@@ -10,7 +10,6 @@ import org.tabooproject.fluxon.util.with
 import taboolib.common.LifeCycle
 import taboolib.common.io.deepDelete
 import taboolib.common.io.newFile
-import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.info
 import taboolib.common.platform.function.warning
@@ -19,7 +18,6 @@ import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.measureTime
 
-@CommandHeader("fluxon", aliases = ["fn"])
 object FluxonLibrary {
 
     // 脚本类加载器

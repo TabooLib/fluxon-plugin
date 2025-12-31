@@ -36,8 +36,8 @@ repositories {
 
 dependencies {
     taboo("org.tabooproject.fluxon:core:1.4.3")
-    compileOnly("ink.ptms.core:v12004:12004:mapped")
-    compileOnly("ink.ptms.core:v12004:12004:universal")
+    // compileOnly("ink.ptms.core:v12004:12004:mapped")
+    // compileOnly("ink.ptms.core:v12004:12004:universal")
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
