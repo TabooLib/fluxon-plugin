@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    taboo("org.tabooproject.fluxon:core:1.4.4")
+    taboo("org.tabooproject.fluxon:core:1.4.4") { isTransitive = false }
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
@@ -57,4 +57,47 @@ tasks.withType<KotlinCompile> {
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// 子模块统一配置
+configure(subprojects) {
+    apply(plugin = "java")
+    apply(plugin = "io.izzel.taboolib")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    
+    repositories {
+        mavenCentral()
+    }
+    
+    dependencies {
+        "taboo"("org.tabooproject.fluxon:core:1.4.4") { isTransitive = false }
+        "compileOnly"(kotlin("stdlib"))
+        "compileOnly"(rootProject.fileTree("libs"))
+    }
+    
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+    
+    tasks.withType<KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(JVM_1_8)
+            freeCompilerArgs.add("-Xjvm-default=all")
+        }
+    }
+    
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+// Shade打包：将所有子模块合并到一个jar
+tasks {
+    jar {
+        archiveBaseName.set("FluxonPlugin")
+        from(rootProject.findProject(":platform-bukkit")!!.sourceSets["main"].output)
+        from(rootProject.findProject(":platform-bungeecord")!!.sourceSets["main"].output)
+        from(rootProject.findProject(":platform-velocity")!!.sourceSets["main"].output)
+    }
 }
