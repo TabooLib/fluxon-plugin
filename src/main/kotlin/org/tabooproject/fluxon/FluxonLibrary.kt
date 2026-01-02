@@ -46,14 +46,7 @@ object FluxonLibrary {
             warning("没有找到脚本 $name")
             return null
         }
-        val environment = FluxonRuntime.getInstance().newEnvironment()
-        vars.forEach { (k, v) -> environment.defineRootVariable(k, v) }
-        return try {
-            script.invoke(vars = vars)?.exceptFluxonCompletableFutureError()
-        } catch (ex: FluxonRuntimeError) {
-            ex.printError()
-            null
-        }
+        return script.invoke(vars = vars)
     }
 
     @Parallel("fluxon_library", runOn = LifeCycle.LOAD)

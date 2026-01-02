@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
 import io.izzel.taboolib.gradle.Basic
 import io.izzel.taboolib.gradle.CommandHelper
 import io.izzel.taboolib.gradle.Bukkit
+import io.izzel.taboolib.gradle.BukkitNMS
+import io.izzel.taboolib.gradle.BukkitNMSUtil
+import io.izzel.taboolib.gradle.BukkitUtil
 import io.izzel.taboolib.gradle.Velocity
 import io.izzel.taboolib.gradle.BungeeCord
 import io.izzel.taboolib.gradle.MinecraftChat
@@ -20,6 +23,9 @@ taboolib {
         install(CommandHelper)
         install(MinecraftChat)
         install(Bukkit)
+        install(BukkitUtil)
+        install(BukkitNMS)
+        install(BukkitNMSUtil)
         install(Velocity)
         install(BungeeCord)
         // repoTabooLib = project.repositories.mavenLocal().url.toString()

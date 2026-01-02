@@ -4,8 +4,10 @@ import ink.ptms.adyeshach.core.entity.manager.Manager
 import ink.ptms.adyeshach.core.entity.manager.PlayerManager
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 
+@Requires(classes = ["ink.ptms.adyeshach.core.Adyeshach"])
 object FunctionEntityManager {
 
     @Awake(LifeCycle.INIT)

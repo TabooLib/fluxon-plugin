@@ -7,9 +7,11 @@ import org.bukkit.entity.Player
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.java.Export
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 
-object FunctionAdyeshach  {
+@Requires(classes = ["ink.ptms.adyeshach.core.Adyeshach"])
+object FunctionAdyeshach {
 
     @Awake(LifeCycle.LOAD)
     fun init() {
