@@ -30,7 +30,7 @@ taboolib {
             name("sky")
         }
     }
-    version { taboolib = "6.2.4-ddf2cc9" }
+    version { taboolib = "6.2.4-5902762" }
 }
 
 repositories {
@@ -71,7 +71,7 @@ configure(subprojects) {
             install(Basic)
             install(MinecraftChat)
         }
-        version { taboolib = "6.2.4-ddf2cc9" }
+        version { taboolib = "6.2.4-5902762" }
     }
     
     repositories {

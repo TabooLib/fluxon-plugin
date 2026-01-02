@@ -1,4 +1,4 @@
-package org.tabooproject.fluxon.function
+package org.tabooproject.fluxon.function.platform
 
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime

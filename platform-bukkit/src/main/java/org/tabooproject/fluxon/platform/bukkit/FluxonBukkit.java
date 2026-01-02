@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class FluxonBukkit {
 
-    @Awake(LifeCycle.LOAD)
+    @Awake(LifeCycle.INIT)
     public static void init() {
         new Functions(FluxonRuntime.getInstance());
         new FunctionPlaceholder(FluxonRuntime.getInstance());

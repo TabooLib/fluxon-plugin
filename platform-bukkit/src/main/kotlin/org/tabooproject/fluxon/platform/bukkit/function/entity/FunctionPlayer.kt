@@ -1,24 +1,25 @@
-package org.tabooproject.fluxon.platform.bukkit.function
+package org.tabooproject.fluxon.platform.bukkit.function.entity
 
 import org.bukkit.Bukkit
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.platform.util.onlinePlayers
 import java.util.UUID
 
-object FunctionWorld {
+object FunctionPlayer {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("world", 1) {
+            registerFunction("player", 1) {
                 when (val id = it.getArgument(0)) {
-                    is UUID -> Bukkit.getWorld(id)
-                    is String -> Bukkit.getWorld(id)
+                    is UUID -> Bukkit.getPlayer(id)
+                    is String -> Bukkit.getPlayerExact(id)
                     else -> null
                 }
             }
-            registerFunction("worlds", 0) { Bukkit.getWorlds() }
+            registerFunction("players", 0) { onlinePlayers }
         }
     }
 }
