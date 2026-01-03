@@ -20,6 +20,7 @@ import taboolib.common.platform.function.warning
 import taboolib.platform.bukkit.Parallel
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 object FluxonLibrary {
@@ -49,6 +50,7 @@ object FluxonLibrary {
         return script.invoke(vars = vars)
     }
 
+    @OptIn(ExperimentalTime::class)
     @Parallel("fluxon_library", runOn = LifeCycle.LOAD)
     fun reload() {
         unload()

@@ -14,6 +14,7 @@ import taboolib.common.platform.function.getDataFolder
 import taboolib.common.util.execution
 import taboolib.common5.Demand
 import taboolib.expansion.createHelper
+import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 @Requires(classes = ["!org.tabooproject.fluxon.ParseScript"])
@@ -26,6 +27,7 @@ object FluxonCommand {
     }
 
     @Suppress("DuplicatedCode")
+    @OptIn(ExperimentalTime::class)
     @CommandBody
     private val run = subCommand {
         dynamic("id") {
