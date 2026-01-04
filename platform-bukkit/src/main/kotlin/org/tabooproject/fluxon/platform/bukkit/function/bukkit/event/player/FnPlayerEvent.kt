@@ -1,0 +1,17 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player
+
+import org.bukkit.event.player.PlayerEvent
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnPlayerEvent {
+
+    @Awake(LifeCycle.INIT)
+    fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(PlayerEvent::class.java)
+                .function("player", 0) { it.target?.player }
+        }
+    }
+}

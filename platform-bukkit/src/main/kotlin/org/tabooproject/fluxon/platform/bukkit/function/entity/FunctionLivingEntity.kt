@@ -27,7 +27,7 @@ object FunctionLivingEntity {
                 .function("isCollidable", 0) {
                     it.target?.isCollidable
                 }
-                .syncFunction("setCollidable", 1) {
+                .function("setCollidable", 1) {
                     it.target?.apply { isCollidable = it.getArgument(0).cbool }
                 }
         }
