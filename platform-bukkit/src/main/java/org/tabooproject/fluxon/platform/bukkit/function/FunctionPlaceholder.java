@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.tabooproject.fluxon.runtime.Environment;
 import org.tabooproject.fluxon.runtime.FluxonRuntime;
 import org.tabooproject.fluxon.runtime.NativeFunction;
+import taboolib.common.LifeCycle;
+import taboolib.common.platform.Awake;
 
 import java.util.Arrays;
 
@@ -17,17 +19,17 @@ import java.util.Arrays;
  */
 public class FunctionPlaceholder {
 
-    public FunctionPlaceholder(final FluxonRuntime runtime) {
+    @Awake(LifeCycle.LOAD)
+    public static void init() {
+        final FluxonRuntime runtime = FluxonRuntime.getInstance();
         final NativeFunction.NativeCallable<?> function = context -> {
             final Environment env = context.getEnvironment();
             final Object[] args = context.getArguments();
             final Player player;
-            final String content;
+            final String content = args[0].toString();
             if (context.getArguments().length > 1) {
-                player = (Player) args[0];
-                content = args[1].toString();
+                player = (Player) args[1];
             } else {
-                content = args[0].toString();
                 Object find = env.getRootVariables().get("player");
                 if (find instanceof Player) {
                     player = (Player) find;
