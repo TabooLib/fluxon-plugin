@@ -1,5 +1,7 @@
 package org.tabooproject.fluxon
 
+import org.tabooproject.fluxon.profiler.EnvironmentCreationEvent
+import org.tabooproject.fluxon.profiler.ScriptExecutionEvent
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionContext
 import org.tabooproject.fluxon.runtime.RuntimeScriptBase
@@ -59,6 +61,36 @@ class FluxonScript(
         } catch (ex: FluxonRuntimeError) {
             ex.printError()
             null
+        }
+    }
+
+    /**
+     * 执行脚本（带性能追踪）
+     * 仅在性能分析时使用
+     *
+     * @param vars 脚本变量
+     * @return 执行结果
+     */
+    fun invokeWithProfiling(vars: Map<String, Any?> = emptyMap()): Any? {
+        val event = ScriptExecutionEvent()
+        event.begin()
+        event.scriptId = scriptId
+        event.hasVariables = vars.isNotEmpty()
+        event.variableCount = vars.size
+        return try {
+            val envEvent = EnvironmentCreationEvent()
+            envEvent.begin()
+            envEvent.context = "FluxonScript.invoke"
+            val environment = FluxonRuntime.getInstance().newEnvironment()
+            envEvent.commit()
+            environment.defineRootVariable("__script__", this)
+            vars.forEach { (key, value) -> environment.defineRootVariable(key, value) }
+            instance.eval(environment)?.exceptFluxonCompletableFutureError()
+        } catch (ex: FluxonRuntimeError) {
+            ex.printError()
+            null
+        } finally {
+            event.commit()
         }
     }
 

@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon
 
 import org.tabooproject.fluxon.FluxonLibrary.loadScriptFile
+import org.tabooproject.fluxon.profiler.FluxonProfiler
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.tool.FunctionDumper
 import org.tabooproject.fluxon.util.exceptFluxonCompletableFutureError
@@ -14,6 +15,8 @@ import taboolib.common.platform.function.getDataFolder
 import taboolib.common.util.execution
 import taboolib.common5.Demand
 import taboolib.expansion.createHelper
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -222,6 +225,148 @@ object FluxonCommand {
         exec<ProxyCommandSender> {
             FluxonLibrary.reload()
             sender.tell("重载完成。")
+        }
+    }
+
+    @CommandBody
+    private val benchmark = subCommand {
+        dynamic("id") {
+            suggest { FluxonLibrary.scripts.keys().toList() }
+            dynamic("params", optional = true) {
+                exec<ProxyCommandSender> {
+                    executeBenchmark(sender, ctx["id"], ctx.get("params"))
+                }
+            }
+            exec<ProxyCommandSender> {
+                executeBenchmark(sender, ctx["id"], null)
+            }
+        }
+    }
+
+    private fun executeBenchmark(sender: ProxyCommandSender, scriptId: String, paramsStr: String?) {
+        val script = FluxonLibrary.scripts[scriptId]
+        if (script == null) {
+            sender.tell("脚本 $scriptId 不存在。")
+            return
+        }
+        // 解析参数
+        val params = if (paramsStr != null) {
+            Demand("0 $paramsStr".trim())
+        } else {
+            Demand("0")
+        }
+        // 提取迭代次数和 JFR 选项
+        val iterations = params.get("iterations")?.toIntOrNull() ?: 100
+        val enableJfr = params.tags.contains("jfr")
+        val quiet = params.tags.contains("quiet")
+        // 构建脚本变量
+        val vars = hashMapOf<String, Any?>()
+        params.tags.forEach { if (it != "jfr" && it != "quiet") vars[it] = true }
+        params.dataMap.forEach { if (it.key != "iterations") vars[it.key] = it.value }
+        vars["sender"] = sender
+
+        sender.tell("=== Benchmark: $scriptId ===")
+        sender.tell("执行次数: $iterations")
+        if (enableJfr) sender.tell("JFR 录制: 已启用")
+
+        // 启动 JFR 录制（如果启用）
+        val jfrRecording = if (enableJfr) {
+            try {
+                val recording = jdk.jfr.Recording()
+                // 启用 Fluxon 自定义事件
+                recording.enable("fluxon.ScriptExecution").withoutStackTrace()
+                recording.enable("fluxon.EnvironmentCreation").withoutStackTrace()
+                recording.enable("fluxon.InterpreterExecution").withoutStackTrace()
+                recording.enable("fluxon.FunctionCall").withoutStackTrace()
+                // 启用一些有用的 JVM 事件
+                recording.enable("jdk.ExecutionSample").withPeriod(java.time.Duration.ofMillis(10))
+                recording.enable("jdk.JavaMonitorEnter").withThreshold(java.time.Duration.ofMillis(10))
+                recording.enable("jdk.ObjectAllocationInNewTLAB").withStackTrace()
+                recording.enable("jdk.GarbageCollection")
+                recording.enable("jdk.ThreadPark").withThreshold(java.time.Duration.ofMillis(10))
+                
+                recording.setMaxSize(100 * 1024 * 1024) // 最大 100MB
+                recording.setMaxAge(java.time.Duration.ofMinutes(10))
+                recording.start()
+                sender.tell("JFR 录制已启动")
+                recording
+            } catch (e: Exception) {
+                sender.tell("启动 JFR 录制失败: ${e.message}")
+                e.printStackTrace()
+                null
+            }
+        } else null
+
+        // 执行基准测试
+        val durations = mutableListOf<Long>()
+        var successCount = 0
+        var failCount = 0
+
+        for (i in 1..iterations) {
+            val startTime = System.currentTimeMillis()
+            try {
+                // 根据是否启用 JFR 选择不同的执行方法
+                if (enableJfr) {
+                    script.invokeWithProfiling(vars)
+                } else {
+                    script.invoke(vars)
+                }
+                val duration = System.currentTimeMillis() - startTime
+                durations.add(duration)
+                successCount++
+                if (!quiet && i % 10 == 0) {
+                    sender.tell("进度: $i/$iterations (${duration}ms)")
+                }
+            } catch (e: Exception) {
+                failCount++
+                if (!quiet) {
+                    sender.tell("执行 #$i 失败: ${e.message}")
+                }
+            }
+        }
+
+        // 停止 JFR 录制
+        val jfrFile = if (jfrRecording != null) {
+            try {
+                val timestamp = LocalDateTime.now().format(
+                    DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")
+                )
+                val filename = "benchmark-$scriptId-$timestamp.jfr"
+                val file = getDataFolder().resolve(filename).toPath()
+                jfrRecording.dump(file)
+                jfrRecording.close()
+                sender.tell("JFR 录制已保存: $filename")
+                file
+            } catch (e: Exception) {
+                sender.tell("保存 JFR 录制失败: ${e.message}")
+                e.printStackTrace()
+                null
+            }
+        } else null
+
+        // 计算统计数据
+        if (durations.isNotEmpty()) {
+            sender.tell("\n=== 统计结果 ===")
+            val stats = FluxonProfiler.calculateStats(durations)
+            sender.tell(stats.format())
+            if (failCount > 0) {
+                sender.tell("失败次数: $failCount")
+            }
+            // 分析 JFR 数据
+            if (jfrFile != null) {
+                try {
+                    sender.tell("\n=== JFR 分析 ===")
+                    val events = FluxonProfiler.analyzeJfrFile(jfrFile)
+                    val eventStats = FluxonProfiler.generateEventReport(events)
+                    sender.tell(FluxonProfiler.formatEventReport(eventStats))
+                    sender.tell("\n提示: 使用 JDK Mission Control 或 IDEA Profiler 打开 ${jfrFile.fileName} 查看详细火焰图")
+                } catch (e: Exception) {
+                    sender.tell("分析 JFR 文件失败: ${e.message}")
+                    e.printStackTrace()
+                }
+            }
+        } else {
+            sender.tell("所有执行均失败，无统计数据")
         }
     }
 }

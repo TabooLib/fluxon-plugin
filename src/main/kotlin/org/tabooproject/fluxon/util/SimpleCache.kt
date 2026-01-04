@@ -32,6 +32,11 @@ class SimpleCache<K : Any, V : Any>(
         }
     }
 
+    fun contains(key: K): Boolean {
+        val now = System.currentTimeMillis()
+        return store[key]?.let { now - it.accessTime <= expireAfterAccessMs } ?: false
+    }
+
     private fun evictIfNeeded() {
         if (store.size < maxSize) return
         val now = System.currentTimeMillis()
