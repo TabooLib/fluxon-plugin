@@ -14,7 +14,7 @@ object FnEntityDamageEvent {
                 .function("damage", 0) {
                     it.target?.damage
                 }
-                .function("setDamage", 1) {
+                .syncFunction("setDamage", 1) {
                     it.target?.setDamage(it.getNumber(0).toDouble())
                 }
                 .function("finalDamage", 0) {
