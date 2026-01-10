@@ -41,11 +41,12 @@ object FnVector {
 
                 // 可读写属性
                 .function("x", 0) { it.target?.x }
-                .syncFunction("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
+                .function("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
                 .function("y", 0) { it.target?.y }
-                .syncFunction("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
+                .function("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
                 .function("z", 0) { it.target?.z }
-                .syncFunction("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
+                .function("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
+                
                 // 基本运算
                 .function("add", 1) {
                     when (val arg = it.getArgument(0)!!) {
