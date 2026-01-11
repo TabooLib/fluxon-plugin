@@ -6,12 +6,14 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnPlayerItemBreakEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemBreakEvent::class.java)
                 .function("brokenItem", 0) { it.target?.brokenItem }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { PlayerItemBreakEvent.getHandlerList() }
         }
     }
 }

@@ -6,12 +6,11 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnPlayerEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEvent::class.java)
-                .function("player", 0) { it.target?.player }
+                .function("player", 0) { it.target?.getPlayer() }
         }
     }
 }

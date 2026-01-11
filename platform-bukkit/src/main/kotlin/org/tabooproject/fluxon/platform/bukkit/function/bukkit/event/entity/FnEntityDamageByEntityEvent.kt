@@ -6,13 +6,11 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnEntityDamageByEntityEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByEntityEvent::class.java)
                 .function("damager", 0) { it.target?.damager }
-//                .function("isCritical", 0) { it.target?.isCritical }
         }
     }
 }

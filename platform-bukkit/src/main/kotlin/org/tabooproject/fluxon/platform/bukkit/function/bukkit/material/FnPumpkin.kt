@@ -1,0 +1,21 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.material
+
+import org.bukkit.block.BlockFace
+import org.bukkit.material.Pumpkin
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnPumpkin {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(Pumpkin::class.java)
+                .function("isLit", 0) { it.target?.isLit }
+                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
+                .function("facing", 0) { it.target?.facing }
+                .function("toString", 0) { it.target?.toString() }
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}

@@ -6,15 +6,19 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnBlockDamageEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageEvent::class.java)
                 .function("player", 0) { it.target?.player }
-                .function("itemInHand", 0) { it.target?.itemInHand }
                 .function("instaBreak", 0) { it.target?.instaBreak }
-                .syncFunction("setInstaBreak", 1) { it.target?.apply { instaBreak = it.getBoolean(0) } }
+                .function("setInstaBreak", 1) { it.target?.setInstaBreak(it.getBoolean(0)) }
+                .function("itemInHand", 0) { it.target?.itemInHand }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockDamageEvent.getHandlerList() }
         }
     }
 }

@@ -6,9 +6,8 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnBlockDispenseArmorEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDispenseArmorEvent::class.java)
                 .function("targetEntity", 0) { it.target?.targetEntity }

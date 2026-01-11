@@ -1,0 +1,18 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.material
+
+import org.bukkit.material.DetectorRail
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnDetectorRail {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(DetectorRail::class.java)
+                .function("isPressed", 0) { it.target?.isPressed }
+                .function("setPressed", 1) { it.target?.setPressed(it.getBoolean(0)) }
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}

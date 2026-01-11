@@ -1,0 +1,18 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.material
+
+import org.bukkit.material.RedstoneWire
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnRedstoneWire {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(RedstoneWire::class.java)
+                .function("isPowered", 0) { it.target?.isPowered }
+                .function("toString", 0) { it.target?.toString() }
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}

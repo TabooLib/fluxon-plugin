@@ -1,0 +1,28 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.metadata
+
+import org.bukkit.metadata.MetadataValue
+
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnMetadataValue {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(MetadataValue::class.java)
+                .function("value", 0) { it.target?.value() }
+                .function("asInt", 0) { it.target?.asInt() }
+                .function("asFloat", 0) { it.target?.asFloat() }
+                .function("asDouble", 0) { it.target?.asDouble() }
+                .function("asLong", 0) { it.target?.asLong() }
+                .function("asShort", 0) { it.target?.asShort() }
+                .function("asByte", 0) { it.target?.asByte() }
+                .function("asBoolean", 0) { it.target?.asBoolean() }
+                .function("asString", 0) { it.target?.asString() }
+                .function("owningPlugin", 0) { it.target?.owningPlugin }
+                .function("invalidate", 0) { it.target?.invalidate() }
+        }
+    }
+}

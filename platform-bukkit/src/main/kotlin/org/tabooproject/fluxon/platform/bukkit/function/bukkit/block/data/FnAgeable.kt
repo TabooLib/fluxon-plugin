@@ -6,13 +6,12 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnAgeable {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ageable::class.java)
                 .function("age", 0) { it.target?.age }
-                .syncFunction("setAge", 1) { it.target?.apply { age = it.getNumber(0).toInt() } }
+                .function("setAge", 1) { it.target?.setAge(it.getNumber(0).toInt()) }
                 .function("maximumAge", 0) { it.target?.maximumAge }
         }
     }

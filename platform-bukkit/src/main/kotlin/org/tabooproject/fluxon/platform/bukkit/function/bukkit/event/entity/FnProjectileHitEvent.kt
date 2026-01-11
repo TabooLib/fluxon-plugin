@@ -6,14 +6,19 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnProjectileHitEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProjectileHitEvent::class.java)
+                .function("entity", 0) { it.target?.getEntity() }
                 .function("hitBlock", 0) { it.target?.hitBlock }
                 .function("hitBlockFace", 0) { it.target?.hitBlockFace }
                 .function("hitEntity", 0) { it.target?.hitEntity }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { ProjectileHitEvent.getHandlerList() }
         }
     }
 }

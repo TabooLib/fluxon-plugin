@@ -7,14 +7,14 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnProjectile {
-
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Projectile::class.java)
-                // 射手
                 .function("shooter", 0) { it.target?.shooter }
-                .syncFunction("setShooter", 1) { it.target?.apply { shooter = it.getArgument(0) as? ProjectileSource } }
+                .function("setShooter", 1) { it.target?.setShooter(it.getArgument(0) as ProjectileSource) }
+                .function("doesBounce", 0) { it.target?.doesBounce() }
+                .function("setBounce", 1) { it.target?.setBounce(it.getBoolean(0)) }
         }
     }
 }

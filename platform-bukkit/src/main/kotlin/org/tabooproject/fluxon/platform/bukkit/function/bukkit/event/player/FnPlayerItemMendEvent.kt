@@ -6,16 +6,20 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnPlayerItemMendEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemMendEvent::class.java)
                 .function("item", 0) { it.target?.item }
                 .function("slot", 0) { it.target?.slot }
                 .function("experienceOrb", 0) { it.target?.experienceOrb }
                 .function("repairAmount", 0) { it.target?.repairAmount }
-                .syncFunction("setRepairAmount", 1) { it.target?.apply { repairAmount = it.getNumber(0).toInt() } }
+                .function("setRepairAmount", 1) { it.target?.setRepairAmount(it.getNumber(0).toInt()) }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { PlayerItemMendEvent.getHandlerList() }
         }
     }
 }

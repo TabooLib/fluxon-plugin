@@ -1,0 +1,17 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard
+
+import org.bukkit.scoreboard.ScoreboardManager
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnScoreboardManager {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(ScoreboardManager::class.java)
+                .function("mainScoreboard", 0) { it.target?.mainScoreboard }
+                .function("newScoreboard", 0) { it.target?.newScoreboard }
+        }
+    }
+}

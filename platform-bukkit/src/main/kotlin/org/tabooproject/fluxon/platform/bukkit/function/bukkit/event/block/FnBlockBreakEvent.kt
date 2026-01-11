@@ -6,14 +6,15 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnBlockBreakEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockBreakEvent::class.java)
                 .function("player", 0) { it.target?.player }
+                .function("setDropItems", 1) { it.target?.setDropItems(it.getBoolean(0)) }
                 .function("isDropItems", 0) { it.target?.isDropItems }
-                .function("setDropItems", 1) { it.getBoolean(0) }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
         }
     }
 }

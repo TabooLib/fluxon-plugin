@@ -6,13 +6,12 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnNameable {
-
-    @Awake(LifeCycle.LOAD)
-    fun init() {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Nameable::class.java)
                 .function("customName", 0) { it.target?.customName }
-                .syncFunction("setCustomName", 1) { it.target?.apply { customName = it.getString(0) } }
+                .function("setCustomName", 1) { it.target?.setCustomName(it.getString(0)) }
         }
     }
 }

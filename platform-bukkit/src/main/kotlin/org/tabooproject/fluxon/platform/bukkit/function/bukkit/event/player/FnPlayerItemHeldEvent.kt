@@ -6,13 +6,17 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnPlayerItemHeldEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemHeldEvent::class.java)
                 .function("previousSlot", 0) { it.target?.previousSlot }
                 .function("newSlot", 0) { it.target?.newSlot }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { PlayerItemHeldEvent.getHandlerList() }
         }
     }
 }

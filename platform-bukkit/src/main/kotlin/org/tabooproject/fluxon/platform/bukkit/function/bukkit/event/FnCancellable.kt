@@ -6,17 +6,12 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 
 object FnCancellable {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cancellable::class.java)
-                .function("isCancelled", 0) {
-                    it.target?.isCancelled
-                }
-                .function("setCancelled", 1) {
-                    it.target?.setCancelled(it.getBoolean(0))
-                }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
         }
     }
 }

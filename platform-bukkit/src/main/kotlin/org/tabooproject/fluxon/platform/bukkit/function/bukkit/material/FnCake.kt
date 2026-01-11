@@ -1,0 +1,21 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.material
+
+import org.bukkit.material.Cake
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnCake {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(Cake::class.java)
+                .function("slicesEaten", 0) { it.target?.slicesEaten }
+                .function("slicesRemaining", 0) { it.target?.slicesRemaining }
+                .function("setSlicesEaten", 1) { it.target?.setSlicesEaten(it.getNumber(0).toInt()) }
+                .function("setSlicesRemaining", 1) { it.target?.setSlicesRemaining(it.getNumber(0).toInt()) }
+                .function("toString", 0) { it.target?.toString() }
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}

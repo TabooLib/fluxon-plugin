@@ -1,0 +1,18 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
+
+import org.bukkit.block.PistonMoveReaction
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnPistonMoveReaction {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(PistonMoveReaction::class.java)
+                .function("id", 0) { it.target?.id }
+                // static
+                .function("byId", 1) { PistonMoveReaction.getById(it.getNumber(0).toInt()) }
+        }
+    }
+}

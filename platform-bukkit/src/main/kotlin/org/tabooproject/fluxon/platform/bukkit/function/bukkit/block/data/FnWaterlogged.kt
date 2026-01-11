@@ -1,0 +1,17 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data
+
+import org.bukkit.block.data.Waterlogged
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnWaterlogged {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(Waterlogged::class.java)
+                .function("isWaterlogged", 0) { it.target?.isWaterlogged }
+                .function("setWaterlogged", 1) { it.target?.setWaterlogged(it.getBoolean(0)) }
+        }
+    }
+}

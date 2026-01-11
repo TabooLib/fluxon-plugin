@@ -1,0 +1,287 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit
+
+import org.bukkit.Server
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnServer {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(Server::class.java)
+                .function("name", 0) { it.target?.name }
+                .function("version", 0) { it.target?.version }
+                .function("bukkitVersion", 0) { it.target?.bukkitVersion }
+                .function("maxPlayers", 0) { it.target?.maxPlayers }
+                .function("setMaxPlayers", 1) { it.target?.setMaxPlayers(it.getNumber(0).toInt()) }
+                .function("port", 0) { it.target?.port }
+                .function("viewDistance", 0) { it.target?.viewDistance }
+                .function("simulationDistance", 0) { it.target?.simulationDistance }
+                .function("ip", 0) { it.target?.ip }
+                .function("worldType", 0) { it.target?.worldType }
+                .function("generateStructures", 0) { it.target?.generateStructures }
+                .function("maxWorldSize", 0) { it.target?.maxWorldSize }
+                .function("allowEnd", 0) { it.target?.allowEnd }
+                .function("allowNether", 0) { it.target?.allowNether }
+                .function("isLoggingIPs", 0) { it.target?.isLoggingIPs }
+                .function("initialEnabledPacks", 0) { it.target?.initialEnabledPacks }
+                .function("initialDisabledPacks", 0) { it.target?.initialDisabledPacks }
+                .function("dataPackManager", 0) { it.target?.dataPackManager }
+                .function("serverTickManager", 0) { it.target?.serverTickManager }
+                .function("serverResourcePack", 0) { it.target?.serverResourcePack }
+                .function("resourcePack", 0) { it.target?.resourcePack }
+                .function("resourcePackHash", 0) { it.target?.resourcePackHash }
+                .function("resourcePackPrompt", 0) { it.target?.resourcePackPrompt }
+                .function("isResourcePackRequired", 0) { it.target?.isResourcePackRequired }
+                .function("hasWhitelist", 0) { it.target?.hasWhitelist() }
+                .function("setWhitelist", 1) { it.target?.setWhitelist(it.getBoolean(0)) }
+                .function("isWhitelistEnforced", 0) { it.target?.isWhitelistEnforced }
+                .function("setWhitelistEnforced", 1) { it.target?.setWhitelistEnforced(it.getBoolean(0)) }
+                .function("whitelistedPlayers", 0) { it.target?.whitelistedPlayers }
+                .function("reloadWhitelist", 0) { it.target?.reloadWhitelist() }
+                .function("broadcastMessage", 1) { it.target?.broadcastMessage(it.getString(0)!!) }
+                .function("updateFolder", 0) { it.target?.updateFolder }
+                .function("updateFolderFile", 0) { it.target?.updateFolderFile }
+                .function("connectionThrottle", 0) { it.target?.connectionThrottle }
+                .function("ticksPerAnimalSpawns", 0) { it.target?.ticksPerAnimalSpawns }
+                .function("ticksPerMonsterSpawns", 0) { it.target?.ticksPerMonsterSpawns }
+                .function("ticksPerWaterSpawns", 0) { it.target?.ticksPerWaterSpawns }
+                .function("ticksPerWaterAmbientSpawns", 0) { it.target?.ticksPerWaterAmbientSpawns }
+                .function(
+                    "ticksPerWaterUndergroundCreatureSpawns",
+                    0
+                ) { it.target?.ticksPerWaterUndergroundCreatureSpawns }
+                .function("ticksPerAmbientSpawns", 0) { it.target?.ticksPerAmbientSpawns }
+                .function("ticksPerSpawns", 1) { it.target?.getTicksPerSpawns(it.getArgument(0) as SpawnCategory) }
+                .function("player", 1) {
+                    // Player getPlayer(@NotNull String var1)
+                    // Player getPlayer(@NotNull UUID var1)
+                    TODO()
+                }
+                .function("playerExact", 1) { it.target?.getPlayerExact(it.getString(0)!!) }
+                .function("matchPlayer", 1) { it.target?.matchPlayer(it.getString(0)!!) }
+                .function("pluginManager", 0) { it.target?.pluginManager }
+                .function("scheduler", 0) { it.target?.scheduler }
+                .function("servicesManager", 0) { it.target?.servicesManager }
+                .function("worlds", 0) { it.target?.worlds }
+                .function("createWorld", 1) { it.target?.createWorld(it.getArgument(0) as WorldCreator) }
+                .function("unloadWorld", 2) {
+                    // boolean unloadWorld(@NotNull String var1, boolean var2)
+                    // boolean unloadWorld(@NotNull World var1, boolean var2)
+                    TODO()
+                }
+                .function("world", 1) {
+                    // World getWorld(@NotNull String var1)
+                    // World getWorld(@NotNull UUID var1)
+                    TODO()
+                }
+                .function("createWorldBorder", 0) { it.target?.createWorldBorder() }
+                .function("map", 1) { it.target?.getMap(it.getNumber(0).toInt()) }
+                .function("createMap", 1) { it.target?.createMap(it.getArgument(0) as World) }
+                .function("createExplorerMap", 3) {
+                    it.target?.createExplorerMap(
+                        it.getArgument(0) as World,
+                        it.getArgument(1) as Location,
+                        it.getArgument(2) as StructureType
+                    )
+                }
+                .function("createExplorerMap", 5) {
+                    it.target?.createExplorerMap(
+                        it.getArgument(0) as World,
+                        it.getArgument(1) as Location,
+                        it.getArgument(2) as StructureType,
+                        it.getNumber(3).toInt(),
+                        it.getBoolean(4)
+                    )
+                }
+                .function("reload", 0) { it.target?.reload() }
+                .function("reloadData", 0) { it.target?.reloadData() }
+                .function("logger", 0) { it.target?.logger }
+                .function("pluginCommand", 1) { it.target?.getPluginCommand(it.getString(0)!!) }
+                .function("savePlayers", 0) { it.target?.savePlayers() }
+                .function("dispatchCommand", 2) {
+                    it.target?.dispatchCommand(
+                        it.getArgument(0) as CommandSender,
+                        it.getString(1)!!
+                    )
+                }
+                .function("addRecipe", 1) { it.target?.addRecipe(it.getArgument(0) as Recipe) }
+                .function("recipesFor", 1) { it.target?.getRecipesFor(it.getArgument(0) as ItemStack) }
+                .function("recipe", 1) { it.target?.getRecipe(it.getArgument(0) as NamespacedKey) }
+                .function("craftingRecipe", 2) {
+                    it.target?.getCraftingRecipe(
+                        it.getArgument(0) as ItemStack
+                        [],
+                        it.getArgument(1) as World
+                    )
+                }
+                .function("craftItem", 3) {
+                    it.target?.craftItem(
+                        it.getArgument(0) as ItemStack
+                        [],
+                        it.getArgument(1) as World,
+                        it.getArgument(2) as Player
+                    )
+                }
+                .function("craftItem", 2) {
+                    it.target?.craftItem(
+                        it.getArgument(0) as ItemStack
+                        [],
+                        it.getArgument(1) as World
+                    )
+                }
+                .function("craftItemResult", 3) {
+                    it.target?.craftItemResult(
+                        it.getArgument(0) as ItemStack
+                        [],
+                        it.getArgument(1) as World,
+                        it.getArgument(2) as Player
+                    )
+                }
+                .function("craftItemResult", 2) {
+                    it.target?.craftItemResult(
+                        it.getArgument(0) as ItemStack
+                        [],
+                        it.getArgument(1) as World
+                    )
+                }
+                .function("recipeIterator", 0) { it.target?.recipeIterator() }
+                .function("clearRecipes", 0) { it.target?.clearRecipes() }
+                .function("resetRecipes", 0) { it.target?.resetRecipes() }
+                .function("removeRecipe", 1) { it.target?.removeRecipe(it.getArgument(0) as NamespacedKey) }
+                .function("spawnRadius", 0) { it.target?.spawnRadius }
+                .function("setSpawnRadius", 1) { it.target?.setSpawnRadius(it.getNumber(0).toInt()) }
+                .function("shouldSendChatPreviews", 0) { it.target?.shouldSendChatPreviews() }
+                .function("isEnforcingSecureProfiles", 0) { it.target?.isEnforcingSecureProfiles }
+                .function("isAcceptingTransfers", 0) { it.target?.isAcceptingTransfers }
+                .function("hideOnlinePlayers", 0) { it.target?.hideOnlinePlayers }
+                .function("onlineMode", 0) { it.target?.onlineMode }
+                .function("allowFlight", 0) { it.target?.allowFlight }
+                .function("isHardcore", 0) { it.target?.isHardcore }
+                .function("shutdown", 0) { it.target?.shutdown() }
+                .function("broadcast", 2) { it.target?.broadcast(it.getString(0)!!, it.getString(1)!!) }
+                .function("offlinePlayer", 1) {
+                    // OfflinePlayer getOfflinePlayer(@NotNull String var1)
+                    // OfflinePlayer getOfflinePlayer(@NotNull UUID var1)
+                    TODO()
+                }
+                .function("createPlayerProfile", 2) {
+                    it.target?.createPlayerProfile(
+                        UUID.fromString(it.getString(0)),
+                        it.getString(1)
+                    )
+                }
+                .function("createPlayerProfile", 1) {
+                    // PlayerProfile createPlayerProfile(@NotNull UUID var1)
+                    // PlayerProfile createPlayerProfile(@NotNull String var1)
+                    TODO()
+                }
+                .function("iPBans", 0) { it.target?.ipBans }
+                .function("banIP", 1) {
+                    // void banIP(@NotNull String var1)
+                    // void banIP(@NotNull InetAddress var1)
+                    TODO()
+                }
+                .function("unbanIP", 1) {
+                    // void unbanIP(@NotNull String var1)
+                    // void unbanIP(@NotNull InetAddress var1)
+                    TODO()
+                }
+                .function("bannedPlayers", 0) { it.target?.bannedPlayers }
+                .function("operators", 0) { it.target?.operators }
+                .function("defaultGameMode", 0) { it.target?.defaultGameMode }
+                .function("setDefaultGameMode", 1) { it.target?.setDefaultGameMode(it.getArgument(0) as GameMode) }
+                .function("consoleSender", 0) { it.target?.consoleSender }
+                .function("worldContainer", 0) { it.target?.worldContainer }
+                .function("offlinePlayers", 0) { it.target?.offlinePlayers }
+                .function("messenger", 0) { it.target?.messenger }
+                .function("helpMap", 0) { it.target?.helpMap }
+                .function("createInventory", 2) {
+                    // Inventory createInventory(@Nullable InventoryHolder var1, @NotNull InventoryType var2)
+                    // Inventory createInventory(@Nullable InventoryHolder var1, int var2)
+                    TODO()
+                }
+                .function("createInventory", 3) {
+                    // Inventory createInventory(@Nullable InventoryHolder var1, @NotNull InventoryType var2, @NotNull String var3)
+                    // Inventory createInventory(@Nullable InventoryHolder var1, int var2, @NotNull String var3)
+                    TODO()
+                }
+                .function("createMerchant", 1) { it.target?.createMerchant(it.getString(0)) }
+                .function("maxChainedNeighborUpdates", 0) { it.target?.maxChainedNeighborUpdates }
+                .function("monsterSpawnLimit", 0) { it.target?.monsterSpawnLimit }
+                .function("animalSpawnLimit", 0) { it.target?.animalSpawnLimit }
+                .function("waterAnimalSpawnLimit", 0) { it.target?.waterAnimalSpawnLimit }
+                .function("waterAmbientSpawnLimit", 0) { it.target?.waterAmbientSpawnLimit }
+                .function(
+                    "waterUndergroundCreatureSpawnLimit",
+                    0
+                ) { it.target?.waterUndergroundCreatureSpawnLimit }
+                .function("ambientSpawnLimit", 0) { it.target?.ambientSpawnLimit }
+                .function("spawnLimit", 1) { it.target?.getSpawnLimit(it.getArgument(0) as SpawnCategory) }
+                .function("isPrimaryThread", 0) { it.target?.isPrimaryThread }
+                .function("motd", 0) { it.target?.motd }
+                .function("setMotd", 1) { it.target?.setMotd(it.getString(0)!!) }
+                .function("shutdownMessage", 0) { it.target?.shutdownMessage }
+                .function("itemFactory", 0) { it.target?.itemFactory }
+                .function("entityFactory", 0) { it.target?.entityFactory }
+                .function("scoreboardManager", 0) { it.target?.scoreboardManager }
+                .function("scoreboardCriteria", 1) { it.target?.getScoreboardCriteria(it.getString(0)!!) }
+                .function("serverIcon", 0) { it.target?.serverIcon }
+                .function("loadServerIcon", 1) {
+                    // CachedServerIcon loadServerIcon(@NotNull File var1)
+                    // CachedServerIcon loadServerIcon(@NotNull BufferedImage var1)
+                    TODO()
+                }
+                .function("setIdleTimeout", 1) { it.target?.setIdleTimeout(it.getNumber(0).toInt()) }
+                .function("idleTimeout", 0) { it.target?.idleTimeout }
+                .function("createBossBar", 3) {
+                    it.target?.createBossBar(
+                        it.getString(0),
+                        it.getArgument(1) as BarColor,
+                        it.getArgument(2) as BarStyle
+                    )
+                }
+                .function("createBossBar", 4) {
+                    it.target?.createBossBar(
+                        it.getArgument(0) as NamespacedKey,
+                        it.getString(1),
+                        it.getArgument(2) as BarColor,
+                        it.getArgument(3) as BarStyle
+                    )
+                }
+                .function("bossBars", 0) { it.target?.bossBars }
+                .function("bossBar", 1) { it.target?.getBossBar(it.getArgument(0) as NamespacedKey) }
+                .function("removeBossBar", 1) { it.target?.removeBossBar(it.getArgument(0) as NamespacedKey) }
+                .function("entity", 1) { it.target?.getEntity(UUID.fromString(it.getString(0))) }
+                .function("advancement", 1) { it.target?.getAdvancement(it.getArgument(0) as NamespacedKey) }
+                .function("advancementIterator", 0) { it.target?.advancementIterator() }
+                .function("createBlockData", 1) {
+                    // BlockData createBlockData(@NotNull Material var1)
+                    // BlockData createBlockData(@NotNull Material var1, @Nullable Consumer<? super BlockData> var2)
+                    // BlockData createBlockData(@NotNull String var1)
+                    TODO()
+                }
+                .function("createBlockData", 2) {
+                    it.target?.createBlockData(
+                        it.getArgument(0) as Material,
+                        it.getString(1)
+                    )
+                }
+                .function("lootTable", 1) { it.target?.getLootTable(it.getArgument(0) as NamespacedKey) }
+                .function("selectEntities", 2) {
+                    it.target?.selectEntities(
+                        it.getArgument(0) as CommandSender,
+                        it.getString(1)!!
+                    )
+                }
+                .function("structureManager", 0) { it.target?.structureManager }
+                .function("unsafe", 0) { it.target?.unsafe }
+                .function("spigot", 0) { it.target?.spigot() }
+                .function("config", 0) { it.target?.getConfig() }
+                .function("broadcast", 1) { it.target?.broadcast(it.getArgument(0) as BaseComponent) }
+                .function("broadcast", 0) { it.target?.broadcast() }
+                .function("restart", 0) { it.target?.restart() }
+        }
+    }
+}
