@@ -17,7 +17,7 @@ object FnBell {
                     when (val var1 = it.getArgument(0)) {
                         is Entity -> it.target?.ring(var1)
                         is BlockFace -> it.target?.ring(var1)
-                        else -> null
+                        else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
                     }
                 }
                 .function("ring", 0) { it.target?.ring() }

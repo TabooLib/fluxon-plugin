@@ -115,7 +115,7 @@ object FnLocation {
                             is World -> value
                             is String -> Bukkit.getWorld(value)
                             is Location -> value.world
-                            else -> null
+                            else -> throw IllegalArgumentException("参数必须是 World 或 String 或 Location 类型")
                         }
                     }
                 }
