@@ -1,9 +1,24 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
+import org.bukkit.GameMode
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.Server
+import org.bukkit.World
+import org.bukkit.WorldCreator
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
+import org.bukkit.entity.SpawnCategory
+import org.bukkit.StructureType
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.Recipe
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import java.util.UUID
 
 object FnServer {
     @Awake(LifeCycle.INIT)
@@ -111,38 +126,33 @@ object FnServer {
                 .function("recipe", 1) { it.target?.getRecipe(it.getArgument(0) as NamespacedKey) }
                 .function("craftingRecipe", 2) {
                     it.target?.getCraftingRecipe(
-                        it.getArgument(0) as ItemStack
-                        [],
+                        it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World
                     )
                 }
                 .function("craftItem", 3) {
                     it.target?.craftItem(
-                        it.getArgument(0) as ItemStack
-                        [],
+                        it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World,
                         it.getArgument(2) as Player
                     )
                 }
                 .function("craftItem", 2) {
                     it.target?.craftItem(
-                        it.getArgument(0) as ItemStack
-                        [],
+                        it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World
                     )
                 }
                 .function("craftItemResult", 3) {
                     it.target?.craftItemResult(
-                        it.getArgument(0) as ItemStack
-                        [],
+                        it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World,
                         it.getArgument(2) as Player
                     )
                 }
                 .function("craftItemResult", 2) {
                     it.target?.craftItemResult(
-                        it.getArgument(0) as ItemStack
-                        [],
+                        it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World
                     )
                 }
@@ -277,11 +287,6 @@ object FnServer {
                 }
                 .function("structureManager", 0) { it.target?.structureManager }
                 .function("unsafe", 0) { it.target?.unsafe }
-                .function("spigot", 0) { it.target?.spigot() }
-                .function("config", 0) { it.target?.getConfig() }
-                .function("broadcast", 1) { it.target?.broadcast(it.getArgument(0) as BaseComponent) }
-                .function("broadcast", 0) { it.target?.broadcast() }
-                .function("restart", 0) { it.target?.restart() }
         }
     }
 }
