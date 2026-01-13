@@ -22,6 +22,10 @@ object FnDamageable {
                 // 伤害吸收
                 .function("absorptionAmount", 0) { it.target?.absorptionAmount }
                 .syncFunction("setAbsorptionAmount", 1) { it.target?.apply { absorptionAmount = it.getNumber(0).toDouble() } }
+
+                .syncFunction("damage", 1) {
+                    it.target?.damage(it.getNumber(0).toDouble())
+                }
         }
     }
 }

@@ -1,19 +1,22 @@
-package org.tabooproject.fluxon.platform.bukkit.function.world
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.util
 
 import org.bukkit.World
 import org.bukkit.util.Vector
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.common.platform.Platform
-import taboolib.common.platform.PlatformSide
 
+/**
+ * FluxonPlugin
+ * org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector
+ *
+ * @author Lynn
+ * @since 2026/1/6
+ */
+object FnVector {
 
-@PlatformSide(Platform.BUKKIT)
-object FunctionVector {
-
-    @Awake(LifeCycle.LOAD)
-    fun init() {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             // 构建向量
             registerFunction("vector", 3) {
@@ -24,6 +27,25 @@ object FunctionVector {
             }
 
             registerExtension(Vector::class.java)
+                // 基本属性（只读）
+                .function("clone", 0) { it.target?.clone() }
+                .function("taboo", 0) { it.target?.let { v -> taboolib.common.util.Vector(v.x, v.y, v.z) } }
+                .function("blockX", 0) { it.target?.blockX }
+                .function("blockY", 0) { it.target?.blockY }
+                .function("blockZ", 0) { it.target?.blockZ }
+                .function("length", 0) { it.target?.length() }
+                .function("lengthSquared", 0) { it.target?.lengthSquared() }
+                .function("isNormalized", 0) { it.target?.isNormalized }
+                .function("normalize", 0) { it.target?.clone()?.normalize() }
+                .function("zero", 0) { it.target?.clone()?.zero() }
+
+                // 可读写属性
+                .function("x", 0) { it.target?.x }
+                .syncFunction("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
+                .function("y", 0) { it.target?.y }
+                .syncFunction("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
+                .function("z", 0) { it.target?.z }
+                .syncFunction("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
                 // 基本运算
                 .function("add", 1) {
                     when (val arg = it.getArgument(0)!!) {
@@ -55,23 +77,11 @@ object FunctionVector {
                 }
 
                 // 属性计算
-                .function("x", 0) {
-                    it.target?.x
-                }
-                .function("y", 0) {
-                    it.target?.y
-                }
-                .function("z", 0) {
-                    it.target?.z
-                }
                 .function("length", 0) {
                     it.target?.length()
                 }
                 .function("lengthSquared", 0) {
                     it.target?.lengthSquared()
-                }
-                .function("normalize", 0) {
-                    it.target?.normalize()
                 }
                 .function("distance", 1) {
                     it.target?.distance(it.getArgumentByType(0, Vector::class.java)!!)
@@ -103,11 +113,6 @@ object FunctionVector {
                         it.getArgumentByType(0, Vector::class.java)!!,
                         it.getNumber(1).toDouble()
                     )
-                }
-
-                // 克隆
-                .function("clone", 0) {
-                    it.target?.clone()
                 }
 
                 // 转换为 Location

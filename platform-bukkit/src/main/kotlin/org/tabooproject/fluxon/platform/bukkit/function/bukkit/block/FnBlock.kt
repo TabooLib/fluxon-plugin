@@ -23,7 +23,7 @@ object FnBlock {
                 .function("locationX", 0) { it.target?.x }
                 .function("locationY", 0) { it.target?.y }
                 .function("locationZ", 0) { it.target?.z }
-                .function("world*", 0) { it.target?.world }
+                .function("world", 0) { it.target?.world }
                 .function("worldName", 0) { it.target?.world?.name }
                 .function("isEmpty", 0) { it.target?.isEmpty }
                 .function("isLiquid", 0) { it.target?.isLiquid }

@@ -1,5 +1,6 @@
-package org.tabooproject.fluxon.platform.bukkit.function.world
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.util.Vector
@@ -8,15 +9,19 @@ import org.tabooproject.fluxon.platform.bukkit.util.multiply
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.common.platform.Platform
-import taboolib.common.platform.PlatformSide
+import taboolib.platform.util.toProxyLocation
 
+/**
+ * FluxonPlugin
+ * org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnLocation
+ *
+ * @author Lynn
+ * @since 2026/1/6
+ */
+object FnLocation {
 
-@PlatformSide(Platform.BUKKIT)
-object FunctionLocation {
-
-    @Awake(LifeCycle.LOAD)
-    fun init() {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             // 构建向量
             // x, y, z
@@ -68,6 +73,53 @@ object FunctionLocation {
             }
 
             registerExtension(Location::class.java)
+                // 基本属性（只读）
+                .function("clone", 0) { it.target?.clone() }
+                .function("taboo", 0) { it.target?.toProxyLocation() }
+                .function("block", 0) { it.target?.block }
+                .function("blockX", 0) { it.target?.blockX }
+                .function("blockY", 0) { it.target?.blockY }
+                .function("blockZ", 0) { it.target?.blockZ }
+                .function("chunk", 0) { it.target?.chunk }
+                .function("isWorldLoaded", 0) { it.target?.isWorldLoaded }
+                .function("length", 0) { it.target?.length() }
+                .function("lengthSquared", 0) { it.target?.lengthSquared() }
+                .function("serialize", 0) { it.target?.serialize() }
+                .function("toVector", 0) { it.target?.toVector() }
+                .function("toString", 0) { it.target?.toString() }
+                .function("zero", 0) { it.target?.zero() }
+
+                // 可读写属性 - 坐标
+                .function("x", 0) { it.target?.x }
+                .syncFunction("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
+                .function("y", 0) { it.target?.y }
+                .syncFunction("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
+                .function("z", 0) { it.target?.z }
+                .syncFunction("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
+
+                // 可读写属性 - 朝向
+                .function("yaw", 0) { it.target?.yaw }
+                .syncFunction("setYaw", 1) { it.target?.apply { yaw = it.getNumber(0).toFloat() } }
+                .function("pitch", 0) { it.target?.pitch }
+                .syncFunction("setPitch", 1) { it.target?.apply { pitch = it.getNumber(0).toFloat() } }
+
+                // 可读写属性 - 方向向量
+                .function("direction", 0) { it.target?.direction }
+                .syncFunction("setDirection", 1) { it.target?.apply { direction = it.getArgument(0) as Vector } }
+
+                // 可读写属性 - 世界
+                .function("world", 0) { it.target?.world }
+                .syncFunction("setWorld", 1) {
+                    it.target?.apply {
+                        world = when (val value = it.getArgument(0)) {
+                            is World -> value
+                            is String -> Bukkit.getWorld(value)
+                            is Location -> value.world
+                            else -> null
+                        }
+                    }
+                }
+
                 // 基本运算
                 .function("add", 1) {
                     when (val arg = it.getArgument(0)!!) {
@@ -98,54 +150,6 @@ object FunctionLocation {
                     }
                 }
 
-                // 属性计算
-                .function("world", 0) {
-                    it.target?.world
-                }
-                .function("x", 0) {
-                    it.target?.x
-                }
-                .function("y", 0) {
-                    it.target?.y
-                }
-                .function("z", 0) {
-                    it.target?.z
-                }
-                .function("yaw", 0) {
-                    it.target?.yaw
-                }
-                .function("pitch", 0) {
-                    it.target?.pitch
-                }
-                .function("direction", 0) {
-                    it.target?.direction
-                }
-                .function("length", 0) {
-                    it.target?.length()
-                }
-                .function("lengthSquared", 0) {
-                    it.target?.lengthSquared()
-                }
-                .function("normalize", 0) {
-                    it.target?.toVector()?.normalize()
-                }
-                .function("distance", 1) {
-                    it.target?.distance(it.getArgumentByType(0, Location::class.java)!!)
-                }
-                .function("distanceSquared", 1) {
-                    it.target?.distanceSquared(it.getArgumentByType(0, Location::class.java)!!)
-                }
-                .function("block", 0) {
-                    it.target?.block
-                }
-                // 克隆
-                .function("clone", 0) {
-                    it.target?.clone()
-                }
-                // 转换为 Vector
-                .function("toVector", 1) {
-                    it.target?.toVector()
-                }
         }
     }
 }
