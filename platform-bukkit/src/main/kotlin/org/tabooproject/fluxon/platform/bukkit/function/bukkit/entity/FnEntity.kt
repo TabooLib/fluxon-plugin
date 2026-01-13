@@ -5,6 +5,9 @@ import org.bukkit.util.Vector
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
+
 
 /**
  * FluxonPlugin
@@ -13,6 +16,7 @@ import taboolib.common.platform.Awake
  * @author mical
  * @since 2026/1/4 12:38
  */
+@PlatformSide(Platform.BUKKIT)
 object FnEntity {
 
     @Awake(LifeCycle.INIT)

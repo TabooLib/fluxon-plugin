@@ -5,7 +5,11 @@ import org.bukkit.projectiles.ProjectileSource
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+
+@PlatformSide(Platform.BUKKIT)
 object FnProjectile {
 
     @Awake(LifeCycle.INIT)

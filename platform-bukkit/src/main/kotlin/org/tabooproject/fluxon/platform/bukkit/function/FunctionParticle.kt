@@ -11,11 +11,14 @@ import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.java.Export
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 import taboolib.library.xseries.particles.XParticle
 import taboolib.module.nms.sendPacket
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.jvm.optionals.getOrNull
 
+@PlatformSide(Platform.BUKKIT)
 object FunctionParticle {
 
     class ParticlePacketBuilder(val particle: Particle, val location: Location) {
@@ -84,7 +87,7 @@ object FunctionParticle {
 
     val particleCacheMap = ConcurrentHashMap<String, Particle>()
 
-    @Awake(LifeCycle.CONST)
+    @Awake(LifeCycle.INIT)
     fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(ParticlePacketBuilder::class.java)

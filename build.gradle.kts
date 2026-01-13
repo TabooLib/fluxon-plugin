@@ -8,13 +8,14 @@ import io.izzel.taboolib.gradle.BukkitNMSUtil
 import io.izzel.taboolib.gradle.BukkitUtil
 import io.izzel.taboolib.gradle.Velocity
 import io.izzel.taboolib.gradle.BungeeCord
+import io.izzel.taboolib.gradle.Hytale
 import io.izzel.taboolib.gradle.MinecraftChat
 
 
 plugins {
     java
     `maven-publish`
-    id("io.izzel.taboolib") version "2.0.27"
+    id("io.izzel.taboolib") version "2.0.28"
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
@@ -29,7 +30,8 @@ taboolib {
         install(BukkitNMSUtil)
         install(Velocity)
         install(BungeeCord)
-        // repoTabooLib = project.repositories.mavenLocal().url.toString()
+        install(Hytale)
+        repoTabooLib = project.repositories.mavenLocal().url.toString()
     }
     description {
         name = "FluxonPlugin"
@@ -37,10 +39,11 @@ taboolib {
             name("sky")
         }
     }
-    version { taboolib = "6.2.4-8d51195" }
+    version { taboolib = "6.2.4-16d06d2" }
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -79,10 +82,11 @@ configure(subprojects) {
             install(Basic)
             install(MinecraftChat)
         }
-        version { taboolib = "6.2.4-8d51195" }
+        version { taboolib = "6.2.4-16d06d2" }
     }
     
     repositories {
+        mavenLocal()
         mavenCentral()
     }
     
@@ -116,6 +120,7 @@ tasks {
         from(rootProject.findProject(":platform-bukkit")!!.sourceSets["main"].output)
         from(rootProject.findProject(":platform-bungeecord")!!.sourceSets["main"].output)
         from(rootProject.findProject(":platform-velocity")!!.sourceSets["main"].output)
+        from(rootProject.findProject(":platform-hytale")!!.sourceSets["main"].output)
     }
 }
 

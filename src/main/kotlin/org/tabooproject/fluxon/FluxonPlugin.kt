@@ -4,6 +4,8 @@ import org.tabooproject.fluxon.compiler.FluxonFeatures
 import org.tabooproject.fluxon.inst.function.FunctionJvm
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
+import taboolib.common.env.RuntimeDependencies
+import taboolib.common.env.RuntimeDependency
 import taboolib.common.platform.Awake
 import taboolib.common.util.runSync
 

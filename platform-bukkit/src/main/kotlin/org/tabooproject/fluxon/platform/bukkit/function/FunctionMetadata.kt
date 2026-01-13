@@ -8,7 +8,11 @@ import taboolib.platform.util.getMetaFirstOrNull
 import taboolib.platform.util.hasMeta
 import taboolib.platform.util.removeMeta
 import taboolib.platform.util.setMeta
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+
+@PlatformSide(Platform.BUKKIT)
 object FunctionMetadata {
 
     @Awake(LifeCycle.INIT)

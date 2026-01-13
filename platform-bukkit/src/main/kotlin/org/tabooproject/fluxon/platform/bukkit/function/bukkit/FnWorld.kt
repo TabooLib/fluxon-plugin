@@ -5,8 +5,11 @@ import org.bukkit.World
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import java.util.UUID
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
+import java.util.*
 
+@PlatformSide(Platform.BUKKIT)
 object FnWorld {
 
     @Awake(LifeCycle.INIT)

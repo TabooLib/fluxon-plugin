@@ -10,7 +10,7 @@ import taboolib.library.reflex.Reflex.Companion.setProperty
 
 object FunctionReflex {
 
-    @Awake(LifeCycle.CONST)
+    @Awake(LifeCycle.INIT)
     fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Any::class.java)

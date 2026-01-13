@@ -4,7 +4,11 @@ import org.bukkit.event.entity.ProjectileHitEvent
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+
+@PlatformSide(Platform.BUKKIT)
 object FnProjectileHitEvent {
 
     @Awake(LifeCycle.INIT)

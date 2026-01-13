@@ -7,6 +7,8 @@ import org.tabooproject.fluxon.runtime.FluxonRuntime;
 import org.tabooproject.fluxon.runtime.NativeFunction;
 import taboolib.common.LifeCycle;
 import taboolib.common.platform.Awake;
+import taboolib.common.platform.Platform;
+import taboolib.common.platform.PlatformSide;
 
 import java.util.Arrays;
 
@@ -17,6 +19,7 @@ import java.util.Arrays;
  * @author mical
  * @since 2025/7/21 18:18
  */
+@PlatformSide(Platform.BUKKIT)
 public class FunctionPlaceholder {
 
     @Awake(LifeCycle.LOAD)

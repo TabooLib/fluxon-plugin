@@ -7,7 +7,11 @@ import org.bukkit.entity.HumanEntity
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+
+@PlatformSide(Platform.BUKKIT)
 object FnHumanEntity {
 
     @Awake(LifeCycle.INIT)

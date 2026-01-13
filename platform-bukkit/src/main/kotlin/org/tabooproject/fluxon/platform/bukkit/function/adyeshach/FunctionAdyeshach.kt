@@ -9,8 +9,12 @@ import org.tabooproject.fluxon.runtime.java.Export
 import taboolib.common.LifeCycle
 import taboolib.common.Requires
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
+
 
 @Requires(classes = ["ink.ptms.adyeshach.core.Adyeshach"])
+@PlatformSide(Platform.BUKKIT)
 object FunctionAdyeshach {
 
     @Awake(LifeCycle.LOAD)
