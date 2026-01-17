@@ -33,7 +33,7 @@ taboolib {
         install(Velocity)
         install(BungeeCord)
         install(Hytale)
-        repoTabooLib = project.repositories.mavenLocal().url.toString()
+        // repoTabooLib = project.repositories.mavenLocal().url.toString()
     }
     description {
         name = "FluxonPlugin"
@@ -41,7 +41,7 @@ taboolib {
             name("sky")
         }
     }
-    version { taboolib = "6.2.4-62eb811" }
+    version { taboolib = "6.2.4-7c873bc" }
 }
 
 repositories {
