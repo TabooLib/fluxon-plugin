@@ -10,6 +10,10 @@ object FnBlockFace {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockFace::class.java)
+                // 橙汁喵: 枚举类语法
+                .function("name", 0) { it.target?.name }
+                // 橙汁喵: 枚举类语法
+                .function("ordinal", 0) { it.target?.ordinal }
                 .function("modX", 0) { it.target?.modX }
                 .function("modY", 0) { it.target?.modY }
                 .function("modZ", 0) { it.target?.modZ }

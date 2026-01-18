@@ -20,7 +20,6 @@ object FnBookMeta {
                 .function("generation", 0) { it.target?.generation }
                 .function("setGeneration", 1) { it.target?.setGeneration(it.getArgument(0) as BookMeta.Generation) }
                 .function("clone", 0) { it.target?.clone() }
-                .function("spigot", 0) { it.target?.spigot() }
                 .function("page", 1) { it.target?.getPage(it.getNumber(0).toInt()) }
                 .function("setPage", 2) { it.target?.setPage(it.getNumber(0).toInt(), it.getString(1)!!) }
                 .function("pages", 0) { it.target?.pages }

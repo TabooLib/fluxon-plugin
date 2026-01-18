@@ -52,6 +52,7 @@ object FnItemStack {
                 }
                 .function("removeEnchantment", 1) { it.target?.removeEnchantment(it.getArgument(0) as Enchantment) }
                 .function("removeEnchantments", 0) { it.target?.removeEnchantments() }
+                .function("serialize", 0) { it.target?.serialize() }
                 // static
                 .function("deserialize", 1) { ItemStack.deserialize(it.getArgument(0) as Map<String, Any>) }
                 .function("itemMeta", 0) { it.target?.itemMeta }

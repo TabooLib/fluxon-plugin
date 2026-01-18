@@ -14,6 +14,8 @@ object FnEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Entity::class.java)
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+                .function("isMoving", 0) { it.target?.velocity?.let { v -> !v.isZero } }
                 .function("location", 0) { it.target?.location }
                 .function("location", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
                 .function("setVelocity", 1) { it.target?.setVelocity(it.getArgument(0) as Vector) }
@@ -87,7 +89,10 @@ object FnEntity {
                 .function(
                     "setLastDamageCause",
                     1
-                ) { it.target?.setLastDamageCause(it.getArgument(0) as EntityDamageEvent) }
+                ) {
+                    @Suppress("removal")
+                    it.target?.setLastDamageCause(it.getArgument(0) as EntityDamageEvent)
+                }
                 .function("lastDamageCause", 0) { it.target?.lastDamageCause }
                 .function("uniqueId", 0) { it.target?.uniqueId }
                 .function("ticksLived", 0) { it.target?.ticksLived }
@@ -123,7 +128,6 @@ object FnEntity {
                 .function("pose", 0) { it.target?.pose }
                 .function("spawnCategory", 0) { it.target?.spawnCategory }
                 .function("isInWorld", 0) { it.target?.isInWorld }
-                .function("spigot", 0) { it.target?.spigot() }
         }
     }
 }

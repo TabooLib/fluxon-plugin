@@ -16,11 +16,23 @@ import org.bukkit.util.Vector
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import java.util.*
 
 object FnWorld {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
+            // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+            registerFunction("world", 1) {
+                when (val id = it.getArgument(0)) {
+                    is UUID -> Bukkit.getWorld(id)
+                    is String -> Bukkit.getWorld(id)
+                    else -> null
+                }
+            }
+            // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+            registerFunction("worlds", 0) { Bukkit.getWorlds() }
+
             registerExtension(World::class.java)
                 .function("blockAt", 3) {
                     it.target?.getBlockAt(
@@ -369,7 +381,7 @@ object FnWorld {
                         it.getBoolean(2)
                     )
                 }
-                .function("pVP", 0) { it.target?.pvp }
+                .function("pvp", 0) { it.target?.pvp }
                 .function("setPVP", 1) { it.target?.setPVP(it.getBoolean(0)) }
                 .function("generator", 0) { it.target?.generator }
                 .function("biomeProvider", 0) { it.target?.biomeProvider }
@@ -765,7 +777,6 @@ object FnWorld {
                         else -> throw IllegalArgumentException("第二个参数必须是 StructureType 或 Structure 类型")
                     }
                 }
-                .function("spigot", 0) { it.target?.spigot() }
                 .function("locateNearestBiome", 2) {
                     it.target?.locateNearestBiome(
                         it.getArgument(0) as Location,

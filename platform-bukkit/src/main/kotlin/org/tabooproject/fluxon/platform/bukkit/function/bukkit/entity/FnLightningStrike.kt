@@ -18,7 +18,6 @@ object FnLightningStrike {
                 .function("setLifeTicks", 1) { it.target?.setLifeTicks(it.getNumber(0).toInt()) }
                 .function("causingPlayer", 0) { it.target?.causingPlayer }
                 .function("setCausingPlayer", 1) { it.target?.setCausingPlayer(it.getArgument(0) as Player) }
-                .function("spigot", 0) { it.target?.spigot() }
                 .function("isSilent", 0) { it.target?.isSilent }
         }
     }
