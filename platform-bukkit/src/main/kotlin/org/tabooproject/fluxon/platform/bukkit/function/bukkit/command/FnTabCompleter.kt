@@ -1,0 +1,25 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.command
+
+import org.bukkit.command.Command
+import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnTabCompleter {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(TabCompleter::class.java)
+                .function("onTabComplete", 4) {
+                    it.target?.onTabComplete(
+                        it.getArgument(0) as CommandSender,
+                        it.getArgument(1) as Command,
+                        it.getString(2)!!,
+                        it.getArgument(3) as Array<String>
+                    )
+                }
+        }
+    }
+}

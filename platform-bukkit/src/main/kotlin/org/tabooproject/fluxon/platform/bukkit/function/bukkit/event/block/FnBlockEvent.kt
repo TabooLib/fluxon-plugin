@@ -10,12 +10,11 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnBlockEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockEvent::class.java)
-                .function("block", 0) { it.target?.block }
+                .function("block", 0) { it.target?.getBlock() }
         }
     }
 }

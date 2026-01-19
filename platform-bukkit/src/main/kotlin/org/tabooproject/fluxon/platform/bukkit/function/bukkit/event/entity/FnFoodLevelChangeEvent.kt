@@ -10,15 +10,19 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnFoodLevelChangeEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FoodLevelChangeEvent::class.java)
-                .function("entity", 0) { it.target?.entity }
+                .function("entity", 0) { it.target?.getEntity() }
                 .function("item", 0) { it.target?.item }
                 .function("foodLevel", 0) { it.target?.foodLevel }
-                .syncFunction("setFoodLevel", 1) { it.target?.apply { foodLevel = it.getNumber(0).toInt() } }
+                .function("setFoodLevel", 1) { it.target?.setFoodLevel(it.getNumber(0).toInt()) }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { FoodLevelChangeEvent.getHandlerList() }
         }
     }
 }

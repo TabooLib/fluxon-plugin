@@ -10,9 +10,8 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnEntityDamageByEntityEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByEntityEvent::class.java)
                 .function("damager", 0) { it.target?.damager }

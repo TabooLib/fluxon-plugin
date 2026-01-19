@@ -11,13 +11,15 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockDamageAbortEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockDamageAbortEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageAbortEvent::class.java)
                 .function("player", 0) { it.target?.player }
                 .function("itemInHand", 0) { it.target?.itemInHand }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockDamageAbortEvent.getHandlerList() }
         }
     }
 }

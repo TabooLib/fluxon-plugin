@@ -1,0 +1,41 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
+
+import org.bukkit.World
+import org.bukkit.block.BlockType
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnBlockType {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(BlockType::class.java)
+                .function("typed", 0) { it.target?.typed() }
+                .function("hasItemType", 0) { it.target?.hasItemType() }
+                .function("itemType", 0) { it.target?.itemType }
+                .function("createBlockData", 0) { it.target?.createBlockData() }
+                .function("createBlockData", 1) { it.target?.createBlockData(it.getString(0)) }
+                .function("isSolid", 0) { it.target?.isSolid }
+                .function("isFlammable", 0) { it.target?.isFlammable }
+                .function("isBurnable", 0) { it.target?.isBurnable }
+                .function("isOccluding", 0) { it.target?.isOccluding }
+                .function("hasGravity", 0) { it.target?.hasGravity() }
+                .function("isInteractable", 0) { it.target?.isInteractable }
+                .function("hardness", 0) { it.target?.hardness }
+                .function("blastResistance", 0) { it.target?.blastResistance }
+                .function("slipperiness", 0) { it.target?.slipperiness }
+                .function("isAir", 0) { it.target?.isAir }
+                .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
+                .function("asMaterial", 0) { it.target?.asMaterial() }
+                .function("blockDataClass", 0) { it.target?.blockDataClass }
+
+            registerExtension(BlockType.Typed::class.java)
+                .function("blockDataClass", 0) { it.target?.blockDataClass }
+                .function("createBlockData", 0) { it.target?.createBlockData() }
+                .function("createBlockData", 1) {
+                    (it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0))
+                }
+        }
+    }
+}

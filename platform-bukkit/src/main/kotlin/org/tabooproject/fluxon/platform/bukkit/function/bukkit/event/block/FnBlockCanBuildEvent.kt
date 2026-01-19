@@ -10,16 +10,18 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnBlockCanBuildEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCanBuildEvent::class.java)
+                .function("isBuildable", 0) { it.target?.isBuildable }
+                .function("setBuildable", 1) { it.target?.setBuildable(it.getBoolean(0)) }
                 .function("material", 0) { it.target?.material }
                 .function("blockData", 0) { it.target?.blockData }
                 .function("player", 0) { it.target?.player }
-                .function("isBuildable", 0) { it.target?.isBuildable }
-                .syncFunction("setBuildable", 1) { it.target?.apply { isBuildable = it.getBoolean(0) } }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockCanBuildEvent.getHandlerList() }
         }
     }
 }

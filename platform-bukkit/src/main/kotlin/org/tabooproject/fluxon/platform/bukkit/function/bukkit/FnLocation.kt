@@ -94,31 +94,31 @@ object FnLocation {
 
                 // 可读写属性 - 坐标
                 .function("x", 0) { it.target?.x }
-                .syncFunction("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
+                .function("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
                 .function("y", 0) { it.target?.y }
-                .syncFunction("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
+                .function("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
                 .function("z", 0) { it.target?.z }
-                .syncFunction("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
+                .function("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
 
                 // 可读写属性 - 朝向
                 .function("yaw", 0) { it.target?.yaw }
-                .syncFunction("setYaw", 1) { it.target?.apply { yaw = it.getNumber(0).toFloat() } }
+                .function("setYaw", 1) { it.target?.apply { yaw = it.getNumber(0).toFloat() } }
                 .function("pitch", 0) { it.target?.pitch }
-                .syncFunction("setPitch", 1) { it.target?.apply { pitch = it.getNumber(0).toFloat() } }
+                .function("setPitch", 1) { it.target?.apply { pitch = it.getNumber(0).toFloat() } }
 
                 // 可读写属性 - 方向向量
                 .function("direction", 0) { it.target?.direction }
-                .syncFunction("setDirection", 1) { it.target?.apply { direction = it.getArgument(0) as Vector } }
+                .function("setDirection", 1) { it.target?.apply { direction = it.getArgument(0) as Vector } }
 
                 // 可读写属性 - 世界
                 .function("world", 0) { it.target?.world }
-                .syncFunction("setWorld", 1) {
+                .function("setWorld", 1) {
                     it.target?.apply {
                         world = when (val value = it.getArgument(0)) {
                             is World -> value
                             is String -> Bukkit.getWorld(value)
                             is Location -> value.world
-                            else -> null
+                            else -> throw IllegalArgumentException("参数必须是 World 或 String 或 Location 类型")
                         }
                     }
                 }

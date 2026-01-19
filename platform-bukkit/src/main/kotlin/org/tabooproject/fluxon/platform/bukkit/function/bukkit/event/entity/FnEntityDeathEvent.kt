@@ -10,17 +10,22 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnEntityDeathEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDeathEvent::class.java)
 //                .function("reviveHealth", 0) { it.target?.reviveHealth }
-//                .syncFunction("setReviveHealth", 1) { it.target?.apply { reviveHealth = it.getNumber(0).toDouble() } }
+//                .function("setReviveHealth", 1) { it.target?reviveHealth = it.getNumber(0).toDouble() }
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+                .function("killer", 0) { it.target?.getEntity() }
+                .function("entity", 0) { it.target?.getEntity() }
+                .function("damageSource", 0) { it.target?.damageSource }
                 .function("droppedExp", 0) { it.target?.droppedExp }
-                .syncFunction("setDroppedExp", 1) { it.target?.apply { droppedExp = it.getNumber(0).toInt() } }
+                .function("setDroppedExp", 1) { it.target?.setDroppedExp(it.getNumber(0).toInt()) }
                 .function("drops", 0) { it.target?.drops }
-                .function("killer", 0) { it.target?.entity?.killer }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { EntityDeathEvent.getHandlerList() }
         }
     }
 }

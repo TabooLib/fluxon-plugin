@@ -12,14 +12,18 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockCookEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockCookEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCookEvent::class.java)
                 .function("source", 0) { it.target?.source }
                 .function("result", 0) { it.target?.result }
-                .syncFunction("setResult", 1) { it.target?.apply { result = it.getArgument(0) as ItemStack } }
+                .function("setResult", 1) { it.target?.setResult(it.getArgument(0) as ItemStack) }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockCookEvent.getHandlerList() }
         }
     }
 }

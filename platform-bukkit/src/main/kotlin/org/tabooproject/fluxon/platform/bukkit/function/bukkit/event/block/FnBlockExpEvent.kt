@@ -10,13 +10,15 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnBlockExpEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExpEvent::class.java)
                 .function("expToDrop", 0) { it.target?.expToDrop }
-                .syncFunction("setExpToDrop", 1) { it.target?.apply { expToDrop = it.getNumber(0).toInt() } }
+                .function("setExpToDrop", 1) { it.target?.setExpToDrop(it.getNumber(0).toInt()) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockExpEvent.getHandlerList() }
         }
     }
 }

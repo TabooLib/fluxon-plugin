@@ -11,29 +11,41 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.entity.AbstractArrow"])
 @PlatformSide(Platform.BUKKIT)
 object FnAbstractArrow {
-
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractArrow::class.java)
-                // 只读属性
-                .function("isInBlock", 0) { it.target?.isInBlock }
-                .function("attachedBlock", 0) { it.target?.let { arrow -> if (arrow.isInBlock) arrow.attachedBlock else null } }
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+                .function(
+                    "attachedBlock",
+                    0
+                ) { it.target?.let { arrow -> if (arrow.isInBlock) arrow.attachedBlock else null } }
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isCanPickup", 0) { it.target?.pickupStatus == AbstractArrow.PickupStatus.ALLOWED }
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isCannotPickup", 0) { it.target?.pickupStatus == AbstractArrow.PickupStatus.DISALLOWED }
-                .function("isCreativeOnlyPickup", 0) { it.target?.pickupStatus == AbstractArrow.PickupStatus.CREATIVE_ONLY }
-
-                // 可读写属性
+                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
+                .function(
+                    "isCreativeOnlyPickup",
+                    0
+                ) { it.target?.pickupStatus == AbstractArrow.PickupStatus.CREATIVE_ONLY }
                 .function("knockbackStrength", 0) { it.target?.knockbackStrength }
-                .syncFunction("setKnockbackStrength", 1) { it.target?.apply { knockbackStrength = it.getNumber(0).toInt() } }
+                .function("setKnockbackStrength", 1) { it.target?.setKnockbackStrength(it.getNumber(0).toInt()) }
                 .function("damage", 0) { it.target?.damage }
-                .syncFunction("setDamage", 1) { it.target?.apply { damage = it.getNumber(0).toDouble() } }
+                .function("setDamage", 1) { it.target?.setDamage(it.getNumber(0).toDouble()) }
                 .function("pierceLevel", 0) { it.target?.pierceLevel }
-                .syncFunction("setPierceLevel", 1) { it.target?.apply { pierceLevel = it.getNumber(0).toInt() } }
+                .function("setPierceLevel", 1) { it.target?.setPierceLevel(it.getNumber(0).toInt()) }
                 .function("isCritical", 0) { it.target?.isCritical }
-                .syncFunction("setCritical", 1) { it.target?.apply { isCritical = it.getBoolean(0) } }
+                .function("setCritical", 1) { it.target?.setCritical(it.getBoolean(0)) }
+                .function("isInBlock", 0) { it.target?.isInBlock }
+                .function("attachedBlock", 0) { it.target?.attachedBlock }
+                .function("pickupStatus", 0) { it.target?.pickupStatus }
+                .function(
+                    "setPickupStatus",
+                    1
+                ) { it.target?.setPickupStatus(it.getArgument(0) as AbstractArrow.PickupStatus) }
                 .function("isShotFromCrossbow", 0) { it.target?.isShotFromCrossbow }
-                .syncFunction("setShotFromCrossbow", 1) { it.target?.apply { isShotFromCrossbow = it.getBoolean(0) } }
+                .function("setShotFromCrossbow", 1) { it.target?.setShotFromCrossbow(it.getBoolean(0)) }
         }
     }
 }

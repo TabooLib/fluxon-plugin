@@ -10,14 +10,19 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnBlockExplodeEvent {
-
     @Awake(LifeCycle.INIT)
-    fun init() {
+    private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExplodeEvent::class.java)
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("explodedBlockState", 0) { it.target?.explodedBlockState }
                 .function("blockList", 0) { it.target?.blockList() }
                 .function("yield", 0) { it.target?.yield }
-                .syncFunction("setYield", 1) { it.target?.apply { yield = it.getNumber(0).toFloat() } }
+                .function("setYield", 1) { it.target?.setYield(it.getNumber(0).toFloat()) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { BlockExplodeEvent.getHandlerList() }
         }
     }
 }

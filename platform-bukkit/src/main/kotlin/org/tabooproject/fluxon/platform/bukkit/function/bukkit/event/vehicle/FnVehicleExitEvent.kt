@@ -1,0 +1,21 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.vehicle
+
+import org.bukkit.event.vehicle.VehicleExitEvent
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnVehicleExitEvent {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(VehicleExitEvent::class.java)
+                .function("exited", 0) { it.target?.exited }
+                .function("isCancelled", 0) { it.target?.isCancelled }
+                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlers", 0) { it.target?.handlers }
+                // static
+                .function("handlerList", 0) { VehicleExitEvent.getHandlerList() }
+        }
+    }
+}

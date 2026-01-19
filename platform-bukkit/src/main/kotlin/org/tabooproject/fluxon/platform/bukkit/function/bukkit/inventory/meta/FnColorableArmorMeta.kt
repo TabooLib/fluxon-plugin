@@ -1,0 +1,16 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta
+
+import org.bukkit.inventory.meta.ColorableArmorMeta
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnColorableArmorMeta {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(ColorableArmorMeta::class.java)
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}

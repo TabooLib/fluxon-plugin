@@ -1,0 +1,16 @@
+package org.tabooproject.fluxon.platform.bukkit.function.bukkit.material
+
+import org.bukkit.material.Furnace
+import org.tabooproject.fluxon.runtime.FluxonRuntime
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
+
+object FnFurnace {
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(Furnace::class.java)
+                .function("clone", 0) { it.target?.clone() }
+        }
+    }
+}
