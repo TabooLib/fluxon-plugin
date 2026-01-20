@@ -6,7 +6,10 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.adaptCommandSender
 import java.util.*
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnCommandSender {
     @Awake(LifeCycle.INIT)
     private fun init() {

@@ -6,7 +6,10 @@ import org.bukkit.util.permissions.DefaultPermissions
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnDefaultPermissions {
     @Awake(LifeCycle.INIT)
     private fun init() {

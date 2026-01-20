@@ -6,7 +6,10 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import java.io.File
 import java.io.Reader
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnYamlConfiguration {
     @Awake(LifeCycle.INIT)
     private fun init() {

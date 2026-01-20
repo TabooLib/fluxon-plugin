@@ -24,7 +24,10 @@ import taboolib.platform.util.onlinePlayers
 import java.time.Duration
 import java.time.Instant
 import java.util.*
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnPlayer {
     @Awake(LifeCycle.INIT)
     private fun init() {

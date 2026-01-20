@@ -4,7 +4,10 @@ import org.bukkit.material.PressurePlate
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnPressurePlate {
     @Awake(LifeCycle.INIT)
     private fun init() {

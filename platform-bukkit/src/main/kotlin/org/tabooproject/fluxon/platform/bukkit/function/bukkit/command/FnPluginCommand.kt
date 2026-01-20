@@ -7,7 +7,10 @@ import org.bukkit.command.TabCompleter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnPluginCommand {
     @Awake(LifeCycle.INIT)
     private fun init() {

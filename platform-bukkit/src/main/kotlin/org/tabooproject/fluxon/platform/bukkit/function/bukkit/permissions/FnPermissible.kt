@@ -7,7 +7,10 @@ import org.bukkit.plugin.Plugin
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnPermissible {
     @Awake(LifeCycle.INIT)
     private fun init() {

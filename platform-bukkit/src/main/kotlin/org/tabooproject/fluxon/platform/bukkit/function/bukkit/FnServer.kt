@@ -17,7 +17,10 @@ import java.awt.image.BufferedImage
 import java.io.File
 import java.net.InetAddress
 import java.util.*
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnServer {
     @Awake(LifeCycle.INIT)
     private fun init() {

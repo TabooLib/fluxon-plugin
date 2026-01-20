@@ -4,7 +4,10 @@ import org.bukkit.block.data.type.Lectern
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnLectern {
     @Awake(LifeCycle.INIT)
     private fun init() {

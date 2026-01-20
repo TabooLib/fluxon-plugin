@@ -5,7 +5,10 @@ import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import java.net.URL
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnPlayerTextures {
     @Awake(LifeCycle.INIT)
     private fun init() {

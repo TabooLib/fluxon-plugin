@@ -7,7 +7,10 @@ import org.bukkit.entity.Player
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnSign {
     @Awake(LifeCycle.INIT)
     private fun init() {

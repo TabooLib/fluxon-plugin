@@ -9,7 +9,10 @@ import taboolib.common.platform.Awake
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 
+@PlatformSide(Platform.BUKKIT)
 object FnStructureManager {
     @Awake(LifeCycle.INIT)
     private fun init() {
