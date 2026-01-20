@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockDamageAbortEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockDamageAbortEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

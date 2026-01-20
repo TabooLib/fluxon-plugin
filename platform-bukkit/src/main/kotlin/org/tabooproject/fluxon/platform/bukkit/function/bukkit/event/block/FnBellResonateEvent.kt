@@ -11,6 +11,7 @@ import taboolib.common.Requires
 @Requires(classes = ["org.bukkit.event.block.BellResonateEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBellResonateEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

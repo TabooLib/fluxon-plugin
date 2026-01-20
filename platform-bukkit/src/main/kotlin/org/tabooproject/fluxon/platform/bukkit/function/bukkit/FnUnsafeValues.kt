@@ -16,6 +16,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnUnsafeValues {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -32,7 +33,7 @@ object FnUnsafeValues {
                         when (val var1 = it.getArgument(0)) {
                             is MaterialData -> it.target?.fromLegacy(var1, it.getBoolean(1))
                             is Material -> it.target?.fromLegacy(var1, it.getNumber(1).toByte())
-                            else -> throw IllegalArgumentException("参数1必须是 MaterialData 或 Material 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 MaterialData 或 Material 类型")
                         }
                     }
                 }

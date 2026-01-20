@@ -15,6 +15,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnRegionAccessor {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -138,7 +139,7 @@ object FnRegionAccessor {
                         2 -> when (val var1 = it.getArgument(0)) {
                             is Int -> it.target?.getHighestBlockYAt(var1, it.getNumber(1).toInt())
                             is Location -> it.target?.getHighestBlockYAt(var1, it.getArgument(1) as HeightMap)
-                            else -> throw IllegalArgumentException("参数1必须是 Int 或 Location 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Int 或 Location 类型")
                         }
 
                         3 -> it.target?.getHighestBlockYAt(

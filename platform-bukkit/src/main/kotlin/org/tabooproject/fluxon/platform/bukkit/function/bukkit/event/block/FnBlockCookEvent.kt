@@ -12,6 +12,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockCookEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockCookEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

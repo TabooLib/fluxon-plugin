@@ -11,6 +11,7 @@ import taboolib.common.Requires
 @Requires(classes = ["org.bukkit.event.block.BellRingEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBellRingEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

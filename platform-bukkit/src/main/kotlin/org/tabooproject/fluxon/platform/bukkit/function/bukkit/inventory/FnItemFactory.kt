@@ -15,6 +15,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnItemFactory {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -24,7 +25,7 @@ object FnItemFactory {
                     when (val var2 = it.getArgument(1)) {
                         is ItemStack -> it.target?.isApplicable(it.getArgument(0) as ItemMeta, var2)
                         is Material -> it.target?.isApplicable(it.getArgument(0) as ItemMeta, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 ItemStack 或 Material 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 ItemStack 或 Material 类型")
                     }
                 }
                 .function("equals", 2) {
@@ -37,7 +38,7 @@ object FnItemFactory {
                     when (val var2 = it.getArgument(1)) {
                         is ItemStack -> it.target?.asMetaFor(it.getArgument(0) as ItemMeta, var2)
                         is Material -> it.target?.asMetaFor(it.getArgument(0) as ItemMeta, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 ItemStack 或 Material 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 ItemStack 或 Material 类型")
                     }
                 }
                 .function("defaultLeatherColor", 0) { it.target?.defaultLeatherColor }
@@ -66,7 +67,7 @@ object FnItemFactory {
                                 it.getBoolean(3)
                             )
 
-                            else -> throw IllegalArgumentException("参数1必须是 Entity 或 World 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Entity 或 World 类型")
                         }
                     }
                 }

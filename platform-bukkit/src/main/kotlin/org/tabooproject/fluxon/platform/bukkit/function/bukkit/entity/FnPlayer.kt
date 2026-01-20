@@ -29,6 +29,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnPlayer {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -68,7 +69,7 @@ object FnPlayer {
                         is Date -> it.target?.ban(it.getString(0), var2, it.getString(2), it.getBoolean(3))
                         is Instant -> it.target?.ban(it.getString(0), var2, it.getString(2), it.getBoolean(3))
                         is Duration -> it.target?.ban(it.getString(0), var2, it.getString(2), it.getBoolean(3))
-                        else -> throw IllegalArgumentException("参数2必须是 Date, Instant, 或 Duration 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 Date, Instant, 或 Duration 类型")
                     }
                 }
                 .function("banIp", 4) {
@@ -76,7 +77,7 @@ object FnPlayer {
                         is Date -> it.target?.banIp(it.getString(0), var2, it.getString(2), it.getBoolean(3))
                         is Instant -> it.target?.banIp(it.getString(0), var2, it.getString(2), it.getBoolean(3))
                         is Duration -> it.target?.banIp(it.getString(0), var2, it.getString(2), it.getBoolean(3))
-                        else -> throw IllegalArgumentException("参数2必须是 Date, Instant, 或 Duration 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 Date, Instant, 或 Duration 类型")
                     }
                 }
                 .syncFunction("chat", 1) { it.target?.chat(it.getString(0)!!) }
@@ -121,7 +122,7 @@ object FnPlayer {
                             it.getArgument(2) as Note
                         )
 
-                        else -> throw IllegalArgumentException("参数2必须是 Byte 或 Instrument 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 Byte 或 Instrument 类型")
                     }
                 }
                 .function("playSound", listOf(4, 5, 6)) {
@@ -142,7 +143,7 @@ object FnPlayer {
                                     it.getNumber(3).toFloat()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
                             is Entity -> when (val var2 = it.getArgument(1)) {
@@ -160,10 +161,10 @@ object FnPlayer {
                                     it.getNumber(3).toFloat()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
-                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Location 或 Entity 类型")
                         }
 
                         5 -> when (val var1 = it.getArgument(0)) {
@@ -184,7 +185,7 @@ object FnPlayer {
                                     it.getNumber(4).toFloat()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
                             is Entity -> when (val var2 = it.getArgument(1)) {
@@ -204,10 +205,10 @@ object FnPlayer {
                                     it.getNumber(4).toFloat()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
-                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Location 或 Entity 类型")
                         }
 
                         6 -> when (val var1 = it.getArgument(0)) {
@@ -230,7 +231,7 @@ object FnPlayer {
                                     it.getNumber(5).toLong()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
                             is Entity -> when (val var2 = it.getArgument(1)) {
@@ -252,10 +253,10 @@ object FnPlayer {
                                     it.getNumber(5).toLong()
                                 )
 
-                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Sound 或 String 类型")
                             }
 
-                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Location 或 Entity 类型")
                         }
                         else -> error("Player#playSound 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
@@ -272,7 +273,7 @@ object FnPlayer {
                         when (val var1 = it.getArgument(0)) {
                             is Sound -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
                             is String -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
-                            else -> throw IllegalArgumentException("参数1必须是 Sound 或 String 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Sound 或 String 类型")
                         }
                     }
                 }
@@ -326,7 +327,7 @@ object FnPlayer {
                                 var3
                             )
 
-                            else -> throw IllegalArgumentException("参数3必须是 Entity 或 Int 类型")
+                            else -> throw IllegalArgumentException("参数 3 必须是 Entity 或 Int 类型")
                         }
                     }
                 }
@@ -502,7 +503,7 @@ object FnPlayer {
                                 var3
                             )
 
-                            else -> throw IllegalArgumentException("参数3必须是 String 或 Boolean 类型")
+                            else -> throw IllegalArgumentException("参数 3 必须是 String 或 Boolean 类型")
                         }
 
                         4 -> it.target?.setResourcePack(

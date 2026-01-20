@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnToolComponent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -36,7 +37,7 @@ object FnToolComponent {
                             it.getBoolean(2)
                         )
 
-                        else -> throw IllegalArgumentException("参数1必须是 Material, Collection<Material>, 或 Tag<Material> 类型")
+                        else -> throw IllegalArgumentException("参数 1 必须是 Material, Collection<Material>, 或 Tag<Material> 类型")
                     }
                 }
                 .function("removeRule", 1) { it.target?.removeRule(it.getArgument(0) as ToolComponent.ToolRule) }
@@ -48,7 +49,7 @@ object FnToolComponent {
                         is Material -> (it.target as? ToolComponent.ToolRule)?.setBlocks(var1)
                         is Collection<*> -> (it.target as? ToolComponent.ToolRule)?.setBlocks(var1 as Collection<Material>)
                         is Tag<*> -> (it.target as? ToolComponent.ToolRule)?.setBlocks(var1 as Tag<Material>)
-                        else -> throw IllegalArgumentException("参数1必须是 Material, Collection<Material>, 或 Tag<Material> 类型")
+                        else -> throw IllegalArgumentException("参数 1 必须是 Material, Collection<Material>, 或 Tag<Material> 类型")
                     }
                 }
                 .function("speed", 0) { it.target?.speed }

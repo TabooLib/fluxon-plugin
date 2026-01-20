@@ -14,11 +14,12 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnItemStack {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemStack::class.java)
-//                .function("name", 0) { it.target?.itemMeta?.displayName ?: it.target?.getI18nName() } // TODO: setter
+//                .function("name", 0) { it.target?.itemMeta?.displayName ?: it.target?.getI18 nName() } // TODO: setter
                 .function("type", 0) { it.target?.type }
                 .function("setType", 1) { it.target?.setType(it.getArgument(0) as Material) }
                 .function("amount", 0) { it.target?.amount }

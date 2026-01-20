@@ -12,6 +12,7 @@ import taboolib.common.Requires
 @Requires(classes = ["org.bukkit.entity.Mob"])
 @PlatformSide(Platform.BUKKIT)
 object FnMob {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

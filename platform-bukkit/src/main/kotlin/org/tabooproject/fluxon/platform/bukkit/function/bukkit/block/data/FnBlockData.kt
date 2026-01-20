@@ -18,6 +18,7 @@ import taboolib.common.Requires
 @Requires(classes = ["org.bukkit.block.data.BlockData"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockData {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

@@ -17,6 +17,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnChunkGenerator {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -197,7 +198,7 @@ object FnChunkGenerator {
                             var4
                         )
 
-                        else -> throw IllegalArgumentException("参数4必须是 Material, MaterialData, 或 BlockData 类型")
+                        else -> throw IllegalArgumentException("参数 4 必须是 Material, MaterialData, 或 BlockData 类型")
                     }
                 }
                 .function("setRegion", 7) {
@@ -232,7 +233,7 @@ object FnChunkGenerator {
                             var7
                         )
 
-                        else -> throw IllegalArgumentException("参数7必须是 Material, MaterialData, 或 BlockData 类型")
+                        else -> throw IllegalArgumentException("参数 7 必须是 Material, MaterialData, 或 BlockData 类型")
                     }
                 }
                 .function("type", 3) {

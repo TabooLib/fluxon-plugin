@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerInventory {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -25,7 +26,7 @@ object FnPlayerInventory {
                     when (val var1 = it.getArgument(0)) {
                         is Int -> it.target?.setItem(var1, it.getArgument(1) as ItemStack)
                         is EquipmentSlot -> it.target?.setItem(var1, it.getArgument(1) as ItemStack)
-                        else -> throw IllegalArgumentException("参数1必须是 Int 或 EquipmentSlot 类型")
+                        else -> throw IllegalArgumentException("参数 1 必须是 Int 或 EquipmentSlot 类型")
                     }
                 }
                 .function("item", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }

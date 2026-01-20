@@ -12,6 +12,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnShapedRecipe {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -25,7 +26,7 @@ object FnShapedRecipe {
                             is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                            else -> throw IllegalArgumentException("参数2必须是 MaterialData, Material, 或 RecipeChoice 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 MaterialData, Material, 或 RecipeChoice 类型")
                         }
                     } else {
                         it.target?.setIngredient(

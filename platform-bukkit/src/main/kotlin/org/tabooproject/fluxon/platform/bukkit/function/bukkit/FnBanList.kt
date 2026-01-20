@@ -12,6 +12,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnBanList {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -53,7 +54,7 @@ object FnBanList {
                                 it.getString(3)
                             )
 
-                            else -> throw IllegalArgumentException("参数3必须是 Date, Instant, 或 Duration 类型")
+                            else -> throw IllegalArgumentException("参数 3 必须是 Date, Instant, 或 Duration 类型")
                         }
                     }
                 }

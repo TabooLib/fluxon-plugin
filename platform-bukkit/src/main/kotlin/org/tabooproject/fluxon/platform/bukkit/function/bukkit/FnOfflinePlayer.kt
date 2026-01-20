@@ -15,6 +15,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnOfflinePlayer {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -29,7 +30,7 @@ object FnOfflinePlayer {
                         is Date -> it.target?.ban(it.getString(0), var2, it.getString(2))
                         is Instant -> it.target?.ban(it.getString(0), var2, it.getString(2))
                         is Duration -> it.target?.ban(it.getString(0), var2, it.getString(2))
-                        else -> throw IllegalArgumentException("参数2必须是 Date, Instant, 或 Duration 类型")
+                        else -> throw IllegalArgumentException("参数 2 必须是 Date, Instant, 或 Duration 类型")
                     }
                 }
                 .function("isWhitelisted", 0) { it.target?.isWhitelisted }
@@ -47,7 +48,7 @@ object FnOfflinePlayer {
                             is Int -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
                             is Material -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
                             is EntityType -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
-                            else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Int, Material, 或 EntityType 类型")
                         }
 
                         3 -> when (val var2 = it.getArgument(1)) {
@@ -63,7 +64,7 @@ object FnOfflinePlayer {
                                 it.getNumber(2).toInt()
                             )
 
-                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Material 或 EntityType 类型")
                         }
                         else -> error("OfflinePlayer#incrementStatistic 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
@@ -75,7 +76,7 @@ object FnOfflinePlayer {
                             is Int -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
                             is Material -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
                             is EntityType -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
-                            else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Int, Material, 或 EntityType 类型")
                         }
 
                         3 -> when (val var2 = it.getArgument(1)) {
@@ -91,7 +92,7 @@ object FnOfflinePlayer {
                                 it.getNumber(2).toInt()
                             )
 
-                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Material 或 EntityType 类型")
                         }
                         else -> error("OfflinePlayer#decrementStatistic 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
@@ -116,7 +117,7 @@ object FnOfflinePlayer {
                                 it.getNumber(2).toInt()
                             )
 
-                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Material 或 EntityType 类型")
                         }
                     }
                 }
@@ -127,7 +128,7 @@ object FnOfflinePlayer {
                         when (val var2 = it.getArgument(1)) {
                             is Material -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
                             is EntityType -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
-                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 Material 或 EntityType 类型")
                         }
                     }
                 }

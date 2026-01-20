@@ -12,6 +12,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnShapelessRecipe {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -30,10 +31,10 @@ object FnShapelessRecipe {
                             is Int -> when (val var2 = it.getArgument(1)) {
                                 is MaterialData -> it.target?.addIngredient(var1, var2)
                                 is Material -> it.target?.addIngredient(var1, var2)
-                                else -> throw IllegalArgumentException("参数2必须是 MaterialData 或 Material 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 MaterialData 或 Material 类型")
                             }
 
-                            else -> throw IllegalArgumentException("参数1必须是 Material 或 Int 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Material 或 Int 类型")
                         }
 
                         3 -> it.target?.addIngredient(
@@ -57,11 +58,11 @@ object FnShapelessRecipe {
                             is Int -> when (val var2 = it.getArgument(1)) {
                                 is Material -> it.target?.removeIngredient(var1, var2)
                                 is MaterialData -> it.target?.removeIngredient(var1, var2)
-                                else -> throw IllegalArgumentException("参数2必须是 Material 或 MaterialData 类型")
+                                else -> throw IllegalArgumentException("参数 2 必须是 Material 或 MaterialData 类型")
                             }
 
                             is Material -> it.target?.removeIngredient(var1, it.getNumber(1).toInt())
-                            else -> throw IllegalArgumentException("参数1必须是 Int 或 Material 类型")
+                            else -> throw IllegalArgumentException("参数 1 必须是 Int 或 Material 类型")
                         }
 
                         3 -> it.target?.removeIngredient(

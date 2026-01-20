@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.block.data.Ageable"])
 @PlatformSide(Platform.BUKKIT)
 object FnAgeable {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

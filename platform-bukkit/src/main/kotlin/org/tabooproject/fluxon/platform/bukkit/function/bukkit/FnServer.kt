@@ -22,6 +22,7 @@ import taboolib.common.platform.PlatformSide
 
 @PlatformSide(Platform.BUKKIT)
 object FnServer {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -231,7 +232,7 @@ object FnServer {
                         when (val var2 = it.getArgument(1)) {
                             is InventoryType -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
                             is Int -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
-                            else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 InventoryType 或 Int 类型")
                         }
                     } else {
                         when (val var2 = it.getArgument(1)) {
@@ -247,7 +248,7 @@ object FnServer {
                                 it.getString(2)!!
                             )
 
-                            else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
+                            else -> throw IllegalArgumentException("参数 2 必须是 InventoryType 或 Int 类型")
                         }
                     }
                 }

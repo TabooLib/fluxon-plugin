@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.entity.AbstractArrow"])
 @PlatformSide(Platform.BUKKIT)
 object FnAbstractArrow {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

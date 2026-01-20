@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockDispenseArmorEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockDispenseArmorEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

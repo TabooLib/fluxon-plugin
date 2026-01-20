@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 @Requires(classes = ["org.bukkit.event.block.BlockDropItemEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockDropItemEvent {
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
