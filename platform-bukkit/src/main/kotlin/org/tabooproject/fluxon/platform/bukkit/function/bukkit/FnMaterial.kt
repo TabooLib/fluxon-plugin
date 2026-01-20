@@ -20,21 +20,32 @@ object FnMaterial {
                 .function("key", 0) { it.target?.key }
                 .function("maxStackSize", 0) { it.target?.maxStackSize }
                 .function("maxDurability", 0) { it.target?.maxDurability }
-                .function("createBlockData", 0) {
-                    it.target?.createBlockData()
+                .function("createBlockData", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.createBlockData()
+                    } else {
+                        it.target?.createBlockData(it.getString(0))
+                    }
                 }
-                .function("createBlockData", 1) { it.target?.createBlockData(it.getString(0)) }
                 .function("newData", 1) { it.target?.getNewData(it.getNumber(0).toByte()) }
                 .function("isBlock", 0) { it.target?.isBlock }
                 .function("isEdible", 0) { it.target?.isEdible }
                 // static
-                .function("material", 1) { Material.getMaterial(it.getString(0)!!) }
+                .function("material", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        Material.getMaterial(it.getString(0)!!)
+                    } else {
+                        Material.getMaterial(it.getString(0)!!, it.getBoolean(1))
+                    }
+                }
                 // static
-                .function("material", 2) { Material.getMaterial(it.getString(0)!!, it.getBoolean(1)) }
-                // static
-                .function("matchMaterial", 1) { Material.matchMaterial(it.getString(0)!!) }
-                // static
-                .function("matchMaterial", 2) { Material.matchMaterial(it.getString(0)!!, it.getBoolean(1)) }
+                .function("matchMaterial", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        Material.matchMaterial(it.getString(0)!!)
+                    } else {
+                        Material.matchMaterial(it.getString(0)!!, it.getBoolean(1))
+                    }
+                }
                 .function("isRecord", 0) { it.target?.isRecord }
                 .function("isSolid", 0) { it.target?.isSolid }
                 .function("isAir", 0) { it.target?.isAir }
@@ -50,8 +61,6 @@ object FnMaterial {
                 .function("blastResistance", 0) { it.target?.blastResistance }
                 .function("slipperiness", 0) { it.target?.slipperiness }
                 .function("craftingRemainingItem", 0) { it.target?.craftingRemainingItem }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("slot", 0) { it.target?.equipmentSlot?.name }
                 .function("equipmentSlot", 0) { it.target?.equipmentSlot }
                 .function("creativeCategory", 0) { it.target?.creativeCategory }
                 .function("translationKey", 0) { it.target?.translationKey }

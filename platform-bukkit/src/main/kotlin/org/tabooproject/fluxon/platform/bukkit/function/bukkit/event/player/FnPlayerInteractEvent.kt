@@ -16,33 +16,25 @@ object FnPlayerInteractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInteractEvent::class.java)
-                // 橙汁喵: 老版本API, 此处返回name所以保留写法
-                .function("action", 0) { it.target?.action?.name }
-                .function("bukkitAction", 0) { it.target?.action }
+                .function("action", 0) { it.target?.action }
 
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "isLeftClick",
                     0
                 ) { it.target?.let { e -> e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "isRightClick",
                     0
                 ) { it.target?.let { e -> e.action == Action.RIGHT_CLICK_AIR || e.action == Action.RIGHT_CLICK_BLOCK } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "isClickAir",
                     0
                 ) { it.target?.let { e -> e.action == Action.LEFT_CLICK_AIR || e.action == Action.RIGHT_CLICK_AIR } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "isClickBlock",
                     0
                 ) { it.target?.let { e -> e.action == Action.LEFT_CLICK_BLOCK || e.action == Action.RIGHT_CLICK_BLOCK } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isPhysical", 0) { it.target?.let { e -> e.action == Action.PHYSICAL } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isBlockPlace", 0) { it.target?.isBlockInHand }
 
                 .function("isCancelled", 0) { it.target?.isCancelled }

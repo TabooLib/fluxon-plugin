@@ -14,10 +14,14 @@ object FnEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Entity::class.java)
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isMoving", 0) { it.target?.velocity?.let { v -> !v.isZero } }
-                .function("location", 0) { it.target?.location }
-                .function("location", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
+                .function("location", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.location
+                    } else {
+                        it.target?.getLocation(it.getArgument(0) as Location)
+                    }
+                }
                 .function("setVelocity", 1) { it.target?.setVelocity(it.getArgument(0) as Vector) }
                 .function("velocity", 0) { it.target?.velocity }
                 .function("height", 0) { it.target?.height }
@@ -32,26 +36,27 @@ object FnEntity {
                         it.getNumber(1).toFloat()
                     )
                 }
-                .syncFunction("teleport", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Location -> it.target?.teleport(var1)
-                        is Entity -> it.target?.teleport(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
-                    }
-                }
-                .syncFunction("teleport", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Location -> it.target?.teleport(
-                            var1,
-                            it.getArgument(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
-                        )
+                .syncFunction("teleport", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Location -> it.target?.teleport(var1)
+                            is Entity -> it.target?.teleport(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
+                        }
+                    } else {
+                        when (val var1 = it.getArgument(0)) {
+                            is Location -> it.target?.teleport(
+                                var1,
+                                it.getArgument(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
+                            )
 
-                        is Entity -> it.target?.teleport(
-                            var1,
-                            it.getArgument(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
-                        )
+                            is Entity -> it.target?.teleport(
+                                var1,
+                                it.getArgument(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
+                            )
 
-                        else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
+                        }
                     }
                 }
                 .syncFunction("nearbyEntities", 3) {
@@ -94,8 +99,6 @@ object FnEntity {
                     it.target?.setLastDamageCause(it.getArgument(0) as EntityDamageEvent)
                 }
                 .function("lastDamageCause", 0) { it.target?.lastDamageCause }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("uuid", 0) { it.target?.uniqueId }
                 .function("uniqueId", 0) { it.target?.uniqueId }
                 .function("ticksLived", 0) { it.target?.ticksLived }
                 .function("setTicksLived", 1) { it.target?.setTicksLived(it.getNumber(0).toInt()) }
@@ -118,8 +121,6 @@ object FnEntity {
                 .function("isInvulnerable", 0) { it.target?.isInvulnerable }
                 .function("isSilent", 0) { it.target?.isSilent }
                 .function("setSilent", 1) { it.target?.setSilent(it.getBoolean(0)) }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("gravity", 0) { it.target?.hasGravity() }
                 .function("hasGravity", 0) { it.target?.hasGravity() }
                 .function("setGravity", 1) { it.target?.setGravity(it.getBoolean(0)) }
                 .function("portalCooldown", 0) { it.target?.portalCooldown }

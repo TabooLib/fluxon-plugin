@@ -15,23 +15,29 @@ object FnWorldBorder {
                 .function("world", 0) { it.target?.world }
                 .function("reset", 0) { it.target?.reset() }
                 .function("size", 0) { it.target?.size }
-                .function("setSize", 1) { it.target?.setSize(it.getNumber(0).toDouble()) }
-                .function("setSize", 2) { it.target?.setSize(it.getNumber(0).toDouble(), it.getNumber(1).toLong()) }
-                .function("setSize", 3) {
-                    it.target?.setSize(
-                        it.getNumber(0).toDouble(),
-                        it.getArgument(1) as TimeUnit,
-                        it.getNumber(2).toLong()
-                    )
+                .function("setSize", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.setSize(it.getNumber(0).toDouble())
+                        2 -> it.target?.setSize(it.getNumber(0).toDouble(), it.getNumber(1).toLong())
+                        3 -> it.target?.setSize(
+                            it.getNumber(0).toDouble(),
+                            it.getArgument(1) as TimeUnit,
+                            it.getNumber(2).toLong()
+                        )
+                        else -> error("WorldBorder#setSize 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function("center", 0) { it.target?.center }
-                .function("setCenter", 2) {
-                    it.target?.setCenter(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble()
-                    )
+                .function("setCenter", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setCenter(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.setCenter(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble()
+                        )
+                    }
                 }
-                .function("setCenter", 1) { it.target?.setCenter(it.getArgument(0) as Location) }
                 .function("damageBuffer", 0) { it.target?.damageBuffer }
                 .function("setDamageBuffer", 1) { it.target?.setDamageBuffer(it.getNumber(0).toDouble()) }
                 .function("damageAmount", 0) { it.target?.damageAmount }

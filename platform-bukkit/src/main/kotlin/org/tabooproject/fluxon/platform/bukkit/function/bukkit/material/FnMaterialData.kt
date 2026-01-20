@@ -13,8 +13,13 @@ object FnMaterialData {
                 .function("data", 0) { it.target?.data }
                 .function("setData", 1) { it.target?.setData(it.getNumber(0).toByte()) }
                 .function("itemType", 0) { it.target?.itemType }
-                .function("toItemStack", 0) { it.target?.toItemStack() }
-                .function("toItemStack", 1) { it.target?.toItemStack(it.getNumber(0).toInt()) }
+                .function("toItemStack", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.toItemStack()
+                    } else {
+                        it.target?.toItemStack(it.getNumber(0).toInt())
+                    }
+                }
                 .function("toString", 0) { it.target?.toString() }
                 .function("hashCode", 0) { it.target?.hashCode() }
                 .function("equals", 1) { it.target?.equals(it.getArgument(0)) }

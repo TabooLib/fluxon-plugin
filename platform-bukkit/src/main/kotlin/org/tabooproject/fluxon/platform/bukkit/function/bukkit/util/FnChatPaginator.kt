@@ -11,15 +11,17 @@ object FnChatPaginator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator::class.java)
                 // static
-                .function("paginate", 2) { ChatPaginator.paginate(it.getString(0), it.getNumber(1).toInt()) }
-                // static
-                .function("paginate", 4) {
-                    ChatPaginator.paginate(
-                        it.getString(0),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("paginate", listOf(2, 4)) {
+                    if (it.arguments.size == 2) {
+                        ChatPaginator.paginate(it.getString(0), it.getNumber(1).toInt())
+                    } else {
+                        ChatPaginator.paginate(
+                            it.getString(0),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
                 // static
                 .function("wordWrap", 2) { ChatPaginator.wordWrap(it.getString(0), it.getNumber(1).toInt()) }

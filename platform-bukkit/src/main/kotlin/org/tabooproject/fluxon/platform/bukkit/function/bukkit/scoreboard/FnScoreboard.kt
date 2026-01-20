@@ -14,36 +14,37 @@ object FnScoreboard {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Scoreboard::class.java)
-                .syncFunction("registerNewObjective", 2) {
-                    it.target?.registerNewObjective(
-                        it.getString(0)!!,
-                        it.getString(1)!!
-                    )
-                }
-                .syncFunction("registerNewObjective", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is String -> it.target?.registerNewObjective(it.getString(0)!!, var2, it.getString(2)!!)
-                        is Criteria -> it.target?.registerNewObjective(it.getString(0)!!, var2, it.getString(2)!!)
-                        else -> throw IllegalArgumentException("第二个参数必须是 String 或 Criteria 类型")
-                    }
-                }
-                .syncFunction("registerNewObjective", 4) {
-                    when (val var2 = it.getArgument(1)) {
-                        is String -> it.target?.registerNewObjective(
+                .syncFunction("registerNewObjective", listOf(2, 3, 4)) {
+                    when (it.arguments.size) {
+                        2 -> it.target?.registerNewObjective(
                             it.getString(0)!!,
-                            var2,
-                            it.getString(2)!!,
-                            it.getArgument(3) as RenderType
+                            it.getString(1)!!
                         )
 
-                        is Criteria -> it.target?.registerNewObjective(
-                            it.getString(0)!!,
-                            var2,
-                            it.getString(2)!!,
-                            it.getArgument(3) as RenderType
-                        )
+                        3 -> when (val var2 = it.getArgument(1)) {
+                            is String -> it.target?.registerNewObjective(it.getString(0)!!, var2, it.getString(2)!!)
+                            is Criteria -> it.target?.registerNewObjective(it.getString(0)!!, var2, it.getString(2)!!)
+                            else -> throw IllegalArgumentException("第二个参数必须是 String 或 Criteria 类型")
+                        }
 
-                        else -> throw IllegalArgumentException("第二个参数必须是 String 或 Criteria 类型")
+                        4 -> when (val var2 = it.getArgument(1)) {
+                            is String -> it.target?.registerNewObjective(
+                                it.getString(0)!!,
+                                var2,
+                                it.getString(2)!!,
+                                it.getArgument(3) as RenderType
+                            )
+
+                            is Criteria -> it.target?.registerNewObjective(
+                                it.getString(0)!!,
+                                var2,
+                                it.getString(2)!!,
+                                it.getArgument(3) as RenderType
+                            )
+
+                            else -> throw IllegalArgumentException("第二个参数必须是 String 或 Criteria 类型")
+                        }
+                        else -> error("Scoreboard#registerNewObjective 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
                 .function("objective", 1) {

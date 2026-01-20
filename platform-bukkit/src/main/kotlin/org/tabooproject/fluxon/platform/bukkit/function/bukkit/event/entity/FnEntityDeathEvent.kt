@@ -16,7 +16,6 @@ object FnEntityDeathEvent {
             registerExtension(EntityDeathEvent::class.java)
 //                .function("reviveHealth", 0) { it.target?.reviveHealth }
 //                .function("setReviveHealth", 1) { it.target?reviveHealth = it.getNumber(0).toDouble() }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("killer", 0) { it.target?.getEntity() }
                 .function("entity", 0) { it.target?.getEntity() }
                 .function("damageSource", 0) { it.target?.damageSource }

@@ -11,36 +11,42 @@ object FnColor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Color::class.java)
                 // static
-                .function("fromARGB", 4) {
-                    Color.fromARGB(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("fromARGB", listOf(1, 4)) {
+                    if (it.arguments.size == 1) {
+                        Color.fromARGB(it.getNumber(0).toInt())
+                    } else {
+                        Color.fromARGB(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
                 // static
-                .function("fromRGB", 3) {
-                    Color.fromRGB(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .function("fromRGB", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        Color.fromRGB(it.getNumber(0).toInt())
+                    } else {
+                        Color.fromRGB(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
                 // static
-                .function("fromBGR", 3) {
-                    Color.fromBGR(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .function("fromBGR", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        Color.fromBGR(it.getNumber(0).toInt())
+                    } else {
+                        Color.fromBGR(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                // static
-                .function("fromRGB", 1) { Color.fromRGB(it.getNumber(0).toInt()) }
-                // static
-                .function("fromARGB", 1) { Color.fromARGB(it.getNumber(0).toInt()) }
-                // static
-                .function("fromBGR", 1) { Color.fromBGR(it.getNumber(0).toInt()) }
                 .function("alpha", 0) { it.target?.alpha }
                 .function("setAlpha", 1) { it.target?.setAlpha(it.getNumber(0).toInt()) }
                 .function("red", 0) { it.target?.red }

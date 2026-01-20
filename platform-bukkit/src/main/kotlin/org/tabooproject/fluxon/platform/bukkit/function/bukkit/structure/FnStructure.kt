@@ -21,28 +21,29 @@ object FnStructure {
                 .function("paletteCount", 0) { it.target?.paletteCount }
                 .function("entities", 0) { it.target?.entities }
                 .function("entityCount", 0) { it.target?.entityCount }
-                .function("place", 7) {
-                    it.target?.place(
-                        it.getArgument(0) as Location,
-                        it.getBoolean(1),
-                        it.getArgument(2) as StructureRotation,
-                        it.getArgument(3) as Mirror,
-                        it.getNumber(4).toInt(),
-                        it.getNumber(5).toFloat(),
-                        it.getArgument(6) as Random
-                    )
-                }
-                .function("place", 8) {
-                    it.target?.place(
-                        it.getArgument(0) as RegionAccessor,
-                        it.getArgument(1) as BlockVector,
-                        it.getBoolean(2),
-                        it.getArgument(3) as StructureRotation,
-                        it.getArgument(4) as Mirror,
-                        it.getNumber(5).toInt(),
-                        it.getNumber(6).toFloat(),
-                        it.getArgument(7) as Random
-                    )
+                .function("place", listOf(7, 8)) {
+                    if (it.arguments.size == 7) {
+                        it.target?.place(
+                            it.getArgument(0) as Location,
+                            it.getBoolean(1),
+                            it.getArgument(2) as StructureRotation,
+                            it.getArgument(3) as Mirror,
+                            it.getNumber(4).toInt(),
+                            it.getNumber(5).toFloat(),
+                            it.getArgument(6) as Random
+                        )
+                    } else {
+                        it.target?.place(
+                            it.getArgument(0) as RegionAccessor,
+                            it.getArgument(1) as BlockVector,
+                            it.getBoolean(2),
+                            it.getArgument(3) as StructureRotation,
+                            it.getArgument(4) as Mirror,
+                            it.getNumber(5).toInt(),
+                            it.getNumber(6).toFloat(),
+                            it.getArgument(7) as Random
+                        )
+                    }
                 }
                 .function("fill", 3) {
                     when (val var2 = it.getArgument(1)) {

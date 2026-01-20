@@ -12,11 +12,12 @@ object FnItemType {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemType::class.java)
                 .function("typed", 0) { it.target?.typed() }
-                .function("createItemStack", 0) {
-                    it.target?.createItemStack()
-                }
-                .function("createItemStack", 1) {
-                    it.target?.createItemStack(it.getNumber(0).toInt())
+                .function("createItemStack", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.createItemStack()
+                    } else {
+                        it.target?.createItemStack(it.getNumber(0).toInt())
+                    }
                 }
                 .function("hasBlockType", 0) { it.target?.hasBlockType() }
                 .function("blockType", 0) { it.target?.blockType }

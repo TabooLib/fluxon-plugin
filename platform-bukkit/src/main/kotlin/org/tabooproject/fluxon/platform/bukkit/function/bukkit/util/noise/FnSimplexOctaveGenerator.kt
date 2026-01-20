@@ -13,26 +13,27 @@ object FnSimplexOctaveGenerator {
                 .function("setScale", 1) { it.target?.setScale(it.getNumber(0).toDouble()) }
                 .function("wScale", 0) { it.target?.wScale }
                 .function("setWScale", 1) { it.target?.setWScale(it.getNumber(0).toDouble()) }
-                .function("noise", 6) {
-                    it.target?.noise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble()
-                    )
-                }
-                .function("noise", 7) {
-                    it.target?.noise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble(),
-                        it.getBoolean(6)
-                    )
+                .function("noise", listOf(6, 7)) {
+                    if (it.arguments.size == 6) {
+                        it.target?.noise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble()
+                        )
+                    } else {
+                        it.target?.noise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble(),
+                            it.getBoolean(6)
+                        )
+                    }
                 }
         }
     }

@@ -12,55 +12,80 @@ object FnEntityEquipment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEquipment::class.java)
-                .function("setItem", 2) {
-                    it.target?.setItem(
-                        it.getArgument(0) as EquipmentSlot,
-                        it.getArgument(1) as ItemStack
-                    )
-                }
-                .function("setItem", 3) {
-                    it.target?.setItem(
-                        it.getArgument(0) as EquipmentSlot,
-                        it.getArgument(1) as ItemStack,
-                        it.getBoolean(2)
-                    )
+                .function("setItem", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.setItem(
+                            it.getArgument(0) as EquipmentSlot,
+                            it.getArgument(1) as ItemStack
+                        )
+                    } else {
+                        it.target?.setItem(
+                            it.getArgument(0) as EquipmentSlot,
+                            it.getArgument(1) as ItemStack,
+                            it.getBoolean(2)
+                        )
+                    }
                 }
                 .function("item", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
                 .function("itemInMainHand", 0) { it.target?.itemInMainHand }
-                .function("setItemInMainHand", 1) { it.target?.setItemInMainHand(it.getArgument(0) as ItemStack) }
-                .function("setItemInMainHand", 2) {
-                    it.target?.setItemInMainHand(
-                        it.getArgument(0) as ItemStack,
-                        it.getBoolean(1)
-                    )
+                .function("setItemInMainHand", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setItemInMainHand(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setItemInMainHand(
+                            it.getArgument(0) as ItemStack,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .function("itemInOffHand", 0) { it.target?.itemInOffHand }
-                .function("setItemInOffHand", 1) { it.target?.setItemInOffHand(it.getArgument(0) as ItemStack) }
-                .function("setItemInOffHand", 2) {
-                    it.target?.setItemInOffHand(
-                        it.getArgument(0) as ItemStack,
-                        it.getBoolean(1)
-                    )
+                .function("setItemInOffHand", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setItemInOffHand(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setItemInOffHand(
+                            it.getArgument(0) as ItemStack,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .function("itemInHand", 0) { it.target?.itemInHand }
                 .function("setItemInHand", 1) { it.target?.setItemInHand(it.getArgument(0) as ItemStack) }
                 .function("helmet", 0) { it.target?.helmet }
-                .function("setHelmet", 1) { it.target?.setHelmet(it.getArgument(0) as ItemStack) }
-                .function("setHelmet", 2) { it.target?.setHelmet(it.getArgument(0) as ItemStack, it.getBoolean(1)) }
+                .function("setHelmet", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setHelmet(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setHelmet(it.getArgument(0) as ItemStack, it.getBoolean(1))
+                    }
+                }
                 .function("chestplate", 0) { it.target?.chestplate }
-                .function("setChestplate", 1) { it.target?.setChestplate(it.getArgument(0) as ItemStack) }
-                .function("setChestplate", 2) {
-                    it.target?.setChestplate(
-                        it.getArgument(0) as ItemStack,
-                        it.getBoolean(1)
-                    )
+                .function("setChestplate", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setChestplate(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setChestplate(
+                            it.getArgument(0) as ItemStack,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .function("leggings", 0) { it.target?.leggings }
-                .function("setLeggings", 1) { it.target?.setLeggings(it.getArgument(0) as ItemStack) }
-                .function("setLeggings", 2) { it.target?.setLeggings(it.getArgument(0) as ItemStack, it.getBoolean(1)) }
+                .function("setLeggings", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setLeggings(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setLeggings(it.getArgument(0) as ItemStack, it.getBoolean(1))
+                    }
+                }
                 .function("boots", 0) { it.target?.boots }
-                .function("setBoots", 1) { it.target?.setBoots(it.getArgument(0) as ItemStack) }
-                .function("setBoots", 2) { it.target?.setBoots(it.getArgument(0) as ItemStack, it.getBoolean(1)) }
+                .function("setBoots", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setBoots(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setBoots(it.getArgument(0) as ItemStack, it.getBoolean(1))
+                    }
+                }
                 .function("armorContents", 0) { it.target?.armorContents }
                 .function("setArmorContents", 1) { it.target?.setArmorContents(it.getArgument(0) as Array<ItemStack>) }
                 .function("clear", 0) { it.target?.clear() }

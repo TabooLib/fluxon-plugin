@@ -91,66 +91,78 @@ object FnChunkGenerator {
                     )
                 }
                 .function("isParallelCapable", 0) { it.target?.isParallelCapable }
-                .function("shouldGenerateNoise", 0) { it.target?.shouldGenerateNoise() }
-                .function("shouldGenerateNoise", 4) {
-                    it.target?.shouldGenerateNoise(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateNoise", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateNoise()
+                    } else {
+                        it.target?.shouldGenerateNoise(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
-                .function("shouldGenerateSurface", 0) { it.target?.shouldGenerateSurface() }
-                .function("shouldGenerateSurface", 4) {
-                    it.target?.shouldGenerateSurface(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateSurface", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateSurface()
+                    } else {
+                        it.target?.shouldGenerateSurface(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
                 .function("shouldGenerateBedrock", 0) { it.target?.shouldGenerateBedrock() }
-                .function("shouldGenerateCaves", 0) { it.target?.shouldGenerateCaves() }
-                .function("shouldGenerateCaves", 4) {
-                    it.target?.shouldGenerateCaves(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateCaves", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateCaves()
+                    } else {
+                        it.target?.shouldGenerateCaves(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
-                .function("shouldGenerateDecorations", 0) { it.target?.shouldGenerateDecorations() }
-                .function(
-                    "shouldGenerateDecorations",
-                    4
-                ) {
-                    it.target?.shouldGenerateDecorations(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateDecorations", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateDecorations()
+                    } else {
+                        it.target?.shouldGenerateDecorations(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
-                .function("shouldGenerateMobs", 0) { it.target?.shouldGenerateMobs() }
-                .function("shouldGenerateMobs", 4) {
-                    it.target?.shouldGenerateMobs(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateMobs", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateMobs()
+                    } else {
+                        it.target?.shouldGenerateMobs(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
-                .function("shouldGenerateStructures", 0) { it.target?.shouldGenerateStructures() }
-                .function(
-                    "shouldGenerateStructures",
-                    4
-                ) {
-                    it.target?.shouldGenerateStructures(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt()
-                    )
+                .function("shouldGenerateStructures", listOf(0, 4)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.shouldGenerateStructures()
+                    } else {
+                        it.target?.shouldGenerateStructures(
+                            it.getArgument(0) as WorldInfo,
+                            it.getArgument(1) as Random,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt()
+                        )
+                    }
                 }
 
             registerExtension(ChunkGenerator.ChunkData::class.java)
@@ -251,20 +263,21 @@ object FnChunkGenerator {
 
             registerExtension(ChunkGenerator.BiomeGrid::class.java)
                 .function("biome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("setBiome", 3) {
-                    it.target?.setBiome(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getArgument(2) as Biome
-                    )
-                }
-                .function("setBiome", 4) {
-                    it.target?.setBiome(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getArgument(3) as Biome
-                    )
+                .function("setBiome", listOf(3, 4)) {
+                    if (it.arguments.size == 3) {
+                        it.target?.setBiome(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getArgument(2) as Biome
+                        )
+                    } else {
+                        it.target?.setBiome(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getArgument(3) as Biome
+                        )
+                    }
                 }
         }
     }

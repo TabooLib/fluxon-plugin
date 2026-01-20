@@ -15,34 +15,34 @@ object FnBoundingBox {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BoundingBox::class.java)
                 // static
-                .function("of", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> BoundingBox.of(var1, it.getArgument(1) as Vector)
-                        is Location -> BoundingBox.of(var1, it.getArgument(1) as Location)
-                        is Block -> BoundingBox.of(var1, it.getArgument(1) as Block)
-                        else -> throw IllegalArgumentException("参数必须是 Vector、Location 或 Block 类型")
-                    }
-                }
-                // static
-                .function("of", 1) { BoundingBox.of(it.getArgument(0) as Block) }
-                // static
-                .function("of", 4) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> BoundingBox.of(
-                            var1,
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble()
-                        )
+                .function("of", listOf(1, 2, 4)) {
+                    when (it.arguments.size) {
+                        1 -> BoundingBox.of(it.getArgument(0) as Block)
+                        2 -> when (val var1 = it.getArgument(0)) {
+                            is Vector -> BoundingBox.of(var1, it.getArgument(1) as Vector)
+                            is Location -> BoundingBox.of(var1, it.getArgument(1) as Location)
+                            is Block -> BoundingBox.of(var1, it.getArgument(1) as Block)
+                            else -> throw IllegalArgumentException("参数必须是 Vector、Location 或 Block 类型")
+                        }
 
-                        is Location -> BoundingBox.of(
-                            var1,
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble()
-                        )
+                        4 -> when (val var1 = it.getArgument(0)) {
+                            is Vector -> BoundingBox.of(
+                                var1,
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                it.getNumber(3).toDouble()
+                            )
 
-                        else -> throw IllegalArgumentException("第一个参数必须是 Vector 或 Location 类型")
+                            is Location -> BoundingBox.of(
+                                var1,
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                it.getNumber(3).toDouble()
+                            )
+
+                            else -> throw IllegalArgumentException("第一个参数必须是 Vector 或 Location 类型")
+                        }
+                        else -> error("BoundingBox#of 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
                 .function("resize", 6) {
@@ -72,110 +72,118 @@ object FnBoundingBox {
                 .function("centerZ", 0) { it.target?.centerZ }
                 .function("center", 0) { it.target?.center }
                 .function("copy", 1) { it.target?.copy(it.getArgument(0) as BoundingBox) }
-                .function("expand", 6) {
-                    it.target?.expand(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble()
-                    )
-                }
-                .function("expand", 3) {
-                    it.target?.expand(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("expand", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> it.target?.expand(var1)
-                        is Double -> it.target?.expand(var1)
-                        is Number -> it.target?.expand(var1.toDouble())
-                        else -> throw IllegalArgumentException("参数必须是 Vector 或 Double 类型")
+                .function("expand", listOf(1, 2, 3, 4, 6)) {
+                    when (it.arguments.size) {
+                        1 -> when (val var1 = it.getArgument(0)) {
+                            is Vector -> it.target?.expand(var1)
+                            is Double -> it.target?.expand(var1)
+                            is Number -> it.target?.expand(var1.toDouble())
+                            else -> throw IllegalArgumentException("参数必须是 Vector 或 Double 类型")
+                        }
+
+                        2 -> when (val var1 = it.getArgument(0)) {
+                            is Vector -> it.target?.expand(var1, it.getNumber(1).toDouble())
+                            is BlockFace -> it.target?.expand(var1, it.getNumber(1).toDouble())
+                            else -> throw IllegalArgumentException("第一个参数必须是 Vector 或 BlockFace 类型")
+                        }
+
+                        3 -> it.target?.expand(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
+
+                        4 -> it.target?.expand(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble()
+                        )
+
+                        6 -> it.target?.expand(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble()
+                        )
+                        else -> error("BoundingBox#expand 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("expand", 4) {
-                    it.target?.expand(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble()
-                    )
-                }
-                .function("expand", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> it.target?.expand(var1, it.getNumber(1).toDouble())
-                        is BlockFace -> it.target?.expand(var1, it.getNumber(1).toDouble())
-                        else -> throw IllegalArgumentException("第一个参数必须是 Vector 或 BlockFace 类型")
+                .function("expandDirectional", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.expandDirectional(it.getArgument(0) as Vector)
+                    } else {
+                        it.target?.expandDirectional(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
                     }
                 }
-                .function("expandDirectional", 3) {
-                    it.target?.expandDirectional(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("expandDirectional", 1) { it.target?.expandDirectional(it.getArgument(0) as Vector) }
-                .function("union", 3) {
-                    it.target?.union(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("union", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> it.target?.union(var1)
-                        is Location -> it.target?.union(var1)
-                        is BoundingBox -> it.target?.union(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Vector、Location 或 BoundingBox 类型")
+                .function("union", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Vector -> it.target?.union(var1)
+                            is Location -> it.target?.union(var1)
+                            is BoundingBox -> it.target?.union(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Vector、Location 或 BoundingBox 类型")
+                        }
+                    } else {
+                        it.target?.union(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
                     }
                 }
                 .function("intersection", 1) { it.target?.intersection(it.getArgument(0) as BoundingBox) }
-                .function("shift", 3) {
-                    it.target?.shift(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("shift", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> it.target?.shift(var1)
-                        is Location -> it.target?.shift(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Vector 或 Location 类型")
+                .function("shift", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Vector -> it.target?.shift(var1)
+                            is Location -> it.target?.shift(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Vector 或 Location 类型")
+                        }
+                    } else {
+                        it.target?.shift(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
                     }
                 }
-                .function("overlaps", 1) { it.target?.overlaps(it.getArgument(0) as BoundingBox) }
-                .function("overlaps", 2) {
-                    it.target?.overlaps(
-                        it.getArgument(0) as Vector,
-                        it.getArgument(1) as Vector
-                    )
-                }
-                .function("contains", 3) {
-                    it.target?.contains(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("contains", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Vector -> it.target?.contains(var1)
-                        is BoundingBox -> it.target?.contains(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Vector 或 BoundingBox 类型")
+                .function("overlaps", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.overlaps(it.getArgument(0) as BoundingBox)
+                    } else {
+                        it.target?.overlaps(
+                            it.getArgument(0) as Vector,
+                            it.getArgument(1) as Vector
+                        )
                     }
                 }
-                .function("contains", 2) {
-                    it.target?.contains(
-                        it.getArgument(0) as Vector,
-                        it.getArgument(1) as Vector
-                    )
+                .function("contains", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> when (val var1 = it.getArgument(0)) {
+                            is Vector -> it.target?.contains(var1)
+                            is BoundingBox -> it.target?.contains(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Vector 或 BoundingBox 类型")
+                        }
+
+                        2 -> it.target?.contains(
+                            it.getArgument(0) as Vector,
+                            it.getArgument(1) as Vector
+                        )
+
+                        3 -> it.target?.contains(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
+                        else -> error("BoundingBox#contains 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function("rayTrace", 3) {
                     it.target?.rayTrace(

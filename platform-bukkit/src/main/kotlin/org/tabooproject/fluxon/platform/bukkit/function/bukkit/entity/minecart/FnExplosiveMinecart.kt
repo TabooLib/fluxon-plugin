@@ -14,8 +14,13 @@ object FnExplosiveMinecart {
                 .function("fuseTicks", 0) { it.target?.fuseTicks }
                 .function("ignite", 0) { it.target?.ignite() }
                 .function("isIgnited", 0) { it.target?.isIgnited }
-                .function("explode", 0) { it.target?.explode() }
-                .function("explode", 1) { it.target?.explode(it.getNumber(0).toDouble()) }
+                .function("explode", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.explode()
+                    } else {
+                        it.target?.explode(it.getNumber(0).toDouble())
+                    }
+                }
         }
     }
 }

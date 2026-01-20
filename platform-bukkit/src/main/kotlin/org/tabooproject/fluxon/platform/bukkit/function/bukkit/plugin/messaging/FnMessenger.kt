@@ -22,14 +22,13 @@ object FnMessenger {
                         ) as Plugin, it.getString(1)!!
                     )
                 }
-                .function(
-                    "unregisterOutgoingPluginChannel",
-                    2
-                ) { it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!) }
-                .function(
-                    "unregisterOutgoingPluginChannel",
-                    1
-                ) { it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin) }
+                .function("unregisterOutgoingPluginChannel", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin)
+                    } else {
+                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                    }
+                }
                 .function("registerIncomingPluginChannel", 3) {
                     it.target?.registerIncomingPluginChannel(
                         it.getArgument(
@@ -37,39 +36,43 @@ object FnMessenger {
                         ) as Plugin, it.getString(1)!!, it.getArgument(2) as PluginMessageListener
                     )
                 }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    3
-                ) {
-                    it.target?.unregisterIncomingPluginChannel(
-                        it.getArgument(0) as Plugin,
-                        it.getString(1)!!,
-                        it.getArgument(2) as PluginMessageListener
-                    )
-                }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    2
-                ) { it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!) }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    1
-                ) { it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin) }
-                .function("outgoingChannels", 0) { it.target?.outgoingChannels }
-                .function("outgoingChannels", 1) { it.target?.getOutgoingChannels(it.getArgument(0) as Plugin) }
-                .function("incomingChannels", 0) { it.target?.incomingChannels }
-                .function("incomingChannels", 1) { it.target?.getIncomingChannels(it.getArgument(0) as Plugin) }
-                .function("incomingChannelRegistrations", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Plugin -> it.target?.getIncomingChannelRegistrations(var1)
-                        is String -> it.target?.getIncomingChannelRegistrations(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Plugin 或 String 类型")
+                .function("unregisterIncomingPluginChannel", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin)
+                        2 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                        3 -> it.target?.unregisterIncomingPluginChannel(
+                            it.getArgument(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getArgument(2) as PluginMessageListener
+                        )
+                        else -> error("Messenger#unregisterIncomingPluginChannel 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function(
-                    "incomingChannelRegistrations",
-                    2
-                ) { it.target?.getIncomingChannelRegistrations(it.getArgument(0) as Plugin, it.getString(1)!!) }
+                .function("outgoingChannels", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.outgoingChannels
+                    } else {
+                        it.target?.getOutgoingChannels(it.getArgument(0) as Plugin)
+                    }
+                }
+                .function("incomingChannels", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.incomingChannels
+                    } else {
+                        it.target?.getIncomingChannels(it.getArgument(0) as Plugin)
+                    }
+                }
+                .function("incomingChannelRegistrations", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Plugin -> it.target?.getIncomingChannelRegistrations(var1)
+                            is String -> it.target?.getIncomingChannelRegistrations(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Plugin 或 String 类型")
+                        }
+                    } else {
+                        it.target?.getIncomingChannelRegistrations(it.getArgument(0) as Plugin, it.getString(1)!!)
+                    }
+                }
                 .function(
                     "isRegistrationValid",
                     1

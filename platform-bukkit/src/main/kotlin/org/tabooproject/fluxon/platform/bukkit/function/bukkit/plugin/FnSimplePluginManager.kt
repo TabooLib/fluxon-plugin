@@ -43,32 +43,36 @@ object FnSimplePluginManager {
                         it.getArgument(1) as Plugin
                     )
                 }
-                .function("registerEvent", 5) {
-                    it.target?.registerEvent(
-                        it.getArgument(0) as Class<Event>,
-                        it.getArgument(1) as Listener,
-                        it.getArgument(2) as EventPriority,
-                        it.getArgument(3) as EventExecutor,
-                        it.getArgument(4) as Plugin
-                    )
-                }
-                .function("registerEvent", 6) {
-                    it.target?.registerEvent(
-                        it.getArgument(0) as Class<Event>,
-                        it.getArgument(1) as Listener,
-                        it.getArgument(2) as EventPriority,
-                        it.getArgument(3) as EventExecutor,
-                        it.getArgument(4) as Plugin,
-                        it.getBoolean(5)
-                    )
+                .function("registerEvent", listOf(5, 6)) {
+                    if (it.arguments.size == 5) {
+                        it.target?.registerEvent(
+                            it.getArgument(0) as Class<Event>,
+                            it.getArgument(1) as Listener,
+                            it.getArgument(2) as EventPriority,
+                            it.getArgument(3) as EventExecutor,
+                            it.getArgument(4) as Plugin
+                        )
+                    } else {
+                        it.target?.registerEvent(
+                            it.getArgument(0) as Class<Event>,
+                            it.getArgument(1) as Listener,
+                            it.getArgument(2) as EventPriority,
+                            it.getArgument(3) as EventExecutor,
+                            it.getArgument(4) as Plugin,
+                            it.getBoolean(5)
+                        )
+                    }
                 }
                 .function("permission", 1) { it.target?.getPermission(it.getString(0)!!) }
-                .function("addPermission", 1) { it.target?.addPermission(it.getArgument(0) as Permission) }
-                .function("addPermission", 2) {
-                    it.target?.addPermission(
-                        it.getArgument(0) as Permission,
-                        it.getBoolean(1)
-                    )
+                .function("addPermission", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.addPermission(it.getArgument(0) as Permission)
+                    } else {
+                        it.target?.addPermission(
+                            it.getArgument(0) as Permission,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .function("defaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
                 .function("removePermission", 1) {
@@ -122,8 +126,13 @@ object FnSimplePluginManager {
                         it.getArgument(1) as PluginDescriptionFile
                     )
                 }
-                .function("useTimings", 0) { it.target?.useTimings() }
-                .function("useTimings", 1) { it.target?.useTimings(it.getBoolean(0)) }
+                .function("useTimings", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.useTimings()
+                    } else {
+                        it.target?.useTimings(it.getBoolean(0))
+                    }
+                }
         }
     }
 }

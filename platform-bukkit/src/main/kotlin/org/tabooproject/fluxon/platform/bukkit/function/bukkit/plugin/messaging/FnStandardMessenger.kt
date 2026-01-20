@@ -22,14 +22,13 @@ object FnStandardMessenger {
                         ) as Plugin, it.getString(1)!!
                     )
                 }
-                .function(
-                    "unregisterOutgoingPluginChannel",
-                    2
-                ) { it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!) }
-                .function(
-                    "unregisterOutgoingPluginChannel",
-                    1
-                ) { it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin) }
+                .function("unregisterOutgoingPluginChannel", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin)
+                    } else {
+                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                    }
+                }
                 .function("registerIncomingPluginChannel", 3) {
                     it.target?.registerIncomingPluginChannel(
                         it.getArgument(
@@ -37,24 +36,18 @@ object FnStandardMessenger {
                         ) as Plugin, it.getString(1)!!, it.getArgument(2) as PluginMessageListener
                     )
                 }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    3
-                ) {
-                    it.target?.unregisterIncomingPluginChannel(
-                        it.getArgument(0) as Plugin,
-                        it.getString(1)!!,
-                        it.getArgument(2) as PluginMessageListener
-                    )
+                .function("unregisterIncomingPluginChannel", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin)
+                        2 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                        3 -> it.target?.unregisterIncomingPluginChannel(
+                            it.getArgument(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getArgument(2) as PluginMessageListener
+                        )
+                        else -> error("StandardMessenger#unregisterIncomingPluginChannel 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    2
-                ) { it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!) }
-                .function(
-                    "unregisterIncomingPluginChannel",
-                    1
-                ) { it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin) }
                 .function(
                     "dispatchIncomingMessage",
                     3

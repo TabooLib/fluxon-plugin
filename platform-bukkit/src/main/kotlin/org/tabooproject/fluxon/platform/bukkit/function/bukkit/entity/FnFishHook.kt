@@ -15,21 +15,27 @@ object FnFishHook {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FishHook::class.java)
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isUnhooked", 0) { it.target?.state == FishHook.HookState.UNHOOKED }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isHookedEntity", 0) { it.target?.state == FishHook.HookState.HOOKED_ENTITY }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isBobbing", 0) { it.target?.state == FishHook.HookState.BOBBING }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("setLureTime", 1) {
-                    val time = it.getNumber(0).toInt()
-                    it.target?.setLureTime(time, time)
+                .function("setLureTime", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        val time = it.getNumber(0).toInt()
+                        it.target?.setLureTime(time, time)
+                    } else {
+                        it.target?.setLureTime(it.getNumber(0).toInt(), it.getNumber(1).toInt())
+                    }
                 }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("setLureAngle", 1) {
-                    val time = it.getNumber(0).toFloat()
-                    it.target?.setLureAngle(time, time)
+                .function("setLureAngle", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        val time = it.getNumber(0).toFloat()
+                        it.target?.setLureAngle(time, time)
+                    } else {
+                        it.target?.setLureAngle(
+                            it.getNumber(0).toFloat(),
+                            it.getNumber(1).toFloat()
+                        )
+                    }
                 }
 
                 .function("minWaitTime", 0) { it.target?.minWaitTime }
@@ -41,17 +47,10 @@ object FnFishHook {
                 .function("setMinLureTime", 1) { it.target?.setMinLureTime(it.getNumber(0).toInt()) }
                 .function("maxLureTime", 0) { it.target?.maxLureTime }
                 .function("setMaxLureTime", 1) { it.target?.setMaxLureTime(it.getNumber(0).toInt()) }
-                .function("setLureTime", 2) { it.target?.setLureTime(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .function("minLureAngle", 0) { it.target?.minLureAngle }
                 .function("setMinLureAngle", 1) { it.target?.setMinLureAngle(it.getNumber(0).toFloat()) }
                 .function("maxLureAngle", 0) { it.target?.maxLureAngle }
                 .function("setMaxLureAngle", 1) { it.target?.setMaxLureAngle(it.getNumber(0).toFloat()) }
-                .function("setLureAngle", 2) {
-                    it.target?.setLureAngle(
-                        it.getNumber(0).toFloat(),
-                        it.getNumber(1).toFloat()
-                    )
-                }
                 .function("applyLure", 0) { it.target?.applyLure }
                 .function("setApplyLure", 1) { it.target?.setApplyLure(it.getBoolean(0)) }
                 .function("biteChance", 0) { it.target?.biteChance }

@@ -22,20 +22,21 @@ object FnCommand {
                         it.getArgument(2) as Array<String>,
                     )
                 }
-                .function("tabComplete", 3) {
-                    it.target?.tabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getString(1)!!,
-                        it.getArgument(2) as Array<String>,
-                    )
-                }
-                .function("tabComplete", 4) {
-                    it.target?.tabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getString(1)!!,
-                        it.getArgument(2) as Array<String>,
-                        it.getArgument(3) as Location
-                    )
+                .function("tabComplete", listOf(3, 4)) {
+                    if (it.arguments.size == 3) {
+                        it.target?.tabComplete(
+                            it.getArgument(0) as CommandSender,
+                            it.getString(1)!!,
+                            it.getArgument(2) as Array<String>,
+                        )
+                    } else {
+                        it.target?.tabComplete(
+                            it.getArgument(0) as CommandSender,
+                            it.getString(1)!!,
+                            it.getArgument(2) as Array<String>,
+                            it.getArgument(3) as Location
+                        )
+                    }
                 }
                 .function("name", 0) { it.target?.name }
                 .function("setName", 1) { it.target?.setName(it.getString(0)!!) }
@@ -59,19 +60,16 @@ object FnCommand {
                 .function("setDescription", 1) { it.target?.setDescription(it.getString(0)!!) }
                 .function("setPermissionMessage", 1) { it.target?.setPermissionMessage(it.getString(0)) }
                 .function("setUsage", 1) { it.target?.setUsage(it.getString(0)!!) }
-                .function(
-                    "broadcastCommandMessage",
-                    2
-                ) { Command.broadcastCommandMessage(it.getArgument(0) as CommandSender, it.getString(1)!!) }
-                .function(
-                    "broadcastCommandMessage",
-                    3
-                ) {
-                    Command.broadcastCommandMessage(
-                        it.getArgument(0) as CommandSender,
-                        it.getString(1)!!,
-                        it.getBoolean(2)
-                    )
+                .function("broadcastCommandMessage", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        Command.broadcastCommandMessage(it.getArgument(0) as CommandSender, it.getString(1)!!)
+                    } else {
+                        Command.broadcastCommandMessage(
+                            it.getArgument(0) as CommandSender,
+                            it.getString(1)!!,
+                            it.getBoolean(2)
+                        )
+                    }
                 }
                 .function("toString", 0) { it.target?.toString() }
         }

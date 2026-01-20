@@ -12,8 +12,13 @@ object FnFireworkMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkMeta::class.java)
                 .function("addEffect", 1) { it.target?.addEffect(it.getArgument(0) as FireworkEffect) }
-                .function("addEffects", 0) { it.target?.addEffects() }
-                .function("addEffects", 1) { it.target?.addEffects(it.getArgument(0) as Iterable<FireworkEffect>) }
+                .function("addEffects", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.addEffects()
+                    } else {
+                        it.target?.addEffects(it.getArgument(0) as Iterable<FireworkEffect>)
+                    }
+                }
                 .function("effects", 0) { it.target?.effects }
                 .function("effectsSize", 0) { it.target?.effectsSize }
                 .function("removeEffect", 1) { it.target?.removeEffect(it.getNumber(0).toInt()) }

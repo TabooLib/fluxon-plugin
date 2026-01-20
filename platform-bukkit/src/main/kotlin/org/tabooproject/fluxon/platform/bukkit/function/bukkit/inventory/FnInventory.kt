@@ -24,18 +24,19 @@ object FnInventory {
                     "setStorageContents",
                     1
                 ) { it.target?.setStorageContents(it.getArgument(0) as Array<ItemStack>) }
-                .function("contains", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Material -> it.target?.contains(var1)
-                        is ItemStack -> it.target?.contains(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                    }
-                }
-                .function("contains", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Material -> it.target?.contains(var1, it.getNumber(1).toInt())
-                        is ItemStack -> it.target?.contains(var1, it.getNumber(1).toInt())
-                        else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                .function("contains", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Material -> it.target?.contains(var1)
+                            is ItemStack -> it.target?.contains(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                        }
+                    } else {
+                        when (val var1 = it.getArgument(0)) {
+                            is Material -> it.target?.contains(var1, it.getNumber(1).toInt())
+                            is ItemStack -> it.target?.contains(var1, it.getNumber(1).toInt())
+                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                        }
                     }
                 }
                 .function("containsAtLeast", 2) {
@@ -60,13 +61,23 @@ object FnInventory {
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
                     }
                 }
-                .function("clear", 1) { it.target?.clear(it.getNumber(0).toInt()) }
-                .function("clear", 0) { it.target?.clear() }
+                .function("clear", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.clear()
+                    } else {
+                        it.target?.clear(it.getNumber(0).toInt())
+                    }
+                }
                 .function("viewers", 0) { it.target?.viewers }
                 .function("type", 0) { it.target?.type }
                 .function("holder", 0) { it.target?.holder }
-                .function("iterator", 0) { it.target?.iterator() }
-                .function("iterator", 1) { it.target?.iterator(it.getNumber(0).toInt()) }
+                .function("iterator", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.iterator()
+                    } else {
+                        it.target?.iterator(it.getNumber(0).toInt())
+                    }
+                }
                 .function("location", 0) { it.target?.location }
         }
     }

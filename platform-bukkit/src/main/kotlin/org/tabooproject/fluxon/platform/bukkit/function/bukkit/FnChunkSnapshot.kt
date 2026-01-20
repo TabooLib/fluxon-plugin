@@ -56,26 +56,30 @@ object FnChunkSnapshot {
                         it.getNumber(1).toInt()
                     )
                 }
-                .function("biome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("biome", 3) {
-                    it.target?.getBiome(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .function("biome", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt())
+                    } else {
+                        it.target?.getBiome(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                .function("rawBiomeTemperature", 2) {
-                    it.target?.getRawBiomeTemperature(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
-                    )
-                }
-                .function("rawBiomeTemperature", 3) {
-                    it.target?.getRawBiomeTemperature(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .function("rawBiomeTemperature", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.getRawBiomeTemperature(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt()
+                        )
+                    } else {
+                        it.target?.getRawBiomeTemperature(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
                 .function("captureFullTime", 0) { it.target?.captureFullTime }
                 .function("isSectionEmpty", 1) { it.target?.isSectionEmpty(it.getNumber(0).toInt()) }

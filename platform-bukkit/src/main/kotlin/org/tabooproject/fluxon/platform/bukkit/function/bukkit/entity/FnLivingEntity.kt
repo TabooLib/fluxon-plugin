@@ -20,10 +20,14 @@ object FnLivingEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LivingEntity::class.java)
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("hasPotion", 0) { it.target?.activePotionEffects?.isNotEmpty() }
-                .function("eyeHeight", 0) { it.target?.eyeHeight }
-                .function("eyeHeight", 1) { it.target?.getEyeHeight(it.getBoolean(0)) }
+                .function("eyeHeight", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.eyeHeight
+                    } else {
+                        it.target?.getEyeHeight(it.getBoolean(0))
+                    }
+                }
                 .function("eyeLocation", 0) { it.target?.eyeLocation }
                 .function("lineOfSight", 2) {
                     it.target?.getLineOfSight(
@@ -41,19 +45,25 @@ object FnLivingEntity {
                     "lastTwoTargetBlocks",
                     2
                 ) { it.target?.getLastTwoTargetBlocks(it.getArgument(0) as Set<Material>, it.getNumber(1).toInt()) }
-                .function("targetBlockExact", 1) { it.target?.getTargetBlockExact(it.getNumber(0).toInt()) }
-                .function("targetBlockExact", 2) {
-                    it.target?.getTargetBlockExact(
-                        it.getNumber(0).toInt(),
-                        it.getArgument(1) as FluidCollisionMode
-                    )
+                .function("targetBlockExact", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getTargetBlockExact(it.getNumber(0).toInt())
+                    } else {
+                        it.target?.getTargetBlockExact(
+                            it.getNumber(0).toInt(),
+                            it.getArgument(1) as FluidCollisionMode
+                        )
+                    }
                 }
-                .function("rayTraceBlocks", 1) { it.target?.rayTraceBlocks(it.getNumber(0).toDouble()) }
-                .function("rayTraceBlocks", 2) {
-                    it.target?.rayTraceBlocks(
-                        it.getNumber(0).toDouble(),
-                        it.getArgument(1) as FluidCollisionMode
-                    )
+                .function("rayTraceBlocks", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.rayTraceBlocks(it.getNumber(0).toDouble())
+                    } else {
+                        it.target?.rayTraceBlocks(
+                            it.getNumber(0).toDouble(),
+                            it.getArgument(1) as FluidCollisionMode
+                        )
+                    }
                 }
                 .function("remainingAir", 0) { it.target?.remainingAir }
                 .function("setRemainingAir", 1) { it.target?.setRemainingAir(it.getNumber(0).toInt()) }
@@ -75,12 +85,15 @@ object FnLivingEntity {
                 .function("noActionTicks", 0) { it.target?.noActionTicks }
                 .function("setNoActionTicks", 1) { it.target?.setNoActionTicks(it.getNumber(0).toInt()) }
                 .function("killer", 0) { it.target?.killer }
-                .syncFunction("addPotionEffect", 1) { it.target?.addPotionEffect(it.getArgument(0) as PotionEffect) }
-                .syncFunction("addPotionEffect", 2) {
-                    it.target?.addPotionEffect(
-                        it.getArgument(0) as PotionEffect,
-                        it.getBoolean(1)
-                    )
+                .syncFunction("addPotionEffect", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.addPotionEffect(it.getArgument(0) as PotionEffect)
+                    } else {
+                        it.target?.addPotionEffect(
+                            it.getArgument(0) as PotionEffect,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .syncFunction(
                     "addPotionEffects",
@@ -129,84 +142,6 @@ object FnLivingEntity {
                 .function("category", 0) { it.target?.category }
                 .function("setInvisible", 1) { it.target?.setInvisible(it.getBoolean(0)) }
                 .function("isInvisible", 0) { it.target?.isInvisible }
-
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                // 装备栏
-                .function("armorContents", 0) { it.target?.equipment?.armorContents ?: arrayOf<ItemStack>() }
-                .function("setArmorContents", 1) {
-                    it.target?.equipment?.apply {
-                        @Suppress("UNCHECKED_CAST")
-                        armorContents = it.getArgument(0) as? Array<out ItemStack> ?: arrayOf()
-                    }
-                }
-
-                // 主手
-                .function("mainHand", 0) { it.target?.equipment?.itemInMainHand ?: ItemStack(Material.AIR) }
-                .function("setMainHand", 1) { it.target?.equipment?.setItemInMainHand(it.getArgument(0) as? ItemStack) }
-                .function("itemInMainHandDropChance", 0) { it.target?.equipment?.itemInMainHandDropChance }
-                .function("setItemInMainHandDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        itemInMainHandDropChance = it.getNumber(0).toFloat()
-                    }
-                }
-
-                // 副手
-                .function("offHand", 0) { it.target?.equipment?.itemInOffHand ?: ItemStack(Material.AIR) }
-                .function("setOffHand", 1) { it.target?.equipment?.setItemInOffHand(it.getArgument(0) as? ItemStack) }
-                .function("itemInOffHandDropChance", 0) { it.target?.equipment?.itemInOffHandDropChance }
-                .function("setItemInOffHandDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        itemInOffHandDropChance = it.getNumber(0).toFloat()
-                    }
-                }
-
-                // 头盔
-                .function("helmet", 0) { it.target?.equipment?.helmet ?: ItemStack(Material.AIR) }
-                .function("setHelmet", 1) { it.target?.equipment?.apply { helmet = it.getArgument(0) as? ItemStack } }
-                .function("helmetDropChance", 0) { it.target?.equipment?.helmetDropChance }
-                .function("setHelmetDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        helmetDropChance = it.getNumber(0).toFloat()
-                    }
-                }
-
-                // 胸甲
-                .function("chestplate", 0) { it.target?.equipment?.chestplate ?: ItemStack(Material.AIR) }
-                .function("setChestplate", 1) {
-                    it.target?.equipment?.apply {
-                        chestplate = it.getArgument(0) as? ItemStack
-                    }
-                }
-                .function("chestplateDropChance", 0) { it.target?.equipment?.chestplateDropChance }
-                .function("setChestplateDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        chestplateDropChance = it.getNumber(0).toFloat()
-                    }
-                }
-
-                // 护腿
-                .function("leggings", 0) { it.target?.equipment?.leggings ?: ItemStack(Material.AIR) }
-                .function("setLeggings", 1) {
-                    it.target?.equipment?.apply {
-                        leggings = it.getArgument(0) as? ItemStack
-                    }
-                }
-                .function("leggingsDropChance", 0) { it.target?.equipment?.leggingsDropChance }
-                .function("setLeggingsDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        leggingsDropChance = it.getNumber(0).toFloat()
-                    }
-                }
-
-                // 护靴
-                .function("boots", 0) { it.target?.equipment?.boots ?: ItemStack(Material.AIR) }
-                .function("setBoots", 1) { it.target?.equipment?.apply { boots = it.getArgument(0) as? ItemStack } }
-                .function("bootsDropChance", 0) { it.target?.equipment?.bootsDropChance }
-                .function("setBootsDropChance", 1) {
-                    it.target?.equipment?.apply {
-                        bootsDropChance = it.getNumber(0).toFloat()
-                    }
-                }
         }
     }
 }

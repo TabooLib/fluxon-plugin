@@ -19,9 +19,13 @@ object FnNamespacedKey {
                 // static
                 .function("minecraft", 1) { NamespacedKey.minecraft(it.getString(0)!!) }
                 // static
-                .function("fromString", 2) { NamespacedKey.fromString(it.getString(0)!!, it.getArgument(1) as Plugin) }
-                // static
-                .function("fromString", 1) { NamespacedKey.fromString(it.getString(0)!!) }
+                .function("fromString", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        NamespacedKey.fromString(it.getString(0)!!)
+                    } else {
+                        NamespacedKey.fromString(it.getString(0)!!, it.getArgument(1) as Plugin)
+                    }
+                }
         }
     }
 }

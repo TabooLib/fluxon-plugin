@@ -11,54 +11,48 @@ object FnPerlinNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PerlinNoiseGenerator::class.java)
                 // static
-                .function("noise", 1) { PerlinNoiseGenerator.getNoise(it.getNumber(0).toDouble()) }
-                // static
-                .function("noise", 2) {
-                    PerlinNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble()
-                    )
-                }
-                // static
-                .function("noise", 3) {
-                    PerlinNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
+                .function("noise", listOf(1, 2, 3, 4, 5, 6)) {
+                    when (it.arguments.size) {
+                        1 -> PerlinNoiseGenerator.getNoise(it.getNumber(0).toDouble())
+                        2 -> PerlinNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble()
+                        )
+
+                        3 -> PerlinNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
+
+                        4 -> PerlinNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble()
+                        )
+
+                        5 -> PerlinNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble()
+                        )
+
+                        6 -> PerlinNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toInt(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble()
+                        )
+                        else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 // static
                 .function("instance", 0) { PerlinNoiseGenerator.getInstance() }
-                // static
-                .function("noise", 4) {
-                    PerlinNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble()
-                    )
-                }
-                // static
-                .function("noise", 5) {
-                    PerlinNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble()
-                    )
-                }
-                // static
-                .function("noise", 6) {
-                    PerlinNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toInt(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble()
-                    )
-                }
         }
     }
 }

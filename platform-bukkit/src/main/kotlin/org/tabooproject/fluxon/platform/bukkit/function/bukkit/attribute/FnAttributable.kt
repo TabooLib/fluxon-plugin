@@ -90,7 +90,6 @@ object FnAttributable {
                         ?.apply { baseValue = it.getNumber(0).toDouble() }
                 }
 
-                // 橙汁喵: 以上全是自定义语法, 这个语法并不在Bukkit中存在
                 .function("attribute", 1) { it.target?.getAttribute(it.getArgument(0) as Attribute) }
         }
     }

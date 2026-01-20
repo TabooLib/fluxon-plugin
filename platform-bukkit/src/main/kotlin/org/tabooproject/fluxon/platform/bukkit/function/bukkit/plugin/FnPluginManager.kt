@@ -49,24 +49,25 @@ object FnPluginManager {
                         it.getArgument(1) as Plugin
                     )
                 }
-                .function("registerEvent", 5) {
-                    it.target?.registerEvent(
-                        it.getArgument(0) as Class<Event>,
-                        it.getArgument(1) as Listener,
-                        it.getArgument(2) as EventPriority,
-                        it.getArgument(3) as EventExecutor,
-                        it.getArgument(4) as Plugin
-                    )
-                }
-                .function("registerEvent", 6) {
-                    it.target?.registerEvent(
-                        it.getArgument(0) as Class<Event>,
-                        it.getArgument(1) as Listener,
-                        it.getArgument(2) as EventPriority,
-                        it.getArgument(3) as EventExecutor,
-                        it.getArgument(4) as Plugin,
-                        it.getBoolean(5)
-                    )
+                .function("registerEvent", listOf(5, 6)) {
+                    if (it.arguments.size == 5) {
+                        it.target?.registerEvent(
+                            it.getArgument(0) as Class<Event>,
+                            it.getArgument(1) as Listener,
+                            it.getArgument(2) as EventPriority,
+                            it.getArgument(3) as EventExecutor,
+                            it.getArgument(4) as Plugin
+                        )
+                    } else {
+                        it.target?.registerEvent(
+                            it.getArgument(0) as Class<Event>,
+                            it.getArgument(1) as Listener,
+                            it.getArgument(2) as EventPriority,
+                            it.getArgument(3) as EventExecutor,
+                            it.getArgument(4) as Plugin,
+                            it.getBoolean(5)
+                        )
+                    }
                 }
                 .function("enablePlugin", 1) { it.target?.enablePlugin(it.getArgument(0) as Plugin) }
                 .function("disablePlugin", 1) { it.target?.disablePlugin(it.getArgument(0) as Plugin) }

@@ -27,27 +27,28 @@ object FnPermissible {
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
                     }
                 }
-                .function("addAttachment", 3) {
-                    it.target?.addAttachment(
-                        it.getArgument(0) as Plugin,
-                        it.getString(1)!!,
-                        it.getBoolean(2)
-                    )
-                }
-                .function("addAttachment", 1) { it.target?.addAttachment(it.getArgument(0) as Plugin) }
-                .function("addAttachment", 4) {
-                    it.target?.addAttachment(
-                        it.getArgument(0) as Plugin,
-                        it.getString(1)!!,
-                        it.getBoolean(2),
-                        it.getNumber(3).toInt()
-                    )
-                }
-                .function("addAttachment", 2) {
-                    it.target?.addAttachment(
-                        it.getArgument(0) as Plugin,
-                        it.getNumber(1).toInt()
-                    )
+                .function("addAttachment", listOf(1, 2, 3, 4)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.addAttachment(it.getArgument(0) as Plugin)
+                        2 -> it.target?.addAttachment(
+                            it.getArgument(0) as Plugin,
+                            it.getNumber(1).toInt()
+                        )
+
+                        3 -> it.target?.addAttachment(
+                            it.getArgument(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBoolean(2)
+                        )
+
+                        4 -> it.target?.addAttachment(
+                            it.getArgument(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBoolean(2),
+                            it.getNumber(3).toInt()
+                        )
+                        else -> error("Permissible#addAttachment 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function(
                     "removeAttachment",

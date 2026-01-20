@@ -11,30 +11,28 @@ object FnSimplexNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
-                .function("noise", 1) { SimplexNoiseGenerator.getNoise(it.getNumber(0).toDouble()) }
-                // static
-                .function("noise", 2) {
-                    SimplexNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble()
-                    )
-                }
-                // static
-                .function("noise", 3) {
-                    SimplexNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                // static
-                .function("noise", 4) {
-                    SimplexNoiseGenerator.getNoise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble()
-                    )
+                .function("noise", listOf(1, 2, 3, 4)) {
+                    when (it.arguments.size) {
+                        1 -> SimplexNoiseGenerator.getNoise(it.getNumber(0).toDouble())
+                        2 -> SimplexNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble()
+                        )
+
+                        3 -> SimplexNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble()
+                        )
+
+                        4 -> SimplexNoiseGenerator.getNoise(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble()
+                        )
+                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 // static
                 .function("instance", 0) { SimplexNoiseGenerator.getInstance() }

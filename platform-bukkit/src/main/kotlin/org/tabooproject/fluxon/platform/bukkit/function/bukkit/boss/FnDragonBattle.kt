@@ -17,11 +17,13 @@ object FnDragonBattle {
                 .function("generateEndPortal", 1) { it.target?.generateEndPortal(it.getBoolean(0)) }
                 .function("hasBeenPreviouslyKilled", 0) { it.target?.hasBeenPreviouslyKilled() }
                 .function("setPreviouslyKilled", 1) { it.target?.setPreviouslyKilled(it.getBoolean(0)) }
-                .function("initiateRespawn", 0) { it.target?.initiateRespawn() }
-                .function(
-                    "initiateRespawn",
-                    1
-                ) { it.target?.initiateRespawn(it.getArgument(0) as Collection<EnderCrystal>) }
+                .function("initiateRespawn", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.initiateRespawn()
+                    } else {
+                        it.target?.initiateRespawn(it.getArgument(0) as Collection<EnderCrystal>)
+                    }
+                }
                 .function("respawnPhase", 0) { it.target?.respawnPhase }
                 .function(
                     "setRespawnPhase",

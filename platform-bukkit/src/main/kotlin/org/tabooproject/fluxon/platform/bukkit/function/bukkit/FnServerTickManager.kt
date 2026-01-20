@@ -14,7 +14,13 @@ object FnServerTickManager {
                 .function("isRunningNormally", 0) { it.target?.isRunningNormally }
                 .function("isStepping", 0) { it.target?.isStepping }
                 .function("isSprinting", 0) { it.target?.isSprinting }
-                .function("isFrozen", 0) { it.target?.isFrozen }
+                .function("isFrozen", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.isFrozen
+                    } else {
+                        it.target?.isFrozen(it.getArgument(0) as Entity)
+                    }
+                }
                 .function("tickRate", 0) { it.target?.tickRate }
                 .function("setTickRate", 1) { it.target?.setTickRate(it.getNumber(0).toFloat()) }
                 .function("setFrozen", 1) { it.target?.setFrozen(it.getBoolean(0)) }
@@ -22,7 +28,6 @@ object FnServerTickManager {
                 .function("stopStepping", 0) { it.target?.stopStepping() }
                 .function("requestGameToSprint", 1) { it.target?.requestGameToSprint(it.getNumber(0).toInt()) }
                 .function("stopSprinting", 0) { it.target?.stopSprinting() }
-                .function("isFrozen", 1) { it.target?.isFrozen(it.getArgument(0) as Entity) }
                 .function("frozenTicksToRun", 0) { it.target?.frozenTicksToRun }
         }
     }

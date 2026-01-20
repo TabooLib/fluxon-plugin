@@ -30,13 +30,19 @@ object FnFireworkEffect {
                 .function("flicker", 1) { it.target?.flicker(it.getBoolean(0)) }
                 .function("withTrail", 0) { it.target?.withTrail() }
                 .function("trail", 1) { it.target?.trail(it.getBoolean(0)) }
-                .function("withColor", 1) { it.target?.withColor(it.getArgument(0) as Color) }
-                .function("withColor", 0) {
-                    it.target?.withColor(it.arguments.map { arg -> arg as Color })
+                .function("withColor", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.withColor(it.arguments.map { arg -> arg as Color })
+                    } else {
+                        it.target?.withColor(it.getArgument(0) as Color)
+                    }
                 }
-                .function("withFade", 1) { it.target?.withFade(it.getArgument(0) as Color) }
-                .function("withFade", 0) {
-                    it.target?.withFade(it.arguments.map { arg -> arg as Color })
+                .function("withFade", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.withFade(it.arguments.map { arg -> arg as Color })
+                    } else {
+                        it.target?.withFade(it.getArgument(0) as Color)
+                    }
                 }
                 .function("build", 0) { it.target?.build() }
         }

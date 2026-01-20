@@ -23,15 +23,25 @@ object FnBlockState {
                 .function("x", 0) { it.target?.x }
                 .function("y", 0) { it.target?.y }
                 .function("z", 0) { it.target?.z }
-                .function("location", 0) { it.target?.location }
-                .function("location", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
+                .function("location", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.location
+                    } else {
+                        it.target?.getLocation(it.getArgument(0) as Location)
+                    }
+                }
                 .function("chunk", 0) { it.target?.chunk }
                 .function("setData", 1) { it.target?.setData(it.getArgument(0) as MaterialData) }
                 .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }
                 .function("setType", 1) { it.target?.setType(it.getArgument(0) as Material) }
-                .function("update", 0) { it.target?.update() }
-                .function("update", 1) { it.target?.update(it.getBoolean(0)) }
-                .function("update", 2) { it.target?.update(it.getBoolean(0), it.getBoolean(1)) }
+                .function("update", listOf(0, 1, 2)) {
+                    when (it.arguments.size) {
+                        0 -> it.target?.update()
+                        1 -> it.target?.update(it.getBoolean(0))
+                        2 -> it.target?.update(it.getBoolean(0), it.getBoolean(1))
+                        else -> error("BlockState#update 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
+                }
                 .function("rawData", 0) { it.target?.rawData }
                 .function("setRawData", 1) { it.target?.setRawData(it.getNumber(0).toByte()) }
                 .function("isPlaced", 0) { it.target?.isPlaced }

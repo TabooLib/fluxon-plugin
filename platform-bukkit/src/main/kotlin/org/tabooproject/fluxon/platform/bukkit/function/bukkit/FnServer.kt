@@ -98,21 +98,22 @@ object FnServer {
                 .function("createWorldBorder", 0) { it.target?.createWorldBorder() }
                 .function("map", 1) { it.target?.getMap(it.getNumber(0).toInt()) }
                 .function("createMap", 1) { it.target?.createMap(it.getArgument(0) as World) }
-                .function("createExplorerMap", 3) {
-                    it.target?.createExplorerMap(
-                        it.getArgument(0) as World,
-                        it.getArgument(1) as Location,
-                        it.getArgument(2) as StructureType
-                    )
-                }
-                .function("createExplorerMap", 5) {
-                    it.target?.createExplorerMap(
-                        it.getArgument(0) as World,
-                        it.getArgument(1) as Location,
-                        it.getArgument(2) as StructureType,
-                        it.getNumber(3).toInt(),
-                        it.getBoolean(4)
-                    )
+                .function("createExplorerMap", listOf(3, 5)) {
+                    if (it.arguments.size == 3) {
+                        it.target?.createExplorerMap(
+                            it.getArgument(0) as World,
+                            it.getArgument(1) as Location,
+                            it.getArgument(2) as StructureType
+                        )
+                    } else {
+                        it.target?.createExplorerMap(
+                            it.getArgument(0) as World,
+                            it.getArgument(1) as Location,
+                            it.getArgument(2) as StructureType,
+                            it.getNumber(3).toInt(),
+                            it.getBoolean(4)
+                        )
+                    }
                 }
                 .function("reload", 0) { it.target?.reload() }
                 .function("reloadData", 0) { it.target?.reloadData() }
@@ -134,31 +135,33 @@ object FnServer {
                         it.getArgument(1) as World
                     )
                 }
-                .function("craftItem", 3) {
-                    it.target?.craftItem(
-                        it.getArgument(0) as Array<ItemStack>,
-                        it.getArgument(1) as World,
-                        it.getArgument(2) as Player
-                    )
+                .function("craftItem", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.craftItem(
+                            it.getArgument(0) as Array<ItemStack>,
+                            it.getArgument(1) as World
+                        )
+                    } else {
+                        it.target?.craftItem(
+                            it.getArgument(0) as Array<ItemStack>,
+                            it.getArgument(1) as World,
+                            it.getArgument(2) as Player
+                        )
+                    }
                 }
-                .function("craftItem", 2) {
-                    it.target?.craftItem(
-                        it.getArgument(0) as Array<ItemStack>,
-                        it.getArgument(1) as World
-                    )
-                }
-                .function("craftItemResult", 3) {
-                    it.target?.craftItemResult(
-                        it.getArgument(0) as Array<ItemStack>,
-                        it.getArgument(1) as World,
-                        it.getArgument(2) as Player
-                    )
-                }
-                .function("craftItemResult", 2) {
-                    it.target?.craftItemResult(
-                        it.getArgument(0) as Array<ItemStack>,
-                        it.getArgument(1) as World
-                    )
+                .function("craftItemResult", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.craftItemResult(
+                            it.getArgument(0) as Array<ItemStack>,
+                            it.getArgument(1) as World
+                        )
+                    } else {
+                        it.target?.craftItemResult(
+                            it.getArgument(0) as Array<ItemStack>,
+                            it.getArgument(1) as World,
+                            it.getArgument(2) as Player
+                        )
+                    }
                 }
                 .function("recipeIterator", 0) { it.target?.recipeIterator() }
                 .function("clearRecipes", 0) { it.target?.clearRecipes() }
@@ -182,17 +185,18 @@ object FnServer {
                         else -> throw IllegalArgumentException("参数必须是 String 或 UUID 类型")
                     }
                 }
-                .function("createPlayerProfile", 2) {
-                    it.target?.createPlayerProfile(
-                        UUID.fromString(it.getString(0)),
-                        it.getString(1)
-                    )
-                }
-                .function("createPlayerProfile", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is UUID -> it.target?.createPlayerProfile(var1)
-                        is String -> it.target?.createPlayerProfile(var1)
-                        else -> throw IllegalArgumentException("参数必须是 UUID 或 String 类型")
+                .function("createPlayerProfile", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is UUID -> it.target?.createPlayerProfile(var1)
+                            is String -> it.target?.createPlayerProfile(var1)
+                            else -> throw IllegalArgumentException("参数必须是 UUID 或 String 类型")
+                        }
+                    } else {
+                        it.target?.createPlayerProfile(
+                            UUID.fromString(it.getString(0)),
+                            it.getString(1)
+                        )
                     }
                 }
                 .function("iPBans", 0) { it.target?.ipBans }
@@ -219,28 +223,29 @@ object FnServer {
                 .function("offlinePlayers", 0) { it.target?.offlinePlayers }
                 .function("messenger", 0) { it.target?.messenger }
                 .function("helpMap", 0) { it.target?.helpMap }
-                .function("createInventory", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is InventoryType -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
-                        is Int -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
-                    }
-                }
-                .function("createInventory", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is InventoryType -> it.target?.createInventory(
-                            it.getArgument(0) as? InventoryHolder,
-                            var2,
-                            it.getString(2)!!
-                        )
+                .function("createInventory", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        when (val var2 = it.getArgument(1)) {
+                            is InventoryType -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
+                            is Int -> it.target?.createInventory(it.getArgument(0) as? InventoryHolder, var2)
+                            else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
+                        }
+                    } else {
+                        when (val var2 = it.getArgument(1)) {
+                            is InventoryType -> it.target?.createInventory(
+                                it.getArgument(0) as? InventoryHolder,
+                                var2,
+                                it.getString(2)!!
+                            )
 
-                        is Int -> it.target?.createInventory(
-                            it.getArgument(0) as? InventoryHolder,
-                            var2,
-                            it.getString(2)!!
-                        )
+                            is Int -> it.target?.createInventory(
+                                it.getArgument(0) as? InventoryHolder,
+                                var2,
+                                it.getString(2)!!
+                            )
 
-                        else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
+                            else -> throw IllegalArgumentException("参数2必须是 InventoryType 或 Int 类型")
+                        }
                     }
                 }
                 .function("createMerchant", 1) { it.target?.createMerchant(it.getString(0)) }
@@ -273,20 +278,21 @@ object FnServer {
                 }
                 .function("setIdleTimeout", 1) { it.target?.setIdleTimeout(it.getNumber(0).toInt()) }
                 .function("idleTimeout", 0) { it.target?.idleTimeout }
-                .function("createBossBar", 3) {
-                    it.target?.createBossBar(
-                        it.getString(0),
-                        it.getArgument(1) as BarColor,
-                        it.getArgument(2) as BarStyle
-                    )
-                }
-                .function("createBossBar", 4) {
-                    it.target?.createBossBar(
-                        it.getArgument(0) as NamespacedKey,
-                        it.getString(1),
-                        it.getArgument(2) as BarColor,
-                        it.getArgument(3) as BarStyle
-                    )
+                .function("createBossBar", listOf(3, 4)) {
+                    if (it.arguments.size == 3) {
+                        it.target?.createBossBar(
+                            it.getString(0),
+                            it.getArgument(1) as BarColor,
+                            it.getArgument(2) as BarStyle
+                        )
+                    } else {
+                        it.target?.createBossBar(
+                            it.getArgument(0) as NamespacedKey,
+                            it.getString(1),
+                            it.getArgument(2) as BarColor,
+                            it.getArgument(3) as BarStyle
+                        )
+                    }
                 }
                 .function("bossBars", 0) { it.target?.bossBars }
                 .function("bossBar", 1) { it.target?.getBossBar(it.getArgument(0) as NamespacedKey) }
@@ -294,18 +300,19 @@ object FnServer {
                 .function("entity", 1) { it.target?.getEntity(UUID.fromString(it.getString(0))) }
                 .function("advancement", 1) { it.target?.getAdvancement(it.getArgument(0) as NamespacedKey) }
                 .function("advancementIterator", 0) { it.target?.advancementIterator() }
-                .function("createBlockData", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Material -> it.target?.createBlockData(var1)
-                        is String -> it.target?.createBlockData(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Material 或 String 类型")
+                .function("createBlockData", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Material -> it.target?.createBlockData(var1)
+                            is String -> it.target?.createBlockData(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Material 或 String 类型")
+                        }
+                    } else {
+                        it.target?.createBlockData(
+                            it.getArgument(0) as Material,
+                            it.getString(1)
+                        )
                     }
-                }
-                .function("createBlockData", 2) {
-                    it.target?.createBlockData(
-                        it.getArgument(0) as Material,
-                        it.getString(1)
-                    )
                 }
                 .function("lootTable", 1) { it.target?.getLootTable(it.getArgument(0) as NamespacedKey) }
                 .function("selectEntities", 2) {

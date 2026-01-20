@@ -15,16 +15,12 @@ object FnAbstractArrow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractArrow::class.java)
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "attachedBlock",
                     0
                 ) { it.target?.let { arrow -> if (arrow.isInBlock) arrow.attachedBlock else null } }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isCanPickup", 0) { it.target?.pickupStatus == AbstractArrow.PickupStatus.ALLOWED }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function("isCannotPickup", 0) { it.target?.pickupStatus == AbstractArrow.PickupStatus.DISALLOWED }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
                 .function(
                     "isCreativeOnlyPickup",
                     0

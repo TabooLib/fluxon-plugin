@@ -14,8 +14,13 @@ object FnBlockType {
                 .function("typed", 0) { it.target?.typed() }
                 .function("hasItemType", 0) { it.target?.hasItemType() }
                 .function("itemType", 0) { it.target?.itemType }
-                .function("createBlockData", 0) { it.target?.createBlockData() }
-                .function("createBlockData", 1) { it.target?.createBlockData(it.getString(0)) }
+                .function("createBlockData", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.createBlockData()
+                    } else {
+                        it.target?.createBlockData(it.getString(0))
+                    }
+                }
                 .function("isSolid", 0) { it.target?.isSolid }
                 .function("isFlammable", 0) { it.target?.isFlammable }
                 .function("isBurnable", 0) { it.target?.isBurnable }
@@ -32,9 +37,12 @@ object FnBlockType {
 
             registerExtension(BlockType.Typed::class.java)
                 .function("blockDataClass", 0) { it.target?.blockDataClass }
-                .function("createBlockData", 0) { it.target?.createBlockData() }
-                .function("createBlockData", 1) {
-                    (it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0))
+                .function("createBlockData", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.createBlockData()
+                    } else {
+                        (it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0))
+                    }
                 }
         }
     }

@@ -17,15 +17,17 @@ object FnCriteria {
                 .function("isReadOnly", 0) { it.target?.isReadOnly }
                 .function("defaultRenderType", 0) { it.target?.defaultRenderType }
                 // static
-                .function("statistic", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Material -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
-                        is EntityType -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
-                        else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
+                .function("statistic", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        Criteria.statistic(it.getArgument(0) as Statistic)
+                    } else {
+                        when (val var2 = it.getArgument(1)) {
+                            is Material -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
+                            is EntityType -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
+                            else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
+                        }
                     }
                 }
-                // static
-                .function("statistic", 1) { Criteria.statistic(it.getArgument(0) as Statistic) }
                 // static
                 .function("create", 1) { Criteria.create(it.getString(0)!!) }
         }

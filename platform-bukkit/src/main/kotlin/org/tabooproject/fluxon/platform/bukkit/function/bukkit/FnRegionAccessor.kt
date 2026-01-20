@@ -16,79 +16,94 @@ object FnRegionAccessor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegionAccessor::class.java)
-                .syncFunction("biome", 1) { it.target?.getBiome(it.getArgument(0) as Location) }
-                .syncFunction("biome", 3) {
-                    it.target?.getBiome(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .syncFunction("biome", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getBiome(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.getBiome(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                .syncFunction("setBiome", 2) {
-                    it.target?.setBiome(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Biome
-                    )
+                .syncFunction("setBiome", listOf(2, 4)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.setBiome(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as Biome
+                        )
+                    } else {
+                        it.target?.setBiome(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getArgument(3) as Biome
+                        )
+                    }
                 }
-                .syncFunction("setBiome", 4) {
-                    it.target?.setBiome(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getArgument(3) as Biome
-                    )
+                .syncFunction("blockState", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getBlockState(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.getBlockState(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                .syncFunction("blockState", 1) { it.target?.getBlockState(it.getArgument(0) as Location) }
-                .syncFunction("blockState", 3) {
-                    it.target?.getBlockState(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .syncFunction("blockData", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getBlockData(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.getBlockData(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                .syncFunction("blockData", 1) { it.target?.getBlockData(it.getArgument(0) as Location) }
-                .syncFunction("blockData", 3) {
-                    it.target?.getBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .syncFunction("type", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getType(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.getType(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
-                .syncFunction("type", 1) { it.target?.getType(it.getArgument(0) as Location) }
-                .syncFunction("type", 3) {
-                    it.target?.getType(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
+                .syncFunction("setBlockData", listOf(2, 4)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.setBlockData(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as BlockData
+                        )
+                    } else {
+                        it.target?.setBlockData(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getArgument(3) as BlockData
+                        )
+                    }
                 }
-                .syncFunction("setBlockData", 2) {
-                    it.target?.setBlockData(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as BlockData
-                    )
-                }
-                .syncFunction("setBlockData", 4) {
-                    it.target?.setBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getArgument(3) as BlockData
-                    )
-                }
-                .syncFunction("setType", 2) {
-                    it.target?.setType(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Material
-                    )
-                }
-                .syncFunction("setType", 4) {
-                    it.target?.setType(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getArgument(3) as Material
-                    )
+                .syncFunction("setType", listOf(2, 4)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.setType(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as Material
+                        )
+                    } else {
+                        it.target?.setType(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt(),
+                            it.getArgument(3) as Material
+                        )
+                    }
                 }
                 .syncFunction("generateTree", 3) {
                     it.target?.generateTree(
@@ -97,36 +112,39 @@ object FnRegionAccessor {
                         it.getArgument(2) as org.bukkit.TreeType
                     )
                 }
-                .syncFunction("spawnEntity", 2) {
-                    it.target?.spawnEntity(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as EntityType
-                    )
-                }
-                .syncFunction("spawnEntity", 3) {
-                    it.target?.spawnEntity(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as EntityType,
-                        it.getBoolean(2)
-                    )
+                .syncFunction("spawnEntity", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.spawnEntity(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as EntityType
+                        )
+                    } else {
+                        it.target?.spawnEntity(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as EntityType,
+                            it.getBoolean(2)
+                        )
+                    }
                 }
                 .syncFunction("entities", 0) { it.target?.entities }
                 .syncFunction("livingEntities", 0) { it.target?.livingEntities }
                 .syncFunction("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
-                .syncFunction("highestBlockYAt", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Int -> it.target?.getHighestBlockYAt(var1, it.getNumber(1).toInt())
-                        is Location -> it.target?.getHighestBlockYAt(var1, it.getArgument(1) as HeightMap)
-                        else -> throw IllegalArgumentException("参数1必须是 Int 或 Location 类型")
+                .syncFunction("highestBlockYAt", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.getHighestBlockYAt(it.getArgument(0) as Location)
+                        2 -> when (val var1 = it.getArgument(0)) {
+                            is Int -> it.target?.getHighestBlockYAt(var1, it.getNumber(1).toInt())
+                            is Location -> it.target?.getHighestBlockYAt(var1, it.getArgument(1) as HeightMap)
+                            else -> throw IllegalArgumentException("参数1必须是 Int 或 Location 类型")
+                        }
+
+                        3 -> it.target?.getHighestBlockYAt(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getArgument(2) as HeightMap
+                        )
+                        else -> error("RegionAccessor#highestBlockYAt 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
-                }
-                .syncFunction("highestBlockYAt", 1) { it.target?.getHighestBlockYAt(it.getArgument(0) as Location) }
-                .syncFunction("highestBlockYAt", 3) {
-                    it.target?.getHighestBlockYAt(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getArgument(2) as HeightMap
-                    )
                 }
         }
     }

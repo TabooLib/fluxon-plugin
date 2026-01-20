@@ -22,46 +22,86 @@ object FnWorldCreator {
                         else -> throw IllegalArgumentException("参数必须是 World 或 WorldCreator 类型")
                     }
                 }
-                .function("name", 0) { it.target?.name() }
-                .function("seed", 0) { it.target?.seed() }
-                .function("seed", 1) { it.target?.seed(it.getNumber(0).toLong()) }
+                .function("name", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.name()
+                    } else {
+                        WorldCreator.name(it.getString(0)!!)
+                    }
+                }
+                .function("seed", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.seed()
+                    } else {
+                        it.target?.seed(it.getNumber(0).toLong())
+                    }
+                }
                 .function("environment", 1) { it.target?.environment(it.getArgument(0) as World.Environment) }
-                .function("type", 0) { it.target?.type() }
-                .function("type", 1) { it.target?.type(it.getArgument(0) as WorldType) }
-                .function("generator", 0) { it.target?.generator() }
-                .function("generator", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is ChunkGenerator -> it.target?.generator(var1)
-                        is String -> it.target?.generator(var1)
-                        else -> throw IllegalArgumentException("参数必须是 ChunkGenerator 或 String 类型")
+                .function("type", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.type()
+                    } else {
+                        it.target?.type(it.getArgument(0) as WorldType)
                     }
                 }
-                .function("generator", 2) { it.target?.generator(it.getString(0), it.getArgument(1) as CommandSender) }
-                .function("biomeProvider", 0) { it.target?.biomeProvider() }
-                .function("biomeProvider", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is BiomeProvider -> it.target?.biomeProvider(var1)
-                        is String -> it.target?.biomeProvider(var1)
-                        else -> throw IllegalArgumentException("参数必须是 BiomeProvider 或 String 类型")
+                .function("generator", listOf(0, 1, 2)) {
+                    when (it.arguments.size) {
+                        0 -> it.target?.generator()
+                        1 -> when (val var1 = it.getArgument(0)) {
+                            is ChunkGenerator -> it.target?.generator(var1)
+                            is String -> it.target?.generator(var1)
+                            else -> throw IllegalArgumentException("参数必须是 ChunkGenerator 或 String 类型")
+                        }
+
+                        2 -> it.target?.generator(it.getString(0), it.getArgument(1) as CommandSender)
+                        else -> error("WorldCreator#generator 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("biomeProvider", 2) {
-                    it.target?.biomeProvider(
-                        it.getString(0),
-                        it.getArgument(1) as CommandSender
-                    )
+                .function("biomeProvider", listOf(0, 1, 2)) {
+                    when (it.arguments.size) {
+                        0 -> it.target?.biomeProvider()
+                        1 -> when (val var1 = it.getArgument(0)) {
+                            is BiomeProvider -> it.target?.biomeProvider(var1)
+                            is String -> it.target?.biomeProvider(var1)
+                            else -> throw IllegalArgumentException("参数必须是 BiomeProvider 或 String 类型")
+                        }
+
+                        2 -> it.target?.biomeProvider(
+                            it.getString(0),
+                            it.getArgument(1) as CommandSender
+                        )
+                        else -> error("WorldCreator#biomeProvider 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
-                .function("generatorSettings", 1) { it.target?.generatorSettings(it.getString(0)!!) }
-                .function("generatorSettings", 0) { it.target?.generatorSettings() }
-                .function("generateStructures", 1) { it.target?.generateStructures(it.getBoolean(0)) }
-                .function("generateStructures", 0) { it.target?.generateStructures() }
-                .function("hardcore", 1) { it.target?.hardcore(it.getBoolean(0)) }
-                .function("hardcore", 0) { it.target?.hardcore() }
-                .function("keepSpawnInMemory", 1) { it.target?.keepSpawnInMemory(it.getBoolean(0)) }
-                .function("keepSpawnInMemory", 0) { it.target?.keepSpawnInMemory() }
+                .function("generatorSettings", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.generatorSettings()
+                    } else {
+                        it.target?.generatorSettings(it.getString(0)!!)
+                    }
+                }
+                .function("generateStructures", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.generateStructures()
+                    } else {
+                        it.target?.generateStructures(it.getBoolean(0))
+                    }
+                }
+                .function("hardcore", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.hardcore()
+                    } else {
+                        it.target?.hardcore(it.getBoolean(0))
+                    }
+                }
+                .function("keepSpawnInMemory", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.keepSpawnInMemory()
+                    } else {
+                        it.target?.keepSpawnInMemory(it.getBoolean(0))
+                    }
+                }
                 .function("createWorld", 0) { it.target?.createWorld() }
-                // static
-                .function("name", 1) { WorldCreator.name(it.getString(0)!!) }
                 // static
                 .function("generatorForName", 3) {
                     WorldCreator.getGeneratorForName(

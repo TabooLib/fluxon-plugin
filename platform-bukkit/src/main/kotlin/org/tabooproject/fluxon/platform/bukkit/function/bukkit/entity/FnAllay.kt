@@ -17,8 +17,13 @@ object FnAllay {
                 .function("setDuplicationCooldown", 1) { it.target?.setDuplicationCooldown(it.getNumber(0).toLong()) }
                 .function("resetDuplicationCooldown", 0) { it.target?.resetDuplicationCooldown() }
                 .function("isDancing", 0) { it.target?.isDancing }
-                .function("startDancing", 1) { it.target?.startDancing(it.getArgument(0) as Location) }
-                .function("startDancing", 0) { it.target?.startDancing() }
+                .function("startDancing", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.startDancing()
+                    } else {
+                        it.target?.startDancing(it.getArgument(0) as Location)
+                    }
+                }
                 .function("stopDancing", 0) { it.target?.stopDancing() }
                 .function("duplicateAllay", 0) { it.target?.duplicateAllay() }
                 .function("jukebox", 0) { it.target?.jukebox }

@@ -34,14 +34,17 @@ object FnCreatureSpawner {
                 .function("setSpawnRange", 1) { it.target?.setSpawnRange(it.getNumber(0).toInt()) }
                 .function("spawnedEntity", 0) { it.target?.spawnedEntity }
                 .function("setSpawnedEntity", 1) { it.target?.setSpawnedEntity(it.getArgument(0) as EntitySnapshot) }
-                .function("addPotentialSpawn", 3) {
-                    it.target?.addPotentialSpawn(
-                        it.getArgument(0) as EntitySnapshot,
-                        it.getNumber(1).toInt(),
-                        it.getArgument(2) as SpawnRule
-                    )
+                .function("addPotentialSpawn", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.addPotentialSpawn(it.getArgument(0) as SpawnerEntry)
+                    } else {
+                        it.target?.addPotentialSpawn(
+                            it.getArgument(0) as EntitySnapshot,
+                            it.getNumber(1).toInt(),
+                            it.getArgument(2) as SpawnRule
+                        )
+                    }
                 }
-                .function("addPotentialSpawn", 1) { it.target?.addPotentialSpawn(it.getArgument(0) as SpawnerEntry) }
                 .function(
                     "setPotentialSpawns",
                     1

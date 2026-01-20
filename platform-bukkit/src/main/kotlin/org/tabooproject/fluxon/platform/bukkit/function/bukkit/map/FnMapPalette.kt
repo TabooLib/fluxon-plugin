@@ -16,16 +16,16 @@ object FnMapPalette {
                 // static
                 .function("imageToBytes", 1) { MapPalette.imageToBytes(it.getArgument(0) as Image) }
                 // static
-                .function("matchColor", 3) {
-                    MapPalette.matchColor(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
-                }
-                // static
-                .function("matchColor", 1) {
-                    MapPalette.matchColor(it.getArgument(0) as java.awt.Color)
+                .function("matchColor", listOf(1, 3)) {
+                    if (it.arguments.size == 1) {
+                        MapPalette.matchColor(it.getArgument(0) as java.awt.Color)
+                    } else {
+                        MapPalette.matchColor(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                    }
                 }
                 // static
                 .function("color", 1) { MapPalette.getColor(it.getNumber(0).toByte()) }

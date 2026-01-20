@@ -34,12 +34,15 @@ object FnHumanEntity {
                 ) { it.target?.setWindowProperty(it.getArgument(0) as InventoryView.Property, it.getNumber(1).toInt()) }
                 .function("enchantmentSeed", 0) { it.target?.enchantmentSeed }
                 .function("setEnchantmentSeed", 1) { it.target?.setEnchantmentSeed(it.getNumber(0).toInt()) }
-                .syncFunction("openInventory", 0) { it.target?.openInventory }
-                .syncFunction("openInventory", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Inventory -> it.target?.openInventory(var1)
-                        is InventoryView -> it.target?.openInventory(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Inventory 或 InventoryView 类型")
+                .syncFunction("openInventory", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.openInventory
+                    } else {
+                        when (val var1 = it.getArgument(0)) {
+                            is Inventory -> it.target?.openInventory(var1)
+                            is InventoryView -> it.target?.openInventory(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Inventory 或 InventoryView 类型")
+                        }
                     }
                 }
                 .syncFunction("openWorkbench", 2) {

@@ -14,12 +14,15 @@ object FnPlayerTextures {
                 .function("isEmpty", 0) { it.target?.isEmpty }
                 .function("clear", 0) { it.target?.clear() }
                 .function("skin", 0) { it.target?.skin }
-                .function("setSkin", 1) { it.target?.setSkin(URL(it.getString(0))) }
-                .function("setSkin", 2) {
-                    it.target?.setSkin(
-                        URL(it.getString(0)),
-                        it.getArgument(1) as PlayerTextures.SkinModel
-                    )
+                .function("setSkin", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setSkin(URL(it.getString(0)))
+                    } else {
+                        it.target?.setSkin(
+                            URL(it.getString(0)),
+                            it.getArgument(1) as PlayerTextures.SkinModel
+                        )
+                    }
                 }
                 .function("skinModel", 0) { it.target?.skinModel }
                 .function("cape", 0) { it.target?.cape }

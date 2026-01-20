@@ -12,15 +12,19 @@ object FnBell {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bell::class.java)
-                .function("ring", 2) { it.target?.ring(it.getArgument(0) as Entity, it.getArgument(1) as BlockFace) }
-                .function("ring", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Entity -> it.target?.ring(var1)
-                        is BlockFace -> it.target?.ring(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
+                .function("ring", listOf(0, 1, 2)) {
+                    when (it.arguments.size) {
+                        0 -> it.target?.ring()
+                        1 -> when (val var1 = it.getArgument(0)) {
+                            is Entity -> it.target?.ring(var1)
+                            is BlockFace -> it.target?.ring(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
+                        }
+
+                        2 -> it.target?.ring(it.getArgument(0) as Entity, it.getArgument(1) as BlockFace)
+                        else -> error("Bell#ring 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("ring", 0) { it.target?.ring() }
                 .function("isShaking", 0) { it.target?.isShaking }
                 .function("shakingTicks", 0) { it.target?.shakingTicks }
                 .function("isResonating", 0) { it.target?.isResonating }

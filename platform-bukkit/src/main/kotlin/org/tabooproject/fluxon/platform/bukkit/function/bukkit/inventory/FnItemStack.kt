@@ -27,8 +27,6 @@ object FnItemStack {
                 .function("setData", 1) { it.target?.setData(it.getArgument(0) as MaterialData) }
                 .function("setDurability", 1) { it.target?.setDurability(it.getNumber(0).toShort()) }
                 .function("durability", 0) { it.target?.durability }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("maxAmount", 0) { it.target?.maxStackSize }
                 .function("maxStackSize", 0) { it.target?.maxStackSize }
                 .function("toString", 0) { it.target?.toString() }
                 .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
@@ -64,8 +62,6 @@ object FnItemStack {
                 // static
                 .function("deserialize", 1) { ItemStack.deserialize(it.getArgument(0) as Map<String, Any>) }
                 .function("itemMeta", 0) { it.target?.itemMeta }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("hasMeta", 0) { it.target?.hasItemMeta() }
                 .function("hasItemMeta", 0) { it.target?.hasItemMeta() }
                 .function("setItemMeta", 1) { it.target?.setItemMeta(it.getArgument(0) as ItemMeta) }
                 .function("translationKey", 0) { it.target?.translationKey }

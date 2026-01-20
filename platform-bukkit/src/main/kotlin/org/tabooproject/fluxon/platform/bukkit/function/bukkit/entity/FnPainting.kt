@@ -12,8 +12,13 @@ object FnPainting {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Painting::class.java)
                 .function("art", 0) { it.target?.art }
-                .function("setArt", 1) { it.target?.setArt(it.getArgument(0) as Art) }
-                .function("setArt", 2) { it.target?.setArt(it.getArgument(0) as Art, it.getBoolean(1)) }
+                .function("setArt", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setArt(it.getArgument(0) as Art)
+                    } else {
+                        it.target?.setArt(it.getArgument(0) as Art, it.getBoolean(1))
+                    }
+                }
         }
     }
 }

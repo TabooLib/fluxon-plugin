@@ -15,8 +15,13 @@ object FnDamageable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
-                .function("damage", 1) { it.target?.damage(it.getNumber(0).toDouble()) }
-                .function("damage", 2) { it.target?.damage(it.getNumber(0).toDouble(), it.getArgument(1) as Entity) }
+                .function("damage", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.damage(it.getNumber(0).toDouble())
+                    } else {
+                        it.target?.damage(it.getNumber(0).toDouble(), it.getArgument(1) as Entity)
+                    }
+                }
                 .function("health", 0) { it.target?.health }
                 .function("setHealth", 1) { it.target?.setHealth(it.getNumber(0).toDouble()) }
                 .function("absorptionAmount", 0) { it.target?.absorptionAmount }

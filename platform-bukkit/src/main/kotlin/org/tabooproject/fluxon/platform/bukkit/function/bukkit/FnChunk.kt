@@ -24,23 +24,36 @@ object FnChunk {
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("chunkSnapshot", 0) { it.target?.chunkSnapshot }
-                .function("chunkSnapshot", 3) {
-                    it.target?.getChunkSnapshot(
-                        it.getBoolean(0),
-                        it.getBoolean(1),
-                        it.getBoolean(2)
-                    )
+                .function("chunkSnapshot", listOf(0, 3)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.chunkSnapshot
+                    } else {
+                        it.target?.getChunkSnapshot(
+                            it.getBoolean(0),
+                            it.getBoolean(1),
+                            it.getBoolean(2)
+                        )
+                    }
                 }
                 .function("isEntitiesLoaded", 0) { it.target?.isEntitiesLoaded }
                 .function("entities", 0) { it.target?.entities }
                 .function("tileEntities", 0) { it.target?.tileEntities }
                 .function("isGenerated", 0) { it.target?.isGenerated }
                 .function("isLoaded", 0) { it.target?.isLoaded }
-                .function("load", 1) { it.target?.load(it.getBoolean(0)) }
-                .function("load", 0) { it.target?.load() }
-                .function("unload", 1) { it.target?.unload(it.getBoolean(0)) }
-                .function("unload", 0) { it.target?.unload() }
+                .function("load", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.load()
+                    } else {
+                        it.target?.load(it.getBoolean(0))
+                    }
+                }
+                .function("unload", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.unload()
+                    } else {
+                        it.target?.unload(it.getBoolean(0))
+                    }
+                }
                 .function("isSlimeChunk", 0) { it.target?.isSlimeChunk }
                 .function("isForceLoaded", 0) { it.target?.isForceLoaded }
                 .function("setForceLoaded", 1) { it.target?.setForceLoaded(it.getBoolean(0)) }
@@ -60,8 +73,13 @@ object FnChunk {
                     }
                 }
                 .function("loadLevel", 0) { it.target?.loadLevel }
-                .function("structures", 0) { it.target?.structures }
-                .function("structures", 1) { it.target?.getStructures(it.getArgument(0) as Structure) }
+                .function("structures", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.structures
+                    } else {
+                        it.target?.getStructures(it.getArgument(0) as Structure)
+                    }
+                }
                 .function("playersSeeingChunk", 0) { it.target?.playersSeeingChunk }
         }
     }

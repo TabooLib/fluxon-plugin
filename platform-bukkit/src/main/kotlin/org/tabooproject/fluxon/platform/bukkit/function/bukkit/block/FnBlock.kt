@@ -24,29 +24,22 @@ object FnBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Block::class.java)
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("locationX", 0) { it.target?.x }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("locationY", 0) { it.target?.y }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("locationZ", 0) { it.target?.z }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("worldName", 0) { it.target?.world?.name }
                 .function("data", 0) { it.target?.data }
                 .syncFunction("blockData", 0) { it.target?.blockData }
-                .function("relative", 3) {
-                    it.target?.getRelative(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
-                    )
-                }
-                .function("relative", 1) { it.target?.getRelative(it.getArgument(0) as BlockFace) }
-                .function("relative", 2) {
-                    it.target?.getRelative(
-                        it.getArgument(0) as BlockFace,
-                        it.getNumber(1).toInt()
-                    )
+                .function("relative", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.getRelative(it.getArgument(0) as BlockFace)
+                        2 -> it.target?.getRelative(
+                            it.getArgument(0) as BlockFace,
+                            it.getNumber(1).toInt()
+                        )
+                        3 -> it.target?.getRelative(
+                            it.getNumber(0).toInt(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toInt()
+                        )
+                        else -> error("Block#relative 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function("type", 0) { it.target?.type }
                 .function("lightLevel", 0) { it.target?.lightLevel }
@@ -56,18 +49,31 @@ object FnBlock {
                 .function("x", 0) { it.target?.x }
                 .function("y", 0) { it.target?.y }
                 .function("z", 0) { it.target?.z }
-                .function("location", 0) { it.target?.location }
-                .function("location", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
-                .function("chunk", 0) { it.target?.chunk }
-                .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }
-                .function("setBlockData", 2) {
-                    it.target?.setBlockData(
-                        it.getArgument(0) as BlockData,
-                        it.getBoolean(1)
-                    )
+                .function("location", listOf(0, 1)) {
+                    if (it.hasArgument(0)) {
+                        it.target?.getLocation(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.location
+                    }
                 }
-                .function("setType", 1) { it.target?.setType(it.getArgument(0) as Material) }
-                .function("setType", 2) { it.target?.setType(it.getArgument(0) as Material, it.getBoolean(1)) }
+                .function("chunk", 0) { it.target?.chunk }
+                .function("setBlockData", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setBlockData(it.getArgument(0) as BlockData)
+                    } else {
+                        it.target?.setBlockData(
+                            it.getArgument(0) as BlockData,
+                            it.getBoolean(1)
+                        )
+                    }
+                }
+                .function("setType", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setType(it.getArgument(0) as Material)
+                    } else {
+                        it.target?.setType(it.getArgument(0) as Material, it.getBoolean(1))
+                    }
+                }
                 .function("face", 1) { it.target?.getFace(it.getArgument(0) as Block) }
                 .function("state", 0) { it.target?.state }
                 .function("biome", 0) { it.target?.biome }
@@ -79,23 +85,36 @@ object FnBlock {
                     "isBlockFaceIndirectlyPowered",
                     1
                 ) { it.target?.isBlockFaceIndirectlyPowered(it.getArgument(0) as BlockFace) }
-                .function("blockPower", 1) { it.target?.getBlockPower(it.getArgument(0) as BlockFace) }
-                .function("blockPower", 0) { it.target?.blockPower }
+                .function("blockPower", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.blockPower
+                    } else {
+                        it.target?.getBlockPower(it.getArgument(0) as BlockFace)
+                    }
+                }
                 .function("isEmpty", 0) { it.target?.isEmpty }
                 .function("isLiquid", 0) { it.target?.isLiquid }
                 .function("temperature", 0) { it.target?.temperature }
                 .function("humidity", 0) { it.target?.humidity }
                 .function("pistonMoveReaction", 0) { it.target?.pistonMoveReaction }
-                .function("breakNaturally", 0) { it.target?.breakNaturally() }
-                .function("breakNaturally", 1) { it.target?.breakNaturally(it.getArgument(0) as ItemStack) }
+                .function("breakNaturally", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.breakNaturally()
+                    } else {
+                        it.target?.breakNaturally(it.getArgument(0) as ItemStack)
+                    }
+                }
                 .function("applyBoneMeal", 1) { it.target?.applyBoneMeal(it.getArgument(0) as BlockFace) }
-                .function("drops", 0) { it.target?.drops }
-                .function("drops", 1) { it.target?.getDrops(it.getArgument(0) as ItemStack) }
-                .function("drops", 2) {
-                    it.target?.getDrops(
-                        it.getArgument(0) as ItemStack,
-                        it.getArgument(1) as Entity
-                    )
+                .function("drops", listOf(0, 1, 2)) {
+                    when (it.arguments.size) {
+                        0 -> it.target?.drops
+                        1 -> it.target?.getDrops(it.getArgument(0) as ItemStack)
+                        2 -> it.target?.getDrops(
+                            it.getArgument(0) as ItemStack,
+                            it.getArgument(1) as Entity
+                        )
+                        else -> error("Block#drops 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function("isPreferredTool", 1) { it.target?.isPreferredTool(it.getArgument(0) as ItemStack) }
                 .function("breakSpeed", 1) { it.target?.getBreakSpeed(it.getArgument(0) as Player) }

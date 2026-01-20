@@ -20,28 +20,32 @@ object FnSimpleCommandMap {
                         it.getArgument(1) as List<Command>
                     )
                 }
-                .function("register", 2) { it.target?.register(it.getString(0)!!, it.getArgument(1) as Command) }
-                .function("register", 3) {
-                    it.target?.register(
-                        it.getString(0)!!,
-                        it.getString(1)!!,
-                        it.getArgument(2) as Command
-                    )
+                .function("register", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.register(it.getString(0)!!, it.getArgument(1) as Command)
+                    } else {
+                        it.target?.register(
+                            it.getString(0)!!,
+                            it.getString(1)!!,
+                            it.getArgument(2) as Command
+                        )
+                    }
                 }
                 .function("dispatch", 2) { it.target?.dispatch(it.getArgument(0) as CommandSender, it.getString(1)!!) }
                 .function("command", 1) { it.target?.getCommand(it.getString(0)!!) }
-                .function("tabComplete", 2) {
-                    it.target?.tabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getString(1)!!
-                    )
-                }
-                .function("tabComplete", 3) {
-                    it.target?.tabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getString(1)!!,
-                        it.getArgument(2) as Location
-                    )
+                .function("tabComplete", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.tabComplete(
+                            it.getArgument(0) as CommandSender,
+                            it.getString(1)!!
+                        )
+                    } else {
+                        it.target?.tabComplete(
+                            it.getArgument(0) as CommandSender,
+                            it.getString(1)!!,
+                            it.getArgument(2) as Location
+                        )
+                    }
                 }
                 .function("commands", 0) { it.target?.commands }
                 .function("registerServerAliases", 0) { it.target?.registerServerAliases() }

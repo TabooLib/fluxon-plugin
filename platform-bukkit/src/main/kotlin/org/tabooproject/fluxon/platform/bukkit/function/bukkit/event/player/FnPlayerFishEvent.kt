@@ -26,7 +26,6 @@ object FnPlayerFishEvent {
                 // static
                 .function("handlerList", 0) { PlayerFishEvent.getHandlerList() }
 
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
                 .function("isFishing", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING } }
                 .function("isCaughtFish", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH } }
                 .function(

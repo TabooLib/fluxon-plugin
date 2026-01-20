@@ -15,13 +15,9 @@ object FnEntityType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityType::class.java)
-                // 橙汁喵: 枚举类语法
                 .function("name", 0) { it.target?.name }
-                // 橙汁喵: 枚举类语法
                 .function("ordinal", 0) { it.target?.ordinal }
                 .function("entityName", 0) { it.target?.getName() }
-                // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
-                .function("namespacedKey", 0) { it.target?.key }
                 .function("key", 0) { it.target?.key }
                 .function("typeId", 0) { it.target?.typeId }
                 // static

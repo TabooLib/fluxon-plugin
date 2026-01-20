@@ -40,31 +40,32 @@ object FnItemFactory {
                 .function("defaultLeatherColor", 0) { it.target?.defaultLeatherColor }
                 .function("createItemStack", 1) { it.target?.createItemStack(it.getString(0)!!) }
                 .function("spawnEgg", 1) { it.target?.getSpawnEgg(it.getArgument(0) as EntityType) }
-                .function("enchantItem", 4) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Entity -> it.target?.enchantItem(
-                            var1,
-                            it.getArgument(1) as ItemStack,
-                            it.getNumber(2).toInt(),
-                            it.getBoolean(3)
+                .function("enchantItem", listOf(3, 4)) {
+                    if (it.arguments.size == 3) {
+                        it.target?.enchantItem(
+                            it.getArgument(0) as ItemStack,
+                            it.getNumber(1).toInt(),
+                            it.getBoolean(2)
                         )
+                    } else {
+                        when (val var1 = it.getArgument(0)) {
+                            is Entity -> it.target?.enchantItem(
+                                var1,
+                                it.getArgument(1) as ItemStack,
+                                it.getNumber(2).toInt(),
+                                it.getBoolean(3)
+                            )
 
-                        is World -> it.target?.enchantItem(
-                            var1,
-                            it.getArgument(1) as ItemStack,
-                            it.getNumber(2).toInt(),
-                            it.getBoolean(3)
-                        )
+                            is World -> it.target?.enchantItem(
+                                var1,
+                                it.getArgument(1) as ItemStack,
+                                it.getNumber(2).toInt(),
+                                it.getBoolean(3)
+                            )
 
-                        else -> throw IllegalArgumentException("参数1必须是 Entity 或 World 类型")
+                            else -> throw IllegalArgumentException("参数1必须是 Entity 或 World 类型")
+                        }
                     }
-                }
-                .function("enchantItem", 3) {
-                    it.target?.enchantItem(
-                        it.getArgument(0) as ItemStack,
-                        it.getNumber(1).toInt(),
-                        it.getBoolean(2)
-                    )
                 }
         }
     }

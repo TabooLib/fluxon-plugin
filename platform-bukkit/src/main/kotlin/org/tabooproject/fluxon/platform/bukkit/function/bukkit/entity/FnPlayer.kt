@@ -29,7 +29,6 @@ object FnPlayer {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
             registerFunction("player", 1) {
                 when (val id = it.getArgument(0)) {
                     is UUID -> Bukkit.getPlayer(id)
@@ -37,7 +36,6 @@ object FnPlayer {
                     else -> null
                 }
             }
-            // 橙汁喵: 自定义语法, 这个语法并不在Bukkit中存在
             registerFunction("players", 0) { onlinePlayers }
 
             registerExtension(Player::class.java)
@@ -89,23 +87,27 @@ object FnPlayer {
                 .function("loadData", 0) { it.target?.loadData() }
                 .function("setSleepingIgnored", 1) { it.target?.setSleepingIgnored(it.getBoolean(0)) }
                 .function("isSleepingIgnored", 0) { it.target?.isSleepingIgnored }
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                .function("bedLocation", 0) { it.target?.bedSpawnLocation }
                 .function("bedSpawnLocation", 0) { it.target?.bedSpawnLocation }
                 .function("respawnLocation", 0) { it.target?.respawnLocation }
-                .function("setBedSpawnLocation", 1) { it.target?.setBedSpawnLocation(it.getArgument(0) as Location) }
-                .function("setRespawnLocation", 1) { it.target?.setRespawnLocation(it.getArgument(0) as Location) }
-                .function("setBedSpawnLocation", 2) {
-                    it.target?.setBedSpawnLocation(
-                        it.getArgument(0) as Location,
-                        it.getBoolean(1)
-                    )
+                .function("setBedSpawnLocation", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setBedSpawnLocation(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.setBedSpawnLocation(
+                            it.getArgument(0) as Location,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
-                .function("setRespawnLocation", 2) {
-                    it.target?.setRespawnLocation(
-                        it.getArgument(0) as Location,
-                        it.getBoolean(1)
-                    )
+                .function("setRespawnLocation", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setRespawnLocation(it.getArgument(0) as Location)
+                    } else {
+                        it.target?.setRespawnLocation(
+                            it.getArgument(0) as Location,
+                            it.getBoolean(1)
+                        )
+                    }
                 }
                 .function("playNote", 3) {
                     when (val var2 = it.getArgument(1)) {
@@ -119,154 +121,156 @@ object FnPlayer {
                         else -> throw IllegalArgumentException("参数2必须是 Byte 或 Instrument 类型")
                     }
                 }
-                .function("playSound", 4) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Location -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getNumber(2).toFloat(),
-                                it.getNumber(3).toFloat()
-                            )
+                .function("playSound", listOf(4, 5, 6)) {
+                    when (it.arguments.size) {
+                        4 -> when (val var1 = it.getArgument(0)) {
+                            is Location -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getNumber(2).toFloat(),
+                                    it.getNumber(3).toFloat()
+                                )
 
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getNumber(2).toFloat(),
-                                it.getNumber(3).toFloat()
-                            )
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getNumber(2).toFloat(),
+                                    it.getNumber(3).toFloat()
+                                )
 
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            is Entity -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getNumber(2).toFloat(),
+                                    it.getNumber(3).toFloat()
+                                )
+
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getNumber(2).toFloat(),
+                                    it.getNumber(3).toFloat()
+                                )
+
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
                         }
 
-                        is Entity -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getNumber(2).toFloat(),
-                                it.getNumber(3).toFloat()
-                            )
+                        5 -> when (val var1 = it.getArgument(0)) {
+                            is Location -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat()
+                                )
 
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getNumber(2).toFloat(),
-                                it.getNumber(3).toFloat()
-                            )
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat()
+                                )
 
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            is Entity -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat()
+                                )
+
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat()
+                                )
+
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
                         }
 
-                        else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
+                        6 -> when (val var1 = it.getArgument(0)) {
+                            is Location -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat(),
+                                    it.getNumber(5).toLong()
+                                )
+
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat(),
+                                    it.getNumber(5).toLong()
+                                )
+
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            is Entity -> when (val var2 = it.getArgument(1)) {
+                                is Sound -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat(),
+                                    it.getNumber(5).toLong()
+                                )
+
+                                is String -> it.target?.playSound(
+                                    var1,
+                                    var2,
+                                    it.getArgument(2) as SoundCategory,
+                                    it.getNumber(3).toFloat(),
+                                    it.getNumber(4).toFloat(),
+                                    it.getNumber(5).toLong()
+                                )
+
+                                else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                            }
+
+                            else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
+                        }
+                        else -> error("Player#playSound 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("playSound", 5) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Location -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat()
-                            )
-
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat()
-                            )
-
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                .function("stopSound", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is Sound -> it.target?.stopSound(var1)
+                            is String -> it.target?.stopSound(var1)
+                            is SoundCategory -> it.target?.stopSound(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Sound, String, 或 SoundCategory 类型")
                         }
-
-                        is Entity -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat()
-                            )
-
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat()
-                            )
-
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
+                    } else {
+                        when (val var1 = it.getArgument(0)) {
+                            is Sound -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
+                            is String -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
+                            else -> throw IllegalArgumentException("参数1必须是 Sound 或 String 类型")
                         }
-
-                        else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
-                    }
-                }
-                .function("playSound", 6) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Location -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat(),
-                                it.getNumber(5).toLong()
-                            )
-
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat(),
-                                it.getNumber(5).toLong()
-                            )
-
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
-                        }
-
-                        is Entity -> when (val var2 = it.getArgument(1)) {
-                            is Sound -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat(),
-                                it.getNumber(5).toLong()
-                            )
-
-                            is String -> it.target?.playSound(
-                                var1,
-                                var2,
-                                it.getArgument(2) as SoundCategory,
-                                it.getNumber(3).toFloat(),
-                                it.getNumber(4).toFloat(),
-                                it.getNumber(5).toLong()
-                            )
-
-                            else -> throw IllegalArgumentException("参数2必须是 Sound 或 String 类型")
-                        }
-
-                        else -> throw IllegalArgumentException("参数1必须是 Location 或 Entity 类型")
-                    }
-                }
-                .function("stopSound", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Sound -> it.target?.stopSound(var1)
-                        is String -> it.target?.stopSound(var1)
-                        is SoundCategory -> it.target?.stopSound(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Sound, String, 或 SoundCategory 类型")
-                    }
-                }
-                .function("stopSound", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Sound -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
-                        is String -> it.target?.stopSound(var1, it.getArgument(1) as? SoundCategory)
-                        else -> throw IllegalArgumentException("参数1必须是 Sound 或 String 类型")
                     }
                 }
                 .function("stopAllSounds", 0) { it.target?.stopAllSounds() }
@@ -278,83 +282,86 @@ object FnPlayer {
                     )
                 }
                 .function("breakBlock", 1) { it.target?.breakBlock(it.getArgument(0) as Block) }
-                .function("sendBlockChange", 3) {
-                    it.target?.sendBlockChange(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Material,
-                        it.getNumber(2).toByte()
-                    )
-                }
-                .function("sendBlockChange", 2) {
-                    it.target?.sendBlockChange(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as BlockData
-                    )
-                }
-                .function(
-                    "sendBlockChanges",
-                    1
-                ) { it.target?.sendBlockChanges(it.getArgument(0) as Collection<BlockState>) }
-                .function(
-                    "sendBlockChanges",
-                    2
-                ) { it.target?.sendBlockChanges(it.getArgument(0) as Collection<BlockState>, it.getBoolean(1)) }
-                .function("sendBlockDamage", 2) {
-                    it.target?.sendBlockDamage(
-                        it.getArgument(0) as Location,
-                        it.getNumber(1).toFloat()
-                    )
-                }
-                .function("sendBlockDamage", 3) {
-                    when (val var3 = it.getArgument(2)) {
-                        is Entity -> it.target?.sendBlockDamage(
+                .function("sendBlockChange", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.sendBlockChange(
                             it.getArgument(0) as Location,
-                            it.getNumber(1).toFloat(),
-                            var3
+                            it.getArgument(1) as BlockData
                         )
-
-                        is Int -> it.target?.sendBlockDamage(
+                    } else {
+                        it.target?.sendBlockChange(
                             it.getArgument(0) as Location,
-                            it.getNumber(1).toFloat(),
-                            var3
+                            it.getArgument(1) as Material,
+                            it.getNumber(2).toByte()
                         )
-
-                        else -> throw IllegalArgumentException("参数3必须是 Entity 或 Int 类型")
                     }
                 }
-                .function("sendEquipmentChange", 3) {
-                    it.target?.sendEquipmentChange(
-                        it.getArgument(0) as LivingEntity,
-                        it.getArgument(1) as EquipmentSlot,
-                        it.getArgument(2) as ItemStack
-                    )
+                .function("sendBlockChanges", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.sendBlockChanges(it.getArgument(0) as Collection<BlockState>)
+                    } else {
+                        it.target?.sendBlockChanges(it.getArgument(0) as Collection<BlockState>, it.getBoolean(1))
+                    }
                 }
-                .function("sendEquipmentChange", 2) {
-                    it.target?.sendEquipmentChange(
-                        it.getArgument(0) as LivingEntity,
-                        it.getArgument(1) as Map<EquipmentSlot, ItemStack>
-                    )
+                .function("sendBlockDamage", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.sendBlockDamage(
+                            it.getArgument(0) as Location,
+                            it.getNumber(1).toFloat()
+                        )
+                    } else {
+                        when (val var3 = it.getArgument(2)) {
+                            is Entity -> it.target?.sendBlockDamage(
+                                it.getArgument(0) as Location,
+                                it.getNumber(1).toFloat(),
+                                var3
+                            )
+
+                            is Int -> it.target?.sendBlockDamage(
+                                it.getArgument(0) as Location,
+                                it.getNumber(1).toFloat(),
+                                var3
+                            )
+
+                            else -> throw IllegalArgumentException("参数3必须是 Entity 或 Int 类型")
+                        }
+                    }
                 }
-                .function("sendSignChange", 2) {
-                    it.target?.sendSignChange(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Array<String>
-                    )
+                .function("sendEquipmentChange", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.sendEquipmentChange(
+                            it.getArgument(0) as LivingEntity,
+                            it.getArgument(1) as Map<EquipmentSlot, ItemStack>
+                        )
+                    } else {
+                        it.target?.sendEquipmentChange(
+                            it.getArgument(0) as LivingEntity,
+                            it.getArgument(1) as EquipmentSlot,
+                            it.getArgument(2) as ItemStack
+                        )
+                    }
                 }
-                .function("sendSignChange", 3) {
-                    it.target?.sendSignChange(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Array<String>,
-                        it.getArgument(2) as DyeColor
-                    )
-                }
-                .function("sendSignChange", 4) {
-                    it.target?.sendSignChange(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Array<String>,
-                        it.getArgument(2) as DyeColor,
-                        it.getBoolean(3)
-                    )
+                .function("sendSignChange", listOf(2, 3, 4)) {
+                    when (it.arguments.size) {
+                        2 -> it.target?.sendSignChange(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as Array<String>
+                        )
+
+                        3 -> it.target?.sendSignChange(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as Array<String>,
+                            it.getArgument(2) as DyeColor
+                        )
+
+                        4 -> it.target?.sendSignChange(
+                            it.getArgument(0) as Location,
+                            it.getArgument(1) as Array<String>,
+                            it.getArgument(2) as DyeColor,
+                            it.getBoolean(3)
+                        )
+                        else -> error("Player#sendSignChange 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function(
                     "sendPotionEffectChange",
@@ -389,9 +396,13 @@ object FnPlayer {
                     1
                 ) { it.target?.setCustomChatCompletions(it.getArgument(0) as Collection<String>) }
                 .function("previousGameMode", 0) { it.target?.previousGameMode }
-                .function("setPlayerTime", 2) { it.target?.setPlayerTime(it.getNumber(0).toLong(), it.getBoolean(1)) }
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                .function("setPlayerTime", 1) { it.target?.setPlayerTime(it.getNumber(0).toLong(), false) }
+                .function("setPlayerTime", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setPlayerTime(it.getNumber(0).toLong(), false)
+                    } else {
+                        it.target?.setPlayerTime(it.getNumber(0).toLong(), it.getBoolean(1))
+                    }
+                }
                 .function("playerTime", 0) { it.target?.playerTime }
                 .function("playerTimeOffset", 0) { it.target?.playerTimeOffset }
                 .function("isPlayerTimeRelative", 0) { it.target?.isPlayerTimeRelative }
@@ -403,38 +414,43 @@ object FnPlayer {
                 .function("setExpCooldown", 1) { it.target?.setExpCooldown(it.getNumber(0).toInt()) }
                 .function("giveExp", 1) { it.target?.giveExp(it.getNumber(0).toInt()) }
                 .function("giveExpLevels", 1) { it.target?.giveExpLevels(it.getNumber(0).toInt()) }
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                .function("experience", 0) { it.target?.exp }
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                .function("setExperience", 1) { it.target?.setExp(it.getNumber(0).toFloat()) }
                 .function("exp", 0) { it.target?.exp }
                 .function("setExp", 1) { it.target?.setExp(it.getNumber(0).toFloat()) }
                 .function("level", 0) { it.target?.level }
                 .function("setLevel", 1) { it.target?.setLevel(it.getNumber(0).toInt()) }
                 .function("totalExperience", 0) { it.target?.totalExperience }
                 .function("setTotalExperience", 1) { it.target?.setTotalExperience(it.getNumber(0).toInt()) }
-                .function("sendExperienceChange", 1) { it.target?.sendExperienceChange(it.getNumber(0).toFloat()) }
-                .function("sendExperienceChange", 2) {
-                    it.target?.sendExperienceChange(
-                        it.getNumber(0).toFloat(),
-                        it.getNumber(1).toInt()
-                    )
+                .function("sendExperienceChange", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.sendExperienceChange(it.getNumber(0).toFloat())
+                    } else {
+                        it.target?.sendExperienceChange(
+                            it.getNumber(0).toFloat(),
+                            it.getNumber(1).toInt()
+                        )
+                    }
                 }
                 .function("allowFlight", 0) { it.target?.allowFlight }
                 .function("setAllowFlight", 1) { it.target?.setAllowFlight(it.getBoolean(0)) }
-                .function("hidePlayer", 1) { it.target?.hidePlayer(it.getArgument(0) as Player) }
-                .function("hidePlayer", 2) {
-                    it.target?.hidePlayer(
-                        it.getArgument(0) as Plugin,
-                        it.getArgument(1) as Player
-                    )
+                .function("hidePlayer", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.hidePlayer(it.getArgument(0) as Player)
+                    } else {
+                        it.target?.hidePlayer(
+                            it.getArgument(0) as Plugin,
+                            it.getArgument(1) as Player
+                        )
+                    }
                 }
-                .function("showPlayer", 1) { it.target?.showPlayer(it.getArgument(0) as Player) }
-                .function("showPlayer", 2) {
-                    it.target?.showPlayer(
-                        it.getArgument(0) as Plugin,
-                        it.getArgument(1) as Player
-                    )
+                .function("showPlayer", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.showPlayer(it.getArgument(0) as Player)
+                    } else {
+                        it.target?.showPlayer(
+                            it.getArgument(0) as Plugin,
+                            it.getArgument(1) as Player
+                        )
+                    }
                 }
                 .function("canSee", 1) {
                     when (val var1 = it.getArgument(0)) {
@@ -462,46 +478,46 @@ object FnPlayer {
                 .function("flySpeed", 0) { it.target?.flySpeed }
                 .function("walkSpeed", 0) { it.target?.walkSpeed }
                 .function("setTexturePack", 1) { it.target?.setTexturePack(it.getString(0)!!) }
-                .function("setResourcePack", 1) { it.target?.setResourcePack(it.getString(0)!!) }
-                .function("setResourcePack", 2) {
-                    it.target?.setResourcePack(
-                        it.getString(0)!!,
-                        it.getArgument(1) as ByteArray
-                    )
-                }
-                .function("setResourcePack", 3) {
-                    when (val var3 = it.getArgument(2)) {
-                        is String -> it.target?.setResourcePack(
+                .function("setResourcePack", listOf(1, 2, 3, 4, 5)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.setResourcePack(it.getString(0)!!)
+                        2 -> it.target?.setResourcePack(
                             it.getString(0)!!,
-                            it.getArgument(1) as? ByteArray,
-                            var3
+                            it.getArgument(1) as ByteArray
                         )
 
-                        is Boolean -> it.target?.setResourcePack(
+                        3 -> when (val var3 = it.getArgument(2)) {
+                            is String -> it.target?.setResourcePack(
+                                it.getString(0)!!,
+                                it.getArgument(1) as? ByteArray,
+                                var3
+                            )
+
+                            is Boolean -> it.target?.setResourcePack(
+                                it.getString(0)!!,
+                                it.getArgument(1) as? ByteArray,
+                                var3
+                            )
+
+                            else -> throw IllegalArgumentException("参数3必须是 String 或 Boolean 类型")
+                        }
+
+                        4 -> it.target?.setResourcePack(
                             it.getString(0)!!,
-                            it.getArgument(1) as? ByteArray,
-                            var3
+                            it.getArgument(1) as ByteArray,
+                            it.getString(2),
+                            it.getBoolean(3)
                         )
 
-                        else -> throw IllegalArgumentException("参数3必须是 String 或 Boolean 类型")
+                        5 -> it.target?.setResourcePack(
+                            UUID.fromString(it.getString(0)),
+                            it.getString(1)!!,
+                            it.getArgument(2) as ByteArray,
+                            it.getString(3),
+                            it.getBoolean(4)
+                        )
+                        else -> error("Player#setResourcePack 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
-                }
-                .function("setResourcePack", 4) {
-                    it.target?.setResourcePack(
-                        it.getString(0)!!,
-                        it.getArgument(1) as ByteArray,
-                        it.getString(2),
-                        it.getBoolean(3)
-                    )
-                }
-                .function("setResourcePack", 5) {
-                    it.target?.setResourcePack(
-                        UUID.fromString(it.getString(0)),
-                        it.getString(1)!!,
-                        it.getArgument(2) as ByteArray,
-                        it.getString(3),
-                        it.getBoolean(4)
-                    )
                 }
                 .function("addResourcePack", 5) {
                     it.target?.addResourcePack(
@@ -518,106 +534,113 @@ object FnPlayer {
                 .function("setScoreboard", 1) { it.target?.setScoreboard(it.getArgument(0) as Scoreboard) }
                 .function("worldBorder", 0) { it.target?.worldBorder }
                 .function("setWorldBorder", 1) { it.target?.setWorldBorder(it.getArgument(0) as WorldBorder) }
-                .function("sendHealthUpdate", 3) {
-                    it.target?.sendHealthUpdate(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toFloat()
-                    )
+                .function("sendHealthUpdate", listOf(0, 3)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.sendHealthUpdate()
+                    } else {
+                        it.target?.sendHealthUpdate(
+                            it.getNumber(0).toDouble(),
+                            it.getNumber(1).toInt(),
+                            it.getNumber(2).toFloat()
+                        )
+                    }
                 }
-                .function("sendHealthUpdate", 0) { it.target?.sendHealthUpdate() }
                 .function("isHealthScaled", 0) { it.target?.isHealthScaled }
                 .function("setHealthScaled", 1) { it.target?.setHealthScaled(it.getBoolean(0)) }
                 .function("setHealthScale", 1) { it.target?.setHealthScale(it.getNumber(0).toDouble()) }
                 .function("healthScale", 0) { it.target?.healthScale }
                 .function("spectatorTarget", 0) { it.target?.spectatorTarget }
                 .function("setSpectatorTarget", 1) { it.target?.setSpectatorTarget(it.getArgument(0) as Entity) }
-                .function("sendTitle", 2) { it.target?.sendTitle(it.getString(0), it.getString(1)) }
-                .function("sendTitle", 5) {
-                    it.target?.sendTitle(
-                        it.getString(0),
-                        it.getString(1),
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getNumber(4).toInt()
-                    )
+                .function("sendTitle", listOf(2, 5)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.sendTitle(it.getString(0), it.getString(1))
+                    } else {
+                        it.target?.sendTitle(
+                            it.getString(0),
+                            it.getString(1),
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toInt(),
+                            it.getNumber(4).toInt()
+                        )
+                    }
                 }
                 .function("resetTitle", 0) { it.target?.resetTitle() }
-                .function("spawnParticle", 3) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getArgument(1) as Location,
-                        it.getNumber(2).toInt()
-                    )
-                }
-                .function("spawnParticle", 5) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toInt()
-                    )
-                }
-                .function("spawnParticle", 6) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getArgument(1) as Location,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble()
-                    )
-                }
-                .function("spawnParticle", 8) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toInt(),
-                        it.getNumber(5).toDouble(),
-                        it.getNumber(6).toDouble(),
-                        it.getNumber(7).toDouble()
-                    )
-                }
-                .function("spawnParticle", 7) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getArgument(1) as Location,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getNumber(5).toDouble(),
-                        it.getNumber(6).toDouble()
-                    )
-                }
-                .function("spawnParticle", 9) {
-                    it.target?.spawnParticle(
-                        it.getArgument(0) as Particle,
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toInt(),
-                        it.getNumber(5).toDouble(),
-                        it.getNumber(6).toDouble(),
-                        it.getNumber(7).toDouble(),
-                        it.getNumber(8).toDouble()
-                    )
+                .function("spawnParticle", listOf(3, 5, 6, 7, 8, 9)) {
+                    when (it.arguments.size) {
+                        3 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getArgument(1) as Location,
+                            it.getNumber(2).toInt()
+                        )
+
+                        5 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toInt()
+                        )
+
+                        6 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getArgument(1) as Location,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble()
+                        )
+
+                        7 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getArgument(1) as Location,
+                            it.getNumber(2).toInt(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toDouble(),
+                            it.getNumber(5).toDouble(),
+                            it.getNumber(6).toDouble()
+                        )
+
+                        8 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toInt(),
+                            it.getNumber(5).toDouble(),
+                            it.getNumber(6).toDouble(),
+                            it.getNumber(7).toDouble()
+                        )
+
+                        9 -> it.target?.spawnParticle(
+                            it.getArgument(0) as Particle,
+                            it.getNumber(1).toDouble(),
+                            it.getNumber(2).toDouble(),
+                            it.getNumber(3).toDouble(),
+                            it.getNumber(4).toInt(),
+                            it.getNumber(5).toDouble(),
+                            it.getNumber(6).toDouble(),
+                            it.getNumber(7).toDouble(),
+                            it.getNumber(8).toDouble()
+                        )
+                        else -> error("Player#spawnParticle 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                    }
                 }
                 .function(
                     "advancementProgress",
                     1
                 ) { it.target?.getAdvancementProgress(it.getArgument(0) as Advancement) }
-                // 橙汁喵: 以下全都是自定义语法, 这个语法并不在Bukkit中存在
-                .function("viewDistance", 0) { it.target?.clientViewDistance }
                 .function("clientViewDistance", 0) { it.target?.clientViewDistance }
                 .function("ping", 0) { it.target?.ping }
                 .function("locale", 0) { it.target?.locale }
                 .function("updateCommands", 0) { it.target?.updateCommands() }
                 .function("openBook", 1) { it.target?.openBook(it.getArgument(0) as ItemStack) }
-                .function("openSign", 1) { it.target?.openSign(it.getArgument(0) as Sign) }
-                .function("openSign", 2) { it.target?.openSign(it.getArgument(0) as Sign, it.getArgument(1) as Side) }
+                .function("openSign", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.openSign(it.getArgument(0) as Sign)
+                    } else {
+                        it.target?.openSign(it.getArgument(0) as Sign, it.getArgument(1) as Side)
+                    }
+                }
                 .function("showDemoScreen", 0) { it.target?.showDemoScreen() }
                 .function("isAllowingServerListings", 0) { it.target?.isAllowingServerListings }
 //                .function("displayName", 0) { it.target?.displayName() }

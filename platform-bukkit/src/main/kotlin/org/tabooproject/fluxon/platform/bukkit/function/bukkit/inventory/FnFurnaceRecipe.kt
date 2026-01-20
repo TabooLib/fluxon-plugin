@@ -13,14 +13,17 @@ object FnFurnaceRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceRecipe::class.java)
-                .function("setInput", 1) {
-                    when (val var1 = it.getArgument(0)) {
-                        is MaterialData -> it.target?.setInput(var1)
-                        is Material -> it.target?.setInput(var1)
-                        else -> throw IllegalArgumentException("参数必须是 MaterialData 或 Material 类型")
+                .function("setInput", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        when (val var1 = it.getArgument(0)) {
+                            is MaterialData -> it.target?.setInput(var1)
+                            is Material -> it.target?.setInput(var1)
+                            else -> throw IllegalArgumentException("参数必须是 MaterialData 或 Material 类型")
+                        }
+                    } else {
+                        it.target?.setInput(it.getArgument(0) as Material, it.getNumber(1).toInt())
                     }
                 }
-                .function("setInput", 2) { it.target?.setInput(it.getArgument(0) as Material, it.getNumber(1).toInt()) }
                 .function("setInputChoice", 1) { it.target?.setInputChoice(it.getArgument(0) as RecipeChoice) }
         }
     }

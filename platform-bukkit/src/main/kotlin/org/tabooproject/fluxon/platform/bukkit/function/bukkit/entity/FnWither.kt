@@ -11,12 +11,15 @@ object FnWither {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wither::class.java)
-                .function("setTarget", 1) { it.target?.setTarget(it.getArgument(0) as LivingEntity) }
-                .function("setTarget", 2) {
-                    it.target?.setTarget(
-                        it.getArgument(0) as Wither.Head,
-                        it.getArgument(1) as LivingEntity
-                    )
+                .function("setTarget", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setTarget(it.getArgument(0) as LivingEntity)
+                    } else {
+                        it.target?.setTarget(
+                            it.getArgument(0) as Wither.Head,
+                            it.getArgument(1) as LivingEntity
+                        )
+                    }
                 }
                 .function("target", 1) { it.target?.getTarget(it.getArgument(0) as Wither.Head) }
                 .function("invulnerabilityTicks", 0) { it.target?.invulnerabilityTicks }

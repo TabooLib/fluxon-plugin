@@ -13,8 +13,13 @@ object FnItemFrame {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemFrame::class.java)
                 .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("setItem", 2) { it.target?.setItem(it.getArgument(0) as ItemStack, it.getBoolean(1)) }
+                .function("setItem", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.setItem(it.getArgument(0) as ItemStack)
+                    } else {
+                        it.target?.setItem(it.getArgument(0) as ItemStack, it.getBoolean(1))
+                    }
+                }
                 .function("itemDropChance", 0) { it.target?.itemDropChance }
                 .function("setItemDropChance", 1) { it.target?.setItemDropChance(it.getNumber(0).toFloat()) }
                 .function("rotation", 0) { it.target?.rotation }

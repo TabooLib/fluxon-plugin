@@ -18,62 +18,62 @@ object FnOctaveGenerator {
                 .function("zScale", 0) { it.target?.getZScale() }
                 .function("setZScale", 1) { it.target?.setZScale(it.getNumber(0).toDouble()) }
                 .function("octaves", 0) { it.target?.getOctaves() }
-                .function("noise", 3) {
-                    it.target?.noise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
-                    )
-                }
-                .function("noise", 4) {
-                    when (val var4 = it.getArgument(3)) {
-                        is Boolean -> it.target?.noise(
+                .function("noise", listOf(3, 4, 5, 6)) {
+                    when (it.arguments.size) {
+                        3 -> it.target?.noise(
                             it.getNumber(0).toDouble(),
                             it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            var4
+                            it.getNumber(2).toDouble()
                         )
 
-                        is Double -> it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            var4
-                        )
+                        4 -> when (val var4 = it.getArgument(3)) {
+                            is Boolean -> it.target?.noise(
+                                it.getNumber(0).toDouble(),
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                var4
+                            )
 
-                        else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
-                    }
-                }
-                .function("noise", 5) {
-                    when (val var5 = it.getArgument(4)) {
-                        is Boolean -> it.target?.noise(
+                            is Double -> it.target?.noise(
+                                it.getNumber(0).toDouble(),
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                var4
+                            )
+
+                            else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        5 -> when (val var5 = it.getArgument(4)) {
+                            is Boolean -> it.target?.noise(
+                                it.getNumber(0).toDouble(),
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                it.getNumber(3).toDouble(),
+                                var5
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getNumber(0).toDouble(),
+                                it.getNumber(1).toDouble(),
+                                it.getNumber(2).toDouble(),
+                                it.getNumber(3).toDouble(),
+                                var5
+                            )
+
+                            else -> throw IllegalArgumentException("第五个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        6 -> it.target?.noise(
                             it.getNumber(0).toDouble(),
                             it.getNumber(1).toDouble(),
                             it.getNumber(2).toDouble(),
                             it.getNumber(3).toDouble(),
-                            var5
+                            it.getNumber(4).toDouble(),
+                            it.getBoolean(5)
                         )
-
-                        is Double -> it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble(),
-                            var5
-                        )
-
-                        else -> throw IllegalArgumentException("第五个参数必须是 Boolean 或 Double 类型")
+                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
-                }
-                .function("noise", 6) {
-                    it.target?.noise(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble(),
-                        it.getNumber(3).toDouble(),
-                        it.getNumber(4).toDouble(),
-                        it.getBoolean(5)
-                    )
                 }
         }
     }

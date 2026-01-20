@@ -37,87 +37,95 @@ object FnOfflinePlayer {
                 .function("hasPlayedBefore", 0) { it.target?.hasPlayedBefore() }
                 .function("bedSpawnLocation", 0) { it.target?.bedSpawnLocation }
                 .function("respawnLocation", 0) { it.target?.respawnLocation }
-                .function("incrementStatistic", 1) { it.target?.incrementStatistic(it.getArgument(0) as Statistic) }
-                .function("decrementStatistic", 1) { it.target?.decrementStatistic(it.getArgument(0) as Statistic) }
-                .function("incrementStatistic", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Int -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
-                        is Material -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
-                        is EntityType -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                .function("incrementStatistic", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.incrementStatistic(it.getArgument(0) as Statistic)
+                        2 -> when (val var2 = it.getArgument(1)) {
+                            is Int -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
+                            is Material -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
+                            is EntityType -> it.target?.incrementStatistic(it.getArgument(0) as Statistic, var2)
+                            else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                        }
+
+                        3 -> when (val var2 = it.getArgument(1)) {
+                            is Material -> it.target?.incrementStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            is EntityType -> it.target?.incrementStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                        }
+                        else -> error("OfflinePlayer#incrementStatistic 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("decrementStatistic", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Int -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
-                        is Material -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
-                        is EntityType -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                .function("decrementStatistic", listOf(1, 2, 3)) {
+                    when (it.arguments.size) {
+                        1 -> it.target?.decrementStatistic(it.getArgument(0) as Statistic)
+                        2 -> when (val var2 = it.getArgument(1)) {
+                            is Int -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
+                            is Material -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
+                            is EntityType -> it.target?.decrementStatistic(it.getArgument(0) as Statistic, var2)
+                            else -> throw IllegalArgumentException("参数2必须是 Int, Material, 或 EntityType 类型")
+                        }
+
+                        3 -> when (val var2 = it.getArgument(1)) {
+                            is Material -> it.target?.decrementStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            is EntityType -> it.target?.decrementStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                        }
+                        else -> error("OfflinePlayer#decrementStatistic 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("setStatistic", 2) {
-                    it.target?.setStatistic(
-                        it.getArgument(0) as Statistic,
-                        it.getNumber(1).toInt()
-                    )
-                }
-                .function("statistic", 1) { it.target?.getStatistic(it.getArgument(0) as Statistic) }
-                .function("statistic", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Material -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
-                        is EntityType -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
-                        else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                .function("setStatistic", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        it.target?.setStatistic(
+                            it.getArgument(0) as Statistic,
+                            it.getNumber(1).toInt()
+                        )
+                    } else {
+                        when (val var2 = it.getArgument(1)) {
+                            is Material -> it.target?.setStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            is EntityType -> it.target?.setStatistic(
+                                it.getArgument(0) as Statistic,
+                                var2,
+                                it.getNumber(2).toInt()
+                            )
+
+                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                        }
                     }
                 }
-                .function("incrementStatistic", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Material -> it.target?.incrementStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        is EntityType -> it.target?.incrementStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
-                    }
-                }
-                .function("decrementStatistic", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Material -> it.target?.decrementStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        is EntityType -> it.target?.decrementStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
-                    }
-                }
-                .function("setStatistic", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Material -> it.target?.setStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        is EntityType -> it.target?.setStatistic(
-                            it.getArgument(0) as Statistic,
-                            var2,
-                            it.getNumber(2).toInt()
-                        )
-
-                        else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                .function("statistic", listOf(1, 2)) {
+                    if (it.arguments.size == 1) {
+                        it.target?.getStatistic(it.getArgument(0) as Statistic)
+                    } else {
+                        when (val var2 = it.getArgument(1)) {
+                            is Material -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
+                            is EntityType -> it.target?.getStatistic(it.getArgument(0) as Statistic, var2)
+                            else -> throw IllegalArgumentException("参数2必须是 Material 或 EntityType 类型")
+                        }
                     }
                 }
                 .function("lastDeathLocation", 0) { it.target?.lastDeathLocation }

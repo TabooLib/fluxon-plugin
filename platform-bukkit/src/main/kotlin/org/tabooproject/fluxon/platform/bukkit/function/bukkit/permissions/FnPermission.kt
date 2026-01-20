@@ -34,20 +34,20 @@ object FnPermission {
                     )
                 }
                 // static
-                .function("loadPermission", 2) {
-                    Permission.loadPermission(
-                        it.getString(0)!!,
-                        it.getArgument(1) as Map<String, Any>
-                    )
-                }
-                // static
-                .function("loadPermission", 3) {
-                    Permission.loadPermission(
-                        it.getString(0)!!,
-                        it.getArgument(1) as Map<*, *>,
-                        it.getArgument(2) as PermissionDefault,
-                        it.getArgument(3) as List<Permission>
-                    )
+                .function("loadPermission", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        Permission.loadPermission(
+                            it.getString(0)!!,
+                            it.getArgument(1) as Map<String, Any>
+                        )
+                    } else {
+                        Permission.loadPermission(
+                            it.getString(0)!!,
+                            it.getArgument(1) as Map<*, *>,
+                            it.getArgument(2) as PermissionDefault,
+                            it.getArgument(3) as List<Permission>
+                        )
+                    }
                 }
         }
     }

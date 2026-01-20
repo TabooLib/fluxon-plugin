@@ -24,8 +24,13 @@ object FnBlockData {
             registerExtension(BlockData::class.java)
 //                .function("isRandomlyTicked", 0) { it.target?.isRandomlyTicked }
                 .function("material", 0) { it.target?.material }
-                .function("asString", 0) { it.target?.asString }
-                .function("asString", 1) { it.target?.getAsString(it.getBoolean(0)) }
+                .function("asString", listOf(0, 1)) {
+                    if (it.arguments.isEmpty()) {
+                        it.target?.asString
+                    } else {
+                        it.target?.getAsString(it.getBoolean(0))
+                    }
+                }
                 .function("merge", 1) { it.target?.merge(it.getArgument(0) as BlockData) }
                 .function("matches", 1) { it.target?.matches(it.getArgument(0) as BlockData) }
                 .function("clone", 0) { it.target?.clone() }

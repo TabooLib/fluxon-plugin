@@ -16,20 +16,21 @@ object FnShapedRecipe {
                 .function("shape", 0) {
                     it.target?.shape
                 }
-                .function("setIngredient", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        else -> throw IllegalArgumentException("参数2必须是 MaterialData, Material, 或 RecipeChoice 类型")
+                .function("setIngredient", listOf(2, 3)) {
+                    if (it.arguments.size == 2) {
+                        when (val var2 = it.getArgument(1)) {
+                            is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            else -> throw IllegalArgumentException("参数2必须是 MaterialData, Material, 或 RecipeChoice 类型")
+                        }
+                    } else {
+                        it.target?.setIngredient(
+                            it.getString(0)?.firstOrNull()!!,
+                            it.getArgument(1) as Material,
+                            it.getNumber(2).toInt()
+                        )
                     }
-                }
-                .function("setIngredient", 3) {
-                    it.target?.setIngredient(
-                        it.getString(0)?.firstOrNull()!!,
-                        it.getArgument(1) as Material,
-                        it.getNumber(2).toInt()
-                    )
                 }
         }
     }
