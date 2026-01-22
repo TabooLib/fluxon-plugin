@@ -71,7 +71,7 @@ object FnHumanEntity {
                 .function("itemOnCursor", 0) { it.target?.itemOnCursor }
                 .function("setItemOnCursor", 1) { it.target?.setItemOnCursor(it.getArgument(0) as ItemStack) }
                 .function("hasCooldown", 1) { it.target?.hasCooldown(it.getArgument(0) as Material) }
-                .function("cooldown", 1) { it.target?.getCooldown(it.getArgument(0) as Material) }
+                .function("getCooldown", 1) { it.target?.getCooldown(it.getArgument(0) as Material) }
                 .function("setCooldown", 2) {
                     it.target?.setCooldown(
                         it.getArgument(0) as Material,

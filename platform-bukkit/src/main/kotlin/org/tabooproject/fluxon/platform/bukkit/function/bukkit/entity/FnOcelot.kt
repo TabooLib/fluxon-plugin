@@ -22,7 +22,7 @@ object FnOcelot {
             registerExtension(Ocelot.Type::class.java)
                 .function("id", 0) { it.target?.id }
                 // static
-                .function("type", 1) { Ocelot.Type.getType(it.getNumber(0).toInt()) }
+                .function("getType", 1) { Ocelot.Type.getType(it.getNumber(0).toInt()) }
         }
     }
 }

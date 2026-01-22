@@ -18,9 +18,9 @@ object FnMushroomBlockTexture {
                 .function("data", 0) { it.target?.data }
                 .function("capFace", 0) { it.target?.capFace }
                 // static
-                .function("byData", 1) { MushroomBlockTexture.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", 1) { MushroomBlockTexture.getByData(it.getNumber(0).toByte()) }
                 // static
-                .function("capByFace", 1) { MushroomBlockTexture.getCapByFace(it.getArgument(0) as BlockFace) }
+                .function("getCapByFace", 1) { MushroomBlockTexture.getCapByFace(it.getArgument(0) as BlockFace) }
         }
     }
 }

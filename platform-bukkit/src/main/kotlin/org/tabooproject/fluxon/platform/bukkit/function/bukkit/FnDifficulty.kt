@@ -16,7 +16,7 @@ object FnDifficulty {
             registerExtension(Difficulty::class.java)
                 .function("value", 0) { it.target?.value }
                 // static
-                .function("byValue", 1) { Difficulty.getByValue(it.getNumber(0).toInt()) }
+                .function("getByValue", 1) { Difficulty.getByValue(it.getNumber(0).toInt()) }
         }
     }
 }

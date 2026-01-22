@@ -36,7 +36,7 @@ object FnItemStack {
                 .function("hashCode", 0) { it.target?.hashCode() }
                 .function("containsEnchantment", 1) { it.target?.containsEnchantment(it.getArgument(0) as Enchantment) }
                 .function("enchantments", 0) { it.target?.enchantments }
-                .function("enchantmentLevel", 1) { it.target?.getEnchantmentLevel(it.getArgument(0) as Enchantment) }
+                .function("getEnchantmentLevel", 1) { it.target?.getEnchantmentLevel(it.getArgument(0) as Enchantment) }
                 .function(
                     "addEnchantments",
                     1

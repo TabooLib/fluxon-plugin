@@ -17,7 +17,7 @@ object FnBanList {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanList::class.java)
-                .function("banEntry", 1) {
+                .function("getBanEntry", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getBanEntry(var1)
                         else -> (it.target as? BanList<Any>)?.getBanEntry(var1!!)

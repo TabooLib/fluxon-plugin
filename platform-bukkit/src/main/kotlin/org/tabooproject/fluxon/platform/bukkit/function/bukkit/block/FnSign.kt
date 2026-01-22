@@ -18,7 +18,7 @@ object FnSign {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sign::class.java)
                 .function("lines", 0) { it.target?.lines }
-                .function("line", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
+                .function("getLine", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
                 .function("setLine", 2) { it.target?.setLine(it.getNumber(0).toInt(), it.getString(1)!!) }
                 .function("isEditable", 0) { it.target?.isEditable }
                 .function("setEditable", 1) { it.target?.setEditable(it.getBoolean(0)) }
@@ -28,8 +28,8 @@ object FnSign {
                 .function("setGlowingText", 1) { it.target?.setGlowingText(it.getBoolean(0)) }
                 .function("color", 0) { it.target?.color }
                 .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as DyeColor) }
-                .function("side", 1) { it.target?.getSide(it.getArgument(0) as Side) }
-                .function("targetSide", 1) { it.target?.getTargetSide(it.getArgument(0) as Player) }
+                .function("getSide", 1) { it.target?.getSide(it.getArgument(0) as Side) }
+                .function("getTargetSide", 1) { it.target?.getTargetSide(it.getArgument(0) as Player) }
                 .function("allowedEditor", 0) { it.target?.allowedEditor }
         }
     }

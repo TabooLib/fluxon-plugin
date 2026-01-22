@@ -26,7 +26,7 @@ object FnJavaPlugin {
                 .function("saveConfig", 0) { it.target?.saveConfig() }
                 .function("saveDefaultConfig", 0) { it.target?.saveDefaultConfig() }
                 .function("saveResource", 2) { it.target?.saveResource(it.getString(0)!!, it.getBoolean(1)) }
-                .function("resource", 1) { it.target?.getResource(it.getString(0)!!) }
+                .function("getResource", 1) { it.target?.getResource(it.getString(0)!!) }
                 .function("onCommand", 4) {
                     it.target?.onCommand(
                         it.getArgument(0) as CommandSender,
@@ -43,17 +43,17 @@ object FnJavaPlugin {
                         it.getArgument(3) as Array<String>
                     )
                 }
-                .function("command", 1) { it.target?.getCommand(it.getString(0)!!) }
+                .function("getCommand", 1) { it.target?.getCommand(it.getString(0)!!) }
                 .function("onLoad", 0) { it.target?.onLoad() }
                 .function("onDisable", 0) { it.target?.onDisable() }
                 .function("onEnable", 0) { it.target?.onEnable() }
-                .function("defaultWorldGenerator", 2) {
+                .function("getDefaultWorldGenerator", 2) {
                     it.target?.getDefaultWorldGenerator(
                         it.getString(0)!!,
                         it.getString(1)
                     )
                 }
-                .function("defaultBiomeProvider", 2) {
+                .function("getDefaultBiomeProvider", 2) {
                     it.target?.getDefaultBiomeProvider(
                         it.getString(0)!!,
                         it.getString(1)
@@ -64,7 +64,7 @@ object FnJavaPlugin {
                 .function("logger", 0) { it.target?.logger }
                 .function("toString", 0) { it.target?.toString() }
                 // static
-                .function("providingPlugin", 1) { JavaPlugin.getProvidingPlugin(it.getArgument(0) as Class<*>) }
+                .function("getProvidingPlugin", 1) { JavaPlugin.getProvidingPlugin(it.getArgument(0) as Class<*>) }
         }
     }
 }

@@ -23,8 +23,8 @@ object FnPotionBrewer {
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("effectsFromDamage", 1) { it.target?.getEffectsFromDamage(it.getNumber(0).toInt()) }
-                .function("effects", 3) {
+                .function("getEffectsFromDamage", 1) { it.target?.getEffectsFromDamage(it.getNumber(0).toInt()) }
+                .function("getEffects", 3) {
                     it.target?.getEffects(
                         it.getArgument(0) as PotionType,
                         it.getBoolean(1),

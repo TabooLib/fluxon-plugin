@@ -121,7 +121,7 @@ object FnOfflinePlayer {
                         }
                     }
                 }
-                .function("statistic", listOf(1, 2)) {
+                .function("getStatistic", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getStatistic(it.getArgument(0) as Statistic)
                     } else {

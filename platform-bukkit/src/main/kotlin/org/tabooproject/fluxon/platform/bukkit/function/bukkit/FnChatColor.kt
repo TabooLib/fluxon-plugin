@@ -19,7 +19,7 @@ object FnChatColor {
                 .function("isFormat", 0) { it.target?.isFormat }
                 .function("isColor", 0) { it.target?.isColor }
                 // static
-                .function("byChar", 1) {
+                .function("getByChar", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is Char -> ChatColor.getByChar(var1)
                         is String -> ChatColor.getByChar(var1)
@@ -35,7 +35,7 @@ object FnChatColor {
                     )
                 }
                 // static
-                .function("lastColors", 1) { ChatColor.getLastColors(it.getString(0)!!) }
+                .function("getLastColors", 1) { ChatColor.getLastColors(it.getString(0)!!) }
         }
     }
 }

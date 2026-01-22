@@ -19,6 +19,7 @@ object FnWorldInfo {
                 .function("seed", 0) { it.target?.seed }
                 .function("minHeight", 0) { it.target?.minHeight }
                 .function("maxHeight", 0) { it.target?.maxHeight }
+                .function("environment", 0) { it.target?.environment }
         }
     }
 }

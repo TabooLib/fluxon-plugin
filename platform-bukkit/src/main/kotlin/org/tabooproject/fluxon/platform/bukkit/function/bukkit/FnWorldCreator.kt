@@ -107,7 +107,7 @@ object FnWorldCreator {
                 }
                 .function("createWorld", 0) { it.target?.createWorld() }
                 // static
-                .function("generatorForName", 3) {
+                .function("getGeneratorForName", 3) {
                     WorldCreator.getGeneratorForName(
                         it.getString(0)!!,
                         it.getString(1),
@@ -115,7 +115,7 @@ object FnWorldCreator {
                     )
                 }
                 // static
-                .function("biomeProviderForName", 3) {
+                .function("getBiomeProviderForName", 3) {
                     WorldCreator.getBiomeProviderForName(
                         it.getString(0)!!,
                         it.getString(1),

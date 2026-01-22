@@ -16,7 +16,7 @@ object FnCoalType {
             registerExtension(CoalType::class.java)
                 .function("data", 0) { it.target?.data }
                 // static
-                .function("byData", 1) { CoalType.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", 1) { CoalType.getByData(it.getNumber(0).toByte()) }
         }
     }
 }

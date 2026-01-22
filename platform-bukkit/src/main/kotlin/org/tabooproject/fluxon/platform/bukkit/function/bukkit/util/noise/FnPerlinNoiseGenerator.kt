@@ -15,7 +15,7 @@ object FnPerlinNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PerlinNoiseGenerator::class.java)
                 // static
-                .function("noise", listOf(1, 2, 3, 4, 5, 6)) {
+                .function("getNoise", listOf(1, 2, 3, 4, 5, 6)) {
                     when (it.arguments.size) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getNumber(0).toDouble())
                         2 -> PerlinNoiseGenerator.getNoise(

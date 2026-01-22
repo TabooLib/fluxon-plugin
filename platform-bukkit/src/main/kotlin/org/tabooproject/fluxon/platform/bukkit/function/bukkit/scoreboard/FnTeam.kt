@@ -46,7 +46,7 @@ object FnTeam {
                 .function("unregister", 0) { it.target?.unregister() }
                 .function("hasPlayer", 1) { it.target?.hasPlayer(it.getArgument(0) as OfflinePlayer) }
                 .function("hasEntry", 1) { it.target?.hasEntry(it.getString(0)!!) }
-                .function("option", 1) { it.target?.getOption(it.getArgument(0) as Team.Option) }
+                .function("getOption", 1) { it.target?.getOption(it.getArgument(0) as Team.Option) }
                 .function("setOption", 2) {
                     it.target?.setOption(
                         it.getArgument(0) as Team.Option,

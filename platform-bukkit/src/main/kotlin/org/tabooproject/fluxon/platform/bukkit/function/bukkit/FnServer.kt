@@ -70,15 +70,15 @@ object FnServer {
                     0
                 ) { it.target?.ticksPerWaterUndergroundCreatureSpawns }
                 .function("ticksPerAmbientSpawns", 0) { it.target?.ticksPerAmbientSpawns }
-                .function("ticksPerSpawns", 1) { it.target?.getTicksPerSpawns(it.getArgument(0) as SpawnCategory) }
-                .function("player", 1) {
+                .function("getTicksPerSpawns", 1) { it.target?.getTicksPerSpawns(it.getArgument(0) as SpawnCategory) }
+                .function("getPlayer", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getPlayer(var1)
                         is UUID -> it.target?.getPlayer(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 UUID 类型")
                     }
                 }
-                .function("playerExact", 1) { it.target?.getPlayerExact(it.getString(0)!!) }
+                .function("getPlayerExact", 1) { it.target?.getPlayerExact(it.getString(0)!!) }
                 .function("matchPlayer", 1) { it.target?.matchPlayer(it.getString(0)!!) }
                 .function("pluginManager", 0) { it.target?.pluginManager }
                 .function("scheduler", 0) { it.target?.scheduler }
@@ -92,7 +92,7 @@ object FnServer {
                         else -> throw IllegalArgumentException("参数必须是 String 或 World 类型")
                     }
                 }
-                .function("world", 1) {
+                .function("getWorld", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getWorld(var1)
                         is UUID -> it.target?.getWorld(var1)
@@ -100,7 +100,7 @@ object FnServer {
                     }
                 }
                 .function("createWorldBorder", 0) { it.target?.createWorldBorder() }
-                .function("map", 1) { it.target?.getMap(it.getNumber(0).toInt()) }
+                .function("getMap", 1) { it.target?.getMap(it.getNumber(0).toInt()) }
                 .function("createMap", 1) { it.target?.createMap(it.getArgument(0) as World) }
                 .function("createExplorerMap", listOf(3, 5)) {
                     if (it.arguments.size == 3) {
@@ -122,7 +122,7 @@ object FnServer {
                 .function("reload", 0) { it.target?.reload() }
                 .function("reloadData", 0) { it.target?.reloadData() }
                 .function("logger", 0) { it.target?.logger }
-                .function("pluginCommand", 1) { it.target?.getPluginCommand(it.getString(0)!!) }
+                .function("getPluginCommand", 1) { it.target?.getPluginCommand(it.getString(0)!!) }
                 .function("savePlayers", 0) { it.target?.savePlayers() }
                 .syncFunction("dispatchCommand", 2) {
                     it.target?.dispatchCommand(
@@ -131,9 +131,9 @@ object FnServer {
                     )
                 }
                 .function("addRecipe", 1) { it.target?.addRecipe(it.getArgument(0) as Recipe) }
-                .function("recipesFor", 1) { it.target?.getRecipesFor(it.getArgument(0) as ItemStack) }
-                .function("recipe", 1) { it.target?.getRecipe(it.getArgument(0) as NamespacedKey) }
-                .function("craftingRecipe", 2) {
+                .function("getRecipesFor", 1) { it.target?.getRecipesFor(it.getArgument(0) as ItemStack) }
+                .function("getRecipe", 1) { it.target?.getRecipe(it.getArgument(0) as NamespacedKey) }
+                .function("getCraftingRecipe", 2) {
                     it.target?.getCraftingRecipe(
                         it.getArgument(0) as Array<ItemStack>,
                         it.getArgument(1) as World
@@ -182,7 +182,7 @@ object FnServer {
                 .function("isHardcore", 0) { it.target?.isHardcore }
                 .function("shutdown", 0) { it.target?.shutdown() }
                 .function("broadcast", 2) { it.target?.broadcast(it.getString(0)!!, it.getString(1)!!) }
-                .function("offlinePlayer", 1) {
+                .function("getOfflinePlayer", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getOfflinePlayer(var1)
                         is UUID -> it.target?.getOfflinePlayer(var1)
@@ -263,7 +263,7 @@ object FnServer {
                     0
                 ) { it.target?.waterUndergroundCreatureSpawnLimit }
                 .function("ambientSpawnLimit", 0) { it.target?.ambientSpawnLimit }
-                .function("spawnLimit", 1) { it.target?.getSpawnLimit(it.getArgument(0) as SpawnCategory) }
+                .function("getSpawnLimit", 1) { it.target?.getSpawnLimit(it.getArgument(0) as SpawnCategory) }
                 .function("isPrimaryThread", 0) { it.target?.isPrimaryThread }
                 .function("motd", 0) { it.target?.motd }
                 .function("setMotd", 1) { it.target?.setMotd(it.getString(0)!!) }
@@ -271,7 +271,7 @@ object FnServer {
                 .function("itemFactory", 0) { it.target?.itemFactory }
                 .function("entityFactory", 0) { it.target?.entityFactory }
                 .function("scoreboardManager", 0) { it.target?.scoreboardManager }
-                .function("scoreboardCriteria", 1) { it.target?.getScoreboardCriteria(it.getString(0)!!) }
+                .function("getScoreboardCriteria", 1) { it.target?.getScoreboardCriteria(it.getString(0)!!) }
                 .function("serverIcon", 0) { it.target?.serverIcon }
                 .function("loadServerIcon", 1) {
                     when (val var1 = it.getArgument(0)) {
@@ -299,10 +299,10 @@ object FnServer {
                     }
                 }
                 .function("bossBars", 0) { it.target?.bossBars }
-                .function("bossBar", 1) { it.target?.getBossBar(it.getArgument(0) as NamespacedKey) }
+                .function("getBossBar", 1) { it.target?.getBossBar(it.getArgument(0) as NamespacedKey) }
                 .function("removeBossBar", 1) { it.target?.removeBossBar(it.getArgument(0) as NamespacedKey) }
-                .function("entity", 1) { it.target?.getEntity(UUID.fromString(it.getString(0))) }
-                .function("advancement", 1) { it.target?.getAdvancement(it.getArgument(0) as NamespacedKey) }
+                .function("getEntity", 1) { it.target?.getEntity(UUID.fromString(it.getString(0))) }
+                .function("getAdvancement", 1) { it.target?.getAdvancement(it.getArgument(0) as NamespacedKey) }
                 .function("advancementIterator", 0) { it.target?.advancementIterator() }
                 .function("createBlockData", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
@@ -318,7 +318,7 @@ object FnServer {
                         )
                     }
                 }
-                .function("lootTable", 1) { it.target?.getLootTable(it.getArgument(0) as NamespacedKey) }
+                .function("getLootTable", 1) { it.target?.getLootTable(it.getArgument(0) as NamespacedKey) }
                 .function("selectEntities", 2) {
                     it.target?.selectEntities(
                         it.getArgument(0) as CommandSender,

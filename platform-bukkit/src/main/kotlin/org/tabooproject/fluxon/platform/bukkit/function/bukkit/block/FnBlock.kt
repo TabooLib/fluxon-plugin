@@ -27,7 +27,7 @@ object FnBlock {
             registerExtension(Block::class.java)
                 .function("data", 0) { it.target?.data }
                 .syncFunction("blockData", 0) { it.target?.blockData }
-                .function("relative", listOf(1, 2, 3)) {
+                .function("getRelative", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getRelative(it.getArgument(0) as BlockFace)
                         2 -> it.target?.getRelative(
@@ -50,13 +50,8 @@ object FnBlock {
                 .function("x", 0) { it.target?.x }
                 .function("y", 0) { it.target?.y }
                 .function("z", 0) { it.target?.z }
-                .function("location", listOf(0, 1)) {
-                    if (it.hasArgument(0)) {
-                        it.target?.getLocation(it.getArgument(0) as Location)
-                    } else {
-                        it.target?.location
-                    }
-                }
+                .function("location", 0) { it.target?.location }
+                .function("getLocation", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
                 .function("chunk", 0) { it.target?.chunk }
                 .function("setBlockData", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
@@ -75,7 +70,7 @@ object FnBlock {
                         it.target?.setType(it.getArgument(0) as Material, it.getBoolean(1))
                     }
                 }
-                .function("face", 1) { it.target?.getFace(it.getArgument(0) as Block) }
+                .function("getFace", 1) { it.target?.getFace(it.getArgument(0) as Block) }
                 .function("state", 0) { it.target?.state }
                 .function("biome", 0) { it.target?.biome }
                 .function("setBiome", 1) { it.target?.setBiome(it.getArgument(0) as Biome) }
@@ -86,13 +81,8 @@ object FnBlock {
                     "isBlockFaceIndirectlyPowered",
                     1
                 ) { it.target?.isBlockFaceIndirectlyPowered(it.getArgument(0) as BlockFace) }
-                .function("blockPower", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.blockPower
-                    } else {
-                        it.target?.getBlockPower(it.getArgument(0) as BlockFace)
-                    }
-                }
+                .function("blockPower", 0) { it.target?.blockPower }
+                .function("getBlockPower", 1) { it.target?.getBlockPower(it.getArgument(0) as BlockFace) }
                 .function("isEmpty", 0) { it.target?.isEmpty }
                 .function("isLiquid", 0) { it.target?.isLiquid }
                 .function("temperature", 0) { it.target?.temperature }
@@ -106,19 +96,19 @@ object FnBlock {
                     }
                 }
                 .function("applyBoneMeal", 1) { it.target?.applyBoneMeal(it.getArgument(0) as BlockFace) }
-                .function("drops", listOf(0, 1, 2)) {
+                .function("drops", 0) { it.target?.drops }
+                .function("getDrops", listOf(1, 2)) {
                     when (it.arguments.size) {
-                        0 -> it.target?.drops
                         1 -> it.target?.getDrops(it.getArgument(0) as ItemStack)
                         2 -> it.target?.getDrops(
                             it.getArgument(0) as ItemStack,
                             it.getArgument(1) as Entity
                         )
-                        else -> error("Block#drops 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("Block#getDrops 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
                 .function("isPreferredTool", 1) { it.target?.isPreferredTool(it.getArgument(0) as ItemStack) }
-                .function("breakSpeed", 1) { it.target?.getBreakSpeed(it.getArgument(0) as Player) }
+                .function("getBreakSpeed", 1) { it.target?.getBreakSpeed(it.getArgument(0) as Player) }
                 .function("isPassable", 0) { it.target?.isPassable }
                 .function("rayTrace", 4) {
                     it.target?.rayTrace(

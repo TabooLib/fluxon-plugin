@@ -36,7 +36,7 @@ object FnCommandMap {
                 }
                 .function("dispatch", 2) { it.target?.dispatch(it.getArgument(0) as CommandSender, it.getString(1)!!) }
                 .function("clearCommands", 0) { it.target?.clearCommands() }
-                .function("command", 1) { it.target?.getCommand(it.getString(0)!!) }
+                .function("getCommand", 1) { it.target?.getCommand(it.getString(0)!!) }
                 .function("tabComplete", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.tabComplete(

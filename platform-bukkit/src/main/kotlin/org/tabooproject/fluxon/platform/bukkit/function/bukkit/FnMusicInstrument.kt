@@ -16,7 +16,7 @@ object FnMusicInstrument {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MusicInstrument::class.java)
                 // static
-                .function("byKey", 1) { MusicInstrument.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", 1) { MusicInstrument.getByKey(it.getArgument(0) as NamespacedKey) }
                 // static
                 .function("values", 0) { MusicInstrument.values() }
         }

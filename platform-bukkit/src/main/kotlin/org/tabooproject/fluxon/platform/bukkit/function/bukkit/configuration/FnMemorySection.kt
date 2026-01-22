@@ -20,7 +20,7 @@ object FnMemorySection {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemorySection::class.java)
-                .function("keys", 1) { it.target?.getKeys(it.getBoolean(0)) }
+                .function("getKeys", 1) { it.target?.getKeys(it.getBoolean(0)) }
                 .function("contains", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.contains(it.getString(0)!!)
@@ -53,7 +53,7 @@ object FnMemorySection {
                         )
                     }
                 }
-                .function("string", listOf(1, 2)) {
+                .function("getString", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getString(it.getString(0)!!)
                     } else {
@@ -61,7 +61,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isString", 1) { it.target?.isString(it.getString(0)!!) }
-                .function("int", listOf(1, 2)) {
+                .function("getInt", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getInt(it.getString(0)!!)
                     } else {
@@ -69,7 +69,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isInt", 1) { it.target?.isInt(it.getString(0)!!) }
-                .function("boolean", listOf(1, 2)) {
+                .function("getBoolean", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBoolean(it.getString(0)!!)
                     } else {
@@ -77,7 +77,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isBoolean", 1) { it.target?.isBoolean(it.getString(0)!!) }
-                .function("double", listOf(1, 2)) {
+                .function("getDouble", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getDouble(it.getString(0)!!)
                     } else {
@@ -85,7 +85,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isDouble", 1) { it.target?.isDouble(it.getString(0)!!) }
-                .function("long", listOf(1, 2)) {
+                .function("getLong", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getLong(it.getString(0)!!)
                     } else {
@@ -94,16 +94,16 @@ object FnMemorySection {
                 }
                 .function("isLong", 1) { it.target?.isLong(it.getString(0)!!) }
                 .function("isList", 1) { it.target?.isList(it.getString(0)!!) }
-                .function("stringList", 1) { it.target?.getStringList(it.getString(0)!!) }
-                .function("integerList", 1) { it.target?.getIntegerList(it.getString(0)!!) }
-                .function("booleanList", 1) { it.target?.getBooleanList(it.getString(0)!!) }
-                .function("doubleList", 1) { it.target?.getDoubleList(it.getString(0)!!) }
-                .function("floatList", 1) { it.target?.getFloatList(it.getString(0)!!) }
-                .function("longList", 1) { it.target?.getLongList(it.getString(0)!!) }
-                .function("byteList", 1) { it.target?.getByteList(it.getString(0)!!) }
-                .function("characterList", 1) { it.target?.getCharacterList(it.getString(0)!!) }
-                .function("shortList", 1) { it.target?.getShortList(it.getString(0)!!) }
-                .function("vector", listOf(1, 2)) {
+                .function("getStringList", 1) { it.target?.getStringList(it.getString(0)!!) }
+                .function("getIntegerList", 1) { it.target?.getIntegerList(it.getString(0)!!) }
+                .function("getBooleanList", 1) { it.target?.getBooleanList(it.getString(0)!!) }
+                .function("getDoubleList", 1) { it.target?.getDoubleList(it.getString(0)!!) }
+                .function("getFloatList", 1) { it.target?.getFloatList(it.getString(0)!!) }
+                .function("getLongList", 1) { it.target?.getLongList(it.getString(0)!!) }
+                .function("getByteList", 1) { it.target?.getByteList(it.getString(0)!!) }
+                .function("getCharacterList", 1) { it.target?.getCharacterList(it.getString(0)!!) }
+                .function("getShortList", 1) { it.target?.getShortList(it.getString(0)!!) }
+                .function("getVector", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getVector(it.getString(0)!!)
                     } else {
@@ -111,7 +111,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isVector", 1) { it.target?.isVector(it.getString(0)!!) }
-                .function("offlinePlayer", listOf(1, 2)) {
+                .function("getOfflinePlayer", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getOfflinePlayer(it.getString(0)!!)
                     } else {
@@ -122,7 +122,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isOfflinePlayer", 1) { it.target?.isOfflinePlayer(it.getString(0)!!) }
-                .function("itemStack", listOf(1, 2)) {
+                .function("getItemStack", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getItemStack(it.getString(0)!!)
                     } else {
@@ -130,7 +130,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isItemStack", 1) { it.target?.isItemStack(it.getString(0)!!) }
-                .function("color", listOf(1, 2)) {
+                .function("getColor", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getColor(it.getString(0)!!)
                     } else {
@@ -138,7 +138,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isColor", 1) { it.target?.isColor(it.getString(0)!!) }
-                .function("location", listOf(1, 2)) {
+                .function("getLocation", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getLocation(it.getString(0)!!)
                     } else {
@@ -146,7 +146,7 @@ object FnMemorySection {
                     }
                 }
                 .function("isLocation", 1) { it.target?.isLocation(it.getString(0)!!) }
-                .function("configurationSection", 1) { it.target?.getConfigurationSection(it.getString(0)!!) }
+                .function("getConfigurationSection", 1) { it.target?.getConfigurationSection(it.getString(0)!!) }
                 .function("isConfigurationSection", 1) { it.target?.isConfigurationSection(it.getString(0)!!) }
                 // static
                 .function("createPath", listOf(2, 3)) {
@@ -163,8 +163,8 @@ object FnMemorySection {
                         )
                     }
                 }
-                .function("comments", 1) { it.target?.getComments(it.getString(0)!!) }
-                .function("inlineComments", 1) { it.target?.getInlineComments(it.getString(0)!!) }
+                .function("getComments", 1) { it.target?.getComments(it.getString(0)!!) }
+                .function("getInlineComments", 1) { it.target?.getInlineComments(it.getString(0)!!) }
                 .function("setComments", 2) {
                     it.target?.setComments(
                         it.getString(0)!!,

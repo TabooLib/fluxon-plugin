@@ -19,9 +19,9 @@ object FnArt {
                 .function("id", 0) { it.target?.id }
                 .function("key", 0) { it.target?.key }
                 // static
-                .function("byId", 1) { Art.getById(it.getNumber(0).toInt()) }
+                .function("getById", 1) { Art.getById(it.getNumber(0).toInt()) }
                 // static
-                .function("byName", 1) { Art.getByName(it.getString(0)!!) }
+                .function("getByName", 1) { Art.getByName(it.getString(0)!!) }
         }
     }
 }

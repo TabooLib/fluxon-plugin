@@ -6,7 +6,7 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-
+import taboolib.platform.util.attacker
 
 @PlatformSide(Platform.BUKKIT)
 object FnEntityDamageByEntityEvent {
@@ -16,6 +16,7 @@ object FnEntityDamageByEntityEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByEntityEvent::class.java)
                 .function("damager", 0) { it.target?.damager }
+                .function("realDamager", 0) { it.target?.attacker } // 在发射弓箭的情况下也能获取到发射者
 //                .function("isCritical", 0) { it.target?.isCritical }
         }
     }

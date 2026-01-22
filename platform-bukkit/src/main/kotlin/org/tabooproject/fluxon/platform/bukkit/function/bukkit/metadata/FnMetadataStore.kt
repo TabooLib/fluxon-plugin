@@ -23,7 +23,7 @@ object FnMetadataStore {
                         it.getArgument(2) as MetadataValue
                     )
                 }
-                .function("metadata", 2) {
+                .function("getMetadata", 2) {
                     (it.target as? MetadataStore<Any>)?.getMetadata(
                         it.getArgument(0)!!,
                         it.getString(1)!!

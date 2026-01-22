@@ -17,7 +17,7 @@ object FnMerchant {
             registerExtension(Merchant::class.java)
                 .function("recipes", 0) { it.target?.recipes }
                 .function("setRecipes", 1) { it.target?.setRecipes(it.getArgument(0) as List<MerchantRecipe>) }
-                .function("recipe", 1) { it.target?.getRecipe(it.getNumber(0).toInt()) }
+                .function("getRecipe", 1) { it.target?.getRecipe(it.getNumber(0).toInt()) }
                 .function("setRecipe", 2) {
                     it.target?.setRecipe(
                         it.getNumber(0).toInt(),

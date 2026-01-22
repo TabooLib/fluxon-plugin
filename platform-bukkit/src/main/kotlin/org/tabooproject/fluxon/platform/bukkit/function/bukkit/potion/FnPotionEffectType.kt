@@ -28,11 +28,11 @@ object FnPotionEffectType {
                 .function("id", 0) { it.target?.id }
                 .function("name", 0) { it.target?.name }
                 // static
-                .function("byKey", 1) { PotionEffectType.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", 1) { PotionEffectType.getByKey(it.getArgument(0) as NamespacedKey) }
                 // static
-                .function("byId", 1) { PotionEffectType.getById(it.getNumber(0).toInt()) }
+                .function("getById", 1) { PotionEffectType.getById(it.getNumber(0).toInt()) }
                 // static
-                .function("byName", 1) { PotionEffectType.getByName(it.getString(0)!!) }
+                .function("getByName", 1) { PotionEffectType.getByName(it.getString(0)!!) }
                 // static
                 .function("values", 0) { PotionEffectType.values() }
         }

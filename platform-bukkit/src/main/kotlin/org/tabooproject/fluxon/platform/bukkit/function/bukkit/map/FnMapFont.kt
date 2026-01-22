@@ -20,8 +20,8 @@ object FnMapFont {
                         it.getArgument(1) as MapFont.CharacterSprite
                     )
                 }
-                .function("char", 1) { it.target?.getChar(it.getString(0)?.firstOrNull()!!) }
-                .function("width", 1) { it.target?.getWidth(it.getString(0)!!) }
+                .function("getChar", 1) { it.target?.getChar(it.getString(0)?.firstOrNull()!!) }
+                .function("getWidth", 1) { it.target?.getWidth(it.getString(0)!!) }
                 .function("height", 0) {
                     it.target?.height
                 }

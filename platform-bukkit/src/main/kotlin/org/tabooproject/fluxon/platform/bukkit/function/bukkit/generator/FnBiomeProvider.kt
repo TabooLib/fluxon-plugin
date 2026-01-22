@@ -16,7 +16,7 @@ object FnBiomeProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeProvider::class.java)
-                .function("biome", listOf(4, 5)) {
+                .function("getBiome", listOf(4, 5)) {
                     if (it.arguments.size == 4) {
                         it.target?.getBiome(
                             it.getArgument(0) as WorldInfo,
@@ -34,7 +34,7 @@ object FnBiomeProvider {
                         )
                     }
                 }
-                .function("biomes", 1) { it.target?.getBiomes(it.getArgument(0) as WorldInfo) }
+                .function("getBiomes", 1) { it.target?.getBiomes(it.getArgument(0) as WorldInfo) }
         }
     }
 }

@@ -15,7 +15,7 @@ object FnSignSide {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
                 .function("lines", 0) { it.target?.lines }
-                .function("line", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
+                .function("getLine", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
                 .function("setLine", 2) { it.target?.setLine(it.getNumber(0).toInt(), it.getString(1)!!) }
                 .function("isGlowingText", 0) { it.target?.isGlowingText }
                 .function("setGlowingText", 1) { it.target?.setGlowingText(it.getBoolean(0)) }

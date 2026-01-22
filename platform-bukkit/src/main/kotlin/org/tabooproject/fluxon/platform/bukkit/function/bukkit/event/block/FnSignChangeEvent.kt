@@ -16,7 +16,7 @@ object FnSignChangeEvent {
             registerExtension(SignChangeEvent::class.java)
                 .function("player", 0) { it.target?.player }
                 .function("lines", 0) { it.target?.lines }
-                .function("line", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
+                .function("getLine", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
                 .function("setLine", 2) { it.target?.setLine(it.getNumber(0).toInt(), it.getString(1)) }
                 .function("side", 0) { it.target?.side }
                 .function("isCancelled", 0) { it.target?.isCancelled }

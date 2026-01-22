@@ -59,10 +59,10 @@ object FnChunkGenerator {
                     )
                 }
                 .function(
-                    "defaultBiomeProvider",
+                    "getDefaultBiomeProvider",
                     1
                 ) { it.target?.getDefaultBiomeProvider(it.getArgument(0) as WorldInfo) }
-                .function("baseHeight", 5) {
+                .function("getBaseHeight", 5) {
                     it.target?.getBaseHeight(
                         it.getArgument(0) as WorldInfo,
                         it.getArgument(1) as Random,
@@ -87,8 +87,8 @@ object FnChunkGenerator {
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("defaultPopulators", 1) { it.target?.getDefaultPopulators(it.getArgument(0) as World) }
-                .function("fixedSpawnLocation", 2) {
+                .function("getDefaultPopulators", 1) { it.target?.getDefaultPopulators(it.getArgument(0) as World) }
+                .function("getFixedSpawnLocation", 2) {
                     it.target?.getFixedSpawnLocation(
                         it.getArgument(0) as World,
                         it.getArgument(1) as Random
@@ -172,7 +172,7 @@ object FnChunkGenerator {
             registerExtension(ChunkGenerator.ChunkData::class.java)
                 .function("minHeight", 0) { it.target?.minHeight }
                 .function("maxHeight", 0) { it.target?.maxHeight }
-                .function("biome", 3) {
+                .function("getBiome", 3) {
                     it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt(), it.getNumber(2).toInt())
                 }
                 .function("setBlock", 4) {
@@ -236,28 +236,28 @@ object FnChunkGenerator {
                         else -> throw IllegalArgumentException("参数 7 必须是 Material, MaterialData, 或 BlockData 类型")
                     }
                 }
-                .function("type", 3) {
+                .function("getType", 3) {
                     it.target?.getType(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("typeAndData", 3) {
+                .function("getTypeAndData", 3) {
                     it.target?.getTypeAndData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("blockData", 3) {
+                .function("getBlockData", 3) {
                     it.target?.getBlockData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("data", 3) {
+                .function("getData", 3) {
                     it.target?.getData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
@@ -266,7 +266,7 @@ object FnChunkGenerator {
                 }
 
             registerExtension(ChunkGenerator.BiomeGrid::class.java)
-                .function("biome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
+                .function("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .function("setBiome", listOf(3, 4)) {
                     if (it.arguments.size == 3) {
                         it.target?.setBiome(

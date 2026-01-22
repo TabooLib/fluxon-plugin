@@ -67,7 +67,7 @@ object FnSimplePluginManager {
                         )
                     }
                 }
-                .function("permission", 1) { it.target?.getPermission(it.getString(0)!!) }
+                .function("getPermission", 1) { it.target?.getPermission(it.getString(0)!!) }
                 .function("addPermission", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.addPermission(it.getArgument(0) as Permission)
@@ -78,7 +78,7 @@ object FnSimplePluginManager {
                         )
                     }
                 }
-                .function("defaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
+                .function("getDefaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
                 .function("removePermission", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is Permission -> it.target?.removePermission(var1)
@@ -106,7 +106,7 @@ object FnSimplePluginManager {
                         it.getArgument(1) as Permissible
                     )
                 }
-                .function("permissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
+                .function("getPermissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
                 .function("subscribeToDefaultPerms", 2) {
                     it.target?.subscribeToDefaultPerms(
                         it.getBoolean(0),
@@ -119,7 +119,7 @@ object FnSimplePluginManager {
                         it.getArgument(1) as Permissible
                     )
                 }
-                .function("defaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
+                .function("getDefaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
                 .function("permissions", 0) { it.target?.permissions }
                 .function(
                     "isTransitiveDepend",

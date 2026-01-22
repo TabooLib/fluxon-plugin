@@ -19,48 +19,48 @@ object FnChunkSnapshot {
                 .function("x", 0) { it.target?.x }
                 .function("z", 0) { it.target?.z }
                 .function("worldName", 0) { it.target?.worldName }
-                .function("blockType", 3) {
+                .function("getBlockType", 3) {
                     it.target?.getBlockType(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("blockData", 3) {
+                .function("getBlockData", 3) {
                     it.target?.getBlockData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("data", 3) {
+                .function("getData", 3) {
                     it.target?.getData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("blockSkyLight", 3) {
+                .function("getBlockSkyLight", 3) {
                     it.target?.getBlockSkyLight(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("blockEmittedLight", 3) {
+                .function("getBlockEmittedLight", 3) {
                     it.target?.getBlockEmittedLight(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("highestBlockYAt", 2) {
+                .function("getHighestBlockYAt", 2) {
                     it.target?.getHighestBlockYAt(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt()
                     )
                 }
-                .function("biome", listOf(2, 3)) {
+                .function("getBiome", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt())
                     } else {
@@ -71,7 +71,7 @@ object FnChunkSnapshot {
                         )
                     }
                 }
-                .function("rawBiomeTemperature", listOf(2, 3)) {
+                .function("getRawBiomeTemperature", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getRawBiomeTemperature(
                             it.getNumber(0).toInt(),

@@ -16,13 +16,8 @@ object FnWarden {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Warden::class.java)
-                .function("anger", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.anger
-                    } else {
-                        it.target?.getAnger(it.getArgument(0) as Entity)
-                    }
-                }
+                .function("anger", 0) { it.target?.anger }
+                .function("getAnger", 1) { it.target?.getAnger(it.getArgument(0) as Entity) }
                 .function("increaseAnger", 2) {
                     it.target?.increaseAnger(
                         it.getArgument(0) as Entity,

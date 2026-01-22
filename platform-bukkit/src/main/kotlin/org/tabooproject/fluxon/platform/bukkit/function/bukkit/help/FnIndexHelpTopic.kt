@@ -17,7 +17,7 @@ object FnIndexHelpTopic {
             registerExtension(IndexHelpTopic::class.java)
                 .function("canSee", 1) { it.target?.canSee(it.getArgument(0) as CommandSender) }
                 .function("amendCanSee", 1) { it.target?.amendCanSee(it.getString(0)) }
-                .function("fullText", 1) { it.target?.getFullText(it.getArgument(0) as CommandSender) }
+                .function("getFullText", 1) { it.target?.getFullText(it.getArgument(0) as CommandSender) }
         }
     }
 }

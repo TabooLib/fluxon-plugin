@@ -21,7 +21,7 @@ object FnBanner {
                 .function("patterns", 0) { it.target?.patterns }
                 .function("setPatterns", 1) { it.target?.setPatterns(it.getArgument(0) as List<Pattern>) }
                 .function("addPattern", 1) { it.target?.addPattern(it.getArgument(0) as Pattern) }
-                .function("pattern", 1) { it.target?.getPattern(it.getNumber(0).toInt()) }
+                .function("getPattern", 1) { it.target?.getPattern(it.getNumber(0).toInt()) }
                 .function("removePattern", 1) { it.target?.removePattern(it.getNumber(0).toInt()) }
                 .function("setPattern", 2) {
                     it.target?.setPattern(

@@ -34,11 +34,11 @@ object FnNote {
                 .function("toString", 0) { it.target?.toString() }
 
             registerExtension(Note.Tone::class.java)
-                .function("id", 1) { it.target?.getId(it.getBoolean(0)) }
+                .function("getId", 1) { it.target?.getId(it.getBoolean(0)) }
                 .function("isSharpable", 0) { it.target?.isSharpable }
                 .function("isSharped", 1) { it.target?.isSharped(it.getNumber(0).toByte()) }
                 // static
-                .function("byId", 1) { Note.Tone.getById(it.getNumber(0).toByte()) }
+                .function("getById", 1) { Note.Tone.getById(it.getNumber(0).toByte()) }
         }
     }
 }

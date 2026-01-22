@@ -21,7 +21,7 @@ object FnDecoratedPot {
                         it.getArgument(1) as Material
                     )
                 }
-                .function("sherd", 1) { it.target?.getSherd(it.getArgument(0) as DecoratedPot.Side) }
+                .function("getSherd", 1) { it.target?.getSherd(it.getArgument(0) as DecoratedPot.Side) }
                 .function("shards", 0) { it.target?.shards }
                 .function("inventory", 0) { it.target?.inventory }
                 .function("snapshotInventory", 0) { it.target?.snapshotInventory }

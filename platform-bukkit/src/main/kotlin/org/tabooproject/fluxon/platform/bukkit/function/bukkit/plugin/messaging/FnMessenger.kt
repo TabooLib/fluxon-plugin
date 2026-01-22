@@ -52,21 +52,11 @@ object FnMessenger {
                         else -> error("Messenger#unregisterIncomingPluginChannel 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("outgoingChannels", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.outgoingChannels
-                    } else {
-                        it.target?.getOutgoingChannels(it.getArgument(0) as Plugin)
-                    }
-                }
-                .function("incomingChannels", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.incomingChannels
-                    } else {
-                        it.target?.getIncomingChannels(it.getArgument(0) as Plugin)
-                    }
-                }
-                .function("incomingChannelRegistrations", listOf(1, 2)) {
+                .function("outgoingChannels", 0) { it.target?.outgoingChannels }
+                .function("getOutgoingChannels", 1) { it.target?.getOutgoingChannels(it.getArgument(0) as Plugin) }
+                .function("incomingChannels", 0) { it.target?.incomingChannels }
+                .function("getIncomingChannels", 1) { it.target?.getIncomingChannels(it.getArgument(0) as Plugin) }
+                .function("getIncomingChannelRegistrations", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         when (val var1 = it.getArgument(0)) {
                             is Plugin -> it.target?.getIncomingChannelRegistrations(var1)

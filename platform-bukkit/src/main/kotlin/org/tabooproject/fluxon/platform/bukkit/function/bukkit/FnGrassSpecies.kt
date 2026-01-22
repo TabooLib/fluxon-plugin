@@ -16,7 +16,7 @@ object FnGrassSpecies {
             registerExtension(GrassSpecies::class.java)
                 .function("data", 0) { it.target?.data }
                 // static
-                .function("byData", 1) { GrassSpecies.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", 1) { GrassSpecies.getByData(it.getNumber(0).toByte()) }
         }
     }
 }

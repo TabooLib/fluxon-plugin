@@ -20,7 +20,7 @@ object FnRegionAccessor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegionAccessor::class.java)
-                .syncFunction("biome", listOf(1, 3)) {
+                .syncFunction("getBiome", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBiome(it.getArgument(0) as Location)
                     } else {
@@ -46,7 +46,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("blockState", listOf(1, 3)) {
+                .syncFunction("getBlockState", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBlockState(it.getArgument(0) as Location)
                     } else {
@@ -57,7 +57,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("blockData", listOf(1, 3)) {
+                .syncFunction("getBlockData", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBlockData(it.getArgument(0) as Location)
                     } else {
@@ -68,7 +68,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("type", listOf(1, 3)) {
+                .syncFunction("getType", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getType(it.getArgument(0) as Location)
                     } else {
@@ -133,7 +133,7 @@ object FnRegionAccessor {
                 .syncFunction("entities", 0) { it.target?.entities }
                 .syncFunction("livingEntities", 0) { it.target?.livingEntities }
                 .syncFunction("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
-                .syncFunction("highestBlockYAt", listOf(1, 2, 3)) {
+                .syncFunction("getHighestBlockYAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getHighestBlockYAt(it.getArgument(0) as Location)
                         2 -> when (val var1 = it.getArgument(0)) {

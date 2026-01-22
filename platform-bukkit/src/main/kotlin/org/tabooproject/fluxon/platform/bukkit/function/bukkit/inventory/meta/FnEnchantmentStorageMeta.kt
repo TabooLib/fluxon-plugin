@@ -18,7 +18,7 @@ object FnEnchantmentStorageMeta {
                 .function("hasStoredEnchants", 0) { it.target?.hasStoredEnchants() }
                 .function("hasStoredEnchant", 1) { it.target?.hasStoredEnchant(it.getArgument(0) as Enchantment) }
                 .function(
-                    "storedEnchantLevel",
+                    "getStoredEnchantLevel",
                     1
                 ) { it.target?.getStoredEnchantLevel(it.getArgument(0) as Enchantment) }
                 .function("addStoredEnchant", 3) {

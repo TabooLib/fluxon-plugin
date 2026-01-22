@@ -23,7 +23,7 @@ object FnBlockChangeDelegate {
                         it.getArgument(3) as BlockData
                     )
                 }
-                .function("blockData", 3) {
+                .function("getBlockData", 3) {
                     it.target?.getBlockData(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),

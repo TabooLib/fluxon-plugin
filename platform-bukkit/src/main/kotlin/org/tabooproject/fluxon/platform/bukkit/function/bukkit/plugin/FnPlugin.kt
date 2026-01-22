@@ -17,7 +17,7 @@ object FnPlugin {
                 .function("dataFolder", 0) { it.target?.dataFolder }
                 .function("description", 0) { it.target?.description }
                 .function("config", 0) { it.target?.config }
-                .function("resource", 1) { it.target?.getResource(it.getString(0)!!) }
+                .function("getResource", 1) { it.target?.getResource(it.getString(0)!!) }
                 .function("saveConfig", 0) { it.target?.saveConfig() }
                 .function("saveDefaultConfig", 0) { it.target?.saveDefaultConfig() }
                 .function("saveResource", 2) { it.target?.saveResource(it.getString(0)!!, it.getBoolean(1)) }
@@ -30,13 +30,13 @@ object FnPlugin {
                 .function("onEnable", 0) { it.target?.onEnable() }
                 .function("isNaggable", 0) { it.target?.isNaggable }
                 .function("setNaggable", 1) { it.target?.setNaggable(it.getBoolean(0)) }
-                .function("defaultWorldGenerator", 2) {
+                .function("getDefaultWorldGenerator", 2) {
                     it.target?.getDefaultWorldGenerator(
                         it.getString(0)!!,
                         it.getString(1)
                     )
                 }
-                .function("defaultBiomeProvider", 2) {
+                .function("getDefaultBiomeProvider", 2) {
                     it.target?.getDefaultBiomeProvider(
                         it.getString(0)!!,
                         it.getString(1)

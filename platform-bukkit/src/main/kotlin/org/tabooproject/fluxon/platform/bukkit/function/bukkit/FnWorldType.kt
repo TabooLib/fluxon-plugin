@@ -16,7 +16,7 @@ object FnWorldType {
             registerExtension(WorldType::class.java)
                 .function("name", 0) { it.target?.getName() }
                 // static
-                .function("byName", 1) { WorldType.getByName(it.getString(0)!!) }
+                .function("getByName", 1) { WorldType.getByName(it.getString(0)!!) }
         }
     }
 }

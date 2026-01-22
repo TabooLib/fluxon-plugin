@@ -30,7 +30,7 @@ object FnEntityEquipment {
                         )
                     }
                 }
-                .function("item", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
+                .function("getItem", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
                 .function("itemInMainHand", 0) { it.target?.itemInMainHand }
                 .function("setItemInMainHand", listOf(1, 2)) {
                     if (it.arguments.size == 1) {

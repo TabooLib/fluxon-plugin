@@ -19,7 +19,7 @@ object FnInventory {
                 .function("size", 0) { it.target?.size }
                 .function("maxStackSize", 0) { it.target?.maxStackSize }
                 .function("setMaxStackSize", 1) { it.target?.setMaxStackSize(it.getNumber(0).toInt()) }
-                .function("item", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
+                .function("getItem", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
                 .function("setItem", 2) { it.target?.setItem(it.getNumber(0).toInt(), it.getArgument(1) as ItemStack) }
                 .function("contents", 0) { it.target?.contents }
                 .function("setContents", 1) { it.target?.setContents(it.getArgument(0) as Array<ItemStack>) }

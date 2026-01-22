@@ -27,7 +27,7 @@ object FnPluginManager {
                     "registerInterface",
                     1
                 ) { it.target?.registerInterface(it.getArgument(0) as Class<PluginLoader>) }
-                .function("plugin", 1) { it.target?.getPlugin(it.getString(0)!!) }
+                .function("getPlugin", 1) { it.target?.getPlugin(it.getString(0)!!) }
                 .function("plugins", 0) { it.target?.plugins }
                 .function("isPluginEnabled", 1) {
                     when (val var1 = it.getArgument(0)) {
@@ -75,7 +75,7 @@ object FnPluginManager {
                 }
                 .function("enablePlugin", 1) { it.target?.enablePlugin(it.getArgument(0) as Plugin) }
                 .function("disablePlugin", 1) { it.target?.disablePlugin(it.getArgument(0) as Plugin) }
-                .function("permission", 1) { it.target?.getPermission(it.getString(0)!!) }
+                .function("getPermission", 1) { it.target?.getPermission(it.getString(0)!!) }
                 .function("addPermission", 1) { it.target?.addPermission(it.getArgument(0) as Permission) }
                 .function("removePermission", 1) {
                     when (val var1 = it.getArgument(0)) {
@@ -84,7 +84,7 @@ object FnPluginManager {
                         else -> throw IllegalArgumentException("参数必须是 Permission 或 String 类型")
                     }
                 }
-                .function("defaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
+                .function("getDefaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
                 .function("recalculatePermissionDefaults", 1) {
                     it.target?.recalculatePermissionDefaults(
                         it.getArgument(
@@ -104,7 +104,7 @@ object FnPluginManager {
                         it.getArgument(1) as Permissible
                     )
                 }
-                .function("permissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
+                .function("getPermissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
                 .function("subscribeToDefaultPerms", 2) {
                     it.target?.subscribeToDefaultPerms(
                         it.getBoolean(0),
@@ -117,7 +117,7 @@ object FnPluginManager {
                         it.getArgument(1) as Permissible
                     )
                 }
-                .function("defaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
+                .function("getDefaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
                 .function("permissions", 0) { it.target?.permissions }
                 .function("useTimings", 0) { it.target?.useTimings() }
         }

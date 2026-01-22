@@ -16,7 +16,7 @@ object FnHelpMap {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpMap::class.java)
-                .function("helpTopic", 1) { it.target?.getHelpTopic(it.getString(0)!!) }
+                .function("getHelpTopic", 1) { it.target?.getHelpTopic(it.getString(0)!!) }
                 .function("helpTopics", 0) { it.target?.helpTopics }
                 .function("addTopic", 1) { it.target?.addTopic(it.getArgument(0) as HelpTopic) }
                 .function("clear", 0) { it.target?.clear() }

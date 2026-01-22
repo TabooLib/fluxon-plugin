@@ -16,7 +16,7 @@ object FnMapCursorCollection {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursorCollection::class.java)
                 .function("size", 0) { it.target?.size() }
-                .function("cursor", 1) { it.target?.getCursor(it.getNumber(0).toInt()) }
+                .function("getCursor", 1) { it.target?.getCursor(it.getNumber(0).toInt()) }
                 .function("removeCursor", 1) { it.target?.removeCursor(it.getArgument(0) as MapCursor) }
                 .function("addCursor", listOf(1, 3, 4, 5, 6)) {
                     when (it.arguments.size) {

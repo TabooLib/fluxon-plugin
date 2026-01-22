@@ -17,7 +17,7 @@ object FnBlockDataMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDataMeta::class.java)
                 .function("hasBlockData", 0) { it.target?.hasBlockData() }
-                .function("blockData", 1) { it.target?.getBlockData(it.getArgument(0) as Material) }
+                .function("getBlockData", 1) { it.target?.getBlockData(it.getArgument(0) as Material) }
                 .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }
         }
     }

@@ -29,7 +29,7 @@ object FnPlayerInventory {
                         else -> throw IllegalArgumentException("参数 1 必须是 Int 或 EquipmentSlot 类型")
                     }
                 }
-                .function("item", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
+                .function("getItem", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
                 .function("setArmorContents", 1) { it.target?.setArmorContents(it.getArgument(0) as Array<ItemStack>) }
                 .function("setExtraContents", 1) { it.target?.setExtraContents(it.getArgument(0) as Array<ItemStack>) }
                 .function("setHelmet", 1) { it.target?.setHelmet(it.getArgument(0) as ItemStack) }

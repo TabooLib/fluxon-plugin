@@ -25,7 +25,7 @@ object FnWither {
                         )
                     }
                 }
-                .function("target", 1) { it.target?.getTarget(it.getArgument(0) as Wither.Head) }
+                .function("getTarget", 1) { it.target?.getTarget(it.getArgument(0) as Wither.Head) }
                 .function("invulnerabilityTicks", 0) { it.target?.invulnerabilityTicks }
                 .function("setInvulnerabilityTicks", 1) { it.target?.setInvulnerabilityTicks(it.getNumber(0).toInt()) }
         }

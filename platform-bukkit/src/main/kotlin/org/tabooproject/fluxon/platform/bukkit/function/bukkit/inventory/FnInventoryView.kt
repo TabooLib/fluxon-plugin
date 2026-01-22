@@ -22,10 +22,10 @@ object FnInventoryView {
                     it.target?.type
                 }
                 .function("setItem", 2) { it.target?.setItem(it.getNumber(0).toInt(), it.getArgument(1) as ItemStack) }
-                .function("item", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
+                .function("getItem", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
                 .function("setCursor", 1) { it.target?.setCursor(it.getArgument(0) as ItemStack) }
                 .function("cursor", 0) { it.target?.cursor }
-                .function("inventory", 1) { it.target?.getInventory(it.getNumber(0).toInt()) }
+                .function("getInventory", 1) { it.target?.getInventory(it.getNumber(0).toInt()) }
                 .function("convertSlot", 1) { it.target?.convertSlot(it.getNumber(0).toInt()) }
                 .function("close", 0) { it.target?.close() }
                 .function("countSlots", 0) { it.target?.countSlots() }

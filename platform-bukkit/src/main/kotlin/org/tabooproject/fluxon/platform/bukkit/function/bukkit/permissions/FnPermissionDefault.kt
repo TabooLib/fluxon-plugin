@@ -14,9 +14,9 @@ object FnPermissionDefault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionDefault::class.java)
-                .function("value", 1) { it.target?.getValue(it.getBoolean(0)) }
+                .function("getValue", 1) { it.target?.getValue(it.getBoolean(0)) }
                 // static
-                .function("byName", 1) { PermissionDefault.getByName(it.getString(0)!!) }
+                .function("getByName", 1) { PermissionDefault.getByName(it.getString(0)!!) }
                 .function("toString", 0) { it.target?.toString() }
         }
     }

@@ -18,7 +18,7 @@ object FnEntityDamageEvent {
                 .function("isCancelled", 0) { it.target?.isCancelled }
                 .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
                 .function(
-                    "originalDamage",
+                    "getOriginalDamage",
                     1
                 ) { it.target?.getOriginalDamage(it.getArgument(0) as EntityDamageEvent.DamageModifier) }
                 .function("setDamage", listOf(1, 2)) {
@@ -31,12 +31,9 @@ object FnEntityDamageEvent {
                         )
                     }
                 }
-                .function("damage", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.damage
-                    } else {
-                        it.target?.getDamage(it.getArgument(0) as EntityDamageEvent.DamageModifier)
-                    }
+                .function("damage", 0) { it.target?.damage }
+                .function("getDamage", 1) {
+                    it.target?.getDamage(it.getArgument(0) as EntityDamageEvent.DamageModifier)
                 }
                 .function(
                     "isApplicable",

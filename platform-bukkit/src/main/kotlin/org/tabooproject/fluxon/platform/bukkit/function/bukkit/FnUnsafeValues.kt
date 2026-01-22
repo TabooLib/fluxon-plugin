@@ -37,7 +37,7 @@ object FnUnsafeValues {
                         }
                     }
                 }
-                .function("material", 2) { it.target?.getMaterial(it.getString(0), it.getNumber(1).toInt()) }
+                .function("getMaterial", 2) { it.target?.getMaterial(it.getString(0), it.getNumber(1).toInt()) }
                 .function("dataVersion", 0) { it.target?.dataVersion }
                 .function("modifyItemStack", 2) {
                     it.target?.modifyItemStack(
@@ -60,10 +60,10 @@ object FnUnsafeValues {
                     )
                 }
                 .function("removeAdvancement", 1) { it.target?.removeAdvancement(it.getArgument(0) as NamespacedKey) }
-                .function("creativeCategory", 1) { it.target?.getCreativeCategory(it.getArgument(0) as Material) }
-                .function("blockTranslationKey", 1) { it.target?.getBlockTranslationKey(it.getArgument(0) as Material) }
-                .function("itemTranslationKey", 1) { it.target?.getItemTranslationKey(it.getArgument(0) as Material) }
-                .function("translationKey", 1) {
+                .function("getCreativeCategory", 1) { it.target?.getCreativeCategory(it.getArgument(0) as Material) }
+                .function("getBlockTranslationKey", 1) { it.target?.getBlockTranslationKey(it.getArgument(0) as Material) }
+                .function("getItemTranslationKey", 1) { it.target?.getItemTranslationKey(it.getArgument(0) as Material) }
+                .function("getTranslationKey", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is EntityType -> it.target?.getTranslationKey(var1)
                         is ItemStack -> it.target?.getTranslationKey(var1)
@@ -71,7 +71,7 @@ object FnUnsafeValues {
                         else -> throw IllegalArgumentException("参数必须是 EntityType, ItemStack, 或 Attribute 类型")
                     }
                 }
-                .function("featureFlag", 1) { it.target?.getFeatureFlag(it.getArgument(0) as NamespacedKey) }
+                .function("getFeatureFlag", 1) { it.target?.getFeatureFlag(it.getArgument(0) as NamespacedKey) }
         }
     }
 }

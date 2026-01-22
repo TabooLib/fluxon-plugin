@@ -630,7 +630,7 @@ object FnPlayer {
                     }
                 }
                 .function(
-                    "advancementProgress",
+                    "getAdvancementProgress",
                     1
                 ) { it.target?.getAdvancementProgress(it.getArgument(0) as Advancement) }
                 .function("clientViewDistance", 0) { it.target?.clientViewDistance }

@@ -19,7 +19,7 @@ object FnHelpTopic {
                 .function("amendCanSee", 1) { it.target?.amendCanSee(it.getString(0)) }
                 .function("name", 0) { it.target?.getName() }
                 .function("shortText", 0) { it.target?.getShortText() }
-                .function("fullText", 1) { it.target?.getFullText(it.getArgument(0) as CommandSender) }
+                .function("getFullText", 1) { it.target?.getFullText(it.getArgument(0) as CommandSender) }
                 .function("amendTopic", 2) { it.target?.amendTopic(it.getString(0), it.getString(1)) }
         }
     }

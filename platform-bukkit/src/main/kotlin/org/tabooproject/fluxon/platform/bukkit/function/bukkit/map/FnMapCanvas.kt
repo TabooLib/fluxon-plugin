@@ -28,13 +28,13 @@ object FnMapCanvas {
                         (it.getArgument(2) as Color).let { color -> java.awt.Color(color.red, color.green, color.blue) }
                     )
                 }
-                .function("pixelColor", 2) {
+                .function("getPixelColor", 2) {
                     it.target?.getPixelColor(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt()
                     )
                 }
-                .function("basePixelColor", 2) {
+                .function("getBasePixelColor", 2) {
                     it.target?.getBasePixelColor(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt()
@@ -47,8 +47,8 @@ object FnMapCanvas {
                         it.getNumber(2).toByte()
                     )
                 }
-                .function("pixel", 2) { it.target?.getPixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("basePixel", 2) { it.target?.getBasePixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
+                .function("getPixel", 2) { it.target?.getPixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
+                .function("getBasePixel", 2) { it.target?.getBasePixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .function("drawImage", 3) {
                     it.target?.drawImage(
                         it.getNumber(0).toInt(),

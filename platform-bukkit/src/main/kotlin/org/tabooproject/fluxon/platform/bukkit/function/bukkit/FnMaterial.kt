@@ -28,11 +28,11 @@ object FnMaterial {
                         it.target?.createBlockData(it.getString(0))
                     }
                 }
-                .function("newData", 1) { it.target?.getNewData(it.getNumber(0).toByte()) }
+                .function("getNewData", 1) { it.target?.getNewData(it.getNumber(0).toByte()) }
                 .function("isBlock", 0) { it.target?.isBlock }
                 .function("isEdible", 0) { it.target?.isEdible }
                 // static
-                .function("material", listOf(1, 2)) {
+                .function("getMaterial", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         Material.getMaterial(it.getString(0)!!)
                     } else {

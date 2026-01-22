@@ -19,9 +19,9 @@ object FnDataPackManager {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DataPackManager::class.java)
                 .function("dataPacks", 0) { it.target?.dataPacks }
-                .function("dataPack", 1) { it.target?.getDataPack(it.getArgument(0) as NamespacedKey) }
-                .function("enabledDataPacks", 1) { it.target?.getEnabledDataPacks(it.getArgument(0) as World) }
-                .function("disabledDataPacks", 1) { it.target?.getDisabledDataPacks(it.getArgument(0) as World) }
+                .function("getDataPack", 1) { it.target?.getDataPack(it.getArgument(0) as NamespacedKey) }
+                .function("getEnabledDataPacks", 1) { it.target?.getEnabledDataPacks(it.getArgument(0) as World) }
+                .function("getDisabledDataPacks", 1) { it.target?.getDisabledDataPacks(it.getArgument(0) as World) }
                 .function("isEnabledByFeature", 2) {
                     when (val var1 = it.getArgument(0)) {
                         is Material -> it.target?.isEnabledByFeature(var1, it.getArgument(1) as World)

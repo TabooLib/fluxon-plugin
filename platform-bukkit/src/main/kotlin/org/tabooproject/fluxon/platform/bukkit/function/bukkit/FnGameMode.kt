@@ -16,7 +16,7 @@ object FnGameMode {
             registerExtension(GameMode::class.java)
                 .function("value", 0) { it.target?.value }
                 // static
-                .function("byValue", 1) { GameMode.getByValue(it.getNumber(0).toInt()) }
+                .function("getByValue", 1) { GameMode.getByValue(it.getNumber(0).toInt()) }
         }
     }
 }

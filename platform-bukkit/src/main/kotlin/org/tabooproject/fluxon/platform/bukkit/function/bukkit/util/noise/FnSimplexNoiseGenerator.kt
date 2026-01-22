@@ -15,7 +15,7 @@ object FnSimplexNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
-                .function("noise", listOf(1, 2, 3, 4)) {
+                .function("getNoise", listOf(1, 2, 3, 4)) {
                     when (it.arguments.size) {
                         1 -> SimplexNoiseGenerator.getNoise(it.getNumber(0).toDouble())
                         2 -> SimplexNoiseGenerator.getNoise(

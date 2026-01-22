@@ -19,7 +19,7 @@ object FnChiseledBookshelf {
                 .function("setLastInteractedSlot", 1) { it.target?.setLastInteractedSlot(it.getNumber(0).toInt()) }
                 .function("inventory", 0) { it.target?.inventory }
                 .function("snapshotInventory", 0) { it.target?.snapshotInventory }
-                .function("slot", 1) { it.target?.getSlot(it.getArgument(0) as Vector) }
+                .function("getSlot", 1) { it.target?.getSlot(it.getArgument(0) as Vector) }
         }
     }
 }

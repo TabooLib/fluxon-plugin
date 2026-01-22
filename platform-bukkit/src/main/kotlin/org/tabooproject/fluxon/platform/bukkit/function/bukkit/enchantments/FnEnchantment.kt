@@ -25,9 +25,9 @@ object FnEnchantment {
                 .function("conflictsWith", 1) { it.target?.conflictsWith(it.getArgument(0) as Enchantment) }
                 .function("canEnchantItem", 1) { it.target?.canEnchantItem(it.getArgument(0) as ItemStack) }
                 // static
-                .function("byKey", 1) { Enchantment.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", 1) { Enchantment.getByKey(it.getArgument(0) as NamespacedKey) }
                 // static
-                .function("byName", 1) { Enchantment.getByName(it.getString(0)) }
+                .function("getByName", 1) { Enchantment.getByName(it.getString(0)) }
                 // static
                 .function("values", 0) { Enchantment.values() }
         }

@@ -18,7 +18,7 @@ object FnAdvancementProgress {
                 .function("isDone", 0) { it.target?.isDone }
                 .function("awardCriteria", 1) { it.target?.awardCriteria(it.getString(0)!!) }
                 .function("revokeCriteria", 1) { it.target?.revokeCriteria(it.getString(0)!!) }
-                .function("dateAwarded", 1) { it.target?.getDateAwarded(it.getString(0)!!) }
+                .function("getDateAwarded", 1) { it.target?.getDateAwarded(it.getString(0)!!) }
                 .function("remainingCriteria", 0) { it.target?.remainingCriteria }
                 .function("awardedCriteria", 0) { it.target?.awardedCriteria }
         }

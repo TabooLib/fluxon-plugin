@@ -51,14 +51,14 @@ object FnScoreboard {
                         else -> error("Scoreboard#registerNewObjective 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .function("objective", 1) {
+                .function("getObjective", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getObjective(var1)
                         is DisplaySlot -> it.target?.getObjective(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 DisplaySlot 类型")
                     }
                 }
-                .function("objectivesByCriteria", 1) {
+                .function("getObjectivesByCriteria", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is String -> it.target?.getObjectivesByCriteria(var1)
                         is Criteria -> it.target?.getObjectivesByCriteria(var1)
@@ -66,7 +66,7 @@ object FnScoreboard {
                     }
                 }
                 .function("objectives", 0) { it.target?.objectives }
-                .function("scores", 1) {
+                .function("getScores", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is OfflinePlayer -> it.target?.getScores(var1)
                         is String -> it.target?.getScores(var1)
@@ -80,9 +80,9 @@ object FnScoreboard {
                         else -> throw IllegalArgumentException("参数必须是 OfflinePlayer 或 String 类型")
                     }
                 }
-                .function("playerTeam", 1) { it.target?.getPlayerTeam(it.getArgument(0) as OfflinePlayer) }
-                .function("entryTeam", 1) { it.target?.getEntryTeam(it.getString(0)!!) }
-                .function("team", 1) { it.target?.getTeam(it.getString(0)!!) }
+                .function("getPlayerTeam", 1) { it.target?.getPlayerTeam(it.getArgument(0) as OfflinePlayer) }
+                .function("getEntryTeam", 1) { it.target?.getEntryTeam(it.getString(0)!!) }
+                .function("getTeam", 1) { it.target?.getTeam(it.getString(0)!!) }
                 .function("teams", 0) { it.target?.teams }
                 .function("registerNewTeam", 1) { it.target?.registerNewTeam(it.getString(0)!!) }
                 .function("players", 0) { it.target?.players }

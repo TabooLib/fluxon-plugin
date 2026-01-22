@@ -18,7 +18,7 @@ object FnAsyncStructureGenerateEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncStructureGenerateEvent::class.java)
                 .function("cause", 0) { it.target?.cause }
-                .function("blockTransformer", 1) { it.target?.getBlockTransformer(it.getArgument(0) as NamespacedKey) }
+                .function("getBlockTransformer", 1) { it.target?.getBlockTransformer(it.getArgument(0) as NamespacedKey) }
                 .function("setBlockTransformer", 2) {
                     it.target?.setBlockTransformer(
                         it.getArgument(0) as NamespacedKey,
@@ -31,7 +31,7 @@ object FnAsyncStructureGenerateEvent {
                 ) { it.target?.removeBlockTransformer(it.getArgument(0) as NamespacedKey) }
                 .function("clearBlockTransformers", 0) { it.target?.clearBlockTransformers() }
                 .function(
-                    "entityTransformer",
+                    "getEntityTransformer",
                     1
                 ) { it.target?.getEntityTransformer(it.getArgument(0) as NamespacedKey) }
                 .function(

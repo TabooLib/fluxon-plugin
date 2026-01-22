@@ -16,7 +16,7 @@ object FnCropState {
             registerExtension(CropState::class.java)
                 .function("data", 0) { it.target?.data }
                 // static
-                .function("byData", 1) { CropState.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", 1) { CropState.getByData(it.getNumber(0).toByte()) }
         }
     }
 }

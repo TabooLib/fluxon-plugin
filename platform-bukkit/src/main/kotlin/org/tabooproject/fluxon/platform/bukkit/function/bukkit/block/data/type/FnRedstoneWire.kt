@@ -15,7 +15,7 @@ object FnRedstoneWire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RedstoneWire::class.java)
-                .function("face", 1) { it.target?.getFace(it.getArgument(0) as BlockFace) }
+                .function("getFace", 1) { it.target?.getFace(it.getArgument(0) as BlockFace) }
                 .function("setFace", 2) {
                     it.target?.setFace(
                         it.getArgument(0) as BlockFace,

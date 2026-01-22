@@ -29,7 +29,7 @@ object FnObjective {
                 .function("displaySlot", 0) { it.target?.displaySlot }
                 .function("setRenderType", 1) { it.target?.setRenderType(it.getArgument(0) as RenderType) }
                 .function("renderType", 0) { it.target?.renderType }
-                .function("score", 1) {
+                .function("getScore", 1) {
                     when (val var1 = it.getArgument(0)) {
                         is OfflinePlayer -> it.target?.getScore(var1)
                         is String -> it.target?.getScore(var1)

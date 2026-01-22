@@ -16,7 +16,7 @@ object FnPistonMoveReaction {
             registerExtension(PistonMoveReaction::class.java)
                 .function("id", 0) { it.target?.id }
                 // static
-                .function("byId", 1) { PistonMoveReaction.getById(it.getNumber(0).toInt()) }
+                .function("getById", 1) { PistonMoveReaction.getById(it.getNumber(0).toInt()) }
         }
     }
 }

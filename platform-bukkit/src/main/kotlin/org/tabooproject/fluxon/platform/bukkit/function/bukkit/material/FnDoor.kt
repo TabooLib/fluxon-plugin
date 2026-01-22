@@ -17,7 +17,7 @@ object FnDoor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Door::class.java)
                 // static
-                .function("woodDoorOfSpecies", 1) { Door.getWoodDoorOfSpecies(it.getArgument(0) as TreeSpecies) }
+                .function("getWoodDoorOfSpecies", 1) { Door.getWoodDoorOfSpecies(it.getArgument(0) as TreeSpecies) }
                 .function("isOpen", 0) { it.target?.isOpen }
                 .function("setOpen", 1) { it.target?.setOpen(it.getBoolean(0)) }
                 .function("isTopHalf", 0) { it.target?.isTopHalf }

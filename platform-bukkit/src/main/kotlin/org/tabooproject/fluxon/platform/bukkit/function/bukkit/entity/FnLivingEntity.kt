@@ -22,31 +22,26 @@ object FnLivingEntity {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LivingEntity::class.java)
                 .function("hasPotion", 0) { it.target?.activePotionEffects?.isNotEmpty() }
-                .function("eyeHeight", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.eyeHeight
-                    } else {
-                        it.target?.getEyeHeight(it.getBoolean(0))
-                    }
-                }
+                .function("eyeHeight", 0) { it.target?.eyeHeight }
+                .function("getEyeHeight", 1) { it.target?.getEyeHeight(it.getBoolean(0)) }
                 .function("eyeLocation", 0) { it.target?.eyeLocation }
-                .function("lineOfSight", 2) {
+                .function("getLineOfSight", 2) {
                     it.target?.getLineOfSight(
                         it.getArgument(0) as Set<Material>,
                         it.getNumber(1).toInt()
                     )
                 }
-                .function("targetBlock", 2) {
+                .function("getTargetBlock", 2) {
                     it.target?.getTargetBlock(
                         it.getArgument(0) as Set<Material>,
                         it.getNumber(1).toInt()
                     )
                 }
                 .function(
-                    "lastTwoTargetBlocks",
+                    "getLastTwoTargetBlocks",
                     2
                 ) { it.target?.getLastTwoTargetBlocks(it.getArgument(0) as Set<Material>, it.getNumber(1).toInt()) }
-                .function("targetBlockExact", listOf(1, 2)) {
+                .function("getTargetBlockExact", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getTargetBlockExact(it.getNumber(0).toInt())
                     } else {
@@ -101,7 +96,7 @@ object FnLivingEntity {
                     1
                 ) { it.target?.addPotionEffects(it.getArgument(0) as Collection<PotionEffect>) }
                 .function("hasPotionEffect", 1) { it.target?.hasPotionEffect(it.getArgument(0) as PotionEffectType) }
-                .function("potionEffect", 1) { it.target?.getPotionEffect(it.getArgument(0) as PotionEffectType) }
+                .function("getPotionEffect", 1) { it.target?.getPotionEffect(it.getArgument(0) as PotionEffectType) }
                 .function(
                     "removePotionEffect",
                     1
@@ -134,11 +129,11 @@ object FnLivingEntity {
                 .function("collidableExemptions", 0) { it.target?.collidableExemptions }
                 .function("hurtSound", 0) { it.target?.hurtSound }
                 .function("deathSound", 0) { it.target?.deathSound }
-                .function("fallDamageSound", 1) { it.target?.getFallDamageSound(it.getNumber(0).toInt()) }
+                .function("getFallDamageSound", 1) { it.target?.getFallDamageSound(it.getNumber(0).toInt()) }
                 .function("fallDamageSoundSmall", 0) { it.target?.fallDamageSoundSmall }
                 .function("fallDamageSoundBig", 0) { it.target?.fallDamageSoundBig }
-                .function("drinkingSound", 1) { it.target?.getDrinkingSound(it.getArgument(0) as ItemStack) }
-                .function("eatingSound", 1) { it.target?.getEatingSound(it.getArgument(0) as ItemStack) }
+                .function("getDrinkingSound", 1) { it.target?.getDrinkingSound(it.getArgument(0) as ItemStack) }
+                .function("getEatingSound", 1) { it.target?.getEatingSound(it.getArgument(0) as ItemStack) }
                 .function("canBreatheUnderwater", 0) { it.target?.canBreatheUnderwater() }
                 .function("category", 0) { it.target?.category }
                 .function("setInvisible", 1) { it.target?.setInvisible(it.getBoolean(0)) }

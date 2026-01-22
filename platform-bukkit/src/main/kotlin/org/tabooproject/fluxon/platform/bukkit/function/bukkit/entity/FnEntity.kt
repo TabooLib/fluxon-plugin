@@ -19,13 +19,8 @@ object FnEntity {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Entity::class.java)
                 .function("isMoving", 0) { it.target?.velocity?.let { v -> !v.isZero } }
-                .function("location", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.location
-                    } else {
-                        it.target?.getLocation(it.getArgument(0) as Location)
-                    }
-                }
+                .function("location", 0) { it.target?.location }
+                .function("getLocation", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
                 .function("setVelocity", 1) { it.target?.setVelocity(it.getArgument(0) as Vector) }
                 .function("velocity", 0) { it.target?.velocity }
                 .function("height", 0) { it.target?.height }
@@ -63,7 +58,7 @@ object FnEntity {
                         }
                     }
                 }
-                .syncFunction("nearbyEntities", 3) {
+                .syncFunction("getNearbyEntities", 3) {
                     it.target?.getNearbyEntities(
                         it.getNumber(0).toDouble(),
                         it.getNumber(1).toDouble(),

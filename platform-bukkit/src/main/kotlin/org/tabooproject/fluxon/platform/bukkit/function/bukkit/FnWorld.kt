@@ -36,7 +36,7 @@ object FnWorld {
             registerFunction("worlds", 0) { Bukkit.getWorlds() }
 
             registerExtension(World::class.java)
-                .function("blockAt", listOf(1, 3)) {
+                .function("getBlockAt", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBlockAt(it.getArgument(0) as Location)
                     } else {
@@ -47,7 +47,7 @@ object FnWorld {
                         )
                     }
                 }
-                .syncFunction("highestBlockAt", listOf(1, 2, 3)) {
+                .syncFunction("getHighestBlockAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getHighestBlockAt(it.getArgument(0) as Location)
                         2 -> when (val var1 = it.getArgument(0)) {
@@ -64,7 +64,7 @@ object FnWorld {
                         else -> error("World#highestBlockAt 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .syncFunction("chunkAt", listOf(1, 2, 3)) {
+                .syncFunction("getChunkAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> when (val var1 = it.getArgument(0)) {
                             is Location -> it.target?.getChunkAt(var1)
@@ -150,7 +150,7 @@ object FnWorld {
                         it.getNumber(1).toInt()
                     )
                 }
-                .function("playersSeeingChunk", listOf(1, 2)) {
+                .function("getPlayersSeeingChunk", listOf(1, 2)) {
                     if (it.arguments.size == 1) {
                         it.target?.getPlayersSeeingChunk(it.getArgument(0) as Chunk)
                     } else {
@@ -192,18 +192,15 @@ object FnWorld {
                     "removePluginChunkTickets",
                     1
                 ) { it.target?.removePluginChunkTickets(it.getArgument(0) as Plugin) }
-                .function("pluginChunkTickets", listOf(0, 2)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.pluginChunkTickets
-                    } else {
-                        it.target?.getPluginChunkTickets(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt()
-                        )
-                    }
+                .function("pluginChunkTickets", 0) { it.target?.pluginChunkTickets }
+                .function("getPluginChunkTickets", 2) {
+                    it.target?.getPluginChunkTickets(
+                        it.getNumber(0).toInt(),
+                        it.getNumber(1).toInt()
+                    )
                 }
                 .function(
-                    "intersectingChunks",
+                    "getIntersectingChunks",
                     1
                 ) { it.target?.getIntersectingChunks(it.getArgument(0) as BoundingBox) }
                 .syncFunction("dropItem", 2) {
@@ -243,7 +240,7 @@ object FnWorld {
                 .syncFunction("livingEntities", 0) { it.target?.livingEntities }
                 .syncFunction("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
                 .syncFunction("players", 0) { it.target?.players }
-                .syncFunction("nearbyEntities", listOf(1, 4)) {
+                .syncFunction("getNearbyEntities", listOf(1, 4)) {
                     if (it.arguments.size == 1) {
                         it.target?.getNearbyEntities(it.getArgument(0) as BoundingBox)
                     } else {
@@ -451,7 +448,7 @@ object FnWorld {
                         )
                     }
                 }
-                .function("emptyChunkSnapshot", 4) {
+                .function("getEmptyChunkSnapshot", 4) {
                     it.target?.getEmptyChunkSnapshot(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
@@ -462,7 +459,7 @@ object FnWorld {
                 .function("setSpawnFlags", 2) { it.target?.setSpawnFlags(it.getBoolean(0), it.getBoolean(1)) }
                 .function("allowAnimals", 0) { it.target?.allowAnimals }
                 .function("allowMonsters", 0) { it.target?.allowMonsters }
-                .syncFunction("biome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
+                .syncFunction("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .syncFunction("setBiome", 3) {
                     it.target?.setBiome(
                         it.getNumber(0).toInt(),
@@ -470,7 +467,7 @@ object FnWorld {
                         it.getArgument(2) as Biome
                     )
                 }
-                .function("temperature", listOf(2, 3)) {
+                .function("getTemperature", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getTemperature(
                             it.getNumber(0).toInt(),
@@ -484,7 +481,7 @@ object FnWorld {
                         )
                     }
                 }
-                .function("humidity", listOf(2, 3)) {
+                .function("getHumidity", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getHumidity(it.getNumber(0).toInt(), it.getNumber(1).toInt())
                     } else {
@@ -548,7 +545,7 @@ object FnWorld {
                         it.getNumber(0).toInt()
                     )
                 }
-                .function("ticksPerSpawns", 1) { it.target?.getTicksPerSpawns(it.getArgument(0) as SpawnCategory) }
+                .function("getTicksPerSpawns", 1) { it.target?.getTicksPerSpawns(it.getArgument(0) as SpawnCategory) }
                 .function("setTicksPerSpawns", 2) {
                     it.target?.setTicksPerSpawns(
                         it.getArgument(0) as SpawnCategory,
@@ -581,7 +578,7 @@ object FnWorld {
                 }
                 .function("ambientSpawnLimit", 0) { it.target?.ambientSpawnLimit }
                 .function("setAmbientSpawnLimit", 1) { it.target?.setAmbientSpawnLimit(it.getNumber(0).toInt()) }
-                .function("spawnLimit", 1) { it.target?.getSpawnLimit(it.getArgument(0) as SpawnCategory) }
+                .function("getSpawnLimit", 1) { it.target?.getSpawnLimit(it.getArgument(0) as SpawnCategory) }
                 .function("setSpawnLimit", 2) {
                     it.target?.setSpawnLimit(
                         it.getArgument(0) as SpawnCategory,
@@ -732,7 +729,7 @@ object FnWorld {
                     }
                 }
                 .function("gameRules", 0) { it.target?.gameRules }
-                .function("gameRuleValue", 1) { it.target?.getGameRuleValue(it.getString(0)) }
+                .function("getGameRuleValue", 1) { it.target?.getGameRuleValue(it.getString(0)) }
                 .function("setGameRuleValue", 2) { it.target?.setGameRuleValue(it.getString(0)!!, it.getString(1)!!) }
                 .function("isGameRule", 1) { it.target?.isGameRule(it.getString(0)!!) }
                 .function("worldBorder", 0) { it.target?.worldBorder }
@@ -839,7 +836,7 @@ object FnWorld {
                 .function("raids", 0) { it.target?.raids }
                 .function("enderDragonBattle", 0) { it.target?.enderDragonBattle }
                 .function("featureFlags", 0) { it.target?.featureFlags }
-                .syncFunction("structures", listOf(2, 3)) {
+                .syncFunction("getStructures", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getStructures(
                             it.getNumber(0).toInt(),
@@ -859,7 +856,7 @@ object FnWorld {
             registerExtension(World.Environment::class.java)
                 .function("id", 0) { it.target?.id }
                 // static
-                .function("environment", 1) { World.Environment.getEnvironment(it.getNumber(0).toInt()) }
+                .function("getEnvironment", 1) { World.Environment.getEnvironment(it.getNumber(0).toInt()) }
         }
     }
 

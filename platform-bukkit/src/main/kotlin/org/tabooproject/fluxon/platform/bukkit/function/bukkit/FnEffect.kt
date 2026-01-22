@@ -18,7 +18,7 @@ object FnEffect {
                 .function("type", 0) { it.target?.type }
                 .function("data", 0) { it.target?.data }
                 // static
-                .function("byId", 1) { Effect.getById(it.getNumber(0).toInt()) }
+                .function("getById", 1) { Effect.getById(it.getNumber(0).toInt()) }
         }
     }
 }

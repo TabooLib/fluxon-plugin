@@ -20,7 +20,7 @@ object FnItemFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemFactory::class.java)
-                .function("itemMeta", 1) { it.target?.getItemMeta(it.getArgument(0) as Material) }
+                .function("getItemMeta", 1) { it.target?.getItemMeta(it.getArgument(0) as Material) }
                 .function("isApplicable", 2) {
                     when (val var2 = it.getArgument(1)) {
                         is ItemStack -> it.target?.isApplicable(it.getArgument(0) as ItemMeta, var2)
@@ -43,7 +43,7 @@ object FnItemFactory {
                 }
                 .function("defaultLeatherColor", 0) { it.target?.defaultLeatherColor }
                 .function("createItemStack", 1) { it.target?.createItemStack(it.getString(0)!!) }
-                .function("spawnEgg", 1) { it.target?.getSpawnEgg(it.getArgument(0) as EntityType) }
+                .function("getSpawnEgg", 1) { it.target?.getSpawnEgg(it.getArgument(0) as EntityType) }
                 .function("enchantItem", listOf(3, 4)) {
                     if (it.arguments.size == 3) {
                         it.target?.enchantItem(

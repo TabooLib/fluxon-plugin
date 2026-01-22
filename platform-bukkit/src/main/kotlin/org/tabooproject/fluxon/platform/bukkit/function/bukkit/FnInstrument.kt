@@ -17,7 +17,7 @@ object FnInstrument {
                 .function("sound", 0) { it.target?.sound }
                 .function("type", 0) { it.target?.type }
                 // static
-                .function("byType", 1) { Instrument.getByType(it.getNumber(0).toByte()) }
+                .function("getByType", 1) { Instrument.getByType(it.getNumber(0).toByte()) }
         }
     }
 }

@@ -32,7 +32,7 @@ object FnMapPalette {
                     }
                 }
                 // static
-                .function("color", 1) { MapPalette.getColor(it.getNumber(0).toByte()) }
+                .function("getColor", 1) { MapPalette.getColor(it.getNumber(0).toByte()) }
                 // static
                 .function(
                     "setMapColorCache",

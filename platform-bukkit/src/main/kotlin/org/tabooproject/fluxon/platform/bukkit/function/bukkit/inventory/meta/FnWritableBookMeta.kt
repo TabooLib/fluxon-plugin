@@ -15,7 +15,7 @@ object FnWritableBookMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WritableBookMeta::class.java)
                 .function("hasPages", 0) { it.target?.hasPages() }
-                .function("page", 1) { it.target?.getPage(it.getNumber(0).toInt()) }
+                .function("getPage", 1) { it.target?.getPage(it.getNumber(0).toInt()) }
                 .function("setPage", 2) { it.target?.setPage(it.getNumber(0).toInt(), it.getString(1)!!) }
                 .function("pages", 0) { it.target?.pages }
                 .function("setPages", listOf(0, 1)) {

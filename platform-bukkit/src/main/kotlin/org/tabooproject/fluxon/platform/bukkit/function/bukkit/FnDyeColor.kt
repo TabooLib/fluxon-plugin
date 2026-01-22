@@ -20,13 +20,13 @@ object FnDyeColor {
                 .function("color", 0) { it.target?.color }
                 .function("fireworkColor", 0) { it.target?.fireworkColor }
                 // static
-                .function("byWoolData", 1) { DyeColor.getByWoolData(it.getNumber(0).toByte()) }
+                .function("getByWoolData", 1) { DyeColor.getByWoolData(it.getNumber(0).toByte()) }
                 // static
-                .function("byDyeData", 1) { DyeColor.getByDyeData(it.getNumber(0).toByte()) }
+                .function("getByDyeData", 1) { DyeColor.getByDyeData(it.getNumber(0).toByte()) }
                 // static
-                .function("byColor", 1) { DyeColor.getByColor(it.getArgument(0) as Color) }
+                .function("getByColor", 1) { DyeColor.getByColor(it.getArgument(0) as Color) }
                 // static
-                .function("byFireworkColor", 1) { DyeColor.getByFireworkColor(it.getArgument(0) as Color) }
+                .function("getByFireworkColor", 1) { DyeColor.getByFireworkColor(it.getArgument(0) as Color) }
                 // static
                 .function("legacyValueOf", 1) { DyeColor.legacyValueOf(it.getString(0)) }
         }

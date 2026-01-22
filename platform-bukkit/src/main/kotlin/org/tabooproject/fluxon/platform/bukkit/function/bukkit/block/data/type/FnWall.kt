@@ -17,7 +17,7 @@ object FnWall {
             registerExtension(Wall::class.java)
                 .function("isUp", 0) { it.target?.isUp }
                 .function("setUp", 1) { it.target?.setUp(it.getBoolean(0)) }
-                .function("height", 1) { it.target?.getHeight(it.getArgument(0) as BlockFace) }
+                .function("getHeight", 1) { it.target?.getHeight(it.getArgument(0) as BlockFace) }
                 .function("setHeight", 2) {
                     it.target?.setHeight(
                         it.getArgument(0) as BlockFace,

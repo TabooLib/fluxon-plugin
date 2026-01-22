@@ -16,7 +16,7 @@ object FnGameEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameEvent::class.java)
                 // static
-                .function("byKey", 1) { GameEvent.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", 1) { GameEvent.getByKey(it.getArgument(0) as NamespacedKey) }
                 // static
                 .function("values", 0) { GameEvent.values() }
         }

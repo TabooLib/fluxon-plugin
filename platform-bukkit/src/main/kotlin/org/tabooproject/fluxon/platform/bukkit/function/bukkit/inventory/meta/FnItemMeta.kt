@@ -40,7 +40,7 @@ object FnItemMeta {
                 .function("enchants", 0) { it.target?.enchants }
                 .function("hasEnchants", 0) { it.target?.hasEnchants() }
                 .function("hasEnchant", 1) { it.target?.hasEnchant(it.getArgument(0) as Enchantment) }
-                .function("enchantLevel", 1) { it.target?.getEnchantLevel(it.getArgument(0) as Enchantment) }
+                .function("getEnchantLevel", 1) { it.target?.getEnchantLevel(it.getArgument(0) as Enchantment) }
                 .function("addEnchant", 3) {
                     it.target?.addEnchant(
                         it.getArgument(0) as Enchantment,
@@ -81,7 +81,7 @@ object FnItemMeta {
                 .function("tool", 0) { it.target?.tool }
                 .function("setTool", 1) { it.target?.setTool(it.getArgument(0) as ToolComponent) }
                 .function("hasAttributeModifiers", 0) { it.target?.hasAttributeModifiers() }
-                .function("attributeModifiers", 1) { it.target?.getAttributeModifiers(it.getArgument(0) as Attribute) }
+                .function("getAttributeModifiers", 1) { it.target?.getAttributeModifiers(it.getArgument(0) as Attribute) }
                 .function("addAttributeModifier", 2) {
                     it.target?.addAttributeModifier(
                         it.getArgument(0) as Attribute,

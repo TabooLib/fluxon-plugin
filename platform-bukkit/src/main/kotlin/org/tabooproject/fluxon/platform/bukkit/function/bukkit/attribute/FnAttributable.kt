@@ -94,7 +94,7 @@ object FnAttributable {
                         ?.apply { baseValue = it.getNumber(0).toDouble() }
                 }
 
-                .function("attribute", 1) { it.target?.getAttribute(it.getArgument(0) as Attribute) }
+                .function("getAttribute", 1) { it.target?.getAttribute(it.getArgument(0) as Attribute) }
         }
     }
 }

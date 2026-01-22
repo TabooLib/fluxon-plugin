@@ -38,7 +38,7 @@ object FnMetadatable {
                         it.getArgument(1) as MetadataValue
                     )
                 }
-                .function("metadata", 1) { it.target?.getMetadata(it.getString(0)!!) }
+                .function("getMetadata", 1) { it.target?.getMetadata(it.getString(0)!!) }
                 .function("hasMetadata", 1) { it.target?.hasMetadata(it.getString(0)!!) }
                 .function("removeMetadata", 2) {
                     it.target?.removeMetadata(

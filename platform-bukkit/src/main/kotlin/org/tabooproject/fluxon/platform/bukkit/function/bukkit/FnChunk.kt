@@ -21,23 +21,20 @@ object FnChunk {
                 .function("x", 0) { it.target?.x }
                 .function("z", 0) { it.target?.z }
                 .function("world", 0) { it.target?.world }
-                .function("block", 3) {
+                .function("getBlock", 3) {
                     it.target?.getBlock(
                         it.getNumber(0).toInt(),
                         it.getNumber(1).toInt(),
                         it.getNumber(2).toInt()
                     )
                 }
-                .function("chunkSnapshot", listOf(0, 3)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.chunkSnapshot
-                    } else {
-                        it.target?.getChunkSnapshot(
-                            it.getBoolean(0),
-                            it.getBoolean(1),
-                            it.getBoolean(2)
-                        )
-                    }
+                .function("chunkSnapshot", 0) { it.target?.chunkSnapshot }
+                .function("getChunkSnapshot", 3) {
+                    it.target?.getChunkSnapshot(
+                        it.getBoolean(0),
+                        it.getBoolean(1),
+                        it.getBoolean(2)
+                    )
                 }
                 .function("isEntitiesLoaded", 0) { it.target?.isEntitiesLoaded }
                 .function("entities", 0) { it.target?.entities }
@@ -77,13 +74,8 @@ object FnChunk {
                     }
                 }
                 .function("loadLevel", 0) { it.target?.loadLevel }
-                .function("structures", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.structures
-                    } else {
-                        it.target?.getStructures(it.getArgument(0) as Structure)
-                    }
-                }
+                .function("structures", 0) { it.target?.structures }
+                .function("getStructures", 1) { it.target?.getStructures(it.getArgument(0) as Structure) }
                 .function("playersSeeingChunk", 0) { it.target?.playersSeeingChunk }
         }
     }

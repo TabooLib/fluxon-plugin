@@ -27,13 +27,8 @@ object FnBlockState {
                 .function("x", 0) { it.target?.x }
                 .function("y", 0) { it.target?.y }
                 .function("z", 0) { it.target?.z }
-                .function("location", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.location
-                    } else {
-                        it.target?.getLocation(it.getArgument(0) as Location)
-                    }
-                }
+                .function("location", 0) { it.target?.location }
+                .function("getLocation", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
                 .function("chunk", 0) { it.target?.chunk }
                 .function("setData", 1) { it.target?.setData(it.getArgument(0) as MaterialData) }
                 .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }

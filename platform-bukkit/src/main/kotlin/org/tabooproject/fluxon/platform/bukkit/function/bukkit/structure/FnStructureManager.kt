@@ -19,7 +19,7 @@ object FnStructureManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureManager::class.java)
-                .function("structure", 1) { it.target?.getStructure(it.getArgument(0) as NamespacedKey) }
+                .function("getStructure", 1) { it.target?.getStructure(it.getArgument(0) as NamespacedKey) }
                 .function("registerStructure", 2) {
                     it.target?.registerStructure(
                         it.getArgument(0) as NamespacedKey,
@@ -67,7 +67,7 @@ object FnStructureManager {
                         )
                     }
                 }
-                .function("structureFile", 1) { it.target?.getStructureFile(it.getArgument(0) as NamespacedKey) }
+                .function("getStructureFile", 1) { it.target?.getStructureFile(it.getArgument(0) as NamespacedKey) }
                 .function("createStructure", 0) { it.target?.createStructure() }
                 .function("copy", 1) { it.target?.copy(it.getArgument(0) as Structure) }
         }

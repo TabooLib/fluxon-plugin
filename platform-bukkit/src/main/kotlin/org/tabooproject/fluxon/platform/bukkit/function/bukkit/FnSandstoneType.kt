@@ -16,7 +16,7 @@ object FnSandstoneType {
             registerExtension(SandstoneType::class.java)
                 .function("data", 0) { it.target?.data }
                 // static
-                .function("byData", 1) { SandstoneType.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", 1) { SandstoneType.getByData(it.getNumber(0).toByte()) }
         }
     }
 }

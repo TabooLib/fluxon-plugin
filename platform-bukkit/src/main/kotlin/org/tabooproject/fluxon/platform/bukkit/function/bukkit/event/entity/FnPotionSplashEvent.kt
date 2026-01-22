@@ -18,7 +18,7 @@ object FnPotionSplashEvent {
                 .function("entity", 0) { it.target?.getEntity() }
                 .function("potion", 0) { it.target?.potion }
                 .function("affectedEntities", 0) { it.target?.affectedEntities }
-                .function("intensity", 1) { it.target?.getIntensity(it.getArgument(0) as LivingEntity) }
+                .function("getIntensity", 1) { it.target?.getIntensity(it.getArgument(0) as LivingEntity) }
                 .function("setIntensity", 2) {
                     it.target?.setIntensity(
                         it.getArgument(0) as LivingEntity,

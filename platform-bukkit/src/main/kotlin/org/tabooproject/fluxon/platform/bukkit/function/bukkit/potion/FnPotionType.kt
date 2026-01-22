@@ -33,8 +33,8 @@ object FnPotionType {
                 .function("maxLevel", 0) {
                     it.target?.maxLevel
                 }
-                // static
-                .function("byEffect", 1) { PotionType.getByEffect(it.getArgument(0) as PotionEffectType) }
+                // statics
+                .function("getByEffect", 1) { PotionType.getByEffect(it.getArgument(0) as PotionEffectType) }
                 .function("key", 0) { it.target?.key }
         }
     }
