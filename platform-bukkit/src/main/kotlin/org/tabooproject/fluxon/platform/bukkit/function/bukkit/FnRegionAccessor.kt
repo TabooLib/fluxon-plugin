@@ -20,7 +20,7 @@ object FnRegionAccessor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegionAccessor::class.java)
-                .syncFunction("getBiome", listOf(1, 3)) {
+                .function("getBiome", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBiome(it.getArgument(0) as Location)
                     } else {
@@ -46,7 +46,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("getBlockState", listOf(1, 3)) {
+                .function("getBlockState", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBlockState(it.getArgument(0) as Location)
                     } else {
@@ -57,7 +57,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("getBlockData", listOf(1, 3)) {
+                .function("getBlockData", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getBlockData(it.getArgument(0) as Location)
                     } else {
@@ -68,7 +68,7 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("getType", listOf(1, 3)) {
+                .function("getType", listOf(1, 3)) {
                     if (it.arguments.size == 1) {
                         it.target?.getType(it.getArgument(0) as Location)
                     } else {
@@ -130,10 +130,10 @@ object FnRegionAccessor {
                         )
                     }
                 }
-                .syncFunction("entities", 0) { it.target?.entities }
-                .syncFunction("livingEntities", 0) { it.target?.livingEntities }
-                .syncFunction("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
-                .syncFunction("getHighestBlockYAt", listOf(1, 2, 3)) {
+                .function("entities", 0) { it.target?.entities }
+                .function("livingEntities", 0) { it.target?.livingEntities }
+                .function("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
+                .function("getHighestBlockYAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getHighestBlockYAt(it.getArgument(0) as Location)
                         2 -> when (val var1 = it.getArgument(0)) {

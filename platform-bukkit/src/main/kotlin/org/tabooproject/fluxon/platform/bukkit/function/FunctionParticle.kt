@@ -92,7 +92,16 @@ object FunctionParticle {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(ParticlePacketBuilder::class.java)
             // Particle
-            registerFunction("particle", listOf(1, 2)) {
+            registerFunction("particle", 1) {
+                val name = it.getArgument(0).toString()
+                XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")
+            }
+            registerFunction("particleOrNull", 1) {
+                val name = it.getArgument(0).toString()
+                XParticle.of(name).getOrNull()?.get()
+            }
+            // BuildParticle
+            registerFunction("buildParticle", listOf(1, 2)) {
                 val name = it.getArgument(0).toString()
                 val particle = particleCacheMap.computeIfAbsent(name) {
                     XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")

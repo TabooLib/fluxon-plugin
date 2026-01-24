@@ -58,7 +58,7 @@ object FnEntity {
                         }
                     }
                 }
-                .syncFunction("getNearbyEntities", 3) {
+                .function("getNearbyEntities", 3) {
                     it.target?.getNearbyEntities(
                         it.getNumber(0).toDouble(),
                         it.getNumber(1).toDouble(),

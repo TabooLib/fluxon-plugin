@@ -47,7 +47,7 @@ object FnWorld {
                         )
                     }
                 }
-                .syncFunction("getHighestBlockAt", listOf(1, 2, 3)) {
+                .function("getHighestBlockAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getHighestBlockAt(it.getArgument(0) as Location)
                         2 -> when (val var1 = it.getArgument(0)) {
@@ -64,7 +64,7 @@ object FnWorld {
                         else -> error("World#highestBlockAt 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .syncFunction("getChunkAt", listOf(1, 2, 3)) {
+                .function("getChunkAt", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> when (val var1 = it.getArgument(0)) {
                             is Location -> it.target?.getChunkAt(var1)
@@ -236,11 +236,11 @@ object FnWorld {
                     "strikeLightningEffect",
                     1
                 ) { it.target?.strikeLightningEffect(it.getArgument(0) as Location) }
-                .syncFunction("entities", 0) { it.target?.entities }
-                .syncFunction("livingEntities", 0) { it.target?.livingEntities }
-                .syncFunction("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
-                .syncFunction("players", 0) { it.target?.players }
-                .syncFunction("getNearbyEntities", listOf(1, 4)) {
+                .function("entities", 0) { it.target?.entities }
+                .function("livingEntities", 0) { it.target?.livingEntities }
+                .function("entitiesByClasses", 0) { it.target?.getEntitiesByClasses() }
+                .function("players", 0) { it.target?.players }
+                .function("getNearbyEntities", listOf(1, 4)) {
                     if (it.arguments.size == 1) {
                         it.target?.getNearbyEntities(it.getArgument(0) as BoundingBox)
                     } else {
@@ -252,7 +252,7 @@ object FnWorld {
                         )
                     }
                 }
-                .syncFunction("rayTraceEntities", listOf(3, 4)) {
+                .function("rayTraceEntities", listOf(3, 4)) {
                     if (it.arguments.size == 3) {
                         it.target?.rayTraceEntities(
                             it.getArgument(0) as Location,
@@ -459,7 +459,7 @@ object FnWorld {
                 .function("setSpawnFlags", 2) { it.target?.setSpawnFlags(it.getBoolean(0), it.getBoolean(1)) }
                 .function("allowAnimals", 0) { it.target?.allowAnimals }
                 .function("allowMonsters", 0) { it.target?.allowMonsters }
-                .syncFunction("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
+                .function("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .syncFunction("setBiome", 3) {
                     it.target?.setBiome(
                         it.getNumber(0).toInt(),
@@ -793,7 +793,7 @@ object FnWorld {
                         else -> error("World#spawnParticle 函数参数数量错误: ${it.arguments.contentDeepToString()}")
                     }
                 }
-                .syncFunction("locateNearestStructure", 4) {
+                .function("locateNearestStructure", 4) {
                     when (val var2 = it.getArgument(1)) {
                         is StructureType -> it.target?.locateNearestStructure(
                             it.getArgument(0) as Location,
@@ -812,7 +812,7 @@ object FnWorld {
                         else -> throw IllegalArgumentException("第二个参数必须是 StructureType 或 Structure 类型")
                     }
                 }
-                .syncFunction("locateNearestBiome", listOf(2, 4)) {
+                .function("locateNearestBiome", listOf(2, 4)) {
                     if (it.arguments.size == 2) {
                         it.target?.locateNearestBiome(
                             it.getArgument(0) as Location,
@@ -827,7 +827,7 @@ object FnWorld {
                         )
                     }
                 }
-                .syncFunction("locateNearestRaid", 2) {
+                .function("locateNearestRaid", 2) {
                     it.target?.locateNearestRaid(
                         it.getArgument(0) as Location,
                         it.getNumber(1).toInt()
@@ -836,7 +836,7 @@ object FnWorld {
                 .function("raids", 0) { it.target?.raids }
                 .function("enderDragonBattle", 0) { it.target?.enderDragonBattle }
                 .function("featureFlags", 0) { it.target?.featureFlags }
-                .syncFunction("getStructures", listOf(2, 3)) {
+                .function("getStructures", listOf(2, 3)) {
                     if (it.arguments.size == 2) {
                         it.target?.getStructures(
                             it.getNumber(0).toInt(),

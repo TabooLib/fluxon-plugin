@@ -7,6 +7,8 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.library.xseries.XMaterial
+import kotlin.jvm.optionals.getOrNull
 
 @PlatformSide(Platform.BUKKIT)
 object FnMaterial {
@@ -70,6 +72,14 @@ object FnMaterial {
                 .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
                 .function("isCompostable", 0) { it.target?.isCompostable }
                 .function("compostChance", 0) { it.target?.compostChance }
+            registerFunction("material", 1) {
+                val name = it.getArgument(0).toString()
+                XMaterial.matchXMaterial(name).getOrNull()?.get() ?: error("Material 不存在: $name")
+            }
+            registerFunction("materialOrNull", 1) {
+                val name = it.getArgument(0).toString()
+                XMaterial.matchXMaterial(name).getOrNull()?.get()
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ object FnBlock {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Block::class.java)
                 .function("data", 0) { it.target?.data }
-                .syncFunction("blockData", 0) { it.target?.blockData }
+                .function("blockData", 0) { it.target?.blockData }
                 .function("getRelative", listOf(1, 2, 3)) {
                     when (it.arguments.size) {
                         1 -> it.target?.getRelative(it.getArgument(0) as BlockFace)
