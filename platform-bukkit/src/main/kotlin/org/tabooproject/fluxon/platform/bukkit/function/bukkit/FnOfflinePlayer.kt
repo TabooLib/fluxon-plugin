@@ -12,7 +12,9 @@ import java.time.Instant
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.OfflinePlayer"])
 @PlatformSide(Platform.BUKKIT)
 object FnOfflinePlayer {
 

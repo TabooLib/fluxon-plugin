@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Boat"])
 @PlatformSide(Platform.BUKKIT)
 object FnBoat {
 
@@ -36,7 +38,17 @@ object FnBoat {
                 .function("workOnLand", 0) { it.target?.workOnLand }
                 .function("setWorkOnLand", 1) { it.target?.setWorkOnLand(it.getBoolean(0)) }
                 .function("status", 0) { it.target?.status }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Boat.Type"])
+@PlatformSide(Platform.BUKKIT)
+object FnBoatType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Boat.Type::class.java)
                 .function("material", 0) { it.target?.material }
         }

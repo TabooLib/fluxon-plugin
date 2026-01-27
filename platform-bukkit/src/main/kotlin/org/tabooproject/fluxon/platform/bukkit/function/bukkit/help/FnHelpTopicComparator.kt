@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.help.HelpTopicComparator"])
 @PlatformSide(Platform.BUKKIT)
 object FnHelpTopicComparator {
 
@@ -25,7 +27,17 @@ object FnHelpTopicComparator {
                         it.getArgument(1) as HelpTopic
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.help.HelpTopicComparator.TopicNameComparator"])
+@PlatformSide(Platform.BUKKIT)
+object FnHelpTopicComparatorTopicNameComparator {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicComparator.TopicNameComparator::class.java)
                 .function("compare", 2) { it.target?.compare(it.getString(0)!!, it.getArgument(1) as String) }
         }

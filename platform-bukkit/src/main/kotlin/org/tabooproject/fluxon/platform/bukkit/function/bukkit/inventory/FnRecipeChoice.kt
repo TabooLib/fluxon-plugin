@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.inventory.RecipeChoice"])
 @PlatformSide(Platform.BUKKIT)
 object FnRecipeChoice {
 
@@ -18,7 +20,17 @@ object FnRecipeChoice {
                 .function("itemStack", 0) { it.target?.itemStack }
                 .function("clone", 0) { it.target?.clone() }
                 .function("test", 1) { it.target?.test(it.getArgument(0) as ItemStack) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.RecipeChoice.MaterialChoice"])
+@PlatformSide(Platform.BUKKIT)
+object FnRecipeChoiceMaterialChoice {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.MaterialChoice::class.java)
                 .function("itemStack", 0) { it.target?.itemStack }
                 .function("clone", 0) { it.target?.clone() }
@@ -27,7 +39,17 @@ object FnRecipeChoice {
                 .function("hashCode", 0) { it.target?.hashCode() }
                 .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
                 .function("toString", 0) { it.target?.toString() }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.RecipeChoice.ExactChoice"])
+@PlatformSide(Platform.BUKKIT)
+object FnRecipeChoiceExactChoice {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.ExactChoice::class.java)
                 .function("itemStack", 0) { it.target?.itemStack }
                 .function("clone", 0) { it.target?.clone() }

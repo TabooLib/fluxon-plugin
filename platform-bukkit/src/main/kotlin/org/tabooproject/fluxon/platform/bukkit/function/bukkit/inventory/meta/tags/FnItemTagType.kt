@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType"])
 @PlatformSide(Platform.BUKKIT)
 object FnItemTagType {
 
@@ -35,7 +37,17 @@ object FnItemTagType {
                         it.getArgument(1) as ItemTagAdapterContext
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType.PrimitiveTagType"])
+@PlatformSide(Platform.BUKKIT)
+object FnItemTagTypePrimitiveTagType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType.PrimitiveTagType::class.java)
                 .function("primitiveType", listOf(0, 2)) {
                     if (it.arguments.isEmpty()) {

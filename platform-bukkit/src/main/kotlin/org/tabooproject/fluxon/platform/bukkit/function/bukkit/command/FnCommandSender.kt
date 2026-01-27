@@ -8,7 +8,9 @@ import taboolib.common.platform.function.adaptCommandSender
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.command.CommandSender"])
 @PlatformSide(Platform.BUKKIT)
 object FnCommandSender {
 

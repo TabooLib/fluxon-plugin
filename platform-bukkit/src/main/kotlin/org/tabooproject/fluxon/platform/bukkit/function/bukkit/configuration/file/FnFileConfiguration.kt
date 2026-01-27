@@ -7,7 +7,9 @@ import taboolib.common.platform.Awake
 import java.io.File
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.configuration.file.FileConfiguration"])
 @PlatformSide(Platform.BUKKIT)
 object FnFileConfiguration {
 

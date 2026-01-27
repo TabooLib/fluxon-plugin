@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.FireworkEffect"])
 @PlatformSide(Platform.BUKKIT)
 object FnFireworkEffect {
 
@@ -27,7 +29,17 @@ object FnFireworkEffect {
                 .function("toString", 0) { it.target?.toString() }
                 .function("hashCode", 0) { it.target?.hashCode() }
                 .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.FireworkEffect.Builder"])
+@PlatformSide(Platform.BUKKIT)
+object FnFireworkEffectBuilder {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffect.Builder::class.java)
                 .function("with", 1) { it.target?.with(it.getArgument(0) as FireworkEffect.Type) }
                 .function("withFlicker", 0) { it.target?.withFlicker() }

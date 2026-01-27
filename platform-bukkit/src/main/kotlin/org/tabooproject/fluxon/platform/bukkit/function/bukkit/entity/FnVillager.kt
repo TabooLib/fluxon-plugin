@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Villager"])
 @PlatformSide(Platform.BUKKIT)
 object FnVillager {
 
@@ -27,10 +29,30 @@ object FnVillager {
                 .function("wakeup", 0) { it.target?.wakeup() }
                 .function("shakeHead", 0) { it.target?.shakeHead() }
                 .function("zombify", 0) { it.target?.zombify() }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Villager.Type"])
+@PlatformSide(Platform.BUKKIT)
+object FnVillagerType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Villager.Type::class.java)
                 .function("key", 0) { it.target?.key }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Villager.Profession"])
+@PlatformSide(Platform.BUKKIT)
+object FnVillagerProfession {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Villager.Profession::class.java)
                 .function("key", 0) { it.target?.key }
         }

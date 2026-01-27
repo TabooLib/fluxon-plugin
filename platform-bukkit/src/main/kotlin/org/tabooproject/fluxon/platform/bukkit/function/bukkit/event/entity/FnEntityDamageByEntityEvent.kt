@@ -7,7 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.platform.util.attacker
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.event.entity.EntityDamageByEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnEntityDamageByEntityEvent {
 

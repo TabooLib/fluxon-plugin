@@ -11,7 +11,9 @@ import java.io.InputStream
 import java.io.OutputStream
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.structure.StructureManager"])
 @PlatformSide(Platform.BUKKIT)
 object FnStructureManager {
 

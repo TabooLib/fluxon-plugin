@@ -9,7 +9,9 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.library.xseries.XMaterial
 import kotlin.jvm.optionals.getOrNull
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.Material"])
 @PlatformSide(Platform.BUKKIT)
 object FnMaterial {
 

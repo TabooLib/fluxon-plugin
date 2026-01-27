@@ -8,7 +8,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.inventory.meta.components.ToolComponent"])
 @PlatformSide(Platform.BUKKIT)
 object FnToolComponent {
 
@@ -41,7 +43,17 @@ object FnToolComponent {
                     }
                 }
                 .function("removeRule", 1) { it.target?.removeRule(it.getArgument(0) as ToolComponent.ToolRule) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.meta.components.ToolComponent.ToolRule"])
+@PlatformSide(Platform.BUKKIT)
+object FnToolComponentToolRule {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(ToolComponent.ToolRule::class.java)
                 .function("blocks", 0) { it.target?.blocks }
                 .function("setBlocks", 1) {

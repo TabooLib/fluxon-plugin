@@ -7,7 +7,9 @@ import taboolib.common.platform.Awake
 import java.net.URL
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.profile.PlayerTextures"])
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerTextures {
 

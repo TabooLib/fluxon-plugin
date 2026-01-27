@@ -10,7 +10,9 @@ import taboolib.common.platform.Awake
 import java.awt.Image
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.map.MapCanvas"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapCanvas {
 

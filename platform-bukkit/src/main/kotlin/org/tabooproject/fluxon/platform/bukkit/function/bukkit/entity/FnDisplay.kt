@@ -8,7 +8,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Display"])
 @PlatformSide(Platform.BUKKIT)
 object FnDisplay {
 
@@ -44,7 +46,17 @@ object FnDisplay {
                 .function("setGlowColorOverride", 1) { it.target?.setGlowColorOverride(it.getArgument(0) as Color) }
                 .function("brightness", 0) { it.target?.brightness }
                 .function("setBrightness", 1) { it.target?.setBrightness(it.getArgument(0) as Display.Brightness) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Display.Brightness"])
+@PlatformSide(Platform.BUKKIT)
+object FnDisplayBrightness {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Display.Brightness::class.java)
                 .function("blockLight", 0) { it.target?.blockLight }
                 .function("skyLight", 0) { it.target?.skyLight }

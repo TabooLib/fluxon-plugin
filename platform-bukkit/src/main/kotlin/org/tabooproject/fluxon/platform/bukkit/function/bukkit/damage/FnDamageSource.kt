@@ -9,7 +9,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.damage.DamageSource"])
 @PlatformSide(Platform.BUKKIT)
 object FnDamageSource {
 
@@ -26,7 +28,17 @@ object FnDamageSource {
                 .function("foodExhaustion", 0) { it.target?.foodExhaustion }
                 .function("scalesWithDifficulty", 0) { it.target?.scalesWithDifficulty() }
                 .function("builder", 1) { DamageSource.builder(it.getArgument(0) as DamageType) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.damage.DamageSource.Builder"])
+@PlatformSide(Platform.BUKKIT)
+object FnDamageSourceBuilder {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(DamageSource.Builder::class.java)
                 .function("withCausingEntity", 1) { it.target?.withCausingEntity(it.getArgument(0) as Entity) }
                 .function("withDirectEntity", 1) { it.target?.withDirectEntity(it.getArgument(0) as Entity) }

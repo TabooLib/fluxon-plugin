@@ -12,6 +12,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.platform.util.toProxyLocation
+import taboolib.common.Requires
 
 /**
  * FluxonPlugin
@@ -20,6 +21,7 @@ import taboolib.platform.util.toProxyLocation
  * @author Lynn
  * @since 2026/1/6
  */
+@Requires(classes = ["org.bukkit.Location"])
 @PlatformSide(Platform.BUKKIT)
 object FnLocation {
 

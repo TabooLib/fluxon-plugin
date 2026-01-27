@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.persistence.PersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataType {
 
@@ -35,7 +37,17 @@ object FnPersistentDataType {
                         it.getArgument(1) as PersistentDataAdapterContext
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.persistence.PersistentDataType.PrimitivePersistentDataType"])
+@PlatformSide(Platform.BUKKIT)
+object FnPersistentDataTypePrimitivePersistentDataType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.PrimitivePersistentDataType::class.java)
                 .function("primitiveType", 0) { it.target?.primitiveType }
                 .function("complexType", 0) { it.target?.complexType }
@@ -57,7 +69,17 @@ object FnPersistentDataType {
                         it.getArgument(1) as PersistentDataAdapterContext
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.persistence.PersistentDataType.BooleanPersistentDataType"])
+@PlatformSide(Platform.BUKKIT)
+object FnPersistentDataTypeBooleanPersistentDataType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.BooleanPersistentDataType::class.java)
                 .function("primitiveType", 0) { it.target?.primitiveType }
                 .function("complexType", 0) { it.target?.complexType }

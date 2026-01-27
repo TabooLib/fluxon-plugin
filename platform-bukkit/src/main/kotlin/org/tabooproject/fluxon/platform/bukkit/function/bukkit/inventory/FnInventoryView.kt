@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.inventory.InventoryView"])
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryView {
 
@@ -38,7 +40,17 @@ object FnInventoryView {
                 .function("title", 0) { it.target?.title }
                 .function("originalTitle", 0) { it.target?.originalTitle }
                 .function("setTitle", 1) { it.target?.setTitle(it.getString(0)!!) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.InventoryView.Property"])
+@PlatformSide(Platform.BUKKIT)
+object FnInventoryViewProperty {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryView.Property::class.java)
                 .function("id", 0) { it.target?.getId() }
         }

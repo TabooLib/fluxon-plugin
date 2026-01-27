@@ -8,7 +8,9 @@ import taboolib.common.platform.Awake
 import java.util.concurrent.TimeUnit
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.WorldBorder"])
 @PlatformSide(Platform.BUKKIT)
 object FnWorldBorder {
 

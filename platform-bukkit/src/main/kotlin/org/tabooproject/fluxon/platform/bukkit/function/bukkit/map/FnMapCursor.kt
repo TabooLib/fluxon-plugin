@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.map.MapCursor"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapCursor {
 
@@ -28,7 +30,17 @@ object FnMapCursor {
                 .function("setVisible", 1) { it.target?.setVisible(it.getBoolean(0)) }
                 .function("caption", 0) { it.target?.caption }
                 .function("setCaption", 1) { it.target?.setCaption(it.getString(0)) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.map.MapCursor.Type"])
+@PlatformSide(Platform.BUKKIT)
+object FnMapCursorType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursor.Type::class.java)
                 .function("key", 0) { it.target?.key }
                 .function("value", 0) { it.target?.value }

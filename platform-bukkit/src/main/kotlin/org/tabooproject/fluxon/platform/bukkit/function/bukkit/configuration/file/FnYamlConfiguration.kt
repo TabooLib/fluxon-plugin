@@ -8,7 +8,9 @@ import java.io.File
 import java.io.Reader
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.configuration.file.YamlConfiguration"])
 @PlatformSide(Platform.BUKKIT)
 object FnYamlConfiguration {
 

@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Interaction"])
 @PlatformSide(Platform.BUKKIT)
 object FnInteraction {
 
@@ -22,7 +24,17 @@ object FnInteraction {
                 .function("setResponsive", 1) { it.target?.setResponsive(it.getBoolean(0)) }
                 .function("lastAttack", 0) { it.target?.lastAttack }
                 .function("lastInteraction", 0) { it.target?.lastInteraction }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Interaction.PreviousInteraction"])
+@PlatformSide(Platform.BUKKIT)
+object FnInteractionPreviousInteraction {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction.PreviousInteraction::class.java)
                 .function("player", 0) { it.target?.player }
                 .function("timestamp", 0) { it.target?.timestamp }

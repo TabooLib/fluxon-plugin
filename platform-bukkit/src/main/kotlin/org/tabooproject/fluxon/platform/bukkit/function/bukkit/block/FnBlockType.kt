@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.block.BlockType"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockType {
 
@@ -38,7 +40,17 @@ object FnBlockType {
                 .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
                 .function("asMaterial", 0) { it.target?.asMaterial() }
                 .function("blockDataClass", 0) { it.target?.blockDataClass }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.block.BlockType.Typed"])
+@PlatformSide(Platform.BUKKIT)
+object FnBlockTypeTyped {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(BlockType.Typed::class.java)
                 .function("blockDataClass", 0) { it.target?.blockDataClass }
                 .function("createBlockData", listOf(0, 1)) {

@@ -7,7 +7,9 @@ import taboolib.common.platform.Awake
 import java.util.logging.LogRecord
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.plugin.PluginLogger"])
 @PlatformSide(Platform.BUKKIT)
 object FnPluginLogger {
 

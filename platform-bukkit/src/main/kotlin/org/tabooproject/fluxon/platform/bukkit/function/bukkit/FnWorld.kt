@@ -19,7 +19,9 @@ import taboolib.common.platform.Awake
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.World"])
 @PlatformSide(Platform.BUKKIT)
 object FnWorld {
 
@@ -852,11 +854,6 @@ object FnWorld {
                 }
                 .function("isDay", 0) { it.target?.isDay }
                 .function("isNight", 0) { it.target?.isNight }
-
-            registerExtension(World.Environment::class.java)
-                .function("id", 0) { it.target?.id }
-                // static
-                .function("getEnvironment", 1) { World.Environment.getEnvironment(it.getNumber(0).toInt()) }
         }
     }
 
@@ -877,4 +874,19 @@ object FnWorld {
      */
     private val World.isNight: Boolean
         get() = time in 12301..23849
+}
+
+@Requires(classes = ["org.bukkit.World.Environment"])
+@PlatformSide(Platform.BUKKIT)
+object FnWorldEnvironment {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
+            registerExtension(World.Environment::class.java)
+                .function("id", 0) { it.target?.id }
+                // static
+                .function("getEnvironment", 1) { World.Environment.getEnvironment(it.getNumber(0).toInt()) }
+        }
+    }
 }

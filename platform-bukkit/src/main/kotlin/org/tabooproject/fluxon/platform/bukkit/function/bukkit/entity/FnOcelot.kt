@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Ocelot"])
 @PlatformSide(Platform.BUKKIT)
 object FnOcelot {
 
@@ -18,7 +20,17 @@ object FnOcelot {
                 .function("setTrusting", 1) { it.target?.setTrusting(it.getBoolean(0)) }
                 .function("catType", 0) { it.target?.catType }
                 .function("setCatType", 1) { it.target?.setCatType(it.getArgument(0) as Ocelot.Type) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Ocelot.Type"])
+@PlatformSide(Platform.BUKKIT)
+object FnOcelotType {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Ocelot.Type::class.java)
                 .function("id", 0) { it.target?.id }
                 // static

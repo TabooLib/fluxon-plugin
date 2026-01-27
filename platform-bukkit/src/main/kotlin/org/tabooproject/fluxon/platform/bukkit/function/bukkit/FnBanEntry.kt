@@ -7,7 +7,9 @@ import taboolib.common.platform.Awake
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.BanEntry"])
 @PlatformSide(Platform.BUKKIT)
 object FnBanEntry {
 

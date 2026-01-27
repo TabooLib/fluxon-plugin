@@ -19,7 +19,9 @@ import java.net.InetAddress
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.Server"])
 @PlatformSide(Platform.BUKKIT)
 object FnServer {
 

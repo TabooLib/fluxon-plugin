@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.map.MapFont"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapFont {
 
@@ -26,7 +28,17 @@ object FnMapFont {
                     it.target?.height
                 }
                 .function("isValid", 1) { it.target?.isValid(it.getString(0)!!) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.map.MapFont.CharacterSprite"])
+@PlatformSide(Platform.BUKKIT)
+object FnMapFontCharacterSprite {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont.CharacterSprite::class.java)
                 .function("get", 2) { it.target?.get(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .function("width", 0) { it.target?.width }

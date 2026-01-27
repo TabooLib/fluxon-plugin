@@ -14,7 +14,9 @@ import taboolib.common.platform.Awake
 import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.generator.ChunkGenerator"])
 @PlatformSide(Platform.BUKKIT)
 object FnChunkGenerator {
 
@@ -168,7 +170,17 @@ object FnChunkGenerator {
                         )
                     }
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.generator.ChunkGenerator.ChunkData"])
+@PlatformSide(Platform.BUKKIT)
+object FnChunkGeneratorChunkData {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator.ChunkData::class.java)
                 .function("minHeight", 0) { it.target?.minHeight }
                 .function("maxHeight", 0) { it.target?.maxHeight }
@@ -264,7 +276,17 @@ object FnChunkGenerator {
                         it.getNumber(2).toInt()
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.generator.ChunkGenerator.BiomeGrid"])
+@PlatformSide(Platform.BUKKIT)
+object FnChunkGeneratorBiomeGrid {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator.BiomeGrid::class.java)
                 .function("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
                 .function("setBiome", listOf(3, 4)) {

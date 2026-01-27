@@ -8,7 +8,9 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.library.xseries.XSound
 import kotlin.jvm.optionals.getOrNull
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.Sound"])
 @PlatformSide(Platform.BUKKIT)
 object FnSound {
 

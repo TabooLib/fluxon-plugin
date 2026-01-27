@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.Note"])
 @PlatformSide(Platform.BUKKIT)
 object FnNote {
 
@@ -32,7 +34,17 @@ object FnNote {
                 .function("hashCode", 0) { it.target?.hashCode() }
                 .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
                 .function("toString", 0) { it.target?.toString() }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.Note.Tone"])
+@PlatformSide(Platform.BUKKIT)
+object FnNoteTone {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Note.Tone::class.java)
                 .function("getId", 1) { it.target?.getId(it.getBoolean(0)) }
                 .function("isSharpable", 0) { it.target?.isSharpable }

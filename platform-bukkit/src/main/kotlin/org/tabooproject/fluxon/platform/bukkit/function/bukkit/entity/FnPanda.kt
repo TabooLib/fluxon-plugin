@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.entity.Panda"])
 @PlatformSide(Platform.BUKKIT)
 object FnPanda {
 
@@ -28,7 +30,17 @@ object FnPanda {
                 .function("setEating", 1) { it.target?.setEating(it.getBoolean(0)) }
                 .function("isScared", 0) { it.target?.isScared }
                 .function("unhappyTicks", 0) { it.target?.unhappyTicks }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.entity.Panda.Gene"])
+@PlatformSide(Platform.BUKKIT)
+object FnPandaGene {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(Panda.Gene::class.java)
                 .function("isRecessive", 0) { it.target?.isRecessive }
         }

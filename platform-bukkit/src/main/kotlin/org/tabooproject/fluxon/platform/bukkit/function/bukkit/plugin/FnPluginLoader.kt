@@ -8,7 +8,9 @@ import taboolib.common.platform.Awake
 import java.io.File
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.plugin.PluginLoader"])
 @PlatformSide(Platform.BUKKIT)
 object FnPluginLoader {
 

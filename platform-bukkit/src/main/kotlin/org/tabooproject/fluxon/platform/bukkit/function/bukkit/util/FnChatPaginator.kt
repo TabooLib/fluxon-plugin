@@ -6,7 +6,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.util.ChatPaginator"])
 @PlatformSide(Platform.BUKKIT)
 object FnChatPaginator {
 
@@ -29,7 +31,17 @@ object FnChatPaginator {
                 }
                 // static
                 .function("wordWrap", 2) { ChatPaginator.wordWrap(it.getString(0), it.getNumber(1).toInt()) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.util.ChatPaginator.ChatPage"])
+@PlatformSide(Platform.BUKKIT)
+object FnChatPaginatorChatPage {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator.ChatPage::class.java)
                 .function("pageNumber", 0) { it.target?.pageNumber }
                 .function("totalPages", 0) { it.target?.totalPages }

@@ -7,7 +7,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.inventory.meta.components.FoodComponent"])
 @PlatformSide(Platform.BUKKIT)
 object FnFoodComponent {
 
@@ -34,7 +36,17 @@ object FnFoodComponent {
                         it.getNumber(1).toFloat()
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.inventory.meta.components.FoodComponent.FoodEffect"])
+@PlatformSide(Platform.BUKKIT)
+object FnFoodComponentFoodEffect {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(FoodComponent.FoodEffect::class.java)
                 .function("effect", 0) { it.target?.effect }
                 .function("setEffect", 1) { it.target?.setEffect(it.getArgument(0) as PotionEffect) }

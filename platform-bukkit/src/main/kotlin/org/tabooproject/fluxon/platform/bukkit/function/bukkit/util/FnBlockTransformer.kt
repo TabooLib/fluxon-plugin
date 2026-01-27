@@ -8,7 +8,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.util.BlockTransformer"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockTransformer {
 
@@ -26,7 +28,17 @@ object FnBlockTransformer {
                         it.getArgument(5) as BlockTransformer.TransformationState
                     )
                 }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.util.BlockTransformer.TransformationState"])
+@PlatformSide(Platform.BUKKIT)
+object FnBlockTransformerTransformationState {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer.TransformationState::class.java)
                 .function("original", 0) { it.target?.original }
                 .function("world", 0) { it.target?.world }

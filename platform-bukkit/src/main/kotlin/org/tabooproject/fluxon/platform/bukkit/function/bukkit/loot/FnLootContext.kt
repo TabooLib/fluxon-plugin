@@ -8,7 +8,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.loot.LootContext"])
 @PlatformSide(Platform.BUKKIT)
 object FnLootContext {
 
@@ -21,7 +23,17 @@ object FnLootContext {
                 .function("lootingModifier", 0) { it.target?.lootingModifier }
                 .function("lootedEntity", 0) { it.target?.lootedEntity }
                 .function("killer", 0) { it.target?.killer }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.loot.LootContext.Builder"])
+@PlatformSide(Platform.BUKKIT)
+object FnLootContextBuilder {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext.Builder::class.java)
                 .function("luck", 1) { it.target?.luck(it.getNumber(0).toFloat()) }
                 .function("lootingModifier", 1) { it.target?.lootingModifier(it.getNumber(0).toInt()) }

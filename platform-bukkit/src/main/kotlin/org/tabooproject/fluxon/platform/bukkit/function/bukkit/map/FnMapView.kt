@@ -8,7 +8,9 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import taboolib.common.Requires
 
+@Requires(classes = ["org.bukkit.map.MapView"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapView {
 
@@ -35,7 +37,17 @@ object FnMapView {
                 .function("setUnlimitedTracking", 1) { it.target?.setUnlimitedTracking(it.getBoolean(0)) }
                 .function("isLocked", 0) { it.target?.isLocked }
                 .function("setLocked", 1) { it.target?.setLocked(it.getBoolean(0)) }
+        }
+    }
+}
 
+@Requires(classes = ["org.bukkit.map.MapView.Scale"])
+@PlatformSide(Platform.BUKKIT)
+object FnMapViewScale {
+
+    @Awake(LifeCycle.INIT)
+    private fun init() {
+        with(FluxonRuntime.getInstance()) {
             registerExtension(MapView.Scale::class.java)
                 // static
                 .function("valueOf", 1) { MapView.Scale.valueOf(it.getNumber(0).toByte()) }
