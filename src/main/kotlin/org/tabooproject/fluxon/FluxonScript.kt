@@ -4,8 +4,10 @@ import org.tabooproject.fluxon.profiler.EnvironmentCreationEvent
 import org.tabooproject.fluxon.profiler.ScriptExecutionEvent
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionContext
+import org.tabooproject.fluxon.runtime.FunctionContextPool
 import org.tabooproject.fluxon.runtime.RuntimeScriptBase
 import org.tabooproject.fluxon.runtime.error.FluxonRuntimeError
+import org.tabooproject.fluxon.runtime.stdlib.Intrinsics
 import org.tabooproject.fluxon.util.exceptFluxonCompletableFutureError
 import org.tabooproject.fluxon.util.printError
 import taboolib.common.platform.function.info
@@ -19,13 +21,13 @@ import java.util.concurrent.ConcurrentHashMap
 class FluxonScript(
     val scriptId: String,
     val scriptFile: File,
-    var instance: RuntimeScriptBase
+    var instance: RuntimeScriptBase,
 ) {
-    
+
     // 脚本创建时间戳
     var timestamp: Long = System.currentTimeMillis()
         private set
-    
+
     // 可释放的资源列表
     val resources = ConcurrentHashMap<String, AutoCloseable>()
 
@@ -44,7 +46,7 @@ class FluxonScript(
         initialized = null
         return null
     }
-    
+
     /**
      * 执行脚本
      * 如果克隆则自动释放（否则会残留）
@@ -137,10 +139,12 @@ class FluxonScript(
             // 调用脚本的 release 函数
             val release = environment.getFunctionOrNull("release")
             if (release != null) {
-                try {
-                    release.call(FunctionContext(release, null, emptyArray(), environment))
-                } catch (ex: FluxonRuntimeError) {
-                    ex.printError()
+                FunctionContextPool.local().borrow(release, null, 0, environment).use { context ->
+                    try {
+                        release.call(context)
+                    } catch (ex: FluxonRuntimeError) {
+                        ex.printError()
+                    }
                 }
             }
         }

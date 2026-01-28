@@ -1,7 +1,6 @@
 package org.tabooproject.fluxon.util
 
 import org.tabooproject.fluxon.runtime.FluxonRuntime
-import org.tabooproject.fluxon.runtime.Function
 import org.tabooproject.fluxon.runtime.error.*
 import taboolib.common.platform.function.warning
 import java.util.concurrent.CompletableFuture
@@ -36,19 +35,18 @@ fun FluxonRuntimeError.printError() {
         // 函数未找到
         is FunctionNotFoundError -> {
             warning("没有找到函数: $name (pos: $pos,$exPos)")
-            warning("参数: ${arguments.joinToString(", ")}")
             // 打印目标
             if (target != null) {
                 warning("目标: $target (${target.javaClass})")
-                val find = arrayListOf<Function>()
-                FluxonRuntime.getInstance().extensionFunctions.forEach { (_, value) ->
-                    value.forEach { (type, func) ->
+                val find = hashSetOf<String>()
+                FluxonRuntime.getInstance().extensionFunctions.forEach { (_, overloadSet) ->
+                    overloadSet.forEach { (type, overload) ->
                         if (type.isAssignableFrom(javaClass)) {
-                            find += func
+                            find += overload.name
                         }
                     }
                 }
-                warning("目标支持的扩展函数: ${find.sortedBy { func -> func.name }.map { func -> func.name }}")
+                warning("目标支持的扩展函数: $find")
             } else {
                 warning("目标为空")
             }

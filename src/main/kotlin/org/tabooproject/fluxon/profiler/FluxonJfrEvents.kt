@@ -1,3 +1,5 @@
+@file:Suppress("Since15")
+
 package org.tabooproject.fluxon.profiler
 
 import jdk.jfr.*

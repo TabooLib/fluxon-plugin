@@ -8,6 +8,7 @@ import kotlin.math.roundToInt
 /**
  * Fluxon 性能分析器
  */
+@Suppress("Since15")
 object FluxonProfiler {
 
     /**

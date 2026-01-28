@@ -50,8 +50,8 @@ repositories {
 }
 
 dependencies {
-    taboo("org.tabooproject.fluxon:core:1.5.7") { isTransitive = false }
-    taboo("org.tabooproject.fluxon:inst-core:1.5.7") { isTransitive = false }
+    taboo("org.tabooproject.fluxon:core:1.6.2") { isTransitive = false }
+    taboo("org.tabooproject.fluxon:inst-core:1.6.2") { isTransitive = false }
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
@@ -93,7 +93,7 @@ configure(subprojects) {
     }
     
     dependencies {
-        taboo("org.tabooproject.fluxon:core:1.5.7") { isTransitive = false }
+        taboo("org.tabooproject.fluxon:core:1.6.2") { isTransitive = false }
         compileOnly(kotlin("stdlib"))
         compileOnly(rootProject.fileTree("libs"))
     }

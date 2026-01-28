@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
+@Suppress("Since15")
 @Requires(classes = ["!org.tabooproject.fluxon.ParseScript"])
 @CommandHeader("fluxon", aliases = ["fn"])
 object FluxonCommand {
