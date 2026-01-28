@@ -34,34 +34,34 @@ object FnLocation {
             // 构建向量
             // x, y, z
             registerFunction("location", returnsObject().params(Type.D, Type.D, Type.D)) {
-                val x = it.getInt(0)
-                val y = it.getInt(1)
-                val z = it.getInt(2)
-                it.setReturnRef(Location(null, x.toDouble(), y.toDouble(), z.toDouble()))}
+                val x = it.getDouble(0)
+                val y = it.getDouble(1)
+                val z = it.getDouble(2)
+                it.setReturnRef(Location(null, x, y, z))}
             // world, x, y, z
             registerFunction("location", returnsObject().params(Type.OBJECT, Type.D, Type.D, Type.D)) {
                 val world = it.getRef(0) as? World
-                val x = it.getInt(1)
-                val y = it.getInt(2)
-                val z = it.getInt(3)
-                it.setReturnRef(Location(world, x.toDouble(), y.toDouble(), z.toDouble()))}
+                val x = it.getDouble(1)
+                val y = it.getDouble(2)
+                val z = it.getDouble(3)
+                it.setReturnRef(Location(world, x, y, z))}
             // x, y, z, yaw, pitch
             registerFunction("location", returnsObject().params(Type.D, Type.D, Type.D, Type.F, Type.F)) {
-                val x = it.getInt(0)
-                val y = it.getInt(1)
-                val z = it.getInt(2)
-                val yaw = it.getInt(3)
-                val pitch = it.getInt(4)
-                it.setReturnRef(Location(null, x.toDouble(), y.toDouble(), z.toDouble(), yaw.toFloat(), pitch.toFloat()))}
+                val x = it.getDouble(0)
+                val y = it.getDouble(1)
+                val z = it.getDouble(2)
+                val yaw = it.getFloat(3)
+                val pitch = it.getFloat(4)
+                it.setReturnRef(Location(null, x, y, z, yaw, pitch))}
             // world, x, y, z, yaw, pitch
             registerFunction("location", returnsObject().params(Type.OBJECT, Type.D, Type.D, Type.D, Type.F, Type.F)) {
                 val world = it.getRef(0) as? World
-                val x = it.getInt(1)
-                val y = it.getInt(2)
-                val z = it.getInt(3)
-                val yaw = it.getInt(4)
-                val pitch = it.getInt(5)
-                it.setReturnRef(Location(world, x.toDouble(), y.toDouble(), z.toDouble(), yaw.toFloat(), pitch.toFloat()))}
+                val x = it.getDouble(1)
+                val y = it.getDouble(2)
+                val z = it.getDouble(3)
+                val yaw = it.getFloat(4)
+                val pitch = it.getFloat(5)
+                it.setReturnRef(Location(world, x, y, z, yaw, pitch))}
 
             registerExtension(Location::class.java)
                 // 基本属性（只读）
@@ -81,17 +81,17 @@ object FnLocation {
                 .function("zero", returnsObject().noParams()) { it.setReturnRef(it.target?.zero()) }
 
                 // 可读写属性 - 坐标
-                .function("x", returns(Type.D).noParams()) { it.setReturnRef(it.target?.x) }
+                .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.x) }
                 .function("setX", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.apply { x = it.getAsDouble(0) }) }
-                .function("y", returns(Type.D).noParams()) { it.setReturnRef(it.target?.y) }
+                .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.y) }
                 .function("setY", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.apply { y = it.getAsDouble(0) }) }
-                .function("z", returns(Type.D).noParams()) { it.setReturnRef(it.target?.z) }
+                .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.z) }
                 .function("setZ", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.apply { z = it.getAsDouble(0) }) }
 
                 // 可读写属性 - 朝向
-                .function("yaw", returns(Type.F).noParams()) { it.setReturnRef(it.target?.yaw) }
+                .function("yaw", returns(Type.F).noParams()) { it.setReturnFloat(it.target!!.yaw) }
                 .function("setYaw", returnsObject().params(Type.F)) { it.setReturnRef(it.target?.apply { yaw = it.getFloat(0) }) }
-                .function("pitch", returns(Type.F).noParams()) { it.setReturnRef(it.target?.pitch) }
+                .function("pitch", returns(Type.F).noParams()) { it.setReturnFloat(it.target!!.pitch) }
                 .function("setPitch", returnsObject().params(Type.F)) { it.setReturnRef(it.target?.apply { pitch = it.getFloat(0) }) }
 
                 // 可读写属性 - 方向向量
