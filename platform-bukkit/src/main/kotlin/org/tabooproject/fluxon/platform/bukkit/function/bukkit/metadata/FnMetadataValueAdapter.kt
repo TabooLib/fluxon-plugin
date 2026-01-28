@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.metadata.MetadataValueAdapter"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +18,15 @@ object FnMetadataValueAdapter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MetadataValueAdapter::class.java)
-                .function("owningPlugin", 0) { it.target?.getOwningPlugin() }
-                .function("asInt", 0) { it.target?.asInt() }
-                .function("asFloat", 0) { it.target?.asFloat() }
-                .function("asDouble", 0) { it.target?.asDouble() }
-                .function("asLong", 0) { it.target?.asLong() }
-                .function("asShort", 0) { it.target?.asShort() }
-                .function("asByte", 0) { it.target?.asByte() }
-                .function("asBoolean", 0) { it.target?.asBoolean() }
-                .function("asString", 0) { it.target?.asString() }
+                .function("owningPlugin", returnsObject().noParams()) { it.target?.getOwningPlugin() }
+                .function("asInt", returnsObject().noParams()) { it.target?.asInt() }
+                .function("asFloat", returnsObject().noParams()) { it.target?.asFloat() }
+                .function("asDouble", returnsObject().noParams()) { it.target?.asDouble() }
+                .function("asLong", returnsObject().noParams()) { it.target?.asLong() }
+                .function("asShort", returnsObject().noParams()) { it.target?.asShort() }
+                .function("asByte", returnsObject().noParams()) { it.target?.asByte() }
+                .function("asBoolean", returnsObject().noParams()) { it.target?.asBoolean() }
+                .function("asString", returnsObject().noParams()) { it.target?.asString() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Fox"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,22 +20,16 @@ object FnFox {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fox::class.java)
-                .function("foxType", 0) { it.target?.foxType }
-                .function("setFoxType", 1) { it.target?.setFoxType(it.getArgument(0) as Fox.Type) }
-                .function("isCrouching", 0) { it.target?.isCrouching }
-                .function("setCrouching", 1) { it.target?.setCrouching(it.getBoolean(0)) }
-                .function("setSleeping", 1) { it.target?.setSleeping(it.getBoolean(0)) }
-                .function("firstTrustedPlayer", 0) { it.target?.firstTrustedPlayer }
-                .function(
-                    "setFirstTrustedPlayer",
-                    1
-                ) { it.target?.setFirstTrustedPlayer(it.getArgument(0) as AnimalTamer) }
-                .function("secondTrustedPlayer", 0) { it.target?.secondTrustedPlayer }
-                .function(
-                    "setSecondTrustedPlayer",
-                    1
-                ) { it.target?.setSecondTrustedPlayer(it.getArgument(0) as AnimalTamer) }
-                .function("isFaceplanted", 0) { it.target?.isFaceplanted }
+                .function("foxType", returnsObject().noParams()) { it.target?.foxType }
+                .function("setFoxType", returnsObject().params(Type.OBJECT)) { it.target?.setFoxType(it.getRef(0) as Fox.Type) }
+                .function("isCrouching", returns(Type.Z).noParams()) { it.target?.isCrouching }
+                .function("setCrouching", returnsObject().params(Type.OBJECT)) { it.target?.setCrouching(it.getBool(0)) }
+                .function("setSleeping", returnsObject().params(Type.OBJECT)) { it.target?.setSleeping(it.getBool(0)) }
+                .function("firstTrustedPlayer", returnsObject().noParams()) { it.target?.firstTrustedPlayer }
+                .function("setFirstTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setFirstTrustedPlayer(it.getRef(0) as AnimalTamer) }
+                .function("secondTrustedPlayer", returnsObject().noParams()) { it.target?.secondTrustedPlayer }
+                .function("setSecondTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setSecondTrustedPlayer(it.getRef(0) as AnimalTamer) }
+                .function("isFaceplanted", returns(Type.Z).noParams()) { it.target?.isFaceplanted }
         }
     }
 }

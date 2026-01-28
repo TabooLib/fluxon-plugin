@@ -3,6 +3,9 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 import org.bukkit.Material
 import org.bukkit.World
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
@@ -19,67 +22,64 @@ object FnMaterial {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Material::class.java)
-                .function("data", 0) { it.target?.data }
-                .function("id", 0) { it.target?.id }
-                .function("isLegacy", 0) { it.target?.isLegacy }
-                .function("key", 0) { it.target?.key }
-                .function("maxStackSize", 0) { it.target?.maxStackSize }
-                .function("maxDurability", 0) { it.target?.maxDurability }
-                .function("createBlockData", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.createBlockData()
-                    } else {
-                        it.target?.createBlockData(it.getString(0))
-                    }
+                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("id", returns(Type.I).noParams()) { it.target?.id }
+                .function("isLegacy", returns(Type.Z).noParams()) { it.target?.isLegacy }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("maxStackSize", returns(Type.I).noParams()) { it.target?.maxStackSize }
+                .function("maxDurability", returns(Type.I).noParams()) { it.target?.maxDurability }
+                .function("createBlockData", returnsObject().noParams()) {
+                    it.target?.createBlockData()
                 }
-                .function("getNewData", 1) { it.target?.getNewData(it.getNumber(0).toByte()) }
-                .function("isBlock", 0) { it.target?.isBlock }
-                .function("isEdible", 0) { it.target?.isEdible }
+                .function("createBlockData", returnsObject().params(Type.STRING)) {
+                    it.target?.createBlockData(it.getString(0))
+                }
+                .function("getNewData", returnsObject().params(Type.I)) { it.target?.getNewData(it.getInt(0).toByte()) }
+                .function("isBlock", returns(Type.Z).noParams()) { it.target?.isBlock }
+                .function("isEdible", returns(Type.Z).noParams()) { it.target?.isEdible }
                 // static
-                .function("getMaterial", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        Material.getMaterial(it.getString(0)!!)
-                    } else {
-                        Material.getMaterial(it.getString(0)!!, it.getBoolean(1))
-                    }
+                .function("getMaterial", returnsObject().params(Type.STRING)) {
+                    Material.getMaterial(it.getString(0)!!)
+                }
+                .function("getMaterial", returnsObject().params(Type.STRING, Type.Z)) {
+                    Material.getMaterial(it.getString(0)!!, it.getBool(1))
                 }
                 // static
-                .function("matchMaterial", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        Material.matchMaterial(it.getString(0)!!)
-                    } else {
-                        Material.matchMaterial(it.getString(0)!!, it.getBoolean(1))
-                    }
+                .function("matchMaterial", returnsObject().params(Type.STRING)) {
+                    Material.matchMaterial(it.getString(0)!!)
                 }
-                .function("isRecord", 0) { it.target?.isRecord }
-                .function("isSolid", 0) { it.target?.isSolid }
-                .function("isAir", 0) { it.target?.isAir }
-                .function("isTransparent", 0) { it.target?.isTransparent }
-                .function("isFlammable", 0) { it.target?.isFlammable }
-                .function("isBurnable", 0) { it.target?.isBurnable }
-                .function("isFuel", 0) { it.target?.isFuel }
-                .function("isOccluding", 0) { it.target?.isOccluding }
-                .function("hasGravity", 0) { it.target?.hasGravity() }
-                .function("isItem", 0) { it.target?.isItem }
-                .function("isInteractable", 0) { it.target?.isInteractable }
-                .function("hardness", 0) { it.target?.hardness }
-                .function("blastResistance", 0) { it.target?.blastResistance }
-                .function("slipperiness", 0) { it.target?.slipperiness }
-                .function("craftingRemainingItem", 0) { it.target?.craftingRemainingItem }
-                .function("equipmentSlot", 0) { it.target?.equipmentSlot }
-                .function("creativeCategory", 0) { it.target?.creativeCategory }
-                .function("translationKey", 0) { it.target?.translationKey }
-                .function("blockTranslationKey", 0) { it.target?.blockTranslationKey }
-                .function("itemTranslationKey", 0) { it.target?.itemTranslationKey }
-                .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
-                .function("isCompostable", 0) { it.target?.isCompostable }
-                .function("compostChance", 0) { it.target?.compostChance }
-            registerFunction("material", 1) {
-                val name = it.getArgument(0).toString()
+                .function("matchMaterial", returnsObject().params(Type.STRING, Type.Z)) {
+                    Material.matchMaterial(it.getString(0)!!, it.getBool(1))
+                }
+                .function("isRecord", returns(Type.Z).noParams()) { it.target?.isRecord }
+                .function("isSolid", returns(Type.Z).noParams()) { it.target?.isSolid }
+                .function("isAir", returns(Type.Z).noParams()) { it.target?.isAir }
+                .function("isTransparent", returns(Type.Z).noParams()) { it.target?.isTransparent }
+                .function("isFlammable", returns(Type.Z).noParams()) { it.target?.isFlammable }
+                .function("isBurnable", returns(Type.Z).noParams()) { it.target?.isBurnable }
+                .function("isFuel", returns(Type.Z).noParams()) { it.target?.isFuel }
+                .function("isOccluding", returns(Type.Z).noParams()) { it.target?.isOccluding }
+                .function("hasGravity", returns(Type.Z).noParams()) { it.target?.hasGravity() }
+                .function("isItem", returns(Type.Z).noParams()) { it.target?.isItem }
+                .function("isInteractable", returns(Type.Z).noParams()) { it.target?.isInteractable }
+                .function("hardness", returns(Type.F).noParams()) { it.target?.hardness }
+                .function("blastResistance", returns(Type.F).noParams()) { it.target?.blastResistance }
+                .function("slipperiness", returns(Type.F).noParams()) { it.target?.slipperiness }
+                .function("craftingRemainingItem", returnsObject().noParams()) { it.target?.craftingRemainingItem }
+                .function("equipmentSlot", returnsObject().noParams()) { it.target?.equipmentSlot }
+                .function("creativeCategory", returnsObject().noParams()) { it.target?.creativeCategory }
+                .function("translationKey", returns(Type.STRING).noParams()) { it.target?.translationKey }
+                .function("blockTranslationKey", returns(Type.STRING).noParams()) { it.target?.blockTranslationKey }
+                .function("itemTranslationKey", returns(Type.STRING).noParams()) { it.target?.itemTranslationKey }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.target?.isEnabledByFeature(it.getRef(0) as World) }
+                .function("isCompostable", returns(Type.Z).noParams()) { it.target?.isCompostable }
+                .function("compostChance", returns(Type.F).noParams()) { it.target?.compostChance }
+            registerFunction("material", returnsObject().params(Type.STRING)) {
+                val name = it.getRef(0).toString()
                 XMaterial.matchXMaterial(name).getOrNull()?.get() ?: error("Material 不存在: $name")
             }
-            registerFunction("materialOrNull", 1) {
-                val name = it.getArgument(0).toString()
+            registerFunction("materialOrNull", returnsObject().params(Type.STRING)) {
+                val name = it.getRef(0).toString()
                 XMaterial.matchXMaterial(name).getOrNull()?.get()
             }
         }

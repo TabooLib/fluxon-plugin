@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.EnderSignal"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,14 +20,14 @@ object FnEnderSignal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderSignal::class.java)
-                .function("targetLocation", 0) { it.target?.targetLocation }
-                .function("setTargetLocation", 1) { it.target?.setTargetLocation(it.getArgument(0) as Location) }
-                .function("dropItem", 0) { it.target?.dropItem }
-                .function("setDropItem", 1) { it.target?.setDropItem(it.getBoolean(0)) }
-                .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("despawnTimer", 0) { it.target?.despawnTimer }
-                .function("setDespawnTimer", 1) { it.target?.setDespawnTimer(it.getNumber(0).toInt()) }
+                .function("targetLocation", returnsObject().noParams()) { it.target?.targetLocation }
+                .function("setTargetLocation", returnsObject().params(Type.OBJECT)) { it.target?.setTargetLocation(it.getRef(0) as Location) }
+                .function("dropItem", returnsObject().noParams()) { it.target?.dropItem }
+                .function("setDropItem", returnsObject().params(Type.OBJECT)) { it.target?.setDropItem(it.getBool(0)) }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("despawnTimer", returnsObject().noParams()) { it.target?.despawnTimer }
+                .function("setDespawnTimer", returnsObject().params(Type.OBJECT)) { it.target?.setDespawnTimer(it.getInt(0).toInt()) }
         }
     }
 }

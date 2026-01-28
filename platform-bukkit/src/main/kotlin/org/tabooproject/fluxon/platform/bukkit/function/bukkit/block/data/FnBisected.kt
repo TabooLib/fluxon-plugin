@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.Bisected"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnBisected {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bisected::class.java)
-                .function("half", 0) { it.target?.half }
-                .function("setHalf", 1) { it.target?.setHalf(it.getArgument(0) as Bisected.Half) }
+                .function("half", returnsObject().noParams()) { it.target?.half }
+                .function("setHalf", returnsObject().params(Type.OBJECT)) { it.target?.setHalf(it.getRef(0) as Bisected.Half) }
         }
     }
 }

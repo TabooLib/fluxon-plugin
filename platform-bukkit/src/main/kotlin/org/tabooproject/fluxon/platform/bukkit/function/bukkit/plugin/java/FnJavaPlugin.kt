@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.java.JavaPlugin"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,55 +21,55 @@ object FnJavaPlugin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JavaPlugin::class.java)
-                .function("dataFolder", 0) { it.target?.dataFolder }
-                .function("pluginLoader", 0) { it.target?.pluginLoader }
-                .function("server", 0) { it.target?.server }
-                .function("isEnabled", 0) { it.target?.isEnabled }
-                .function("description", 0) { it.target?.description }
-                .function("config", 0) { it.target?.config }
-                .function("reloadConfig", 0) { it.target?.reloadConfig() }
-                .function("saveConfig", 0) { it.target?.saveConfig() }
-                .function("saveDefaultConfig", 0) { it.target?.saveDefaultConfig() }
-                .function("saveResource", 2) { it.target?.saveResource(it.getString(0)!!, it.getBoolean(1)) }
-                .function("getResource", 1) { it.target?.getResource(it.getString(0)!!) }
-                .function("onCommand", 4) {
+                .function("dataFolder", returnsObject().noParams()) { it.target?.dataFolder }
+                .function("pluginLoader", returnsObject().noParams()) { it.target?.pluginLoader }
+                .function("server", returnsObject().noParams()) { it.target?.server }
+                .function("isEnabled", returns(Type.Z).noParams()) { it.target?.isEnabled }
+                .function("description", returnsObject().noParams()) { it.target?.description }
+                .function("config", returnsObject().noParams()) { it.target?.config }
+                .function("reloadConfig", returnsObject().noParams()) { it.target?.reloadConfig() }
+                .function("saveConfig", returnsObject().noParams()) { it.target?.saveConfig() }
+                .function("saveDefaultConfig", returnsObject().noParams()) { it.target?.saveDefaultConfig() }
+                .function("saveResource", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.saveResource(it.getString(0)!!, it.getBool(1)) }
+                .function("getResource", returnsObject().params(Type.OBJECT)) { it.target?.getResource(it.getString(0)!!) }
+                .function("onCommand", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.onCommand(
-                        it.getArgument(0) as CommandSender,
-                        it.getArgument(1) as Command,
+                        it.getRef(0) as CommandSender,
+                        it.getRef(1) as Command,
                         it.getString(2)!!,
-                        it.getArgument(3) as Array<String>
+                        it.getRef(3) as Array<String>
                     )
                 }
-                .function("onTabComplete", 4) {
+                .function("onTabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.onTabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getArgument(1) as Command,
+                        it.getRef(0) as CommandSender,
+                        it.getRef(1) as Command,
                         it.getString(2)!!,
-                        it.getArgument(3) as Array<String>
+                        it.getRef(3) as Array<String>
                     )
                 }
-                .function("getCommand", 1) { it.target?.getCommand(it.getString(0)!!) }
-                .function("onLoad", 0) { it.target?.onLoad() }
-                .function("onDisable", 0) { it.target?.onDisable() }
-                .function("onEnable", 0) { it.target?.onEnable() }
-                .function("getDefaultWorldGenerator", 2) {
+                .function("getCommand", returnsObject().params(Type.OBJECT)) { it.target?.getCommand(it.getString(0)!!) }
+                .function("onLoad", returnsObject().noParams()) { it.target?.onLoad() }
+                .function("onDisable", returnsObject().noParams()) { it.target?.onDisable() }
+                .function("onEnable", returnsObject().noParams()) { it.target?.onEnable() }
+                .function("getDefaultWorldGenerator", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getDefaultWorldGenerator(
                         it.getString(0)!!,
                         it.getString(1)
                     )
                 }
-                .function("getDefaultBiomeProvider", 2) {
+                .function("getDefaultBiomeProvider", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getDefaultBiomeProvider(
                         it.getString(0)!!,
                         it.getString(1)
                     )
                 }
-                .function("isNaggable", 0) { it.target?.isNaggable }
-                .function("setNaggable", 1) { it.target?.setNaggable(it.getBoolean(0)) }
-                .function("logger", 0) { it.target?.logger }
-                .function("toString", 0) { it.target?.toString() }
+                .function("isNaggable", returns(Type.Z).noParams()) { it.target?.isNaggable }
+                .function("setNaggable", returnsObject().params(Type.OBJECT)) { it.target?.setNaggable(it.getBool(0)) }
+                .function("logger", returnsObject().noParams()) { it.target?.logger }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
                 // static
-                .function("getProvidingPlugin", 1) { JavaPlugin.getProvidingPlugin(it.getArgument(0) as Class<*>) }
+                .function("getProvidingPlugin", returnsObject().params(Type.OBJECT)) { JavaPlugin.getProvidingPlugin(it.getRef(0) as Class<*>) }
         }
     }
 }

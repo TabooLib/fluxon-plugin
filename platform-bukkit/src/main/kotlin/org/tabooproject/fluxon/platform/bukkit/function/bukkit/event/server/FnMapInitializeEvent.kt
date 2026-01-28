@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.server.MapInitializeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnMapInitializeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapInitializeEvent::class.java)
-                .function("map", 0) { it.target?.map }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("map", returnsObject().noParams()) { it.target?.map }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { MapInitializeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { MapInitializeEvent.getHandlerList() }
         }
     }
 }

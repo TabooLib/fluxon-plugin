@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerTakeLecternBookEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnPlayerTakeLecternBookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerTakeLecternBookEvent::class.java)
-                .function("lectern", 0) { it.target?.lectern }
-                .function("book", 0) { it.target?.book }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("lectern", returnsObject().noParams()) { it.target?.lectern }
+                .function("book", returnsObject().noParams()) { it.target?.book }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerTakeLecternBookEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerTakeLecternBookEvent.getHandlerList() }
         }
     }
 }

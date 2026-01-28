@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.AbstractHorseInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnAbstractHorseInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractHorseInventory::class.java)
-                .function("saddle", 0) { it.target?.saddle }
-                .function("setSaddle", 1) { it.target?.setSaddle(it.getArgument(0) as ItemStack) }
+                .function("saddle", returnsObject().noParams()) { it.target?.saddle }
+                .function("setSaddle", returnsObject().params(Type.OBJECT)) { it.target?.setSaddle(it.getRef(0) as ItemStack) }
         }
     }
 }

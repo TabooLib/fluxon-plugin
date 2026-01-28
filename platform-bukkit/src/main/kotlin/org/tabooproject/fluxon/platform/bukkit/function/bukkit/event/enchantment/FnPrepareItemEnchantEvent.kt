@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.enchantment.PrepareItemEnchantEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,17 +19,17 @@ object FnPrepareItemEnchantEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareItemEnchantEvent::class.java)
-                .function("enchanter", 0) { it.target?.enchanter }
-                .function("enchantBlock", 0) { it.target?.enchantBlock }
-                .function("item", 0) { it.target?.item }
-                .function("expLevelCostsOffered", 0) { it.target?.expLevelCostsOffered }
-                .function("offers", 0) { it.target?.offers }
-                .function("enchantmentBonus", 0) { it.target?.enchantmentBonus }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("enchanter", returnsObject().noParams()) { it.target?.enchanter }
+                .function("enchantBlock", returnsObject().noParams()) { it.target?.enchantBlock }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("expLevelCostsOffered", returnsObject().noParams()) { it.target?.expLevelCostsOffered }
+                .function("offers", returnsObject().noParams()) { it.target?.offers }
+                .function("enchantmentBonus", returnsObject().noParams()) { it.target?.enchantmentBonus }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PrepareItemEnchantEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PrepareItemEnchantEvent.getHandlerList() }
         }
     }
 }

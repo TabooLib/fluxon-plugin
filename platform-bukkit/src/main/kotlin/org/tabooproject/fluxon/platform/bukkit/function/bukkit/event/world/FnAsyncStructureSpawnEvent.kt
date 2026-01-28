@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.AsyncStructureSpawnEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnAsyncStructureSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncStructureSpawnEvent::class.java)
-                .function("structure", 0) { it.target?.structure }
-                .function("boundingBox", 0) { it.target?.boundingBox }
-                .function("chunkX", 0) { it.target?.chunkX }
-                .function("chunkZ", 0) { it.target?.chunkZ }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("structure", returnsObject().noParams()) { it.target?.structure }
+                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
+                .function("chunkX", returnsObject().noParams()) { it.target?.chunkX }
+                .function("chunkZ", returnsObject().noParams()) { it.target?.chunkZ }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { AsyncStructureSpawnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { AsyncStructureSpawnEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.TropicalFish"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnTropicalFish {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFish::class.java)
-                .function("patternColor", 0) { it.target?.patternColor }
-                .function("setPatternColor", 1) { it.target?.setPatternColor(it.getArgument(0) as DyeColor) }
-                .function("bodyColor", 0) { it.target?.bodyColor }
-                .function("setBodyColor", 1) { it.target?.setBodyColor(it.getArgument(0) as DyeColor) }
-                .function("pattern", 0) { it.target?.pattern }
-                .function("setPattern", 1) { it.target?.setPattern(it.getArgument(0) as TropicalFish.Pattern) }
+                .function("patternColor", returnsObject().noParams()) { it.target?.patternColor }
+                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
+                .function("bodyColor", returnsObject().noParams()) { it.target?.bodyColor }
+                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
+                .function("pattern", returnsObject().noParams()) { it.target?.pattern }
+                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
         }
     }
 }

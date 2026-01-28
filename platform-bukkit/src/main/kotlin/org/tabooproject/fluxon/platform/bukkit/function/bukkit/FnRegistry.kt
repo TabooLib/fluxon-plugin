@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Registry"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry::class.java)
-                .function("get", 1) { it.target?.get(it.getArgument(0) as NamespacedKey) }
-                .function("stream", 0) { it.target?.stream() }
-                .function("iterator", 0) { it.target?.iterator() }
-                .function("match", 0) { it.target?.match(it.getString(0)!!) }
+                .function("get", returnsObject().params(Type.OBJECT)) { it.target?.get(it.getRef(0) as NamespacedKey) }
+                .function("stream", returnsObject().noParams()) { it.target?.stream() }
+                .function("iterator", returnsObject().noParams()) { it.target?.iterator() }
+                .function("match", returnsObject().noParams()) { it.target?.match(it.getString(0)!!) }
         }
     }
 }
@@ -33,10 +35,10 @@ object FnRegistrySimpleRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry.SimpleRegistry::class.java)
-                .function("get", 1) { it.target?.get(it.getArgument(0) as NamespacedKey) }
-                .function("stream", 0) { it.target?.stream() }
-                .function("iterator", 0) { it.target?.iterator() }
-                .function("type", 0) { it.target?.type }
+                .function("get", returnsObject().params(Type.OBJECT)) { it.target?.get(it.getRef(0) as NamespacedKey) }
+                .function("stream", returnsObject().noParams()) { it.target?.stream() }
+                .function("iterator", returnsObject().noParams()) { it.target?.iterator() }
+                .function("type", returnsObject().noParams()) { it.target?.type }
         }
     }
 }

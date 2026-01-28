@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.banner.PatternType"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnPatternType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PatternType::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("identifier", 0) { it.target?.identifier }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("identifier", returnsObject().noParams()) { it.target?.identifier }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.sign.SignSide"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnSignSide {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
-                .function("lines", 0) { it.target?.lines }
-                .function("getLine", 1) { it.target?.getLine(it.getNumber(0).toInt()) }
-                .function("setLine", 2) { it.target?.setLine(it.getNumber(0).toInt(), it.getString(1)!!) }
-                .function("isGlowingText", 0) { it.target?.isGlowingText }
-                .function("setGlowingText", 1) { it.target?.setGlowingText(it.getBoolean(0)) }
+                .function("lines", returnsObject().noParams()) { it.target?.lines }
+                .function("getLine", returnsObject().params(Type.OBJECT)) { it.target?.getLine(it.getInt(0).toInt()) }
+                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("isGlowingText", returns(Type.Z).noParams()) { it.target?.isGlowingText }
+                .function("setGlowingText", returnsObject().params(Type.OBJECT)) { it.target?.setGlowingText(it.getBool(0)) }
         }
     }
 }

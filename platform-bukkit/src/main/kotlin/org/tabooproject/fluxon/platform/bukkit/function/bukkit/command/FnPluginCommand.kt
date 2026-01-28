@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.command.PluginCommand"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,26 +22,26 @@ object FnPluginCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginCommand::class.java)
-                .function("execute", 3) {
+                .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.execute(
-                        it.getArgument(0) as CommandSender,
+                        it.getRef(0) as CommandSender,
                         it.getString(1)!!,
-                        it.getArgument(2) as Array<String>
+                        it.getRef(2) as Array<String>
                     )
                 }
-                .function("setExecutor", 1) { it.target?.setExecutor(it.getArgument(0) as CommandExecutor) }
-                .function("executor", 0) { it.target?.executor }
-                .function("setTabCompleter", 1) { it.target?.setTabCompleter(it.getArgument(0) as TabCompleter) }
-                .function("tabCompleter", 0) { it.target?.tabCompleter }
-                .function("plugin", 0) { it.target?.plugin }
-                .function("tabComplete", 3) {
+                .function("setExecutor", returnsObject().params(Type.OBJECT)) { it.target?.setExecutor(it.getRef(0) as CommandExecutor) }
+                .function("executor", returnsObject().noParams()) { it.target?.executor }
+                .function("setTabCompleter", returnsObject().params(Type.OBJECT)) { it.target?.setTabCompleter(it.getRef(0) as TabCompleter) }
+                .function("tabCompleter", returnsObject().noParams()) { it.target?.tabCompleter }
+                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.tabComplete(
-                        it.getArgument(0) as CommandSender,
+                        it.getRef(0) as CommandSender,
                         it.getString(1)!!,
-                        it.getArgument(2) as Array<String>
+                        it.getRef(2) as Array<String>
                     )
                 }
-                .function("toString", 0) { it.target?.toString() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

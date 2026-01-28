@@ -10,6 +10,9 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Animals"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,13 +22,13 @@ object FnAnimals {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Animals::class.java)
-                .function("breedCause", 0) { it.target?.breedCause }
-                .function("setBreedCause", 1) { it.target?.setBreedCause(UUID.fromString(it.getString(0))) }
-                .function("isLoveMode", 0) { it.target?.isLoveMode }
-                .function("loveModeTicks", 0) { it.target?.loveModeTicks }
-                .function("setLoveModeTicks", 1) { it.target?.setLoveModeTicks(it.getNumber(0).toInt()) }
-                .function("isBreedItem", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("breedCause", returnsObject().noParams()) { it.target?.breedCause }
+                .function("setBreedCause", returnsObject().params(Type.OBJECT)) { it.target?.setBreedCause(UUID.fromString(it.getString(0))) }
+                .function("isLoveMode", returns(Type.Z).noParams()) { it.target?.isLoveMode }
+                .function("loveModeTicks", returnsObject().noParams()) { it.target?.loveModeTicks }
+                .function("setLoveModeTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLoveModeTicks(it.getInt(0).toInt()) }
+                .function("isBreedItem", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is ItemStack -> it.target?.isBreedItem(var1)
                         is Material -> it.target?.isBreedItem(var1)
                         else -> throw IllegalArgumentException("参数必须是 ItemStack 或 Material 类型")

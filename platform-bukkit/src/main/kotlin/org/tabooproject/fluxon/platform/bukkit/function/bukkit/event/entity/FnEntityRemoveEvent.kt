@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityRemoveEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnEntityRemoveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityRemoveEvent::class.java)
-                .function("cause", 0) { it.target?.cause }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityRemoveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityRemoveEvent.getHandlerList() }
         }
     }
 }

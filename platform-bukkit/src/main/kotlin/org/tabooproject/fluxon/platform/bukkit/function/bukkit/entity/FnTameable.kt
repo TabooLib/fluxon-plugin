@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.entity.Tameable"])
@@ -18,11 +21,11 @@ object FnTameable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tameable::class.java)
-//                .function("ownerUniqueId", 0) { it.target?.ownerUniqueId?.toString() }
-                .function("isTamed", 0) { it.target?.isTamed }
-                .function("setTamed", 1) { it.target?.setTamed(it.getBoolean(0)) }
-                .function("owner", 0) { it.target?.owner }
-                .function("setOwner", 1) { it.target?.setOwner(it.getArgument(0) as AnimalTamer) }
+//                .function("ownerUniqueId", returnsObject().noParams()) { it.target?.ownerUniqueId?.toString() }
+                .function("isTamed", returns(Type.Z).noParams()) { it.target?.isTamed }
+                .function("setTamed", returnsObject().params(Type.OBJECT)) { it.target?.setTamed(it.getBool(0)) }
+                .function("owner", returnsObject().noParams()) { it.target?.owner }
+                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.target?.setOwner(it.getRef(0) as AnimalTamer) }
         }
     }
 }

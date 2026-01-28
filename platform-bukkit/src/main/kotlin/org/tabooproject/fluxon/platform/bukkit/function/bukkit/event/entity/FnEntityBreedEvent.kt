@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityBreedEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,18 +19,18 @@ object FnEntityBreedEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBreedEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("mother", 0) { it.target?.mother }
-                .function("father", 0) { it.target?.father }
-                .function("breeder", 0) { it.target?.breeder }
-                .function("bredWith", 0) { it.target?.bredWith }
-                .function("experience", 0) { it.target?.experience }
-                .function("setExperience", 1) { it.target?.setExperience(it.getNumber(0).toInt()) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("mother", returnsObject().noParams()) { it.target?.mother }
+                .function("father", returnsObject().noParams()) { it.target?.father }
+                .function("breeder", returnsObject().noParams()) { it.target?.breeder }
+                .function("bredWith", returnsObject().noParams()) { it.target?.bredWith }
+                .function("experience", returnsObject().noParams()) { it.target?.experience }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getInt(0).toInt()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityBreedEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityBreedEvent.getHandlerList() }
         }
     }
 }

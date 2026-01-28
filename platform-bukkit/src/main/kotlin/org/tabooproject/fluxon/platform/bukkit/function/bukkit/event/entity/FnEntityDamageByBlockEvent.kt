@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityDamageByBlockEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnEntityDamageByBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByBlockEvent::class.java)
-                .function("damager", 0) { it.target?.damager }
-                .function("damagerBlockState", 0) { it.target?.damagerBlockState }
+                .function("damager", returnsObject().noParams()) { it.target?.damager }
+                .function("damagerBlockState", returnsObject().noParams()) { it.target?.damagerBlockState }
         }
     }
 }

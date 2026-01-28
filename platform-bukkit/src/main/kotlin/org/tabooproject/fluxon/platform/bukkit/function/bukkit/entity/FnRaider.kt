@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Raider"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,21 +21,21 @@ object FnRaider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Raider::class.java)
-                .function("setRaid", 1) { it.target?.setRaid(it.getArgument(0) as Raid) }
-                .function("raid", 0) { it.target?.raid }
-                .function("wave", 0) { it.target?.wave }
-                .function("setWave", 1) { it.target?.setWave(it.getNumber(0).toInt()) }
-                .function("patrolTarget", 0) { it.target?.patrolTarget }
-                .function("setPatrolTarget", 1) { it.target?.setPatrolTarget(it.getArgument(0) as Block) }
-                .function("isPatrolLeader", 0) { it.target?.isPatrolLeader }
-                .function("setPatrolLeader", 1) { it.target?.setPatrolLeader(it.getBoolean(0)) }
-                .function("isCanJoinRaid", 0) { it.target?.isCanJoinRaid }
-                .function("setCanJoinRaid", 1) { it.target?.setCanJoinRaid(it.getBoolean(0)) }
-                .function("ticksOutsideRaid", 0) { it.target?.ticksOutsideRaid }
-                .function("setTicksOutsideRaid", 1) { it.target?.setTicksOutsideRaid(it.getNumber(0).toInt()) }
-                .function("isCelebrating", 0) { it.target?.isCelebrating }
-                .function("setCelebrating", 1) { it.target?.setCelebrating(it.getBoolean(0)) }
-                .function("celebrationSound", 0) { it.target?.celebrationSound }
+                .function("setRaid", returnsObject().params(Type.OBJECT)) { it.target?.setRaid(it.getRef(0) as Raid) }
+                .function("raid", returnsObject().noParams()) { it.target?.raid }
+                .function("wave", returnsObject().noParams()) { it.target?.wave }
+                .function("setWave", returnsObject().params(Type.OBJECT)) { it.target?.setWave(it.getInt(0).toInt()) }
+                .function("patrolTarget", returnsObject().noParams()) { it.target?.patrolTarget }
+                .function("setPatrolTarget", returnsObject().params(Type.OBJECT)) { it.target?.setPatrolTarget(it.getRef(0) as Block) }
+                .function("isPatrolLeader", returns(Type.Z).noParams()) { it.target?.isPatrolLeader }
+                .function("setPatrolLeader", returnsObject().params(Type.OBJECT)) { it.target?.setPatrolLeader(it.getBool(0)) }
+                .function("isCanJoinRaid", returns(Type.Z).noParams()) { it.target?.isCanJoinRaid }
+                .function("setCanJoinRaid", returnsObject().params(Type.OBJECT)) { it.target?.setCanJoinRaid(it.getBool(0)) }
+                .function("ticksOutsideRaid", returnsObject().noParams()) { it.target?.ticksOutsideRaid }
+                .function("setTicksOutsideRaid", returnsObject().params(Type.OBJECT)) { it.target?.setTicksOutsideRaid(it.getInt(0).toInt()) }
+                .function("isCelebrating", returns(Type.Z).noParams()) { it.target?.isCelebrating }
+                .function("setCelebrating", returnsObject().params(Type.OBJECT)) { it.target?.setCelebrating(it.getBool(0)) }
+                .function("celebrationSound", returnsObject().noParams()) { it.target?.celebrationSound }
         }
     }
 }

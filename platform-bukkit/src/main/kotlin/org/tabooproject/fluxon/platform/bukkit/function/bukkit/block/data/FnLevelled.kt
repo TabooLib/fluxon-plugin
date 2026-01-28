@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.Levelled"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnLevelled {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Levelled::class.java)
-                .function("level", 0) { it.target?.level }
-                .function("setLevel", 1) { it.target?.setLevel(it.getNumber(0).toInt()) }
-                .function("maximumLevel", 0) { it.target?.maximumLevel }
+                .function("level", returnsObject().noParams()) { it.target?.level }
+                .function("setLevel", returnsObject().params(Type.OBJECT)) { it.target?.setLevel(it.getInt(0).toInt()) }
+                .function("maximumLevel", returnsObject().noParams()) { it.target?.maximumLevel }
         }
     }
 }

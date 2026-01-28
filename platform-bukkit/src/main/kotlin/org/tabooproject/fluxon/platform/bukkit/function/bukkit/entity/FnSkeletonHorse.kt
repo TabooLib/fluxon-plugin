@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.SkeletonHorse"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnSkeletonHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SkeletonHorse::class.java)
-                .function("isTrapped", 0) { it.target?.isTrapped }
-                .function("setTrapped", 1) { it.target?.setTrapped(it.getBoolean(0)) }
-                .function("trapTime", 0) { it.target?.trapTime }
-                .function("setTrapTime", 1) { it.target?.setTrapTime(it.getNumber(0).toInt()) }
+                .function("isTrapped", returns(Type.Z).noParams()) { it.target?.isTrapped }
+                .function("setTrapped", returnsObject().params(Type.OBJECT)) { it.target?.setTrapped(it.getBool(0)) }
+                .function("trapTime", returnsObject().noParams()) { it.target?.trapTime }
+                .function("setTrapTime", returnsObject().params(Type.OBJECT)) { it.target?.setTrapTime(it.getInt(0).toInt()) }
         }
     }
 }

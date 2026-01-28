@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.RespawnAnchor"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnRespawnAnchor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RespawnAnchor::class.java)
-                .function("charges", 0) { it.target?.charges }
-                .function("setCharges", 1) { it.target?.setCharges(it.getNumber(0).toInt()) }
-                .function("maximumCharges", 0) { it.target?.maximumCharges }
+                .function("charges", returnsObject().noParams()) { it.target?.charges }
+                .function("setCharges", returnsObject().params(Type.OBJECT)) { it.target?.setCharges(it.getInt(0).toInt()) }
+                .function("maximumCharges", returnsObject().noParams()) { it.target?.maximumCharges }
         }
     }
 }

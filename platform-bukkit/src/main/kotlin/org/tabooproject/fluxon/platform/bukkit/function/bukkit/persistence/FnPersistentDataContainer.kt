@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.persistence.PersistentDataContainer"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,17 +20,17 @@ object FnPersistentDataContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataContainer::class.java)
-                .function("has", 1) { it.target?.has(it.getArgument(0) as NamespacedKey) }
-                .function("keys", 0) { it.target?.keys }
-                .function("remove", 1) { it.target?.remove(it.getArgument(0) as NamespacedKey) }
-                .function("isEmpty", 0) { it.target?.isEmpty }
-                .function("copyTo", 2) {
+                .function("has", returnsObject().params(Type.OBJECT)) { it.target?.has(it.getRef(0) as NamespacedKey) }
+                .function("keys", returnsObject().noParams()) { it.target?.keys }
+                .function("remove", returnsObject().params(Type.OBJECT)) { it.target?.remove(it.getRef(0) as NamespacedKey) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("copyTo", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.copyTo(
-                        it.getArgument(0) as PersistentDataContainer,
-                        it.getBoolean(1)
+                        it.getRef(0) as PersistentDataContainer,
+                        it.getBool(1)
                     )
                 }
-                .function("adapterContext", 0) { it.target?.adapterContext }
+                .function("adapterContext", returnsObject().noParams()) { it.target?.adapterContext }
         }
     }
 }

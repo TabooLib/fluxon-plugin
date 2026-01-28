@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.BlockInventoryHolder"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnBlockInventoryHolder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockInventoryHolder::class.java)
-                .function("block", 0) { it.target?.block }
+                .function("block", returnsObject().noParams()) { it.target?.block }
         }
     }
 }

@@ -11,6 +11,8 @@ import java.awt.Image
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.map.MapCanvas"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,49 +22,49 @@ object FnMapCanvas {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCanvas::class.java)
-                .function("mapView", 0) { it.target?.mapView }
-                .function("cursors", 0) { it.target?.cursors }
-                .function("setCursors", 1) { it.target?.setCursors(it.getArgument(0) as MapCursorCollection) }
-                .function("setPixelColor", 3) {
+                .function("mapView", returnsObject().noParams()) { it.target?.mapView }
+                .function("cursors", returnsObject().noParams()) { it.target?.cursors }
+                .function("setCursors", returnsObject().params(Type.OBJECT)) { it.target?.setCursors(it.getRef(0) as MapCursorCollection) }
+                .function("setPixelColor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.setPixelColor(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        (it.getArgument(2) as Color).let { color -> java.awt.Color(color.red, color.green, color.blue) }
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        (it.getRef(2) as Color).let { color -> java.awt.Color(color.red, color.green, color.blue) }
                     )
                 }
-                .function("getPixelColor", 2) {
+                .function("getPixelColor", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getPixelColor(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("getBasePixelColor", 2) {
+                .function("getBasePixelColor", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBasePixelColor(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("setPixel", 3) {
+                .function("setPixel", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.setPixel(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toByte()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toByte()
                     )
                 }
-                .function("getPixel", 2) { it.target?.getPixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("getBasePixel", 2) { it.target?.getBasePixel(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("drawImage", 3) {
+                .function("getPixel", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.getPixel(it.getInt(0).toInt(), it.getInt(1).toInt()) }
+                .function("getBasePixel", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.getBasePixel(it.getInt(0).toInt(), it.getInt(1).toInt()) }
+                .function("drawImage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.drawImage(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getArgument(2) as Image
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getRef(2) as Image
                     )
                 }
-                .function("drawText", 4) {
+                .function("drawText", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.drawText(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getArgument(2) as MapFont,
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getRef(2) as MapFont,
                         it.getString(3)!!
                     )
                 }

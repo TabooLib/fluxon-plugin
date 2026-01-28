@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Endermite"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnEndermite {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Endermite::class.java)
-                .function("isPlayerSpawned", 0) { it.target?.isPlayerSpawned }
-                .function("setPlayerSpawned", 1) { it.target?.setPlayerSpawned(it.getBoolean(0)) }
+                .function("isPlayerSpawned", returns(Type.Z).noParams()) { it.target?.isPlayerSpawned }
+                .function("setPlayerSpawned", returnsObject().params(Type.OBJECT)) { it.target?.setPlayerSpawned(it.getBool(0)) }
         }
     }
 }

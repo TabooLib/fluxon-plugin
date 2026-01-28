@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 
 @Requires(classes = ["org.bukkit.permissions.PermissionRemovedExecutor"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,7 @@ object FnPermissionRemovedExecutor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionRemovedExecutor::class.java)
-                .function(
-                    "attachmentRemoved",
-                    1
-                ) { it.target?.attachmentRemoved(it.getArgument(0) as PermissionAttachment) }
+                .function("attachmentRemoved", returnsObject().params(Type.OBJECT)) { it.target?.attachmentRemoved(it.getRef(0) as PermissionAttachment) }
         }
     }
 }

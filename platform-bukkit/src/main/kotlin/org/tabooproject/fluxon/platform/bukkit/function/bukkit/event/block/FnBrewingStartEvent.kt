@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BrewingStartEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnBrewingStartEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStartEvent::class.java)
-                .function("totalBrewTime", 0) { it.target?.totalBrewTime }
-                .function("setTotalBrewTime", 1) { it.target?.setTotalBrewTime(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("totalBrewTime", returnsObject().noParams()) { it.target?.totalBrewTime }
+                .function("setTotalBrewTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalBrewTime(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BrewingStartEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BrewingStartEvent.getHandlerList() }
         }
     }
 }

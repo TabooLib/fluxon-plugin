@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.vehicle.VehicleEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnVehicleEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleEvent::class.java)
-                .function("vehicle", 0) { it.target?.getVehicle() }
+                .function("vehicle", returnsObject().noParams()) { it.target?.getVehicle() }
         }
     }
 }

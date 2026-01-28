@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Vault"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,10 @@ object FnVault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vault::class.java)
-                .function("trialSpawnerState", 0) { it.target?.trialSpawnerState }
-                .function(
-                    "setTrialSpawnerState",
-                    1
-                ) { it.target?.setTrialSpawnerState(it.getArgument(0) as Vault.State) }
-                .function("isOminous", 0) { it.target?.isOminous }
-                .function("setOminous", 1) { it.target?.setOminous(it.getBoolean(0)) }
+                .function("trialSpawnerState", returnsObject().noParams()) { it.target?.trialSpawnerState }
+                .function("setTrialSpawnerState", returnsObject().params(Type.OBJECT)) { it.target?.setTrialSpawnerState(it.getRef(0) as Vault.State) }
+                .function("isOminous", returns(Type.Z).noParams()) { it.target?.isOminous }
+                .function("setOminous", returnsObject().params(Type.OBJECT)) { it.target?.setOminous(it.getBool(0)) }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapCursor"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,20 +19,20 @@ object FnMapCursor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursor::class.java)
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("direction", 0) { it.target?.direction }
-                .function("type", 0) { it.target?.type }
-                .function("rawType", 0) { it.target?.rawType }
-                .function("isVisible", 0) { it.target?.isVisible }
-                .function("setX", 1) { it.target?.setX(it.getNumber(0).toByte()) }
-                .function("setY", 1) { it.target?.setY(it.getNumber(0).toByte()) }
-                .function("setDirection", 1) { it.target?.setDirection(it.getNumber(0).toByte()) }
-                .function("setType", 1) { it.target?.setType(it.getArgument(0) as MapCursor.Type) }
-                .function("setRawType", 1) { it.target?.setRawType(it.getNumber(0).toByte()) }
-                .function("setVisible", 1) { it.target?.setVisible(it.getBoolean(0)) }
-                .function("caption", 0) { it.target?.caption }
-                .function("setCaption", 1) { it.target?.setCaption(it.getString(0)) }
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("direction", returnsObject().noParams()) { it.target?.direction }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("rawType", returnsObject().noParams()) { it.target?.rawType }
+                .function("isVisible", returns(Type.Z).noParams()) { it.target?.isVisible }
+                .function("setX", returnsObject().params(Type.OBJECT)) { it.target?.setX(it.getInt(0).toByte()) }
+                .function("setY", returnsObject().params(Type.OBJECT)) { it.target?.setY(it.getInt(0).toByte()) }
+                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.target?.setDirection(it.getInt(0).toByte()) }
+                .function("setType", returnsObject().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as MapCursor.Type) }
+                .function("setRawType", returnsObject().params(Type.OBJECT)) { it.target?.setRawType(it.getInt(0).toByte()) }
+                .function("setVisible", returnsObject().params(Type.OBJECT)) { it.target?.setVisible(it.getBool(0)) }
+                .function("caption", returnsObject().noParams()) { it.target?.caption }
+                .function("setCaption", returnsObject().params(Type.OBJECT)) { it.target?.setCaption(it.getString(0)) }
         }
     }
 }
@@ -42,10 +45,10 @@ object FnMapCursorType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursor.Type::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("value", 0) { it.target?.value }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("value", returnsObject().noParams()) { it.target?.value }
                 // static
-                .function("byValue", 1) { MapCursor.Type.byValue(it.getNumber(0).toByte()) }
+                .function("byValue", returnsObject().params(Type.OBJECT)) { MapCursor.Type.byValue(it.getInt(0).toByte()) }
         }
     }
 }

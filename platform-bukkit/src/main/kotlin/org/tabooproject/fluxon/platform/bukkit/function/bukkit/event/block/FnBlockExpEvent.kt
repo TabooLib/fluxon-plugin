@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockExpEvent"])
@@ -17,11 +19,11 @@ object FnBlockExpEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExpEvent::class.java)
-                .function("expToDrop", 0) { it.target?.expToDrop }
-                .function("setExpToDrop", 1) { it.target?.setExpToDrop(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("expToDrop", returnsObject().noParams()) { it.target?.expToDrop }
+                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.target?.setExpToDrop(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockExpEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockExpEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPortalExitEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnEntityPortalExitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalExitEvent::class.java)
-                .function("before", 0) { it.target?.before }
-                .function("after", 0) { it.target?.after }
-                .function("setAfter", 1) { it.target?.setAfter(it.getArgument(0) as Vector) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("before", returnsObject().noParams()) { it.target?.before }
+                .function("after", returnsObject().noParams()) { it.target?.after }
+                .function("setAfter", returnsObject().params(Type.OBJECT)) { it.target?.setAfter(it.getRef(0) as Vector) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityPortalExitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityPortalExitEvent.getHandlerList() }
         }
     }
 }

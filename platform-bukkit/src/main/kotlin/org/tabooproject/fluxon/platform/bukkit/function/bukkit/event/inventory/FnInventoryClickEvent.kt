@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryClickEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,22 +20,22 @@ object FnInventoryClickEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryClickEvent::class.java)
-                .function("cursor", 0) { it.target?.cursor }
-                .function("currentItem", 0) { it.target?.currentItem }
-                .function("isRightClick", 0) { it.target?.isRightClick }
-                .function("isLeftClick", 0) { it.target?.isLeftClick }
-                .function("isShiftClick", 0) { it.target?.isShiftClick }
-                .function("setCursor", 1) { it.target?.setCursor(it.getArgument(0) as ItemStack) }
-                .function("setCurrentItem", 1) { it.target?.setCurrentItem(it.getArgument(0) as ItemStack) }
-                .function("clickedInventory", 0) { it.target?.clickedInventory }
-                .function("slot", 0) { it.target?.slot }
-                .function("rawSlot", 0) { it.target?.rawSlot }
-                .function("hotbarButton", 0) { it.target?.hotbarButton }
-                .function("action", 0) { it.target?.action }
-                .function("click", 0) { it.target?.click }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
+                .function("currentItem", returnsObject().noParams()) { it.target?.currentItem }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.target?.isRightClick }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.target?.isLeftClick }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.target?.isShiftClick }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
+                .function("setCurrentItem", returnsObject().params(Type.OBJECT)) { it.target?.setCurrentItem(it.getRef(0) as ItemStack) }
+                .function("clickedInventory", returnsObject().noParams()) { it.target?.clickedInventory }
+                .function("slot", returnsObject().noParams()) { it.target?.slot }
+                .function("rawSlot", returnsObject().noParams()) { it.target?.rawSlot }
+                .function("hotbarButton", returnsObject().noParams()) { it.target?.hotbarButton }
+                .function("action", returnsObject().noParams()) { it.target?.action }
+                .function("click", returnsObject().noParams()) { it.target?.click }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { InventoryClickEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { InventoryClickEvent.getHandlerList() }
         }
     }
 }

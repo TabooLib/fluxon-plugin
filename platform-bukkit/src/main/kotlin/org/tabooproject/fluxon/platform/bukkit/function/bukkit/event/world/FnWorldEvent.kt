@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.WorldEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnWorldEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldEvent::class.java)
-                .function("world", 0) { it.target?.world }
+                .function("world", returnsObject().noParams()) { it.target?.world }
         }
     }
 }

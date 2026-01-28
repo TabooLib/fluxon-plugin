@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.permissions.PermissionDefault"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnPermissionDefault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionDefault::class.java)
-                .function("getValue", 1) { it.target?.getValue(it.getBoolean(0)) }
+                .function("getValue", returnsObject().params(Type.OBJECT)) { it.target?.getValue(it.getBool(0)) }
                 // static
-                .function("getByName", 1) { PermissionDefault.getByName(it.getString(0)!!) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("getByName", returnsObject().params(Type.OBJECT)) { PermissionDefault.getByName(it.getString(0)!!) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

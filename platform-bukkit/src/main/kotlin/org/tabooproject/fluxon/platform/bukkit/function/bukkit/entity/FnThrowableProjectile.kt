@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.ThrowableProjectile"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnThrowableProjectile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ThrowableProjectile::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
         }
     }
 }

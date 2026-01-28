@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryCreativeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnInventoryCreativeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryCreativeEvent::class.java)
-                .function("cursor", 0) { it.target?.cursor }
-                .function("setCursor", 1) { it.target?.setCursor(it.getArgument(0) as ItemStack) }
+                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.SpawnChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnSpawnChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnChangeEvent::class.java)
-                .function("previousLocation", 0) { it.target?.previousLocation }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("previousLocation", returnsObject().noParams()) { it.target?.previousLocation }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { SpawnChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { SpawnChangeEvent.getHandlerList() }
         }
     }
 }

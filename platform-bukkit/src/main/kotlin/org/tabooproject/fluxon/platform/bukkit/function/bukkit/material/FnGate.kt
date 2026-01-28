@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Gate"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +20,12 @@ object FnGate {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Gate::class.java)
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("facing", 0) { it.target?.facing }
-                .function("isOpen", 0) { it.target?.isOpen }
-                .function("setOpen", 1) { it.target?.setOpen(it.getBoolean(0)) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing", returnsObject().noParams()) { it.target?.facing }
+                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
+                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.target?.setOpen(it.getBool(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

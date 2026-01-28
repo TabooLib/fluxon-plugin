@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.noise.SimplexNoiseGenerator"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,31 +19,100 @@ object FnSimplexNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
-                .function("getNoise", listOf(1, 2, 3, 4)) {
-                    when (it.arguments.size) {
-                        1 -> SimplexNoiseGenerator.getNoise(it.getNumber(0).toDouble())
+                .function("getNoise", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> SimplexNoiseGenerator.getNoise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
                         )
 
                         3 -> SimplexNoiseGenerator.getNoise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
                         )
 
                         4 -> SimplexNoiseGenerator.getNoise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3)
                         )
-                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
+                        2 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
+                        )
+
+                        3 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3)
+                        )
+                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
+                        2 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
+                        )
+
+                        3 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3)
+                        )
+                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
+                        2 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
+                        )
+
+                        3 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> SimplexNoiseGenerator.getNoise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3)
+                        )
+                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
                     }
                 }
                 // static
-                .function("instance", 0) { SimplexNoiseGenerator.getInstance() }
+                .function("instance", returnsObject().noParams()) { SimplexNoiseGenerator.getInstance() }
         }
     }
 }

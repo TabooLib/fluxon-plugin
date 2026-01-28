@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.banner.Pattern"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnPattern {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Pattern::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("pattern", 0) { it.target?.pattern }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("pattern", returnsObject().noParams()) { it.target?.pattern }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
         }
     }
 }

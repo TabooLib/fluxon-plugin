@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.GenericGameEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,16 +19,16 @@ object FnGenericGameEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericGameEvent::class.java)
-                .function("event", 0) { it.target?.event }
-                .function("location", 0) { it.target?.location }
-                .function("entity", 0) { it.target?.entity }
-                .function("radius", 0) { it.target?.radius }
-                .function("setRadius", 1) { it.target?.setRadius(it.getNumber(0).toInt()) }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("event", returnsObject().noParams()) { it.target?.event }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("radius", returnsObject().noParams()) { it.target?.radius }
+                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.target?.setRadius(it.getInt(0).toInt()) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { GenericGameEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { GenericGameEvent.getHandlerList() }
         }
     }
 }

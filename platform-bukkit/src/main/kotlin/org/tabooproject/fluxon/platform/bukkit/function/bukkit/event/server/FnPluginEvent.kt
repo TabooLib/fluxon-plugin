@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.server.PluginEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnPluginEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginEvent::class.java)
-                .function("plugin", 0) { it.target?.plugin }
+                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
         }
     }
 }

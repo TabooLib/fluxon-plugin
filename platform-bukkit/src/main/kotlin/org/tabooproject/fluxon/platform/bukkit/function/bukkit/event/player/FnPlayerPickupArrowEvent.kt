@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerPickupArrowEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnPlayerPickupArrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPickupArrowEvent::class.java)
-                .function("arrow", 0) { it.target?.arrow }
+                .function("arrow", returnsObject().noParams()) { it.target?.arrow }
         }
     }
 }

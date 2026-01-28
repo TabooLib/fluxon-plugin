@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.advancement.AdvancementDisplay"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnAdvancementDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AdvancementDisplay::class.java)
-                .function("title", 0) { it.target?.title }
-                .function("description", 0) { it.target?.description }
-                .function("icon", 0) { it.target?.icon }
-                .function("shouldShowToast", 0) { it.target?.shouldShowToast() }
-                .function("shouldAnnounceChat", 0) { it.target?.shouldAnnounceChat() }
-                .function("isHidden", 0) { it.target?.isHidden }
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("type", 0) { it.target?.type }
+                .function("title", returnsObject().noParams()) { it.target?.title }
+                .function("description", returnsObject().noParams()) { it.target?.description }
+                .function("icon", returnsObject().noParams()) { it.target?.icon }
+                .function("shouldShowToast", returns(Type.Z).noParams()) { it.target?.shouldShowToast() }
+                .function("shouldAnnounceChat", returns(Type.Z).noParams()) { it.target?.shouldAnnounceChat() }
+                .function("isHidden", returns(Type.Z).noParams()) { it.target?.isHidden }
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("type", returnsObject().noParams()) { it.target?.type }
         }
     }
 }

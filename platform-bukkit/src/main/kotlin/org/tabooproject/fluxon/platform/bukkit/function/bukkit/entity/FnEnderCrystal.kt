@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.EnderCrystal"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnEnderCrystal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderCrystal::class.java)
-                .function("isShowingBottom", 0) { it.target?.isShowingBottom }
-                .function("setShowingBottom", 1) { it.target?.setShowingBottom(it.getBoolean(0)) }
-                .function("beamTarget", 0) { it.target?.beamTarget }
-                .function("setBeamTarget", 1) { it.target?.setBeamTarget(it.getArgument(0) as Location) }
+                .function("isShowingBottom", returns(Type.Z).noParams()) { it.target?.isShowingBottom }
+                .function("setShowingBottom", returnsObject().params(Type.OBJECT)) { it.target?.setShowingBottom(it.getBool(0)) }
+                .function("beamTarget", returnsObject().noParams()) { it.target?.beamTarget }
+                .function("setBeamTarget", returnsObject().params(Type.OBJECT)) { it.target?.setBeamTarget(it.getRef(0) as Location) }
         }
     }
 }

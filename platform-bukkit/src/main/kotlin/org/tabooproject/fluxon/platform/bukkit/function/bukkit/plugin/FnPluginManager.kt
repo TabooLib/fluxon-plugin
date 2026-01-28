@@ -16,6 +16,9 @@ import java.io.File
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.PluginManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -25,103 +28,120 @@ object FnPluginManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginManager::class.java)
-                .function(
-                    "registerInterface",
-                    1
-                ) { it.target?.registerInterface(it.getArgument(0) as Class<PluginLoader>) }
-                .function("getPlugin", 1) { it.target?.getPlugin(it.getString(0)!!) }
-                .function("plugins", 0) { it.target?.plugins }
-                .function("isPluginEnabled", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("registerInterface", returnsObject().params(Type.OBJECT)) { it.target?.registerInterface(it.getRef(0) as Class<PluginLoader>) }
+                .function("getPlugin", returnsObject().params(Type.OBJECT)) { it.target?.getPlugin(it.getString(0)!!) }
+                .function("plugins", returnsObject().noParams()) { it.target?.plugins }
+                .function("isPluginEnabled", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isPluginEnabled(var1)
                         is Plugin -> it.target?.isPluginEnabled(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 Plugin 类型")
                     }
                 }
-                .function("loadPlugin", 1) { it.target?.loadPlugin(it.getArgument(0) as File) }
-                .function("loadPlugins", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("loadPlugin", returnsObject().params(Type.OBJECT)) { it.target?.loadPlugin(it.getRef(0) as File) }
+                .function("loadPlugins", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is File -> it.target?.loadPlugins(var1)
                         is Array<*> -> it.target?.loadPlugins(var1 as Array<File>)
                         else -> throw IllegalArgumentException("参数必须是 File 或 File[] 类型")
                     }
                 }
-                .function("disablePlugins", 0) { it.target?.disablePlugins() }
-                .function("clearPlugins", 0) { it.target?.clearPlugins() }
-                .function("callEvent", 1) { it.target?.callEvent(it.getArgument(0) as Event) }
-                .function("registerEvents", 2) {
+                .function("disablePlugins", returnsObject().noParams()) { it.target?.disablePlugins() }
+                .function("clearPlugins", returnsObject().noParams()) { it.target?.clearPlugins() }
+                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
+                .function("registerEvents", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerEvents(
-                        it.getArgument(0) as Listener,
-                        it.getArgument(1) as Plugin
+                        it.getRef(0) as Listener,
+                        it.getRef(1) as Plugin
                     )
                 }
-                .function("registerEvent", listOf(5, 6)) {
-                    if (it.arguments.size == 5) {
+                .function("registerEvent", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 5) {
                         it.target?.registerEvent(
-                            it.getArgument(0) as Class<Event>,
-                            it.getArgument(1) as Listener,
-                            it.getArgument(2) as EventPriority,
-                            it.getArgument(3) as EventExecutor,
-                            it.getArgument(4) as Plugin
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin
                         )
                     } else {
                         it.target?.registerEvent(
-                            it.getArgument(0) as Class<Event>,
-                            it.getArgument(1) as Listener,
-                            it.getArgument(2) as EventPriority,
-                            it.getArgument(3) as EventExecutor,
-                            it.getArgument(4) as Plugin,
-                            it.getBoolean(5)
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin,
+                            it.getBool(5)
                         )
                     }
                 }
-                .function("enablePlugin", 1) { it.target?.enablePlugin(it.getArgument(0) as Plugin) }
-                .function("disablePlugin", 1) { it.target?.disablePlugin(it.getArgument(0) as Plugin) }
-                .function("getPermission", 1) { it.target?.getPermission(it.getString(0)!!) }
-                .function("addPermission", 1) { it.target?.addPermission(it.getArgument(0) as Permission) }
-                .function("removePermission", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("registerEvent", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 5) {
+                        it.target?.registerEvent(
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin
+                        )
+                    } else {
+                        it.target?.registerEvent(
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin,
+                            it.getBool(5)
+                        )
+                    }
+                }
+                .function("enablePlugin", returnsObject().params(Type.OBJECT)) { it.target?.enablePlugin(it.getRef(0) as Plugin) }
+                .function("disablePlugin", returnsObject().params(Type.OBJECT)) { it.target?.disablePlugin(it.getRef(0) as Plugin) }
+                .function("getPermission", returnsObject().params(Type.OBJECT)) { it.target?.getPermission(it.getString(0)!!) }
+                .function("addPermission", returnsObject().params(Type.OBJECT)) { it.target?.addPermission(it.getRef(0) as Permission) }
+                .function("removePermission", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Permission -> it.target?.removePermission(var1)
                         is String -> it.target?.removePermission(var1)
                         else -> throw IllegalArgumentException("参数必须是 Permission 或 String 类型")
                     }
                 }
-                .function("getDefaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
-                .function("recalculatePermissionDefaults", 1) {
+                .function("getDefaultPermissions", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultPermissions(it.getBool(0)) }
+                .function("recalculatePermissionDefaults", returnsObject().params(Type.OBJECT)) {
                     it.target?.recalculatePermissionDefaults(
-                        it.getArgument(
+                        it.getRef(
                             0
                         ) as Permission
                     )
                 }
-                .function("subscribeToPermission", 2) {
+                .function("subscribeToPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.subscribeToPermission(
                         it.getString(0)!!,
-                        it.getArgument(1) as Permissible
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("unsubscribeFromPermission", 2) {
+                .function("unsubscribeFromPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.unsubscribeFromPermission(
                         it.getString(0)!!,
-                        it.getArgument(1) as Permissible
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("getPermissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
-                .function("subscribeToDefaultPerms", 2) {
+                .function("getPermissionSubscriptions", returnsObject().params(Type.OBJECT)) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
+                .function("subscribeToDefaultPerms", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.subscribeToDefaultPerms(
-                        it.getBoolean(0),
-                        it.getArgument(1) as Permissible
+                        it.getBool(0),
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("unsubscribeFromDefaultPerms", 2) {
+                .function("unsubscribeFromDefaultPerms", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.unsubscribeFromDefaultPerms(
-                        it.getBoolean(0),
-                        it.getArgument(1) as Permissible
+                        it.getBool(0),
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("getDefaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
-                .function("permissions", 0) { it.target?.permissions }
-                .function("useTimings", 0) { it.target?.useTimings() }
+                .function("getDefaultPermSubscriptions", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultPermSubscriptions(it.getBool(0)) }
+                .function("permissions", returnsObject().noParams()) { it.target?.permissions }
+                .function("useTimings", returnsObject().noParams()) { it.target?.useTimings() }
         }
     }
 }

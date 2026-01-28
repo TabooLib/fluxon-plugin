@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.WitherSkull"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnWitherSkull {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WitherSkull::class.java)
-                .function("setCharged", 1) { it.target?.setCharged(it.getBoolean(0)) }
-                .function("isCharged", 0) { it.target?.isCharged }
+                .function("setCharged", returnsObject().params(Type.OBJECT)) { it.target?.setCharged(it.getBool(0)) }
+                .function("isCharged", returns(Type.Z).noParams()) { it.target?.isCharged }
         }
     }
 }

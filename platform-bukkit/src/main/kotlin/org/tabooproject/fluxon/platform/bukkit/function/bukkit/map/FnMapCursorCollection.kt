@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapCursorCollection"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,42 +20,182 @@ object FnMapCursorCollection {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursorCollection::class.java)
-                .function("size", 0) { it.target?.size() }
-                .function("getCursor", 1) { it.target?.getCursor(it.getNumber(0).toInt()) }
-                .function("removeCursor", 1) { it.target?.removeCursor(it.getArgument(0) as MapCursor) }
-                .function("addCursor", listOf(1, 3, 4, 5, 6)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.addCursor(it.getArgument(0) as MapCursor)
+                .function("size", returns(Type.I).noParams()) { it.target?.size() }
+                .function("getCursor", returnsObject().params(Type.OBJECT)) { it.target?.getCursor(it.getInt(0).toInt()) }
+                .function("removeCursor", returnsObject().params(Type.OBJECT)) { it.target?.removeCursor(it.getRef(0) as MapCursor) }
+                .function("addCursor", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toByte()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte()
                         )
 
                         4 -> it.target?.addCursor(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toByte(),
-                            it.getNumber(3).toByte()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte()
                         )
 
                         5 -> it.target?.addCursor(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toByte(),
-                            it.getNumber(3).toByte(),
-                            it.getBoolean(4)
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4)
                         )
 
                         6 -> it.target?.addCursor(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toByte(),
-                            it.getNumber(3).toByte(),
-                            it.getBoolean(4),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4),
                             it.getString(5)
                         )
-                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
+                        3 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte()
+                        )
+
+                        4 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte()
+                        )
+
+                        5 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4)
+                        )
+
+                        6 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4),
+                            it.getString(5)
+                        )
+                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
+                        3 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte()
+                        )
+
+                        4 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte()
+                        )
+
+                        5 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4)
+                        )
+
+                        6 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4),
+                            it.getString(5)
+                        )
+                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
+                        3 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte()
+                        )
+
+                        4 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte()
+                        )
+
+                        5 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4)
+                        )
+
+                        6 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4),
+                            it.getString(5)
+                        )
+                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
+                        3 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte()
+                        )
+
+                        4 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte()
+                        )
+
+                        5 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4)
+                        )
+
+                        6 -> it.target?.addCursor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toByte(),
+                            it.getInt(3).toByte(),
+                            it.getBool(4),
+                            it.getString(5)
+                        )
+                        else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
                     }
                 }
         }

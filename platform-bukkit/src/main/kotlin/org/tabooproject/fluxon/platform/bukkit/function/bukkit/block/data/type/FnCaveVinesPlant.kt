@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.CaveVinesPlant"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnCaveVinesPlant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CaveVinesPlant::class.java)
-                .function("isBerries", 0) { it.target?.isBerries }
-                .function("setBerries", 1) { it.target?.setBerries(it.getBoolean(0)) }
+                .function("isBerries", returns(Type.Z).noParams()) { it.target?.isBerries }
+                .function("setBerries", returnsObject().params(Type.OBJECT)) { it.target?.setBerries(it.getBool(0)) }
         }
     }
 }

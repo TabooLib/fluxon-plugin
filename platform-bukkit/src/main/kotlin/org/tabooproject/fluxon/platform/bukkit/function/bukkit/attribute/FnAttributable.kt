@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.attribute.Attributable"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,85 +20,76 @@ object FnAttributable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Attributable::class.java)
                 // 护甲
-                .function("armor", 0) { it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.value }
-                .function("baseArmor", 0) { it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.baseValue }
-                .syncFunction("setBaseArmor", 1) {
-                    it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.apply { baseValue = it.getNumber(0).toDouble() }
+                .function("armor", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.value }
+                .function("baseArmor", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.baseValue }
+                .syncFunction("setBaseArmor", returnsObject().params(Type.OBJECT)) {
+                    it.target?.getAttribute(Attribute.GENERIC_ARMOR)?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 护甲韧性
-                .function("armorToughness", 0) { it.target?.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS)?.value }
-                .function(
-                    "baseArmorToughness",
-                    0
-                ) { it.target?.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS)?.baseValue }
-                .syncFunction("setBaseArmorToughness", 1) {
+                .function("armorToughness", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS)?.value }
+                .function("baseArmorToughness", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS)?.baseValue }
+                .syncFunction("setBaseArmorToughness", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 攻击伤害
-                .function("attackDamage", 0) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)?.value }
-                .function("baseAttackDamage", 0) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)?.baseValue }
-                .syncFunction("setBaseAttackDamage", 1) {
+                .function("attackDamage", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)?.value }
+                .function("baseAttackDamage", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)?.baseValue }
+                .syncFunction("setBaseAttackDamage", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 攻击击退
-                .function("attackKnockback", 0) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK)?.value }
-                .function(
-                    "baseAttackKnockback",
-                    0
-                ) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK)?.baseValue }
-                .syncFunction("setBaseAttackKnockback", 1) {
+                .function("attackKnockback", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK)?.value }
+                .function("baseAttackKnockback", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK)?.baseValue }
+                .syncFunction("setBaseAttackKnockback", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 飞行速度
-                .function("flyingSpeed", 0) { it.target?.getAttribute(Attribute.GENERIC_FLYING_SPEED)?.value }
-                .function("baseFlyingSpeed", 0) { it.target?.getAttribute(Attribute.GENERIC_FLYING_SPEED)?.baseValue }
-                .syncFunction("setBaseFlyingSpeed", 1) {
+                .function("flyingSpeed", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_FLYING_SPEED)?.value }
+                .function("baseFlyingSpeed", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_FLYING_SPEED)?.baseValue }
+                .syncFunction("setBaseFlyingSpeed", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_FLYING_SPEED)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 跟随范围
-                .function("followRange", 0) { it.target?.getAttribute(Attribute.GENERIC_FOLLOW_RANGE)?.value }
-                .function("baseFollowRange", 0) { it.target?.getAttribute(Attribute.GENERIC_FOLLOW_RANGE)?.baseValue }
-                .syncFunction("setBaseFollowRange", 1) {
+                .function("followRange", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_FOLLOW_RANGE)?.value }
+                .function("baseFollowRange", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_FOLLOW_RANGE)?.baseValue }
+                .syncFunction("setBaseFollowRange", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_FOLLOW_RANGE)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 幸运
-                .function("luck", 0) { it.target?.getAttribute(Attribute.GENERIC_LUCK)?.value }
-                .function("baseLuck", 0) { it.target?.getAttribute(Attribute.GENERIC_LUCK)?.baseValue }
-                .syncFunction("setBaseLuck", 1) {
-                    it.target?.getAttribute(Attribute.GENERIC_LUCK)?.apply { baseValue = it.getNumber(0).toDouble() }
+                .function("luck", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_LUCK)?.value }
+                .function("baseLuck", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_LUCK)?.baseValue }
+                .syncFunction("setBaseLuck", returnsObject().params(Type.OBJECT)) {
+                    it.target?.getAttribute(Attribute.GENERIC_LUCK)?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 最大生命值
-                .function("maxHealth", 0) { it.target?.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value }
-                .function("baseMaxHealth", 0) { it.target?.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue }
-                .syncFunction("setBaseMaxHealth", 1) {
+                .function("maxHealth", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value }
+                .function("baseMaxHealth", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.baseValue }
+                .syncFunction("setBaseMaxHealth", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
                 // 移动速度
-                .function("movementSpeed", 0) { it.target?.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.value }
-                .function(
-                    "baseMovementSpeed",
-                    0
-                ) { it.target?.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.baseValue }
-                .syncFunction("setBaseMovementSpeed", 1) {
+                .function("movementSpeed", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.value }
+                .function("baseMovementSpeed", returnsObject().noParams()) { it.target?.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)?.baseValue }
+                .syncFunction("setBaseMovementSpeed", returnsObject().params(Type.OBJECT)) {
                     it.target?.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)
-                        ?.apply { baseValue = it.getNumber(0).toDouble() }
+                        ?.apply { baseValue = it.getAsDouble(0) }
                 }
 
-                .function("getAttribute", 1) { it.target?.getAttribute(it.getArgument(0) as Attribute) }
+                .function("getAttribute", returnsObject().params(Type.OBJECT)) { it.target?.getAttribute(it.getRef(0) as Attribute) }
         }
     }
 }

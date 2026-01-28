@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Coal"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnCoal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Coal::class.java)
-                .function("type", 0) { it.target?.type }
-                .function("setType", 1) { it.target?.setType(it.getArgument(0) as CoalType) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("setType", returnsObject().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as CoalType) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityCombustEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnEntityCombustEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityCombustEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("duration", 0) { it.target?.duration }
-                .function("setDuration", 1) { it.target?.setDuration(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("duration", returnsObject().noParams()) { it.target?.duration }
+                .function("setDuration", returnsObject().params(Type.OBJECT)) { it.target?.setDuration(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityCombustEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityCombustEvent.getHandlerList() }
         }
     }
 }

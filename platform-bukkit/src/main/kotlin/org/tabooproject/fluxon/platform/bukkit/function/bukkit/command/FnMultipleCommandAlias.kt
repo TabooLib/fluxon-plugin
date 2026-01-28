@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.MultipleCommandAlias"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnMultipleCommandAlias {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MultipleCommandAlias::class.java)
-                .function("commands", 0) { it.target?.commands }
-                .function("execute", 3) {
+                .function("commands", returnsObject().noParams()) { it.target?.commands }
+                .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.execute(
-                        it.getArgument(0) as CommandSender,
+                        it.getRef(0) as CommandSender,
                         it.getString(1)!!,
-                        it.getArgument(2) as Array<String>
+                        it.getRef(2) as Array<String>
                     )
                 }
         }

@@ -1,6 +1,10 @@
 package org.tabooproject.fluxon.function
 
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.index.IndexAccessor
 import org.tabooproject.fluxon.runtime.index.IndexAccessorRegistry
 import org.tabooproject.fluxon.runtime.java.Export
@@ -17,55 +21,58 @@ object FunctionConfig {
         IndexAccessorRegistry.getInstance().registerAccessor(ConfigIndexAccessor)
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(YamlApi::class.java)
-            registerFunction("yaml", 0) { YamlApi }
+            registerFunction("yaml", returnsObject().noParams()) { YamlApi }
             registerExtension(Configuration::class.java)
-                .function("file", 0) {
+                .function("file", returns(Type.FILE).noParams()) {
                     it.target?.file
                 }
-                .function("save", 0) {
+                .function("save", returnsVoid().noParams()) {
                     it.target?.saveToFile()
                 }
-                .function("saveToFile", 1) {
-                    it.target?.saveToFile(it.getArgument(0) as File)
+                .function("saveToFile", returnsVoid().params(Type.FILE)) {
+                    it.target?.saveToFile(it.getRef(0) as File)
                 }
             registerExtension(ConfigurationSection::class.java)
-                .function("primitiveConfig", 0) {
+                .function("primitiveConfig", returnsObject().noParams()) {
                     it.target?.primitiveConfig
                 }
-                .function("parent", 0) {
+                .function("parent", returnsObject().noParams()) {
                     it.target?.parent
                 }
-                .function("name", 0) {
+                .function("name", returns(Type.STRING).noParams()) {
                     it.target?.name
                 }
-                .function("type", 0) {
+                .function("type", returns(Type.STRING).noParams()) {
                     it.target?.type?.name
                 }
-                .function("keys", listOf(0, 1)) {
-                    it.target?.getKeys(it.getBoolean(0))
+                .function("keys", returns(Type.LIST).noParams()) {
+                    it.target?.getKeys(false)
                 }
-                .function("values", listOf(0, 1)) {
-                    it.target?.getValues(it.getBoolean(0))
+                .function("keys", returns(Type.LIST).params(Type.Z)) {
+                    it.target?.getKeys(it.getBool(0))
                 }
-                .function("contains", listOf(1)) {
-                    it.target?.contains(it.getArgument(0)!!.toString())
+                .function("values", returns(Type.MAP).noParams()) {
+                    it.target?.getValues(false)
                 }
-                .function("get", listOf(1, 1)) {
-                    it.target?.get(
-                        it.getArgument(0)!!.toString(),
-                        it.getArgument(1)
-                    )
+                .function("values", returns(Type.MAP).params(Type.Z)) {
+                    it.target?.getValues(it.getBool(0))
                 }
-                .function("set", listOf(1, 1)) {
-                    it.target?.set(
-                        it.getArgument(0)!!.toString(),
-                        it.getArgument(1)
-                    )
+                .function("contains", returns(Type.Z).params(Type.STRING)) {
+                    it.target?.contains(it.getString(0)!!)
                 }
-                .function("toMap", 0) {
+                .function("get", returnsObject().params(Type.STRING)) {
+                    it.target?.get(it.getString(0)!!)
+                }
+                .function("get", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.get(it.getString(0)!!, it.getRef(1))
+                }
+                .function("set", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.set(it.getString(0)!!, it.getRef(1))
+                }
+                .function("toMap", returns(Type.MAP).noParams()) {
                     it.target?.toMap()
                 }
-                .function("clear", 0) {
+                .function("clear", returnsVoid().noParams()) {
                     it.target?.clear()
                 }
         }

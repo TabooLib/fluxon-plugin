@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.help.HelpMap"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,20 +20,17 @@ object FnHelpMap {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpMap::class.java)
-                .function("getHelpTopic", 1) { it.target?.getHelpTopic(it.getString(0)!!) }
-                .function("helpTopics", 0) { it.target?.helpTopics }
-                .function("addTopic", 1) { it.target?.addTopic(it.getArgument(0) as HelpTopic) }
-                .function("clear", 0) { it.target?.clear() }
-                .function(
-                    "registerHelpTopicFactory",
-                    2
-                ) {
+                .function("getHelpTopic", returnsObject().params(Type.OBJECT)) { it.target?.getHelpTopic(it.getString(0)!!) }
+                .function("helpTopics", returnsObject().noParams()) { it.target?.helpTopics }
+                .function("addTopic", returnsObject().params(Type.OBJECT)) { it.target?.addTopic(it.getRef(0) as HelpTopic) }
+                .function("clear", returnsObject().noParams()) { it.target?.clear() }
+                .function("registerHelpTopicFactory", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerHelpTopicFactory(
                         Class.forName(it.getString(0)),
-                        it.getArgument(1) as HelpTopicFactory<*>
+                        it.getRef(1) as HelpTopicFactory<*>
                     )
                 }
-                .function("ignoredPlugins", 0) { it.target?.ignoredPlugins }
+                .function("ignoredPlugins", returnsObject().noParams()) { it.target?.ignoredPlugins }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.raid.RaidSpawnWaveEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnRaidSpawnWaveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidSpawnWaveEvent::class.java)
-                .function("patrolLeader", 0) { it.target?.patrolLeader }
-                .function("raiders", 0) { it.target?.raiders }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("patrolLeader", returnsObject().noParams()) { it.target?.patrolLeader }
+                .function("raiders", returnsObject().noParams()) { it.target?.raiders }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { RaidSpawnWaveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { RaidSpawnWaveEvent.getHandlerList() }
         }
     }
 }

@@ -10,6 +10,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.spawner.SpawnerEntry"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,14 +21,14 @@ object FnSpawnerEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry::class.java)
-                .function("snapshot", 0) { it.target?.snapshot }
-                .function("setSnapshot", 1) { it.target?.setSnapshot(it.getArgument(0) as EntitySnapshot) }
-                .function("spawnWeight", 0) { it.target?.spawnWeight }
-                .function("setSpawnWeight", 1) { it.target?.setSpawnWeight(it.getNumber(0).toInt()) }
-                .function("spawnRule", 0) { it.target?.spawnRule }
-                .function("setSpawnRule", 1) { it.target?.setSpawnRule(it.getArgument(0) as SpawnRule) }
-                .function("equipment", 0) { it.target?.equipment }
-                .function("setEquipment", 1) { it.target?.setEquipment(it.getArgument(0) as SpawnerEntry.Equipment) }
+                .function("snapshot", returnsObject().noParams()) { it.target?.snapshot }
+                .function("setSnapshot", returnsObject().params(Type.OBJECT)) { it.target?.setSnapshot(it.getRef(0) as EntitySnapshot) }
+                .function("spawnWeight", returnsObject().noParams()) { it.target?.spawnWeight }
+                .function("setSpawnWeight", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnWeight(it.getInt(0).toInt()) }
+                .function("spawnRule", returnsObject().noParams()) { it.target?.spawnRule }
+                .function("setSpawnRule", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnRule(it.getRef(0) as SpawnRule) }
+                .function("equipment", returnsObject().noParams()) { it.target?.equipment }
+                .function("setEquipment", returnsObject().params(Type.OBJECT)) { it.target?.setEquipment(it.getRef(0) as SpawnerEntry.Equipment) }
         }
     }
 }
@@ -39,11 +41,8 @@ object FnSpawnerEntryEquipment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry.Equipment::class.java)
-                .function("equipmentLootTable", 0) { it.target?.equipmentLootTable }
-                .function(
-                    "setEquipmentLootTable",
-                    1
-                ) { it.target?.setEquipmentLootTable(it.getArgument(0) as LootTable) }
+                .function("equipmentLootTable", returnsObject().noParams()) { it.target?.equipmentLootTable }
+                .function("setEquipmentLootTable", returnsObject().params(Type.OBJECT)) { it.target?.setEquipmentLootTable(it.getRef(0) as LootTable) }
         }
     }
 }

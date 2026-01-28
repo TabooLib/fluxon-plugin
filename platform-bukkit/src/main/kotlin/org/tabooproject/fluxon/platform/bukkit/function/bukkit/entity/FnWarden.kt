@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Warden"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,22 +20,19 @@ object FnWarden {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Warden::class.java)
-                .function("anger", 0) { it.target?.anger }
-                .function("getAnger", 1) { it.target?.getAnger(it.getArgument(0) as Entity) }
-                .function("increaseAnger", 2) {
+                .function("anger", returnsObject().noParams()) { it.target?.anger }
+                .function("getAnger", returnsObject().params(Type.OBJECT)) { it.target?.getAnger(it.getRef(0) as Entity) }
+                .function("increaseAnger", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.increaseAnger(
-                        it.getArgument(0) as Entity,
-                        it.getNumber(1).toInt()
+                        it.getRef(0) as Entity,
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("setAnger", 2) { it.target?.setAnger(it.getArgument(0) as Entity, it.getNumber(1).toInt()) }
-                .function("clearAnger", 1) { it.target?.clearAnger(it.getArgument(0) as Entity) }
-                .function("entityAngryAt", 0) { it.target?.entityAngryAt }
-                .function(
-                    "setDisturbanceLocation",
-                    1
-                ) { it.target?.setDisturbanceLocation(it.getArgument(0) as Location) }
-                .function("angerLevel", 0) { it.target?.angerLevel }
+                .function("setAnger", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setAnger(it.getRef(0) as Entity, it.getInt(1).toInt()) }
+                .function("clearAnger", returnsObject().params(Type.OBJECT)) { it.target?.clearAnger(it.getRef(0) as Entity) }
+                .function("entityAngryAt", returnsObject().noParams()) { it.target?.entityAngryAt }
+                .function("setDisturbanceLocation", returnsObject().params(Type.OBJECT)) { it.target?.setDisturbanceLocation(it.getRef(0) as Location) }
+                .function("angerLevel", returnsObject().noParams()) { it.target?.angerLevel }
         }
     }
 }

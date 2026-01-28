@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPortalEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnEntityPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalEvent::class.java)
-                .function("setSearchRadius", 1) { it.target?.setSearchRadius(it.getNumber(0).toInt()) }
-                .function("searchRadius", 0) { it.target?.searchRadius }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
+                .function("searchRadius", returnsObject().noParams()) { it.target?.searchRadius }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityPortalEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityPortalEvent.getHandlerList() }
         }
     }
 }

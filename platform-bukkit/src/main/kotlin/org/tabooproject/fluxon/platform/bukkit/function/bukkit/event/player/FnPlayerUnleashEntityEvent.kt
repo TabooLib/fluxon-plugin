@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerUnleashEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnPlayerUnleashEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerUnleashEntityEvent::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("hand", 0) { it.target?.hand }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
         }
     }
 }

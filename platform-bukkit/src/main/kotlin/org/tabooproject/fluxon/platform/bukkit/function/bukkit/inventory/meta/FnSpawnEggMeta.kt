@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.SpawnEggMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,11 +20,11 @@ object FnSpawnEggMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnEggMeta::class.java)
-                .function("spawnedType", 0) { it.target?.spawnedType }
-                .function("setSpawnedType", 1) { it.target?.setSpawnedType(it.getArgument(0) as EntityType) }
-                .function("spawnedEntity", 0) { it.target?.spawnedEntity }
-                .function("setSpawnedEntity", 1) { it.target?.setSpawnedEntity(it.getArgument(0) as EntitySnapshot) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("spawnedType", returnsObject().noParams()) { it.target?.spawnedType }
+                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
+                .function("spawnedEntity", returnsObject().noParams()) { it.target?.spawnedEntity }
+                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

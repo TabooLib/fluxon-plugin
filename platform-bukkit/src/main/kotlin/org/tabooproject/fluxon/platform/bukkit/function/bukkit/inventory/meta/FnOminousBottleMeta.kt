@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.OminousBottleMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnOminousBottleMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OminousBottleMeta::class.java)
-                .function("hasAmplifier", 0) { it.target?.hasAmplifier() }
-                .function("amplifier", 0) { it.target?.amplifier }
-                .function("setAmplifier", 1) { it.target?.setAmplifier(it.getNumber(0).toInt()) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("hasAmplifier", returns(Type.Z).noParams()) { it.target?.hasAmplifier() }
+                .function("amplifier", returnsObject().noParams()) { it.target?.amplifier }
+                .function("setAmplifier", returnsObject().params(Type.OBJECT)) { it.target?.setAmplifier(it.getInt(0).toInt()) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

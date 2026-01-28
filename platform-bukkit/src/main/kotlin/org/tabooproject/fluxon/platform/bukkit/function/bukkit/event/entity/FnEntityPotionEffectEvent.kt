@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPotionEffectEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,18 +19,18 @@ object FnEntityPotionEffectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPotionEffectEvent::class.java)
-                .function("oldEffect", 0) { it.target?.oldEffect }
-                .function("newEffect", 0) { it.target?.newEffect }
-                .function("cause", 0) { it.target?.cause }
-                .function("action", 0) { it.target?.action }
-                .function("modifiedType", 0) { it.target?.modifiedType }
-                .function("isOverride", 0) { it.target?.isOverride }
-                .function("setOverride", 1) { it.target?.setOverride(it.getBoolean(0)) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("oldEffect", returnsObject().noParams()) { it.target?.oldEffect }
+                .function("newEffect", returnsObject().noParams()) { it.target?.newEffect }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("action", returnsObject().noParams()) { it.target?.action }
+                .function("modifiedType", returnsObject().noParams()) { it.target?.modifiedType }
+                .function("isOverride", returns(Type.Z).noParams()) { it.target?.isOverride }
+                .function("setOverride", returnsObject().params(Type.OBJECT)) { it.target?.setOverride(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityPotionEffectEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityPotionEffectEvent.getHandlerList() }
         }
     }
 }

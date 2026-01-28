@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.ChunkUnloadEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnChunkUnloadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkUnloadEvent::class.java)
-                .function("isSaveChunk", 0) { it.target?.isSaveChunk }
-                .function("setSaveChunk", 1) { it.target?.setSaveChunk(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isSaveChunk", returns(Type.Z).noParams()) { it.target?.isSaveChunk }
+                .function("setSaveChunk", returnsObject().params(Type.OBJECT)) { it.target?.setSaveChunk(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ChunkUnloadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { ChunkUnloadEvent.getHandlerList() }
         }
     }
 }

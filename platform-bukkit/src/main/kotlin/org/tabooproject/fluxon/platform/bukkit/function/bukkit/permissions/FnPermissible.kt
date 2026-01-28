@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.permissions.Permissible"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,49 +22,115 @@ object FnPermissible {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Permissible::class.java)
-                .function("isPermissionSet", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("isPermissionSet", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isPermissionSet(var1)
                         is Permission -> it.target?.isPermissionSet(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
                     }
                 }
-                .function("hasPermission", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("hasPermission", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is String -> it.target?.hasPermission(var1)
                         is Permission -> it.target?.hasPermission(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
                     }
                 }
-                .function("addAttachment", listOf(1, 2, 3, 4)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.addAttachment(it.getArgument(0) as Plugin)
+                .function("addAttachment", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addAttachment(it.getRef(0) as Plugin)
                         2 -> it.target?.addAttachment(
-                            it.getArgument(0) as Plugin,
-                            it.getNumber(1).toInt()
+                            it.getRef(0) as Plugin,
+                            it.getInt(1).toInt()
                         )
 
                         3 -> it.target?.addAttachment(
-                            it.getArgument(0) as Plugin,
+                            it.getRef(0) as Plugin,
                             it.getString(1)!!,
-                            it.getBoolean(2)
+                            it.getBool(2)
                         )
 
                         4 -> it.target?.addAttachment(
-                            it.getArgument(0) as Plugin,
+                            it.getRef(0) as Plugin,
                             it.getString(1)!!,
-                            it.getBoolean(2),
-                            it.getNumber(3).toInt()
+                            it.getBool(2),
+                            it.getInt(3).toInt()
                         )
-                        else -> error("Permissible#addAttachment 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("Permissible#addAttachment 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function(
-                    "removeAttachment",
-                    1
-                ) { it.target?.removeAttachment(it.getArgument(0) as PermissionAttachment) }
-                .function("recalculatePermissions", 0) { it.target?.recalculatePermissions() }
-                .function("effectivePermissions", 0) { it.target?.effectivePermissions }
+                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addAttachment(it.getRef(0) as Plugin)
+                        2 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getInt(1).toInt()
+                        )
+
+                        3 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2)
+                        )
+
+                        4 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2),
+                            it.getInt(3).toInt()
+                        )
+                        else -> error("Permissible#addAttachment 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addAttachment(it.getRef(0) as Plugin)
+                        2 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getInt(1).toInt()
+                        )
+
+                        3 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2)
+                        )
+
+                        4 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2),
+                            it.getInt(3).toInt()
+                        )
+                        else -> error("Permissible#addAttachment 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.addAttachment(it.getRef(0) as Plugin)
+                        2 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getInt(1).toInt()
+                        )
+
+                        3 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2)
+                        )
+
+                        4 -> it.target?.addAttachment(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getBool(2),
+                            it.getInt(3).toInt()
+                        )
+                        else -> error("Permissible#addAttachment 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("removeAttachment", returnsObject().params(Type.OBJECT)) { it.target?.removeAttachment(it.getRef(0) as PermissionAttachment) }
+                .function("recalculatePermissions", returnsObject().noParams()) { it.target?.recalculatePermissions() }
+                .function("effectivePermissions", returnsObject().noParams()) { it.target?.effectivePermissions }
         }
     }
 }

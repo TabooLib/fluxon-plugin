@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapView"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,25 +21,25 @@ object FnMapView {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapView::class.java)
-                .function("id", 0) { it.target?.id }
-                .function("isVirtual", 0) { it.target?.isVirtual }
-                .function("scale", 0) { it.target?.scale }
-                .function("setScale", 1) { it.target?.setScale(it.getArgument(0) as MapView.Scale) }
-                .function("centerX", 0) { it.target?.centerX }
-                .function("centerZ", 0) { it.target?.centerZ }
-                .function("setCenterX", 1) { it.target?.setCenterX(it.getNumber(0).toInt()) }
-                .function("setCenterZ", 1) { it.target?.setCenterZ(it.getNumber(0).toInt()) }
-                .function("world", 0) { it.target?.world }
-                .function("setWorld", 1) { it.target?.setWorld(it.getArgument(0) as World) }
-                .function("renderers", 0) { it.target?.renderers }
-                .function("addRenderer", 1) { it.target?.addRenderer(it.getArgument(0) as MapRenderer) }
-                .function("removeRenderer", 1) { it.target?.removeRenderer(it.getArgument(0) as MapRenderer) }
-                .function("isTrackingPosition", 0) { it.target?.isTrackingPosition }
-                .function("setTrackingPosition", 1) { it.target?.setTrackingPosition(it.getBoolean(0)) }
-                .function("isUnlimitedTracking", 0) { it.target?.isUnlimitedTracking }
-                .function("setUnlimitedTracking", 1) { it.target?.setUnlimitedTracking(it.getBoolean(0)) }
-                .function("isLocked", 0) { it.target?.isLocked }
-                .function("setLocked", 1) { it.target?.setLocked(it.getBoolean(0)) }
+                .function("id", returnsObject().noParams()) { it.target?.id }
+                .function("isVirtual", returns(Type.Z).noParams()) { it.target?.isVirtual }
+                .function("scale", returnsObject().noParams()) { it.target?.scale }
+                .function("setScale", returnsObject().params(Type.OBJECT)) { it.target?.setScale(it.getRef(0) as MapView.Scale) }
+                .function("centerX", returnsObject().noParams()) { it.target?.centerX }
+                .function("centerZ", returnsObject().noParams()) { it.target?.centerZ }
+                .function("setCenterX", returnsObject().params(Type.OBJECT)) { it.target?.setCenterX(it.getInt(0).toInt()) }
+                .function("setCenterZ", returnsObject().params(Type.OBJECT)) { it.target?.setCenterZ(it.getInt(0).toInt()) }
+                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("setWorld", returnsObject().params(Type.OBJECT)) { it.target?.setWorld(it.getRef(0) as World) }
+                .function("renderers", returnsObject().noParams()) { it.target?.renderers }
+                .function("addRenderer", returnsObject().params(Type.OBJECT)) { it.target?.addRenderer(it.getRef(0) as MapRenderer) }
+                .function("removeRenderer", returnsObject().params(Type.OBJECT)) { it.target?.removeRenderer(it.getRef(0) as MapRenderer) }
+                .function("isTrackingPosition", returns(Type.Z).noParams()) { it.target?.isTrackingPosition }
+                .function("setTrackingPosition", returnsObject().params(Type.OBJECT)) { it.target?.setTrackingPosition(it.getBool(0)) }
+                .function("isUnlimitedTracking", returns(Type.Z).noParams()) { it.target?.isUnlimitedTracking }
+                .function("setUnlimitedTracking", returnsObject().params(Type.OBJECT)) { it.target?.setUnlimitedTracking(it.getBool(0)) }
+                .function("isLocked", returns(Type.Z).noParams()) { it.target?.isLocked }
+                .function("setLocked", returnsObject().params(Type.OBJECT)) { it.target?.setLocked(it.getBool(0)) }
         }
     }
 }
@@ -50,8 +53,8 @@ object FnMapViewScale {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapView.Scale::class.java)
                 // static
-                .function("valueOf", 1) { MapView.Scale.valueOf(it.getNumber(0).toByte()) }
-                .function("value", 0) { it.target?.value }
+                .function("valueOf", returnsObject().params(Type.OBJECT)) { MapView.Scale.valueOf(it.getInt(0).toByte()) }
+                .function("value", returnsObject().noParams()) { it.target?.value }
         }
     }
 }

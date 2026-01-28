@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerArmorStandManipulateEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +18,14 @@ object FnPlayerArmorStandManipulateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerArmorStandManipulateEvent::class.java)
-                .function("playerItem", 0) { it.target?.playerItem }
-                .function("armorStandItem", 0) { it.target?.armorStandItem }
-                .function("slot", 0) { it.target?.slot }
-                .function("hand", 0) { it.target?.hand }
-                .function("rightClicked", 0) { it.target?.rightClicked }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("playerItem", returnsObject().noParams()) { it.target?.playerItem }
+                .function("armorStandItem", returnsObject().noParams()) { it.target?.armorStandItem }
+                .function("slot", returnsObject().noParams()) { it.target?.slot }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("rightClicked", returnsObject().noParams()) { it.target?.rightClicked }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerArmorStandManipulateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerArmorStandManipulateEvent.getHandlerList() }
         }
     }
 }

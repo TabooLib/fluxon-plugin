@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.enchantment.EnchantItemEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,19 +19,19 @@ object FnEnchantItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantItemEvent::class.java)
-                .function("enchanter", 0) { it.target?.enchanter }
-                .function("enchantBlock", 0) { it.target?.enchantBlock }
-                .function("item", 0) { it.target?.item }
-                .function("expLevelCost", 0) { it.target?.expLevelCost }
-                .function("setExpLevelCost", 1) { it.target?.setExpLevelCost(it.getNumber(0).toInt()) }
-                .function("enchantmentHint", 0) { it.target?.enchantmentHint }
-                .function("levelHint", 0) { it.target?.levelHint }
-                .function("whichButton", 0) { it.target?.whichButton() }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("enchanter", returnsObject().noParams()) { it.target?.enchanter }
+                .function("enchantBlock", returnsObject().noParams()) { it.target?.enchantBlock }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("expLevelCost", returnsObject().noParams()) { it.target?.expLevelCost }
+                .function("setExpLevelCost", returnsObject().params(Type.OBJECT)) { it.target?.setExpLevelCost(it.getInt(0).toInt()) }
+                .function("enchantmentHint", returnsObject().noParams()) { it.target?.enchantmentHint }
+                .function("levelHint", returnsObject().noParams()) { it.target?.levelHint }
+                .function("whichButton", returnsObject().noParams()) { it.target?.whichButton() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EnchantItemEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EnchantItemEvent.getHandlerList() }
         }
     }
 }

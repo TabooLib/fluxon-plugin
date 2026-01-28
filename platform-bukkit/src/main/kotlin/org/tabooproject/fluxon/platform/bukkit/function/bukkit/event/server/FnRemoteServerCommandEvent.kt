@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.server.RemoteServerCommandEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnRemoteServerCommandEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RemoteServerCommandEvent::class.java)
-                .function("handlers", 0) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { RemoteServerCommandEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { RemoteServerCommandEvent.getHandlerList() }
         }
     }
 }

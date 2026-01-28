@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.ItemType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,28 +20,35 @@ object FnItemType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemType::class.java)
-                .function("typed", 0) { it.target?.typed() }
-                .function("createItemStack", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("typed", returnsObject().noParams()) { it.target?.typed() }
+                .function("createItemStack", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.createItemStack()
                     } else {
-                        it.target?.createItemStack(it.getNumber(0).toInt())
+                        it.target?.createItemStack(it.getInt(0).toInt())
                     }
                 }
-                .function("hasBlockType", 0) { it.target?.hasBlockType() }
-                .function("blockType", 0) { it.target?.blockType }
-                .function("maxStackSize", 0) { it.target?.maxStackSize }
-                .function("maxDurability", 0) { it.target?.maxDurability }
-                .function("isEdible", 0) { it.target?.isEdible }
-                .function("isRecord", 0) { it.target?.isRecord }
-                .function("isFuel", 0) { it.target?.isFuel }
-                .function("isCompostable", 0) { it.target?.isCompostable }
-                .function("compostChance", 0) { it.target?.compostChance }
-                .function("craftingRemainingItem", 0) { it.target?.craftingRemainingItem }
-                .function("creativeCategory", 0) { it.target?.creativeCategory }
-                .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
-                .function("asMaterial", 0) { it.target?.asMaterial() }
-                .function("itemMetaClass", 0) { it.target?.itemMetaClass }
+                .function("createItemStack", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.createItemStack()
+                    } else {
+                        it.target?.createItemStack(it.getInt(0).toInt())
+                    }
+                }
+                .function("hasBlockType", returns(Type.Z).noParams()) { it.target?.hasBlockType() }
+                .function("blockType", returnsObject().noParams()) { it.target?.blockType }
+                .function("maxStackSize", returnsObject().noParams()) { it.target?.maxStackSize }
+                .function("maxDurability", returnsObject().noParams()) { it.target?.maxDurability }
+                .function("isEdible", returns(Type.Z).noParams()) { it.target?.isEdible }
+                .function("isRecord", returns(Type.Z).noParams()) { it.target?.isRecord }
+                .function("isFuel", returns(Type.Z).noParams()) { it.target?.isFuel }
+                .function("isCompostable", returns(Type.Z).noParams()) { it.target?.isCompostable }
+                .function("compostChance", returnsObject().noParams()) { it.target?.compostChance }
+                .function("craftingRemainingItem", returnsObject().noParams()) { it.target?.craftingRemainingItem }
+                .function("creativeCategory", returnsObject().noParams()) { it.target?.creativeCategory }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.target?.isEnabledByFeature(it.getRef(0) as World) }
+                .function("asMaterial", returnsObject().noParams()) { it.target?.asMaterial() }
+                .function("itemMetaClass", returnsObject().noParams()) { it.target?.itemMetaClass }
         }
     }
 }

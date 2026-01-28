@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.persistence.PersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,24 +19,18 @@ object FnPersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType::class.java)
-                .function("primitiveType", 0) { it.target?.primitiveType }
-                .function("complexType", 0) { it.target?.complexType }
-                .function(
-                    "toPrimitive",
-                    2
-                ) {
+                .function("primitiveType", returnsObject().noParams()) { it.target?.primitiveType }
+                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Any, Any>)?.toPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
-                .function(
-                    "fromPrimitive",
-                    2
-                ) {
+                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Any, Any>)?.fromPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
         }
@@ -49,24 +45,18 @@ object FnPersistentDataTypePrimitivePersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.PrimitivePersistentDataType::class.java)
-                .function("primitiveType", 0) { it.target?.primitiveType }
-                .function("complexType", 0) { it.target?.complexType }
-                .function(
-                    "toPrimitive",
-                    2
-                ) {
+                .function("primitiveType", returnsObject().noParams()) { it.target?.primitiveType }
+                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Any, Any>)?.toPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
-                .function(
-                    "fromPrimitive",
-                    2
-                ) {
+                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Any, Any>)?.fromPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
         }
@@ -81,24 +71,18 @@ object FnPersistentDataTypeBooleanPersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.BooleanPersistentDataType::class.java)
-                .function("primitiveType", 0) { it.target?.primitiveType }
-                .function("complexType", 0) { it.target?.complexType }
-                .function(
-                    "toPrimitive",
-                    2
-                ) {
+                .function("primitiveType", returnsObject().noParams()) { it.target?.primitiveType }
+                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Byte, Boolean>)?.toPrimitive(
-                        it.getBoolean(0),
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getBool(0),
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
-                .function(
-                    "fromPrimitive",
-                    2
-                ) {
+                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? PersistentDataType<Byte, Boolean>)?.fromPrimitive(
-                        it.getArgument(0) as Byte,
-                        it.getArgument(1) as PersistentDataAdapterContext
+                        it.getRef(0) as Byte,
+                        it.getRef(1) as PersistentDataAdapterContext
                     )
                 }
         }

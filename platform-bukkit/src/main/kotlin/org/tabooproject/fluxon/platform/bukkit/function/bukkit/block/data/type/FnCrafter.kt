@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Crafter"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnCrafter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
-                .function("isCrafting", 0) { it.target?.isCrafting }
-                .function("setCrafting", 1) { it.target?.setCrafting(it.getBoolean(0)) }
-                .function("isTriggered", 0) { it.target?.isTriggered }
-                .function("setTriggered", 1) { it.target?.setTriggered(it.getBoolean(0)) }
-                .function("orientation", 0) { it.target?.orientation }
-                .function("setOrientation", 1) { it.target?.setOrientation(it.getArgument(0) as Crafter.Orientation) }
+                .function("isCrafting", returns(Type.Z).noParams()) { it.target?.isCrafting }
+                .function("setCrafting", returnsObject().params(Type.OBJECT)) { it.target?.setCrafting(it.getBool(0)) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.target?.isTriggered }
+                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.target?.setTriggered(it.getBool(0)) }
+                .function("orientation", returnsObject().noParams()) { it.target?.orientation }
+                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.target?.setOrientation(it.getRef(0) as Crafter.Orientation) }
         }
     }
 }

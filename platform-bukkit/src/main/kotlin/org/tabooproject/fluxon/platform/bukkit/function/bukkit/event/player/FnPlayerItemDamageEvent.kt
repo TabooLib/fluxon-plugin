@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerItemDamageEvent"])
@@ -17,14 +20,14 @@ object FnPlayerItemDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemDamageEvent::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("damage", 0) { it.target?.damage }
-                .function("setDamage", 1) { it.target?.setDamage(it.getNumber(0).toInt()) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("damage", returnsObject().noParams()) { it.target?.damage }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getInt(0).toInt()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerItemDamageEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerItemDamageEvent.getHandlerList() }
         }
     }
 }

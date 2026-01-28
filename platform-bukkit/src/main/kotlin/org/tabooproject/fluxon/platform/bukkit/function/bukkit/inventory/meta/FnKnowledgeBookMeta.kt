@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.KnowledgeBookMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +20,11 @@ object FnKnowledgeBookMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(KnowledgeBookMeta::class.java)
-                .function("hasRecipes", 0) { it.target?.hasRecipes() }
-                .function("recipes", 0) { it.target?.recipes }
-                .function("setRecipes", 1) { it.target?.setRecipes(it.getArgument(0) as List<NamespacedKey>) }
-                .function("addRecipe", 0) { it.target?.addRecipe() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("hasRecipes", returns(Type.Z).noParams()) { it.target?.hasRecipes() }
+                .function("recipes", returnsObject().noParams()) { it.target?.recipes }
+                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.target?.setRecipes(it.getRef(0) as List<NamespacedKey>) }
+                .function("addRecipe", returnsObject().noParams()) { it.target?.addRecipe() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

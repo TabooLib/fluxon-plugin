@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.help.HelpTopic"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +20,12 @@ object FnHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopic::class.java)
-                .function("canSee", 1) { it.target?.canSee(it.getArgument(0) as CommandSender) }
-                .function("amendCanSee", 1) { it.target?.amendCanSee(it.getString(0)) }
-                .function("name", 0) { it.target?.getName() }
-                .function("shortText", 0) { it.target?.getShortText() }
-                .function("getFullText", 1) { it.target?.getFullText(it.getArgument(0) as CommandSender) }
-                .function("amendTopic", 2) { it.target?.amendTopic(it.getString(0), it.getString(1)) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.target?.canSee(it.getRef(0) as CommandSender) }
+                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.target?.amendCanSee(it.getString(0)) }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.getName() }
+                .function("shortText", returnsObject().noParams()) { it.target?.getShortText() }
+                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.target?.getFullText(it.getRef(0) as CommandSender) }
+                .function("amendTopic", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.amendTopic(it.getString(0), it.getString(1)) }
         }
     }
 }

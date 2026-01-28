@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerShearEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnPlayerShearEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerShearEntityEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("entity", 0) { it.target?.entity }
-                .function("item", 0) { it.target?.item }
-                .function("hand", 0) { it.target?.hand }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerShearEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerShearEntityEvent.getHandlerList() }
         }
     }
 }

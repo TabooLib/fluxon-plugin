@@ -3,6 +3,9 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.util
 import org.bukkit.World
 import org.bukkit.util.Vector
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
@@ -24,58 +27,58 @@ object FnVector {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             // 构建向量
-            registerFunction("vector", 3) {
-                val x = it.getNumber(0)
-                val y = it.getNumber(1)
-                val z = it.getNumber(2)
+            registerFunction("vector", returnsObject().params(Type.D, Type.D, Type.D)) {
+                val x = it.getInt(0)
+                val y = it.getInt(1)
+                val z = it.getInt(2)
                 Vector(x.toDouble(), y.toDouble(), z.toDouble())
             }
 
             registerExtension(Vector::class.java)
                 // 基本属性（只读）
-                .function("clone", 0) { it.target?.clone() }
-                .function("taboo", 0) { it.target?.let { v -> taboolib.common.util.Vector(v.x, v.y, v.z) } }
-                .function("blockX", 0) { it.target?.blockX }
-                .function("blockY", 0) { it.target?.blockY }
-                .function("blockZ", 0) { it.target?.blockZ }
-                .function("length", 0) { it.target?.length() }
-                .function("lengthSquared", 0) { it.target?.lengthSquared() }
-                .function("isNormalized", 0) { it.target?.isNormalized }
-                .function("normalize", 0) { it.target?.clone()?.normalize() }
-                .function("zero", 0) { it.target?.clone()?.zero() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("taboo", returnsObject().noParams()) { it.target?.let { v -> taboolib.common.util.Vector(v.x, v.y, v.z) } }
+                .function("blockX", returns(Type.I).noParams()) { it.target?.blockX }
+                .function("blockY", returns(Type.I).noParams()) { it.target?.blockY }
+                .function("blockZ", returns(Type.I).noParams()) { it.target?.blockZ }
+                .function("length", returns(Type.D).noParams()) { it.target?.length() }
+                .function("lengthSquared", returns(Type.D).noParams()) { it.target?.lengthSquared() }
+                .function("isNormalized", returns(Type.Z).noParams()) { it.target?.isNormalized }
+                .function("normalize", returnsObject().noParams()) { it.target?.clone()?.normalize() }
+                .function("zero", returnsObject().noParams()) { it.target?.clone()?.zero() }
 
                 // 可读写属性
-                .function("x", 0) { it.target?.x }
-                .function("setX", 1) { it.target?.apply { x = it.getNumber(0).toDouble() } }
-                .function("y", 0) { it.target?.y }
-                .function("setY", 1) { it.target?.apply { y = it.getNumber(0).toDouble() } }
-                .function("z", 0) { it.target?.z }
-                .function("setZ", 1) { it.target?.apply { z = it.getNumber(0).toDouble() } }
+                .function("x", returns(Type.D).noParams()) { it.target?.x }
+                .function("setX", returnsObject().params(Type.D)) { it.target?.apply { x = it.getAsDouble(0) } }
+                .function("y", returns(Type.D).noParams()) { it.target?.y }
+                .function("setY", returnsObject().params(Type.D)) { it.target?.apply { y = it.getAsDouble(0) } }
+                .function("z", returns(Type.D).noParams()) { it.target?.z }
+                .function("setZ", returnsObject().params(Type.D)) { it.target?.apply { z = it.getAsDouble(0) } }
 
                 // 基本运算
-                .function("add", 1) {
-                    when (val arg = it.getArgument(0)!!) {
+                .function("add", returnsObject().params(Type.OBJECT)) {
+                    when (val arg = it.getRef(0)!!) {
                         is Vector -> it.target?.add(arg)
                         is Number -> it.target?.add(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Vector 或 Number 类型")
                     }
                 }
-                .function("subtract", 1) {
-                    when (val arg = it.getArgument(0)!!) {
+                .function("subtract", returnsObject().params(Type.OBJECT)) {
+                    when (val arg = it.getRef(0)!!) {
                         is Vector -> it.target?.subtract(arg)
                         is Number -> it.target?.subtract(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Vector 或 Number 类型")
                     }
                 }
-                .function("multiply", 1) {
-                    when (val arg = it.getArgument(0)!!) {
+                .function("multiply", returnsObject().params(Type.OBJECT)) {
+                    when (val arg = it.getRef(0)!!) {
                         is Vector -> it.target?.multiply(arg)
                         is Number -> it.target?.multiply(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Vector 或 Number 类型")
                     }
                 }
-                .function("divide", 1) {
-                    when (val arg = it.getArgument(0)!!) {
+                .function("divide", returnsObject().params(Type.OBJECT)) {
+                    when (val arg = it.getRef(0)!!) {
                         is Vector -> it.target?.divide(arg)
                         is Number -> it.target?.divide(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Vector 或 Number 类型")
@@ -83,47 +86,41 @@ object FnVector {
                 }
 
                 // 属性计算
-                .function("length", 0) {
-                    it.target?.length()
+                .function("distance", returns(Type.D).params(Type.OBJECT)) {
+                    it.target?.distance(it.getRef(0) as Vector)
                 }
-                .function("lengthSquared", 0) {
-                    it.target?.lengthSquared()
-                }
-                .function("distance", 1) {
-                    it.target?.distance(it.getArgumentByType(0, Vector::class.java)!!)
-                }
-                .function("distanceSquared", 1) {
-                    it.target?.distanceSquared(it.getArgumentByType(0, Vector::class.java)!!)
+                .function("distanceSquared", returns(Type.D).params(Type.OBJECT)) {
+                    it.target?.distanceSquared(it.getRef(0) as Vector)
                 }
 
                 // 向量积运算
-                .function("dot", 1) {
-                    it.target?.dot(it.getArgumentByType(0, Vector::class.java)!!)
+                .function("dot", returns(Type.D).params(Type.OBJECT)) {
+                    it.target?.dot(it.getRef(0) as Vector)
                 }
-                .function("cross", 1) {
-                    it.target?.crossProduct(it.getArgumentByType(0, Vector::class.java)!!)
+                .function("cross", returnsObject().params(Type.OBJECT)) {
+                    it.target?.crossProduct(it.getRef(0) as Vector)
                 }
 
                 // 向量旋转
-                .function("rotateAroundX", 1) {
-                    it.target?.rotateAroundX(it.getNumber(0).toDouble())
+                .function("rotateAroundX", returnsObject().params(Type.D)) {
+                    it.target?.rotateAroundX(it.getAsDouble(0))
                 }
-                .function("rotateAroundY", 1) {
-                    it.target?.rotateAroundY(it.getNumber(0).toDouble())
+                .function("rotateAroundY", returnsObject().params(Type.D)) {
+                    it.target?.rotateAroundY(it.getAsDouble(0))
                 }
-                .function("rotateAroundZ", 1) {
-                    it.target?.rotateAroundZ(it.getNumber(0).toDouble())
+                .function("rotateAroundZ", returnsObject().params(Type.D)) {
+                    it.target?.rotateAroundZ(it.getAsDouble(0))
                 }
-                .function("rotateAroundAxis", 2) {
+                .function("rotateAroundAxis", returnsObject().params(Type.OBJECT, Type.D)) {
                     it.target?.rotateAroundAxis(
-                        it.getArgumentByType(0, Vector::class.java)!!,
-                        it.getNumber(1).toDouble()
+                        it.getRef(0) as Vector,
+                        it.getAsDouble(1)
                     )
                 }
 
                 // 转换为 Location
-                .function("toLocation", 1) {
-                    it.target?.toLocation(it.getArgument(0)!! as World)
+                .function("toLocation", returnsObject().params(Type.OBJECT)) {
+                    it.target?.toLocation(it.getRef(0)!! as World)
                 }
         }
     }

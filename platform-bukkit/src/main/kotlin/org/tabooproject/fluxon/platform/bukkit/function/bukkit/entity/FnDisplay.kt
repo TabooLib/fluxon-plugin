@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Display"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,34 +21,34 @@ object FnDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Display::class.java)
-                .function("transformation", 0) { it.target?.transformation }
-                .function("setTransformation", 1) { it.target?.setTransformation(it.getArgument(0) as Transformation) }
-                .function("interpolationDuration", 0) { it.target?.interpolationDuration }
-                .function("setInterpolationDuration", 1) {
+                .function("transformation", returnsObject().noParams()) { it.target?.transformation }
+                .function("setTransformation", returnsObject().params(Type.OBJECT)) { it.target?.setTransformation(it.getRef(0) as Transformation) }
+                .function("interpolationDuration", returnsObject().noParams()) { it.target?.interpolationDuration }
+                .function("setInterpolationDuration", returnsObject().params(Type.OBJECT)) {
                     it.target?.setInterpolationDuration(
-                        it.getNumber(0).toInt()
+                        it.getInt(0).toInt()
                     )
                 }
-                .function("teleportDuration", 0) { it.target?.teleportDuration }
-                .function("setTeleportDuration", 1) { it.target?.setTeleportDuration(it.getNumber(0).toInt()) }
-                .function("viewRange", 0) { it.target?.viewRange }
-                .function("setViewRange", 1) { it.target?.setViewRange(it.getNumber(0).toFloat()) }
-                .function("shadowRadius", 0) { it.target?.shadowRadius }
-                .function("setShadowRadius", 1) { it.target?.setShadowRadius(it.getNumber(0).toFloat()) }
-                .function("shadowStrength", 0) { it.target?.shadowStrength }
-                .function("setShadowStrength", 1) { it.target?.setShadowStrength(it.getNumber(0).toFloat()) }
-                .function("displayWidth", 0) { it.target?.displayWidth }
-                .function("setDisplayWidth", 1) { it.target?.setDisplayWidth(it.getNumber(0).toFloat()) }
-                .function("displayHeight", 0) { it.target?.displayHeight }
-                .function("setDisplayHeight", 1) { it.target?.setDisplayHeight(it.getNumber(0).toFloat()) }
-                .function("interpolationDelay", 0) { it.target?.interpolationDelay }
-                .function("setInterpolationDelay", 1) { it.target?.setInterpolationDelay(it.getNumber(0).toInt()) }
-                .function("billboard", 0) { it.target?.billboard }
-                .function("setBillboard", 1) { it.target?.setBillboard(it.getArgument(0) as Display.Billboard) }
-                .function("glowColorOverride", 0) { it.target?.glowColorOverride }
-                .function("setGlowColorOverride", 1) { it.target?.setGlowColorOverride(it.getArgument(0) as Color) }
-                .function("brightness", 0) { it.target?.brightness }
-                .function("setBrightness", 1) { it.target?.setBrightness(it.getArgument(0) as Display.Brightness) }
+                .function("teleportDuration", returnsObject().noParams()) { it.target?.teleportDuration }
+                .function("setTeleportDuration", returnsObject().params(Type.OBJECT)) { it.target?.setTeleportDuration(it.getInt(0).toInt()) }
+                .function("viewRange", returnsObject().noParams()) { it.target?.viewRange }
+                .function("setViewRange", returnsObject().params(Type.OBJECT)) { it.target?.setViewRange(it.getFloat(0)) }
+                .function("shadowRadius", returnsObject().noParams()) { it.target?.shadowRadius }
+                .function("setShadowRadius", returnsObject().params(Type.OBJECT)) { it.target?.setShadowRadius(it.getFloat(0)) }
+                .function("shadowStrength", returnsObject().noParams()) { it.target?.shadowStrength }
+                .function("setShadowStrength", returnsObject().params(Type.OBJECT)) { it.target?.setShadowStrength(it.getFloat(0)) }
+                .function("displayWidth", returnsObject().noParams()) { it.target?.displayWidth }
+                .function("setDisplayWidth", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayWidth(it.getFloat(0)) }
+                .function("displayHeight", returnsObject().noParams()) { it.target?.displayHeight }
+                .function("setDisplayHeight", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayHeight(it.getFloat(0)) }
+                .function("interpolationDelay", returnsObject().noParams()) { it.target?.interpolationDelay }
+                .function("setInterpolationDelay", returnsObject().params(Type.OBJECT)) { it.target?.setInterpolationDelay(it.getInt(0).toInt()) }
+                .function("billboard", returnsObject().noParams()) { it.target?.billboard }
+                .function("setBillboard", returnsObject().params(Type.OBJECT)) { it.target?.setBillboard(it.getRef(0) as Display.Billboard) }
+                .function("glowColorOverride", returnsObject().noParams()) { it.target?.glowColorOverride }
+                .function("setGlowColorOverride", returnsObject().params(Type.OBJECT)) { it.target?.setGlowColorOverride(it.getRef(0) as Color) }
+                .function("brightness", returnsObject().noParams()) { it.target?.brightness }
+                .function("setBrightness", returnsObject().params(Type.OBJECT)) { it.target?.setBrightness(it.getRef(0) as Display.Brightness) }
         }
     }
 }
@@ -58,11 +61,11 @@ object FnDisplayBrightness {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Display.Brightness::class.java)
-                .function("blockLight", 0) { it.target?.blockLight }
-                .function("skyLight", 0) { it.target?.skyLight }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("blockLight", returnsObject().noParams()) { it.target?.blockLight }
+                .function("skyLight", returnsObject().noParams()) { it.target?.skyLight }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

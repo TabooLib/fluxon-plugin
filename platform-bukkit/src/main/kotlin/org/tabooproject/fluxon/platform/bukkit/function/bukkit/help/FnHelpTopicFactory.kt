@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 
 @Requires(classes = ["org.bukkit.help.HelpTopicFactory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,7 @@ object FnHelpTopicFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicFactory::class.java)
-                .function(
-                    "createTopic",
-                    1
-                ) { (it.target as? HelpTopicFactory<Command>)?.createTopic(it.getArgument(0) as Command) }
+                .function("createTopic", returnsObject().params(Type.OBJECT)) { (it.target as? HelpTopicFactory<Command>)?.createTopic(it.getRef(0) as Command) }
         }
     }
 }

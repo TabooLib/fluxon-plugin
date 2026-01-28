@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Stairs"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnStairs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Stairs::class.java)
-                .function("shape", 0) { it.target?.shape }
-                .function("setShape", 1) { it.target?.setShape(it.getArgument(0) as Stairs.Shape) }
+                .function("shape", returnsObject().noParams()) { it.target?.shape }
+                .function("setShape", returnsObject().params(Type.OBJECT)) { it.target?.setShape(it.getRef(0) as Stairs.Shape) }
         }
     }
 }

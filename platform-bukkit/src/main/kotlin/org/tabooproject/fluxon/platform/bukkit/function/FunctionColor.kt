@@ -2,9 +2,11 @@ package org.tabooproject.fluxon.platform.bukkit.function
 
 import org.bukkit.Color
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
-import taboolib.common5.cint
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 
@@ -15,53 +17,38 @@ object FunctionColor {
     @Awake(LifeCycle.LOAD)
     fun init() {
         with(FluxonRuntime.getInstance()) {
-            // Color
-            registerFunction("color", listOf(1, 3)) {
-                when (it.arguments.size) {
-                    1 -> {
-                        val arg = it.getArgument(0)!!
-                        if (arg is String) {
-                            val hex = arg.removePrefix("#")
-                            val rgb = hex.toInt(16)
-                            Color.fromRGB(rgb)
-                        } else {
-                            Color.fromRGB(arg.cint)
-                        }
-                    }
-
-                    3 -> {
-                        val r = it.getNumber(0).toInt()
-                        val g = it.getNumber(1).toInt()
-                        val b = it.getNumber(2).toInt()
-                        Color.fromRGB(r, g, b)
-                    }
-
-                    else -> error("color 函数参数数量错误: ${it.arguments.contentDeepToString()}")
-                }
+            // Color - 单参数版本 (hex string 或 int)
+            registerFunction("color", returnsObject().params(Type.STRING)) {
+                val hex = it.getString(0)!!.removePrefix("#")
+                Color.fromRGB(hex.toInt(16))
             }
-
+            registerFunction("color", returnsObject().params(Type.I)) {
+                Color.fromRGB(it.getInt(0))
+            }
+            // Color - RGB 三参数版本
+            registerFunction("color", returnsObject().params(Type.I, Type.I, Type.I)) {
+                Color.fromRGB(it.getInt(0), it.getInt(1), it.getInt(2))
+            }
             registerExtension(Color::class.java)
                 // 基本属性
-                .function("r", 0) {
+                .function("r", returns(Type.I).noParams()) {
                     it.target?.red
                 }
-                .function("g", 0) {
+                .function("g", returns(Type.I).noParams()) {
                     it.target?.green
                 }
-                .function("b", 0) {
+                .function("b", returns(Type.I).noParams()) {
                     it.target?.blue
                 }
-
                 // 转换为 16 进制颜色
-                .function("hex", 0) {
+                .function("hex", returns(Type.STRING).noParams()) {
                     String.format("#%06X", it.target?.asRGB() ?: 0)
                 }
-
                 // 颜色插值
-                .function("lerp", 2) {
+                .function("lerp", returnsObject().params(Type.OBJECT, Type.D)) {
                     val fromColor = it.target!!
-                    val toColor = it.getArgumentByType(0, Color::class.java)!!
-                    val t = it.getNumber(1).toDouble()
+                    val toColor = it.getRef(0) as Color
+                    val t = it.getAsDouble(1)
                     Color.fromRGB(
                         (fromColor.red + (toColor.red - fromColor.red) * t).toInt(),
                         (fromColor.green + (toColor.green - fromColor.green) * t).toInt(),

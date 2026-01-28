@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.GameEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,9 +20,9 @@ object FnGameEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameEvent::class.java)
                 // static
-                .function("getByKey", 1) { GameEvent.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { GameEvent.getByKey(it.getRef(0) as NamespacedKey) }
                 // static
-                .function("values", 0) { GameEvent.values() }
+                .function("values", returnsObject().noParams()) { GameEvent.values() }
         }
     }
 }

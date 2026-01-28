@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.PlayerDeathEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,19 +18,19 @@ object FnPlayerDeathEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerDeathEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("setDeathMessage", 1) { it.target?.setDeathMessage(it.getString(0)) }
-                .function("deathMessage", 0) { it.target?.deathMessage }
-                .function("newExp", 0) { it.target?.newExp }
-                .function("setNewExp", 1) { it.target?.setNewExp(it.getNumber(0).toInt()) }
-                .function("newLevel", 0) { it.target?.newLevel }
-                .function("setNewLevel", 1) { it.target?.setNewLevel(it.getNumber(0).toInt()) }
-                .function("newTotalExp", 0) { it.target?.newTotalExp }
-                .function("setNewTotalExp", 1) { it.target?.setNewTotalExp(it.getNumber(0).toInt()) }
-                .function("keepLevel", 0) { it.target?.keepLevel }
-                .function("setKeepLevel", 1) { it.target?.setKeepLevel(it.getBoolean(0)) }
-                .function("setKeepInventory", 1) { it.target?.setKeepInventory(it.getBoolean(0)) }
-                .function("keepInventory", 0) { it.target?.keepInventory }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("setDeathMessage", returnsObject().params(Type.OBJECT)) { it.target?.setDeathMessage(it.getString(0)) }
+                .function("deathMessage", returnsObject().noParams()) { it.target?.deathMessage }
+                .function("newExp", returnsObject().noParams()) { it.target?.newExp }
+                .function("setNewExp", returnsObject().params(Type.OBJECT)) { it.target?.setNewExp(it.getInt(0).toInt()) }
+                .function("newLevel", returnsObject().noParams()) { it.target?.newLevel }
+                .function("setNewLevel", returnsObject().params(Type.OBJECT)) { it.target?.setNewLevel(it.getInt(0).toInt()) }
+                .function("newTotalExp", returnsObject().noParams()) { it.target?.newTotalExp }
+                .function("setNewTotalExp", returnsObject().params(Type.OBJECT)) { it.target?.setNewTotalExp(it.getInt(0).toInt()) }
+                .function("keepLevel", returnsObject().noParams()) { it.target?.keepLevel }
+                .function("setKeepLevel", returnsObject().params(Type.OBJECT)) { it.target?.setKeepLevel(it.getBool(0)) }
+                .function("setKeepInventory", returnsObject().params(Type.OBJECT)) { it.target?.setKeepInventory(it.getBool(0)) }
+                .function("keepInventory", returnsObject().noParams()) { it.target?.keepInventory }
         }
     }
 }

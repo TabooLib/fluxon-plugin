@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerExpChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnPlayerExpChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerExpChangeEvent::class.java)
-                .function("amount", 0) { it.target?.amount }
-                .function("setAmount", 1) { it.target?.setAmount(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("amount", returnsObject().noParams()) { it.target?.amount }
+                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAmount(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerExpChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerExpChangeEvent.getHandlerList() }
         }
     }
 }

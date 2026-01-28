@@ -7,6 +7,8 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.Ageable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnAgeable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ageable::class.java)
-                .function("age", 0) { it.target?.age }
-                .function("setAge", 1) { it.target?.setAge(it.getNumber(0).toInt()) }
-                .function("maximumAge", 0) { it.target?.maximumAge }
+                .function("age", returnsObject().noParams()) { it.target?.age }
+                .function("setAge", returnsObject().params(Type.OBJECT)) { it.target?.setAge(it.getInt(0).toInt()) }
+                .function("maximumAge", returnsObject().noParams()) { it.target?.maximumAge }
         }
     }
 }

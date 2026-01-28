@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerSignOpenEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnPlayerSignOpenEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSignOpenEvent::class.java)
-                .function("sign", 0) { it.target?.sign }
-                .function("side", 0) { it.target?.side }
-                .function("cause", 0) { it.target?.cause }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("sign", returnsObject().noParams()) { it.target?.sign }
+                .function("side", returnsObject().noParams()) { it.target?.side }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerSignOpenEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerSignOpenEvent.getHandlerList() }
         }
     }
 }

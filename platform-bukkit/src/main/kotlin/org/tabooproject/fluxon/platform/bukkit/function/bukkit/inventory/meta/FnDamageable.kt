@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.Damageable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnDamageable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
-                .function("hasDamage", 0) { it.target?.hasDamage() }
-                .function("damage", 0) { it.target?.damage }
-                .function("setDamage", 1) { it.target?.setDamage(it.getNumber(0).toInt()) }
-                .function("hasMaxDamage", 0) { it.target?.hasMaxDamage() }
-                .function("maxDamage", 0) { it.target?.maxDamage }
-                .function("setMaxDamage", 1) { it.target?.setMaxDamage(it.getNumber(0).toInt()) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("hasDamage", returns(Type.Z).noParams()) { it.target?.hasDamage() }
+                .function("damage", returnsObject().noParams()) { it.target?.damage }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getInt(0).toInt()) }
+                .function("hasMaxDamage", returns(Type.Z).noParams()) { it.target?.hasMaxDamage() }
+                .function("maxDamage", returnsObject().noParams()) { it.target?.maxDamage }
+                .function("setMaxDamage", returnsObject().params(Type.OBJECT)) { it.target?.setMaxDamage(it.getInt(0).toInt()) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

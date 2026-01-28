@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.minecart.PoweredMinecart"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnPoweredMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PoweredMinecart::class.java)
-                .function("fuel", 0) { it.target?.fuel }
-                .function("setFuel", 1) { it.target?.setFuel(it.getNumber(0).toInt()) }
+                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
+                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.target?.setFuel(it.getInt(0).toInt()) }
         }
     }
 }

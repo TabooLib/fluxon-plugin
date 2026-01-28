@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.GameRule"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnGameRule {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameRule::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("type", 0) { it.target?.getType() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("type", returnsObject().noParams()) { it.target?.getType() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

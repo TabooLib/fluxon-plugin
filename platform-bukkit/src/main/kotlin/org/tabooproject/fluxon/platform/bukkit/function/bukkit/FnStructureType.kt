@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.StructureType"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnStructureType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureType::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("toString", 0) { it.target?.toString() }
-                .function("key", 0) { it.target?.key }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }

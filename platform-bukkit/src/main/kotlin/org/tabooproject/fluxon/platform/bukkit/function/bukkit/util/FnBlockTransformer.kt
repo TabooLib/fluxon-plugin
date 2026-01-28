@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.BlockTransformer"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,14 +20,14 @@ object FnBlockTransformer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer::class.java)
-                .function("transform", 6) {
+                .function("transform", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.transform(
-                        it.getArgument(0) as LimitedRegion,
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as BlockState,
-                        it.getArgument(5) as BlockTransformer.TransformationState
+                        it.getRef(0) as LimitedRegion,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as BlockState,
+                        it.getRef(5) as BlockTransformer.TransformationState
                     )
                 }
         }
@@ -40,8 +42,8 @@ object FnBlockTransformerTransformationState {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer.TransformationState::class.java)
-                .function("original", 0) { it.target?.original }
-                .function("world", 0) { it.target?.world }
+                .function("original", returnsObject().noParams()) { it.target?.original }
+                .function("world", returnsObject().noParams()) { it.target?.world }
         }
     }
 }

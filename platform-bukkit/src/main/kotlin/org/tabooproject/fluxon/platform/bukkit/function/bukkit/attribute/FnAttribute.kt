@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.attribute.Attribute"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnAttribute {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Attribute::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("translationKey", 0) { it.target?.translationKey }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
         }
     }
 }

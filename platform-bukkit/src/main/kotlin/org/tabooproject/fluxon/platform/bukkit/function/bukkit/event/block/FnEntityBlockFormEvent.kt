@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.EntityBlockFormEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnEntityBlockFormEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBlockFormEvent::class.java)
-                .function("entity", 0) { it.target?.entity }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
         }
     }
 }

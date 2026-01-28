@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Lidded"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnLidded {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lidded::class.java)
-                .function("open", 0) { it.target?.open() }
-                .function("close", 0) { it.target?.close() }
+                .function("open", returnsObject().noParams()) { it.target?.open() }
+                .function("close", returnsObject().noParams()) { it.target?.close() }
         }
     }
 }

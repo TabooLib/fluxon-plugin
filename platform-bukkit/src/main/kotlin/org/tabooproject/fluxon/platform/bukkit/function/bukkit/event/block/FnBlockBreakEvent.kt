@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockBreakEvent"])
@@ -17,11 +20,11 @@ object FnBlockBreakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockBreakEvent::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("setDropItems", 1) { it.target?.setDropItems(it.getBoolean(0)) }
-                .function("isDropItems", 0) { it.target?.isDropItems }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("setDropItems", returnsObject().params(Type.OBJECT)) { it.target?.setDropItems(it.getBool(0)) }
+                .function("isDropItems", returns(Type.Z).noParams()) { it.target?.isDropItems }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
         }
     }
 }

@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.loot.LootContext"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,11 +20,11 @@ object FnLootContext {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext::class.java)
-                .function("location", 0) { it.target?.location }
-                .function("luck", 0) { it.target?.luck }
-                .function("lootingModifier", 0) { it.target?.lootingModifier }
-                .function("lootedEntity", 0) { it.target?.lootedEntity }
-                .function("killer", 0) { it.target?.killer }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("luck", returnsObject().noParams()) { it.target?.luck }
+                .function("lootingModifier", returnsObject().noParams()) { it.target?.lootingModifier }
+                .function("lootedEntity", returnsObject().noParams()) { it.target?.lootedEntity }
+                .function("killer", returnsObject().noParams()) { it.target?.killer }
         }
     }
 }
@@ -35,11 +37,11 @@ object FnLootContextBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext.Builder::class.java)
-                .function("luck", 1) { it.target?.luck(it.getNumber(0).toFloat()) }
-                .function("lootingModifier", 1) { it.target?.lootingModifier(it.getNumber(0).toInt()) }
-                .function("lootedEntity", 1) { it.target?.lootedEntity(it.getArgument(0) as Entity) }
-                .function("killer", 1) { it.target?.killer(it.getArgument(0) as HumanEntity) }
-                .function("build", 0) { it.target?.build() }
+                .function("luck", returnsObject().params(Type.OBJECT)) { it.target?.luck(it.getFloat(0)) }
+                .function("lootingModifier", returnsObject().params(Type.OBJECT)) { it.target?.lootingModifier(it.getInt(0).toInt()) }
+                .function("lootedEntity", returnsObject().params(Type.OBJECT)) { it.target?.lootedEntity(it.getRef(0) as Entity) }
+                .function("killer", returnsObject().params(Type.OBJECT)) { it.target?.killer(it.getRef(0) as HumanEntity) }
+                .function("build", returnsObject().noParams()) { it.target?.build() }
         }
     }
 }

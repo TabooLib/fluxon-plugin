@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Boat"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,27 +19,27 @@ object FnBoat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Boat::class.java)
-                .function("woodType", 0) { it.target?.woodType }
-                .function("setWoodType", 1) { it.target?.setWoodType(it.getArgument(0) as TreeSpecies) }
-                .function("boatType", 0) { it.target?.boatType }
-                .function("setBoatType", 1) { it.target?.setBoatType(it.getArgument(0) as Boat.Type) }
-                .function("maxSpeed", 0) { it.target?.maxSpeed }
-                .function("setMaxSpeed", 1) { it.target?.setMaxSpeed(it.getNumber(0).toDouble()) }
-                .function("occupiedDeceleration", 0) { it.target?.occupiedDeceleration }
-                .function("setOccupiedDeceleration", 1) {
+                .function("woodType", returnsObject().noParams()) { it.target?.woodType }
+                .function("setWoodType", returnsObject().params(Type.OBJECT)) { it.target?.setWoodType(it.getRef(0) as TreeSpecies) }
+                .function("boatType", returnsObject().noParams()) { it.target?.boatType }
+                .function("setBoatType", returnsObject().params(Type.OBJECT)) { it.target?.setBoatType(it.getRef(0) as Boat.Type) }
+                .function("maxSpeed", returnsObject().noParams()) { it.target?.maxSpeed }
+                .function("setMaxSpeed", returnsObject().params(Type.OBJECT)) { it.target?.setMaxSpeed(it.getAsDouble(0)) }
+                .function("occupiedDeceleration", returnsObject().noParams()) { it.target?.occupiedDeceleration }
+                .function("setOccupiedDeceleration", returnsObject().params(Type.OBJECT)) {
                     it.target?.setOccupiedDeceleration(
-                        it.getNumber(0).toDouble()
+                        it.getAsDouble(0)
                     )
                 }
-                .function("unoccupiedDeceleration", 0) { it.target?.unoccupiedDeceleration }
-                .function("setUnoccupiedDeceleration", 1) {
+                .function("unoccupiedDeceleration", returnsObject().noParams()) { it.target?.unoccupiedDeceleration }
+                .function("setUnoccupiedDeceleration", returnsObject().params(Type.OBJECT)) {
                     it.target?.setUnoccupiedDeceleration(
-                        it.getNumber(0).toDouble()
+                        it.getAsDouble(0)
                     )
                 }
-                .function("workOnLand", 0) { it.target?.workOnLand }
-                .function("setWorkOnLand", 1) { it.target?.setWorkOnLand(it.getBoolean(0)) }
-                .function("status", 0) { it.target?.status }
+                .function("workOnLand", returnsObject().noParams()) { it.target?.workOnLand }
+                .function("setWorkOnLand", returnsObject().params(Type.OBJECT)) { it.target?.setWorkOnLand(it.getBool(0)) }
+                .function("status", returnsObject().noParams()) { it.target?.status }
         }
     }
 }
@@ -50,7 +52,7 @@ object FnBoatType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Boat.Type::class.java)
-                .function("material", 0) { it.target?.material }
+                .function("material", returnsObject().noParams()) { it.target?.material }
         }
     }
 }

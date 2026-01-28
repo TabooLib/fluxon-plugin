@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPoseChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnEntityPoseChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPoseChangeEvent::class.java)
-                .function("pose", 0) { it.target?.pose }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("pose", returnsObject().noParams()) { it.target?.pose }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityPoseChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityPoseChangeEvent.getHandlerList() }
         }
     }
 }

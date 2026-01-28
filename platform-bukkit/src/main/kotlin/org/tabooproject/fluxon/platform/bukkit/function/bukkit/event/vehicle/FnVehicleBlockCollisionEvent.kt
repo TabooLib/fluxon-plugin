@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.vehicle.VehicleBlockCollisionEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnVehicleBlockCollisionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleBlockCollisionEvent::class.java)
-                .function("block", 0) { it.target?.block }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { VehicleBlockCollisionEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { VehicleBlockCollisionEvent.getHandlerList() }
         }
     }
 }

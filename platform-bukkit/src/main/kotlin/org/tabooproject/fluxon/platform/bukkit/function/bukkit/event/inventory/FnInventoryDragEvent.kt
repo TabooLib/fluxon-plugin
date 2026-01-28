@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryDragEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +19,15 @@ object FnInventoryDragEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryDragEvent::class.java)
-                .function("rawSlots", 0) { it.target?.rawSlots }
-                .function("inventorySlots", 0) { it.target?.inventorySlots }
-                .function("cursor", 0) { it.target?.cursor }
-                .function("setCursor", 1) { it.target?.setCursor(it.getArgument(0) as ItemStack) }
-                .function("oldCursor", 0) { it.target?.oldCursor }
-                .function("type", 0) { it.target?.type }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("rawSlots", returnsObject().noParams()) { it.target?.rawSlots }
+                .function("inventorySlots", returnsObject().noParams()) { it.target?.inventorySlots }
+                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
+                .function("oldCursor", returnsObject().noParams()) { it.target?.oldCursor }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { InventoryDragEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { InventoryDragEvent.getHandlerList() }
         }
     }
 }

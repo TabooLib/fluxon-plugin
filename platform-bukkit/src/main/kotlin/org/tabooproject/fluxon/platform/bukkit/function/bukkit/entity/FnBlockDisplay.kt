@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.BlockDisplay"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnBlockDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDisplay::class.java)
-                .function("block", 0) { it.target?.block }
-                .function("setBlock", 1) { it.target?.setBlock(it.getArgument(0) as BlockData) }
+                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("setBlock", returnsObject().params(Type.OBJECT)) { it.target?.setBlock(it.getRef(0) as BlockData) }
         }
     }
 }

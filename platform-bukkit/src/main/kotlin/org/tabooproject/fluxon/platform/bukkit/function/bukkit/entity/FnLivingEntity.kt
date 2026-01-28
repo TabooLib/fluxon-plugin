@@ -13,6 +13,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.entity.LivingEntity"])
@@ -23,123 +26,144 @@ object FnLivingEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LivingEntity::class.java)
-                .function("hasPotion", 0) { it.target?.activePotionEffects?.isNotEmpty() }
-                .function("eyeHeight", 0) { it.target?.eyeHeight }
-                .function("getEyeHeight", 1) { it.target?.getEyeHeight(it.getBoolean(0)) }
-                .function("eyeLocation", 0) { it.target?.eyeLocation }
-                .function("getLineOfSight", 2) {
+                .function("hasPotion", returns(Type.Z).noParams()) { it.target?.activePotionEffects?.isNotEmpty() }
+                .function("eyeHeight", returnsObject().noParams()) { it.target?.eyeHeight }
+                .function("getEyeHeight", returnsObject().params(Type.OBJECT)) { it.target?.getEyeHeight(it.getBool(0)) }
+                .function("eyeLocation", returnsObject().noParams()) { it.target?.eyeLocation }
+                .function("getLineOfSight", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getLineOfSight(
-                        it.getArgument(0) as Set<Material>,
-                        it.getNumber(1).toInt()
+                        it.getRef(0) as Set<Material>,
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("getTargetBlock", 2) {
+                .function("getTargetBlock", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getTargetBlock(
-                        it.getArgument(0) as Set<Material>,
-                        it.getNumber(1).toInt()
+                        it.getRef(0) as Set<Material>,
+                        it.getInt(1).toInt()
                     )
                 }
-                .function(
-                    "getLastTwoTargetBlocks",
-                    2
-                ) { it.target?.getLastTwoTargetBlocks(it.getArgument(0) as Set<Material>, it.getNumber(1).toInt()) }
-                .function("getTargetBlockExact", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.getTargetBlockExact(it.getNumber(0).toInt())
+                .function("getLastTwoTargetBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.getLastTwoTargetBlocks(it.getRef(0) as Set<Material>, it.getInt(1).toInt()) }
+                .function("getTargetBlockExact", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.getTargetBlockExact(it.getInt(0).toInt())
                     } else {
                         it.target?.getTargetBlockExact(
-                            it.getNumber(0).toInt(),
-                            it.getArgument(1) as FluidCollisionMode
+                            it.getInt(0).toInt(),
+                            it.getRef(1) as FluidCollisionMode
                         )
                     }
                 }
-                .function("rayTraceBlocks", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.rayTraceBlocks(it.getNumber(0).toDouble())
+                .function("getTargetBlockExact", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.getTargetBlockExact(it.getInt(0).toInt())
+                    } else {
+                        it.target?.getTargetBlockExact(
+                            it.getInt(0).toInt(),
+                            it.getRef(1) as FluidCollisionMode
+                        )
+                    }
+                }
+                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.rayTraceBlocks(it.getAsDouble(0))
                     } else {
                         it.target?.rayTraceBlocks(
-                            it.getNumber(0).toDouble(),
-                            it.getArgument(1) as FluidCollisionMode
+                            it.getAsDouble(0),
+                            it.getRef(1) as FluidCollisionMode
                         )
                     }
                 }
-                .function("remainingAir", 0) { it.target?.remainingAir }
-                .function("setRemainingAir", 1) { it.target?.setRemainingAir(it.getNumber(0).toInt()) }
-                .function("maximumAir", 0) { it.target?.maximumAir }
-                .function("setMaximumAir", 1) { it.target?.setMaximumAir(it.getNumber(0).toInt()) }
-                .function("itemInUse", 0) { it.target?.itemInUse }
-                .function("itemInUseTicks", 0) { it.target?.itemInUseTicks }
-                .function("setItemInUseTicks", 1) { it.target?.setItemInUseTicks(it.getNumber(0).toInt()) }
-                .function("arrowCooldown", 0) { it.target?.arrowCooldown }
-                .function("setArrowCooldown", 1) { it.target?.setArrowCooldown(it.getNumber(0).toInt()) }
-                .function("arrowsInBody", 0) { it.target?.arrowsInBody }
-                .function("setArrowsInBody", 1) { it.target?.setArrowsInBody(it.getNumber(0).toInt()) }
-                .function("maximumNoDamageTicks", 0) { it.target?.maximumNoDamageTicks }
-                .function("setMaximumNoDamageTicks", 1) { it.target?.setMaximumNoDamageTicks(it.getNumber(0).toInt()) }
-                .function("lastDamage", 0) { it.target?.lastDamage }
-                .function("setLastDamage", 1) { it.target?.setLastDamage(it.getNumber(0).toDouble()) }
-                .function("noDamageTicks", 0) { it.target?.noDamageTicks }
-                .function("setNoDamageTicks", 1) { it.target?.setNoDamageTicks(it.getNumber(0).toInt()) }
-                .function("noActionTicks", 0) { it.target?.noActionTicks }
-                .function("setNoActionTicks", 1) { it.target?.setNoActionTicks(it.getNumber(0).toInt()) }
-                .function("killer", 0) { it.target?.killer }
-                .syncFunction("addPotionEffect", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.addPotionEffect(it.getArgument(0) as PotionEffect)
+                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.rayTraceBlocks(it.getAsDouble(0))
+                    } else {
+                        it.target?.rayTraceBlocks(
+                            it.getAsDouble(0),
+                            it.getRef(1) as FluidCollisionMode
+                        )
+                    }
+                }
+                .function("remainingAir", returnsObject().noParams()) { it.target?.remainingAir }
+                .function("setRemainingAir", returnsObject().params(Type.OBJECT)) { it.target?.setRemainingAir(it.getInt(0).toInt()) }
+                .function("maximumAir", returnsObject().noParams()) { it.target?.maximumAir }
+                .function("setMaximumAir", returnsObject().params(Type.OBJECT)) { it.target?.setMaximumAir(it.getInt(0).toInt()) }
+                .function("itemInUse", returnsObject().noParams()) { it.target?.itemInUse }
+                .function("itemInUseTicks", returnsObject().noParams()) { it.target?.itemInUseTicks }
+                .function("setItemInUseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setItemInUseTicks(it.getInt(0).toInt()) }
+                .function("arrowCooldown", returnsObject().noParams()) { it.target?.arrowCooldown }
+                .function("setArrowCooldown", returnsObject().params(Type.OBJECT)) { it.target?.setArrowCooldown(it.getInt(0).toInt()) }
+                .function("arrowsInBody", returnsObject().noParams()) { it.target?.arrowsInBody }
+                .function("setArrowsInBody", returnsObject().params(Type.OBJECT)) { it.target?.setArrowsInBody(it.getInt(0).toInt()) }
+                .function("maximumNoDamageTicks", returnsObject().noParams()) { it.target?.maximumNoDamageTicks }
+                .function("setMaximumNoDamageTicks", returnsObject().params(Type.OBJECT)) { it.target?.setMaximumNoDamageTicks(it.getInt(0).toInt()) }
+                .function("lastDamage", returnsObject().noParams()) { it.target?.lastDamage }
+                .function("setLastDamage", returnsObject().params(Type.OBJECT)) { it.target?.setLastDamage(it.getAsDouble(0)) }
+                .function("noDamageTicks", returnsObject().noParams()) { it.target?.noDamageTicks }
+                .function("setNoDamageTicks", returnsObject().params(Type.OBJECT)) { it.target?.setNoDamageTicks(it.getInt(0).toInt()) }
+                .function("noActionTicks", returnsObject().noParams()) { it.target?.noActionTicks }
+                .function("setNoActionTicks", returnsObject().params(Type.OBJECT)) { it.target?.setNoActionTicks(it.getInt(0).toInt()) }
+                .function("killer", returnsObject().noParams()) { it.target?.killer }
+                .syncFunction("addPotionEffect", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPotionEffect(it.getRef(0) as PotionEffect)
                     } else {
                         it.target?.addPotionEffect(
-                            it.getArgument(0) as PotionEffect,
-                            it.getBoolean(1)
+                            it.getRef(0) as PotionEffect,
+                            it.getBool(1)
                         )
                     }
                 }
-                .syncFunction(
-                    "addPotionEffects",
-                    1
-                ) { it.target?.addPotionEffects(it.getArgument(0) as Collection<PotionEffect>) }
-                .function("hasPotionEffect", 1) { it.target?.hasPotionEffect(it.getArgument(0) as PotionEffectType) }
-                .function("getPotionEffect", 1) { it.target?.getPotionEffect(it.getArgument(0) as PotionEffectType) }
-                .function(
-                    "removePotionEffect",
-                    1
-                ) { it.target?.removePotionEffect(it.getArgument(0) as PotionEffectType) }
-                .function("activePotionEffects", 0) { it.target?.activePotionEffects }
-                .function("hasLineOfSight", 1) { it.target?.hasLineOfSight(it.getArgument(0) as Entity) }
-                .function("removeWhenFarAway", 0) { it.target?.removeWhenFarAway }
-                .function("setRemoveWhenFarAway", 1) { it.target?.setRemoveWhenFarAway(it.getBoolean(0)) }
-                .function("equipment", 0) { it.target?.equipment }
-                .function("setCanPickupItems", 1) { it.target?.setCanPickupItems(it.getBoolean(0)) }
-                .function("canPickupItems", 0) { it.target?.canPickupItems }
-                .function("isLeashed", 0) { it.target?.isLeashed }
-                .function("leashHolder", 0) { it.target?.leashHolder }
-                .function("setLeashHolder", 1) { it.target?.setLeashHolder(it.getArgument(0) as Entity) }
-                .function("isGliding", 0) { it.target?.isGliding }
-                .function("setGliding", 1) { it.target?.setGliding(it.getBoolean(0)) }
-                .function("isSwimming", 0) { it.target?.isSwimming }
-                .function("setSwimming", 1) { it.target?.setSwimming(it.getBoolean(0)) }
-                .function("isRiptiding", 0) { it.target?.isRiptiding }
-                .function("isSleeping", 0) { it.target?.isSleeping }
-                .function("isClimbing", 0) { it.target?.isClimbing }
-                .function("setAI", 1) { it.target?.setAI(it.getBoolean(0)) }
-                .function("hasAI", 0) { it.target?.hasAI() }
-                .function("attack", 1) { it.target?.attack(it.getArgument(0) as Entity) }
-                .function("swingMainHand", 0) { it.target?.swingMainHand() }
-                .function("swingOffHand", 0) { it.target?.swingOffHand() }
-                .function("playHurtAnimation", 1) { it.target?.playHurtAnimation(it.getNumber(0).toFloat()) }
-                .function("setCollidable", 1) { it.target?.setCollidable(it.getBoolean(0)) }
-                .function("isCollidable", 0) { it.target?.isCollidable }
-                .function("collidableExemptions", 0) { it.target?.collidableExemptions }
-                .function("hurtSound", 0) { it.target?.hurtSound }
-                .function("deathSound", 0) { it.target?.deathSound }
-                .function("getFallDamageSound", 1) { it.target?.getFallDamageSound(it.getNumber(0).toInt()) }
-                .function("fallDamageSoundSmall", 0) { it.target?.fallDamageSoundSmall }
-                .function("fallDamageSoundBig", 0) { it.target?.fallDamageSoundBig }
-                .function("getDrinkingSound", 1) { it.target?.getDrinkingSound(it.getArgument(0) as ItemStack) }
-                .function("getEatingSound", 1) { it.target?.getEatingSound(it.getArgument(0) as ItemStack) }
-                .function("canBreatheUnderwater", 0) { it.target?.canBreatheUnderwater() }
-                .function("category", 0) { it.target?.category }
-                .function("setInvisible", 1) { it.target?.setInvisible(it.getBoolean(0)) }
-                .function("isInvisible", 0) { it.target?.isInvisible }
+                .syncFunction("addPotionEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPotionEffect(it.getRef(0) as PotionEffect)
+                    } else {
+                        it.target?.addPotionEffect(
+                            it.getRef(0) as PotionEffect,
+                            it.getBool(1)
+                        )
+                    }
+                }
+                .syncFunction("addPotionEffects", returnsObject().params(Type.OBJECT)) { it.target?.addPotionEffects(it.getRef(0) as Collection<PotionEffect>) }
+                .function("hasPotionEffect", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasPotionEffect(it.getRef(0) as PotionEffectType) }
+                .function("getPotionEffect", returnsObject().params(Type.OBJECT)) { it.target?.getPotionEffect(it.getRef(0) as PotionEffectType) }
+                .function("removePotionEffect", returnsObject().params(Type.OBJECT)) { it.target?.removePotionEffect(it.getRef(0) as PotionEffectType) }
+                .function("activePotionEffects", returnsObject().noParams()) { it.target?.activePotionEffects }
+                .function("hasLineOfSight", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasLineOfSight(it.getRef(0) as Entity) }
+                .function("removeWhenFarAway", returnsObject().noParams()) { it.target?.removeWhenFarAway }
+                .function("setRemoveWhenFarAway", returnsObject().params(Type.OBJECT)) { it.target?.setRemoveWhenFarAway(it.getBool(0)) }
+                .function("equipment", returnsObject().noParams()) { it.target?.equipment }
+                .function("setCanPickupItems", returnsObject().params(Type.OBJECT)) { it.target?.setCanPickupItems(it.getBool(0)) }
+                .function("canPickupItems", returns(Type.Z).noParams()) { it.target?.canPickupItems }
+                .function("isLeashed", returns(Type.Z).noParams()) { it.target?.isLeashed }
+                .function("leashHolder", returnsObject().noParams()) { it.target?.leashHolder }
+                .function("setLeashHolder", returnsObject().params(Type.OBJECT)) { it.target?.setLeashHolder(it.getRef(0) as Entity) }
+                .function("isGliding", returns(Type.Z).noParams()) { it.target?.isGliding }
+                .function("setGliding", returnsObject().params(Type.OBJECT)) { it.target?.setGliding(it.getBool(0)) }
+                .function("isSwimming", returns(Type.Z).noParams()) { it.target?.isSwimming }
+                .function("setSwimming", returnsObject().params(Type.OBJECT)) { it.target?.setSwimming(it.getBool(0)) }
+                .function("isRiptiding", returns(Type.Z).noParams()) { it.target?.isRiptiding }
+                .function("isSleeping", returns(Type.Z).noParams()) { it.target?.isSleeping }
+                .function("isClimbing", returns(Type.Z).noParams()) { it.target?.isClimbing }
+                .function("setAI", returnsObject().params(Type.OBJECT)) { it.target?.setAI(it.getBool(0)) }
+                .function("hasAI", returns(Type.Z).noParams()) { it.target?.hasAI() }
+                .function("attack", returnsObject().params(Type.OBJECT)) { it.target?.attack(it.getRef(0) as Entity) }
+                .function("swingMainHand", returnsObject().noParams()) { it.target?.swingMainHand() }
+                .function("swingOffHand", returnsObject().noParams()) { it.target?.swingOffHand() }
+                .function("playHurtAnimation", returnsObject().params(Type.OBJECT)) { it.target?.playHurtAnimation(it.getFloat(0)) }
+                .function("setCollidable", returnsObject().params(Type.OBJECT)) { it.target?.setCollidable(it.getBool(0)) }
+                .function("isCollidable", returns(Type.Z).noParams()) { it.target?.isCollidable }
+                .function("collidableExemptions", returnsObject().noParams()) { it.target?.collidableExemptions }
+                .function("hurtSound", returnsObject().noParams()) { it.target?.hurtSound }
+                .function("deathSound", returnsObject().noParams()) { it.target?.deathSound }
+                .function("getFallDamageSound", returnsObject().params(Type.OBJECT)) { it.target?.getFallDamageSound(it.getInt(0).toInt()) }
+                .function("fallDamageSoundSmall", returnsObject().noParams()) { it.target?.fallDamageSoundSmall }
+                .function("fallDamageSoundBig", returnsObject().noParams()) { it.target?.fallDamageSoundBig }
+                .function("getDrinkingSound", returnsObject().params(Type.OBJECT)) { it.target?.getDrinkingSound(it.getRef(0) as ItemStack) }
+                .function("getEatingSound", returnsObject().params(Type.OBJECT)) { it.target?.getEatingSound(it.getRef(0) as ItemStack) }
+                .function("canBreatheUnderwater", returns(Type.Z).noParams()) { it.target?.canBreatheUnderwater() }
+                .function("category", returnsObject().noParams()) { it.target?.category }
+                .function("setInvisible", returnsObject().params(Type.OBJECT)) { it.target?.setInvisible(it.getBool(0)) }
+                .function("isInvisible", returns(Type.Z).noParams()) { it.target?.isInvisible }
         }
     }
 }

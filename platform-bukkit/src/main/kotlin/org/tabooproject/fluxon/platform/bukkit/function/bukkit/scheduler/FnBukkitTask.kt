@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.scheduler.BukkitTask"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnBukkitTask {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitTask::class.java)
-                .function("taskId", 0) { it.target?.taskId }
-                .function("owner", 0) { it.target?.owner }
-                .function("isSync", 0) { it.target?.isSync }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("cancel", 0) { it.target?.cancel() }
+                .function("taskId", returnsObject().noParams()) { it.target?.taskId }
+                .function("owner", returnsObject().noParams()) { it.target?.owner }
+                .function("isSync", returns(Type.Z).noParams()) { it.target?.isSync }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("cancel", returnsObject().noParams()) { it.target?.cancel() }
         }
     }
 }

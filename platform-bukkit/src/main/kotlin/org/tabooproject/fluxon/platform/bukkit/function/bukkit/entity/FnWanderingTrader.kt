@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.WanderingTrader"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnWanderingTrader {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WanderingTrader::class.java)
-                .function("despawnDelay", 0) { it.target?.despawnDelay }
-                .function("setDespawnDelay", 1) { it.target?.setDespawnDelay(it.getNumber(0).toInt()) }
+                .function("despawnDelay", returnsObject().noParams()) { it.target?.despawnDelay }
+                .function("setDespawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDespawnDelay(it.getInt(0).toInt()) }
         }
     }
 }

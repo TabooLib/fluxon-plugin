@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerExpCooldownChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +18,12 @@ object FnPlayerExpCooldownChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerExpCooldownChangeEvent::class.java)
-                .function("reason", 0) { it.target?.reason }
-                .function("newCooldown", 0) { it.target?.newCooldown }
-                .function("setNewCooldown", 1) { it.target?.setNewCooldown(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("reason", returnsObject().noParams()) { it.target?.reason }
+                .function("newCooldown", returnsObject().noParams()) { it.target?.newCooldown }
+                .function("setNewCooldown", returnsObject().params(Type.OBJECT)) { it.target?.setNewCooldown(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerExpCooldownChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerExpCooldownChangeEvent.getHandlerList() }
         }
     }
 }

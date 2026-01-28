@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.NoteBlock"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,10 +20,10 @@ object FnNoteBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NoteBlock::class.java)
-                .function("instrument", 0) { it.target?.instrument }
-                .function("setInstrument", 1) { it.target?.setInstrument(it.getArgument(0) as Instrument) }
-                .function("note", 0) { it.target?.note }
-                .function("setNote", 1) { it.target?.setNote(it.getArgument(0) as Note) }
+                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as Instrument) }
+                .function("note", returnsObject().noParams()) { it.target?.note }
+                .function("setNote", returnsObject().params(Type.OBJECT)) { it.target?.setNote(it.getRef(0) as Note) }
         }
     }
 }

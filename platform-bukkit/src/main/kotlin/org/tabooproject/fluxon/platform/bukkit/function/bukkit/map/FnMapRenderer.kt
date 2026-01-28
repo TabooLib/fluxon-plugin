@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapRenderer"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,13 +22,13 @@ object FnMapRenderer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapRenderer::class.java)
-                .function("isContextual", 0) { it.target?.isContextual }
-                .function("initialize", 1) { it.target?.initialize(it.getArgument(0) as MapView) }
-                .function("render", 3) {
+                .function("isContextual", returns(Type.Z).noParams()) { it.target?.isContextual }
+                .function("initialize", returnsObject().params(Type.OBJECT)) { it.target?.initialize(it.getRef(0) as MapView) }
+                .function("render", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.render(
-                        it.getArgument(0) as MapView,
-                        it.getArgument(1) as MapCanvas,
-                        it.getArgument(2) as Player
+                        it.getRef(0) as MapView,
+                        it.getRef(1) as MapCanvas,
+                        it.getRef(2) as Player
                     )
                 }
         }

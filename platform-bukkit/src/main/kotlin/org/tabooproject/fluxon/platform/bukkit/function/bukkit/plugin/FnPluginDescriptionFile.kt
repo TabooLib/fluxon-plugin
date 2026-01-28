@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.PluginDescriptionFile"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,27 +19,27 @@ object FnPluginDescriptionFile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginDescriptionFile::class.java)
-                .function("toString", 0) { it.target?.toString() }
-                .function("name", 0) { it.target?.name }
-                .function("provides", 0) { it.target?.provides }
-                .function("version", 0) { it.target?.version }
-                .function("main", 0) { it.target?.main }
-                .function("description", 0) { it.target?.description }
-                .function("load", 0) { it.target?.load }
-                .function("authors", 0) { it.target?.authors }
-                .function("contributors", 0) { it.target?.contributors }
-                .function("website", 0) { it.target?.website }
-                .function("depend", 0) { it.target?.depend }
-                .function("softDepend", 0) { it.target?.softDepend }
-                .function("loadBefore", 0) { it.target?.loadBefore }
-                .function("prefix", 0) { it.target?.prefix }
-                .function("permissions", 0) { it.target?.permissions }
-                .function("permissionDefault", 0) { it.target?.permissionDefault }
-                .function("awareness", 0) { it.target?.awareness }
-                .function("fullName", 0) { it.target?.fullName }
-                .function("aPIVersion", 0) { it.target?.apiVersion }
-                .function("libraries", 0) { it.target?.libraries }
-                .function("classLoaderOf", 0) { it.target?.classLoaderOf }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("provides", returnsObject().noParams()) { it.target?.provides }
+                .function("version", returnsObject().noParams()) { it.target?.version }
+                .function("main", returnsObject().noParams()) { it.target?.main }
+                .function("description", returnsObject().noParams()) { it.target?.description }
+                .function("load", returnsObject().noParams()) { it.target?.load }
+                .function("authors", returnsObject().noParams()) { it.target?.authors }
+                .function("contributors", returnsObject().noParams()) { it.target?.contributors }
+                .function("website", returnsObject().noParams()) { it.target?.website }
+                .function("depend", returnsObject().noParams()) { it.target?.depend }
+                .function("softDepend", returnsObject().noParams()) { it.target?.softDepend }
+                .function("loadBefore", returnsObject().noParams()) { it.target?.loadBefore }
+                .function("prefix", returnsObject().noParams()) { it.target?.prefix }
+                .function("permissions", returnsObject().noParams()) { it.target?.permissions }
+                .function("permissionDefault", returnsObject().noParams()) { it.target?.permissionDefault }
+                .function("awareness", returnsObject().noParams()) { it.target?.awareness }
+                .function("fullName", returnsObject().noParams()) { it.target?.fullName }
+                .function("aPIVersion", returnsObject().noParams()) { it.target?.apiVersion }
+                .function("libraries", returnsObject().noParams()) { it.target?.libraries }
+                .function("classLoaderOf", returnsObject().noParams()) { it.target?.classLoaderOf }
         }
     }
 }

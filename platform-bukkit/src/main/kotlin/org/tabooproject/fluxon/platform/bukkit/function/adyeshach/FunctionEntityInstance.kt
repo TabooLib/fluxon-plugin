@@ -3,6 +3,10 @@ package org.tabooproject.fluxon.platform.bukkit.function.adyeshach
 import ink.ptms.adyeshach.core.entity.EntityInstance
 import ink.ptms.adyeshach.core.entity.ModelEngine
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.Requires
 import taboolib.common.platform.Awake
@@ -19,80 +23,82 @@ object FunctionEntityInstance {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityInstance::class.java)
                 // 函数
-                .function("respawn", 0) {
+                .function("respawn", returnsVoid().noParams()) {
                     it.target?.respawn()
                 }
                 // 属性
-                .function("location", 0) {
+                .function("location", returnsObject().noParams()) {
                     it.target?.getLocation()
                 }
                 // 载具
-                .function("passengers", 0) {
+                .function("passengers", returns(Type.LIST).noParams()) {
                     it.target?.getPassengers()
                 }
-                .function("refreshPassenger", 0) {
+                .function("refreshPassenger", returnsVoid().noParams()) {
                     it.target?.refreshPassenger()
                 }
                 // 标签
-                .function("setTag", 2) {
-                    if (it.getArgument(1) != null) {
-                        it.target?.setTag(it.getArgument(0).toString(), it.getArgument(1))
+                .function("setTag", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    val value = it.getRef(1)
+                    if (value != null) {
+                        it.target?.setTag(it.getString(0)!!, value)
                     } else {
-                        it.target?.removeTag(it.getArgument(0).toString())
+                        it.target?.removeTag(it.getString(0)!!)
                     }
                 }
-                .function("setPersistentTag", 2) {
-                    if (it.getArgument(1) != null) {
-                        it.target?.setPersistentTag(it.getArgument(0).toString(), it.getArgument(1).toString())
+                .function("setPersistentTag", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    val value = it.getRef(1)
+                    if (value != null) {
+                        it.target?.setPersistentTag(it.getString(0)!!, value.toString())
                     } else {
-                        it.target?.removePersistentTag(it.getArgument(0).toString())
+                        it.target?.removePersistentTag(it.getString(0)!!)
                     }
                 }
-                .function("hasTag", 1) {
-                    it.target?.hasTag(it.getArgument(0).toString())
+                .function("hasTag", returns(Type.Z).params(Type.STRING)) {
+                    it.target?.hasTag(it.getString(0)!!)
                 }
-                .function("hasPersistentTag", 1) {
-                    it.target?.hasPersistentTag(it.getArgument(0).toString())
+                .function("hasPersistentTag", returns(Type.Z).params(Type.STRING)) {
+                    it.target?.hasPersistentTag(it.getString(0)!!)
                 }
-                .function("getTag", 1) {
-                    it.target?.getTag(it.getArgument(0).toString())
+                .function("getTag", returnsObject().params(Type.STRING)) {
+                    it.target?.getTag(it.getString(0)!!)
                 }
-                .function("consumeTag", 1) {
-                    val id = it.getArgument(0).toString()
+                .function("consumeTag", returnsObject().params(Type.STRING)) {
+                    val id = it.getString(0)!!
                     val find = it.target?.getTag(id)
                     it.target?.removeTag(id)
                     find
                 }
-                .function("getPersistentTag", 1) {
-                    it.target?.getPersistentTag(it.getArgument(0).toString())
+                .function("getPersistentTag", returns(Type.STRING).params(Type.STRING)) {
+                    it.target?.getPersistentTag(it.getString(0)!!)
                 }
-                .function("consumePersistentTag", 1) {
-                    val id = it.getArgument(0).toString()
+                .function("consumePersistentTag", returns(Type.STRING).params(Type.STRING)) {
+                    val id = it.getString(0)!!
                     val find = it.target?.getPersistentTag(id)
                     it.target?.removePersistentTag(id)
                     find
                 }
-                .function("tags", 0) {
+                .function("tags", returns(Type.MAP).noParams()) {
                     it.target?.getTags()
                 }
-                .function("persistentTags", 0) {
+                .function("persistentTags", returns(Type.MAP).noParams()) {
                     it.target?.getPersistentTags()
                 }
                 // 模型
-                .function("modelEngineName", 0) {
+                .function("modelEngineName", returns(Type.STRING).noParams()) {
                     val target = it.target as ModelEngine
                     target.modelEngineName
                 }
-                .function("modelEngineUniqueId", 0) {
+                .function("modelEngineUniqueId", returnsObject().noParams()) {
                     val target = it.target as ModelEngine
                     target.modelEngineUniqueId
                 }
-                .function("refreshModelEngine", 0) {
+                .function("refreshModelEngine", returnsVoid().noParams()) {
                     val target = it.target as ModelEngine
                     target.refreshModelEngine()
                 }
                 // 管理器
-                .function("manager", 0) {
+                .function("manager", returnsObject().noParams()) {
                     it.target?.manager
                 }
         }

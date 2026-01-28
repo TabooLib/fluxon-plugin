@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Ageable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnAgeable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ageable::class.java)
-                .function("age", 0) { it.target?.age }
-                .function("setAge", 1) { it.target?.setAge(it.getNumber(0).toInt()) }
-                .function("setAgeLock", 1) { it.target?.setAgeLock(it.getBoolean(0)) }
-                .function("ageLock", 0) { it.target?.ageLock }
-                .function("setBaby", 0) { it.target?.setBaby() }
-                .function("setAdult", 0) { it.target?.setAdult() }
-                .function("isAdult", 0) { it.target?.isAdult }
-                .function("canBreed", 0) { it.target?.canBreed() }
-                .function("setBreed", 1) { it.target?.setBreed(it.getBoolean(0)) }
+                .function("age", returnsObject().noParams()) { it.target?.age }
+                .function("setAge", returnsObject().params(Type.OBJECT)) { it.target?.setAge(it.getInt(0).toInt()) }
+                .function("setAgeLock", returnsObject().params(Type.OBJECT)) { it.target?.setAgeLock(it.getBool(0)) }
+                .function("ageLock", returnsObject().noParams()) { it.target?.ageLock }
+                .function("setBaby", returnsObject().noParams()) { it.target?.setBaby() }
+                .function("setAdult", returnsObject().noParams()) { it.target?.setAdult() }
+                .function("isAdult", returns(Type.Z).noParams()) { it.target?.isAdult }
+                .function("canBreed", returns(Type.Z).noParams()) { it.target?.canBreed() }
+                .function("setBreed", returnsObject().params(Type.OBJECT)) { it.target?.setBreed(it.getBool(0)) }
         }
     }
 }

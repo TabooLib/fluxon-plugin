@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.RedstoneWire"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +19,14 @@ object FnRedstoneWire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RedstoneWire::class.java)
-                .function("getFace", 1) { it.target?.getFace(it.getArgument(0) as BlockFace) }
-                .function("setFace", 2) {
+                .function("getFace", returnsObject().params(Type.OBJECT)) { it.target?.getFace(it.getRef(0) as BlockFace) }
+                .function("setFace", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setFace(
-                        it.getArgument(0) as BlockFace,
-                        it.getArgument(1) as RedstoneWire.Connection
+                        it.getRef(0) as BlockFace,
+                        it.getRef(1) as RedstoneWire.Connection
                     )
                 }
-                .function("allowedFaces", 0) { it.target?.allowedFaces }
+                .function("allowedFaces", returnsObject().noParams()) { it.target?.allowedFaces }
         }
     }
 }

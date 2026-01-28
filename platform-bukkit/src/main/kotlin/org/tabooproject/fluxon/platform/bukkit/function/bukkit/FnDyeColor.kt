@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.DyeColor"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,20 +19,20 @@ object FnDyeColor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DyeColor::class.java)
-                .function("woolData", 0) { it.target?.woolData }
-                .function("dyeData", 0) { it.target?.dyeData }
-                .function("color", 0) { it.target?.color }
-                .function("fireworkColor", 0) { it.target?.fireworkColor }
+                .function("woolData", returnsObject().noParams()) { it.target?.woolData }
+                .function("dyeData", returnsObject().noParams()) { it.target?.dyeData }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("fireworkColor", returnsObject().noParams()) { it.target?.fireworkColor }
                 // static
-                .function("getByWoolData", 1) { DyeColor.getByWoolData(it.getNumber(0).toByte()) }
+                .function("getByWoolData", returnsObject().params(Type.OBJECT)) { DyeColor.getByWoolData(it.getInt(0).toByte()) }
                 // static
-                .function("getByDyeData", 1) { DyeColor.getByDyeData(it.getNumber(0).toByte()) }
+                .function("getByDyeData", returnsObject().params(Type.OBJECT)) { DyeColor.getByDyeData(it.getInt(0).toByte()) }
                 // static
-                .function("getByColor", 1) { DyeColor.getByColor(it.getArgument(0) as Color) }
+                .function("getByColor", returnsObject().params(Type.OBJECT)) { DyeColor.getByColor(it.getRef(0) as Color) }
                 // static
-                .function("getByFireworkColor", 1) { DyeColor.getByFireworkColor(it.getArgument(0) as Color) }
+                .function("getByFireworkColor", returnsObject().params(Type.OBJECT)) { DyeColor.getByFireworkColor(it.getRef(0) as Color) }
                 // static
-                .function("legacyValueOf", 1) { DyeColor.legacyValueOf(it.getString(0)) }
+                .function("legacyValueOf", returnsObject().params(Type.OBJECT)) { DyeColor.legacyValueOf(it.getString(0)) }
         }
     }
 }

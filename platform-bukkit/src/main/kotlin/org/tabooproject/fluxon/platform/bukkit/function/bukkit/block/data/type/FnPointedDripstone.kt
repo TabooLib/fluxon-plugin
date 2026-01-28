@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.PointedDripstone"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +19,11 @@ object FnPointedDripstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PointedDripstone::class.java)
-                .function("verticalDirection", 0) { it.target?.verticalDirection }
-                .function("setVerticalDirection", 1) { it.target?.setVerticalDirection(it.getArgument(0) as BlockFace) }
-                .function("verticalDirections", 0) { it.target?.verticalDirections }
-                .function("thickness", 0) { it.target?.thickness }
-                .function(
-                    "setThickness",
-                    1
-                ) { it.target?.setThickness(it.getArgument(0) as PointedDripstone.Thickness) }
+                .function("verticalDirection", returnsObject().noParams()) { it.target?.verticalDirection }
+                .function("setVerticalDirection", returnsObject().params(Type.OBJECT)) { it.target?.setVerticalDirection(it.getRef(0) as BlockFace) }
+                .function("verticalDirections", returnsObject().noParams()) { it.target?.verticalDirections }
+                .function("thickness", returnsObject().noParams()) { it.target?.thickness }
+                .function("setThickness", returnsObject().params(Type.OBJECT)) { it.target?.setThickness(it.getRef(0) as PointedDripstone.Thickness) }
         }
     }
 }

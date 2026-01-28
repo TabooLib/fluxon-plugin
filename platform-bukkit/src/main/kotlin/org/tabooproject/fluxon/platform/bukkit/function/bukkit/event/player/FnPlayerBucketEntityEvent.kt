@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerBucketEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnPlayerBucketEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketEntityEvent::class.java)
-                .function("entity", 0) { it.target?.entity }
-                .function("originalBucket", 0) { it.target?.originalBucket }
-                .function("entityBucket", 0) { it.target?.entityBucket }
-                .function("hand", 0) { it.target?.hand }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("originalBucket", returnsObject().noParams()) { it.target?.originalBucket }
+                .function("entityBucket", returnsObject().noParams()) { it.target?.entityBucket }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerBucketEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerBucketEntityEvent.getHandlerList() }
         }
     }
 }

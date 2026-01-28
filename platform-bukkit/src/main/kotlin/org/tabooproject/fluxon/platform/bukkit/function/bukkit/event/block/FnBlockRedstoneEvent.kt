@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockRedstoneEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +18,12 @@ object FnBlockRedstoneEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockRedstoneEvent::class.java)
-                .function("oldCurrent", 0) { it.target?.oldCurrent }
-                .function("newCurrent", 0) { it.target?.newCurrent }
-                .function("setNewCurrent", 1) { it.target?.setNewCurrent(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("oldCurrent", returnsObject().noParams()) { it.target?.oldCurrent }
+                .function("newCurrent", returnsObject().noParams()) { it.target?.newCurrent }
+                .function("setNewCurrent", returnsObject().params(Type.OBJECT)) { it.target?.setNewCurrent(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockRedstoneEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockRedstoneEvent.getHandlerList() }
         }
     }
 }

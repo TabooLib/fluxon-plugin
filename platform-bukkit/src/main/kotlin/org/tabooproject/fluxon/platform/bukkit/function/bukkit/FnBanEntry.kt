@@ -8,6 +8,8 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.BanEntry"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,18 +19,18 @@ object FnBanEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanEntry::class.java)
-                .function("target", 0) { it.target?.target }
-                .function("banTarget", 0) { it.target?.getBanTarget() }
-                .function("created", 0) { it.target?.created }
-                .function("setCreated", 1) { it.target?.setCreated(Date(it.getNumber(0).toLong())) }
-                .function("source", 0) { it.target?.source }
-                .function("setSource", 1) { it.target?.setSource(it.getString(0)!!) }
-                .function("expiration", 0) { it.target?.expiration }
-                .function("setExpiration", 1) { it.target?.setExpiration(Date(it.getNumber(0).toLong())) }
-                .function("reason", 0) { it.target?.reason }
-                .function("setReason", 1) { it.target?.setReason(it.getString(0)) }
-                .function("save", 0) { it.target?.save() }
-                .function("remove", 0) { it.target?.remove() }
+                .function("target", returnsObject().noParams()) { it.target?.target }
+                .function("banTarget", returnsObject().noParams()) { it.target?.getBanTarget() }
+                .function("created", returnsObject().noParams()) { it.target?.created }
+                .function("setCreated", returnsObject().params(Type.OBJECT)) { it.target?.setCreated(Date(it.getInt(0).toLong())) }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("setSource", returnsObject().params(Type.OBJECT)) { it.target?.setSource(it.getString(0)!!) }
+                .function("expiration", returnsObject().noParams()) { it.target?.expiration }
+                .function("setExpiration", returnsObject().params(Type.OBJECT)) { it.target?.setExpiration(Date(it.getInt(0).toLong())) }
+                .function("reason", returnsObject().noParams()) { it.target?.reason }
+                .function("setReason", returnsObject().params(Type.OBJECT)) { it.target?.setReason(it.getString(0)) }
+                .function("save", returnsObject().noParams()) { it.target?.save() }
+                .function("remove", returnsObject().noParams()) { it.target?.remove() }
         }
     }
 }

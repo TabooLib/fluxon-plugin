@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.ChiseledBookshelf"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnChiseledBookshelf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
-                .function("isSlotOccupied", 1) { it.target?.isSlotOccupied(it.getNumber(0).toInt()) }
-                .function("setSlotOccupied", 2) {
+                .function("isSlotOccupied", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSlotOccupied(it.getInt(0).toInt()) }
+                .function("setSlotOccupied", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setSlotOccupied(
-                        it.getNumber(0).toInt(),
-                        it.getBoolean(1)
+                        it.getInt(0).toInt(),
+                        it.getBool(1)
                     )
                 }
-                .function("occupiedSlots", 0) { it.target?.occupiedSlots }
-                .function("maximumOccupiedSlots", 0) { it.target?.maximumOccupiedSlots }
+                .function("occupiedSlots", returnsObject().noParams()) { it.target?.occupiedSlots }
+                .function("maximumOccupiedSlots", returnsObject().noParams()) { it.target?.maximumOccupiedSlots }
         }
     }
 }

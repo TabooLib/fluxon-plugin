@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockCanBuildEvent"])
@@ -17,14 +20,14 @@ object FnBlockCanBuildEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCanBuildEvent::class.java)
-                .function("isBuildable", 0) { it.target?.isBuildable }
-                .function("setBuildable", 1) { it.target?.setBuildable(it.getBoolean(0)) }
-                .function("material", 0) { it.target?.material }
-                .function("blockData", 0) { it.target?.blockData }
-                .function("player", 0) { it.target?.player }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isBuildable", returns(Type.Z).noParams()) { it.target?.isBuildable }
+                .function("setBuildable", returnsObject().params(Type.OBJECT)) { it.target?.setBuildable(it.getBool(0)) }
+                .function("material", returnsObject().noParams()) { it.target?.material }
+                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockCanBuildEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockCanBuildEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Dye"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnDye {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dye::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as DyeColor) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as DyeColor) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

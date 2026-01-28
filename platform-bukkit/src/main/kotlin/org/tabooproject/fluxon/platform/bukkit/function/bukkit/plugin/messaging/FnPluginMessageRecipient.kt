@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.messaging.PluginMessageRecipient"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +19,14 @@ object FnPluginMessageRecipient {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageRecipient::class.java)
-                .function("sendPluginMessage", 3) {
+                .function("sendPluginMessage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.sendPluginMessage(
-                        it.getArgument(0) as Plugin,
+                        it.getRef(0) as Plugin,
                         it.getString(1)!!,
-                        it.getArgument(2) as ByteArray
+                        it.getRef(2) as ByteArray
                     )
                 }
-                .function("listeningPluginChannels", 0) { it.target?.listeningPluginChannels }
+                .function("listeningPluginChannels", returnsObject().noParams()) { it.target?.listeningPluginChannels }
         }
     }
 }

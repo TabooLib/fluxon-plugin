@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerSpawnChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnPlayerSpawnChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSpawnChangeEvent::class.java)
-                .function("cause", 0) { it.target?.cause }
-                .function("isForced", 0) { it.target?.isForced }
-                .function("setForced", 1) { it.target?.setForced(it.getBoolean(0)) }
-                .function("newSpawn", 0) { it.target?.newSpawn }
-                .function("setNewSpawn", 1) { it.target?.setNewSpawn(it.getArgument(0) as Location) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("isForced", returns(Type.Z).noParams()) { it.target?.isForced }
+                .function("setForced", returnsObject().params(Type.OBJECT)) { it.target?.setForced(it.getBool(0)) }
+                .function("newSpawn", returnsObject().noParams()) { it.target?.newSpawn }
+                .function("setNewSpawn", returnsObject().params(Type.OBJECT)) { it.target?.setNewSpawn(it.getRef(0) as Location) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerSpawnChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerSpawnChangeEvent.getHandlerList() }
         }
     }
 }

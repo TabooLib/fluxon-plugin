@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.EntityEffect"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +20,9 @@ object FnEntityEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEffect::class.java)
-                .function("data", 0) { it.target?.data }
-                .function("isApplicableTo", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("isApplicableTo", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Entity -> it.target?.isApplicableTo(var1)
                         is Class<*> -> it.target?.isApplicableTo(var1 as Class<Entity>)
                         else -> throw IllegalArgumentException("参数必须是 Entity 或 Class<Entity> 类型")

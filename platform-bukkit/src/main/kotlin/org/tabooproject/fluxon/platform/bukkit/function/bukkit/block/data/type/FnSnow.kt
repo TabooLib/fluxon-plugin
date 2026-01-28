@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Snow"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnSnow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Snow::class.java)
-                .function("layers", 0) { it.target?.layers }
-                .function("setLayers", 1) { it.target?.setLayers(it.getNumber(0).toInt()) }
-                .function("minimumLayers", 0) { it.target?.minimumLayers }
-                .function("maximumLayers", 0) { it.target?.maximumLayers }
+                .function("layers", returnsObject().noParams()) { it.target?.layers }
+                .function("setLayers", returnsObject().params(Type.OBJECT)) { it.target?.setLayers(it.getInt(0).toInt()) }
+                .function("minimumLayers", returnsObject().noParams()) { it.target?.minimumLayers }
+                .function("maximumLayers", returnsObject().noParams()) { it.target?.maximumLayers }
         }
     }
 }

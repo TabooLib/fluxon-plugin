@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerChangedMainHandEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnPlayerChangedMainHandEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChangedMainHandEvent::class.java)
-                .function("mainHand", 0) { it.target?.mainHand }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("mainHand", returnsObject().noParams()) { it.target?.mainHand }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerChangedMainHandEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerChangedMainHandEvent.getHandlerList() }
         }
     }
 }

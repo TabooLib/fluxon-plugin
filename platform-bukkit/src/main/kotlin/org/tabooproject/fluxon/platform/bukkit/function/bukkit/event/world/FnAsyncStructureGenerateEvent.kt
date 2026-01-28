@@ -10,6 +10,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.AsyncStructureGenerateEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,44 +21,32 @@ object FnAsyncStructureGenerateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncStructureGenerateEvent::class.java)
-                .function("cause", 0) { it.target?.cause }
-                .function("getBlockTransformer", 1) { it.target?.getBlockTransformer(it.getArgument(0) as NamespacedKey) }
-                .function("setBlockTransformer", 2) {
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("getBlockTransformer", returnsObject().params(Type.OBJECT)) { it.target?.getBlockTransformer(it.getRef(0) as NamespacedKey) }
+                .function("setBlockTransformer", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setBlockTransformer(
-                        it.getArgument(0) as NamespacedKey,
-                        it.getArgument(1) as BlockTransformer
+                        it.getRef(0) as NamespacedKey,
+                        it.getRef(1) as BlockTransformer
                     )
                 }
-                .function(
-                    "removeBlockTransformer",
-                    1
-                ) { it.target?.removeBlockTransformer(it.getArgument(0) as NamespacedKey) }
-                .function("clearBlockTransformers", 0) { it.target?.clearBlockTransformers() }
-                .function(
-                    "getEntityTransformer",
-                    1
-                ) { it.target?.getEntityTransformer(it.getArgument(0) as NamespacedKey) }
-                .function(
-                    "setEntityTransformer",
-                    2
-                ) {
+                .function("removeBlockTransformer", returnsObject().params(Type.OBJECT)) { it.target?.removeBlockTransformer(it.getRef(0) as NamespacedKey) }
+                .function("clearBlockTransformers", returnsObject().noParams()) { it.target?.clearBlockTransformers() }
+                .function("getEntityTransformer", returnsObject().params(Type.OBJECT)) { it.target?.getEntityTransformer(it.getRef(0) as NamespacedKey) }
+                .function("setEntityTransformer", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setEntityTransformer(
-                        it.getArgument(0) as NamespacedKey,
-                        it.getArgument(1) as EntityTransformer
+                        it.getRef(0) as NamespacedKey,
+                        it.getRef(1) as EntityTransformer
                     )
                 }
-                .function(
-                    "removeEntityTransformer",
-                    1
-                ) { it.target?.removeEntityTransformer(it.getArgument(0) as NamespacedKey) }
-                .function("clearEntityTransformers", 0) { it.target?.clearEntityTransformers() }
-                .function("structure", 0) { it.target?.structure }
-                .function("boundingBox", 0) { it.target?.boundingBox }
-                .function("chunkX", 0) { it.target?.chunkX }
-                .function("chunkZ", 0) { it.target?.chunkZ }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("removeEntityTransformer", returnsObject().params(Type.OBJECT)) { it.target?.removeEntityTransformer(it.getRef(0) as NamespacedKey) }
+                .function("clearEntityTransformers", returnsObject().noParams()) { it.target?.clearEntityTransformers() }
+                .function("structure", returnsObject().noParams()) { it.target?.structure }
+                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
+                .function("chunkX", returnsObject().noParams()) { it.target?.chunkX }
+                .function("chunkZ", returnsObject().noParams()) { it.target?.chunkZ }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { AsyncStructureGenerateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { AsyncStructureGenerateEvent.getHandlerList() }
         }
     }
 }

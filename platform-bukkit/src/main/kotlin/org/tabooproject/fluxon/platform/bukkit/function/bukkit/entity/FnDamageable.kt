@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.entity.Damageable"])
@@ -18,20 +20,27 @@ object FnDamageable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
-                .function("damage", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.damage(it.getNumber(0).toDouble())
+                .function("damage", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.damage(it.getAsDouble(0))
                     } else {
-                        it.target?.damage(it.getNumber(0).toDouble(), it.getArgument(1) as Entity)
+                        it.target?.damage(it.getAsDouble(0), it.getRef(1) as Entity)
                     }
                 }
-                .function("health", 0) { it.target?.health }
-                .function("setHealth", 1) { it.target?.setHealth(it.getNumber(0).toDouble()) }
-                .function("absorptionAmount", 0) { it.target?.absorptionAmount }
-                .function("setAbsorptionAmount", 1) { it.target?.setAbsorptionAmount(it.getNumber(0).toDouble()) }
-                .function("maxHealth", 0) { it.target?.maxHealth }
-                .function("setMaxHealth", 1) { it.target?.setMaxHealth(it.getNumber(0).toDouble()) }
-                .function("resetMaxHealth", 0) { it.target?.resetMaxHealth() }
+                .function("damage", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.damage(it.getAsDouble(0))
+                    } else {
+                        it.target?.damage(it.getAsDouble(0), it.getRef(1) as Entity)
+                    }
+                }
+                .function("health", returnsObject().noParams()) { it.target?.health }
+                .function("setHealth", returnsObject().params(Type.OBJECT)) { it.target?.setHealth(it.getAsDouble(0)) }
+                .function("absorptionAmount", returnsObject().noParams()) { it.target?.absorptionAmount }
+                .function("setAbsorptionAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAbsorptionAmount(it.getAsDouble(0)) }
+                .function("maxHealth", returnsObject().noParams()) { it.target?.maxHealth }
+                .function("setMaxHealth", returnsObject().params(Type.OBJECT)) { it.target?.setMaxHealth(it.getAsDouble(0)) }
+                .function("resetMaxHealth", returnsObject().noParams()) { it.target?.resetMaxHealth() }
         }
     }
 }

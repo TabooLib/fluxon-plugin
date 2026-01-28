@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.EntitiesLoadEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnEntitiesLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntitiesLoadEvent::class.java)
-                .function("entities", 0) { it.target?.entities }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entities", returnsObject().noParams()) { it.target?.entities }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntitiesLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntitiesLoadEvent.getHandlerList() }
         }
     }
 }

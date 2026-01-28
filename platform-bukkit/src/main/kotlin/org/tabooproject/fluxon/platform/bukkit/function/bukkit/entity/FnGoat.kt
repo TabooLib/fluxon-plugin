@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Goat"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnGoat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Goat::class.java)
-                .function("hasLeftHorn", 0) { it.target?.hasLeftHorn() }
-                .function("setLeftHorn", 1) { it.target?.setLeftHorn(it.getBoolean(0)) }
-                .function("hasRightHorn", 0) { it.target?.hasRightHorn() }
-                .function("setRightHorn", 1) { it.target?.setRightHorn(it.getBoolean(0)) }
-                .function("isScreaming", 0) { it.target?.isScreaming }
-                .function("setScreaming", 1) { it.target?.setScreaming(it.getBoolean(0)) }
+                .function("hasLeftHorn", returns(Type.Z).noParams()) { it.target?.hasLeftHorn() }
+                .function("setLeftHorn", returnsObject().params(Type.OBJECT)) { it.target?.setLeftHorn(it.getBool(0)) }
+                .function("hasRightHorn", returns(Type.Z).noParams()) { it.target?.hasRightHorn() }
+                .function("setRightHorn", returnsObject().params(Type.OBJECT)) { it.target?.setRightHorn(it.getBool(0)) }
+                .function("isScreaming", returns(Type.Z).noParams()) { it.target?.isScreaming }
+                .function("setScreaming", returnsObject().params(Type.OBJECT)) { it.target?.setScreaming(it.getBool(0)) }
         }
     }
 }

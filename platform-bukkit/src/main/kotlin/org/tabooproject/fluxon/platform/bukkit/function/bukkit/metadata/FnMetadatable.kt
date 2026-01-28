@@ -13,6 +13,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.metadata.Metadatable"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,30 +25,30 @@ object FnMetadatable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Metadatable::class.java)
-                .function("setMeta", 2) {
-                    it.target?.setMeta(it.getArgument(0)!!.toString(), it.getArgument(1)!!)
+                .function("setMeta", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    it.target?.setMeta(it.getRef(0)!!.toString(), it.getRef(1)!!)
                 }
-                .function("removeMeta", 1) {
-                    it.target?.removeMeta(it.getArgument(0)!!.toString())
+                .function("removeMeta", returnsObject().params(Type.OBJECT)) {
+                    it.target?.removeMeta(it.getRef(0)!!.toString())
                 }
-                .function("hasMeta", 1) {
-                    it.target?.hasMeta(it.getArgument(0)!!.toString())
+                .function("hasMeta", returns(Type.Z).params(Type.OBJECT)) {
+                    it.target?.hasMeta(it.getRef(0)!!.toString())
                 }
-                .function("getMeta", 1) {
-                    it.target?.getMetaFirstOrNull(it.getArgument(0)!!.toString())?.value()
+                .function("getMeta", returnsObject().params(Type.OBJECT)) {
+                    it.target?.getMetaFirstOrNull(it.getRef(0)!!.toString())?.value()
                 }
-                .function("setMetadata", 2) {
+                .function("setMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setMetadata(
                         it.getString(0)!!,
-                        it.getArgument(1) as MetadataValue
+                        it.getRef(1) as MetadataValue
                     )
                 }
-                .function("getMetadata", 1) { it.target?.getMetadata(it.getString(0)!!) }
-                .function("hasMetadata", 1) { it.target?.hasMetadata(it.getString(0)!!) }
-                .function("removeMetadata", 2) {
+                .function("getMetadata", returnsObject().params(Type.OBJECT)) { it.target?.getMetadata(it.getString(0)!!) }
+                .function("hasMetadata", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasMetadata(it.getString(0)!!) }
+                .function("removeMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.removeMetadata(
                         it.getString(0)!!,
-                        it.getArgument(1) as Plugin
+                        it.getRef(1) as Plugin
                     )
                 }
         }

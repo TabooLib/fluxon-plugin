@@ -12,6 +12,8 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.generator.BlockPopulator"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,20 +23,37 @@ object FnBlockPopulator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPopulator::class.java)
-                .function("populate", listOf(3, 5)) {
-                    if (it.arguments.size == 3) {
+                .function("populate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
                         it.target?.populate(
-                            it.getArgument(0) as World,
-                            it.getArgument(1) as Random,
-                            it.getArgument(2) as Chunk
+                            it.getRef(0) as World,
+                            it.getRef(1) as Random,
+                            it.getRef(2) as Chunk
                         )
                     } else {
                         it.target?.populate(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt(),
-                            it.getArgument(4) as LimitedRegion
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt(),
+                            it.getRef(4) as LimitedRegion
+                        )
+                    }
+                }
+                .function("populate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
+                        it.target?.populate(
+                            it.getRef(0) as World,
+                            it.getRef(1) as Random,
+                            it.getRef(2) as Chunk
+                        )
+                    } else {
+                        it.target?.populate(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt(),
+                            it.getRef(4) as LimitedRegion
                         )
                     }
                 }

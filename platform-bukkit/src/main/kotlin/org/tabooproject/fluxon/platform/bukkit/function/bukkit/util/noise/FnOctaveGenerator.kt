@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.noise.OctaveGenerator"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,54 +18,54 @@ object FnOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OctaveGenerator::class.java)
-                .function("setScale", 1) { it.target?.setScale(it.getNumber(0).toDouble()) }
-                .function("xScale", 0) { it.target?.getXScale() }
-                .function("setXScale", 1) { it.target?.setXScale(it.getNumber(0).toDouble()) }
-                .function("yScale", 0) { it.target?.getYScale() }
-                .function("setYScale", 1) { it.target?.setYScale(it.getNumber(0).toDouble()) }
-                .function("zScale", 0) { it.target?.getZScale() }
-                .function("setZScale", 1) { it.target?.setZScale(it.getNumber(0).toDouble()) }
-                .function("octaves", 0) { it.target?.getOctaves() }
-                .function("noise", listOf(3, 4, 5, 6)) {
-                    when (it.arguments.size) {
+                .function("setScale", returnsObject().params(Type.OBJECT)) { it.target?.setScale(it.getAsDouble(0)) }
+                .function("xScale", returnsObject().noParams()) { it.target?.getXScale() }
+                .function("setXScale", returnsObject().params(Type.OBJECT)) { it.target?.setXScale(it.getAsDouble(0)) }
+                .function("yScale", returnsObject().noParams()) { it.target?.getYScale() }
+                .function("setYScale", returnsObject().params(Type.OBJECT)) { it.target?.setYScale(it.getAsDouble(0)) }
+                .function("zScale", returnsObject().noParams()) { it.target?.getZScale() }
+                .function("setZScale", returnsObject().params(Type.OBJECT)) { it.target?.setZScale(it.getAsDouble(0)) }
+                .function("octaves", returnsObject().noParams()) { it.target?.getOctaves() }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
                         3 -> it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
                         )
 
-                        4 -> when (val var4 = it.getArgument(3)) {
+                        4 -> when (val var4 = it.getRef(3)) {
                             is Boolean -> it.target?.noise(
-                                it.getNumber(0).toDouble(),
-                                it.getNumber(1).toDouble(),
-                                it.getNumber(2).toDouble(),
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
                                 var4
                             )
 
                             is Double -> it.target?.noise(
-                                it.getNumber(0).toDouble(),
-                                it.getNumber(1).toDouble(),
-                                it.getNumber(2).toDouble(),
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
                                 var4
                             )
 
                             else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
                         }
 
-                        5 -> when (val var5 = it.getArgument(4)) {
+                        5 -> when (val var5 = it.getRef(4)) {
                             is Boolean -> it.target?.noise(
-                                it.getNumber(0).toDouble(),
-                                it.getNumber(1).toDouble(),
-                                it.getNumber(2).toDouble(),
-                                it.getNumber(3).toDouble(),
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
                                 var5
                             )
 
                             is Double -> it.target?.noise(
-                                it.getNumber(0).toDouble(),
-                                it.getNumber(1).toDouble(),
-                                it.getNumber(2).toDouble(),
-                                it.getNumber(3).toDouble(),
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
                                 var5
                             )
 
@@ -71,14 +73,185 @@ object FnOctaveGenerator {
                         }
 
                         6 -> it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble(),
-                            it.getNumber(4).toDouble(),
-                            it.getBoolean(5)
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getBool(5)
                         )
-                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        3 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> when (val var4 = it.getRef(3)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        5 -> when (val var5 = it.getRef(4)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            else -> throw IllegalArgumentException("第五个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        6 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getBool(5)
+                        )
+                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        3 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> when (val var4 = it.getRef(3)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        5 -> when (val var5 = it.getRef(4)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            else -> throw IllegalArgumentException("第五个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        6 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getBool(5)
+                        )
+                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        3 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2)
+                        )
+
+                        4 -> when (val var4 = it.getRef(3)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                var4
+                            )
+
+                            else -> throw IllegalArgumentException("第四个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        5 -> when (val var5 = it.getRef(4)) {
+                            is Boolean -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            is Double -> it.target?.noise(
+                                it.getAsDouble(0),
+                                it.getAsDouble(1),
+                                it.getAsDouble(2),
+                                it.getAsDouble(3),
+                                var5
+                            )
+
+                            else -> throw IllegalArgumentException("第五个参数必须是 Boolean 或 Double 类型")
+                        }
+
+                        6 -> it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getBool(5)
+                        )
+                        else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
                     }
                 }
         }

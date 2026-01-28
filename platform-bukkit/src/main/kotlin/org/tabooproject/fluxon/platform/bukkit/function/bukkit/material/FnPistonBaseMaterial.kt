@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.PistonBaseMaterial"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +20,12 @@ object FnPistonBaseMaterial {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonBaseMaterial::class.java)
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("facing", 0) { it.target?.facing }
-                .function("isPowered", 0) { it.target?.isPowered }
-                .function("setPowered", 1) { it.target?.setPowered(it.getBoolean(0)) }
-                .function("isSticky", 0) { it.target?.isSticky }
-                .function("clone", 0) { it.target?.clone() }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing", returnsObject().noParams()) { it.target?.facing }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
+                .function("isSticky", returns(Type.Z).noParams()) { it.target?.isSticky }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

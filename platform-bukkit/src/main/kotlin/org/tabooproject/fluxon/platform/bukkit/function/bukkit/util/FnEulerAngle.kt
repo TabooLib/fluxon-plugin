@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.EulerAngle"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,28 +19,28 @@ object FnEulerAngle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EulerAngle::class.java)
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("z", 0) { it.target?.z }
-                .function("setX", 1) { it.target?.setX(it.getNumber(0).toDouble()) }
-                .function("setY", 1) { it.target?.setY(it.getNumber(0).toDouble()) }
-                .function("setZ", 1) { it.target?.setZ(it.getNumber(0).toDouble()) }
-                .function("add", 3) {
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("z", returnsObject().noParams()) { it.target?.z }
+                .function("setX", returnsObject().params(Type.OBJECT)) { it.target?.setX(it.getAsDouble(0)) }
+                .function("setY", returnsObject().params(Type.OBJECT)) { it.target?.setY(it.getAsDouble(0)) }
+                .function("setZ", returnsObject().params(Type.OBJECT)) { it.target?.setZ(it.getAsDouble(0)) }
+                .function("add", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.add(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     )
                 }
-                .function("subtract", 3) {
+                .function("subtract", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.subtract(
-                        it.getNumber(0).toDouble(),
-                        it.getNumber(1).toDouble(),
-                        it.getNumber(2).toDouble()
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     )
                 }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("hashCode", 0) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
         }
     }
 }

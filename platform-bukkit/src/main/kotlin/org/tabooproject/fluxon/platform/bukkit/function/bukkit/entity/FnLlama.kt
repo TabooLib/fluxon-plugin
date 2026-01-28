@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Llama"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnLlama {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Llama::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as Llama.Color) }
-                .function("strength", 0) { it.target?.strength }
-                .function("setStrength", 1) { it.target?.setStrength(it.getNumber(0).toInt()) }
-                .function("inventory", 0) { it.target?.inventory }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Llama.Color) }
+                .function("strength", returnsObject().noParams()) { it.target?.strength }
+                .function("setStrength", returnsObject().params(Type.OBJECT)) { it.target?.setStrength(it.getInt(0).toInt()) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
         }
     }
 }

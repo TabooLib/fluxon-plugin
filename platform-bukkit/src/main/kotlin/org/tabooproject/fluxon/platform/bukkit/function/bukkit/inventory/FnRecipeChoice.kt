@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.RecipeChoice"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +20,9 @@ object FnRecipeChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice::class.java)
-                .function("itemStack", 0) { it.target?.itemStack }
-                .function("clone", 0) { it.target?.clone() }
-                .function("test", 1) { it.target?.test(it.getArgument(0) as ItemStack) }
+                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
         }
     }
 }
@@ -32,13 +35,13 @@ object FnRecipeChoiceMaterialChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.MaterialChoice::class.java)
-                .function("itemStack", 0) { it.target?.itemStack }
-                .function("clone", 0) { it.target?.clone() }
-                .function("test", 1) { it.target?.test(it.getArgument(0) as ItemStack) }
-                .function("choices", 0) { it.target?.choices }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
+                .function("choices", returnsObject().noParams()) { it.target?.choices }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }
@@ -51,13 +54,13 @@ object FnRecipeChoiceExactChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.ExactChoice::class.java)
-                .function("itemStack", 0) { it.target?.itemStack }
-                .function("clone", 0) { it.target?.clone() }
-                .function("test", 1) { it.target?.test(it.getArgument(0) as ItemStack) }
-                .function("choices", 0) { it.target?.choices }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
+                .function("choices", returnsObject().noParams()) { it.target?.choices }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Camel"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnCamel {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Camel::class.java)
-                .function("isDashing", 0) { it.target?.isDashing }
-                .function("setDashing", 1) { it.target?.setDashing(it.getBoolean(0)) }
+                .function("isDashing", returns(Type.Z).noParams()) { it.target?.isDashing }
+                .function("setDashing", returnsObject().params(Type.OBJECT)) { it.target?.setDashing(it.getBool(0)) }
         }
     }
 }

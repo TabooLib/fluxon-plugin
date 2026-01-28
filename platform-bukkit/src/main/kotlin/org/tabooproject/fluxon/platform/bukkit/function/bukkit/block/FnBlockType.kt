@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.BlockType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,29 +20,36 @@ object FnBlockType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockType::class.java)
-                .function("typed", 0) { it.target?.typed() }
-                .function("hasItemType", 0) { it.target?.hasItemType() }
-                .function("itemType", 0) { it.target?.itemType }
-                .function("createBlockData", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("typed", returnsObject().noParams()) { it.target?.typed() }
+                .function("hasItemType", returns(Type.Z).noParams()) { it.target?.hasItemType() }
+                .function("itemType", returnsObject().noParams()) { it.target?.itemType }
+                .function("createBlockData", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.createBlockData()
                     } else {
                         it.target?.createBlockData(it.getString(0))
                     }
                 }
-                .function("isSolid", 0) { it.target?.isSolid }
-                .function("isFlammable", 0) { it.target?.isFlammable }
-                .function("isBurnable", 0) { it.target?.isBurnable }
-                .function("isOccluding", 0) { it.target?.isOccluding }
-                .function("hasGravity", 0) { it.target?.hasGravity() }
-                .function("isInteractable", 0) { it.target?.isInteractable }
-                .function("hardness", 0) { it.target?.hardness }
-                .function("blastResistance", 0) { it.target?.blastResistance }
-                .function("slipperiness", 0) { it.target?.slipperiness }
-                .function("isAir", 0) { it.target?.isAir }
-                .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
-                .function("asMaterial", 0) { it.target?.asMaterial() }
-                .function("blockDataClass", 0) { it.target?.blockDataClass }
+                .function("createBlockData", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.createBlockData()
+                    } else {
+                        it.target?.createBlockData(it.getString(0))
+                    }
+                }
+                .function("isSolid", returns(Type.Z).noParams()) { it.target?.isSolid }
+                .function("isFlammable", returns(Type.Z).noParams()) { it.target?.isFlammable }
+                .function("isBurnable", returns(Type.Z).noParams()) { it.target?.isBurnable }
+                .function("isOccluding", returns(Type.Z).noParams()) { it.target?.isOccluding }
+                .function("hasGravity", returns(Type.Z).noParams()) { it.target?.hasGravity() }
+                .function("isInteractable", returns(Type.Z).noParams()) { it.target?.isInteractable }
+                .function("hardness", returnsObject().noParams()) { it.target?.hardness }
+                .function("blastResistance", returnsObject().noParams()) { it.target?.blastResistance }
+                .function("slipperiness", returnsObject().noParams()) { it.target?.slipperiness }
+                .function("isAir", returns(Type.Z).noParams()) { it.target?.isAir }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.target?.isEnabledByFeature(it.getRef(0) as World) }
+                .function("asMaterial", returnsObject().noParams()) { it.target?.asMaterial() }
+                .function("blockDataClass", returnsObject().noParams()) { it.target?.blockDataClass }
         }
     }
 }
@@ -52,9 +62,16 @@ object FnBlockTypeTyped {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockType.Typed::class.java)
-                .function("blockDataClass", 0) { it.target?.blockDataClass }
-                .function("createBlockData", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("blockDataClass", returnsObject().noParams()) { it.target?.blockDataClass }
+                .function("createBlockData", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.createBlockData()
+                    } else {
+                        (it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0))
+                    }
+                }
+                .function("createBlockData", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.createBlockData()
                     } else {
                         (it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0))

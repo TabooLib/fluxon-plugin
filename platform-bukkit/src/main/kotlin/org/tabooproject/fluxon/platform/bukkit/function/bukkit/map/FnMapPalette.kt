@@ -8,6 +8,9 @@ import java.awt.Image
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapPalette"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,28 +21,36 @@ object FnMapPalette {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapPalette::class.java)
                 // static
-                .function("resizeImage", 1) { MapPalette.resizeImage(it.getArgument(0) as Image) }
+                .function("resizeImage", returnsObject().params(Type.OBJECT)) { MapPalette.resizeImage(it.getRef(0) as Image) }
                 // static
-                .function("imageToBytes", 1) { MapPalette.imageToBytes(it.getArgument(0) as Image) }
+                .function("imageToBytes", returnsObject().params(Type.OBJECT)) { MapPalette.imageToBytes(it.getRef(0) as Image) }
                 // static
-                .function("matchColor", listOf(1, 3)) {
-                    if (it.arguments.size == 1) {
-                        MapPalette.matchColor(it.getArgument(0) as java.awt.Color)
+                .function("matchColor", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        MapPalette.matchColor(it.getRef(0) as java.awt.Color)
                     } else {
                         MapPalette.matchColor(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("matchColor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        MapPalette.matchColor(it.getRef(0) as java.awt.Color)
+                    } else {
+                        MapPalette.matchColor(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
                     }
                 }
                 // static
-                .function("getColor", 1) { MapPalette.getColor(it.getNumber(0).toByte()) }
+                .function("getColor", returnsObject().params(Type.OBJECT)) { MapPalette.getColor(it.getInt(0).toByte()) }
                 // static
-                .function(
-                    "setMapColorCache",
-                    1
-                ) { MapPalette.setMapColorCache(it.getArgument(0) as MapPalette.MapColorCache) }
+                .function("setMapColorCache", returnsObject().params(Type.OBJECT)) { MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache) }
         }
     }
 }
@@ -52,7 +63,7 @@ object FnMapPaletteMapColorCache {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapPalette.MapColorCache::class.java)
-                .function("isCached", 0) { it.target?.isCached }
+                .function("isCached", returns(Type.Z).noParams()) { it.target?.isCached }
         }
     }
 }

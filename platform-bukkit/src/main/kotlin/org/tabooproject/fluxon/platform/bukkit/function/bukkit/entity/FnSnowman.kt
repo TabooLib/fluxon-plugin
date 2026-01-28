@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Snowman"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnSnowman {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Snowman::class.java)
-                .function("isDerp", 0) { it.target?.isDerp }
-                .function("setDerp", 1) { it.target?.setDerp(it.getBoolean(0)) }
+                .function("isDerp", returns(Type.Z).noParams()) { it.target?.isDerp }
+                .function("setDerp", returnsObject().params(Type.OBJECT)) { it.target?.setDerp(it.getBool(0)) }
         }
     }
 }

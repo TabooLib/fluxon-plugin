@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.material.Colorable"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnColorable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Colorable::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as DyeColor) }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as DyeColor) }
         }
     }
 }

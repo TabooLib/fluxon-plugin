@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.entity.EntityDamageEvent"])
@@ -17,36 +20,40 @@ object FnEntityDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function(
-                    "getOriginalDamage",
-                    1
-                ) { it.target?.getOriginalDamage(it.getArgument(0) as EntityDamageEvent.DamageModifier) }
-                .function("setDamage", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setDamage(it.getNumber(0).toDouble())
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("getOriginalDamage", returnsObject().params(Type.OBJECT)) { it.target?.getOriginalDamage(it.getRef(0) as EntityDamageEvent.DamageModifier) }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setDamage(it.getAsDouble(0))
                     } else {
                         it.target?.setDamage(
-                            it.getArgument(0) as EntityDamageEvent.DamageModifier,
-                            it.getNumber(1).toDouble()
+                            it.getRef(0) as EntityDamageEvent.DamageModifier,
+                            it.getAsDouble(1)
                         )
                     }
                 }
-                .function("damage", 0) { it.target?.damage }
-                .function("getDamage", 1) {
-                    it.target?.getDamage(it.getArgument(0) as EntityDamageEvent.DamageModifier)
+                .function("setDamage", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setDamage(it.getAsDouble(0))
+                    } else {
+                        it.target?.setDamage(
+                            it.getRef(0) as EntityDamageEvent.DamageModifier,
+                            it.getAsDouble(1)
+                        )
+                    }
                 }
-                .function(
-                    "isApplicable",
-                    1
-                ) { it.target?.isApplicable(it.getArgument(0) as EntityDamageEvent.DamageModifier) }
-                .function("finalDamage", 0) { it.target?.finalDamage }
-                .function("cause", 0) { it.target?.cause }
-                .function("damageSource", 0) { it.target?.damageSource }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("damage", returnsObject().noParams()) { it.target?.damage }
+                .function("getDamage", returnsObject().params(Type.OBJECT)) {
+                    it.target?.getDamage(it.getRef(0) as EntityDamageEvent.DamageModifier)
+                }
+                .function("isApplicable", returns(Type.Z).params(Type.OBJECT)) { it.target?.isApplicable(it.getRef(0) as EntityDamageEvent.DamageModifier) }
+                .function("finalDamage", returnsObject().noParams()) { it.target?.finalDamage }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("damageSource", returnsObject().noParams()) { it.target?.damageSource }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityDamageEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityDamageEvent.getHandlerList() }
         }
     }
 }

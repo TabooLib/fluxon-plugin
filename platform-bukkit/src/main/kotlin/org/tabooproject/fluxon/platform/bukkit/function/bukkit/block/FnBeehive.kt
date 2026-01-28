@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.Beehive"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +20,9 @@ object FnBeehive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beehive::class.java)
-                .function("flower", 0) { it.target?.flower }
-                .function("setFlower", 1) { it.target?.setFlower(it.getArgument(0) as Location) }
-                .function("isSedated", 0) { it.target?.isSedated }
+                .function("flower", returnsObject().noParams()) { it.target?.flower }
+                .function("setFlower", returnsObject().params(Type.OBJECT)) { it.target?.setFlower(it.getRef(0) as Location) }
+                .function("isSedated", returns(Type.Z).noParams()) { it.target?.isSedated }
         }
     }
 }

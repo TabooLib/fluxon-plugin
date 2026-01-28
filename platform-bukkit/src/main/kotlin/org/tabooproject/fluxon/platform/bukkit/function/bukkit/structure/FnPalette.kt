@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.structure.Palette"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnPalette {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Palette::class.java)
-                .function("blocks", 0) { it.target?.blocks }
-                .function("blockCount", 0) { it.target?.blockCount }
+                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
+                .function("blockCount", returnsObject().noParams()) { it.target?.blockCount }
         }
     }
 }

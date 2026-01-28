@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPortalEnterEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnEntityPortalEnterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalEnterEvent::class.java)
-                .function("location", 0) { it.target?.location }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityPortalEnterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityPortalEnterEvent.getHandlerList() }
         }
     }
 }

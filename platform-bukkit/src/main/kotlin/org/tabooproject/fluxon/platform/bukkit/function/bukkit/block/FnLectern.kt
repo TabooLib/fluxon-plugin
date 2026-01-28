@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Lectern"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnLectern {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lectern::class.java)
-                .function("page", 0) { it.target?.page }
-                .function("setPage", 1) { it.target?.setPage(it.getNumber(0).toInt()) }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("snapshotInventory", 0) { it.target?.snapshotInventory }
+                .function("page", returnsObject().noParams()) { it.target?.page }
+                .function("setPage", returnsObject().params(Type.OBJECT)) { it.target?.setPage(it.getInt(0).toInt()) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
         }
     }
 }

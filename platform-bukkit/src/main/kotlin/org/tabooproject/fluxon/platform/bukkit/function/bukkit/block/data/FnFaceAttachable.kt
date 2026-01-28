@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.FaceAttachable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,8 @@ object FnFaceAttachable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FaceAttachable::class.java)
-                .function("attachedFace", 0) { it.target?.attachedFace }
-                .function(
-                    "setAttachedFace",
-                    1
-                ) { it.target?.setAttachedFace(it.getArgument(0) as FaceAttachable.AttachedFace) }
+                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
+                .function("setAttachedFace", returnsObject().params(Type.OBJECT)) { it.target?.setAttachedFace(it.getRef(0) as FaceAttachable.AttachedFace) }
         }
     }
 }

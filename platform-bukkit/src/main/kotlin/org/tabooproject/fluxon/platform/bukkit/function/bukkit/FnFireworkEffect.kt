@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.FireworkEffect"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,17 +21,17 @@ object FnFireworkEffect {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffect::class.java)
                 // static
-                .function("builder", 0) { FireworkEffect.builder() }
-                .function("hasFlicker", 0) { it.target?.hasFlicker() }
-                .function("hasTrail", 0) { it.target?.hasTrail() }
-                .function("colors", 0) { it.target?.colors }
-                .function("fadeColors", 0) { it.target?.fadeColors }
-                .function("type", 0) { it.target?.type }
+                .function("builder", returnsObject().noParams()) { FireworkEffect.builder() }
+                .function("hasFlicker", returns(Type.Z).noParams()) { it.target?.hasFlicker() }
+                .function("hasTrail", returns(Type.Z).noParams()) { it.target?.hasTrail() }
+                .function("colors", returnsObject().noParams()) { it.target?.colors }
+                .function("fadeColors", returnsObject().noParams()) { it.target?.fadeColors }
+                .function("type", returnsObject().noParams()) { it.target?.type }
                 // static
-                .function("deserialize", 1) { FireworkEffect.deserialize(it.getArgument(0) as Map<String, Any>) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { FireworkEffect.deserialize(it.getRef(0) as Map<String, Any>) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
         }
     }
 }
@@ -41,26 +44,18 @@ object FnFireworkEffectBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffect.Builder::class.java)
-                .function("with", 1) { it.target?.with(it.getArgument(0) as FireworkEffect.Type) }
-                .function("withFlicker", 0) { it.target?.withFlicker() }
-                .function("flicker", 1) { it.target?.flicker(it.getBoolean(0)) }
-                .function("withTrail", 0) { it.target?.withTrail() }
-                .function("trail", 1) { it.target?.trail(it.getBoolean(0)) }
-                .function("withColor", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.withColor(it.arguments.map { arg -> arg as Color })
-                    } else {
-                        it.target?.withColor(it.getArgument(0) as Color)
-                    }
+                .function("with", returnsObject().params(Type.OBJECT)) { it.target?.with(it.getRef(0) as FireworkEffect.Type) }
+                .function("withFlicker", returnsObject().noParams()) { it.target?.withFlicker() }
+                .function("flicker", returnsObject().params(Type.OBJECT)) { it.target?.flicker(it.getBool(0)) }
+                .function("withTrail", returnsObject().noParams()) { it.target?.withTrail() }
+                .function("trail", returnsObject().params(Type.OBJECT)) { it.target?.trail(it.getBool(0)) }
+                .function("withColor", returnsObject().params(Type.OBJECT)) {
+                    it.target?.withColor(it.getRef(0) as Color)
                 }
-                .function("withFade", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
-                        it.target?.withFade(it.arguments.map { arg -> arg as Color })
-                    } else {
-                        it.target?.withFade(it.getArgument(0) as Color)
-                    }
+                .function("withFade", returnsObject().params(Type.OBJECT)) {
+                    it.target?.withFade(it.getRef(0) as Color)
                 }
-                .function("build", 0) { it.target?.build() }
+                .function("build", returnsObject().noParams()) { it.target?.build() }
         }
     }
 }

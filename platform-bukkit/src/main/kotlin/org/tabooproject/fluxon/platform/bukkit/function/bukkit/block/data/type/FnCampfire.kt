@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Campfire"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnCampfire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Campfire::class.java)
-                .function("isSignalFire", 0) { it.target?.isSignalFire }
-                .function("setSignalFire", 1) { it.target?.setSignalFire(it.getBoolean(0)) }
+                .function("isSignalFire", returns(Type.Z).noParams()) { it.target?.isSignalFire }
+                .function("setSignalFire", returnsObject().params(Type.OBJECT)) { it.target?.setSignalFire(it.getBool(0)) }
         }
     }
 }

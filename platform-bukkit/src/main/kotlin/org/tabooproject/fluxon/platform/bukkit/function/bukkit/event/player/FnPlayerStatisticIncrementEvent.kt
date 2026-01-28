@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerStatisticIncrementEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,16 +19,16 @@ object FnPlayerStatisticIncrementEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerStatisticIncrementEvent::class.java)
-                .function("statistic", 0) { it.target?.getStatistic() }
-                .function("previousValue", 0) { it.target?.previousValue }
-                .function("newValue", 0) { it.target?.newValue }
-                .function("entityType", 0) { it.target?.entityType }
-                .function("material", 0) { it.target?.material }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("statistic", returnsObject().noParams()) { it.target?.getStatistic() }
+                .function("previousValue", returnsObject().noParams()) { it.target?.previousValue }
+                .function("newValue", returnsObject().noParams()) { it.target?.newValue }
+                .function("entityType", returnsObject().noParams()) { it.target?.entityType }
+                .function("material", returnsObject().noParams()) { it.target?.material }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerStatisticIncrementEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerStatisticIncrementEvent.getHandlerList() }
         }
     }
 }

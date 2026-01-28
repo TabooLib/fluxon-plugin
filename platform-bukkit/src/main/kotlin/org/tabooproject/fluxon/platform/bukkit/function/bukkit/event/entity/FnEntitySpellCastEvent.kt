@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntitySpellCastEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnEntitySpellCastEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntitySpellCastEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntitySpellCastEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntitySpellCastEvent.getHandlerList() }
         }
     }
 }

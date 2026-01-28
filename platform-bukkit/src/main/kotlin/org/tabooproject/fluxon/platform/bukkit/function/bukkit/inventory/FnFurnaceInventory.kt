@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.FurnaceInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +19,13 @@ object FnFurnaceInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceInventory::class.java)
-                .function("result", 0) { it.target?.result }
-                .function("fuel", 0) { it.target?.fuel }
-                .function("smelting", 0) { it.target?.smelting }
-                .function("setFuel", 1) { it.target?.setFuel(it.getArgument(0) as ItemStack) }
-                .function("setResult", 1) { it.target?.setResult(it.getArgument(0) as ItemStack) }
-                .function("setSmelting", 1) { it.target?.setSmelting(it.getArgument(0) as ItemStack) }
-                .function("holder", 0) { it.target?.holder }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
+                .function("smelting", returnsObject().noParams()) { it.target?.smelting }
+                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("setSmelting", returnsObject().params(Type.OBJECT)) { it.target?.setSmelting(it.getRef(0) as ItemStack) }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
         }
     }
 }

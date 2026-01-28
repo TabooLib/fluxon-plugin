@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.EventPriority"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnEventPriority {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventPriority::class.java)
-                .function("slot", 0) { it.target?.slot }
+                .function("slot", returnsObject().noParams()) { it.target?.slot }
         }
     }
 }

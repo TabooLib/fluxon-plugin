@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.BlockStateMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +20,9 @@ object FnBlockStateMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockStateMeta::class.java)
-                .function("hasBlockState", 0) { it.target?.hasBlockState() }
-                .function("blockState", 0) { it.target?.blockState }
-                .function("setBlockState", 1) { it.target?.setBlockState(it.getArgument(0) as BlockState) }
+                .function("hasBlockState", returns(Type.Z).noParams()) { it.target?.hasBlockState() }
+                .function("blockState", returnsObject().noParams()) { it.target?.blockState }
+                .function("setBlockState", returnsObject().params(Type.OBJECT)) { it.target?.setBlockState(it.getRef(0) as BlockState) }
         }
     }
 }

@@ -16,6 +16,9 @@ import java.io.File
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.SimplePluginManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -25,118 +28,152 @@ object FnSimplePluginManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplePluginManager::class.java)
-                .function("loadPlugins", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("loadPlugins", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is File -> it.target?.loadPlugins(var1)
                         is Array<*> -> it.target?.loadPlugins(var1 as Array<File>)
                         else -> throw IllegalArgumentException("参数必须是 File 或 File[] 类型")
                     }
                 }
-                .function("isPluginEnabled", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("isPluginEnabled", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isPluginEnabled(var1)
                         is Plugin -> it.target?.isPluginEnabled(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 Plugin 类型")
                     }
                 }
-                .function("enablePlugin", 1) { it.target?.enablePlugin(it.getArgument(0) as Plugin) }
-                .function("disablePlugins", 0) { it.target?.disablePlugins() }
-                .function("disablePlugin", 1) { it.target?.disablePlugin(it.getArgument(0) as Plugin) }
-                .function("callEvent", 1) { it.target?.callEvent(it.getArgument(0) as Event) }
-                .function("registerEvents", 2) {
+                .function("enablePlugin", returnsObject().params(Type.OBJECT)) { it.target?.enablePlugin(it.getRef(0) as Plugin) }
+                .function("disablePlugins", returnsObject().noParams()) { it.target?.disablePlugins() }
+                .function("disablePlugin", returnsObject().params(Type.OBJECT)) { it.target?.disablePlugin(it.getRef(0) as Plugin) }
+                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
+                .function("registerEvents", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerEvents(
-                        it.getArgument(0) as Listener,
-                        it.getArgument(1) as Plugin
+                        it.getRef(0) as Listener,
+                        it.getRef(1) as Plugin
                     )
                 }
-                .function("registerEvent", listOf(5, 6)) {
-                    if (it.arguments.size == 5) {
+                .function("registerEvent", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 5) {
                         it.target?.registerEvent(
-                            it.getArgument(0) as Class<Event>,
-                            it.getArgument(1) as Listener,
-                            it.getArgument(2) as EventPriority,
-                            it.getArgument(3) as EventExecutor,
-                            it.getArgument(4) as Plugin
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin
                         )
                     } else {
                         it.target?.registerEvent(
-                            it.getArgument(0) as Class<Event>,
-                            it.getArgument(1) as Listener,
-                            it.getArgument(2) as EventPriority,
-                            it.getArgument(3) as EventExecutor,
-                            it.getArgument(4) as Plugin,
-                            it.getBoolean(5)
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin,
+                            it.getBool(5)
                         )
                     }
                 }
-                .function("getPermission", 1) { it.target?.getPermission(it.getString(0)!!) }
-                .function("addPermission", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.addPermission(it.getArgument(0) as Permission)
+                .function("registerEvent", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 5) {
+                        it.target?.registerEvent(
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin
+                        )
+                    } else {
+                        it.target?.registerEvent(
+                            it.getRef(0) as Class<Event>,
+                            it.getRef(1) as Listener,
+                            it.getRef(2) as EventPriority,
+                            it.getRef(3) as EventExecutor,
+                            it.getRef(4) as Plugin,
+                            it.getBool(5)
+                        )
+                    }
+                }
+                .function("getPermission", returnsObject().params(Type.OBJECT)) { it.target?.getPermission(it.getString(0)!!) }
+                .function("addPermission", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPermission(it.getRef(0) as Permission)
                     } else {
                         it.target?.addPermission(
-                            it.getArgument(0) as Permission,
-                            it.getBoolean(1)
+                            it.getRef(0) as Permission,
+                            it.getBool(1)
                         )
                     }
                 }
-                .function("getDefaultPermissions", 1) { it.target?.getDefaultPermissions(it.getBoolean(0)) }
-                .function("removePermission", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("addPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPermission(it.getRef(0) as Permission)
+                    } else {
+                        it.target?.addPermission(
+                            it.getRef(0) as Permission,
+                            it.getBool(1)
+                        )
+                    }
+                }
+                .function("getDefaultPermissions", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultPermissions(it.getBool(0)) }
+                .function("removePermission", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Permission -> it.target?.removePermission(var1)
                         is String -> it.target?.removePermission(var1)
                         else -> throw IllegalArgumentException("参数必须是 Permission 或 String 类型")
                     }
                 }
-                .function("recalculatePermissionDefaults", 1) {
+                .function("recalculatePermissionDefaults", returnsObject().params(Type.OBJECT)) {
                     it.target?.recalculatePermissionDefaults(
-                        it.getArgument(
+                        it.getRef(
                             0
                         ) as Permission
                     )
                 }
-                .function("dirtyPermissibles", 0) { it.target?.dirtyPermissibles() }
-                .function("subscribeToPermission", 2) {
+                .function("dirtyPermissibles", returnsObject().noParams()) { it.target?.dirtyPermissibles() }
+                .function("subscribeToPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.subscribeToPermission(
                         it.getString(0)!!,
-                        it.getArgument(1) as Permissible
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("unsubscribeFromPermission", 2) {
+                .function("unsubscribeFromPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.unsubscribeFromPermission(
                         it.getString(0)!!,
-                        it.getArgument(1) as Permissible
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("getPermissionSubscriptions", 1) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
-                .function("subscribeToDefaultPerms", 2) {
+                .function("getPermissionSubscriptions", returnsObject().params(Type.OBJECT)) { it.target?.getPermissionSubscriptions(it.getString(0)!!) }
+                .function("subscribeToDefaultPerms", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.subscribeToDefaultPerms(
-                        it.getBoolean(0),
-                        it.getArgument(1) as Permissible
+                        it.getBool(0),
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("unsubscribeFromDefaultPerms", 2) {
+                .function("unsubscribeFromDefaultPerms", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.unsubscribeFromDefaultPerms(
-                        it.getBoolean(0),
-                        it.getArgument(1) as Permissible
+                        it.getBool(0),
+                        it.getRef(1) as Permissible
                     )
                 }
-                .function("getDefaultPermSubscriptions", 1) { it.target?.getDefaultPermSubscriptions(it.getBoolean(0)) }
-                .function("permissions", 0) { it.target?.permissions }
-                .function(
-                    "isTransitiveDepend",
-                    2
-                ) {
+                .function("getDefaultPermSubscriptions", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultPermSubscriptions(it.getBool(0)) }
+                .function("permissions", returnsObject().noParams()) { it.target?.permissions }
+                .function("isTransitiveDepend", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.isTransitiveDepend(
-                        it.getArgument(0) as PluginDescriptionFile,
-                        it.getArgument(1) as PluginDescriptionFile
+                        it.getRef(0) as PluginDescriptionFile,
+                        it.getRef(1) as PluginDescriptionFile
                     )
                 }
-                .function("useTimings", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("useTimings", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.useTimings()
                     } else {
-                        it.target?.useTimings(it.getBoolean(0))
+                        it.target?.useTimings(it.getBool(0))
+                    }
+                }
+                .function("useTimings", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.useTimings()
+                    } else {
+                        it.target?.useTimings(it.getBool(0))
                     }
                 }
         }

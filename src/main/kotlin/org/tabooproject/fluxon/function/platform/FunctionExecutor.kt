@@ -3,6 +3,9 @@ package org.tabooproject.fluxon.function.platform
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.java.Export
 import org.tabooproject.fluxon.util.getFluxonScript
 import org.tabooproject.fluxon.util.invokeInline
@@ -19,41 +22,41 @@ object FunctionExecutor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             // 注册扩展函数
-            registerExtensionFunction(PlatformExecutor.PlatformTask::class.java, "cancel", 0) { it.target!!.cancel() }
+            registerExtensionFunction(PlatformExecutor.PlatformTask::class.java, null, "cancel", returnsVoid().noParams(), { it.target!!.cancel() }, false, false)
             // Builder 模式
             exportRegistry.registerClass(TaskBuilder::class.java)
-            registerFunction("submit", 0) { TaskBuilder(it.environment) }
+            registerFunction("submit", returnsObject().noParams()) { TaskBuilder(it.environment) }
             // 快捷函数：立即执行
-            registerFunction("run", 1) { context ->
-                val lambda = context.getFunction(0)
+            registerFunction("run", returnsObject().params(Type.OBJECT)) { context ->
+                val lambda = context.getRef(0) as Function
                 executeTask(lambda, context.environment, async = false, delay = 0, period = 0)
             }
-            registerFunction("runAsync", 1) { context ->
-                val lambda = context.getFunction(0)
+            registerFunction("runAsync", returnsObject().params(Type.OBJECT)) { context ->
+                val lambda = context.getRef(0) as Function
                 executeTask(lambda, context.environment, async = true, delay = 0, period = 0)
             }
             // 快捷函数：延迟执行
-            registerFunction("runLater", 2) { context ->
-                val delay = context.getNumber(0).toLong()
-                val lambda = context.getFunction(1)
+            registerFunction("runLater", returnsObject().params(Type.J, Type.OBJECT)) { context ->
+                val delay = context.getLong(0)
+                val lambda = context.getRef(1) as Function
                 executeTask(lambda, context.environment, async = false, delay = delay, period = 0)
             }
-            registerFunction("runAsyncLater", 2) { context ->
-                val delay = context.getNumber(0).toLong()
-                val lambda = context.getFunction(1)
+            registerFunction("runAsyncLater", returnsObject().params(Type.J, Type.OBJECT)) { context ->
+                val delay = context.getLong(0)
+                val lambda = context.getRef(1) as Function
                 executeTask(lambda, context.environment, async = true, delay = delay, period = 0)
             }
             // 快捷函数：定时执行
-            registerFunction("runTimer", 3) { context ->
-                val delay = context.getNumber(0).toLong()
-                val period = context.getNumber(1).toLong()
-                val lambda = context.getFunction(2)
+            registerFunction("runTimer", returnsObject().params(Type.J, Type.J, Type.OBJECT)) { context ->
+                val delay = context.getLong(0)
+                val period = context.getLong(1)
+                val lambda = context.getRef(2) as Function
                 executeTask(lambda, context.environment, async = false, delay = delay, period = period)
             }
-            registerFunction("runAsyncTimer", 3) { context ->
-                val delay = context.getNumber(0).toLong()
-                val period = context.getNumber(1).toLong()
-                val lambda = context.getFunction(2)
+            registerFunction("runAsyncTimer", returnsObject().params(Type.J, Type.J, Type.OBJECT)) { context ->
+                val delay = context.getLong(0)
+                val period = context.getLong(1)
+                val lambda = context.getRef(2) as Function
                 executeTask(lambda, context.environment, async = true, delay = delay, period = period)
             }
         }

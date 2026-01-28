@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Rabbit"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnRabbit {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rabbit::class.java)
-                .function("rabbitType", 0) { it.target?.rabbitType }
-                .function("setRabbitType", 1) { it.target?.setRabbitType(it.getArgument(0) as Rabbit.Type) }
+                .function("rabbitType", returnsObject().noParams()) { it.target?.rabbitType }
+                .function("setRabbitType", returnsObject().params(Type.OBJECT)) { it.target?.setRabbitType(it.getRef(0) as Rabbit.Type) }
         }
     }
 }

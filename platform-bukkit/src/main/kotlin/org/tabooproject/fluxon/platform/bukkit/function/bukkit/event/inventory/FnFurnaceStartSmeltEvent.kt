@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.FurnaceStartSmeltEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnFurnaceStartSmeltEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceStartSmeltEvent::class.java)
-                .function("totalCookTime", 0) { it.target?.totalCookTime }
-                .function("setTotalCookTime", 1) { it.target?.setTotalCookTime(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("totalCookTime", returnsObject().noParams()) { it.target?.totalCookTime }
+                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalCookTime(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { FurnaceStartSmeltEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { FurnaceStartSmeltEvent.getHandlerList() }
         }
     }
 }

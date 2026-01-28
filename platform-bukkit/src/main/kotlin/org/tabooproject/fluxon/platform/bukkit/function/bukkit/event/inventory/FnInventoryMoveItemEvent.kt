@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryMoveItemEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnInventoryMoveItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryMoveItemEvent::class.java)
-                .function("source", 0) { it.target?.source }
-                .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("destination", 0) { it.target?.destination }
-                .function("initiator", 0) { it.target?.initiator }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("destination", returnsObject().noParams()) { it.target?.destination }
+                .function("initiator", returnsObject().noParams()) { it.target?.initiator }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { InventoryMoveItemEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { InventoryMoveItemEvent.getHandlerList() }
         }
     }
 }

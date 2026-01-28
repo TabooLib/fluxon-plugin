@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.scoreboard.Criteria"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,23 +22,34 @@ object FnCriteria {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Criteria::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("isReadOnly", 0) { it.target?.isReadOnly }
-                .function("defaultRenderType", 0) { it.target?.defaultRenderType }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("isReadOnly", returns(Type.Z).noParams()) { it.target?.isReadOnly }
+                .function("defaultRenderType", returnsObject().noParams()) { it.target?.defaultRenderType }
                 // static
-                .function("statistic", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        Criteria.statistic(it.getArgument(0) as Statistic)
+                .function("statistic", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Criteria.statistic(it.getRef(0) as Statistic)
                     } else {
-                        when (val var2 = it.getArgument(1)) {
-                            is Material -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
-                            is EntityType -> Criteria.statistic(it.getArgument(0) as Statistic, var2)
+                        when (val var2 = it.getRef(1)) {
+                            is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
+                            is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
+                            else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
+                        }
+                    }
+                }
+                .function("statistic", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Criteria.statistic(it.getRef(0) as Statistic)
+                    } else {
+                        when (val var2 = it.getRef(1)) {
+                            is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
+                            is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
                             else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
                         }
                     }
                 }
                 // static
-                .function("create", 1) { Criteria.create(it.getString(0)!!) }
+                .function("create", returnsObject().params(Type.OBJECT)) { Criteria.create(it.getString(0)!!) }
         }
     }
 }

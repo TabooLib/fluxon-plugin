@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.AbstractHorse"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnAbstractHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractHorse::class.java)
-                .function("setVariant", 1) { it.target?.setVariant(it.getArgument(0) as Horse.Variant) }
-                .function("domestication", 0) { it.target?.domestication }
-                .function("setDomestication", 1) { it.target?.setDomestication(it.getNumber(0).toInt()) }
-                .function("maxDomestication", 0) { it.target?.maxDomestication }
-                .function("setMaxDomestication", 1) { it.target?.setMaxDomestication(it.getNumber(0).toInt()) }
-                .function("jumpStrength", 0) { it.target?.jumpStrength }
-                .function("setJumpStrength", 1) { it.target?.setJumpStrength(it.getNumber(0).toDouble()) }
-                .function("isEatingHaystack", 0) { it.target?.isEatingHaystack }
-                .function("setEatingHaystack", 1) { it.target?.setEatingHaystack(it.getBoolean(0)) }
-                .function("inventory", 0) { it.target?.inventory }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Horse.Variant) }
+                .function("domestication", returnsObject().noParams()) { it.target?.domestication }
+                .function("setDomestication", returnsObject().params(Type.OBJECT)) { it.target?.setDomestication(it.getInt(0).toInt()) }
+                .function("maxDomestication", returnsObject().noParams()) { it.target?.maxDomestication }
+                .function("setMaxDomestication", returnsObject().params(Type.OBJECT)) { it.target?.setMaxDomestication(it.getInt(0).toInt()) }
+                .function("jumpStrength", returnsObject().noParams()) { it.target?.jumpStrength }
+                .function("setJumpStrength", returnsObject().params(Type.OBJECT)) { it.target?.setJumpStrength(it.getAsDouble(0)) }
+                .function("isEatingHaystack", returns(Type.Z).noParams()) { it.target?.isEatingHaystack }
+                .function("setEatingHaystack", returnsObject().params(Type.OBJECT)) { it.target?.setEatingHaystack(it.getBool(0)) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
         }
     }
 }

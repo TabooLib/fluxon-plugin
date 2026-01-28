@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.Color"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,60 +20,94 @@ object FnColor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Color::class.java)
                 // static
-                .function("fromARGB", listOf(1, 4)) {
-                    if (it.arguments.size == 1) {
-                        Color.fromARGB(it.getNumber(0).toInt())
+                .function("fromARGB", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromARGB(it.getInt(0).toInt())
                     } else {
                         Color.fromARGB(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("fromARGB", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromARGB(it.getInt(0).toInt())
+                    } else {
+                        Color.fromARGB(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
                 // static
-                .function("fromRGB", listOf(1, 3)) {
-                    if (it.arguments.size == 1) {
-                        Color.fromRGB(it.getNumber(0).toInt())
+                .function("fromRGB", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromRGB(it.getInt(0).toInt())
                     } else {
                         Color.fromRGB(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("fromRGB", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromRGB(it.getInt(0).toInt())
+                    } else {
+                        Color.fromRGB(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
                     }
                 }
                 // static
-                .function("fromBGR", listOf(1, 3)) {
-                    if (it.arguments.size == 1) {
-                        Color.fromBGR(it.getNumber(0).toInt())
+                .function("fromBGR", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromBGR(it.getInt(0).toInt())
                     } else {
                         Color.fromBGR(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
                     }
                 }
-                .function("alpha", 0) { it.target?.alpha }
-                .function("setAlpha", 1) { it.target?.setAlpha(it.getNumber(0).toInt()) }
-                .function("red", 0) { it.target?.red }
-                .function("setRed", 1) { it.target?.setRed(it.getNumber(0).toInt()) }
-                .function("green", 0) { it.target?.green }
-                .function("setGreen", 1) { it.target?.setGreen(it.getNumber(0).toInt()) }
-                .function("blue", 0) { it.target?.blue }
-                .function("setBlue", 1) { it.target?.setBlue(it.getNumber(0).toInt()) }
-                .function("asRGB", 0) { it.target?.asRGB() }
-                .function("asARGB", 0) { it.target?.asARGB() }
-                .function("asBGR", 0) { it.target?.asBGR() }
-                .function("mixDyes", 0) { it.target?.mixDyes() }
-                .function("mixColors", 0) { it.target?.mixColors() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("hashCode", 0) { it.target?.hashCode() }
+                .function("fromBGR", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        Color.fromBGR(it.getInt(0).toInt())
+                    } else {
+                        Color.fromBGR(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("alpha", returnsObject().noParams()) { it.target?.alpha }
+                .function("setAlpha", returnsObject().params(Type.OBJECT)) { it.target?.setAlpha(it.getInt(0).toInt()) }
+                .function("red", returnsObject().noParams()) { it.target?.red }
+                .function("setRed", returnsObject().params(Type.OBJECT)) { it.target?.setRed(it.getInt(0).toInt()) }
+                .function("green", returnsObject().noParams()) { it.target?.green }
+                .function("setGreen", returnsObject().params(Type.OBJECT)) { it.target?.setGreen(it.getInt(0).toInt()) }
+                .function("blue", returnsObject().noParams()) { it.target?.blue }
+                .function("setBlue", returnsObject().params(Type.OBJECT)) { it.target?.setBlue(it.getInt(0).toInt()) }
+                .function("asRGB", returnsObject().noParams()) { it.target?.asRGB() }
+                .function("asARGB", returnsObject().noParams()) { it.target?.asARGB() }
+                .function("asBGR", returnsObject().noParams()) { it.target?.asBGR() }
+                .function("mixDyes", returnsObject().noParams()) { it.target?.mixDyes() }
+                .function("mixColors", returnsObject().noParams()) { it.target?.mixColors() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
                 // static
-                .function("deserialize", 1) { Color.deserialize(it.getArgument(0) as Map<String, Any>) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { Color.deserialize(it.getRef(0) as Map<String, Any>) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

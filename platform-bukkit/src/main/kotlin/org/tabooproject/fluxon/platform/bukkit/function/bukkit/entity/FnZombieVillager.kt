@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.ZombieVillager"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,19 +21,13 @@ object FnZombieVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ZombieVillager::class.java)
-                .function(
-                    "setVillagerProfession",
-                    1
-                ) { it.target?.setVillagerProfession(it.getArgument(0) as Villager.Profession) }
-                .function("setVillagerType", 1) { it.target?.setVillagerType(it.getArgument(0) as Villager.Type) }
-                .function("isConverting", 0) { it.target?.isConverting }
-                .function("conversionTime", 0) { it.target?.conversionTime }
-                .function("setConversionTime", 1) { it.target?.setConversionTime(it.getNumber(0).toInt()) }
-                .function("conversionPlayer", 0) { it.target?.conversionPlayer }
-                .function(
-                    "setConversionPlayer",
-                    1
-                ) { it.target?.setConversionPlayer(it.getArgument(0) as OfflinePlayer) }
+                .function("setVillagerProfession", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
+                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
+                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("conversionPlayer", returnsObject().noParams()) { it.target?.conversionPlayer }
+                .function("setConversionPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer) }
         }
     }
 }

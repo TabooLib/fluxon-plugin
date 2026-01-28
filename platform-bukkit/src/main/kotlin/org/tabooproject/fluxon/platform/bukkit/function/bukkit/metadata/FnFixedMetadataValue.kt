@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.metadata.FixedMetadataValue"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnFixedMetadataValue {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FixedMetadataValue::class.java)
-                .function("invalidate", 0) { it.target?.invalidate() }
-                .function("value", 0) { it.target?.value() }
+                .function("invalidate", returnsObject().noParams()) { it.target?.invalidate() }
+                .function("value", returnsObject().noParams()) { it.target?.value() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.RegisteredListener"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +20,11 @@ object FnRegisteredListener {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegisteredListener::class.java)
-                .function("listener", 0) { it.target?.listener }
-                .function("plugin", 0) { it.target?.plugin }
-                .function("priority", 0) { it.target?.priority }
-                .function("callEvent", 1) { it.target?.callEvent(it.getArgument(0) as Event) }
-                .function("isIgnoringCancelled", 0) { it.target?.isIgnoringCancelled }
+                .function("listener", returnsObject().noParams()) { it.target?.listener }
+                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("priority", returnsObject().noParams()) { it.target?.priority }
+                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
+                .function("isIgnoringCancelled", returns(Type.Z).noParams()) { it.target?.isIgnoringCancelled }
         }
     }
 }

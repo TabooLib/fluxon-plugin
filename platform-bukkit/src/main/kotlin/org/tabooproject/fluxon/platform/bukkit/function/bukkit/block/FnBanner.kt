@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Banner"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,20 +20,20 @@ object FnBanner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Banner::class.java)
-                .function("baseColor", 0) { it.target?.baseColor }
-                .function("setBaseColor", 1) { it.target?.setBaseColor(it.getArgument(0) as DyeColor) }
-                .function("patterns", 0) { it.target?.patterns }
-                .function("setPatterns", 1) { it.target?.setPatterns(it.getArgument(0) as List<Pattern>) }
-                .function("addPattern", 1) { it.target?.addPattern(it.getArgument(0) as Pattern) }
-                .function("getPattern", 1) { it.target?.getPattern(it.getNumber(0).toInt()) }
-                .function("removePattern", 1) { it.target?.removePattern(it.getNumber(0).toInt()) }
-                .function("setPattern", 2) {
+                .function("baseColor", returnsObject().noParams()) { it.target?.baseColor }
+                .function("setBaseColor", returnsObject().params(Type.OBJECT)) { it.target?.setBaseColor(it.getRef(0) as DyeColor) }
+                .function("patterns", returnsObject().noParams()) { it.target?.patterns }
+                .function("setPatterns", returnsObject().params(Type.OBJECT)) { it.target?.setPatterns(it.getRef(0) as List<Pattern>) }
+                .function("addPattern", returnsObject().params(Type.OBJECT)) { it.target?.addPattern(it.getRef(0) as Pattern) }
+                .function("getPattern", returnsObject().params(Type.OBJECT)) { it.target?.getPattern(it.getInt(0).toInt()) }
+                .function("removePattern", returnsObject().params(Type.OBJECT)) { it.target?.removePattern(it.getInt(0).toInt()) }
+                .function("setPattern", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setPattern(
-                        it.getNumber(0).toInt(),
-                        it.getArgument(1) as Pattern
+                        it.getInt(0).toInt(),
+                        it.getRef(1) as Pattern
                     )
                 }
-                .function("numberOfPatterns", 0) { it.target?.numberOfPatterns() }
+                .function("numberOfPatterns", returnsObject().noParams()) { it.target?.numberOfPatterns() }
         }
     }
 }

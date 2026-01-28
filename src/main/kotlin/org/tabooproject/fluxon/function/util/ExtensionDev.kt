@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.function.util
 
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.warning
@@ -11,16 +12,16 @@ object ExtensionDev {
     @Awake(LifeCycle.LOAD)
     fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerExtensionFunction(Object::class.java, "usage", 0) {
+            registerExtensionFunction(Object::class.java, null, "usage", returnsVoid().noParams(), {
                 val javaClass = it.target?.javaClass
                 if (javaClass == null) {
                     warning("Target is null")
                 } else {
-                    val find = arrayListOf<Function>()
+                    val find = mutableListOf<Function>()
                     FluxonRuntime.getInstance().extensionFunctions.forEach { (_, value) ->
-                        value.forEach { (type, func) ->
+                        value.forEach { (type, overloadSet) ->
                             if (type.isAssignableFrom(javaClass)) {
-                                find += func
+                                find.addAll(overloadSet.overloads)
                             }
                         }
                     }
@@ -29,11 +30,11 @@ object ExtensionDev {
                     warning("例如 random [1,2] 表示可以使用 random(num) 或 random(num1, num2)")
                     warning("具体参数类型请查看相关说明文档")
                     find.sortedBy { func -> func.name }.forEach { func ->
-                        warning("    ${func.name} ${func.parameterCounts}")
+                        warning("    ${func.name} ${func.signature}")
                     }
                 }
                 null
-            }
+            }, false, false)
         }
     }
 }

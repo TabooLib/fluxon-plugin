@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.generator.WorldInfo"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnWorldInfo {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldInfo::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("uID", 0) { it.target?.uid }
-                .function("seed", 0) { it.target?.seed }
-                .function("minHeight", 0) { it.target?.minHeight }
-                .function("maxHeight", 0) { it.target?.maxHeight }
-                .function("environment", 0) { it.target?.environment }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("uID", returnsObject().noParams()) { it.target?.uid }
+                .function("seed", returnsObject().noParams()) { it.target?.seed }
+                .function("minHeight", returnsObject().noParams()) { it.target?.minHeight }
+                .function("maxHeight", returnsObject().noParams()) { it.target?.maxHeight }
+                .function("environment", returnsObject().noParams()) { it.target?.environment }
         }
     }
 }

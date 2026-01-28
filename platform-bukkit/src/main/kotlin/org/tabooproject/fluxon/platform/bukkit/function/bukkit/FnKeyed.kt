@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Keyed"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnKeyed {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Keyed::class.java)
-                .function("key", 0) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }

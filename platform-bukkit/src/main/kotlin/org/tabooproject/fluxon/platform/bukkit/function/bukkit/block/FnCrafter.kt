@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.Crafter"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,17 +19,17 @@ object FnCrafter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
-                .function("craftingTicks", 0) { it.target?.craftingTicks }
-                .function("setCraftingTicks", 1) { it.target?.setCraftingTicks(it.getNumber(0).toInt()) }
-                .function("isSlotDisabled", 1) { it.target?.isSlotDisabled(it.getNumber(0).toInt()) }
-                .function("setSlotDisabled", 2) {
+                .function("craftingTicks", returnsObject().noParams()) { it.target?.craftingTicks }
+                .function("setCraftingTicks", returnsObject().params(Type.OBJECT)) { it.target?.setCraftingTicks(it.getInt(0).toInt()) }
+                .function("isSlotDisabled", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSlotDisabled(it.getInt(0).toInt()) }
+                .function("setSlotDisabled", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setSlotDisabled(
-                        it.getNumber(0).toInt(),
-                        it.getBoolean(1)
+                        it.getInt(0).toInt(),
+                        it.getBool(1)
                     )
                 }
-                .function("isTriggered", 0) { it.target?.isTriggered }
-                .function("setTriggered", 1) { it.target?.setTriggered(it.getBoolean(0)) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.target?.isTriggered }
+                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.target?.setTriggered(it.getBool(0)) }
         }
     }
 }

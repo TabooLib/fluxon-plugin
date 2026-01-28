@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +18,12 @@ object FnInventoryEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryEvent::class.java)
-                .function("inventory", 0) { it.target?.inventory }
-                .function("viewers", 0) { it.target?.viewers }
-                .function("view", 0) { it.target?.view }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("viewers", returnsObject().noParams()) { it.target?.viewers }
+                .function("view", returnsObject().noParams()) { it.target?.view }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { InventoryEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { InventoryEvent.getHandlerList() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.inventory.ClickType"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnClickType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ClickType::class.java)
-                .function("isKeyboardClick", 0) { it.target?.isKeyboardClick }
-                .function("isMouseClick", 0) { it.target?.isMouseClick }
-                .function("isCreativeAction", 0) { it.target?.isCreativeAction }
-                .function("isRightClick", 0) { it.target?.isRightClick }
-                .function("isLeftClick", 0) { it.target?.isLeftClick }
-                .function("isShiftClick", 0) { it.target?.isShiftClick }
+                .function("isKeyboardClick", returns(Type.Z).noParams()) { it.target?.isKeyboardClick }
+                .function("isMouseClick", returns(Type.Z).noParams()) { it.target?.isMouseClick }
+                .function("isCreativeAction", returns(Type.Z).noParams()) { it.target?.isCreativeAction }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.target?.isRightClick }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.target?.isLeftClick }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.target?.isShiftClick }
         }
     }
 }

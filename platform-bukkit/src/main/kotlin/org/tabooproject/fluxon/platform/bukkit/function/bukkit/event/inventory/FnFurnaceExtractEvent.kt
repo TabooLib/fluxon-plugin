@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.FurnaceExtractEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnFurnaceExtractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceExtractEvent::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("itemType", 0) { it.target?.itemType }
-                .function("itemAmount", 0) { it.target?.itemAmount }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("itemType", returnsObject().noParams()) { it.target?.itemType }
+                .function("itemAmount", returnsObject().noParams()) { it.target?.itemAmount }
         }
     }
 }

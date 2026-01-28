@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockPistonRetractEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnBlockPistonRetractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonRetractEvent::class.java)
-                .function("retractLocation", 0) { it.target?.retractLocation }
-                .function("blocks", 0) { it.target?.blocks }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("retractLocation", returnsObject().noParams()) { it.target?.retractLocation }
+                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockPistonRetractEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockPistonRetractEvent.getHandlerList() }
         }
     }
 }

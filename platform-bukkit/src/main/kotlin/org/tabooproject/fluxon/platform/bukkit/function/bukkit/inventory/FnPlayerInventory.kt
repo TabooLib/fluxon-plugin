@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.PlayerInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,35 +20,35 @@ object FnPlayerInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInventory::class.java)
-                .function("armorContents", 0) { it.target?.armorContents }
-                .function("extraContents", 0) { it.target?.extraContents }
-                .function("helmet", 0) { it.target?.helmet }
-                .function("chestplate", 0) { it.target?.chestplate }
-                .function("leggings", 0) { it.target?.leggings }
-                .function("boots", 0) { it.target?.boots }
-                .function("setItem", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is Int -> it.target?.setItem(var1, it.getArgument(1) as ItemStack)
-                        is EquipmentSlot -> it.target?.setItem(var1, it.getArgument(1) as ItemStack)
+                .function("armorContents", returnsObject().noParams()) { it.target?.armorContents }
+                .function("extraContents", returnsObject().noParams()) { it.target?.extraContents }
+                .function("helmet", returnsObject().noParams()) { it.target?.helmet }
+                .function("chestplate", returnsObject().noParams()) { it.target?.chestplate }
+                .function("leggings", returnsObject().noParams()) { it.target?.leggings }
+                .function("boots", returnsObject().noParams()) { it.target?.boots }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
+                        is Int -> it.target?.setItem(var1, it.getRef(1) as ItemStack)
+                        is EquipmentSlot -> it.target?.setItem(var1, it.getRef(1) as ItemStack)
                         else -> throw IllegalArgumentException("参数 1 必须是 Int 或 EquipmentSlot 类型")
                     }
                 }
-                .function("getItem", 1) { it.target?.getItem(it.getArgument(0) as EquipmentSlot) }
-                .function("setArmorContents", 1) { it.target?.setArmorContents(it.getArgument(0) as Array<ItemStack>) }
-                .function("setExtraContents", 1) { it.target?.setExtraContents(it.getArgument(0) as Array<ItemStack>) }
-                .function("setHelmet", 1) { it.target?.setHelmet(it.getArgument(0) as ItemStack) }
-                .function("setChestplate", 1) { it.target?.setChestplate(it.getArgument(0) as ItemStack) }
-                .function("setLeggings", 1) { it.target?.setLeggings(it.getArgument(0) as ItemStack) }
-                .function("setBoots", 1) { it.target?.setBoots(it.getArgument(0) as ItemStack) }
-                .function("itemInMainHand", 0) { it.target?.itemInMainHand }
-                .function("setItemInMainHand", 1) { it.target?.setItemInMainHand(it.getArgument(0) as ItemStack) }
-                .function("itemInOffHand", 0) { it.target?.itemInOffHand }
-                .function("setItemInOffHand", 1) { it.target?.setItemInOffHand(it.getArgument(0) as ItemStack) }
-                .function("itemInHand", 0) { it.target?.itemInHand }
-                .function("setItemInHand", 1) { it.target?.setItemInHand(it.getArgument(0) as ItemStack) }
-                .function("heldItemSlot", 0) { it.target?.heldItemSlot }
-                .function("setHeldItemSlot", 1) { it.target?.setHeldItemSlot(it.getNumber(0).toInt()) }
-                .function("holder", 0) { it.target?.holder }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getRef(0) as EquipmentSlot) }
+                .function("setArmorContents", returnsObject().params(Type.OBJECT)) { it.target?.setArmorContents(it.getRef(0) as Array<ItemStack>) }
+                .function("setExtraContents", returnsObject().params(Type.OBJECT)) { it.target?.setExtraContents(it.getRef(0) as Array<ItemStack>) }
+                .function("setHelmet", returnsObject().params(Type.OBJECT)) { it.target?.setHelmet(it.getRef(0) as ItemStack) }
+                .function("setChestplate", returnsObject().params(Type.OBJECT)) { it.target?.setChestplate(it.getRef(0) as ItemStack) }
+                .function("setLeggings", returnsObject().params(Type.OBJECT)) { it.target?.setLeggings(it.getRef(0) as ItemStack) }
+                .function("setBoots", returnsObject().params(Type.OBJECT)) { it.target?.setBoots(it.getRef(0) as ItemStack) }
+                .function("itemInMainHand", returnsObject().noParams()) { it.target?.itemInMainHand }
+                .function("setItemInMainHand", returnsObject().params(Type.OBJECT)) { it.target?.setItemInMainHand(it.getRef(0) as ItemStack) }
+                .function("itemInOffHand", returnsObject().noParams()) { it.target?.itemInOffHand }
+                .function("setItemInOffHand", returnsObject().params(Type.OBJECT)) { it.target?.setItemInOffHand(it.getRef(0) as ItemStack) }
+                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
+                .function("setItemInHand", returnsObject().params(Type.OBJECT)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }
+                .function("heldItemSlot", returnsObject().noParams()) { it.target?.heldItemSlot }
+                .function("setHeldItemSlot", returnsObject().params(Type.OBJECT)) { it.target?.setHeldItemSlot(it.getInt(0).toInt()) }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
         }
     }
 }

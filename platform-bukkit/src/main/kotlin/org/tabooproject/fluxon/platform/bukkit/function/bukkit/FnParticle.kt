@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.Particle"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +19,7 @@ object FnParticle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle::class.java)
-                .function("key", 0) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }
@@ -29,8 +32,8 @@ object FnParticleDustOptions {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle.DustOptions::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("size", 0) { it.target?.size }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
         }
     }
 }
@@ -43,7 +46,7 @@ object FnParticleDustTransition {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle.DustTransition::class.java)
-                .function("toColor", 0) { it.target?.toColor }
+                .function("toColor", returnsObject().noParams()) { it.target?.toColor }
         }
     }
 }

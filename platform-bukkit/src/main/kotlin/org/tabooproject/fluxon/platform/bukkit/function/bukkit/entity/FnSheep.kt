@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Sheep"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnSheep {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sheep::class.java)
-                .function("isSheared", 0) { it.target?.isSheared }
-                .function("setSheared", 1) { it.target?.setSheared(it.getBoolean(0)) }
+                .function("isSheared", returns(Type.Z).noParams()) { it.target?.isSheared }
+                .function("setSheared", returnsObject().params(Type.OBJECT)) { it.target?.setSheared(it.getBool(0)) }
         }
     }
 }

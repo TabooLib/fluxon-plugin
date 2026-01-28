@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.permissions.Permission"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,41 +20,56 @@ object FnPermission {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Permission::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("default", 0) { it.target?.default }
-                .function("setDefault", 1) { it.target?.setDefault(it.getArgument(0) as PermissionDefault) }
-                .function("description", 0) { it.target?.description }
-                .function("setDescription", 1) { it.target?.setDescription(it.getString(0)) }
-                .function("permissibles", 0) { it.target?.permissibles }
-                .function("recalculatePermissibles", 0) { it.target?.recalculatePermissibles() }
-                .function("addParent", 2) {
-                    when (val var1 = it.getArgument(0)) {
-                        is String -> it.target?.addParent(var1, it.getBoolean(1))
-                        is Permission -> it.target?.addParent(var1, it.getBoolean(1))
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("default", returnsObject().noParams()) { it.target?.default }
+                .function("setDefault", returnsObject().params(Type.OBJECT)) { it.target?.setDefault(it.getRef(0) as PermissionDefault) }
+                .function("description", returnsObject().noParams()) { it.target?.description }
+                .function("setDescription", returnsObject().params(Type.OBJECT)) { it.target?.setDescription(it.getString(0)) }
+                .function("permissibles", returnsObject().noParams()) { it.target?.permissibles }
+                .function("recalculatePermissibles", returnsObject().noParams()) { it.target?.recalculatePermissibles() }
+                .function("addParent", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
+                        is String -> it.target?.addParent(var1, it.getBool(1))
+                        is Permission -> it.target?.addParent(var1, it.getBool(1))
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
                     }
                 }
                 // static
-                .function("loadPermissions", 3) {
+                .function("loadPermissions", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     Permission.loadPermissions(
-                        it.getArgument(0) as Map<*, *>,
+                        it.getRef(0) as Map<*, *>,
                         it.getString(1)!!,
-                        it.getArgument(2) as PermissionDefault
+                        it.getRef(2) as PermissionDefault
                     )
                 }
                 // static
-                .function("loadPermission", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
+                .function("loadPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
                         Permission.loadPermission(
                             it.getString(0)!!,
-                            it.getArgument(1) as Map<String, Any>
+                            it.getRef(1) as Map<String, Any>
                         )
                     } else {
                         Permission.loadPermission(
                             it.getString(0)!!,
-                            it.getArgument(1) as Map<*, *>,
-                            it.getArgument(2) as PermissionDefault,
-                            it.getArgument(3) as List<Permission>
+                            it.getRef(1) as Map<*, *>,
+                            it.getRef(2) as PermissionDefault,
+                            it.getRef(3) as List<Permission>
+                        )
+                    }
+                }
+                .function("loadPermission", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        Permission.loadPermission(
+                            it.getString(0)!!,
+                            it.getRef(1) as Map<String, Any>
+                        )
+                    } else {
+                        Permission.loadPermission(
+                            it.getString(0)!!,
+                            it.getRef(1) as Map<*, *>,
+                            it.getRef(2) as PermissionDefault,
+                            it.getRef(3) as List<Permission>
                         )
                     }
                 }

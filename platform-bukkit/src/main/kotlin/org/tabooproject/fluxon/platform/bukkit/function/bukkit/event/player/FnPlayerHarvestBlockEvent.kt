@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerHarvestBlockEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnPlayerHarvestBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerHarvestBlockEvent::class.java)
-                .function("harvestedBlock", 0) { it.target?.harvestedBlock }
-                .function("hand", 0) { it.target?.hand }
-                .function("itemsHarvested", 0) { it.target?.itemsHarvested }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("harvestedBlock", returnsObject().noParams()) { it.target?.harvestedBlock }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("itemsHarvested", returnsObject().noParams()) { it.target?.itemsHarvested }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerHarvestBlockEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerHarvestBlockEvent.getHandlerList() }
         }
     }
 }

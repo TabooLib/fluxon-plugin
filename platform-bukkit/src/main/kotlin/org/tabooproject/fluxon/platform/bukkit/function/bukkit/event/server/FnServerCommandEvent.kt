@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.server.ServerCommandEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnServerCommandEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerCommandEvent::class.java)
-                .function("command", 0) { it.target?.command }
-                .function("setCommand", 1) { it.target?.setCommand(it.getString(0)!!) }
-                .function("sender", 0) { it.target?.sender }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("command", returnsObject().noParams()) { it.target?.command }
+                .function("setCommand", returnsObject().params(Type.OBJECT)) { it.target?.setCommand(it.getString(0)!!) }
+                .function("sender", returnsObject().noParams()) { it.target?.sender }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ServerCommandEvent.getHandlerList() }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlerList", returnsObject().noParams()) { ServerCommandEvent.getHandlerList() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
         }
     }
 }

@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.TropicalFishBucketMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,13 +21,13 @@ object FnTropicalFishBucketMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFishBucketMeta::class.java)
-                .function("patternColor", 0) { it.target?.patternColor }
-                .function("setPatternColor", 1) { it.target?.setPatternColor(it.getArgument(0) as DyeColor) }
-                .function("bodyColor", 0) { it.target?.bodyColor }
-                .function("setBodyColor", 1) { it.target?.setBodyColor(it.getArgument(0) as DyeColor) }
-                .function("setPattern", 1) { it.target?.setPattern(it.getArgument(0) as TropicalFish.Pattern) }
-                .function("hasVariant", 0) { it.target?.hasVariant() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("patternColor", returnsObject().noParams()) { it.target?.patternColor }
+                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
+                .function("bodyColor", returnsObject().noParams()) { it.target?.bodyColor }
+                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
+                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
+                .function("hasVariant", returns(Type.Z).noParams()) { it.target?.hasVariant() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

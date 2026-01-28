@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockMultiPlaceEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnBlockMultiPlaceEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockMultiPlaceEvent::class.java)
-                .function("replacedBlockStates", 0) { it.target?.replacedBlockStates }
+                .function("replacedBlockStates", returnsObject().noParams()) { it.target?.replacedBlockStates }
         }
     }
 }

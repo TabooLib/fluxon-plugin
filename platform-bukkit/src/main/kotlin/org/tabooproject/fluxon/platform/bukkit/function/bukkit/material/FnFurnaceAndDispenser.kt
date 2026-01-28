@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.material.FurnaceAndDispenser"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnFurnaceAndDispenser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceAndDispenser::class.java)
-                .function("clone", 0) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

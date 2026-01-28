@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Breedable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnBreedable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Breedable::class.java)
-                .function("setAgeLock", 1) { it.target?.setAgeLock(it.getBoolean(0)) }
-                .function("ageLock", 0) { it.target?.ageLock }
-                .function("canBreed", 0) { it.target?.canBreed() }
-                .function("setBreed", 1) { it.target?.setBreed(it.getBoolean(0)) }
+                .function("setAgeLock", returnsObject().params(Type.OBJECT)) { it.target?.setAgeLock(it.getBool(0)) }
+                .function("ageLock", returnsObject().noParams()) { it.target?.ageLock }
+                .function("canBreed", returns(Type.Z).noParams()) { it.target?.canBreed() }
+                .function("setBreed", returnsObject().params(Type.OBJECT)) { it.target?.setBreed(it.getBool(0)) }
         }
     }
 }

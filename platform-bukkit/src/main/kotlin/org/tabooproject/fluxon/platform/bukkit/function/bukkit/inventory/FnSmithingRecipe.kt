@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.SmithingRecipe"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnSmithingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingRecipe::class.java)
-                .function("base", 0) { it.target?.base }
-                .function("addition", 0) { it.target?.addition }
-                .function("result", 0) { it.target?.result }
-                .function("key", 0) { it.target?.key }
+                .function("base", returnsObject().noParams()) { it.target?.base }
+                .function("addition", returnsObject().noParams()) { it.target?.addition }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }

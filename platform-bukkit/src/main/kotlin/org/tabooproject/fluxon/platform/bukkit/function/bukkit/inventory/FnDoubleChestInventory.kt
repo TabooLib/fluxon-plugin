@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.DoubleChestInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnDoubleChestInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DoubleChestInventory::class.java)
-                .function("leftSide", 0) { it.target?.leftSide }
-                .function("rightSide", 0) { it.target?.rightSide }
-                .function("holder", 0) { it.target?.holder }
+                .function("leftSide", returnsObject().noParams()) { it.target?.leftSide }
+                .function("rightSide", returnsObject().noParams()) { it.target?.rightSide }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
         }
     }
 }

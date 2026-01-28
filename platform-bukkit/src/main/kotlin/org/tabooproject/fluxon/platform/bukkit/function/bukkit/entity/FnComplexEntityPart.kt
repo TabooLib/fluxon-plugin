@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.ComplexEntityPart"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnComplexEntityPart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ComplexEntityPart::class.java)
-                .function("parent", 0) { it.target?.parent }
+                .function("parent", returnsObject().noParams()) { it.target?.parent }
         }
     }
 }

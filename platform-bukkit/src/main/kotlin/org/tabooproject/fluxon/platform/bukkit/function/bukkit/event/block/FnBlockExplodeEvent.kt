@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockExplodeEvent"])
@@ -17,15 +20,15 @@ object FnBlockExplodeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExplodeEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("explodedBlockState", 0) { it.target?.explodedBlockState }
-                .function("blockList", 0) { it.target?.blockList() }
-                .function("yield", 0) { it.target?.yield }
-                .function("setYield", 1) { it.target?.setYield(it.getNumber(0).toFloat()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("explodedBlockState", returnsObject().noParams()) { it.target?.explodedBlockState }
+                .function("blockList", returnsObject().noParams()) { it.target?.blockList() }
+                .function("yield", returnsObject().noParams()) { it.target?.yield }
+                .function("setYield", returnsObject().params(Type.OBJECT)) { it.target?.setYield(it.getFloat(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockExplodeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockExplodeEvent.getHandlerList() }
         }
     }
 }

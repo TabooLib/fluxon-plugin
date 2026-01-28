@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerRecipeBookClickEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +20,14 @@ object FnPlayerRecipeBookClickEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRecipeBookClickEvent::class.java)
-                .function("originalRecipe", 0) { it.target?.originalRecipe }
-                .function("recipe", 0) { it.target?.recipe }
-                .function("setRecipe", 1) { it.target?.setRecipe(it.getArgument(0) as Recipe) }
-                .function("isShiftClick", 0) { it.target?.isShiftClick }
-                .function("setShiftClick", 1) { it.target?.setShiftClick(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("originalRecipe", returnsObject().noParams()) { it.target?.originalRecipe }
+                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
+                .function("setRecipe", returnsObject().params(Type.OBJECT)) { it.target?.setRecipe(it.getRef(0) as Recipe) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.target?.isShiftClick }
+                .function("setShiftClick", returnsObject().params(Type.OBJECT)) { it.target?.setShiftClick(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerRecipeBookClickEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerRecipeBookClickEvent.getHandlerList() }
         }
     }
 }

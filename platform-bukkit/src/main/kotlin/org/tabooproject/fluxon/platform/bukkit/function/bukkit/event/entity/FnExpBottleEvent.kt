@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.ExpBottleEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +18,14 @@ object FnExpBottleEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExpBottleEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("showEffect", 0) { it.target?.showEffect }
-                .function("setShowEffect", 1) { it.target?.setShowEffect(it.getBoolean(0)) }
-                .function("experience", 0) { it.target?.experience }
-                .function("setExperience", 1) { it.target?.setExperience(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("showEffect", returnsObject().noParams()) { it.target?.showEffect }
+                .function("setShowEffect", returnsObject().params(Type.OBJECT)) { it.target?.setShowEffect(it.getBool(0)) }
+                .function("experience", returnsObject().noParams()) { it.target?.experience }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ExpBottleEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { ExpBottleEvent.getHandlerList() }
         }
     }
 }

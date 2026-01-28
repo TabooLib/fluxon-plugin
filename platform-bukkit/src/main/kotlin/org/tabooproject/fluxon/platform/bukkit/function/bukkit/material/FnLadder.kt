@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.material.Ladder"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +19,9 @@ object FnLadder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ladder::class.java)
-                .function("attachedFace", 0) { it.target?.attachedFace }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerRiptideEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnPlayerRiptideEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRiptideEvent::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("velocity", 0) { it.target?.velocity }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("velocity", returnsObject().noParams()) { it.target?.velocity }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerRiptideEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerRiptideEvent.getHandlerList() }
         }
     }
 }

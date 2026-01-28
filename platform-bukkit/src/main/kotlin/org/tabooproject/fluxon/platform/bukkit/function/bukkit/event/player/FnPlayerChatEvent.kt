@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerChatEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,17 +20,17 @@ object FnPlayerChatEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChatEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("message", 0) { it.target?.message }
-                .function("setMessage", 1) { it.target?.setMessage(it.getString(0)!!) }
-                .function("setPlayer", 1) { it.target?.setPlayer(it.getArgument(0) as Player) }
-                .function("format", 0) { it.target?.format }
-                .function("setFormat", 1) { it.target?.setFormat(it.getString(0)!!) }
-                .function("recipients", 0) { it.target?.recipients }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("message", returnsObject().noParams()) { it.target?.message }
+                .function("setMessage", returnsObject().params(Type.OBJECT)) { it.target?.setMessage(it.getString(0)!!) }
+                .function("setPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setPlayer(it.getRef(0) as Player) }
+                .function("format", returnsObject().noParams()) { it.target?.format }
+                .function("setFormat", returnsObject().params(Type.OBJECT)) { it.target?.setFormat(it.getString(0)!!) }
+                .function("recipients", returnsObject().noParams()) { it.target?.recipients }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerChatEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerChatEvent.getHandlerList() }
         }
     }
 }

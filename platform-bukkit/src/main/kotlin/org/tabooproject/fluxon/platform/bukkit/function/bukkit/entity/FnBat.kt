@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Bat"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnBat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bat::class.java)
-                .function("isAwake", 0) { it.target?.isAwake }
-                .function("setAwake", 1) { it.target?.setAwake(it.getBoolean(0)) }
+                .function("isAwake", returns(Type.Z).noParams()) { it.target?.isAwake }
+                .function("setAwake", returnsObject().params(Type.OBJECT)) { it.target?.setAwake(it.getBool(0)) }
         }
     }
 }

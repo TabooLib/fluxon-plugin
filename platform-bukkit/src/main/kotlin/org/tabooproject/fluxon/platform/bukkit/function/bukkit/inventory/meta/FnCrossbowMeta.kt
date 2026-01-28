@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.CrossbowMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,10 @@ object FnCrossbowMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CrossbowMeta::class.java)
-                .function("hasChargedProjectiles", 0) { it.target?.hasChargedProjectiles() }
-                .function("chargedProjectiles", 0) { it.target?.chargedProjectiles }
-                .function(
-                    "setChargedProjectiles",
-                    1
-                ) { it.target?.setChargedProjectiles(it.getArgument(0) as List<ItemStack>) }
-                .function("addChargedProjectile", 1) { it.target?.addChargedProjectile(it.getArgument(0) as ItemStack) }
+                .function("hasChargedProjectiles", returns(Type.Z).noParams()) { it.target?.hasChargedProjectiles() }
+                .function("chargedProjectiles", returnsObject().noParams()) { it.target?.chargedProjectiles }
+                .function("setChargedProjectiles", returnsObject().params(Type.OBJECT)) { it.target?.setChargedProjectiles(it.getRef(0) as List<ItemStack>) }
+                .function("addChargedProjectile", returnsObject().params(Type.OBJECT)) { it.target?.addChargedProjectile(it.getRef(0) as ItemStack) }
         }
     }
 }

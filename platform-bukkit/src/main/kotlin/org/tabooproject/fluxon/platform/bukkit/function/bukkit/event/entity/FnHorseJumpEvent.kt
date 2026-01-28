@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.HorseJumpEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnHorseJumpEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HorseJumpEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("power", 0) { it.target?.power }
-                .function("setPower", 1) { it.target?.setPower(it.getNumber(0).toFloat()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("power", returnsObject().noParams()) { it.target?.power }
+                .function("setPower", returnsObject().params(Type.OBJECT)) { it.target?.setPower(it.getFloat(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { HorseJumpEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { HorseJumpEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Wall"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnWall {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wall::class.java)
-                .function("isUp", 0) { it.target?.isUp }
-                .function("setUp", 1) { it.target?.setUp(it.getBoolean(0)) }
-                .function("getHeight", 1) { it.target?.getHeight(it.getArgument(0) as BlockFace) }
-                .function("setHeight", 2) {
+                .function("isUp", returns(Type.Z).noParams()) { it.target?.isUp }
+                .function("setUp", returnsObject().params(Type.OBJECT)) { it.target?.setUp(it.getBool(0)) }
+                .function("getHeight", returnsObject().params(Type.OBJECT)) { it.target?.getHeight(it.getRef(0) as BlockFace) }
+                .function("setHeight", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setHeight(
-                        it.getArgument(0) as BlockFace,
-                        it.getArgument(1) as Wall.Height
+                        it.getRef(0) as BlockFace,
+                        it.getRef(1) as Wall.Height
                     )
                 }
         }

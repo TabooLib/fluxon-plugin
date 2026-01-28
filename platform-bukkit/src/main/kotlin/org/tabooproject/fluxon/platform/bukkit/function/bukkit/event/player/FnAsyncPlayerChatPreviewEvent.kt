@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.AsyncPlayerChatPreviewEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnAsyncPlayerChatPreviewEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncPlayerChatPreviewEvent::class.java)
-                .function("handlers", 0) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { AsyncPlayerChatPreviewEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { AsyncPlayerChatPreviewEvent.getHandlerList() }
         }
     }
 }

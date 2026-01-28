@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.VillagerReplenishTradeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnVillagerReplenishTradeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VillagerReplenishTradeEvent::class.java)
-                .function("recipe", 0) { it.target?.recipe }
-                .function("setRecipe", 1) { it.target?.setRecipe(it.getArgument(0) as MerchantRecipe) }
-                .function("bonus", 0) { it.target?.bonus }
-                .function("setBonus", 1) { it.target?.setBonus(it.getNumber(0).toInt()) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
+                .function("setRecipe", returnsObject().params(Type.OBJECT)) { it.target?.setRecipe(it.getRef(0) as MerchantRecipe) }
+                .function("bonus", returnsObject().noParams()) { it.target?.bonus }
+                .function("setBonus", returnsObject().params(Type.OBJECT)) { it.target?.setBonus(it.getInt(0).toInt()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { VillagerReplenishTradeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { VillagerReplenishTradeEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.ExtendedRails"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +20,14 @@ object FnExtendedRails {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExtendedRails::class.java)
-                .function("isCurve", 0) { it.target?.isCurve }
-                .function("setDirection", 2) {
+                .function("isCurve", returns(Type.Z).noParams()) { it.target?.isCurve }
+                .function("setDirection", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setDirection(
-                        it.getArgument(0) as BlockFace,
-                        it.getBoolean(1)
+                        it.getRef(0) as BlockFace,
+                        it.getBool(1)
                     )
                 }
-                .function("clone", 0) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

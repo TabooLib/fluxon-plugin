@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryCloseEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnInventoryCloseEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryCloseEvent::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { InventoryCloseEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { InventoryCloseEvent.getHandlerList() }
         }
     }
 }

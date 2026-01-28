@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Comparator"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnComparator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Comparator::class.java)
-                .function("mode", 0) { it.target?.mode }
-                .function("setMode", 1) { it.target?.setMode(it.getArgument(0) as Comparator.Mode) }
+                .function("mode", returnsObject().noParams()) { it.target?.mode }
+                .function("setMode", returnsObject().params(Type.OBJECT)) { it.target?.setMode(it.getRef(0) as Comparator.Mode) }
         }
     }
 }

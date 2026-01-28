@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.ShulkerBullet"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnShulkerBullet {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShulkerBullet::class.java)
-                .function("target", 0) { it.target?.target }
-                .function("setTarget", 1) { it.target?.setTarget(it.getArgument(0) as Entity) }
+                .function("target", returnsObject().noParams()) { it.target?.target }
+                .function("setTarget", returnsObject().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as Entity) }
         }
     }
 }

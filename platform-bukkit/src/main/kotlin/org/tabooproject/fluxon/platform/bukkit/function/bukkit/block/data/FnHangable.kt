@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.Hangable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnHangable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hangable::class.java)
-                .function("isHanging", 0) { it.target?.isHanging }
-                .function("setHanging", 1) { it.target?.setHanging(it.getBoolean(0)) }
+                .function("isHanging", returns(Type.Z).noParams()) { it.target?.isHanging }
+                .function("setHanging", returnsObject().params(Type.OBJECT)) { it.target?.setHanging(it.getBool(0)) }
         }
     }
 }

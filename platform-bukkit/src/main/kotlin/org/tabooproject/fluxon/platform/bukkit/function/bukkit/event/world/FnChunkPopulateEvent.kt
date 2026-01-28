@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.ChunkPopulateEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnChunkPopulateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkPopulateEvent::class.java)
-                .function("handlers", 0) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ChunkPopulateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { ChunkPopulateEvent.getHandlerList() }
         }
     }
 }

@@ -14,6 +14,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.AreaEffectCloud"])
 @PlatformSide(Platform.BUKKIT)
@@ -23,44 +26,41 @@ object FnAreaEffectCloud {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AreaEffectCloud::class.java)
-                .function("duration", 0) { it.target?.duration }
-                .function("setDuration", 1) { it.target?.setDuration(it.getNumber(0).toInt()) }
-                .function("waitTime", 0) { it.target?.waitTime }
-                .function("setWaitTime", 1) { it.target?.setWaitTime(it.getNumber(0).toInt()) }
-                .function("reapplicationDelay", 0) { it.target?.reapplicationDelay }
-                .function("setReapplicationDelay", 1) { it.target?.setReapplicationDelay(it.getNumber(0).toInt()) }
-                .function("durationOnUse", 0) { it.target?.durationOnUse }
-                .function("setDurationOnUse", 1) { it.target?.setDurationOnUse(it.getNumber(0).toInt()) }
-                .function("radius", 0) { it.target?.radius }
-                .function("setRadius", 1) { it.target?.setRadius(it.getNumber(0).toFloat()) }
-                .function("radiusOnUse", 0) { it.target?.radiusOnUse }
-                .function("setRadiusOnUse", 1) { it.target?.setRadiusOnUse(it.getNumber(0).toFloat()) }
-                .function("radiusPerTick", 0) { it.target?.radiusPerTick }
-                .function("setRadiusPerTick", 1) { it.target?.setRadiusPerTick(it.getNumber(0).toFloat()) }
-                .function("particle", 0) { it.target?.particle }
-                .function("setParticle", 1) { it.target?.setParticle(it.getArgument(0) as Particle) }
-                .function("setBasePotionData", 1) { it.target?.setBasePotionData(it.getArgument(0) as PotionData) }
-                .function("basePotionData", 0) { it.target?.basePotionData }
-                .function("setBasePotionType", 1) { it.target?.setBasePotionType(it.getArgument(0) as PotionType) }
-                .function("basePotionType", 0) { it.target?.basePotionType }
-                .function("hasCustomEffects", 0) { it.target?.hasCustomEffects() }
-                .function("customEffects", 0) { it.target?.customEffects }
-                .function("addCustomEffect", 2) {
+                .function("duration", returnsObject().noParams()) { it.target?.duration }
+                .function("setDuration", returnsObject().params(Type.OBJECT)) { it.target?.setDuration(it.getInt(0).toInt()) }
+                .function("waitTime", returnsObject().noParams()) { it.target?.waitTime }
+                .function("setWaitTime", returnsObject().params(Type.OBJECT)) { it.target?.setWaitTime(it.getInt(0).toInt()) }
+                .function("reapplicationDelay", returnsObject().noParams()) { it.target?.reapplicationDelay }
+                .function("setReapplicationDelay", returnsObject().params(Type.OBJECT)) { it.target?.setReapplicationDelay(it.getInt(0).toInt()) }
+                .function("durationOnUse", returnsObject().noParams()) { it.target?.durationOnUse }
+                .function("setDurationOnUse", returnsObject().params(Type.OBJECT)) { it.target?.setDurationOnUse(it.getInt(0).toInt()) }
+                .function("radius", returnsObject().noParams()) { it.target?.radius }
+                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.target?.setRadius(it.getFloat(0)) }
+                .function("radiusOnUse", returnsObject().noParams()) { it.target?.radiusOnUse }
+                .function("setRadiusOnUse", returnsObject().params(Type.OBJECT)) { it.target?.setRadiusOnUse(it.getFloat(0)) }
+                .function("radiusPerTick", returnsObject().noParams()) { it.target?.radiusPerTick }
+                .function("setRadiusPerTick", returnsObject().params(Type.OBJECT)) { it.target?.setRadiusPerTick(it.getFloat(0)) }
+                .function("particle", returnsObject().noParams()) { it.target?.particle }
+                .function("setParticle", returnsObject().params(Type.OBJECT)) { it.target?.setParticle(it.getRef(0) as Particle) }
+                .function("setBasePotionData", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
+                .function("basePotionData", returnsObject().noParams()) { it.target?.basePotionData }
+                .function("setBasePotionType", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
+                .function("basePotionType", returnsObject().noParams()) { it.target?.basePotionType }
+                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.target?.hasCustomEffects() }
+                .function("customEffects", returnsObject().noParams()) { it.target?.customEffects }
+                .function("addCustomEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.addCustomEffect(
-                        it.getArgument(0) as PotionEffect,
-                        it.getBoolean(1)
+                        it.getRef(0) as PotionEffect,
+                        it.getBool(1)
                     )
                 }
-                .function(
-                    "removeCustomEffect",
-                    1
-                ) { it.target?.removeCustomEffect(it.getArgument(0) as PotionEffectType) }
-                .function("hasCustomEffect", 1) { it.target?.hasCustomEffect(it.getArgument(0) as PotionEffectType) }
-                .function("clearCustomEffects", 0) { it.target?.clearCustomEffects() }
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as Color) }
-                .function("source", 0) { it.target?.source }
-                .function("setSource", 1) { it.target?.setSource(it.getArgument(0) as ProjectileSource) }
+                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) }
+                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) }
+                .function("clearCustomEffects", returnsObject().noParams()) { it.target?.clearCustomEffects() }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("setSource", returnsObject().params(Type.OBJECT)) { it.target?.setSource(it.getRef(0) as ProjectileSource) }
         }
     }
 }

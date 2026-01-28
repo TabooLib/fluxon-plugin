@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Sittable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnSittable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sittable::class.java)
-                .function("isSitting", 0) { it.target?.isSitting }
-                .function("setSitting", 1) { it.target?.setSitting(it.getBoolean(0)) }
+                .function("isSitting", returns(Type.Z).noParams()) { it.target?.isSitting }
+                .function("setSitting", returnsObject().params(Type.OBJECT)) { it.target?.setSitting(it.getBool(0)) }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.PufferFish"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnPufferFish {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PufferFish::class.java)
-                .function("puffState", 0) { it.target?.puffState }
-                .function("setPuffState", 1) { it.target?.setPuffState(it.getNumber(0).toInt()) }
+                .function("puffState", returnsObject().noParams()) { it.target?.puffState }
+                .function("setPuffState", returnsObject().params(Type.OBJECT)) { it.target?.setPuffState(it.getInt(0).toInt()) }
         }
     }
 }

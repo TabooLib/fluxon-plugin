@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Cauldron"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnCauldron {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cauldron::class.java)
-                .function("isFull", 0) { it.target?.isFull }
-                .function("isEmpty", 0) { it.target?.isEmpty }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("isFull", returns(Type.Z).noParams()) { it.target?.isFull }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

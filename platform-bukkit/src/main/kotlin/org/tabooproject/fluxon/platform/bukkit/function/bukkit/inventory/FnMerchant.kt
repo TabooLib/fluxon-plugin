@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.Merchant"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,18 +20,18 @@ object FnMerchant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Merchant::class.java)
-                .function("recipes", 0) { it.target?.recipes }
-                .function("setRecipes", 1) { it.target?.setRecipes(it.getArgument(0) as List<MerchantRecipe>) }
-                .function("getRecipe", 1) { it.target?.getRecipe(it.getNumber(0).toInt()) }
-                .function("setRecipe", 2) {
+                .function("recipes", returnsObject().noParams()) { it.target?.recipes }
+                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>) }
+                .function("getRecipe", returnsObject().params(Type.OBJECT)) { it.target?.getRecipe(it.getInt(0).toInt()) }
+                .function("setRecipe", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setRecipe(
-                        it.getNumber(0).toInt(),
-                        it.getArgument(1) as MerchantRecipe
+                        it.getInt(0).toInt(),
+                        it.getRef(1) as MerchantRecipe
                     )
                 }
-                .function("recipeCount", 0) { it.target?.recipeCount }
-                .function("isTrading", 0) { it.target?.isTrading }
-                .function("trader", 0) { it.target?.trader }
+                .function("recipeCount", returnsObject().noParams()) { it.target?.recipeCount }
+                .function("isTrading", returns(Type.Z).noParams()) { it.target?.isTrading }
+                .function("trader", returnsObject().noParams()) { it.target?.trader }
         }
     }
 }

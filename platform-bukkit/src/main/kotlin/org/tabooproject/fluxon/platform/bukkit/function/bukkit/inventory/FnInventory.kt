@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.Inventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,73 +21,99 @@ object FnInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Inventory::class.java)
-                .function("size", 0) { it.target?.size }
-                .function("maxStackSize", 0) { it.target?.maxStackSize }
-                .function("setMaxStackSize", 1) { it.target?.setMaxStackSize(it.getNumber(0).toInt()) }
-                .function("getItem", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
-                .function("setItem", 2) { it.target?.setItem(it.getNumber(0).toInt(), it.getArgument(1) as ItemStack) }
-                .function("contents", 0) { it.target?.contents }
-                .function("setContents", 1) { it.target?.setContents(it.getArgument(0) as Array<ItemStack>) }
-                .function("storageContents", 0) { it.target?.storageContents }
-                .function(
-                    "setStorageContents",
-                    1
-                ) { it.target?.setStorageContents(it.getArgument(0) as Array<ItemStack>) }
-                .function("contains", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        when (val var1 = it.getArgument(0)) {
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("maxStackSize", returnsObject().noParams()) { it.target?.maxStackSize }
+                .function("setMaxStackSize", returnsObject().params(Type.OBJECT)) { it.target?.setMaxStackSize(it.getInt(0).toInt()) }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getInt(0).toInt()) }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack) }
+                .function("contents", returnsObject().noParams()) { it.target?.contents }
+                .function("setContents", returnsObject().params(Type.OBJECT)) { it.target?.setContents(it.getRef(0) as Array<ItemStack>) }
+                .function("storageContents", returnsObject().noParams()) { it.target?.storageContents }
+                .function("setStorageContents", returnsObject().params(Type.OBJECT)) { it.target?.setStorageContents(it.getRef(0) as Array<ItemStack>) }
+                .function("contains", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        when (val var1 = it.getRef(0)) {
                             is Material -> it.target?.contains(var1)
                             is ItemStack -> it.target?.contains(var1)
                             else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
                         }
                     } else {
-                        when (val var1 = it.getArgument(0)) {
-                            is Material -> it.target?.contains(var1, it.getNumber(1).toInt())
-                            is ItemStack -> it.target?.contains(var1, it.getNumber(1).toInt())
+                        when (val var1 = it.getRef(0)) {
+                            is Material -> it.target?.contains(var1, it.getInt(1).toInt())
+                            is ItemStack -> it.target?.contains(var1, it.getInt(1).toInt())
                             else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
                         }
                     }
                 }
-                .function("containsAtLeast", 2) {
+                .function("contains", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        when (val var1 = it.getRef(0)) {
+                            is Material -> it.target?.contains(var1)
+                            is ItemStack -> it.target?.contains(var1)
+                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                        }
+                    } else {
+                        when (val var1 = it.getRef(0)) {
+                            is Material -> it.target?.contains(var1, it.getInt(1).toInt())
+                            is ItemStack -> it.target?.contains(var1, it.getInt(1).toInt())
+                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                        }
+                    }
+                }
+                .function("containsAtLeast", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.containsAtLeast(
-                        it.getArgument(0) as ItemStack,
-                        it.getNumber(1).toInt()
+                        it.getRef(0) as ItemStack,
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("first", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("first", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.first(var1)
                         is ItemStack -> it.target?.first(var1)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
                     }
                 }
-                .function("firstEmpty", 0) { it.target?.firstEmpty() }
-                .function("isEmpty", 0) { it.target?.isEmpty }
-                .function("remove", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("firstEmpty", returnsObject().noParams()) { it.target?.firstEmpty() }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("remove", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.remove(var1)
                         is ItemStack -> it.target?.remove(var1)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
                     }
                 }
-                .function("clear", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("clear", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.clear()
                     } else {
-                        it.target?.clear(it.getNumber(0).toInt())
+                        it.target?.clear(it.getInt(0).toInt())
                     }
                 }
-                .function("viewers", 0) { it.target?.viewers }
-                .function("type", 0) { it.target?.type }
-                .function("holder", 0) { it.target?.holder }
-                .function("iterator", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("clear", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.clear()
+                    } else {
+                        it.target?.clear(it.getInt(0).toInt())
+                    }
+                }
+                .function("viewers", returnsObject().noParams()) { it.target?.viewers }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("iterator", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.iterator()
                     } else {
-                        it.target?.iterator(it.getNumber(0).toInt())
+                        it.target?.iterator(it.getInt(0).toInt())
                     }
                 }
-                .function("location", 0) { it.target?.location }
+                .function("iterator", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.iterator()
+                    } else {
+                        it.target?.iterator(it.getInt(0).toInt())
+                    }
+                }
+                .function("location", returnsObject().noParams()) { it.target?.location }
         }
     }
 }

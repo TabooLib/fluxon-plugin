@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Redstone"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +19,7 @@ object FnRedstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Redstone::class.java)
-                .function("isPowered", 0) { it.target?.isPowered }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
         }
     }
 }

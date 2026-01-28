@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.loot.LootTables"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnLootTables {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootTables::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("lootTable", 0) { it.target?.lootTable }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("lootTable", returnsObject().noParams()) { it.target?.lootTable }
         }
     }
 }

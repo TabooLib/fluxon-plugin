@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerInteractEntityEvent"])
@@ -17,13 +20,13 @@ object FnPlayerInteractEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInteractEntityEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("rightClicked", 0) { it.target?.rightClicked }
-                .function("hand", 0) { it.target?.hand }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("rightClicked", returnsObject().noParams()) { it.target?.rightClicked }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerInteractEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerInteractEntityEvent.getHandlerList() }
         }
     }
 }

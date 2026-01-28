@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.Campfire"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnCampfire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Campfire::class.java)
-                .function("size", 0) { it.target?.size }
-                .function("getItem", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
-                .function("setItem", 2) { it.target?.setItem(it.getNumber(0).toInt(), it.getArgument(1) as ItemStack) }
-                .function("getCookTime", 1) { it.target?.getCookTime(it.getNumber(0).toInt()) }
-                .function("setCookTime", 2) { it.target?.setCookTime(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("getCookTimeTotal", 1) { it.target?.getCookTimeTotal(it.getNumber(0).toInt()) }
-                .function("setCookTimeTotal", 2) {
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getInt(0).toInt()) }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack) }
+                .function("getCookTime", returnsObject().params(Type.OBJECT)) { it.target?.getCookTime(it.getInt(0).toInt()) }
+                .function("setCookTime", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setCookTime(it.getInt(0).toInt(), it.getInt(1).toInt()) }
+                .function("getCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.target?.getCookTimeTotal(it.getInt(0).toInt()) }
+                .function("setCookTimeTotal", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setCookTimeTotal(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
                     )
                 }
         }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.PistonMoveReaction"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnPistonMoveReaction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonMoveReaction::class.java)
-                .function("id", 0) { it.target?.id }
+                .function("id", returnsObject().noParams()) { it.target?.id }
                 // static
-                .function("getById", 1) { PistonMoveReaction.getById(it.getNumber(0).toInt()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { PistonMoveReaction.getById(it.getInt(0).toInt()) }
         }
     }
 }

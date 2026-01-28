@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.material.types.MushroomBlockTexture"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnMushroomBlockTexture {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MushroomBlockTexture::class.java)
-                .function("data", 0) { it.target?.data }
-                .function("capFace", 0) { it.target?.capFace }
+                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("capFace", returnsObject().noParams()) { it.target?.capFace }
                 // static
-                .function("getByData", 1) { MushroomBlockTexture.getByData(it.getNumber(0).toByte()) }
+                .function("getByData", returnsObject().params(Type.OBJECT)) { MushroomBlockTexture.getByData(it.getInt(0).toByte()) }
                 // static
-                .function("getCapByFace", 1) { MushroomBlockTexture.getCapByFace(it.getArgument(0) as BlockFace) }
+                .function("getCapByFace", returnsObject().params(Type.OBJECT)) { MushroomBlockTexture.getCapByFace(it.getRef(0) as BlockFace) }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.world.ChunkEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnChunkEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkEvent::class.java)
-                .function("chunk", 0) { it.target?.getChunk() }
+                .function("chunk", returnsObject().noParams()) { it.target?.getChunk() }
         }
     }
 }

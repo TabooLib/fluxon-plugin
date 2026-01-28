@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockSpreadEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnBlockSpreadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockSpreadEvent::class.java)
-                .function("source", 0) { it.target?.source }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockSpreadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockSpreadEvent.getHandlerList() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.weather.LightningStrikeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnLightningStrikeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LightningStrikeEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("lightning", 0) { it.target?.lightning }
-                .function("cause", 0) { it.target?.cause }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("lightning", returnsObject().noParams()) { it.target?.lightning }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { LightningStrikeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { LightningStrikeEvent.getHandlerList() }
         }
     }
 }

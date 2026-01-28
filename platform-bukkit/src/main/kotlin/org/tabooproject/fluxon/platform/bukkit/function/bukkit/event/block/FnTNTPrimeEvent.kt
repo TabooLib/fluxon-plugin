@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.TNTPrimeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnTNTPrimeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TNTPrimeEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("cause", 0) { it.target?.cause }
-                .function("primingEntity", 0) { it.target?.primingEntity }
-                .function("primingBlock", 0) { it.target?.primingBlock }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("primingEntity", returnsObject().noParams()) { it.target?.primingEntity }
+                .function("primingBlock", returnsObject().noParams()) { it.target?.primingBlock }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { TNTPrimeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { TNTPrimeEvent.getHandlerList() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.memory.MemoryKey"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnMemoryKey {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemoryKey::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("memoryClass", 0) { it.target?.getMemoryClass() }
-                .function("getByKey", 1) { MemoryKey.getByKey(it.getArgument(0) as NamespacedKey) }
-                .function("values", 0) { MemoryKey.values() }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("memoryClass", returnsObject().noParams()) { it.target?.getMemoryClass() }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { MemoryKey.getByKey(it.getRef(0) as NamespacedKey) }
+                .function("values", returnsObject().noParams()) { MemoryKey.values() }
         }
     }
 }

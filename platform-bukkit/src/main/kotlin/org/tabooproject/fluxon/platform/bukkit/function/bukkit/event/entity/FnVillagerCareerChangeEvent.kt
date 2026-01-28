@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.VillagerCareerChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +20,14 @@ object FnVillagerCareerChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VillagerCareerChangeEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("setProfession", 1) { it.target?.setProfession(it.getArgument(0) as Villager.Profession) }
-                .function("reason", 0) { it.target?.reason }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("setProfession", returnsObject().params(Type.OBJECT)) { it.target?.setProfession(it.getRef(0) as Villager.Profession) }
+                .function("reason", returnsObject().noParams()) { it.target?.reason }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { VillagerCareerChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { VillagerCareerChangeEvent.getHandlerList() }
         }
     }
 }

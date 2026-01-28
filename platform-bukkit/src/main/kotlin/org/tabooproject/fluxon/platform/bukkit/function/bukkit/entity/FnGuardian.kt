@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Guardian"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnGuardian {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Guardian::class.java)
-                .function("setLaser", 1) { it.target?.setLaser(it.getBoolean(0)) }
-                .function("hasLaser", 0) { it.target?.hasLaser() }
-                .function("laserDuration", 0) { it.target?.laserDuration }
-                .function("setLaserTicks", 1) { it.target?.setLaserTicks(it.getNumber(0).toInt()) }
-                .function("laserTicks", 0) { it.target?.laserTicks }
-                .function("isElder", 0) { it.target?.isElder }
-                .function("setElder", 1) { it.target?.setElder(it.getBoolean(0)) }
-                .function("isMoving", 0) { it.target?.isMoving }
+                .function("setLaser", returnsObject().params(Type.OBJECT)) { it.target?.setLaser(it.getBool(0)) }
+                .function("hasLaser", returns(Type.Z).noParams()) { it.target?.hasLaser() }
+                .function("laserDuration", returnsObject().noParams()) { it.target?.laserDuration }
+                .function("setLaserTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLaserTicks(it.getInt(0).toInt()) }
+                .function("laserTicks", returnsObject().noParams()) { it.target?.laserTicks }
+                .function("isElder", returns(Type.Z).noParams()) { it.target?.isElder }
+                .function("setElder", returnsObject().params(Type.OBJECT)) { it.target?.setElder(it.getBool(0)) }
+                .function("isMoving", returns(Type.Z).noParams()) { it.target?.isMoving }
         }
     }
 }

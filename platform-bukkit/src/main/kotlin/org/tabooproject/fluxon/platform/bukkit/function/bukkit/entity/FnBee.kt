@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Bee"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,18 +20,18 @@ object FnBee {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bee::class.java)
-                .function("hive", 0) { it.target?.hive }
-                .function("setHive", 1) { it.target?.setHive(it.getArgument(0) as Location) }
-                .function("flower", 0) { it.target?.flower }
-                .function("setFlower", 1) { it.target?.setFlower(it.getArgument(0) as Location) }
-                .function("hasNectar", 0) { it.target?.hasNectar() }
-                .function("setHasNectar", 1) { it.target?.setHasNectar(it.getBoolean(0)) }
-                .function("hasStung", 0) { it.target?.hasStung() }
-                .function("setHasStung", 1) { it.target?.setHasStung(it.getBoolean(0)) }
-                .function("anger", 0) { it.target?.anger }
-                .function("setAnger", 1) { it.target?.setAnger(it.getNumber(0).toInt()) }
-                .function("cannotEnterHiveTicks", 0) { it.target?.cannotEnterHiveTicks }
-                .function("setCannotEnterHiveTicks", 1) { it.target?.setCannotEnterHiveTicks(it.getNumber(0).toInt()) }
+                .function("hive", returnsObject().noParams()) { it.target?.hive }
+                .function("setHive", returnsObject().params(Type.OBJECT)) { it.target?.setHive(it.getRef(0) as Location) }
+                .function("flower", returnsObject().noParams()) { it.target?.flower }
+                .function("setFlower", returnsObject().params(Type.OBJECT)) { it.target?.setFlower(it.getRef(0) as Location) }
+                .function("hasNectar", returns(Type.Z).noParams()) { it.target?.hasNectar() }
+                .function("setHasNectar", returnsObject().params(Type.OBJECT)) { it.target?.setHasNectar(it.getBool(0)) }
+                .function("hasStung", returns(Type.Z).noParams()) { it.target?.hasStung() }
+                .function("setHasStung", returnsObject().params(Type.OBJECT)) { it.target?.setHasStung(it.getBool(0)) }
+                .function("anger", returnsObject().noParams()) { it.target?.anger }
+                .function("setAnger", returnsObject().params(Type.OBJECT)) { it.target?.setAnger(it.getInt(0).toInt()) }
+                .function("cannotEnterHiveTicks", returnsObject().noParams()) { it.target?.cannotEnterHiveTicks }
+                .function("setCannotEnterHiveTicks", returnsObject().params(Type.OBJECT)) { it.target?.setCannotEnterHiveTicks(it.getInt(0).toInt()) }
         }
     }
 }

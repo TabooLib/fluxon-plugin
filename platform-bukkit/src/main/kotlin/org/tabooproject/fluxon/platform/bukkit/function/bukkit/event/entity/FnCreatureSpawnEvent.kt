@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.CreatureSpawnEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnCreatureSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CreatureSpawnEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("spawnReason", 0) { it.target?.spawnReason }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("spawnReason", returnsObject().noParams()) { it.target?.spawnReason }
         }
     }
 }

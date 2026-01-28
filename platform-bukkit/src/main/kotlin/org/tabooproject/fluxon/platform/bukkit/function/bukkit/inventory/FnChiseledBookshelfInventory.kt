@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.ChiseledBookshelfInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnChiseledBookshelfInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelfInventory::class.java)
-                .function("holder", 0) { it.target?.holder }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
         }
     }
 }

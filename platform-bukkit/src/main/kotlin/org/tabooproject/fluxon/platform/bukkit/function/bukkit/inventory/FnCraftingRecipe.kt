@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.CraftingRecipe"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnCraftingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CraftingRecipe::class.java)
-                .function("key", 0) { it.target?.key }
-                .function("result", 0) { it.target?.result }
-                .function("group", 0) { it.target?.group }
-                .function("setGroup", 1) { it.target?.setGroup(it.getString(0)!!) }
-                .function("category", 0) { it.target?.category }
-                .function("setCategory", 1) { it.target?.setCategory(it.getArgument(0) as CraftingBookCategory) }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("group", returnsObject().noParams()) { it.target?.group }
+                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.target?.setGroup(it.getString(0)!!) }
+                .function("category", returnsObject().noParams()) { it.target?.category }
+                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CraftingBookCategory) }
         }
     }
 }

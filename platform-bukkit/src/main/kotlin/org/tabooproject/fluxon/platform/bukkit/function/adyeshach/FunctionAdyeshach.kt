@@ -5,6 +5,7 @@ import ink.ptms.adyeshach.core.entity.EntityInstance
 import ink.ptms.adyeshach.core.entity.manager.ManagerType
 import org.bukkit.entity.Player
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.java.Export
 import taboolib.common.LifeCycle
 import taboolib.common.Requires
@@ -21,7 +22,7 @@ object FunctionAdyeshach {
     fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(AdyeshachApi::class.java)
-            registerFunction("aapi", 0) { AdyeshachApi }
+            registerFunction("aapi", returnsObject().noParams()) { AdyeshachApi }
         }
     }
 

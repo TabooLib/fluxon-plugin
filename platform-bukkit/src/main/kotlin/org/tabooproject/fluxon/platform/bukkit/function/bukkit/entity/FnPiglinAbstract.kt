@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.PiglinAbstract"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnPiglinAbstract {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PiglinAbstract::class.java)
-                .function("isImmuneToZombification", 0) { it.target?.isImmuneToZombification }
-                .function("setImmuneToZombification", 1) { it.target?.setImmuneToZombification(it.getBoolean(0)) }
-                .function("conversionTime", 0) { it.target?.conversionTime }
-                .function("setConversionTime", 1) { it.target?.setConversionTime(it.getNumber(0).toInt()) }
-                .function("isConverting", 0) { it.target?.isConverting }
-                .function("isBaby", 0) { it.target?.isBaby }
-                .function("setBaby", 1) { it.target?.setBaby(it.getBoolean(0)) }
+                .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.target?.isImmuneToZombification }
+                .function("setImmuneToZombification", returnsObject().params(Type.OBJECT)) { it.target?.setImmuneToZombification(it.getBool(0)) }
+                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
+                .function("isBaby", returns(Type.Z).noParams()) { it.target?.isBaby }
+                .function("setBaby", returnsObject().params(Type.OBJECT)) { it.target?.setBaby(it.getBool(0)) }
         }
     }
 }

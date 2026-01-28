@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,24 +19,31 @@ object FnItemTagType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType::class.java)
-                .function("primitiveType", listOf(0, 2)) {
-                    if (it.arguments.isEmpty()) {
+                .function("primitiveType", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getArgument(0)!!,
-                            it.getArgument(1) as ItemTagAdapterContext
+                            it.getRef(0)!!,
+                            it.getRef(1) as ItemTagAdapterContext
                         )
                     }
                 }
-                .function("complexType", 0) { it.target?.complexType }
-                .function(
-                    "toPrimitive",
-                    2
-                ) {
+                .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.primitiveType
+                    } else {
+                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
+                            it.getRef(0)!!,
+                            it.getRef(1) as ItemTagAdapterContext
+                        )
+                    }
+                }
+                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as ItemTagAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as ItemTagAdapterContext
                     )
                 }
         }
@@ -49,24 +58,31 @@ object FnItemTagTypePrimitiveTagType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType.PrimitiveTagType::class.java)
-                .function("primitiveType", listOf(0, 2)) {
-                    if (it.arguments.isEmpty()) {
+                .function("primitiveType", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getArgument(0)!!,
-                            it.getArgument(1) as ItemTagAdapterContext
+                            it.getRef(0)!!,
+                            it.getRef(1) as ItemTagAdapterContext
                         )
                     }
                 }
-                .function("complexType", 0) { it.target?.complexType }
-                .function(
-                    "toPrimitive",
-                    2
-                ) {
+                .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.primitiveType
+                    } else {
+                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
+                            it.getRef(0)!!,
+                            it.getRef(1) as ItemTagAdapterContext
+                        )
+                    }
+                }
+                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
-                        it.getArgument(0)!!,
-                        it.getArgument(1) as ItemTagAdapterContext
+                        it.getRef(0)!!,
+                        it.getRef(1) as ItemTagAdapterContext
                     )
                 }
         }

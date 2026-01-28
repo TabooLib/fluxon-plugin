@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.NotePlayEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,15 +21,15 @@ object FnNotePlayEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NotePlayEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("instrument", 0) { it.target?.instrument }
-                .function("note", 0) { it.target?.note }
-                .function("setInstrument", 1) { it.target?.setInstrument(it.getArgument(0) as Instrument) }
-                .function("setNote", 1) { it.target?.setNote(it.getArgument(0) as Note) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
+                .function("note", returnsObject().noParams()) { it.target?.note }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as Instrument) }
+                .function("setNote", returnsObject().params(Type.OBJECT)) { it.target?.setNote(it.getRef(0) as Note) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { NotePlayEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { NotePlayEvent.getHandlerList() }
         }
     }
 }

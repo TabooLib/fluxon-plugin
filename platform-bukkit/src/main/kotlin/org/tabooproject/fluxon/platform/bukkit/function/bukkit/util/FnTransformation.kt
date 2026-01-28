@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.Transformation"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnTransformation {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Transformation::class.java)
-//                .function("translation", 0) { it.target?.translation }
-//                .function("leftRotation", 0) { it.target?.leftRotation }
-//                .function("scale", 0) { it.target?.scale }
-//                .function("rightRotation", 0) { it.target?.rightRotation }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+//                .function("translation", returnsObject().noParams()) { it.target?.translation }
+//                .function("leftRotation", returnsObject().noParams()) { it.target?.leftRotation }
+//                .function("scale", returnsObject().noParams()) { it.target?.scale }
+//                .function("rightRotation", returnsObject().noParams()) { it.target?.rightRotation }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

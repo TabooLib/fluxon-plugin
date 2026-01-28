@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerResourcePackStatusEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnPlayerResourcePackStatusEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerResourcePackStatusEvent::class.java)
-                .function("iD", 0) { it.target?.id }
-                .function("status", 0) { it.target?.status }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("iD", returnsObject().noParams()) { it.target?.id }
+                .function("status", returnsObject().noParams()) { it.target?.status }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerResourcePackStatusEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerResourcePackStatusEvent.getHandlerList() }
         }
     }
 }

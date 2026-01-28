@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockEvent"])
@@ -17,7 +19,7 @@ object FnBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockEvent::class.java)
-                .function("block", 0) { it.target?.getBlock() }
+                .function("block", returnsObject().noParams()) { it.target?.getBlock() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.SculkCatalyst"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,7 +19,7 @@ object FnSculkCatalyst {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkCatalyst::class.java)
-                .function("bloom", 2) { it.target?.bloom(it.getArgument(0) as Block, it.getNumber(1).toInt()) }
+                .function("bloom", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.bloom(it.getRef(0) as Block, it.getInt(1).toInt()) }
         }
     }
 }

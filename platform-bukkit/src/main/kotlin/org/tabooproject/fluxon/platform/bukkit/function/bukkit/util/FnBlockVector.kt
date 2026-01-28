@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.BlockVector"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnBlockVector {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockVector::class.java)
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
                 // static
-                .function("deserialize", 1) { BlockVector.deserialize(it.getArgument(0) as Map<String, Any>) }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { BlockVector.deserialize(it.getRef(0) as Map<String, Any>) }
         }
     }
 }

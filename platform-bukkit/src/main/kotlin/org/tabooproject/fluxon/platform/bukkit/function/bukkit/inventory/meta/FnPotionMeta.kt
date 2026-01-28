@@ -12,6 +12,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.PotionMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,30 +24,27 @@ object FnPotionMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionMeta::class.java)
-                .function("setBasePotionData", 1) { it.target?.setBasePotionData(it.getArgument(0) as PotionData) }
-                .function("basePotionData", 0) { it.target?.basePotionData }
-                .function("setBasePotionType", 1) { it.target?.setBasePotionType(it.getArgument(0) as PotionType) }
-                .function("basePotionType", 0) { it.target?.basePotionType }
-                .function("hasBasePotionType", 0) { it.target?.hasBasePotionType() }
-                .function("hasCustomEffects", 0) { it.target?.hasCustomEffects() }
-                .function("customEffects", 0) { it.target?.customEffects }
-                .function("addCustomEffect", 2) {
+                .function("setBasePotionData", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
+                .function("basePotionData", returnsObject().noParams()) { it.target?.basePotionData }
+                .function("setBasePotionType", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
+                .function("basePotionType", returnsObject().noParams()) { it.target?.basePotionType }
+                .function("hasBasePotionType", returns(Type.Z).noParams()) { it.target?.hasBasePotionType() }
+                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.target?.hasCustomEffects() }
+                .function("customEffects", returnsObject().noParams()) { it.target?.customEffects }
+                .function("addCustomEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.addCustomEffect(
-                        it.getArgument(0) as PotionEffect,
-                        it.getBoolean(1)
+                        it.getRef(0) as PotionEffect,
+                        it.getBool(1)
                     )
                 }
-                .function(
-                    "removeCustomEffect",
-                    1
-                ) { it.target?.removeCustomEffect(it.getArgument(0) as PotionEffectType) }
-                .function("hasCustomEffect", 1) { it.target?.hasCustomEffect(it.getArgument(0) as PotionEffectType) }
-                .function("setMainEffect", 1) { it.target?.setMainEffect(it.getArgument(0) as PotionEffectType) }
-                .function("clearCustomEffects", 0) { it.target?.clearCustomEffects() }
-                .function("hasColor", 0) { it.target?.hasColor() }
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as Color) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) }
+                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) }
+                .function("setMainEffect", returnsObject().params(Type.OBJECT)) { it.target?.setMainEffect(it.getRef(0) as PotionEffectType) }
+                .function("clearCustomEffects", returnsObject().noParams()) { it.target?.clearCustomEffects() }
+                .function("hasColor", returns(Type.Z).noParams()) { it.target?.hasColor() }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.HandlerList"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +19,8 @@ object FnHandlerList {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HandlerList::class.java)
-                .function(
-                    "registerAll",
-                    1
-                ) { it.target?.registerAll(it.getArgument(0) as Collection<RegisteredListener>) }
-                .function("registeredListeners", 0) { it.target?.registeredListeners }
+                .function("registerAll", returnsObject().params(Type.OBJECT)) { it.target?.registerAll(it.getRef(0) as Collection<RegisteredListener>) }
+                .function("registeredListeners", returnsObject().noParams()) { it.target?.registeredListeners }
         }
     }
 }

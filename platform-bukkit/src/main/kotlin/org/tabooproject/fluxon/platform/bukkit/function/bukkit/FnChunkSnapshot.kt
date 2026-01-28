@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.ChunkSnapshot"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,79 +21,104 @@ object FnChunkSnapshot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkSnapshot::class.java)
-                .function("x", 0) { it.target?.x }
-                .function("z", 0) { it.target?.z }
-                .function("worldName", 0) { it.target?.worldName }
-                .function("getBlockType", 3) {
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("z", returnsObject().noParams()) { it.target?.z }
+                .function("worldName", returnsObject().noParams()) { it.target?.worldName }
+                .function("getBlockType", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockType(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getBlockData", 3) {
+                .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getData", 3) {
+                .function("getData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getBlockSkyLight", 3) {
+                .function("getBlockSkyLight", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockSkyLight(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getBlockEmittedLight", 3) {
+                .function("getBlockEmittedLight", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockEmittedLight(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getHighestBlockYAt", 2) {
+                .function("getHighestBlockYAt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getHighestBlockYAt(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("getBiome", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
-                        it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt())
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())
                     } else {
                         it.target?.getBiome(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
                     }
                 }
-                .function("getRawBiomeTemperature", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())
+                    } else {
+                        it.target?.getBiome(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("getRawBiomeTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
                         it.target?.getRawBiomeTemperature(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt()
                         )
                     } else {
                         it.target?.getRawBiomeTemperature(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
                     }
                 }
-                .function("captureFullTime", 0) { it.target?.captureFullTime }
-                .function("isSectionEmpty", 1) { it.target?.isSectionEmpty(it.getNumber(0).toInt()) }
-                .function("contains", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("getRawBiomeTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.getRawBiomeTemperature(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt()
+                        )
+                    } else {
+                        it.target?.getRawBiomeTemperature(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("captureFullTime", returnsObject().noParams()) { it.target?.captureFullTime }
+                .function("isSectionEmpty", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSectionEmpty(it.getInt(0).toInt()) }
+                .function("contains", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is BlockData -> it.target?.contains(var1)
                         is Biome -> it.target?.contains(var1)
                         else -> throw IllegalArgumentException("参数必须是 BlockData 或 Biome 类型")

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.MusicInstrument"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,9 +20,9 @@ object FnMusicInstrument {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MusicInstrument::class.java)
                 // static
-                .function("getByKey", 1) { MusicInstrument.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { MusicInstrument.getByKey(it.getRef(0) as NamespacedKey) }
                 // static
-                .function("values", 0) { MusicInstrument.values() }
+                .function("values", returnsObject().noParams()) { MusicInstrument.values() }
         }
     }
 }

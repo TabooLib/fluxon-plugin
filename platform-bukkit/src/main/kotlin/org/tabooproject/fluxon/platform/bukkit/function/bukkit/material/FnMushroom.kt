@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Mushroom"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,23 +21,20 @@ object FnMushroom {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Mushroom::class.java)
-                .function("isStem", 0) { it.target?.isStem }
-                .function("setStem", 0) { it.target?.setStem() }
-                .function("blockTexture", 0) { it.target?.blockTexture }
-                .function(
-                    "setBlockTexture",
-                    1
-                ) { it.target?.setBlockTexture(it.getArgument(0) as MushroomBlockTexture) }
-                .function("isFacePainted", 1) { it.target?.isFacePainted(it.getArgument(0) as BlockFace) }
-                .function("setFacePainted", 2) {
+                .function("isStem", returns(Type.Z).noParams()) { it.target?.isStem }
+                .function("setStem", returnsObject().noParams()) { it.target?.setStem() }
+                .function("blockTexture", returnsObject().noParams()) { it.target?.blockTexture }
+                .function("setBlockTexture", returnsObject().params(Type.OBJECT)) { it.target?.setBlockTexture(it.getRef(0) as MushroomBlockTexture) }
+                .function("isFacePainted", returns(Type.Z).params(Type.OBJECT)) { it.target?.isFacePainted(it.getRef(0) as BlockFace) }
+                .function("setFacePainted", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setFacePainted(
-                        it.getArgument(0) as BlockFace,
-                        it.getBoolean(1)
+                        it.getRef(0) as BlockFace,
+                        it.getBool(1)
                     )
                 }
-                .function("paintedFaces", 0) { it.target?.paintedFaces }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("paintedFaces", returnsObject().noParams()) { it.target?.paintedFaces }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

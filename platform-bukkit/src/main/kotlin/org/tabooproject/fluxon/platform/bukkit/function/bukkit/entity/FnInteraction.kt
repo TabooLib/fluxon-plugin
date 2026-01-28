@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Interaction"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnInteraction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction::class.java)
-                .function("interactionWidth", 0) { it.target?.interactionWidth }
-                .function("setInteractionWidth", 1) { it.target?.setInteractionWidth(it.getNumber(0).toFloat()) }
-                .function("interactionHeight", 0) { it.target?.interactionHeight }
-                .function("setInteractionHeight", 1) { it.target?.setInteractionHeight(it.getNumber(0).toFloat()) }
-                .function("isResponsive", 0) { it.target?.isResponsive }
-                .function("setResponsive", 1) { it.target?.setResponsive(it.getBoolean(0)) }
-                .function("lastAttack", 0) { it.target?.lastAttack }
-                .function("lastInteraction", 0) { it.target?.lastInteraction }
+                .function("interactionWidth", returnsObject().noParams()) { it.target?.interactionWidth }
+                .function("setInteractionWidth", returnsObject().params(Type.OBJECT)) { it.target?.setInteractionWidth(it.getFloat(0)) }
+                .function("interactionHeight", returnsObject().noParams()) { it.target?.interactionHeight }
+                .function("setInteractionHeight", returnsObject().params(Type.OBJECT)) { it.target?.setInteractionHeight(it.getFloat(0)) }
+                .function("isResponsive", returns(Type.Z).noParams()) { it.target?.isResponsive }
+                .function("setResponsive", returnsObject().params(Type.OBJECT)) { it.target?.setResponsive(it.getBool(0)) }
+                .function("lastAttack", returnsObject().noParams()) { it.target?.lastAttack }
+                .function("lastInteraction", returnsObject().noParams()) { it.target?.lastInteraction }
         }
     }
 }
@@ -36,8 +39,8 @@ object FnInteractionPreviousInteraction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction.PreviousInteraction::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("timestamp", 0) { it.target?.timestamp }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("timestamp", returnsObject().noParams()) { it.target?.timestamp }
         }
     }
 }

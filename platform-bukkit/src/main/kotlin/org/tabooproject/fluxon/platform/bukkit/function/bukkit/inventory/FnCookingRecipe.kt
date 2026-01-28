@@ -10,6 +10,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.CookingRecipe"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,20 +21,20 @@ object FnCookingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CookingRecipe::class.java)
-                .function("setInput", 1) { it.target?.setInput(it.getArgument(0) as Material) }
-                .function("input", 0) { it.target?.input }
-                .function("setInputChoice", 1) { it.target?.setInputChoice(it.getArgument(0) as RecipeChoice) }
-                .function("inputChoice", 0) { it.target?.inputChoice }
-                .function("result", 0) { it.target?.result }
-                .function("setExperience", 1) { it.target?.setExperience(it.getNumber(0).toFloat()) }
-                .function("experience", 0) { it.target?.experience }
-                .function("setCookingTime", 1) { it.target?.setCookingTime(it.getNumber(0).toInt()) }
-                .function("cookingTime", 0) { it.target?.cookingTime }
-                .function("key", 0) { it.target?.key }
-                .function("group", 0) { it.target?.group }
-                .function("setGroup", 1) { it.target?.setGroup(it.getString(0)!!) }
-                .function("category", 0) { it.target?.category }
-                .function("setCategory", 1) { it.target?.setCategory(it.getArgument(0) as CookingBookCategory) }
+                .function("setInput", returnsObject().params(Type.OBJECT)) { it.target?.setInput(it.getRef(0) as Material) }
+                .function("input", returnsObject().noParams()) { it.target?.input }
+                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.target?.setInputChoice(it.getRef(0) as RecipeChoice) }
+                .function("inputChoice", returnsObject().noParams()) { it.target?.inputChoice }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getFloat(0)) }
+                .function("experience", returnsObject().noParams()) { it.target?.experience }
+                .function("setCookingTime", returnsObject().params(Type.OBJECT)) { it.target?.setCookingTime(it.getInt(0).toInt()) }
+                .function("cookingTime", returnsObject().noParams()) { it.target?.cookingTime }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("group", returnsObject().noParams()) { it.target?.group }
+                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.target?.setGroup(it.getString(0)!!) }
+                .function("category", returnsObject().noParams()) { it.target?.category }
+                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CookingBookCategory) }
         }
     }
 }

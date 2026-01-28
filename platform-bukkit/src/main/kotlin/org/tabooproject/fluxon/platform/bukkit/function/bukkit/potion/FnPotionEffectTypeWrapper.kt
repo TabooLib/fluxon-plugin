@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.potion.PotionEffectTypeWrapper"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnPotionEffectTypeWrapper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffectTypeWrapper::class.java)
-                .function("type", 0) { it.target?.type }
+                .function("type", returnsObject().noParams()) { it.target?.type }
         }
     }
 }

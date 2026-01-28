@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Husk"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +19,9 @@ object FnHusk {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Husk::class.java)
-                .function("isConverting", 0) { it.target?.isConverting }
-                .function("conversionTime", 0) { it.target?.conversionTime }
-                .function("setConversionTime", 1) { it.target?.setConversionTime(it.getNumber(0).toInt()) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
+                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
         }
     }
 }

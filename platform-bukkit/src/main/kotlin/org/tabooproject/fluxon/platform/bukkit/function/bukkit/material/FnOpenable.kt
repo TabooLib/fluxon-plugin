@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Openable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnOpenable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Openable::class.java)
-                .function("isOpen", 0) { it.target?.isOpen }
-                .function("setOpen", 1) { it.target?.setOpen(it.getBoolean(0)) }
+                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
+                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.target?.setOpen(it.getBool(0)) }
         }
     }
 }

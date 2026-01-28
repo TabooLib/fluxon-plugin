@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Minecart"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,25 +22,22 @@ object FnMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Minecart::class.java)
-                .function("setDamage", 1) { it.target?.setDamage(it.getNumber(0).toDouble()) }
-                .function("damage", 0) { it.target?.damage }
-                .function("maxSpeed", 0) { it.target?.maxSpeed }
-                .function("setMaxSpeed", 1) { it.target?.setMaxSpeed(it.getNumber(0).toDouble()) }
-                .function("isSlowWhenEmpty", 0) { it.target?.isSlowWhenEmpty }
-                .function("setSlowWhenEmpty", 1) { it.target?.setSlowWhenEmpty(it.getBoolean(0)) }
-                .function("flyingVelocityMod", 0) { it.target?.flyingVelocityMod }
-                .function("setFlyingVelocityMod", 1) { it.target?.setFlyingVelocityMod(it.getArgument(0) as Vector) }
-                .function("derailedVelocityMod", 0) { it.target?.derailedVelocityMod }
-                .function(
-                    "setDerailedVelocityMod",
-                    1
-                ) { it.target?.setDerailedVelocityMod(it.getArgument(0) as Vector) }
-                .function("setDisplayBlock", 1) { it.target?.setDisplayBlock(it.getArgument(0) as MaterialData) }
-                .function("displayBlock", 0) { it.target?.displayBlock }
-                .function("setDisplayBlockData", 1) { it.target?.setDisplayBlockData(it.getArgument(0) as BlockData) }
-                .function("displayBlockData", 0) { it.target?.displayBlockData }
-                .function("setDisplayBlockOffset", 1) { it.target?.setDisplayBlockOffset(it.getNumber(0).toInt()) }
-                .function("displayBlockOffset", 0) { it.target?.displayBlockOffset }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getAsDouble(0)) }
+                .function("damage", returnsObject().noParams()) { it.target?.damage }
+                .function("maxSpeed", returnsObject().noParams()) { it.target?.maxSpeed }
+                .function("setMaxSpeed", returnsObject().params(Type.OBJECT)) { it.target?.setMaxSpeed(it.getAsDouble(0)) }
+                .function("isSlowWhenEmpty", returns(Type.Z).noParams()) { it.target?.isSlowWhenEmpty }
+                .function("setSlowWhenEmpty", returnsObject().params(Type.OBJECT)) { it.target?.setSlowWhenEmpty(it.getBool(0)) }
+                .function("flyingVelocityMod", returnsObject().noParams()) { it.target?.flyingVelocityMod }
+                .function("setFlyingVelocityMod", returnsObject().params(Type.OBJECT)) { it.target?.setFlyingVelocityMod(it.getRef(0) as Vector) }
+                .function("derailedVelocityMod", returnsObject().noParams()) { it.target?.derailedVelocityMod }
+                .function("setDerailedVelocityMod", returnsObject().params(Type.OBJECT)) { it.target?.setDerailedVelocityMod(it.getRef(0) as Vector) }
+                .function("setDisplayBlock", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayBlock(it.getRef(0) as MaterialData) }
+                .function("displayBlock", returnsObject().noParams()) { it.target?.displayBlock }
+                .function("setDisplayBlockData", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayBlockData(it.getRef(0) as BlockData) }
+                .function("displayBlockData", returnsObject().noParams()) { it.target?.displayBlockData }
+                .function("setDisplayBlockOffset", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayBlockOffset(it.getInt(0).toInt()) }
+                .function("displayBlockOffset", returnsObject().noParams()) { it.target?.displayBlockOffset }
         }
     }
 }

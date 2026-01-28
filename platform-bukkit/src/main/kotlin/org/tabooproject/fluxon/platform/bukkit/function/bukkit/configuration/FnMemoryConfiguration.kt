@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.configuration.MemoryConfiguration"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,17 +19,17 @@ object FnMemoryConfiguration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemoryConfiguration::class.java)
-                .function("addDefault", 2) { it.target?.addDefault(it.getString(0)!!, it.getArgument(1)) }
-                .function("addDefaults", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("addDefault", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.addDefault(it.getString(0)!!, it.getRef(1)) }
+                .function("addDefaults", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Map<*, *> -> it.target?.addDefaults(var1 as Map<String, Any>)
                         is Configuration -> it.target?.addDefaults(var1)
                         else -> throw IllegalArgumentException("参数必须是 Map<String, Object> 或 Configuration 类型")
                     }
                 }
-                .function("setDefaults", 1) { it.target?.setDefaults(it.getArgument(0) as Configuration) }
-                .function("defaults", 0) { it.target?.getDefaults() }
-                .function("parent", 0) { it.target?.parent }
+                .function("setDefaults", returnsObject().params(Type.OBJECT)) { it.target?.setDefaults(it.getRef(0) as Configuration) }
+                .function("defaults", returnsObject().noParams()) { it.target?.getDefaults() }
+                .function("parent", returnsObject().noParams()) { it.target?.parent }
         }
     }
 }

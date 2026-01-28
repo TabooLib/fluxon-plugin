@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockIgniteEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnBlockIgniteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockIgniteEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("cause", 0) { it.target?.cause }
-                .function("player", 0) { it.target?.player }
-                .function("ignitingEntity", 0) { it.target?.ignitingEntity }
-                .function("ignitingBlock", 0) { it.target?.ignitingBlock }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("ignitingEntity", returnsObject().noParams()) { it.target?.ignitingEntity }
+                .function("ignitingBlock", returnsObject().noParams()) { it.target?.ignitingBlock }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockIgniteEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockIgniteEvent.getHandlerList() }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.DoubleChest"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +18,14 @@ object FnDoubleChest {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DoubleChest::class.java)
-                .function("inventory", 0) { it.target?.inventory }
-                .function("leftSide", 0) { it.target?.leftSide }
-                .function("rightSide", 0) { it.target?.rightSide }
-                .function("location", 0) { it.target?.location }
-                .function("world", 0) { it.target?.world }
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("z", 0) { it.target?.z }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("leftSide", returnsObject().noParams()) { it.target?.leftSide }
+                .function("rightSide", returnsObject().noParams()) { it.target?.rightSide }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("z", returnsObject().noParams()) { it.target?.z }
         }
     }
 }

@@ -15,6 +15,9 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.generator.ChunkGenerator"])
 @PlatformSide(Platform.BUKKIT)
@@ -24,149 +27,218 @@ object FnChunkGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator::class.java)
-                .function("generateNoise", 5) {
+                .function("generateNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.generateNoise(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as ChunkGenerator.ChunkData
+                        it.getRef(0) as WorldInfo,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateSurface", 5) {
+                .function("generateSurface", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.generateSurface(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as ChunkGenerator.ChunkData
+                        it.getRef(0) as WorldInfo,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateBedrock", 5) {
+                .function("generateBedrock", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.generateBedrock(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as ChunkGenerator.ChunkData
+                        it.getRef(0) as WorldInfo,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateCaves", 5) {
+                .function("generateCaves", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.generateCaves(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as ChunkGenerator.ChunkData
+                        it.getRef(0) as WorldInfo,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function(
-                    "getDefaultBiomeProvider",
-                    1
-                ) { it.target?.getDefaultBiomeProvider(it.getArgument(0) as WorldInfo) }
-                .function("getBaseHeight", 5) {
+                .function("getDefaultBiomeProvider", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultBiomeProvider(it.getRef(0) as WorldInfo) }
+                .function("getBaseHeight", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBaseHeight(
-                        it.getArgument(0) as WorldInfo,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as HeightMap
+                        it.getRef(0) as WorldInfo,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as HeightMap
                     )
                 }
-                .function("generateChunkData", 5) {
+                .function("generateChunkData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.generateChunkData(
-                        it.getArgument(0) as World,
-                        it.getArgument(1) as Random,
-                        it.getNumber(2).toInt(),
-                        it.getNumber(3).toInt(),
-                        it.getArgument(4) as ChunkGenerator.BiomeGrid
+                        it.getRef(0) as World,
+                        it.getRef(1) as Random,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as ChunkGenerator.BiomeGrid
                     )
                 }
-                .function("canSpawn", 3) {
+                .function("canSpawn", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.canSpawn(
-                        it.getArgument(0) as World,
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getRef(0) as World,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getDefaultPopulators", 1) { it.target?.getDefaultPopulators(it.getArgument(0) as World) }
-                .function("getFixedSpawnLocation", 2) {
+                .function("getDefaultPopulators", returnsObject().params(Type.OBJECT)) { it.target?.getDefaultPopulators(it.getRef(0) as World) }
+                .function("getFixedSpawnLocation", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.getFixedSpawnLocation(
-                        it.getArgument(0) as World,
-                        it.getArgument(1) as Random
+                        it.getRef(0) as World,
+                        it.getRef(1) as Random
                     )
                 }
-                .function("isParallelCapable", 0) { it.target?.isParallelCapable }
-                .function("shouldGenerateNoise", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("isParallelCapable", returns(Type.Z).noParams()) { it.target?.isParallelCapable }
+                .function("shouldGenerateNoise", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateNoise()
                     } else {
                         it.target?.shouldGenerateNoise(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
-                .function("shouldGenerateSurface", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("shouldGenerateNoise", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateNoise()
+                    } else {
+                        it.target?.shouldGenerateNoise(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateSurface", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateSurface()
                     } else {
                         it.target?.shouldGenerateSurface(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
-                .function("shouldGenerateBedrock", 0) { it.target?.shouldGenerateBedrock() }
-                .function("shouldGenerateCaves", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("shouldGenerateSurface", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateSurface()
+                    } else {
+                        it.target?.shouldGenerateSurface(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateBedrock", returns(Type.Z).noParams()) { it.target?.shouldGenerateBedrock() }
+                .function("shouldGenerateCaves", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateCaves()
                     } else {
                         it.target?.shouldGenerateCaves(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
-                .function("shouldGenerateDecorations", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("shouldGenerateCaves", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateCaves()
+                    } else {
+                        it.target?.shouldGenerateCaves(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateDecorations", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateDecorations()
                     } else {
                         it.target?.shouldGenerateDecorations(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
-                .function("shouldGenerateMobs", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("shouldGenerateDecorations", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateDecorations()
+                    } else {
+                        it.target?.shouldGenerateDecorations(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateMobs", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateMobs()
                     } else {
                         it.target?.shouldGenerateMobs(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
-                .function("shouldGenerateStructures", listOf(0, 4)) {
-                    if (it.arguments.isEmpty()) {
+                .function("shouldGenerateMobs", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateMobs()
+                    } else {
+                        it.target?.shouldGenerateMobs(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateStructures", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.shouldGenerateStructures()
                     } else {
                         it.target?.shouldGenerateStructures(
-                            it.getArgument(0) as WorldInfo,
-                            it.getArgument(1) as Random,
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("shouldGenerateStructures", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.shouldGenerateStructures()
+                    } else {
+                        it.target?.shouldGenerateStructures(
+                            it.getRef(0) as WorldInfo,
+                            it.getRef(1) as Random,
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
@@ -182,98 +254,98 @@ object FnChunkGeneratorChunkData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator.ChunkData::class.java)
-                .function("minHeight", 0) { it.target?.minHeight }
-                .function("maxHeight", 0) { it.target?.maxHeight }
-                .function("getBiome", 3) {
-                    it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt(), it.getNumber(2).toInt())
+                .function("minHeight", returnsObject().noParams()) { it.target?.minHeight }
+                .function("maxHeight", returnsObject().noParams()) { it.target?.maxHeight }
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt())
                 }
-                .function("setBlock", 4) {
-                    when (val var4 = it.getArgument(3)) {
+                .function("setBlock", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (val var4 = it.getRef(3)) {
                         is Material -> it.target?.setBlock(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
                             var4
                         )
 
                         is MaterialData -> it.target?.setBlock(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
                             var4
                         )
 
                         is BlockData -> it.target?.setBlock(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
                             var4
                         )
 
                         else -> throw IllegalArgumentException("参数 4 必须是 Material, MaterialData, 或 BlockData 类型")
                     }
                 }
-                .function("setRegion", 7) {
-                    when (val var7 = it.getArgument(6)) {
+                .function("setRegion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (val var7 = it.getRef(6)) {
                         is Material -> it.target?.setRegion(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt(),
-                            it.getNumber(4).toInt(),
-                            it.getNumber(5).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt(),
+                            it.getInt(4).toInt(),
+                            it.getInt(5).toInt(),
                             var7
                         )
 
                         is MaterialData -> it.target?.setRegion(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt(),
-                            it.getNumber(4).toInt(),
-                            it.getNumber(5).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt(),
+                            it.getInt(4).toInt(),
+                            it.getInt(5).toInt(),
                             var7
                         )
 
                         is BlockData -> it.target?.setRegion(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt(),
-                            it.getNumber(4).toInt(),
-                            it.getNumber(5).toInt(),
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt(),
+                            it.getInt(4).toInt(),
+                            it.getInt(5).toInt(),
                             var7
                         )
 
                         else -> throw IllegalArgumentException("参数 7 必须是 Material, MaterialData, 或 BlockData 类型")
                     }
                 }
-                .function("getType", 3) {
+                .function("getType", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getType(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getTypeAndData", 3) {
+                .function("getTypeAndData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getTypeAndData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getBlockData", 3) {
+                .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getData", 3) {
+                .function("getData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
         }
@@ -288,20 +360,36 @@ object FnChunkGeneratorBiomeGrid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator.BiomeGrid::class.java)
-                .function("getBiome", 2) { it.target?.getBiome(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("setBiome", listOf(3, 4)) {
-                    if (it.arguments.size == 3) {
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt()) }
+                .function("setBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
                         it.target?.setBiome(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getArgument(2) as Biome
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getRef(2) as Biome
                         )
                     } else {
                         it.target?.setBiome(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getArgument(3) as Biome
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getRef(3) as Biome
+                        )
+                    }
+                }
+                .function("setBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
+                        it.target?.setBiome(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getRef(2) as Biome
+                        )
+                    } else {
+                        it.target?.setBiome(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getRef(3) as Biome
                         )
                     }
                 }

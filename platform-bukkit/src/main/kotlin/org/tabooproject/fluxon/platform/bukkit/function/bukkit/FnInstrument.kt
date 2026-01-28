@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Instrument"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnInstrument {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Instrument::class.java)
-                .function("sound", 0) { it.target?.sound }
-                .function("type", 0) { it.target?.type }
+                .function("sound", returnsObject().noParams()) { it.target?.sound }
+                .function("type", returnsObject().noParams()) { it.target?.type }
                 // static
-                .function("getByType", 1) { Instrument.getByType(it.getNumber(0).toByte()) }
+                .function("getByType", returnsObject().params(Type.OBJECT)) { Instrument.getByType(it.getInt(0).toByte()) }
         }
     }
 }

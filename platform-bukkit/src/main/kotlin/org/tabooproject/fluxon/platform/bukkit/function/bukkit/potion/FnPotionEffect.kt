@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionEffect"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,19 +20,19 @@ object FnPotionEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffect::class.java)
-                .syncFunction("apply", 1) { it.target?.apply(it.getArgument(0) as LivingEntity) }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("amplifier", 0) { it.target?.amplifier }
-                .function("duration", 0) { it.target?.duration }
-                .function("isInfinite", 0) { it.target?.isInfinite }
-                .function("isShorterThan", 1) { it.target?.isShorterThan(it.getArgument(0) as PotionEffect) }
-                .function("type", 0) { it.target?.type }
-                .function("isAmbient", 0) { it.target?.isAmbient }
-                .function("hasParticles", 0) { it.target?.hasParticles() }
-                .function("color", 0) { it.target?.color }
-                .function("hasIcon", 0) { it.target?.hasIcon() }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("toString", 0) { it.target?.toString() }
+                .syncFunction("apply", returnsObject().params(Type.OBJECT)) { it.target?.apply(it.getRef(0) as LivingEntity) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("amplifier", returnsObject().noParams()) { it.target?.amplifier }
+                .function("duration", returnsObject().noParams()) { it.target?.duration }
+                .function("isInfinite", returns(Type.Z).noParams()) { it.target?.isInfinite }
+                .function("isShorterThan", returns(Type.Z).params(Type.OBJECT)) { it.target?.isShorterThan(it.getRef(0) as PotionEffect) }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("isAmbient", returns(Type.Z).noParams()) { it.target?.isAmbient }
+                .function("hasParticles", returns(Type.Z).noParams()) { it.target?.hasParticles() }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("hasIcon", returns(Type.Z).noParams()) { it.target?.hasIcon() }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

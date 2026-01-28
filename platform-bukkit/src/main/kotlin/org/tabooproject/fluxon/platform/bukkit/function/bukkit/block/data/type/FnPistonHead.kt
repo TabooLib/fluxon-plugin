@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.PistonHead"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnPistonHead {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonHead::class.java)
-                .function("isShort", 0) { it.target?.isShort }
-                .function("setShort", 1) { it.target?.setShort(it.getBoolean(0)) }
+                .function("isShort", returns(Type.Z).noParams()) { it.target?.isShort }
+                .function("setShort", returnsObject().params(Type.OBJECT)) { it.target?.setShort(it.getBool(0)) }
         }
     }
 }

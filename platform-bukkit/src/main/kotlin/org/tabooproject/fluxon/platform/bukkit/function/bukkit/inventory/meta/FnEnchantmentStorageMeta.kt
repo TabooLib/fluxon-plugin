@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.EnchantmentStorageMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,25 +20,19 @@ object FnEnchantmentStorageMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentStorageMeta::class.java)
-                .function("hasStoredEnchants", 0) { it.target?.hasStoredEnchants() }
-                .function("hasStoredEnchant", 1) { it.target?.hasStoredEnchant(it.getArgument(0) as Enchantment) }
-                .function(
-                    "getStoredEnchantLevel",
-                    1
-                ) { it.target?.getStoredEnchantLevel(it.getArgument(0) as Enchantment) }
-                .function("addStoredEnchant", 3) {
+                .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.target?.hasStoredEnchants() }
+                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasStoredEnchant(it.getRef(0) as Enchantment) }
+                .function("getStoredEnchantLevel", returnsObject().params(Type.OBJECT)) { it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment) }
+                .function("addStoredEnchant", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.addStoredEnchant(
-                        it.getArgument(0) as Enchantment,
-                        it.getNumber(1).toInt(),
-                        it.getBoolean(2)
+                        it.getRef(0) as Enchantment,
+                        it.getInt(1).toInt(),
+                        it.getBool(2)
                     )
                 }
-                .function("removeStoredEnchant", 1) { it.target?.removeStoredEnchant(it.getArgument(0) as Enchantment) }
-                .function(
-                    "hasConflictingStoredEnchant",
-                    1
-                ) { it.target?.hasConflictingStoredEnchant(it.getArgument(0) as Enchantment) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("removeStoredEnchant", returnsObject().params(Type.OBJECT)) { it.target?.removeStoredEnchant(it.getRef(0) as Enchantment) }
+                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

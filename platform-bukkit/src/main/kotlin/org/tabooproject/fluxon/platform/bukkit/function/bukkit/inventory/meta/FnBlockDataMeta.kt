@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.BlockDataMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,9 +21,9 @@ object FnBlockDataMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDataMeta::class.java)
-                .function("hasBlockData", 0) { it.target?.hasBlockData() }
-                .function("getBlockData", 1) { it.target?.getBlockData(it.getArgument(0) as Material) }
-                .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }
+                .function("hasBlockData", returns(Type.Z).noParams()) { it.target?.hasBlockData() }
+                .function("getBlockData", returnsObject().params(Type.OBJECT)) { it.target?.getBlockData(it.getRef(0) as Material) }
+                .function("setBlockData", returnsObject().params(Type.OBJECT)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
         }
     }
 }

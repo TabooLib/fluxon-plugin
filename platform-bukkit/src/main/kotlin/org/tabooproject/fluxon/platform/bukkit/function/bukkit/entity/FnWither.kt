@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Wither"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,19 +19,29 @@ object FnWither {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wither::class.java)
-                .function("setTarget", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setTarget(it.getArgument(0) as LivingEntity)
+                .function("setTarget", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setTarget(it.getRef(0) as LivingEntity)
                     } else {
                         it.target?.setTarget(
-                            it.getArgument(0) as Wither.Head,
-                            it.getArgument(1) as LivingEntity
+                            it.getRef(0) as Wither.Head,
+                            it.getRef(1) as LivingEntity
                         )
                     }
                 }
-                .function("getTarget", 1) { it.target?.getTarget(it.getArgument(0) as Wither.Head) }
-                .function("invulnerabilityTicks", 0) { it.target?.invulnerabilityTicks }
-                .function("setInvulnerabilityTicks", 1) { it.target?.setInvulnerabilityTicks(it.getNumber(0).toInt()) }
+                .function("setTarget", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setTarget(it.getRef(0) as LivingEntity)
+                    } else {
+                        it.target?.setTarget(
+                            it.getRef(0) as Wither.Head,
+                            it.getRef(1) as LivingEntity
+                        )
+                    }
+                }
+                .function("getTarget", returnsObject().params(Type.OBJECT)) { it.target?.getTarget(it.getRef(0) as Wither.Head) }
+                .function("invulnerabilityTicks", returnsObject().noParams()) { it.target?.invulnerabilityTicks }
+                .function("setInvulnerabilityTicks", returnsObject().params(Type.OBJECT)) { it.target?.setInvulnerabilityTicks(it.getInt(0).toInt()) }
         }
     }
 }

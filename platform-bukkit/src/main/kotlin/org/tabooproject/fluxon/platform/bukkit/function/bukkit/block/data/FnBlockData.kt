@@ -14,6 +14,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.BlockData"])
 @PlatformSide(Platform.BUKKIT)
@@ -23,37 +26,37 @@ object FnBlockData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockData::class.java)
-//                .function("isRandomlyTicked", 0) { it.target?.isRandomlyTicked }
-                .function("material", 0) { it.target?.material }
-                .function("asString", 0) { it.target?.asString }
-                .function("getAsString", 1) { it.target?.getAsString(it.getBoolean(0)) }
-                .function("merge", 1) { it.target?.merge(it.getArgument(0) as BlockData) }
-                .function("matches", 1) { it.target?.matches(it.getArgument(0) as BlockData) }
-                .function("clone", 0) { it.target?.clone() }
-                .function("soundGroup", 0) { it.target?.soundGroup }
-                .function("lightEmission", 0) { it.target?.lightEmission }
-                .function("isOccluding", 0) { it.target?.isOccluding }
-                .function("requiresCorrectToolForDrops", 0) { it.target?.requiresCorrectToolForDrops() }
-                .function("isPreferredTool", 1) { it.target?.isPreferredTool(it.getArgument(0) as ItemStack) }
-                .function("pistonMoveReaction", 0) { it.target?.pistonMoveReaction }
-                .function("isSupported", 1) {
-                    when (val var1 = it.getArgument(0)) {
+//                .function("isRandomlyTicked", returns(Type.Z).noParams()) { it.target?.isRandomlyTicked }
+                .function("material", returnsObject().noParams()) { it.target?.material }
+                .function("asString", returnsObject().noParams()) { it.target?.asString }
+                .function("getAsString", returnsObject().params(Type.OBJECT)) { it.target?.getAsString(it.getBool(0)) }
+                .function("merge", returnsObject().params(Type.OBJECT)) { it.target?.merge(it.getRef(0) as BlockData) }
+                .function("matches", returnsObject().params(Type.OBJECT)) { it.target?.matches(it.getRef(0) as BlockData) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("soundGroup", returnsObject().noParams()) { it.target?.soundGroup }
+                .function("lightEmission", returnsObject().noParams()) { it.target?.lightEmission }
+                .function("isOccluding", returns(Type.Z).noParams()) { it.target?.isOccluding }
+                .function("requiresCorrectToolForDrops", returnsObject().noParams()) { it.target?.requiresCorrectToolForDrops() }
+                .function("isPreferredTool", returns(Type.Z).params(Type.OBJECT)) { it.target?.isPreferredTool(it.getRef(0) as ItemStack) }
+                .function("pistonMoveReaction", returnsObject().noParams()) { it.target?.pistonMoveReaction }
+                .function("isSupported", returns(Type.Z).params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Block -> it.target?.isSupported(var1)
                         is Location -> it.target?.isSupported(var1)
                         else -> throw IllegalArgumentException("参数必须是 Block 或 Location 类型")
                     }
                 }
-                .function("isFaceSturdy", 2) {
+                .function("isFaceSturdy", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.isFaceSturdy(
-                        it.getArgument(0) as BlockFace,
-                        it.getArgument(1) as BlockSupport
+                        it.getRef(0) as BlockFace,
+                        it.getRef(1) as BlockSupport
                     )
                 }
-                .function("mapColor", 0) { it.target?.mapColor }
-                .function("placementMaterial", 0) { it.target?.placementMaterial }
-                .function("rotate", 1) { it.target?.rotate(it.getArgument(0) as StructureRotation) }
-                .function("mirror", 1) { it.target?.mirror(it.getArgument(0) as Mirror) }
-                .function("copyTo", 1) { it.target?.copyTo(it.getArgument(0) as BlockData) }
+                .function("mapColor", returnsObject().noParams()) { it.target?.mapColor }
+                .function("placementMaterial", returnsObject().noParams()) { it.target?.placementMaterial }
+                .function("rotate", returnsObject().params(Type.OBJECT)) { it.target?.rotate(it.getRef(0) as StructureRotation) }
+                .function("mirror", returnsObject().params(Type.OBJECT)) { it.target?.mirror(it.getRef(0) as Mirror) }
+                .function("copyTo", returnsObject().params(Type.OBJECT)) { it.target?.copyTo(it.getRef(0) as BlockData) }
         }
     }
 }

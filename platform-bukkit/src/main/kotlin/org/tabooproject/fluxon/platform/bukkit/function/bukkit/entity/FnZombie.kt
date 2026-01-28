@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Zombie"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,19 +20,16 @@ object FnZombie {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Zombie::class.java)
-                .function("isBaby", 0) { it.target?.isBaby }
-                .function("setBaby", 1) { it.target?.setBaby(it.getBoolean(0)) }
-                .function("isVillager", 0) { it.target?.isVillager }
-                .function("setVillager", 1) { it.target?.setVillager(it.getBoolean(0)) }
-                .function(
-                    "setVillagerProfession",
-                    1
-                ) { it.target?.setVillagerProfession(it.getArgument(0) as Villager.Profession) }
-                .function("isConverting", 0) { it.target?.isConverting }
-                .function("conversionTime", 0) { it.target?.conversionTime }
-                .function("setConversionTime", 1) { it.target?.setConversionTime(it.getNumber(0).toInt()) }
-                .function("canBreakDoors", 0) { it.target?.canBreakDoors() }
-                .function("setCanBreakDoors", 1) { it.target?.setCanBreakDoors(it.getBoolean(0)) }
+                .function("isBaby", returns(Type.Z).noParams()) { it.target?.isBaby }
+                .function("setBaby", returnsObject().params(Type.OBJECT)) { it.target?.setBaby(it.getBool(0)) }
+                .function("isVillager", returns(Type.Z).noParams()) { it.target?.isVillager }
+                .function("setVillager", returnsObject().params(Type.OBJECT)) { it.target?.setVillager(it.getBool(0)) }
+                .function("setVillagerProfession", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
+                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("canBreakDoors", returns(Type.Z).noParams()) { it.target?.canBreakDoors() }
+                .function("setCanBreakDoors", returnsObject().params(Type.OBJECT)) { it.target?.setCanBreakDoors(it.getBool(0)) }
         }
     }
 }

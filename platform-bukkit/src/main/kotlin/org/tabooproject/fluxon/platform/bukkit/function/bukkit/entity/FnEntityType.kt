@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.entity.EntityType"])
@@ -18,19 +21,19 @@ object FnEntityType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityType::class.java)
-                .function("name", 0) { it.target?.name }
-                .function("ordinal", 0) { it.target?.ordinal }
-                .function("entityName", 0) { it.target?.getName() }
-                .function("key", 0) { it.target?.key }
-                .function("typeId", 0) { it.target?.typeId }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("ordinal", returnsObject().noParams()) { it.target?.ordinal }
+                .function("entityName", returnsObject().noParams()) { it.target?.getName() }
+                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("typeId", returnsObject().noParams()) { it.target?.typeId }
                 // static
-                .function("fromName", 1) { EntityType.fromName(it.getString(0)) }
+                .function("fromName", returnsObject().params(Type.OBJECT)) { EntityType.fromName(it.getString(0)) }
                 // static
-                .function("fromId", 1) { EntityType.fromId(it.getNumber(0).toInt()) }
-                .function("isSpawnable", 0) { it.target?.isSpawnable }
-                .function("isAlive", 0) { it.target?.isAlive }
-                .function("translationKey", 0) { it.target?.translationKey }
-                .function("isEnabledByFeature", 1) { it.target?.isEnabledByFeature(it.getArgument(0) as World) }
+                .function("fromId", returnsObject().params(Type.OBJECT)) { EntityType.fromId(it.getInt(0).toInt()) }
+                .function("isSpawnable", returns(Type.Z).noParams()) { it.target?.isSpawnable }
+                .function("isAlive", returns(Type.Z).noParams()) { it.target?.isAlive }
+                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.target?.isEnabledByFeature(it.getRef(0) as World) }
         }
     }
 }

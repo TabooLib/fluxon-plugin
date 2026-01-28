@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Vex"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnVex {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vex::class.java)
-                .function("isCharging", 0) { it.target?.isCharging }
-                .function("setCharging", 1) { it.target?.setCharging(it.getBoolean(0)) }
-                .function("bound", 0) { it.target?.bound }
-                .function("setBound", 1) { it.target?.setBound(it.getArgument(0) as Location) }
-                .function("lifeTicks", 0) { it.target?.lifeTicks }
-                .function("setLifeTicks", 1) { it.target?.setLifeTicks(it.getNumber(0).toInt()) }
-                .function("hasLimitedLife", 0) { it.target?.hasLimitedLife() }
+                .function("isCharging", returns(Type.Z).noParams()) { it.target?.isCharging }
+                .function("setCharging", returnsObject().params(Type.OBJECT)) { it.target?.setCharging(it.getBool(0)) }
+                .function("bound", returnsObject().noParams()) { it.target?.bound }
+                .function("setBound", returnsObject().params(Type.OBJECT)) { it.target?.setBound(it.getRef(0) as Location) }
+                .function("lifeTicks", returnsObject().noParams()) { it.target?.lifeTicks }
+                .function("setLifeTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
+                .function("hasLimitedLife", returns(Type.Z).noParams()) { it.target?.hasLimitedLife() }
         }
     }
 }

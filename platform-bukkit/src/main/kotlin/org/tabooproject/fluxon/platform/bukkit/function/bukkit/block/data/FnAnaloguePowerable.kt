@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.AnaloguePowerable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnAnaloguePowerable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnaloguePowerable::class.java)
-                .function("power", 0) { it.target?.power }
-                .function("setPower", 1) { it.target?.setPower(it.getNumber(0).toInt()) }
-                .function("maximumPower", 0) { it.target?.maximumPower }
+                .function("power", returnsObject().noParams()) { it.target?.power }
+                .function("setPower", returnsObject().params(Type.OBJECT)) { it.target?.setPower(it.getInt(0).toInt()) }
+                .function("maximumPower", returnsObject().noParams()) { it.target?.maximumPower }
         }
     }
 }

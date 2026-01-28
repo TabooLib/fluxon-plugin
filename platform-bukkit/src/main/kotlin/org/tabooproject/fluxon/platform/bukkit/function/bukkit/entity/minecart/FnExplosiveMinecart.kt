@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.minecart.ExplosiveMinecart"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,22 @@ object FnExplosiveMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExplosiveMinecart::class.java)
-                .function("setFuseTicks", 1) { it.target?.setFuseTicks(it.getNumber(0).toInt()) }
-                .function("fuseTicks", 0) { it.target?.fuseTicks }
-                .function("ignite", 0) { it.target?.ignite() }
-                .function("isIgnited", 0) { it.target?.isIgnited }
-                .function("explode", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
+                .function("fuseTicks", returnsObject().noParams()) { it.target?.fuseTicks }
+                .function("ignite", returnsObject().noParams()) { it.target?.ignite() }
+                .function("isIgnited", returns(Type.Z).noParams()) { it.target?.isIgnited }
+                .function("explode", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.explode()
                     } else {
-                        it.target?.explode(it.getNumber(0).toDouble())
+                        it.target?.explode(it.getAsDouble(0))
+                    }
+                }
+                .function("explode", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.explode()
+                    } else {
+                        it.target?.explode(it.getAsDouble(0))
                     }
                 }
         }

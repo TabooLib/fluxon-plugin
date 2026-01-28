@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Piglin"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,20 +20,14 @@ object FnPiglin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Piglin::class.java)
-                .function("isAbleToHunt", 0) { it.target?.isAbleToHunt }
-                .function("setIsAbleToHunt", 1) { it.target?.setIsAbleToHunt(it.getBoolean(0)) }
-                .function("addBarterMaterial", 1) { it.target?.addBarterMaterial(it.getArgument(0) as Material) }
-                .function("removeBarterMaterial", 1) { it.target?.removeBarterMaterial(it.getArgument(0) as Material) }
-                .function(
-                    "addMaterialOfInterest",
-                    1
-                ) { it.target?.addMaterialOfInterest(it.getArgument(0) as Material) }
-                .function(
-                    "removeMaterialOfInterest",
-                    1
-                ) { it.target?.removeMaterialOfInterest(it.getArgument(0) as Material) }
-                .function("interestList", 0) { it.target?.interestList }
-                .function("barterList", 0) { it.target?.barterList }
+                .function("isAbleToHunt", returns(Type.Z).noParams()) { it.target?.isAbleToHunt }
+                .function("setIsAbleToHunt", returnsObject().params(Type.OBJECT)) { it.target?.setIsAbleToHunt(it.getBool(0)) }
+                .function("addBarterMaterial", returnsObject().params(Type.OBJECT)) { it.target?.addBarterMaterial(it.getRef(0) as Material) }
+                .function("removeBarterMaterial", returnsObject().params(Type.OBJECT)) { it.target?.removeBarterMaterial(it.getRef(0) as Material) }
+                .function("addMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.target?.addMaterialOfInterest(it.getRef(0) as Material) }
+                .function("removeMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.target?.removeMaterialOfInterest(it.getRef(0) as Material) }
+                .function("interestList", returnsObject().noParams()) { it.target?.interestList }
+                .function("barterList", returnsObject().noParams()) { it.target?.barterList }
         }
     }
 }

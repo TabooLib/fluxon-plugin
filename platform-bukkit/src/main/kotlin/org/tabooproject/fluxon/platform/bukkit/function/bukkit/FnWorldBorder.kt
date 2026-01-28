@@ -9,6 +9,9 @@ import java.util.concurrent.TimeUnit
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.WorldBorder"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,43 +21,77 @@ object FnWorldBorder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldBorder::class.java)
-                .function("world", 0) { it.target?.world }
-                .function("reset", 0) { it.target?.reset() }
-                .function("size", 0) { it.target?.size }
-                .function("setSize", listOf(1, 2, 3)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.setSize(it.getNumber(0).toDouble())
-                        2 -> it.target?.setSize(it.getNumber(0).toDouble(), it.getNumber(1).toLong())
+                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("reset", returnsObject().noParams()) { it.target?.reset() }
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("setSize", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.setSize(it.getAsDouble(0))
+                        2 -> it.target?.setSize(it.getAsDouble(0), it.getInt(1).toLong())
                         3 -> it.target?.setSize(
-                            it.getNumber(0).toDouble(),
-                            it.getArgument(1) as TimeUnit,
-                            it.getNumber(2).toLong()
+                            it.getAsDouble(0),
+                            it.getRef(1) as TimeUnit,
+                            it.getInt(2).toLong()
                         )
-                        else -> error("WorldBorder#setSize 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("WorldBorder#setSize 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function("center", 0) { it.target?.center }
-                .function("setCenter", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setCenter(it.getArgument(0) as Location)
+                .function("setSize", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.setSize(it.getAsDouble(0))
+                        2 -> it.target?.setSize(it.getAsDouble(0), it.getInt(1).toLong())
+                        3 -> it.target?.setSize(
+                            it.getAsDouble(0),
+                            it.getRef(1) as TimeUnit,
+                            it.getInt(2).toLong()
+                        )
+                        else -> error("WorldBorder#setSize 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("setSize", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.setSize(it.getAsDouble(0))
+                        2 -> it.target?.setSize(it.getAsDouble(0), it.getInt(1).toLong())
+                        3 -> it.target?.setSize(
+                            it.getAsDouble(0),
+                            it.getRef(1) as TimeUnit,
+                            it.getInt(2).toLong()
+                        )
+                        else -> error("WorldBorder#setSize 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("center", returnsObject().noParams()) { it.target?.center }
+                .function("setCenter", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setCenter(it.getRef(0) as Location)
                     } else {
                         it.target?.setCenter(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
                         )
                     }
                 }
-                .function("damageBuffer", 0) { it.target?.damageBuffer }
-                .function("setDamageBuffer", 1) { it.target?.setDamageBuffer(it.getNumber(0).toDouble()) }
-                .function("damageAmount", 0) { it.target?.damageAmount }
-                .function("setDamageAmount", 1) { it.target?.setDamageAmount(it.getNumber(0).toDouble()) }
-                .function("warningTime", 0) { it.target?.warningTime }
-                .function("setWarningTime", 1) { it.target?.setWarningTime(it.getNumber(0).toInt()) }
-                .function("warningDistance", 0) { it.target?.warningDistance }
-                .function("setWarningDistance", 1) { it.target?.setWarningDistance(it.getNumber(0).toInt()) }
-                .function("isInside", 1) { it.target?.isInside(it.getArgument(0) as Location) }
-                .function("maxSize", 0) { it.target?.maxSize }
-                .function("maxCenterCoordinate", 0) { it.target?.maxCenterCoordinate }
+                .function("setCenter", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setCenter(it.getRef(0) as Location)
+                    } else {
+                        it.target?.setCenter(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1)
+                        )
+                    }
+                }
+                .function("damageBuffer", returnsObject().noParams()) { it.target?.damageBuffer }
+                .function("setDamageBuffer", returnsObject().params(Type.OBJECT)) { it.target?.setDamageBuffer(it.getAsDouble(0)) }
+                .function("damageAmount", returnsObject().noParams()) { it.target?.damageAmount }
+                .function("setDamageAmount", returnsObject().params(Type.OBJECT)) { it.target?.setDamageAmount(it.getAsDouble(0)) }
+                .function("warningTime", returnsObject().noParams()) { it.target?.warningTime }
+                .function("setWarningTime", returnsObject().params(Type.OBJECT)) { it.target?.setWarningTime(it.getInt(0).toInt()) }
+                .function("warningDistance", returnsObject().noParams()) { it.target?.warningDistance }
+                .function("setWarningDistance", returnsObject().params(Type.OBJECT)) { it.target?.setWarningDistance(it.getInt(0).toInt()) }
+                .function("isInside", returns(Type.Z).params(Type.OBJECT)) { it.target?.isInside(it.getRef(0) as Location) }
+                .function("maxSize", returnsObject().noParams()) { it.target?.maxSize }
+                .function("maxCenterCoordinate", returnsObject().noParams()) { it.target?.maxCenterCoordinate }
         }
     }
 }

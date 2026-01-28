@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.entity.ExperienceOrb"])
@@ -17,14 +20,14 @@ object FnExperienceOrb {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExperienceOrb::class.java)
-//                .function("isFromBottle", 0) { it.target?.isFromBottle }
-//                .function("triggerEntityId", 0) { it.target?.triggerEntityId?.toString() }
-//                .function("sourceEntityId", 0) { it.target?.sourceEntityId?.toString() }
-//                .function("spawnReason", 0) { it.target?.spawnReason?.name }
-//                .function("count", 0) { it.target?.count }
-//                .function("setCount", 1) { it.target?.apply { count = it.getNumber(0).toInt() } }
-                .function("experience", 0) { it.target?.experience }
-                .function("setExperience", 1) { it.target?.setExperience(it.getNumber(0).toInt()) }
+//                .function("isFromBottle", returns(Type.Z).noParams()) { it.target?.isFromBottle }
+//                .function("triggerEntityId", returnsObject().noParams()) { it.target?.triggerEntityId?.toString() }
+//                .function("sourceEntityId", returnsObject().noParams()) { it.target?.sourceEntityId?.toString() }
+//                .function("spawnReason", returnsObject().noParams()) { it.target?.spawnReason?.name }
+//                .function("count", returns(Type.I).noParams()) { it.target?.count }
+//                .function("setCount", returnsObject().params(Type.OBJECT)) { it.target?.apply { count = it.getInt(0).toInt() } }
+                .function("experience", returnsObject().noParams()) { it.target?.experience }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getInt(0).toInt()) }
         }
     }
 }

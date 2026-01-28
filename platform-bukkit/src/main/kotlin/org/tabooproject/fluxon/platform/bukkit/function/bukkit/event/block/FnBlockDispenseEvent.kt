@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockDispenseEvent"])
@@ -19,15 +22,15 @@ object FnBlockDispenseEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDispenseEvent::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("velocity", 0) { it.target?.velocity }
-                .function("setVelocity", 1) { it.target?.setVelocity(it.getArgument(0) as Vector) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("velocity", returnsObject().noParams()) { it.target?.velocity }
+                .function("setVelocity", returnsObject().params(Type.OBJECT)) { it.target?.setVelocity(it.getRef(0) as Vector) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockDispenseEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockDispenseEvent.getHandlerList() }
         }
     }
 }

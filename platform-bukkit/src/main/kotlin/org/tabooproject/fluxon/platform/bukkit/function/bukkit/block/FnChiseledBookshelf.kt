@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.ChiseledBookshelf"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +19,11 @@ object FnChiseledBookshelf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
-                .function("lastInteractedSlot", 0) { it.target?.lastInteractedSlot }
-                .function("setLastInteractedSlot", 1) { it.target?.setLastInteractedSlot(it.getNumber(0).toInt()) }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("snapshotInventory", 0) { it.target?.snapshotInventory }
-                .function("getSlot", 1) { it.target?.getSlot(it.getArgument(0) as Vector) }
+                .function("lastInteractedSlot", returnsObject().noParams()) { it.target?.lastInteractedSlot }
+                .function("setLastInteractedSlot", returnsObject().params(Type.OBJECT)) { it.target?.setLastInteractedSlot(it.getInt(0).toInt()) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("getSlot", returnsObject().params(Type.OBJECT)) { it.target?.getSlot(it.getRef(0) as Vector) }
         }
     }
 }

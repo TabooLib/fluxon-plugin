@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.ItemCraftResult"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnItemCraftResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemCraftResult::class.java)
-                .function("result", 0) { it.target?.result }
-                .function("resultingMatrix", 0) { it.target?.resultingMatrix }
-                .function("overflowItems", 0) { it.target?.overflowItems }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("resultingMatrix", returnsObject().noParams()) { it.target?.resultingMatrix }
+                .function("overflowItems", returnsObject().noParams()) { it.target?.overflowItems }
         }
     }
 }

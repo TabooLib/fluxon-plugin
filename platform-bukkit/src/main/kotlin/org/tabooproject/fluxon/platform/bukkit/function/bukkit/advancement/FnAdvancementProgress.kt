@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.advancement.AdvancementProgress"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnAdvancementProgress {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AdvancementProgress::class.java)
-                .function("advancement", 0) { it.target?.advancement }
-                .function("isDone", 0) { it.target?.isDone }
-                .function("awardCriteria", 1) { it.target?.awardCriteria(it.getString(0)!!) }
-                .function("revokeCriteria", 1) { it.target?.revokeCriteria(it.getString(0)!!) }
-                .function("getDateAwarded", 1) { it.target?.getDateAwarded(it.getString(0)!!) }
-                .function("remainingCriteria", 0) { it.target?.remainingCriteria }
-                .function("awardedCriteria", 0) { it.target?.awardedCriteria }
+                .function("advancement", returnsObject().noParams()) { it.target?.advancement }
+                .function("isDone", returns(Type.Z).noParams()) { it.target?.isDone }
+                .function("awardCriteria", returnsObject().params(Type.OBJECT)) { it.target?.awardCriteria(it.getString(0)!!) }
+                .function("revokeCriteria", returnsObject().params(Type.OBJECT)) { it.target?.revokeCriteria(it.getString(0)!!) }
+                .function("getDateAwarded", returnsObject().params(Type.OBJECT)) { it.target?.getDateAwarded(it.getString(0)!!) }
+                .function("remainingCriteria", returnsObject().noParams()) { it.target?.remainingCriteria }
+                .function("awardedCriteria", returnsObject().noParams()) { it.target?.awardedCriteria }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockPistonExtendEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnBlockPistonExtendEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonExtendEvent::class.java)
-                .function("length", 0) { it.target?.length }
-                .function("blocks", 0) { it.target?.blocks }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("length", returns(Type.I).noParams()) { it.target?.length }
+                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockPistonExtendEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockPistonExtendEvent.getHandlerList() }
         }
     }
 }

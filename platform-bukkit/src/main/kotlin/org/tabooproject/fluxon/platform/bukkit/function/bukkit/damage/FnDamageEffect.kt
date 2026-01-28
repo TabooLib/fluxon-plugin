@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.damage.DamageEffect"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnDamageEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageEffect::class.java)
-                .function("sound", 0) { it.target?.sound }
+                .function("sound", returnsObject().noParams()) { it.target?.sound }
         }
     }
 }

@@ -3,6 +3,9 @@ package org.tabooproject.fluxon.platform.bukkit.function.adyeshach
 import ink.ptms.adyeshach.core.entity.manager.Manager
 import ink.ptms.adyeshach.core.entity.manager.PlayerManager
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.Requires
 import taboolib.common.platform.Awake
@@ -18,29 +21,27 @@ object FunctionEntityManager {
     fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerManager::class.java)
-                .function("owner", 0) {
+                .function("owner", returnsObject().noParams()) {
                     it.target?.owner
                 }
             registerExtension(Manager::class.java)
-                .function("isValid", 0) {
+                .function("isValid", returns(Type.Z).noParams()) {
                     it.target?.isValid()
                 }
-                .function("isPublic", 0) {
+                .function("isPublic", returns(Type.Z).noParams()) {
                     it.target?.isPublic()
                 }
-                .function("isTemporary", 0) {
+                .function("isTemporary", returns(Type.Z).noParams()) {
                     it.target?.isTemporary()
                 }
-                .function("entity", 1) {
-                    it.target?.getEntityById(it.getArgument(0).toString())?.firstOrNull()
+                .function("entity", returnsObject().params(Type.STRING)) {
+                    it.target?.getEntityById(it.getString(0)!!)?.firstOrNull()
                 }
-                .function("entities", listOf(0, 1)) {
-                    val id = it.getArgument(0)
-                    if (id is String) {
-                        it.target?.getEntityById(id)
-                    } else {
-                        it.target?.getEntities()
-                    }
+                .function("entities", returns(Type.LIST).noParams()) {
+                    it.target?.getEntities()
+                }
+                .function("entities", returns(Type.LIST).params(Type.STRING)) {
+                    it.target?.getEntityById(it.getString(0)!!)
                 }
         }
     }

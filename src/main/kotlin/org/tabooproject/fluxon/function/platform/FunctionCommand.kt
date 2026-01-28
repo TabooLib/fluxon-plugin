@@ -3,6 +3,9 @@ package org.tabooproject.fluxon.function.platform
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.java.Export
 import org.tabooproject.fluxon.util.getFluxonScript
 import org.tabooproject.fluxon.util.invokeInline
@@ -23,8 +26,8 @@ object FunctionCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(CommandBuilder::class.java)
-            registerFunction("command", 1) { CommandBuilder(it.getString(0)!!, it.environment) }
-            registerFunction("unregisterCommand", 1) { unregisterCommand(it.getString(0)!!) }
+            registerFunction("command", returnsObject().params(Type.STRING)) { CommandBuilder(it.getString(0)!!, it.environment) }
+            registerFunction("unregisterCommand", returnsVoid().params(Type.STRING)) { unregisterCommand(it.getString(0)!!) }
         }
     }
 

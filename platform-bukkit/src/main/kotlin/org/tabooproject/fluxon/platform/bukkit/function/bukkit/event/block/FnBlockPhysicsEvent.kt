@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockPhysicsEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnBlockPhysicsEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPhysicsEvent::class.java)
-                .function("sourceBlock", 0) { it.target?.sourceBlock }
-                .function("changedType", 0) { it.target?.changedType }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("sourceBlock", returnsObject().noParams()) { it.target?.sourceBlock }
+                .function("changedType", returnsObject().noParams()) { it.target?.changedType }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockPhysicsEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockPhysicsEvent.getHandlerList() }
         }
     }
 }

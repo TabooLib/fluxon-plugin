@@ -13,6 +13,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.ItemFactory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,51 +25,78 @@ object FnItemFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemFactory::class.java)
-                .function("getItemMeta", 1) { it.target?.getItemMeta(it.getArgument(0) as Material) }
-                .function("isApplicable", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is ItemStack -> it.target?.isApplicable(it.getArgument(0) as ItemMeta, var2)
-                        is Material -> it.target?.isApplicable(it.getArgument(0) as ItemMeta, var2)
+                .function("getItemMeta", returnsObject().params(Type.OBJECT)) { it.target?.getItemMeta(it.getRef(0) as Material) }
+                .function("isApplicable", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
+                    when (val var2 = it.getRef(1)) {
+                        is ItemStack -> it.target?.isApplicable(it.getRef(0) as ItemMeta, var2)
+                        is Material -> it.target?.isApplicable(it.getRef(0) as ItemMeta, var2)
                         else -> throw IllegalArgumentException("参数 2 必须是 ItemStack 或 Material 类型")
                     }
                 }
-                .function("equals", 2) {
+                .function("equals", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.equals(
-                        it.getArgument(0) as ItemMeta,
-                        it.getArgument(1) as ItemMeta
+                        it.getRef(0) as ItemMeta,
+                        it.getRef(1) as ItemMeta
                     )
                 }
-                .function("asMetaFor", 2) {
-                    when (val var2 = it.getArgument(1)) {
-                        is ItemStack -> it.target?.asMetaFor(it.getArgument(0) as ItemMeta, var2)
-                        is Material -> it.target?.asMetaFor(it.getArgument(0) as ItemMeta, var2)
+                .function("asMetaFor", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (val var2 = it.getRef(1)) {
+                        is ItemStack -> it.target?.asMetaFor(it.getRef(0) as ItemMeta, var2)
+                        is Material -> it.target?.asMetaFor(it.getRef(0) as ItemMeta, var2)
                         else -> throw IllegalArgumentException("参数 2 必须是 ItemStack 或 Material 类型")
                     }
                 }
-                .function("defaultLeatherColor", 0) { it.target?.defaultLeatherColor }
-                .function("createItemStack", 1) { it.target?.createItemStack(it.getString(0)!!) }
-                .function("getSpawnEgg", 1) { it.target?.getSpawnEgg(it.getArgument(0) as EntityType) }
-                .function("enchantItem", listOf(3, 4)) {
-                    if (it.arguments.size == 3) {
+                .function("defaultLeatherColor", returnsObject().noParams()) { it.target?.defaultLeatherColor }
+                .function("createItemStack", returnsObject().params(Type.OBJECT)) { it.target?.createItemStack(it.getString(0)!!) }
+                .function("getSpawnEgg", returnsObject().params(Type.OBJECT)) { it.target?.getSpawnEgg(it.getRef(0) as EntityType) }
+                .function("enchantItem", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
                         it.target?.enchantItem(
-                            it.getArgument(0) as ItemStack,
-                            it.getNumber(1).toInt(),
-                            it.getBoolean(2)
+                            it.getRef(0) as ItemStack,
+                            it.getInt(1).toInt(),
+                            it.getBool(2)
                         )
                     } else {
-                        when (val var1 = it.getArgument(0)) {
+                        when (val var1 = it.getRef(0)) {
                             is Entity -> it.target?.enchantItem(
                                 var1,
-                                it.getArgument(1) as ItemStack,
-                                it.getNumber(2).toInt(),
-                                it.getBoolean(3)
+                                it.getRef(1) as ItemStack,
+                                it.getInt(2).toInt(),
+                                it.getBool(3)
                             )
 
                             is World -> it.target?.enchantItem(
                                 var1,
-                                it.getArgument(1) as ItemStack,
-                                it.getNumber(2).toInt(),
-                                it.getBoolean(3)
+                                it.getRef(1) as ItemStack,
+                                it.getInt(2).toInt(),
+                                it.getBool(3)
+                            )
+
+                            else -> throw IllegalArgumentException("参数 1 必须是 Entity 或 World 类型")
+                        }
+                    }
+                }
+                .function("enchantItem", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 3) {
+                        it.target?.enchantItem(
+                            it.getRef(0) as ItemStack,
+                            it.getInt(1).toInt(),
+                            it.getBool(2)
+                        )
+                    } else {
+                        when (val var1 = it.getRef(0)) {
+                            is Entity -> it.target?.enchantItem(
+                                var1,
+                                it.getRef(1) as ItemStack,
+                                it.getInt(2).toInt(),
+                                it.getBool(3)
+                            )
+
+                            is World -> it.target?.enchantItem(
+                                var1,
+                                it.getRef(1) as ItemStack,
+                                it.getInt(2).toInt(),
+                                it.getBool(3)
                             )
 
                             else -> throw IllegalArgumentException("参数 1 必须是 Entity 或 World 类型")

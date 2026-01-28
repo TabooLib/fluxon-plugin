@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.SpectralArrow"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnSpectralArrow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpectralArrow::class.java)
-                .function("glowingTicks", 0) { it.target?.glowingTicks }
-                .function("setGlowingTicks", 1) { it.target?.setGlowingTicks(it.getNumber(0).toInt()) }
+                .function("glowingTicks", returnsObject().noParams()) { it.target?.glowingTicks }
+                .function("setGlowingTicks", returnsObject().params(Type.OBJECT)) { it.target?.setGlowingTicks(it.getInt(0).toInt()) }
         }
     }
 }

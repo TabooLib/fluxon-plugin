@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.InventoryView"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,29 +19,29 @@ object FnInventoryView {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryView::class.java)
-                .function("topInventory", 0) { it.target?.topInventory }
-                .function("bottomInventory", 0) { it.target?.bottomInventory }
-                .function("player", 0) { it.target?.player }
-                .function("type", 0) {
+                .function("topInventory", returnsObject().noParams()) { it.target?.topInventory }
+                .function("bottomInventory", returnsObject().noParams()) { it.target?.bottomInventory }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("type", returnsObject().noParams()) {
                     it.target?.type
                 }
-                .function("setItem", 2) { it.target?.setItem(it.getNumber(0).toInt(), it.getArgument(1) as ItemStack) }
-                .function("getItem", 1) { it.target?.getItem(it.getNumber(0).toInt()) }
-                .function("setCursor", 1) { it.target?.setCursor(it.getArgument(0) as ItemStack) }
-                .function("cursor", 0) { it.target?.cursor }
-                .function("getInventory", 1) { it.target?.getInventory(it.getNumber(0).toInt()) }
-                .function("convertSlot", 1) { it.target?.convertSlot(it.getNumber(0).toInt()) }
-                .function("close", 0) { it.target?.close() }
-                .function("countSlots", 0) { it.target?.countSlots() }
-                .function("setProperty", 2) {
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack) }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getInt(0).toInt()) }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
+                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
+                .function("getInventory", returnsObject().params(Type.OBJECT)) { it.target?.getInventory(it.getInt(0).toInt()) }
+                .function("convertSlot", returnsObject().params(Type.OBJECT)) { it.target?.convertSlot(it.getInt(0).toInt()) }
+                .function("close", returnsObject().noParams()) { it.target?.close() }
+                .function("countSlots", returnsObject().noParams()) { it.target?.countSlots() }
+                .function("setProperty", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setProperty(
-                        it.getArgument(0) as InventoryView.Property,
-                        it.getNumber(1).toInt()
+                        it.getRef(0) as InventoryView.Property,
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("title", 0) { it.target?.title }
-                .function("originalTitle", 0) { it.target?.originalTitle }
-                .function("setTitle", 1) { it.target?.setTitle(it.getString(0)!!) }
+                .function("title", returnsObject().noParams()) { it.target?.title }
+                .function("originalTitle", returnsObject().noParams()) { it.target?.originalTitle }
+                .function("setTitle", returnsObject().params(Type.OBJECT)) { it.target?.setTitle(it.getString(0)!!) }
         }
     }
 }
@@ -52,7 +54,7 @@ object FnInventoryViewProperty {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryView.Property::class.java)
-                .function("id", 0) { it.target?.getId() }
+                .function("id", returnsObject().noParams()) { it.target?.getId() }
         }
     }
 }

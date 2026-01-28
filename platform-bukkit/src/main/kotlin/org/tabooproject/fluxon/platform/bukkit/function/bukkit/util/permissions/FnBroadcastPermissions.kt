@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 
 @Requires(classes = ["org.bukkit.util.permissions.BroadcastPermissions"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,10 +20,7 @@ object FnBroadcastPermissions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BroadcastPermissions::class.java)
                 // static
-                .function(
-                    "registerPermissions",
-                    1
-                ) { BroadcastPermissions.registerPermissions(it.getArgument(0) as Permission) }
+                .function("registerPermissions", returnsObject().params(Type.OBJECT)) { BroadcastPermissions.registerPermissions(it.getRef(0) as Permission) }
         }
     }
 }

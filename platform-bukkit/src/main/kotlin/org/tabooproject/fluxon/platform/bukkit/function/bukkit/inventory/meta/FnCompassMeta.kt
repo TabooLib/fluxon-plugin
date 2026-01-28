@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.CompassMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +20,12 @@ object FnCompassMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CompassMeta::class.java)
-                .function("hasLodestone", 0) { it.target?.hasLodestone() }
-                .function("lodestone", 0) { it.target?.lodestone }
-                .function("setLodestone", 1) { it.target?.setLodestone(it.getArgument(0) as Location) }
-                .function("isLodestoneTracked", 0) { it.target?.isLodestoneTracked }
-                .function("setLodestoneTracked", 1) { it.target?.setLodestoneTracked(it.getBoolean(0)) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("hasLodestone", returns(Type.Z).noParams()) { it.target?.hasLodestone() }
+                .function("lodestone", returnsObject().noParams()) { it.target?.lodestone }
+                .function("setLodestone", returnsObject().params(Type.OBJECT)) { it.target?.setLodestone(it.getRef(0) as Location) }
+                .function("isLodestoneTracked", returns(Type.Z).noParams()) { it.target?.isLodestoneTracked }
+                .function("setLodestoneTracked", returnsObject().params(Type.OBJECT)) { it.target?.setLodestoneTracked(it.getBool(0)) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.tags.CustomItemTagContainer"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +20,9 @@ object FnCustomItemTagContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CustomItemTagContainer::class.java)
-                .function("removeCustomTag", 1) { it.target?.removeCustomTag(it.getArgument(0) as NamespacedKey) }
-                .function("isEmpty", 0) { it.target?.isEmpty }
-                .function("adapterContext", 0) { it.target?.adapterContext }
+                .function("removeCustomTag", returnsObject().params(Type.OBJECT)) { it.target?.removeCustomTag(it.getRef(0) as NamespacedKey) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("adapterContext", returnsObject().noParams()) { it.target?.adapterContext }
         }
     }
 }

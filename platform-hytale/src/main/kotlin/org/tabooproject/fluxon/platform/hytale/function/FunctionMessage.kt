@@ -2,6 +2,8 @@ package org.tabooproject.fluxon.platform.hytale.function
 
 import com.hypixel.hytale.server.core.Message
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
@@ -13,7 +15,7 @@ object FunctionMessage {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("raw", 1) { Message.raw(it.getString(0)!!) }
+            registerFunction("raw", returnsObject().params(Type.STRING)) { Message.raw(it.getString(0)!!) }
         }
     }
 }

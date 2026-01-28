@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.SculkBloomEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnSculkBloomEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkBloomEvent::class.java)
-                .function("charge", 0) { it.target?.charge }
-                .function("setCharge", 1) { it.target?.setCharge(it.getNumber(0).toInt()) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("charge", returnsObject().noParams()) { it.target?.charge }
+                .function("setCharge", returnsObject().params(Type.OBJECT)) { it.target?.setCharge(it.getInt(0).toInt()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { SculkBloomEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { SculkBloomEvent.getHandlerList() }
         }
     }
 }

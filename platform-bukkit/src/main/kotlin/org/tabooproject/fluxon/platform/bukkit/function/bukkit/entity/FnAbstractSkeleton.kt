@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 
 @Requires(classes = ["org.bukkit.entity.AbstractSkeleton"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,7 @@ object FnAbstractSkeleton {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractSkeleton::class.java)
-                .function(
-                    "setSkeletonType",
-                    1
-                ) { it.target?.setSkeletonType(it.getArgument(0) as Skeleton.SkeletonType) }
+                .function("setSkeletonType", returnsObject().params(Type.OBJECT)) { it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType) }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BellResonateEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnBellResonateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BellResonateEvent::class.java)
-                .function("resonatedEntities", 0) { it.target?.resonatedEntities }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("resonatedEntities", returnsObject().noParams()) { it.target?.resonatedEntities }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BellResonateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BellResonateEvent.getHandlerList() }
         }
     }
 }

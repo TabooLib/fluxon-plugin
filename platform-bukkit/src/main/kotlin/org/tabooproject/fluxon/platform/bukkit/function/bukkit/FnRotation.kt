@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Rotation"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnRotation {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rotation::class.java)
-                .function("rotateClockwise", 0) { it.target?.rotateClockwise() }
-                .function("rotateCounterClockwise", 0) { it.target?.rotateCounterClockwise() }
+                .function("rotateClockwise", returnsObject().noParams()) { it.target?.rotateClockwise() }
+                .function("rotateCounterClockwise", returnsObject().noParams()) { it.target?.rotateCounterClockwise() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerBedEnterEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +20,14 @@ object FnPlayerBedEnterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBedEnterEvent::class.java)
-                .function("bedEnterResult", 0) { it.target?.bedEnterResult }
-                .function("setUseBed", 1) { it.target?.setUseBed(it.getArgument(0) as Event.Result) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("bed", 0) { it.target?.bed }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("bedEnterResult", returnsObject().noParams()) { it.target?.bedEnterResult }
+                .function("setUseBed", returnsObject().params(Type.OBJECT)) { it.target?.setUseBed(it.getRef(0) as Event.Result) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("bed", returnsObject().noParams()) { it.target?.bed }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerBedEnterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerBedEnterEvent.getHandlerList() }
         }
     }
 }

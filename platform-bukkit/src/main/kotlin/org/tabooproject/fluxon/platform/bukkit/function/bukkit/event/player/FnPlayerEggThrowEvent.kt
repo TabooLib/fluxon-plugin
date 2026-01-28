@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerEggThrowEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +20,16 @@ object FnPlayerEggThrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEggThrowEvent::class.java)
-                .function("egg", 0) { it.target?.egg }
-                .function("isHatching", 0) { it.target?.isHatching }
-                .function("setHatching", 1) { it.target?.setHatching(it.getBoolean(0)) }
-                .function("hatchingType", 0) { it.target?.hatchingType }
-                .function("setHatchingType", 1) { it.target?.setHatchingType(it.getArgument(0) as EntityType) }
-                .function("numHatches", 0) { it.target?.numHatches }
-                .function("setNumHatches", 1) { it.target?.setNumHatches(it.getNumber(0).toByte()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("egg", returnsObject().noParams()) { it.target?.egg }
+                .function("isHatching", returns(Type.Z).noParams()) { it.target?.isHatching }
+                .function("setHatching", returnsObject().params(Type.OBJECT)) { it.target?.setHatching(it.getBool(0)) }
+                .function("hatchingType", returnsObject().noParams()) { it.target?.hatchingType }
+                .function("setHatchingType", returnsObject().params(Type.OBJECT)) { it.target?.setHatchingType(it.getRef(0) as EntityType) }
+                .function("numHatches", returnsObject().noParams()) { it.target?.numHatches }
+                .function("setNumHatches", returnsObject().params(Type.OBJECT)) { it.target?.setNumHatches(it.getInt(0).toByte()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerEggThrowEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerEggThrowEvent.getHandlerList() }
         }
     }
 }

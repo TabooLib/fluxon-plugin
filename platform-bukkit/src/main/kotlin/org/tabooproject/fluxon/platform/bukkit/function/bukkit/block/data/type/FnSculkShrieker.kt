@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.SculkShrieker"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnSculkShrieker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkShrieker::class.java)
-                .function("isCanSummon", 0) { it.target?.isCanSummon }
-                .function("setCanSummon", 1) { it.target?.setCanSummon(it.getBoolean(0)) }
-                .function("isShrieking", 0) { it.target?.isShrieking }
-                .function("setShrieking", 1) { it.target?.setShrieking(it.getBoolean(0)) }
+                .function("isCanSummon", returns(Type.Z).noParams()) { it.target?.isCanSummon }
+                .function("setCanSummon", returnsObject().params(Type.OBJECT)) { it.target?.setCanSummon(it.getBool(0)) }
+                .function("isShrieking", returns(Type.Z).noParams()) { it.target?.isShrieking }
+                .function("setShrieking", returnsObject().params(Type.OBJECT)) { it.target?.setShrieking(it.getBool(0)) }
         }
     }
 }

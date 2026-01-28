@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.scoreboard.ScoreboardManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnScoreboardManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ScoreboardManager::class.java)
-                .function("mainScoreboard", 0) { it.target?.mainScoreboard }
-                .syncFunction("newScoreboard", 0) { it.target?.newScoreboard }
+                .function("mainScoreboard", returnsObject().noParams()) { it.target?.mainScoreboard }
+                .syncFunction("newScoreboard", returnsObject().noParams()) { it.target?.newScoreboard }
         }
     }
 }

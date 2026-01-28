@@ -17,6 +17,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.block.Block"])
@@ -27,102 +30,163 @@ object FnBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Block::class.java)
-                .function("data", 0) { it.target?.data }
-                .function("blockData", 0) { it.target?.blockData }
-                .function("getRelative", listOf(1, 2, 3)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.getRelative(it.getArgument(0) as BlockFace)
+                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
+                .function("getRelative", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.getRelative(it.getRef(0) as BlockFace)
                         2 -> it.target?.getRelative(
-                            it.getArgument(0) as BlockFace,
-                            it.getNumber(1).toInt()
+                            it.getRef(0) as BlockFace,
+                            it.getInt(1).toInt()
                         )
                         3 -> it.target?.getRelative(
-                            it.getNumber(0).toInt(),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt()
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
                         )
-                        else -> error("Block#relative 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("Block#relative 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function("type", 0) { it.target?.type }
-                .function("lightLevel", 0) { it.target?.lightLevel }
-                .function("lightFromSky", 0) { it.target?.lightFromSky }
-                .function("lightFromBlocks", 0) { it.target?.lightFromBlocks }
-                .function("world", 0) { it.target?.world }
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("z", 0) { it.target?.z }
-                .function("location", 0) { it.target?.location }
-                .function("getLocation", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
-                .function("chunk", 0) { it.target?.chunk }
-                .function("setBlockData", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setBlockData(it.getArgument(0) as BlockData)
+                .function("getRelative", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.getRelative(it.getRef(0) as BlockFace)
+                        2 -> it.target?.getRelative(
+                            it.getRef(0) as BlockFace,
+                            it.getInt(1).toInt()
+                        )
+                        3 -> it.target?.getRelative(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                        else -> error("Block#relative 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("getRelative", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.getRelative(it.getRef(0) as BlockFace)
+                        2 -> it.target?.getRelative(
+                            it.getRef(0) as BlockFace,
+                            it.getInt(1).toInt()
+                        )
+                        3 -> it.target?.getRelative(
+                            it.getInt(0).toInt(),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt()
+                        )
+                        else -> error("Block#relative 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("lightLevel", returnsObject().noParams()) { it.target?.lightLevel }
+                .function("lightFromSky", returnsObject().noParams()) { it.target?.lightFromSky }
+                .function("lightFromBlocks", returnsObject().noParams()) { it.target?.lightFromBlocks }
+                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("z", returnsObject().noParams()) { it.target?.z }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("getLocation", returnsObject().params(Type.OBJECT)) { it.target?.getLocation(it.getRef(0) as Location) }
+                .function("chunk", returnsObject().noParams()) { it.target?.chunk }
+                .function("setBlockData", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setBlockData(it.getRef(0) as BlockData)
                     } else {
                         it.target?.setBlockData(
-                            it.getArgument(0) as BlockData,
-                            it.getBoolean(1)
+                            it.getRef(0) as BlockData,
+                            it.getBool(1)
                         )
                     }
                 }
-                .function("setType", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setType(it.getArgument(0) as Material)
+                .function("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setBlockData(it.getRef(0) as BlockData)
                     } else {
-                        it.target?.setType(it.getArgument(0) as Material, it.getBoolean(1))
+                        it.target?.setBlockData(
+                            it.getRef(0) as BlockData,
+                            it.getBool(1)
+                        )
                     }
                 }
-                .function("getFace", 1) { it.target?.getFace(it.getArgument(0) as Block) }
-                .function("state", 0) { it.target?.state }
-                .function("biome", 0) { it.target?.biome }
-                .function("setBiome", 1) { it.target?.setBiome(it.getArgument(0) as Biome) }
-                .function("isBlockPowered", 0) { it.target?.isBlockPowered }
-                .function("isBlockIndirectlyPowered", 0) { it.target?.isBlockIndirectlyPowered }
-                .function("isBlockFacePowered", 1) { it.target?.isBlockFacePowered(it.getArgument(0) as BlockFace) }
-                .function(
-                    "isBlockFaceIndirectlyPowered",
-                    1
-                ) { it.target?.isBlockFaceIndirectlyPowered(it.getArgument(0) as BlockFace) }
-                .function("blockPower", 0) { it.target?.blockPower }
-                .function("getBlockPower", 1) { it.target?.getBlockPower(it.getArgument(0) as BlockFace) }
-                .function("isEmpty", 0) { it.target?.isEmpty }
-                .function("isLiquid", 0) { it.target?.isLiquid }
-                .function("temperature", 0) { it.target?.temperature }
-                .function("humidity", 0) { it.target?.humidity }
-                .function("pistonMoveReaction", 0) { it.target?.pistonMoveReaction }
-                .function("breakNaturally", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("setType", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setType(it.getRef(0) as Material)
+                    } else {
+                        it.target?.setType(it.getRef(0) as Material, it.getBool(1))
+                    }
+                }
+                .function("setType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setType(it.getRef(0) as Material)
+                    } else {
+                        it.target?.setType(it.getRef(0) as Material, it.getBool(1))
+                    }
+                }
+                .function("getFace", returnsObject().params(Type.OBJECT)) { it.target?.getFace(it.getRef(0) as Block) }
+                .function("state", returnsObject().noParams()) { it.target?.state }
+                .function("biome", returnsObject().noParams()) { it.target?.biome }
+                .function("setBiome", returnsObject().params(Type.OBJECT)) { it.target?.setBiome(it.getRef(0) as Biome) }
+                .function("isBlockPowered", returns(Type.Z).noParams()) { it.target?.isBlockPowered }
+                .function("isBlockIndirectlyPowered", returns(Type.Z).noParams()) { it.target?.isBlockIndirectlyPowered }
+                .function("isBlockFacePowered", returns(Type.Z).params(Type.OBJECT)) { it.target?.isBlockFacePowered(it.getRef(0) as BlockFace) }
+                .function("isBlockFaceIndirectlyPowered", returns(Type.Z).params(Type.OBJECT)) { it.target?.isBlockFaceIndirectlyPowered(it.getRef(0) as BlockFace) }
+                .function("blockPower", returnsObject().noParams()) { it.target?.blockPower }
+                .function("getBlockPower", returnsObject().params(Type.OBJECT)) { it.target?.getBlockPower(it.getRef(0) as BlockFace) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("isLiquid", returns(Type.Z).noParams()) { it.target?.isLiquid }
+                .function("temperature", returnsObject().noParams()) { it.target?.temperature }
+                .function("humidity", returnsObject().noParams()) { it.target?.humidity }
+                .function("pistonMoveReaction", returnsObject().noParams()) { it.target?.pistonMoveReaction }
+                .function("breakNaturally", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.breakNaturally()
                     } else {
-                        it.target?.breakNaturally(it.getArgument(0) as ItemStack)
+                        it.target?.breakNaturally(it.getRef(0) as ItemStack)
                     }
                 }
-                .function("applyBoneMeal", 1) { it.target?.applyBoneMeal(it.getArgument(0) as BlockFace) }
-                .function("drops", 0) { it.target?.drops }
-                .function("getDrops", listOf(1, 2)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.getDrops(it.getArgument(0) as ItemStack)
+                .function("breakNaturally", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.breakNaturally()
+                    } else {
+                        it.target?.breakNaturally(it.getRef(0) as ItemStack)
+                    }
+                }
+                .function("applyBoneMeal", returnsObject().params(Type.OBJECT)) { it.target?.applyBoneMeal(it.getRef(0) as BlockFace) }
+                .function("drops", returnsObject().noParams()) { it.target?.drops }
+                .function("getDrops", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.getDrops(it.getRef(0) as ItemStack)
                         2 -> it.target?.getDrops(
-                            it.getArgument(0) as ItemStack,
-                            it.getArgument(1) as Entity
+                            it.getRef(0) as ItemStack,
+                            it.getRef(1) as Entity
                         )
-                        else -> error("Block#getDrops 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("Block#getDrops 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function("isPreferredTool", 1) { it.target?.isPreferredTool(it.getArgument(0) as ItemStack) }
-                .function("getBreakSpeed", 1) { it.target?.getBreakSpeed(it.getArgument(0) as Player) }
-                .function("isPassable", 0) { it.target?.isPassable }
-                .function("rayTrace", 4) {
+                .function("getDrops", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.getDrops(it.getRef(0) as ItemStack)
+                        2 -> it.target?.getDrops(
+                            it.getRef(0) as ItemStack,
+                            it.getRef(1) as Entity
+                        )
+                        else -> error("Block#getDrops 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("isPreferredTool", returns(Type.Z).params(Type.OBJECT)) { it.target?.isPreferredTool(it.getRef(0) as ItemStack) }
+                .function("getBreakSpeed", returnsObject().params(Type.OBJECT)) { it.target?.getBreakSpeed(it.getRef(0) as Player) }
+                .function("isPassable", returns(Type.Z).noParams()) { it.target?.isPassable }
+                .function("rayTrace", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.rayTrace(
-                        it.getArgument(0) as Location,
-                        it.getArgument(1) as Vector,
-                        it.getNumber(2).toDouble(),
-                        it.getArgument(3) as FluidCollisionMode
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getAsDouble(2),
+                        it.getRef(3) as FluidCollisionMode
                     )
                 }
-                .function("boundingBox", 0) { it.target?.boundingBox }
-                .function("collisionShape", 0) { it.target?.collisionShape }
-                .function("canPlace", 1) { it.target?.canPlace(it.getArgument(0) as BlockData) }
+                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
+                .function("collisionShape", returnsObject().noParams()) { it.target?.collisionShape }
+                .function("canPlace", returns(Type.Z).params(Type.OBJECT)) { it.target?.canPlace(it.getRef(0) as BlockData) }
         }
     }
 }

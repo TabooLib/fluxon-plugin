@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Slime"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnSlime {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Slime::class.java)
-                .function("size", 0) { it.target?.size }
-                .function("setSize", 1) { it.target?.setSize(it.getNumber(0).toInt()) }
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("setSize", returnsObject().params(Type.OBJECT)) { it.target?.setSize(it.getInt(0).toInt()) }
         }
     }
 }

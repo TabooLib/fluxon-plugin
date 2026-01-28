@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.enchantments.EnchantmentOffer"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,12 @@ object FnEnchantmentOffer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentOffer::class.java)
-                .function("enchantment", 0) { it.target?.enchantment }
-                .function("setEnchantment", 1) { it.target?.setEnchantment(it.getArgument(0) as Enchantment) }
-                .function("enchantmentLevel", 0) { it.target?.enchantmentLevel }
-                .function("setEnchantmentLevel", 1) { it.target?.setEnchantmentLevel(it.getNumber(0).toInt()) }
-                .function("cost", 0) { it.target?.cost }
-                .function("setCost", 1) { it.target?.setCost(it.getNumber(0).toInt()) }
+                .function("enchantment", returnsObject().noParams()) { it.target?.enchantment }
+                .function("setEnchantment", returnsObject().params(Type.OBJECT)) { it.target?.setEnchantment(it.getRef(0) as Enchantment) }
+                .function("enchantmentLevel", returnsObject().noParams()) { it.target?.enchantmentLevel }
+                .function("setEnchantmentLevel", returnsObject().params(Type.OBJECT)) { it.target?.setEnchantmentLevel(it.getInt(0).toInt()) }
+                .function("cost", returnsObject().noParams()) { it.target?.cost }
+                .function("setCost", returnsObject().params(Type.OBJECT)) { it.target?.setCost(it.getInt(0).toInt()) }
         }
     }
 }

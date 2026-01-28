@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.raid.RaidEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnRaidEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidEvent::class.java)
-                .function("raid", 0) { it.target?.raid }
+                .function("raid", returnsObject().noParams()) { it.target?.raid }
         }
     }
 }

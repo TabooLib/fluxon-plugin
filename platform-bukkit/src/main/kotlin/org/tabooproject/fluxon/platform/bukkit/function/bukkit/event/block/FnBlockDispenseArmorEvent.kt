@@ -7,6 +7,8 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockDispenseArmorEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnBlockDispenseArmorEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDispenseArmorEvent::class.java)
-                .function("targetEntity", 0) { it.target?.targetEntity }
+                .function("targetEntity", returnsObject().noParams()) { it.target?.targetEntity }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Container"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Container::class.java)
-                .function("inventory", 0) { it.target?.inventory }
-                .function("snapshotInventory", 0) { it.target?.snapshotInventory }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
         }
     }
 }

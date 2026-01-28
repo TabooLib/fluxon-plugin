@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.EnchantingInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnEnchantingInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantingInventory::class.java)
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("item", 0) { it.target?.item }
-                .function("setSecondary", 1) { it.target?.setSecondary(it.getArgument(0) as ItemStack) }
-                .function("secondary", 0) { it.target?.secondary }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setSecondary", returnsObject().params(Type.OBJECT)) { it.target?.setSecondary(it.getRef(0) as ItemStack) }
+                .function("secondary", returnsObject().noParams()) { it.target?.secondary }
         }
     }
 }

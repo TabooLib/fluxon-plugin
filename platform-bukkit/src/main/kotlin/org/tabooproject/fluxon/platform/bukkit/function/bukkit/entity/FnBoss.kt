@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Boss"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnBoss {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Boss::class.java)
-                .function("bossBar", 0) { it.target?.bossBar }
+                .function("bossBar", returnsObject().noParams()) { it.target?.bossBar }
         }
     }
 }

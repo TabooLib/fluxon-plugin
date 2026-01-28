@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerToggleFlightEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnPlayerToggleFlightEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerToggleFlightEvent::class.java)
-                .function("isFlying", 0) { it.target?.isFlying }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isFlying", returns(Type.Z).noParams()) { it.target?.isFlying }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerToggleFlightEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerToggleFlightEvent.getHandlerList() }
         }
     }
 }

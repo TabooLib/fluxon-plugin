@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.TurtleEgg"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnTurtleEgg {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TurtleEgg::class.java)
-                .function("eggs", 0) { it.target?.eggs }
-                .function("setEggs", 1) { it.target?.setEggs(it.getNumber(0).toInt()) }
-                .function("minimumEggs", 0) { it.target?.minimumEggs }
-                .function("maximumEggs", 0) { it.target?.maximumEggs }
+                .function("eggs", returnsObject().noParams()) { it.target?.eggs }
+                .function("setEggs", returnsObject().params(Type.OBJECT)) { it.target?.setEggs(it.getInt(0).toInt()) }
+                .function("minimumEggs", returnsObject().noParams()) { it.target?.minimumEggs }
+                .function("maximumEggs", returnsObject().noParams()) { it.target?.maximumEggs }
         }
     }
 }

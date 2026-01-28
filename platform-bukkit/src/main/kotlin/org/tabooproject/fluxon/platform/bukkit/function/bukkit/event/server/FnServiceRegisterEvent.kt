@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.server.ServiceRegisterEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnServiceRegisterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServiceRegisterEvent::class.java)
-                .function("handlers", 0) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ServiceRegisterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { ServiceRegisterEvent.getHandlerList() }
         }
     }
 }

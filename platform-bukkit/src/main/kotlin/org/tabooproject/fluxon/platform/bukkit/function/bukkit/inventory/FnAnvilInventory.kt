@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.AnvilInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +18,13 @@ object FnAnvilInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnvilInventory::class.java)
-                .function("renameText", 0) { it.target?.renameText }
-                .function("repairCostAmount", 0) { it.target?.repairCostAmount }
-                .function("setRepairCostAmount", 1) { it.target?.setRepairCostAmount(it.getNumber(0).toInt()) }
-                .function("repairCost", 0) { it.target?.repairCost }
-                .function("setRepairCost", 1) { it.target?.setRepairCost(it.getNumber(0).toInt()) }
-                .function("maximumRepairCost", 0) { it.target?.maximumRepairCost }
-                .function("setMaximumRepairCost", 1) { it.target?.setMaximumRepairCost(it.getNumber(0).toInt()) }
+                .function("renameText", returnsObject().noParams()) { it.target?.renameText }
+                .function("repairCostAmount", returnsObject().noParams()) { it.target?.repairCostAmount }
+                .function("setRepairCostAmount", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCostAmount(it.getInt(0).toInt()) }
+                .function("repairCost", returnsObject().noParams()) { it.target?.repairCost }
+                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCost(it.getInt(0).toInt()) }
+                .function("maximumRepairCost", returnsObject().noParams()) { it.target?.maximumRepairCost }
+                .function("setMaximumRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setMaximumRepairCost(it.getInt(0).toInt()) }
         }
     }
 }

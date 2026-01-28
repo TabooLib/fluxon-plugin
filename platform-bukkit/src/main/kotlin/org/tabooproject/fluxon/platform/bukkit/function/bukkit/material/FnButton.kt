@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Button"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +20,12 @@ object FnButton {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Button::class.java)
-                .function("isPowered", 0) { it.target?.isPowered }
-                .function("setPowered", 1) { it.target?.setPowered(it.getBoolean(0)) }
-                .function("attachedFace", 0) { it.target?.attachedFace }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
+                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

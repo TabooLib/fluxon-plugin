@@ -11,6 +11,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.BlockState"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,32 +23,48 @@ object FnBlockState {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockState::class.java)
-                .function("block", 0) { it.target?.block }
-                .function("data", 0) { it.target?.data }
-                .function("blockData", 0) { it.target?.blockData }
-                .function("type", 0) { it.target?.type }
-                .function("lightLevel", 0) { it.target?.lightLevel }
-                .function("world", 0) { it.target?.world }
-                .function("x", 0) { it.target?.x }
-                .function("y", 0) { it.target?.y }
-                .function("z", 0) { it.target?.z }
-                .function("location", 0) { it.target?.location }
-                .function("getLocation", 1) { it.target?.getLocation(it.getArgument(0) as Location) }
-                .function("chunk", 0) { it.target?.chunk }
-                .function("setData", 1) { it.target?.setData(it.getArgument(0) as MaterialData) }
-                .function("setBlockData", 1) { it.target?.setBlockData(it.getArgument(0) as BlockData) }
-                .function("setType", 1) { it.target?.setType(it.getArgument(0) as Material) }
-                .function("update", listOf(0, 1, 2)) {
-                    when (it.arguments.size) {
+                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("lightLevel", returnsObject().noParams()) { it.target?.lightLevel }
+                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("x", returnsObject().noParams()) { it.target?.x }
+                .function("y", returnsObject().noParams()) { it.target?.y }
+                .function("z", returnsObject().noParams()) { it.target?.z }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("getLocation", returnsObject().params(Type.OBJECT)) { it.target?.getLocation(it.getRef(0) as Location) }
+                .function("chunk", returnsObject().noParams()) { it.target?.chunk }
+                .function("setData", returnsObject().params(Type.OBJECT)) { it.target?.setData(it.getRef(0) as MaterialData) }
+                .function("setBlockData", returnsObject().params(Type.OBJECT)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
+                .function("setType", returnsObject().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as Material) }
+                .function("update", returnsObject().noParams()) {
+                    when (it.argumentCount) {
                         0 -> it.target?.update()
-                        1 -> it.target?.update(it.getBoolean(0))
-                        2 -> it.target?.update(it.getBoolean(0), it.getBoolean(1))
-                        else -> error("BlockState#update 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        1 -> it.target?.update(it.getBool(0))
+                        2 -> it.target?.update(it.getBool(0), it.getBool(1))
+                        else -> error("BlockState#update 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function("rawData", 0) { it.target?.rawData }
-                .function("setRawData", 1) { it.target?.setRawData(it.getNumber(0).toByte()) }
-                .function("isPlaced", 0) { it.target?.isPlaced }
+                .function("update", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        0 -> it.target?.update()
+                        1 -> it.target?.update(it.getBool(0))
+                        2 -> it.target?.update(it.getBool(0), it.getBool(1))
+                        else -> error("BlockState#update 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("update", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        0 -> it.target?.update()
+                        1 -> it.target?.update(it.getBool(0))
+                        2 -> it.target?.update(it.getBool(0), it.getBool(1))
+                        else -> error("BlockState#update 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("rawData", returnsObject().noParams()) { it.target?.rawData }
+                .function("setRawData", returnsObject().params(Type.OBJECT)) { it.target?.setRawData(it.getInt(0).toByte()) }
+                .function("isPlaced", returns(Type.Z).noParams()) { it.target?.isPlaced }
         }
     }
 }

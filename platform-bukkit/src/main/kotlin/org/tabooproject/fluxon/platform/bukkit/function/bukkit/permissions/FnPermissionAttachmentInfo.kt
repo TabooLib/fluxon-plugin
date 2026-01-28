@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.permissions.PermissionAttachmentInfo"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnPermissionAttachmentInfo {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionAttachmentInfo::class.java)
-                .function("permissible", 0) { it.target?.permissible }
-                .function("permission", 0) { it.target?.permission }
-                .function("attachment", 0) { it.target?.attachment }
-                .function("value", 0) { it.target?.value }
+                .function("permissible", returnsObject().noParams()) { it.target?.permissible }
+                .function("permission", returnsObject().noParams()) { it.target?.permission }
+                .function("attachment", returnsObject().noParams()) { it.target?.attachment }
+                .function("value", returnsObject().noParams()) { it.target?.value }
         }
     }
 }

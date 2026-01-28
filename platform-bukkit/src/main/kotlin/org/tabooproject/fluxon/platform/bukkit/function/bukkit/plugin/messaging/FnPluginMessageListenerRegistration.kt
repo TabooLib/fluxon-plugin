@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.messaging.PluginMessageListenerRegistration"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnPluginMessageListenerRegistration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageListenerRegistration::class.java)
-                .function("channel", 0) { it.target?.channel }
-                .function("listener", 0) { it.target?.listener }
-                .function("plugin", 0) { it.target?.plugin }
-                .function("isValid", 0) { it.target?.isValid }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("hashCode", 0) { it.target?.hashCode() }
+                .function("channel", returnsObject().noParams()) { it.target?.channel }
+                .function("listener", returnsObject().noParams()) { it.target?.listener }
+                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("isValid", returns(Type.Z).noParams()) { it.target?.isValid }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
         }
     }
 }

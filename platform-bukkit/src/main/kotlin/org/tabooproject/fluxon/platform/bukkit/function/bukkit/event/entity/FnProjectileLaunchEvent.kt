@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.ProjectileLaunchEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +19,9 @@ object FnProjectileLaunchEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProjectileLaunchEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("entity", 0) { it.target?.getEntity() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
         }
     }
 }

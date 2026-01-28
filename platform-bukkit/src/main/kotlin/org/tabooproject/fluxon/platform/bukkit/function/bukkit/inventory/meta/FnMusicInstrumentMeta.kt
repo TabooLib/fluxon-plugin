@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.MusicInstrumentMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +19,9 @@ object FnMusicInstrumentMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MusicInstrumentMeta::class.java)
-                .function("setInstrument", 1) { it.target?.setInstrument(it.getArgument(0) as MusicInstrument) }
-                .function("instrument", 0) { it.target?.instrument }
-                .function("clone", 0) { it.target?.clone() }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as MusicInstrument) }
+                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

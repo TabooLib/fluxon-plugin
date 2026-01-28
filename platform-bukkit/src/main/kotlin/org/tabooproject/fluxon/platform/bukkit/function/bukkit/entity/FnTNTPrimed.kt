@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.TNTPrimed"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnTNTPrimed {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TNTPrimed::class.java)
-                .function("setFuseTicks", 1) { it.target?.setFuseTicks(it.getNumber(0).toInt()) }
-                .function("fuseTicks", 0) { it.target?.fuseTicks }
-                .function("source", 0) { it.target?.source }
-                .function("setSource", 1) { it.target?.setSource(it.getArgument(0) as Entity) }
+                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
+                .function("fuseTicks", returnsObject().noParams()) { it.target?.fuseTicks }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("setSource", returnsObject().params(Type.OBJECT)) { it.target?.setSource(it.getRef(0) as Entity) }
         }
     }
 }

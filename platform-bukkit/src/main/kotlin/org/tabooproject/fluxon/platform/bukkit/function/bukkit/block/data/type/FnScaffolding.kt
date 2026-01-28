@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Scaffolding"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnScaffolding {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Scaffolding::class.java)
-                .function("isBottom", 0) { it.target?.isBottom }
-                .function("setBottom", 1) { it.target?.setBottom(it.getBoolean(0)) }
-                .function("distance", 0) { it.target?.distance }
-                .function("setDistance", 1) { it.target?.setDistance(it.getNumber(0).toInt()) }
-                .function("maximumDistance", 0) { it.target?.maximumDistance }
+                .function("isBottom", returns(Type.Z).noParams()) { it.target?.isBottom }
+                .function("setBottom", returnsObject().params(Type.OBJECT)) { it.target?.setBottom(it.getBool(0)) }
+                .function("distance", returnsObject().noParams()) { it.target?.distance }
+                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.target?.setDistance(it.getInt(0).toInt()) }
+                .function("maximumDistance", returnsObject().noParams()) { it.target?.maximumDistance }
         }
     }
 }

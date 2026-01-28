@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.ArmorStand"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,54 +22,54 @@ object FnArmorStand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorStand::class.java)
-                .function("itemInHand", 0) { it.target?.itemInHand }
-                .function("setItemInHand", 1) { it.target?.setItemInHand(it.getArgument(0) as ItemStack) }
-                .function("boots", 0) { it.target?.boots }
-                .function("setBoots", 1) { it.target?.setBoots(it.getArgument(0) as ItemStack) }
-                .function("leggings", 0) { it.target?.leggings }
-                .function("setLeggings", 1) { it.target?.setLeggings(it.getArgument(0) as ItemStack) }
-                .function("chestplate", 0) { it.target?.chestplate }
-                .function("setChestplate", 1) { it.target?.setChestplate(it.getArgument(0) as ItemStack) }
-                .function("helmet", 0) { it.target?.helmet }
-                .function("setHelmet", 1) { it.target?.setHelmet(it.getArgument(0) as ItemStack) }
-                .function("bodyPose", 0) { it.target?.bodyPose }
-                .function("setBodyPose", 1) { it.target?.setBodyPose(it.getArgument(0) as EulerAngle) }
-                .function("leftArmPose", 0) { it.target?.leftArmPose }
-                .function("setLeftArmPose", 1) { it.target?.setLeftArmPose(it.getArgument(0) as EulerAngle) }
-                .function("rightArmPose", 0) { it.target?.rightArmPose }
-                .function("setRightArmPose", 1) { it.target?.setRightArmPose(it.getArgument(0) as EulerAngle) }
-                .function("leftLegPose", 0) { it.target?.leftLegPose }
-                .function("setLeftLegPose", 1) { it.target?.setLeftLegPose(it.getArgument(0) as EulerAngle) }
-                .function("rightLegPose", 0) { it.target?.rightLegPose }
-                .function("setRightLegPose", 1) { it.target?.setRightLegPose(it.getArgument(0) as EulerAngle) }
-                .function("headPose", 0) { it.target?.headPose }
-                .function("setHeadPose", 1) { it.target?.setHeadPose(it.getArgument(0) as EulerAngle) }
-                .function("hasBasePlate", 0) { it.target?.hasBasePlate() }
-                .function("setBasePlate", 1) { it.target?.setBasePlate(it.getBoolean(0)) }
-                .function("isVisible", 0) { it.target?.isVisible }
-                .function("setVisible", 1) { it.target?.setVisible(it.getBoolean(0)) }
-                .function("hasArms", 0) { it.target?.hasArms() }
-                .function("setArms", 1) { it.target?.setArms(it.getBoolean(0)) }
-                .function("isSmall", 0) { it.target?.isSmall }
-                .function("setSmall", 1) { it.target?.setSmall(it.getBoolean(0)) }
-                .function("isMarker", 0) { it.target?.isMarker }
-                .function("setMarker", 1) { it.target?.setMarker(it.getBoolean(0)) }
-                .function("addEquipmentLock", 2) {
+                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
+                .function("setItemInHand", returnsObject().params(Type.OBJECT)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }
+                .function("boots", returnsObject().noParams()) { it.target?.boots }
+                .function("setBoots", returnsObject().params(Type.OBJECT)) { it.target?.setBoots(it.getRef(0) as ItemStack) }
+                .function("leggings", returnsObject().noParams()) { it.target?.leggings }
+                .function("setLeggings", returnsObject().params(Type.OBJECT)) { it.target?.setLeggings(it.getRef(0) as ItemStack) }
+                .function("chestplate", returnsObject().noParams()) { it.target?.chestplate }
+                .function("setChestplate", returnsObject().params(Type.OBJECT)) { it.target?.setChestplate(it.getRef(0) as ItemStack) }
+                .function("helmet", returnsObject().noParams()) { it.target?.helmet }
+                .function("setHelmet", returnsObject().params(Type.OBJECT)) { it.target?.setHelmet(it.getRef(0) as ItemStack) }
+                .function("bodyPose", returnsObject().noParams()) { it.target?.bodyPose }
+                .function("setBodyPose", returnsObject().params(Type.OBJECT)) { it.target?.setBodyPose(it.getRef(0) as EulerAngle) }
+                .function("leftArmPose", returnsObject().noParams()) { it.target?.leftArmPose }
+                .function("setLeftArmPose", returnsObject().params(Type.OBJECT)) { it.target?.setLeftArmPose(it.getRef(0) as EulerAngle) }
+                .function("rightArmPose", returnsObject().noParams()) { it.target?.rightArmPose }
+                .function("setRightArmPose", returnsObject().params(Type.OBJECT)) { it.target?.setRightArmPose(it.getRef(0) as EulerAngle) }
+                .function("leftLegPose", returnsObject().noParams()) { it.target?.leftLegPose }
+                .function("setLeftLegPose", returnsObject().params(Type.OBJECT)) { it.target?.setLeftLegPose(it.getRef(0) as EulerAngle) }
+                .function("rightLegPose", returnsObject().noParams()) { it.target?.rightLegPose }
+                .function("setRightLegPose", returnsObject().params(Type.OBJECT)) { it.target?.setRightLegPose(it.getRef(0) as EulerAngle) }
+                .function("headPose", returnsObject().noParams()) { it.target?.headPose }
+                .function("setHeadPose", returnsObject().params(Type.OBJECT)) { it.target?.setHeadPose(it.getRef(0) as EulerAngle) }
+                .function("hasBasePlate", returns(Type.Z).noParams()) { it.target?.hasBasePlate() }
+                .function("setBasePlate", returnsObject().params(Type.OBJECT)) { it.target?.setBasePlate(it.getBool(0)) }
+                .function("isVisible", returns(Type.Z).noParams()) { it.target?.isVisible }
+                .function("setVisible", returnsObject().params(Type.OBJECT)) { it.target?.setVisible(it.getBool(0)) }
+                .function("hasArms", returns(Type.Z).noParams()) { it.target?.hasArms() }
+                .function("setArms", returnsObject().params(Type.OBJECT)) { it.target?.setArms(it.getBool(0)) }
+                .function("isSmall", returns(Type.Z).noParams()) { it.target?.isSmall }
+                .function("setSmall", returnsObject().params(Type.OBJECT)) { it.target?.setSmall(it.getBool(0)) }
+                .function("isMarker", returns(Type.Z).noParams()) { it.target?.isMarker }
+                .function("setMarker", returnsObject().params(Type.OBJECT)) { it.target?.setMarker(it.getBool(0)) }
+                .function("addEquipmentLock", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.addEquipmentLock(
-                        it.getArgument(0) as EquipmentSlot,
-                        it.getArgument(1) as ArmorStand.LockType
+                        it.getRef(0) as EquipmentSlot,
+                        it.getRef(1) as ArmorStand.LockType
                     )
                 }
-                .function("removeEquipmentLock", 2) {
+                .function("removeEquipmentLock", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.removeEquipmentLock(
-                        it.getArgument(0) as EquipmentSlot,
-                        it.getArgument(1) as ArmorStand.LockType
+                        it.getRef(0) as EquipmentSlot,
+                        it.getRef(1) as ArmorStand.LockType
                     )
                 }
-                .function("hasEquipmentLock", 2) {
+                .function("hasEquipmentLock", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.hasEquipmentLock(
-                        it.getArgument(0) as EquipmentSlot,
-                        it.getArgument(1) as ArmorStand.LockType
+                        it.getRef(0) as EquipmentSlot,
+                        it.getRef(1) as ArmorStand.LockType
                     )
                 }
         }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.PrepareInventoryResultEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +19,11 @@ object FnPrepareInventoryResultEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareInventoryResultEvent::class.java)
-                .function("result", 0) { it.target?.result }
-                .function("setResult", 1) { it.target?.setResult(it.getArgument(0) as ItemStack) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PrepareInventoryResultEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PrepareInventoryResultEvent.getHandlerList() }
         }
     }
 }

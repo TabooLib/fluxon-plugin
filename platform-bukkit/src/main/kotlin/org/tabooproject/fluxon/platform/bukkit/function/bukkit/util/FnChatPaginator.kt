@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.ChatPaginator"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,20 +19,32 @@ object FnChatPaginator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator::class.java)
                 // static
-                .function("paginate", listOf(2, 4)) {
-                    if (it.arguments.size == 2) {
-                        ChatPaginator.paginate(it.getString(0), it.getNumber(1).toInt())
+                .function("paginate", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt())
                     } else {
                         ChatPaginator.paginate(
                             it.getString(0),
-                            it.getNumber(1).toInt(),
-                            it.getNumber(2).toInt(),
-                            it.getNumber(3).toInt()
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
+                        )
+                    }
+                }
+                .function("paginate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt())
+                    } else {
+                        ChatPaginator.paginate(
+                            it.getString(0),
+                            it.getInt(1).toInt(),
+                            it.getInt(2).toInt(),
+                            it.getInt(3).toInt()
                         )
                     }
                 }
                 // static
-                .function("wordWrap", 2) { ChatPaginator.wordWrap(it.getString(0), it.getNumber(1).toInt()) }
+                .function("wordWrap", returnsObject().params(Type.OBJECT, Type.OBJECT)) { ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt()) }
         }
     }
 }
@@ -43,9 +57,9 @@ object FnChatPaginatorChatPage {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator.ChatPage::class.java)
-                .function("pageNumber", 0) { it.target?.pageNumber }
-                .function("totalPages", 0) { it.target?.totalPages }
-                .function("lines", 0) { it.target?.lines }
+                .function("pageNumber", returnsObject().noParams()) { it.target?.pageNumber }
+                .function("totalPages", returnsObject().noParams()) { it.target?.totalPages }
+                .function("lines", returnsObject().noParams()) { it.target?.lines }
         }
     }
 }

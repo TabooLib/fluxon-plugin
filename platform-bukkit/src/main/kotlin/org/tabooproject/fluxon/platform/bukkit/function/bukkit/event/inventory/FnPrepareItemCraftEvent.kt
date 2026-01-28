@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.inventory.PrepareItemCraftEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnPrepareItemCraftEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareItemCraftEvent::class.java)
-                .function("recipe", 0) { it.target?.recipe }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("isRepair", 0) { it.target?.isRepair }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("isRepair", returns(Type.Z).noParams()) { it.target?.isRepair }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PrepareItemCraftEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PrepareItemCraftEvent.getHandlerList() }
         }
     }
 }

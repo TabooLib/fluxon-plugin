@@ -10,6 +10,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.damage.DamageSource"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,15 +22,15 @@ object FnDamageSource {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageSource::class.java)
-                .function("damageType", 0) { it.target?.damageType }
-                .function("causingEntity", 0) { it.target?.causingEntity }
-                .function("directEntity", 0) { it.target?.directEntity }
-                .function("damageLocation", 0) { it.target?.damageLocation }
-                .function("sourceLocation", 0) { it.target?.sourceLocation }
-                .function("isIndirect", 0) { it.target?.isIndirect }
-                .function("foodExhaustion", 0) { it.target?.foodExhaustion }
-                .function("scalesWithDifficulty", 0) { it.target?.scalesWithDifficulty() }
-                .function("builder", 1) { DamageSource.builder(it.getArgument(0) as DamageType) }
+                .function("damageType", returnsObject().noParams()) { it.target?.damageType }
+                .function("causingEntity", returnsObject().noParams()) { it.target?.causingEntity }
+                .function("directEntity", returnsObject().noParams()) { it.target?.directEntity }
+                .function("damageLocation", returnsObject().noParams()) { it.target?.damageLocation }
+                .function("sourceLocation", returnsObject().noParams()) { it.target?.sourceLocation }
+                .function("isIndirect", returns(Type.Z).noParams()) { it.target?.isIndirect }
+                .function("foodExhaustion", returnsObject().noParams()) { it.target?.foodExhaustion }
+                .function("scalesWithDifficulty", returnsObject().noParams()) { it.target?.scalesWithDifficulty() }
+                .function("builder", returnsObject().params(Type.OBJECT)) { DamageSource.builder(it.getRef(0) as DamageType) }
         }
     }
 }
@@ -40,10 +43,10 @@ object FnDamageSourceBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageSource.Builder::class.java)
-                .function("withCausingEntity", 1) { it.target?.withCausingEntity(it.getArgument(0) as Entity) }
-                .function("withDirectEntity", 1) { it.target?.withDirectEntity(it.getArgument(0) as Entity) }
-                .function("withDamageLocation", 1) { it.target?.withDamageLocation(it.getArgument(0) as Location) }
-                .function("build", 0) { it.target?.build() }
+                .function("withCausingEntity", returnsObject().params(Type.OBJECT)) { it.target?.withCausingEntity(it.getRef(0) as Entity) }
+                .function("withDirectEntity", returnsObject().params(Type.OBJECT)) { it.target?.withDirectEntity(it.getRef(0) as Entity) }
+                .function("withDamageLocation", returnsObject().params(Type.OBJECT)) { it.target?.withDamageLocation(it.getRef(0) as Location) }
+                .function("build", returnsObject().noParams()) { it.target?.build() }
         }
     }
 }

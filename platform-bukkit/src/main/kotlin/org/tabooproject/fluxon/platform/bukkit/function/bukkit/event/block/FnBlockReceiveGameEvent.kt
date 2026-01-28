@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockReceiveGameEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnBlockReceiveGameEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockReceiveGameEvent::class.java)
-                .function("event", 0) { it.target?.event }
-                .function("entity", 0) { it.target?.entity }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("event", returnsObject().noParams()) { it.target?.event }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockReceiveGameEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockReceiveGameEvent.getHandlerList() }
         }
     }
 }

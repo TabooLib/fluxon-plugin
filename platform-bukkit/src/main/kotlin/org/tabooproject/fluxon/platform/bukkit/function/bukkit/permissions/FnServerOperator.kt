@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.permissions.ServerOperator"])
@@ -17,8 +20,8 @@ object FnServerOperator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerOperator::class.java)
-                .function("isOp", 0) { it.target?.isOp }
-                .function("setOp", 1) { it.target?.setOp(it.getBoolean(0)) }
+                .function("isOp", returns(Type.Z).noParams()) { it.target?.isOp }
+                .function("setOp", returnsObject().params(Type.OBJECT)) { it.target?.setOp(it.getBool(0)) }
         }
     }
 }

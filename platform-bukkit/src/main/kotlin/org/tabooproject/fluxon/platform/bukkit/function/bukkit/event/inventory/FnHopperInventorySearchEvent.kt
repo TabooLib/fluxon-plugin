@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.HopperInventorySearchEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +19,13 @@ object FnHopperInventorySearchEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HopperInventorySearchEvent::class.java)
-                .function("setInventory", 1) { it.target?.setInventory(it.getArgument(0) as Inventory) }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("containerType", 0) { it.target?.containerType }
-                .function("searchBlock", 0) { it.target?.searchBlock }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("setInventory", returnsObject().params(Type.OBJECT)) { it.target?.setInventory(it.getRef(0) as Inventory) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("containerType", returnsObject().noParams()) { it.target?.containerType }
+                .function("searchBlock", returnsObject().noParams()) { it.target?.searchBlock }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { HopperInventorySearchEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { HopperInventorySearchEvent.getHandlerList() }
         }
     }
 }

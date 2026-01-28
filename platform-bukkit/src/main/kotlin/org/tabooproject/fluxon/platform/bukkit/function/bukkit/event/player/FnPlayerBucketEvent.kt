@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerBucketEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,15 @@ object FnPlayerBucketEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketEvent::class.java)
-                .function("bucket", 0) { it.target?.bucket }
-                .function("itemStack", 0) { it.target?.itemStack }
-                .function("setItemStack", 1) { it.target?.setItemStack(it.getArgument(0) as ItemStack) }
-                .function("block", 0) { it.target?.block }
-                .function("blockClicked", 0) { it.target?.blockClicked }
-                .function("blockFace", 0) { it.target?.blockFace }
-                .function("hand", 0) { it.target?.hand }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("bucket", returnsObject().noParams()) { it.target?.bucket }
+                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
+                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
+                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("blockClicked", returnsObject().noParams()) { it.target?.blockClicked }
+                .function("blockFace", returnsObject().noParams()) { it.target?.blockFace }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
         }
     }
 }

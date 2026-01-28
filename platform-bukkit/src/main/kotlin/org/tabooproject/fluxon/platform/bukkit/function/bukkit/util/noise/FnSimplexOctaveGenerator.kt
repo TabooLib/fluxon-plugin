@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.noise.SimplexOctaveGenerator"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,28 +18,50 @@ object FnSimplexOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexOctaveGenerator::class.java)
-                .function("setScale", 1) { it.target?.setScale(it.getNumber(0).toDouble()) }
-                .function("wScale", 0) { it.target?.wScale }
-                .function("setWScale", 1) { it.target?.setWScale(it.getNumber(0).toDouble()) }
-                .function("noise", listOf(6, 7)) {
-                    if (it.arguments.size == 6) {
+                .function("setScale", returnsObject().params(Type.OBJECT)) { it.target?.setScale(it.getAsDouble(0)) }
+                .function("wScale", returnsObject().noParams()) { it.target?.wScale }
+                .function("setWScale", returnsObject().params(Type.OBJECT)) { it.target?.setWScale(it.getAsDouble(0)) }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 6) {
                         it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble(),
-                            it.getNumber(4).toDouble(),
-                            it.getNumber(5).toDouble()
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getAsDouble(5)
                         )
                     } else {
                         it.target?.noise(
-                            it.getNumber(0).toDouble(),
-                            it.getNumber(1).toDouble(),
-                            it.getNumber(2).toDouble(),
-                            it.getNumber(3).toDouble(),
-                            it.getNumber(4).toDouble(),
-                            it.getNumber(5).toDouble(),
-                            it.getBoolean(6)
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getAsDouble(5),
+                            it.getBool(6)
+                        )
+                    }
+                }
+                .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 6) {
+                        it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getAsDouble(5)
+                        )
+                    } else {
+                        it.target?.noise(
+                            it.getAsDouble(0),
+                            it.getAsDouble(1),
+                            it.getAsDouble(2),
+                            it.getAsDouble(3),
+                            it.getAsDouble(4),
+                            it.getAsDouble(5),
+                            it.getBool(6)
                         )
                     }
                 }

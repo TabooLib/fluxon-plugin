@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.LlamaInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +19,8 @@ object FnLlamaInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LlamaInventory::class.java)
-                .function("decor", 0) { it.target?.decor }
-                .function("setDecor", 1) { it.target?.setDecor(it.getArgument(0) as ItemStack) }
+                .function("decor", returnsObject().noParams()) { it.target?.decor }
+                .function("setDecor", returnsObject().params(Type.OBJECT)) { it.target?.setDecor(it.getRef(0) as ItemStack) }
         }
     }
 }

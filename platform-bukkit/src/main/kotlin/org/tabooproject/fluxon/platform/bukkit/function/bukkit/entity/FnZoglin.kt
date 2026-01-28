@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Zoglin"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnZoglin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Zoglin::class.java)
-                .function("isBaby", 0) { it.target?.isBaby }
-                .function("setBaby", 1) { it.target?.setBaby(it.getBoolean(0)) }
+                .function("isBaby", returns(Type.Z).noParams()) { it.target?.isBaby }
+                .function("setBaby", returnsObject().params(Type.OBJECT)) { it.target?.setBaby(it.getBool(0)) }
         }
     }
 }

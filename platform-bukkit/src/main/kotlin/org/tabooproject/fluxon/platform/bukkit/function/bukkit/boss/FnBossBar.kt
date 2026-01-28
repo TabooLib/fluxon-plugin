@@ -11,6 +11,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.boss.BossBar"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,25 +23,25 @@ object FnBossBar {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BossBar::class.java)
-                .function("title", 0) { it.target?.title }
-                .function("setTitle", 1) { it.target?.setTitle(it.getString(0)) }
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as BarColor) }
-                .function("style", 0) { it.target?.style }
-                .function("setStyle", 1) { it.target?.setStyle(it.getArgument(0) as BarStyle) }
-                .function("removeFlag", 1) { it.target?.removeFlag(it.getArgument(0) as BarFlag) }
-                .function("addFlag", 1) { it.target?.addFlag(it.getArgument(0) as BarFlag) }
-                .function("hasFlag", 1) { it.target?.hasFlag(it.getArgument(0) as BarFlag) }
-                .function("setProgress", 1) { it.target?.setProgress(it.getNumber(0).toDouble()) }
-                .function("progress", 0) { it.target?.progress }
-                .function("addPlayer", 1) { it.target?.addPlayer(it.getArgument(0) as Player) }
-                .function("removePlayer", 1) { it.target?.removePlayer(it.getArgument(0) as Player) }
-                .function("removeAll", 0) { it.target?.removeAll() }
-                .function("players", 0) { it.target?.players }
-                .function("setVisible", 1) { it.target?.setVisible(it.getBoolean(0)) }
-                .function("isVisible", 0) { it.target?.isVisible }
-                .function("show", 0) { it.target?.show() }
-                .function("hide", 0) { it.target?.hide() }
+                .function("title", returnsObject().noParams()) { it.target?.title }
+                .function("setTitle", returnsObject().params(Type.OBJECT)) { it.target?.setTitle(it.getString(0)) }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as BarColor) }
+                .function("style", returnsObject().noParams()) { it.target?.style }
+                .function("setStyle", returnsObject().params(Type.OBJECT)) { it.target?.setStyle(it.getRef(0) as BarStyle) }
+                .function("removeFlag", returnsObject().params(Type.OBJECT)) { it.target?.removeFlag(it.getRef(0) as BarFlag) }
+                .function("addFlag", returnsObject().params(Type.OBJECT)) { it.target?.addFlag(it.getRef(0) as BarFlag) }
+                .function("hasFlag", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasFlag(it.getRef(0) as BarFlag) }
+                .function("setProgress", returnsObject().params(Type.OBJECT)) { it.target?.setProgress(it.getAsDouble(0)) }
+                .function("progress", returnsObject().noParams()) { it.target?.progress }
+                .function("addPlayer", returnsObject().params(Type.OBJECT)) { it.target?.addPlayer(it.getRef(0) as Player) }
+                .function("removePlayer", returnsObject().params(Type.OBJECT)) { it.target?.removePlayer(it.getRef(0) as Player) }
+                .function("removeAll", returnsObject().noParams()) { it.target?.removeAll() }
+                .function("players", returnsObject().noParams()) { it.target?.players }
+                .function("setVisible", returnsObject().params(Type.OBJECT)) { it.target?.setVisible(it.getBool(0)) }
+                .function("isVisible", returns(Type.Z).noParams()) { it.target?.isVisible }
+                .function("show", returnsObject().noParams()) { it.target?.show() }
+                .function("hide", returnsObject().noParams()) { it.target?.hide() }
         }
     }
 }

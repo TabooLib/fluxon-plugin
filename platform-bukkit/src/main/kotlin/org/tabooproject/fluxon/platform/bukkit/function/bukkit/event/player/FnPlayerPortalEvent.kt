@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerPortalEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,15 +19,15 @@ object FnPlayerPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPortalEvent::class.java)
-                .function("setSearchRadius", 1) { it.target?.setSearchRadius(it.getNumber(0).toInt()) }
-                .function("searchRadius", 0) { it.target?.searchRadius }
-                .function("canCreatePortal", 0) { it.target?.canCreatePortal }
-                .function("setCanCreatePortal", 1) { it.target?.setCanCreatePortal(it.getBoolean(0)) }
-                .function("setCreationRadius", 1) { it.target?.setCreationRadius(it.getNumber(0).toInt()) }
-                .function("creationRadius", 0) { it.target?.creationRadius }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
+                .function("searchRadius", returnsObject().noParams()) { it.target?.searchRadius }
+                .function("canCreatePortal", returns(Type.Z).noParams()) { it.target?.canCreatePortal }
+                .function("setCanCreatePortal", returnsObject().params(Type.OBJECT)) { it.target?.setCanCreatePortal(it.getBool(0)) }
+                .function("setCreationRadius", returnsObject().params(Type.OBJECT)) { it.target?.setCreationRadius(it.getInt(0).toInt()) }
+                .function("creationRadius", returnsObject().noParams()) { it.target?.creationRadius }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerPortalEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerPortalEvent.getHandlerList() }
         }
     }
 }

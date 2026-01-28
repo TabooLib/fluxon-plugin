@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerJoinEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnPlayerJoinEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerJoinEvent::class.java)
-                .function("joinMessage", 0) { it.target?.joinMessage }
-                .function("setJoinMessage", 1) { it.target?.setJoinMessage(it.getString(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("joinMessage", returnsObject().noParams()) { it.target?.joinMessage }
+                .function("setJoinMessage", returnsObject().params(Type.OBJECT)) { it.target?.setJoinMessage(it.getString(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerJoinEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerJoinEvent.getHandlerList() }
         }
     }
 }

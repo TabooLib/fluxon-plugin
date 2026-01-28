@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.OminousItemSpawner"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnOminousItemSpawner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OminousItemSpawner::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("setItem", 1) { it.target?.setItem(it.getArgument(0) as ItemStack) }
-                .function("spawnItemAfterTicks", 0) { it.target?.spawnItemAfterTicks }
-                .function("setSpawnItemAfterTicks", 1) { it.target?.setSpawnItemAfterTicks(it.getNumber(0).toLong()) }
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("spawnItemAfterTicks", returnsObject().noParams()) { it.target?.spawnItemAfterTicks }
+                .function("setSpawnItemAfterTicks", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnItemAfterTicks(it.getInt(0).toLong()) }
         }
     }
 }

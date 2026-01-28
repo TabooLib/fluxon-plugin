@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Tripwire"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnTripwire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tripwire::class.java)
-                .function("isActivated", 0) { it.target?.isActivated }
-                .function("setActivated", 1) { it.target?.setActivated(it.getBoolean(0)) }
-                .function("isObjectTriggering", 0) { it.target?.isObjectTriggering }
-                .function("setObjectTriggering", 1) { it.target?.setObjectTriggering(it.getBoolean(0)) }
-                .function("clone", 0) { it.target?.clone() }
-                .function("toString", 0) { it.target?.toString() }
+                .function("isActivated", returns(Type.Z).noParams()) { it.target?.isActivated }
+                .function("setActivated", returnsObject().params(Type.OBJECT)) { it.target?.setActivated(it.getBool(0)) }
+                .function("isObjectTriggering", returns(Type.Z).noParams()) { it.target?.isObjectTriggering }
+                .function("setObjectTriggering", returnsObject().params(Type.OBJECT)) { it.target?.setObjectTriggering(it.getBool(0)) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

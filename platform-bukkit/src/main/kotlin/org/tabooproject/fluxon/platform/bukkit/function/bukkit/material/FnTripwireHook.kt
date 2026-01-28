@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.TripwireHook"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,15 @@ object FnTripwireHook {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TripwireHook::class.java)
-                .function("isConnected", 0) { it.target?.isConnected }
-                .function("setConnected", 1) { it.target?.setConnected(it.getBoolean(0)) }
-                .function("isActivated", 0) { it.target?.isActivated }
-                .function("setActivated", 1) { it.target?.setActivated(it.getBoolean(0)) }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("attachedFace", 0) { it.target?.attachedFace }
-                .function("isPowered", 0) { it.target?.isPowered }
-                .function("clone", 0) { it.target?.clone() }
-                .function("toString", 0) { it.target?.toString() }
+                .function("isConnected", returns(Type.Z).noParams()) { it.target?.isConnected }
+                .function("setConnected", returnsObject().params(Type.OBJECT)) { it.target?.setConnected(it.getBool(0)) }
+                .function("isActivated", returns(Type.Z).noParams()) { it.target?.isActivated }
+                .function("setActivated", returnsObject().params(Type.OBJECT)) { it.target?.setActivated(it.getBool(0)) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

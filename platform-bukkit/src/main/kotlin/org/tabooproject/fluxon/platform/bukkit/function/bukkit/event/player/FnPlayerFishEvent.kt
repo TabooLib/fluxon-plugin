@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerFishEvent"])
@@ -17,31 +20,25 @@ object FnPlayerFishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerFishEvent::class.java)
-                .function("caught", 0) { it.target?.caught }
-                .function("hook", 0) { it.target?.hook }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("expToDrop", 0) { it.target?.expToDrop }
-                .function("setExpToDrop", 1) { it.target?.setExpToDrop(it.getNumber(0).toInt()) }
-                .function("hand", 0) { it.target?.hand }
-                .function("state", 0) { it.target?.state }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("caught", returnsObject().noParams()) { it.target?.caught }
+                .function("hook", returnsObject().noParams()) { it.target?.hook }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("expToDrop", returnsObject().noParams()) { it.target?.expToDrop }
+                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.target?.setExpToDrop(it.getInt(0).toInt()) }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("state", returnsObject().noParams()) { it.target?.state }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerFishEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerFishEvent.getHandlerList() }
 
-                .function("isFishing", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING } }
-                .function("isCaughtFish", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH } }
-                .function(
-                    "isCaughtEntity",
-                    0
-                ) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_ENTITY } }
-                .function("isInGround", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.IN_GROUND } }
-                .function(
-                    "isFailedAttempt",
-                    0
-                ) { it.target?.let { e -> e.state == PlayerFishEvent.State.FAILED_ATTEMPT } }
-                .function("isReelIn", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.REEL_IN } }
-                .function("isBite", 0) { it.target?.let { e -> e.state == PlayerFishEvent.State.BITE } }
+                .function("isFishing", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING } }
+                .function("isCaughtFish", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH } }
+                .function("isCaughtEntity", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_ENTITY } }
+                .function("isInGround", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.IN_GROUND } }
+                .function("isFailedAttempt", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.FAILED_ATTEMPT } }
+                .function("isReelIn", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.REEL_IN } }
+                .function("isBite", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.BITE } }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.ServicesManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +19,9 @@ object FnServicesManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServicesManager::class.java)
-                .function("unregisterAll", 1) { it.target?.unregisterAll(it.getArgument(0) as Plugin) }
-                .function("unregister", 1) {
-                    it.target?.unregister(it.getArgument(0)!!)
+                .function("unregisterAll", returnsObject().params(Type.OBJECT)) { it.target?.unregisterAll(it.getRef(0) as Plugin) }
+                .function("unregister", returnsObject().params(Type.OBJECT)) {
+                    it.target?.unregister(it.getRef(0)!!)
                 }
         }
     }

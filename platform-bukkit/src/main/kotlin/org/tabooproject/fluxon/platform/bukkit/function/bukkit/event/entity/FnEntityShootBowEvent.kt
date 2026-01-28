@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.entity.EntityShootBowEvent"])
@@ -18,20 +21,20 @@ object FnEntityShootBowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityShootBowEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("bow", 0) { it.target?.bow }
-                .function("consumable", 0) { it.target?.consumable }
-                .function("projectile", 0) { it.target?.projectile }
-                .function("setProjectile", 1) { it.target?.setProjectile(it.getArgument(0) as Entity) }
-                .function("hand", 0) { it.target?.hand }
-                .function("force", 0) { it.target?.force }
-                .function("setConsumeItem", 1) { it.target?.setConsumeItem(it.getBoolean(0)) }
-                .function("shouldConsumeItem", 0) { it.target?.shouldConsumeItem() }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("bow", returnsObject().noParams()) { it.target?.bow }
+                .function("consumable", returnsObject().noParams()) { it.target?.consumable }
+                .function("projectile", returnsObject().noParams()) { it.target?.projectile }
+                .function("setProjectile", returnsObject().params(Type.OBJECT)) { it.target?.setProjectile(it.getRef(0) as Entity) }
+                .function("hand", returnsObject().noParams()) { it.target?.hand }
+                .function("force", returnsObject().noParams()) { it.target?.force }
+                .function("setConsumeItem", returnsObject().params(Type.OBJECT)) { it.target?.setConsumeItem(it.getBool(0)) }
+                .function("shouldConsumeItem", returns(Type.Z).noParams()) { it.target?.shouldConsumeItem() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityShootBowEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityShootBowEvent.getHandlerList() }
         }
     }
 }

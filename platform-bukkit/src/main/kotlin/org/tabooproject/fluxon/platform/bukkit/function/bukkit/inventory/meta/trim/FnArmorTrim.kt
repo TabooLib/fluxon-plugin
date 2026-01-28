@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.trim.ArmorTrim"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnArmorTrim {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorTrim::class.java)
-                .function("material", 0) { it.target?.material }
-                .function("pattern", 0) { it.target?.pattern }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
+                .function("material", returnsObject().noParams()) { it.target?.material }
+                .function("pattern", returnsObject().noParams()) { it.target?.pattern }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
         }
     }
 }

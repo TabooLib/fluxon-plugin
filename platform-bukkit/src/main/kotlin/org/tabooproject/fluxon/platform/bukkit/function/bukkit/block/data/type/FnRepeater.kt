@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Repeater"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +19,12 @@ object FnRepeater {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repeater::class.java)
-                .function("delay", 0) { it.target?.delay }
-                .function("setDelay", 1) { it.target?.setDelay(it.getNumber(0).toInt()) }
-                .function("minimumDelay", 0) { it.target?.minimumDelay }
-                .function("maximumDelay", 0) { it.target?.maximumDelay }
-                .function("isLocked", 0) { it.target?.isLocked }
-                .function("setLocked", 1) { it.target?.setLocked(it.getBoolean(0)) }
+                .function("delay", returnsObject().noParams()) { it.target?.delay }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
+                .function("minimumDelay", returnsObject().noParams()) { it.target?.minimumDelay }
+                .function("maximumDelay", returnsObject().noParams()) { it.target?.maximumDelay }
+                .function("isLocked", returns(Type.Z).noParams()) { it.target?.isLocked }
+                .function("setLocked", returnsObject().params(Type.OBJECT)) { it.target?.setLocked(it.getBool(0)) }
         }
     }
 }

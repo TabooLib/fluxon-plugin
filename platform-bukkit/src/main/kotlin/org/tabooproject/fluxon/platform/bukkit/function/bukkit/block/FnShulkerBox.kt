@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.ShulkerBox"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnShulkerBox {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShulkerBox::class.java)
-                .function("color", 0) { it.target?.color }
+                .function("color", returnsObject().noParams()) { it.target?.color }
         }
     }
 }

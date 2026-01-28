@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.profile.PlayerProfile"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnPlayerProfile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerProfile::class.java)
-                .function("uniqueId", 0) { it.target?.uniqueId }
-                .function("name", 0) { it.target?.name }
-                .function("textures", 0) { it.target?.textures }
-                .function("setTextures", 1) { it.target?.setTextures(it.getArgument(0) as PlayerTextures) }
-                .function("isComplete", 0) { it.target?.isComplete }
-                .function("update", 0) { it.target?.update() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("uniqueId", returnsObject().noParams()) { it.target?.uniqueId }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("textures", returnsObject().noParams()) { it.target?.textures }
+                .function("setTextures", returnsObject().params(Type.OBJECT)) { it.target?.setTextures(it.getRef(0) as PlayerTextures) }
+                .function("isComplete", returns(Type.Z).noParams()) { it.target?.isComplete }
+                .function("update", returnsObject().noParams()) { it.target?.update() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

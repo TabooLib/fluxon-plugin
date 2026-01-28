@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionEffectType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,26 +20,26 @@ object FnPotionEffectType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffectType::class.java)
-                .function("createEffect", 2) {
+                .function("createEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.createEffect(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
                     )
                 }
-                .function("isInstant", 0) { it.target?.isInstant }
-                .function("category", 0) { it.target?.category }
-                .function("color", 0) { it.target?.color }
-                .function("durationModifier", 0) { it.target?.durationModifier }
-                .function("id", 0) { it.target?.id }
-                .function("name", 0) { it.target?.name }
+                .function("isInstant", returns(Type.Z).noParams()) { it.target?.isInstant }
+                .function("category", returnsObject().noParams()) { it.target?.category }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("durationModifier", returnsObject().noParams()) { it.target?.durationModifier }
+                .function("id", returnsObject().noParams()) { it.target?.id }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
                 // static
-                .function("getByKey", 1) { PotionEffectType.getByKey(it.getArgument(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { PotionEffectType.getByKey(it.getRef(0) as NamespacedKey) }
                 // static
-                .function("getById", 1) { PotionEffectType.getById(it.getNumber(0).toInt()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { PotionEffectType.getById(it.getInt(0).toInt()) }
                 // static
-                .function("getByName", 1) { PotionEffectType.getByName(it.getString(0)!!) }
+                .function("getByName", returnsObject().params(Type.OBJECT)) { PotionEffectType.getByName(it.getString(0)!!) }
                 // static
-                .function("values", 0) { PotionEffectType.values() }
+                .function("values", returnsObject().noParams()) { PotionEffectType.values() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.RayTraceResult"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnRayTraceResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RayTraceResult::class.java)
-                .function("hitPosition", 0) { it.target?.hitPosition }
-                .function("hitBlock", 0) { it.target?.hitBlock }
-                .function("hitBlockFace", 0) { it.target?.hitBlockFace }
-                .function("hitEntity", 0) { it.target?.hitEntity }
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("hitPosition", returnsObject().noParams()) { it.target?.hitPosition }
+                .function("hitBlock", returnsObject().noParams()) { it.target?.hitBlock }
+                .function("hitBlockFace", returnsObject().noParams()) { it.target?.hitBlockFace }
+                .function("hitEntity", returnsObject().noParams()) { it.target?.hitEntity }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

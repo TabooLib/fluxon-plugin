@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.PinkPetals"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnPinkPetals {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PinkPetals::class.java)
-                .function("flowerAmount", 0) { it.target?.flowerAmount }
-                .function("setFlowerAmount", 1) { it.target?.setFlowerAmount(it.getNumber(0).toInt()) }
-                .function("maximumFlowerAmount", 0) { it.target?.maximumFlowerAmount }
+                .function("flowerAmount", returnsObject().noParams()) { it.target?.flowerAmount }
+                .function("setFlowerAmount", returnsObject().params(Type.OBJECT)) { it.target?.setFlowerAmount(it.getInt(0).toInt()) }
+                .function("maximumFlowerAmount", returnsObject().noParams()) { it.target?.maximumFlowerAmount }
         }
     }
 }

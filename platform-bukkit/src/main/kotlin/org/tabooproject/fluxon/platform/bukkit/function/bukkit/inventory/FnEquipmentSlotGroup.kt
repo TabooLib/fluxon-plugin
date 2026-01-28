@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.EquipmentSlotGroup"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +20,8 @@ object FnEquipmentSlotGroup {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EquipmentSlotGroup::class.java)
-                .function("test", 1) { it.target?.test(it.getArgument(0) as EquipmentSlot) }
-                .function("toString", 0) { it.target?.toString() }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as EquipmentSlot) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

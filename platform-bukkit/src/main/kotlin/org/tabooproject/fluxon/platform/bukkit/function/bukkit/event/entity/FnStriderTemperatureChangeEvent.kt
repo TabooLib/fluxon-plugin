@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.StriderTemperatureChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnStriderTemperatureChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StriderTemperatureChangeEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("isShivering", 0) { it.target?.isShivering }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("isShivering", returns(Type.Z).noParams()) { it.target?.isShivering }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { StriderTemperatureChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { StriderTemperatureChangeEvent.getHandlerList() }
         }
     }
 }

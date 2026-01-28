@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerEditBookEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,17 +20,17 @@ object FnPlayerEditBookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEditBookEvent::class.java)
-                .function("previousBookMeta", 0) { it.target?.previousBookMeta }
-                .function("newBookMeta", 0) { it.target?.newBookMeta }
-                .function("slot", 0) { it.target?.slot }
-                .function("setNewBookMeta", 1) { it.target?.setNewBookMeta(it.getArgument(0) as BookMeta) }
-                .function("isSigning", 0) { it.target?.isSigning }
-                .function("setSigning", 1) { it.target?.setSigning(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("previousBookMeta", returnsObject().noParams()) { it.target?.previousBookMeta }
+                .function("newBookMeta", returnsObject().noParams()) { it.target?.newBookMeta }
+                .function("slot", returnsObject().noParams()) { it.target?.slot }
+                .function("setNewBookMeta", returnsObject().params(Type.OBJECT)) { it.target?.setNewBookMeta(it.getRef(0) as BookMeta) }
+                .function("isSigning", returns(Type.Z).noParams()) { it.target?.isSigning }
+                .function("setSigning", returnsObject().params(Type.OBJECT)) { it.target?.setSigning(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerEditBookEvent.getHandlerList() }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
+                .function("handlerList", returnsObject().noParams()) { PlayerEditBookEvent.getHandlerList() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
         }
     }
 }

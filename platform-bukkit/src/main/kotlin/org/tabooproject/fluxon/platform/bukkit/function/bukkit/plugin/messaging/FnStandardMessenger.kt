@@ -11,6 +11,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.messaging.StandardMessenger"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,67 +23,89 @@ object FnStandardMessenger {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StandardMessenger::class.java)
-                .function("isReservedChannel", 1) { it.target?.isReservedChannel(it.getString(0)!!) }
-                .function("registerOutgoingPluginChannel", 2) {
+                .function("isReservedChannel", returns(Type.Z).params(Type.OBJECT)) { it.target?.isReservedChannel(it.getString(0)!!) }
+                .function("registerOutgoingPluginChannel", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerOutgoingPluginChannel(
-                        it.getArgument(
+                        it.getRef(
                             0
                         ) as Plugin, it.getString(1)!!
                     )
                 }
-                .function("unregisterOutgoingPluginChannel", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin)
+                .function("unregisterOutgoingPluginChannel", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin)
                     } else {
-                        it.target?.unregisterOutgoingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                        it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
                     }
                 }
-                .function("registerIncomingPluginChannel", 3) {
+                .function("unregisterOutgoingPluginChannel", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin)
+                    } else {
+                        it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
+                    }
+                }
+                .function("registerIncomingPluginChannel", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerIncomingPluginChannel(
-                        it.getArgument(
+                        it.getRef(
                             0
-                        ) as Plugin, it.getString(1)!!, it.getArgument(2) as PluginMessageListener
+                        ) as Plugin, it.getString(1)!!, it.getRef(2) as PluginMessageListener
                     )
                 }
-                .function("unregisterIncomingPluginChannel", listOf(1, 2, 3)) {
-                    when (it.arguments.size) {
-                        1 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin)
-                        2 -> it.target?.unregisterIncomingPluginChannel(it.getArgument(0) as Plugin, it.getString(1)!!)
+                .function("unregisterIncomingPluginChannel", returnsObject().params(Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin)
+                        2 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
                         3 -> it.target?.unregisterIncomingPluginChannel(
-                            it.getArgument(0) as Plugin,
+                            it.getRef(0) as Plugin,
                             it.getString(1)!!,
-                            it.getArgument(2) as PluginMessageListener
+                            it.getRef(2) as PluginMessageListener
                         )
-                        else -> error("StandardMessenger#unregisterIncomingPluginChannel 函数参数数量错误: ${it.arguments.contentDeepToString()}")
+                        else -> error("StandardMessenger#unregisterIncomingPluginChannel 函数参数数量错误: ${"args"}")
                     }
                 }
-                .function(
-                    "dispatchIncomingMessage",
-                    3
-                ) {
+                .function("unregisterIncomingPluginChannel", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin)
+                        2 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
+                        3 -> it.target?.unregisterIncomingPluginChannel(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getRef(2) as PluginMessageListener
+                        )
+                        else -> error("StandardMessenger#unregisterIncomingPluginChannel 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("unregisterIncomingPluginChannel", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (it.argumentCount) {
+                        1 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin)
+                        2 -> it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
+                        3 -> it.target?.unregisterIncomingPluginChannel(
+                            it.getRef(0) as Plugin,
+                            it.getString(1)!!,
+                            it.getRef(2) as PluginMessageListener
+                        )
+                        else -> error("StandardMessenger#unregisterIncomingPluginChannel 函数参数数量错误: ${"args"}")
+                    }
+                }
+                .function("dispatchIncomingMessage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.dispatchIncomingMessage(
-                        it.getArgument(0) as Player,
+                        it.getRef(0) as Player,
                         it.getString(1)!!,
-                        it.getArgument(2) as ByteArray
+                        it.getRef(2) as ByteArray
                     )
                 }
                 // static
-                .function("validateChannel", 1) { StandardMessenger.validateChannel(it.getString(0)!!) }
+                .function("validateChannel", returnsObject().params(Type.OBJECT)) { StandardMessenger.validateChannel(it.getString(0)!!) }
                 // static
-                .function(
-                    "validateAndCorrectChannel",
-                    1
-                ) { StandardMessenger.validateAndCorrectChannel(it.getString(0)!!) }
+                .function("validateAndCorrectChannel", returnsObject().params(Type.OBJECT)) { StandardMessenger.validateAndCorrectChannel(it.getString(0)!!) }
                 // static
-                .function(
-                    "validatePluginMessage",
-                    4
-                ) {
+                .function("validatePluginMessage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     StandardMessenger.validatePluginMessage(
-                        it.getArgument(0) as Messenger,
-                        it.getArgument(1) as Plugin,
+                        it.getRef(0) as Messenger,
+                        it.getRef(1) as Plugin,
                         it.getString(2)!!,
-                        it.getArgument(3) as ByteArray
+                        it.getRef(3) as ByteArray
                     )
                 }
         }

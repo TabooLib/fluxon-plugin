@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerBucketFishEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnPlayerBucketFishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketFishEvent::class.java)
-                .function("entity", 0) { it.target?.entity }
-                .function("waterBucket", 0) { it.target?.waterBucket }
-                .function("fishBucket", 0) { it.target?.fishBucket }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("waterBucket", returnsObject().noParams()) { it.target?.waterBucket }
+                .function("fishBucket", returnsObject().noParams()) { it.target?.fishBucket }
         }
     }
 }

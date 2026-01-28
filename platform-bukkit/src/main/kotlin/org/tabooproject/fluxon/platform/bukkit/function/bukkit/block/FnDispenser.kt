@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Dispenser"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnDispenser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dispenser::class.java)
-                .function("blockProjectileSource", 0) { it.target?.blockProjectileSource }
-                .function("dispense", 0) { it.target?.dispense() }
+                .function("blockProjectileSource", returnsObject().noParams()) { it.target?.blockProjectileSource }
+                .function("dispense", returnsObject().noParams()) { it.target?.dispense() }
         }
     }
 }

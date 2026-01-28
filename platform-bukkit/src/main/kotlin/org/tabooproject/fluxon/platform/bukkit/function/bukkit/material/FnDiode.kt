@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Diode"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnDiode {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Diode::class.java)
-                .function("setDelay", 1) { it.target?.setDelay(it.getNumber(0).toInt()) }
-                .function("delay", 0) { it.target?.delay }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("facing", 0) { it.target?.facing }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
-                .function("isPowered", 0) { it.target?.isPowered }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
+                .function("delay", returnsObject().noParams()) { it.target?.delay }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing", returnsObject().noParams()) { it.target?.facing }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
         }
     }
 }

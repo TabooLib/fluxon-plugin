@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.CocoaPlant"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnCocoaPlant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CocoaPlant::class.java)
-                .function("size", 0) { it.target?.size }
-                .function("setSize", 1) { it.target?.setSize(it.getArgument(0) as CocoaPlant.CocoaPlantSize) }
-                .function("attachedFace", 0) { it.target?.attachedFace }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("facing", 0) { it.target?.facing }
-                .function("clone", 0) { it.target?.clone() }
-                .function("toString", 0) { it.target?.toString() }
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("setSize", returnsObject().params(Type.OBJECT)) { it.target?.setSize(it.getRef(0) as CocoaPlant.CocoaPlantSize) }
+                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing", returnsObject().noParams()) { it.target?.facing }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
         }
     }
 }

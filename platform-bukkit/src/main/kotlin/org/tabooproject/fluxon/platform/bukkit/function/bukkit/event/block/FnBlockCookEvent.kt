@@ -8,6 +8,9 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockCookEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +20,14 @@ object FnBlockCookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCookEvent::class.java)
-                .function("source", 0) { it.target?.source }
-                .function("result", 0) { it.target?.result }
-                .function("setResult", 1) { it.target?.setResult(it.getArgument(0) as ItemStack) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.target?.source }
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockCookEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockCookEvent.getHandlerList() }
         }
     }
 }

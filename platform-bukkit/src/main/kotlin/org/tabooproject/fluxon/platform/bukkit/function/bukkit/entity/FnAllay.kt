@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Allay"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,22 +20,29 @@ object FnAllay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Allay::class.java)
-                .function("canDuplicate", 0) { it.target?.canDuplicate() }
-                .function("setCanDuplicate", 1) { it.target?.setCanDuplicate(it.getBoolean(0)) }
-                .function("duplicationCooldown", 0) { it.target?.duplicationCooldown }
-                .function("setDuplicationCooldown", 1) { it.target?.setDuplicationCooldown(it.getNumber(0).toLong()) }
-                .function("resetDuplicationCooldown", 0) { it.target?.resetDuplicationCooldown() }
-                .function("isDancing", 0) { it.target?.isDancing }
-                .function("startDancing", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("canDuplicate", returns(Type.Z).noParams()) { it.target?.canDuplicate() }
+                .function("setCanDuplicate", returnsObject().params(Type.OBJECT)) { it.target?.setCanDuplicate(it.getBool(0)) }
+                .function("duplicationCooldown", returnsObject().noParams()) { it.target?.duplicationCooldown }
+                .function("setDuplicationCooldown", returnsObject().params(Type.OBJECT)) { it.target?.setDuplicationCooldown(it.getInt(0).toLong()) }
+                .function("resetDuplicationCooldown", returnsObject().noParams()) { it.target?.resetDuplicationCooldown() }
+                .function("isDancing", returns(Type.Z).noParams()) { it.target?.isDancing }
+                .function("startDancing", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.startDancing()
                     } else {
-                        it.target?.startDancing(it.getArgument(0) as Location)
+                        it.target?.startDancing(it.getRef(0) as Location)
                     }
                 }
-                .function("stopDancing", 0) { it.target?.stopDancing() }
-                .function("duplicateAllay", 0) { it.target?.duplicateAllay() }
-                .function("jukebox", 0) { it.target?.jukebox }
+                .function("startDancing", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.startDancing()
+                    } else {
+                        it.target?.startDancing(it.getRef(0) as Location)
+                    }
+                }
+                .function("stopDancing", returnsObject().noParams()) { it.target?.stopDancing() }
+                .function("duplicateAllay", returnsObject().noParams()) { it.target?.duplicateAllay() }
+                .function("jukebox", returnsObject().noParams()) { it.target?.jukebox }
         }
     }
 }

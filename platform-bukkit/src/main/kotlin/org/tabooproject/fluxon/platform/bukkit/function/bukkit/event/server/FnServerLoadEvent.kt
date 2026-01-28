@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.server.ServerLoadEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnServerLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerLoadEvent::class.java)
-                .function("type", 0) { it.target?.type }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { ServerLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { ServerLoadEvent.getHandlerList() }
         }
     }
 }

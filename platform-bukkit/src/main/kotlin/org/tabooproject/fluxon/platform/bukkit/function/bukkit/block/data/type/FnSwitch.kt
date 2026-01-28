@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Switch"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnSwitch {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Switch::class.java)
-                .function("face", 0) { it.target?.face }
-                .function("setFace", 1) { it.target?.setFace(it.getArgument(0) as Switch.Face) }
+                .function("face", returnsObject().noParams()) { it.target?.face }
+                .function("setFace", returnsObject().params(Type.OBJECT)) { it.target?.setFace(it.getRef(0) as Switch.Face) }
         }
     }
 }

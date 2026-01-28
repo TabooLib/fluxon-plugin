@@ -10,6 +10,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.CommandMap"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,37 +21,62 @@ object FnCommandMap {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandMap::class.java)
-                .function("registerAll", 2) {
+                .function("registerAll", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.registerAll(
                         it.getString(0)!!,
-                        it.getArgument(1) as List<Command>
+                        it.getRef(1) as List<Command>
                     )
                 }
-                .function("register", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
-                        it.target?.register(it.getString(0)!!, it.getArgument(1) as Command)
+                .function("register", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.register(it.getString(0)!!, it.getRef(1) as Command)
                     } else {
                         it.target?.register(
                             it.getString(0)!!,
                             it.getString(1)!!,
-                            it.getArgument(2) as Command
+                            it.getRef(2) as Command
                         )
                     }
                 }
-                .function("dispatch", 2) { it.target?.dispatch(it.getArgument(0) as CommandSender, it.getString(1)!!) }
-                .function("clearCommands", 0) { it.target?.clearCommands() }
-                .function("getCommand", 1) { it.target?.getCommand(it.getString(0)!!) }
-                .function("tabComplete", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
+                .function("register", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.register(it.getString(0)!!, it.getRef(1) as Command)
+                    } else {
+                        it.target?.register(
+                            it.getString(0)!!,
+                            it.getString(1)!!,
+                            it.getRef(2) as Command
+                        )
+                    }
+                }
+                .function("dispatch", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.dispatch(it.getRef(0) as CommandSender, it.getString(1)!!) }
+                .function("clearCommands", returnsObject().noParams()) { it.target?.clearCommands() }
+                .function("getCommand", returnsObject().params(Type.OBJECT)) { it.target?.getCommand(it.getString(0)!!) }
+                .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
                         it.target?.tabComplete(
-                            it.getArgument(0) as CommandSender,
+                            it.getRef(0) as CommandSender,
                             it.getString(1)!!
                         )
                     } else {
                         it.target?.tabComplete(
-                            it.getArgument(0) as CommandSender,
+                            it.getRef(0) as CommandSender,
                             it.getString(1)!!,
-                            it.getArgument(2) as Location
+                            it.getRef(2) as Location
+                        )
+                    }
+                }
+                .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        it.target?.tabComplete(
+                            it.getRef(0) as CommandSender,
+                            it.getString(1)!!
+                        )
+                    } else {
+                        it.target?.tabComplete(
+                            it.getRef(0) as CommandSender,
+                            it.getString(1)!!,
+                            it.getRef(2) as Location
                         )
                     }
                 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.Brushable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnBrushable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Brushable::class.java)
-                .function("dusted", 0) { it.target?.dusted }
-                .function("setDusted", 1) { it.target?.setDusted(it.getNumber(0).toInt()) }
-                .function("maximumDusted", 0) { it.target?.maximumDusted }
+                .function("dusted", returnsObject().noParams()) { it.target?.dusted }
+                .function("setDusted", returnsObject().params(Type.OBJECT)) { it.target?.setDusted(it.getInt(0).toInt()) }
+                .function("maximumDusted", returnsObject().noParams()) { it.target?.maximumDusted }
         }
     }
 }

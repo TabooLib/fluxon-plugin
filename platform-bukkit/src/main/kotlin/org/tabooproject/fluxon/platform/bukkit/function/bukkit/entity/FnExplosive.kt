@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Explosive"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnExplosive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Explosive::class.java)
-                .function("setYield", 1) { it.target?.setYield(it.getNumber(0).toFloat()) }
-                .function("yield", 0) { it.target?.yield }
-                .function("setIsIncendiary", 1) { it.target?.setIsIncendiary(it.getBoolean(0)) }
-                .function("isIncendiary", 0) { it.target?.isIncendiary }
+                .function("setYield", returnsObject().params(Type.OBJECT)) { it.target?.setYield(it.getFloat(0)) }
+                .function("yield", returnsObject().noParams()) { it.target?.yield }
+                .function("setIsIncendiary", returnsObject().params(Type.OBJECT)) { it.target?.setIsIncendiary(it.getBool(0)) }
+                .function("isIncendiary", returns(Type.Z).noParams()) { it.target?.isIncendiary }
         }
     }
 }

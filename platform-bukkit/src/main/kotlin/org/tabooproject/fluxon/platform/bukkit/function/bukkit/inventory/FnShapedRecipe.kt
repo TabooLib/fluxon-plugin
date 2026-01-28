@@ -10,6 +10,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.ShapedRecipe"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,12 +21,12 @@ object FnShapedRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShapedRecipe::class.java)
-                .function("shape", 0) {
+                .function("shape", returnsObject().noParams()) {
                     it.target?.shape
                 }
-                .function("setIngredient", listOf(2, 3)) {
-                    if (it.arguments.size == 2) {
-                        when (val var2 = it.getArgument(1)) {
+                .function("setIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        when (val var2 = it.getRef(1)) {
                             is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
@@ -33,8 +35,24 @@ object FnShapedRecipe {
                     } else {
                         it.target?.setIngredient(
                             it.getString(0)?.firstOrNull()!!,
-                            it.getArgument(1) as Material,
-                            it.getNumber(2).toInt()
+                            it.getRef(1) as Material,
+                            it.getInt(2).toInt()
+                        )
+                    }
+                }
+                .function("setIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 2) {
+                        when (val var2 = it.getRef(1)) {
+                            is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
+                            else -> throw IllegalArgumentException("参数 2 必须是 MaterialData, Material, 或 RecipeChoice 类型")
+                        }
+                    } else {
+                        it.target?.setIngredient(
+                            it.getString(0)?.firstOrNull()!!,
+                            it.getRef(1) as Material,
+                            it.getInt(2).toInt()
                         )
                     }
                 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.player.PlayerLocaleChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnPlayerLocaleChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerLocaleChangeEvent::class.java)
-                .function("locale", 0) { it.target?.locale }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("locale", returnsObject().noParams()) { it.target?.locale }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerLocaleChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerLocaleChangeEvent.getHandlerList() }
         }
     }
 }

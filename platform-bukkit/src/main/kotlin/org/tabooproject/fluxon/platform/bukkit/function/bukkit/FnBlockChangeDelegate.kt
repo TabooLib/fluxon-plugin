@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.BlockChangeDelegate"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,27 +20,27 @@ object FnBlockChangeDelegate {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockChangeDelegate::class.java)
-                .function("setBlockData", 4) {
+                .function("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.setBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt(),
-                        it.getArgument(3) as BlockData
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getRef(3) as BlockData
                     )
                 }
-                .function("getBlockData", 3) {
+                .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getBlockData(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("height", 0) { it.target?.height }
-                .function("isEmpty", 3) {
+                .function("height", returnsObject().noParams()) { it.target?.height }
+                .function("isEmpty", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.isEmpty(
-                        it.getNumber(0).toInt(),
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
         }

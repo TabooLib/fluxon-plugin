@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.DecoratedPot"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,16 +19,16 @@ object FnDecoratedPot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DecoratedPot::class.java)
-                .function("setSherd", 2) {
+                .function("setSherd", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setSherd(
-                        it.getArgument(0) as DecoratedPot.Side,
-                        it.getArgument(1) as Material
+                        it.getRef(0) as DecoratedPot.Side,
+                        it.getRef(1) as Material
                     )
                 }
-                .function("getSherd", 1) { it.target?.getSherd(it.getArgument(0) as DecoratedPot.Side) }
-                .function("shards", 0) { it.target?.shards }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("snapshotInventory", 0) { it.target?.snapshotInventory }
+                .function("getSherd", returnsObject().params(Type.OBJECT)) { it.target?.getSherd(it.getRef(0) as DecoratedPot.Side) }
+                .function("shards", returnsObject().noParams()) { it.target?.shards }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
         }
     }
 }

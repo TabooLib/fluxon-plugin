@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.StructureGrowEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,16 +19,16 @@ object FnStructureGrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureGrowEvent::class.java)
-                .function("location", 0) { it.target?.location }
-                .function("species", 0) { it.target?.species }
-                .function("isFromBonemeal", 0) { it.target?.isFromBonemeal }
-                .function("player", 0) { it.target?.player }
-                .function("blocks", 0) { it.target?.blocks }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("species", returnsObject().noParams()) { it.target?.species }
+                .function("isFromBonemeal", returns(Type.Z).noParams()) { it.target?.isFromBonemeal }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { StructureGrowEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { StructureGrowEvent.getHandlerList() }
         }
     }
 }

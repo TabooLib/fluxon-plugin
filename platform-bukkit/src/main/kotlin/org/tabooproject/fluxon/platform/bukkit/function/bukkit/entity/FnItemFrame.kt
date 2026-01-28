@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.ItemFrame"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,22 +21,29 @@ object FnItemFrame {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemFrame::class.java)
-                .function("item", 0) { it.target?.item }
-                .function("setItem", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setItem(it.getArgument(0) as ItemStack)
+                .function("item", returnsObject().noParams()) { it.target?.item }
+                .function("setItem", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setItem(it.getRef(0) as ItemStack)
                     } else {
-                        it.target?.setItem(it.getArgument(0) as ItemStack, it.getBoolean(1))
+                        it.target?.setItem(it.getRef(0) as ItemStack, it.getBool(1))
                     }
                 }
-                .function("itemDropChance", 0) { it.target?.itemDropChance }
-                .function("setItemDropChance", 1) { it.target?.setItemDropChance(it.getNumber(0).toFloat()) }
-                .function("rotation", 0) { it.target?.rotation }
-                .function("setRotation", 1) { it.target?.setRotation(it.getArgument(0) as Rotation) }
-                .function("isVisible", 0) { it.target?.isVisible }
-                .function("setVisible", 1) { it.target?.setVisible(it.getBoolean(0)) }
-                .function("isFixed", 0) { it.target?.isFixed }
-                .function("setFixed", 1) { it.target?.setFixed(it.getBoolean(0)) }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setItem(it.getRef(0) as ItemStack)
+                    } else {
+                        it.target?.setItem(it.getRef(0) as ItemStack, it.getBool(1))
+                    }
+                }
+                .function("itemDropChance", returnsObject().noParams()) { it.target?.itemDropChance }
+                .function("setItemDropChance", returnsObject().params(Type.OBJECT)) { it.target?.setItemDropChance(it.getFloat(0)) }
+                .function("rotation", returnsObject().noParams()) { it.target?.rotation }
+                .function("setRotation", returnsObject().params(Type.OBJECT)) { it.target?.setRotation(it.getRef(0) as Rotation) }
+                .function("isVisible", returns(Type.Z).noParams()) { it.target?.isVisible }
+                .function("setVisible", returnsObject().params(Type.OBJECT)) { it.target?.setVisible(it.getBool(0)) }
+                .function("isFixed", returns(Type.Z).noParams()) { it.target?.isFixed }
+                .function("setFixed", returnsObject().params(Type.OBJECT)) { it.target?.setFixed(it.getBool(0)) }
         }
     }
 }

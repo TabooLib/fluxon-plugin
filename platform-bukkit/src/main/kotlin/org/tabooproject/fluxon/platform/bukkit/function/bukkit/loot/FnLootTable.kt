@@ -10,6 +10,8 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.loot.LootTable"])
 @PlatformSide(Platform.BUKKIT)
@@ -19,17 +21,17 @@ object FnLootTable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootTable::class.java)
-                .function("populateLoot", 2) {
+                .function("populateLoot", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.populateLoot(
-                        it.getArgument(0) as Random,
-                        it.getArgument(1) as LootContext
+                        it.getRef(0) as Random,
+                        it.getRef(1) as LootContext
                     )
                 }
-                .function("fillInventory", 3) {
+                .function("fillInventory", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.fillInventory(
-                        it.getArgument(0) as Inventory,
-                        it.getArgument(1) as Random,
-                        it.getArgument(2) as LootContext
+                        it.getRef(0) as Inventory,
+                        it.getRef(1) as Random,
+                        it.getRef(2) as LootContext
                     )
                 }
         }

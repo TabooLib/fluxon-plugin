@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.inventory.FurnaceBurnEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,16 +19,16 @@ object FnFurnaceBurnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceBurnEvent::class.java)
-                .function("fuel", 0) { it.target?.fuel }
-                .function("burnTime", 0) { it.target?.burnTime }
-                .function("setBurnTime", 1) { it.target?.setBurnTime(it.getNumber(0).toInt()) }
-                .function("isBurning", 0) { it.target?.isBurning }
-                .function("setBurning", 1) { it.target?.setBurning(it.getBoolean(0)) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
+                .function("burnTime", returnsObject().noParams()) { it.target?.burnTime }
+                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.target?.setBurnTime(it.getInt(0).toInt()) }
+                .function("isBurning", returns(Type.Z).noParams()) { it.target?.isBurning }
+                .function("setBurning", returnsObject().params(Type.OBJECT)) { it.target?.setBurning(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { FurnaceBurnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { FurnaceBurnEvent.getHandlerList() }
         }
     }
 }

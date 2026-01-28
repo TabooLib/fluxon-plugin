@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.WritableBookMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,20 +19,27 @@ object FnWritableBookMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WritableBookMeta::class.java)
-                .function("hasPages", 0) { it.target?.hasPages() }
-                .function("getPage", 1) { it.target?.getPage(it.getNumber(0).toInt()) }
-                .function("setPage", 2) { it.target?.setPage(it.getNumber(0).toInt(), it.getString(1)!!) }
-                .function("pages", 0) { it.target?.pages }
-                .function("setPages", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("hasPages", returns(Type.Z).noParams()) { it.target?.hasPages() }
+                .function("getPage", returnsObject().params(Type.OBJECT)) { it.target?.getPage(it.getInt(0).toInt()) }
+                .function("setPage", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setPage(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("pages", returnsObject().noParams()) { it.target?.pages }
+                .function("setPages", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.setPages()
                     } else {
-                        it.target?.setPages(it.getArgument(0) as List<String>)
+                        it.target?.setPages(it.getRef(0) as List<String>)
                     }
                 }
-                .function("addPage", 0) { it.target?.addPage() }
-                .function("pageCount", 0) { it.target?.pageCount }
-                .function("clone", 0) { it.target?.clone() }
+                .function("setPages", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.setPages()
+                    } else {
+                        it.target?.setPages(it.getRef(0) as List<String>)
+                    }
+                }
+                .function("addPage", returnsObject().noParams()) { it.target?.addPage() }
+                .function("pageCount", returnsObject().noParams()) { it.target?.pageCount }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.Tag"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,8 +20,8 @@ object FnTag {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tag::class.java)
-                .function("isTagged", 1) { (it.target as? Tag<Keyed>)?.isTagged(it.getArgument(0) as Keyed) }
-                .function("values", 0) { it.target?.getValues() }
+                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) { (it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed) }
+                .function("values", returnsObject().noParams()) { it.target?.getValues() }
         }
     }
 }

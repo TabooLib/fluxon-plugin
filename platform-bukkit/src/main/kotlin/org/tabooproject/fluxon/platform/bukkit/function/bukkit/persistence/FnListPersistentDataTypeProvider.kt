@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.persistence.ListPersistentDataTypeProvider"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,36 +19,33 @@ object FnListPersistentDataTypeProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ListPersistentDataTypeProvider::class.java)
-                .function("bytes", 0) { it.target?.bytes() }
-                .function("shorts", 0) { it.target?.shorts() }
-                .function("integers", 0) { it.target?.integers() }
-                .function("longs", 0) { it.target?.longs() }
-                .function("floats", 0) { it.target?.floats() }
-                .function("doubles", 0) { it.target?.doubles() }
-                .function("booleans", 0) { it.target?.booleans() }
-                .function("strings", 0) { it.target?.strings() }
-                .function("byteArrays", 0) { it.target?.byteArrays() }
-                .function("integerArrays", 0) { it.target?.integerArrays() }
-                .function("longArrays", 0) { it.target?.longArrays() }
-                .function("dataContainers", 0) { it.target?.dataContainers() }
-                .function(
-                    "listTypeFrom",
-                    1
-                ) { it.target?.listTypeFrom(it.getArgument(0) as PersistentDataType<Any, Any>) }
+                .function("bytes", returnsObject().noParams()) { it.target?.bytes() }
+                .function("shorts", returnsObject().noParams()) { it.target?.shorts() }
+                .function("integers", returnsObject().noParams()) { it.target?.integers() }
+                .function("longs", returnsObject().noParams()) { it.target?.longs() }
+                .function("floats", returnsObject().noParams()) { it.target?.floats() }
+                .function("doubles", returnsObject().noParams()) { it.target?.doubles() }
+                .function("booleans", returnsObject().noParams()) { it.target?.booleans() }
+                .function("strings", returnsObject().noParams()) { it.target?.strings() }
+                .function("byteArrays", returnsObject().noParams()) { it.target?.byteArrays() }
+                .function("integerArrays", returnsObject().noParams()) { it.target?.integerArrays() }
+                .function("longArrays", returnsObject().noParams()) { it.target?.longArrays() }
+                .function("dataContainers", returnsObject().noParams()) { it.target?.dataContainers() }
+                .function("listTypeFrom", returnsObject().params(Type.OBJECT)) { it.target?.listTypeFrom(it.getRef(0) as PersistentDataType<Any, Any>) }
 
 //            registerExtension(ListPersistentDataTypeProvider.ListPersistentDataTypeImpl::class.java)
-//                .function("primitiveType", 0) { it.target?.getPrimitiveType() }
-//                .function("complexType", 0) { it.target?.getComplexType() }
-//                .function("toPrimitive", 2) {
+//                .function("primitiveType", returnsObject().noParams()) { it.target?.getPrimitiveType() }
+//                .function("complexType", returnsObject().noParams()) { it.target?.getComplexType() }
+//                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
 //                    (it.target as ListPersistentDataTypeProvider.ListPersistentDataTypeImpl<Any, Any>)?.toPrimitive(
-//                        it.getArgument(0) as List<Any>,
-//                        it.getArgument(1) as PersistentDataAdapterContext
+//                        it.getRef(0) as List<Any>,
+//                        it.getRef(1) as PersistentDataAdapterContext
 //                    )
 //                }
-//                .function("fromPrimitive", 2) {
+//                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
 //                    (it.target as ListPersistentDataTypeProvider.ListPersistentDataTypeImpl<Any, Any>)?.fromPrimitive(
-//                        it.getArgument(0) as List<Any>,
-//                        it.getArgument(1) as PersistentDataAdapterContext
+//                        it.getRef(0) as List<Any>,
+//                        it.getRef(1) as PersistentDataAdapterContext
 //                    )
 //                }
         }

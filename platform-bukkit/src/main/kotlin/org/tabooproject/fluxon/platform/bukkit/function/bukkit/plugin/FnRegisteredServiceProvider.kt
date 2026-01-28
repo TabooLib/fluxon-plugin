@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.RegisteredServiceProvider"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +19,11 @@ object FnRegisteredServiceProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegisteredServiceProvider::class.java)
-                .function("service", 0) { it.target?.getService() }
-                .function("plugin", 0) { it.target?.plugin }
-                .function("provider", 0) { it.target?.getProvider() }
-                .function("priority", 0) { it.target?.priority }
-                .function("compareTo", 1) { it.target?.compareTo(it.getArgument(0) as RegisteredServiceProvider<*>) }
+                .function("service", returnsObject().noParams()) { it.target?.getService() }
+                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("provider", returnsObject().noParams()) { it.target?.getProvider() }
+                .function("priority", returnsObject().noParams()) { it.target?.priority }
+                .function("compareTo", returns(Type.I).params(Type.OBJECT)) { it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>) }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.loot.Lootable"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnLootable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lootable::class.java)
-                .function("setLootTable", 1) { it.target?.setLootTable(it.getArgument(0) as LootTable) }
-                .function("lootTable", 0) { it.target?.lootTable }
-                .function("setSeed", 1) { it.target?.setSeed(it.getNumber(0).toLong()) }
-                .function("seed", 0) { it.target?.seed }
+                .function("setLootTable", returnsObject().params(Type.OBJECT)) { it.target?.setLootTable(it.getRef(0) as LootTable) }
+                .function("lootTable", returnsObject().noParams()) { it.target?.lootTable }
+                .function("setSeed", returnsObject().params(Type.OBJECT)) { it.target?.setSeed(it.getInt(0).toLong()) }
+                .function("seed", returnsObject().noParams()) { it.target?.seed }
         }
     }
 }

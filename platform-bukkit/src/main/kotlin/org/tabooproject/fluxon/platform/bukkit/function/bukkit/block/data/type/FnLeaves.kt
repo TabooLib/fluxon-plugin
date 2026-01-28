@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.data.type.Leaves"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnLeaves {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Leaves::class.java)
-                .function("isPersistent", 0) { it.target?.isPersistent }
-                .function("setPersistent", 1) { it.target?.setPersistent(it.getBoolean(0)) }
-                .function("distance", 0) { it.target?.distance }
-                .function("setDistance", 1) { it.target?.setDistance(it.getNumber(0).toInt()) }
+                .function("isPersistent", returns(Type.Z).noParams()) { it.target?.isPersistent }
+                .function("setPersistent", returnsObject().params(Type.OBJECT)) { it.target?.setPersistent(it.getBool(0)) }
+                .function("distance", returnsObject().noParams()) { it.target?.distance }
+                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.target?.setDistance(it.getInt(0).toInt()) }
         }
     }
 }

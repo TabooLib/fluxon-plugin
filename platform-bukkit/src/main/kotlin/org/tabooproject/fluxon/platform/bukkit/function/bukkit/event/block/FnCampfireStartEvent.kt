@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.CampfireStartEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +18,12 @@ object FnCampfireStartEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CampfireStartEvent::class.java)
-                .function("recipe", 0) { it.target?.recipe }
-                .function("totalCookTime", 0) { it.target?.totalCookTime }
-                .function("setTotalCookTime", 1) { it.target?.setTotalCookTime(it.getNumber(0).toInt()) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
+                .function("totalCookTime", returnsObject().noParams()) { it.target?.totalCookTime }
+                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalCookTime(it.getInt(0).toInt()) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { CampfireStartEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { CampfireStartEvent.getHandlerList() }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Axolotl"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnAxolotl {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Axolotl::class.java)
-                .function("isPlayingDead", 0) { it.target?.isPlayingDead }
-                .function("setPlayingDead", 1) { it.target?.setPlayingDead(it.getBoolean(0)) }
-                .function("variant", 0) { it.target?.variant }
-                .function("setVariant", 1) { it.target?.setVariant(it.getArgument(0) as Axolotl.Variant) }
+                .function("isPlayingDead", returns(Type.Z).noParams()) { it.target?.isPlayingDead }
+                .function("setPlayingDead", returnsObject().params(Type.OBJECT)) { it.target?.setPlayingDead(it.getBool(0)) }
+                .function("variant", returnsObject().noParams()) { it.target?.variant }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
         }
     }
 }

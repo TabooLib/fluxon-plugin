@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.TabCompleter"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,12 +20,12 @@ object FnTabCompleter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TabCompleter::class.java)
-                .function("onTabComplete", 4) {
+                .function("onTabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.onTabComplete(
-                        it.getArgument(0) as CommandSender,
-                        it.getArgument(1) as Command,
+                        it.getRef(0) as CommandSender,
+                        it.getRef(1) as Command,
                         it.getString(2)!!,
-                        it.getArgument(3) as Array<String>
+                        it.getRef(3) as Array<String>
                     )
                 }
         }

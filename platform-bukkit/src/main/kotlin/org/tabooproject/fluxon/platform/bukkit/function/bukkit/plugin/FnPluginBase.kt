@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.PluginBase"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +19,9 @@ object FnPluginBase {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginBase::class.java)
-                .function("hashCode", 0) { it.target?.hashCode() }
-                .function("equals", 1) { it.target?.equals(it.getArgument(0)) }
-                .function("name", 0) { it.target?.name }
+                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
         }
     }
 }

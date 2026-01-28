@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Fireball"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnFireball {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fireball::class.java)
-                .function("setDirection", 1) { it.target?.setDirection(it.getArgument(0) as Vector) }
-                .function("direction", 0) { it.target?.direction }
-                .function("setAcceleration", 1) { it.target?.setAcceleration(it.getArgument(0) as Vector) }
-                .function("acceleration", 0) { it.target?.acceleration }
+                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.target?.setDirection(it.getRef(0) as Vector) }
+                .function("direction", returnsObject().noParams()) { it.target?.direction }
+                .function("setAcceleration", returnsObject().params(Type.OBJECT)) { it.target?.setAcceleration(it.getRef(0) as Vector) }
+                .function("acceleration", returnsObject().noParams()) { it.target?.acceleration }
         }
     }
 }

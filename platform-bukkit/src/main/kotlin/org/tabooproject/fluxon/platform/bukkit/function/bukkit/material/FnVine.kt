@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Vine"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,11 +20,11 @@ object FnVine {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vine::class.java)
-                .function("isOnFace", 1) { it.target?.isOnFace(it.getArgument(0) as BlockFace) }
-                .function("putOnFace", 1) { it.target?.putOnFace(it.getArgument(0) as BlockFace) }
-                .function("removeFromFace", 1) { it.target?.removeFromFace(it.getArgument(0) as BlockFace) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("isOnFace", returns(Type.Z).params(Type.OBJECT)) { it.target?.isOnFace(it.getRef(0) as BlockFace) }
+                .function("putOnFace", returnsObject().params(Type.OBJECT)) { it.target?.putOnFace(it.getRef(0) as BlockFace) }
+                .function("removeFromFace", returnsObject().params(Type.OBJECT)) { it.target?.removeFromFace(it.getRef(0) as BlockFace) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Painting"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,12 +19,19 @@ object FnPainting {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Painting::class.java)
-                .function("art", 0) { it.target?.art }
-                .function("setArt", listOf(1, 2)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.setArt(it.getArgument(0) as Art)
+                .function("art", returnsObject().noParams()) { it.target?.art }
+                .function("setArt", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setArt(it.getRef(0) as Art)
                     } else {
-                        it.target?.setArt(it.getArgument(0) as Art, it.getBoolean(1))
+                        it.target?.setArt(it.getRef(0) as Art, it.getBool(1))
+                    }
+                }
+                .function("setArt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.setArt(it.getRef(0) as Art)
+                    } else {
+                        it.target?.setArt(it.getRef(0) as Art, it.getBool(1))
                     }
                 }
         }

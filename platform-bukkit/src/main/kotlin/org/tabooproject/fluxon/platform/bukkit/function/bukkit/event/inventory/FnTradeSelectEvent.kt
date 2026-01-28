@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.TradeSelectEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,12 +18,12 @@ object FnTradeSelectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TradeSelectEvent::class.java)
-                .function("index", 0) { it.target?.index }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("merchant", 0) { it.target?.merchant }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("index", returnsObject().noParams()) { it.target?.index }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("merchant", returnsObject().noParams()) { it.target?.merchant }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { TradeSelectEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { TradeSelectEvent.getHandlerList() }
         }
     }
 }

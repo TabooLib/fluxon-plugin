@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityTeleportEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,15 @@ object FnEntityTeleportEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTeleportEvent::class.java)
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("from", 0) { it.target?.from }
-                .function("setFrom", 1) { it.target?.setFrom(it.getArgument(0) as Location) }
-                .function("to", 0) { it.target?.to }
-                .function("setTo", 1) { it.target?.setTo(it.getArgument(0) as Location) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("from", returnsObject().noParams()) { it.target?.from }
+                .function("setFrom", returnsObject().params(Type.OBJECT)) { it.target?.setFrom(it.getRef(0) as Location) }
+                .function("to", returnsObject().noParams()) { it.target?.to }
+                .function("setTo", returnsObject().params(Type.OBJECT)) { it.target?.setTo(it.getRef(0) as Location) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityTeleportEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityTeleportEvent.getHandlerList() }
         }
     }
 }

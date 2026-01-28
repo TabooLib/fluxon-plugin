@@ -9,6 +9,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.potion.PotionBrewer"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,19 +20,19 @@ object FnPotionBrewer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionBrewer::class.java)
-                .function("createEffect", 3) {
+                .function("createEffect", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.createEffect(
-                        it.getArgument(0) as PotionEffectType,
-                        it.getNumber(1).toInt(),
-                        it.getNumber(2).toInt()
+                        it.getRef(0) as PotionEffectType,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
                     )
                 }
-                .function("getEffectsFromDamage", 1) { it.target?.getEffectsFromDamage(it.getNumber(0).toInt()) }
-                .function("getEffects", 3) {
+                .function("getEffectsFromDamage", returnsObject().params(Type.OBJECT)) { it.target?.getEffectsFromDamage(it.getInt(0).toInt()) }
+                .function("getEffects", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.target?.getEffects(
-                        it.getArgument(0) as PotionType,
-                        it.getBoolean(1),
-                        it.getBoolean(2)
+                        it.getRef(0) as PotionType,
+                        it.getBool(1),
+                        it.getBool(2)
                     )
                 }
         }

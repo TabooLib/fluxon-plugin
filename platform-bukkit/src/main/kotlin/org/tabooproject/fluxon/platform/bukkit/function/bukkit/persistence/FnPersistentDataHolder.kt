@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.persistence.PersistentDataHolder"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnPersistentDataHolder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataHolder::class.java)
-                .function("persistentDataContainer", 0) { it.target?.persistentDataContainer }
+                .function("persistentDataContainer", returnsObject().noParams()) { it.target?.persistentDataContainer }
         }
     }
 }

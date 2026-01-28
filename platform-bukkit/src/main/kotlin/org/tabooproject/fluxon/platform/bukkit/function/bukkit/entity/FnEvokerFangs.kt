@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.entity.EvokerFangs"])
@@ -18,10 +20,10 @@ object FnEvokerFangs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EvokerFangs::class.java)
-                .function("owner", 0) { it.target?.owner }
-                .function("setOwner", 1) { it.target?.setOwner(it.getArgument(0) as LivingEntity) }
-                .function("attackDelay", 0) { it.target?.attackDelay }
-                .function("setAttackDelay", 1) { it.target?.setAttackDelay(it.getNumber(0).toInt()) }
+                .function("owner", returnsObject().noParams()) { it.target?.owner }
+                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.target?.setOwner(it.getRef(0) as LivingEntity) }
+                .function("attackDelay", returnsObject().noParams()) { it.target?.attackDelay }
+                .function("setAttackDelay", returnsObject().params(Type.OBJECT)) { it.target?.setAttackDelay(it.getInt(0).toInt()) }
         }
     }
 }

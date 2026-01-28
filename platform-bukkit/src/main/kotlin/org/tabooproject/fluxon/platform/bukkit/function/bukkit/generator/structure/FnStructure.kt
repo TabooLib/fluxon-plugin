@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.generator.structure.Structure"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnStructure {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Structure::class.java)
-                .function("structureType", 0) { it.target?.structureType }
+                .function("structureType", returnsObject().noParams()) { it.target?.structureType }
         }
     }
 }

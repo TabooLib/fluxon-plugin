@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Translatable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnTranslatable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Translatable::class.java)
-                .function("translationKey", 0) { it.target?.translationKey }
+                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
         }
     }
 }

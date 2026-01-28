@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityTransformEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnEntityTransformEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTransformEvent::class.java)
-                .function("transformedEntity", 0) { it.target?.transformedEntity }
-                .function("transformedEntities", 0) { it.target?.transformedEntities }
-                .function("transformReason", 0) { it.target?.transformReason }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("transformedEntity", returnsObject().noParams()) { it.target?.transformedEntity }
+                .function("transformedEntities", returnsObject().noParams()) { it.target?.transformedEntities }
+                .function("transformReason", returnsObject().noParams()) { it.target?.transformReason }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { EntityTransformEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { EntityTransformEvent.getHandlerList() }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.AbstractVillager"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnAbstractVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractVillager::class.java)
-                .function("inventory", 0) { it.target?.inventory }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
         }
     }
 }

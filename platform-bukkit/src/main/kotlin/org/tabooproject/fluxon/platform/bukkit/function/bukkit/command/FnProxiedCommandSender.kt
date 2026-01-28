@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.ProxiedCommandSender"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnProxiedCommandSender {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProxiedCommandSender::class.java)
-                .function("caller", 0) { it.target?.caller }
-                .function("callee", 0) { it.target?.callee }
+                .function("caller", returnsObject().noParams()) { it.target?.caller }
+                .function("callee", returnsObject().noParams()) { it.target?.callee }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.Hopper"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,13 +20,13 @@ object FnHopper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hopper::class.java)
-                .function("setActive", 1) { it.target?.setActive(it.getBoolean(0)) }
-                .function("isActive", 0) { it.target?.isActive }
-                .function("setFacingDirection", 1) { it.target?.setFacingDirection(it.getArgument(0) as BlockFace) }
-                .function("facing", 0) { it.target?.facing }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
-                .function("isPowered", 0) { it.target?.isPowered }
+                .function("setActive", returnsObject().params(Type.OBJECT)) { it.target?.setActive(it.getBool(0)) }
+                .function("isActive", returns(Type.Z).noParams()) { it.target?.isActive }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing", returnsObject().noParams()) { it.target?.facing }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
         }
     }
 }

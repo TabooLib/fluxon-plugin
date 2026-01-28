@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionType"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,27 +20,27 @@ object FnPotionType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionType::class.java)
-                .function("effectType", 0) {
+                .function("effectType", returnsObject().noParams()) {
                     it.target?.effectType
                 }
-                .function("potionEffects", 0) {
+                .function("potionEffects", returnsObject().noParams()) {
                     it.target?.potionEffects
                 }
-                .function("isInstant", 0) {
+                .function("isInstant", returns(Type.Z).noParams()) {
                     it.target?.isInstant
                 }
-                .function("isUpgradeable", 0) {
+                .function("isUpgradeable", returns(Type.Z).noParams()) {
                     it.target?.isUpgradeable
                 }
-                .function("isExtendable", 0) {
+                .function("isExtendable", returns(Type.Z).noParams()) {
                     it.target?.isExtendable
                 }
-                .function("maxLevel", 0) {
+                .function("maxLevel", returnsObject().noParams()) {
                     it.target?.maxLevel
                 }
                 // statics
-                .function("getByEffect", 1) { PotionType.getByEffect(it.getArgument(0) as PotionEffectType) }
-                .function("key", 0) { it.target?.key }
+                .function("getByEffect", returnsObject().params(Type.OBJECT)) { PotionType.getByEffect(it.getRef(0) as PotionEffectType) }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }

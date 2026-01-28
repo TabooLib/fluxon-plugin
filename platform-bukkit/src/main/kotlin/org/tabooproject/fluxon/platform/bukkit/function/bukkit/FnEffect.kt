@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Effect"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Effect::class.java)
-                .function("id", 0) { it.target?.id }
-                .function("type", 0) { it.target?.type }
-                .function("data", 0) { it.target?.data }
+                .function("id", returnsObject().noParams()) { it.target?.id }
+                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("data", returnsObject().noParams()) { it.target?.data }
                 // static
-                .function("getById", 1) { Effect.getById(it.getNumber(0).toInt()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { Effect.getById(it.getInt(0).toInt()) }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.AuthorNagException"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnAuthorNagException {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AuthorNagException::class.java)
-                .function("message", 0) { it.target?.message }
+                .function("message", returnsObject().noParams()) { it.target?.message }
         }
     }
 }

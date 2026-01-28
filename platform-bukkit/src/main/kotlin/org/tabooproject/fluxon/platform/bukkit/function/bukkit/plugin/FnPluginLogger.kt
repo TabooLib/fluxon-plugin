@@ -8,6 +8,8 @@ import java.util.logging.LogRecord
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.PluginLogger"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,7 +19,7 @@ object FnPluginLogger {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginLogger::class.java)
-                .function("log", 1) { it.target?.log(it.getArgument(0) as LogRecord) }
+                .function("log", returnsObject().params(Type.OBJECT)) { it.target?.log(it.getRef(0) as LogRecord) }
         }
     }
 }

@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.NetherWarts"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnNetherWarts {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NetherWarts::class.java)
-                .function("state", 0) { it.target?.state }
-                .function("setState", 1) { it.target?.setState(it.getArgument(0) as NetherWartsState) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("state", returnsObject().noParams()) { it.target?.state }
+                .function("setState", returnsObject().params(Type.OBJECT)) { it.target?.setState(it.getRef(0) as NetherWartsState) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

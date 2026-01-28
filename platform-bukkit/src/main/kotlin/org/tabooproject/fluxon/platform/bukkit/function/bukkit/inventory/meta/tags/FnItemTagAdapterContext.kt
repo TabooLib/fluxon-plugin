@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagAdapterContext"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnItemTagAdapterContext {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagAdapterContext::class.java)
-                .function("newTagContainer", 0) { it.target?.newTagContainer() }
+                .function("newTagContainer", returnsObject().noParams()) { it.target?.newTagContainer() }
         }
     }
 }

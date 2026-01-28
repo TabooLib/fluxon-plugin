@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Chest"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnChest {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Chest::class.java)
-                .function("blockInventory", 0) { it.target?.blockInventory }
+                .function("blockInventory", returnsObject().noParams()) { it.target?.blockInventory }
         }
     }
 }

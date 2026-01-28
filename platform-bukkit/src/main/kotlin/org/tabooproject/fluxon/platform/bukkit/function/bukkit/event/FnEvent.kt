@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.Event"])
@@ -17,9 +20,9 @@ object FnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Event::class.java)
-                .function("eventName", 0) { it.target?.eventName }
-                .function("handlers", 0) { it.target?.handlers }
-                .function("isAsynchronous", 0) { it.target?.isAsynchronous }
+                .function("eventName", returnsObject().noParams()) { it.target?.eventName }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isAsynchronous", returns(Type.Z).noParams()) { it.target?.isAsynchronous }
         }
     }
 }

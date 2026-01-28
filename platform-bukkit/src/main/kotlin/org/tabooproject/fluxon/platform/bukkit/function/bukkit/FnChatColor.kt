@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.ChatColor"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,28 +19,28 @@ object FnChatColor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatColor::class.java)
-                .function("char", 0) { it.target?.char }
-                .function("toString", 0) { it.target?.toString() }
-                .function("isFormat", 0) { it.target?.isFormat }
-                .function("isColor", 0) { it.target?.isColor }
+                .function("char", returnsObject().noParams()) { it.target?.char }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("isFormat", returns(Type.Z).noParams()) { it.target?.isFormat }
+                .function("isColor", returns(Type.Z).noParams()) { it.target?.isColor }
                 // static
-                .function("getByChar", 1) {
-                    when (val var1 = it.getArgument(0)) {
+                .function("getByChar", returnsObject().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Char -> ChatColor.getByChar(var1)
                         is String -> ChatColor.getByChar(var1)
                         else -> throw IllegalArgumentException("参数必须是 Char 或 String 类型")
                     }
                 }
                 // static
-                .function("stripColor", 1) { ChatColor.stripColor(it.getString(0)) }
+                .function("stripColor", returnsObject().params(Type.OBJECT)) { ChatColor.stripColor(it.getString(0)) }
                 // static
-                .function("translateAlternateColorCodes", 2) {
+                .function("translateAlternateColorCodes", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     ChatColor.translateAlternateColorCodes(
                         it.getString(0)?.firstOrNull()!!, it.getString(1)!!
                     )
                 }
                 // static
-                .function("getLastColors", 1) { ChatColor.getLastColors(it.getString(0)!!) }
+                .function("getLastColors", returnsObject().params(Type.OBJECT)) { ChatColor.getLastColors(it.getString(0)!!) }
         }
     }
 }

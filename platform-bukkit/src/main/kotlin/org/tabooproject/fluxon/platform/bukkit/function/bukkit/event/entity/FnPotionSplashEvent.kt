@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.PotionSplashEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,21 +20,21 @@ object FnPotionSplashEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionSplashEvent::class.java)
-                .function("entity", 0) { it.target?.getEntity() }
-                .function("potion", 0) { it.target?.potion }
-                .function("affectedEntities", 0) { it.target?.affectedEntities }
-                .function("getIntensity", 1) { it.target?.getIntensity(it.getArgument(0) as LivingEntity) }
-                .function("setIntensity", 2) {
+                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("potion", returnsObject().noParams()) { it.target?.potion }
+                .function("affectedEntities", returnsObject().noParams()) { it.target?.affectedEntities }
+                .function("getIntensity", returnsObject().params(Type.OBJECT)) { it.target?.getIntensity(it.getRef(0) as LivingEntity) }
+                .function("setIntensity", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setIntensity(
-                        it.getArgument(0) as LivingEntity,
-                        it.getNumber(1).toDouble()
+                        it.getRef(0) as LivingEntity,
+                        it.getAsDouble(1)
                     )
                 }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PotionSplashEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PotionSplashEvent.getHandlerList() }
         }
     }
 }

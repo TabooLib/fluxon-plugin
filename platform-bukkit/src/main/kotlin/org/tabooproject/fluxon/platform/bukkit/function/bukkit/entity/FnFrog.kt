@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Frog"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +19,10 @@ object FnFrog {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Frog::class.java)
-                .function("tongueTarget", 0) { it.target?.tongueTarget }
-                .function("setTongueTarget", 1) { it.target?.setTongueTarget(it.getArgument(0) as Entity) }
-                .function("variant", 0) { it.target?.variant }
-                .function("setVariant", 1) { it.target?.setVariant(it.getArgument(0) as Frog.Variant) }
+                .function("tongueTarget", returnsObject().noParams()) { it.target?.tongueTarget }
+                .function("setTongueTarget", returnsObject().params(Type.OBJECT)) { it.target?.setTongueTarget(it.getRef(0) as Entity) }
+                .function("variant", returnsObject().noParams()) { it.target?.variant }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Frog.Variant) }
         }
     }
 }
@@ -33,7 +35,7 @@ object FnFrogVariant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Frog.Variant::class.java)
-                .function("key", 0) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.target?.key }
         }
     }
 }

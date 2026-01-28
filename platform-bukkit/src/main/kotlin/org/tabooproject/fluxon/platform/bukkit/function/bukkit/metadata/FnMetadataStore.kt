@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.metadata.MetadataStore"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,33 +21,33 @@ object FnMetadataStore {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MetadataStore::class.java)
-                .function("setMetadata", 3) {
+                .function("setMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     (it.target as? MetadataStore<Any>)?.setMetadata(
-                        it.getArgument(0)!!,
+                        it.getRef(0)!!,
                         it.getString(1)!!,
-                        it.getArgument(2) as MetadataValue
+                        it.getRef(2) as MetadataValue
                     )
                 }
-                .function("getMetadata", 2) {
+                .function("getMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? MetadataStore<Any>)?.getMetadata(
-                        it.getArgument(0)!!,
+                        it.getRef(0)!!,
                         it.getString(1)!!
                     )
                 }
-                .function("hasMetadata", 2) {
+                .function("hasMetadata", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
                     (it.target as? MetadataStore<Any>)?.hasMetadata(
-                        it.getArgument(0)!!,
+                        it.getRef(0)!!,
                         it.getString(1)!!
                     )
                 }
-                .function("removeMetadata", 3) {
+                .function("removeMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     (it.target as? MetadataStore<Any>)?.removeMetadata(
-                        it.getArgument(0)!!,
+                        it.getRef(0)!!,
                         it.getString(1)!!,
-                        it.getArgument(2) as Plugin
+                        it.getRef(2) as Plugin
                     )
                 }
-                .function("invalidateAll", 1) { it.target?.invalidateAll(it.getArgument(0) as Plugin) }
+                .function("invalidateAll", returnsObject().params(Type.OBJECT)) { it.target?.invalidateAll(it.getRef(0) as Plugin) }
         }
     }
 }

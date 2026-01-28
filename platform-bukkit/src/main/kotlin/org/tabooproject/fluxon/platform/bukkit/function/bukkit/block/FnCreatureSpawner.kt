@@ -11,6 +11,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.CreatureSpawner"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,42 +22,50 @@ object FnCreatureSpawner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CreatureSpawner::class.java)
-                .function("spawnedType", 0) { it.target?.spawnedType }
-                .function("setSpawnedType", 1) { it.target?.setSpawnedType(it.getArgument(0) as EntityType) }
-                .function("setCreatureTypeByName", 1) { it.target?.setCreatureTypeByName(it.getString(0)) }
-                .function("creatureTypeName", 0) { it.target?.creatureTypeName }
-                .function("delay", 0) { it.target?.delay }
-                .function("setDelay", 1) { it.target?.setDelay(it.getNumber(0).toInt()) }
-                .function("minSpawnDelay", 0) { it.target?.minSpawnDelay }
-                .function("setMinSpawnDelay", 1) { it.target?.setMinSpawnDelay(it.getNumber(0).toInt()) }
-                .function("maxSpawnDelay", 0) { it.target?.maxSpawnDelay }
-                .function("setMaxSpawnDelay", 1) { it.target?.setMaxSpawnDelay(it.getNumber(0).toInt()) }
-                .function("spawnCount", 0) { it.target?.spawnCount }
-                .function("setSpawnCount", 1) { it.target?.setSpawnCount(it.getNumber(0).toInt()) }
-                .function("maxNearbyEntities", 0) { it.target?.maxNearbyEntities }
-                .function("setMaxNearbyEntities", 1) { it.target?.setMaxNearbyEntities(it.getNumber(0).toInt()) }
-                .function("requiredPlayerRange", 0) { it.target?.requiredPlayerRange }
-                .function("setRequiredPlayerRange", 1) { it.target?.setRequiredPlayerRange(it.getNumber(0).toInt()) }
-                .function("spawnRange", 0) { it.target?.spawnRange }
-                .function("setSpawnRange", 1) { it.target?.setSpawnRange(it.getNumber(0).toInt()) }
-                .function("spawnedEntity", 0) { it.target?.spawnedEntity }
-                .function("setSpawnedEntity", 1) { it.target?.setSpawnedEntity(it.getArgument(0) as EntitySnapshot) }
-                .function("addPotentialSpawn", listOf(1, 3)) {
-                    if (it.arguments.size == 1) {
-                        it.target?.addPotentialSpawn(it.getArgument(0) as SpawnerEntry)
+                .function("spawnedType", returnsObject().noParams()) { it.target?.spawnedType }
+                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
+                .function("setCreatureTypeByName", returnsObject().params(Type.OBJECT)) { it.target?.setCreatureTypeByName(it.getString(0)) }
+                .function("creatureTypeName", returnsObject().noParams()) { it.target?.creatureTypeName }
+                .function("delay", returnsObject().noParams()) { it.target?.delay }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
+                .function("minSpawnDelay", returnsObject().noParams()) { it.target?.minSpawnDelay }
+                .function("setMinSpawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setMinSpawnDelay(it.getInt(0).toInt()) }
+                .function("maxSpawnDelay", returnsObject().noParams()) { it.target?.maxSpawnDelay }
+                .function("setMaxSpawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setMaxSpawnDelay(it.getInt(0).toInt()) }
+                .function("spawnCount", returnsObject().noParams()) { it.target?.spawnCount }
+                .function("setSpawnCount", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnCount(it.getInt(0).toInt()) }
+                .function("maxNearbyEntities", returnsObject().noParams()) { it.target?.maxNearbyEntities }
+                .function("setMaxNearbyEntities", returnsObject().params(Type.OBJECT)) { it.target?.setMaxNearbyEntities(it.getInt(0).toInt()) }
+                .function("requiredPlayerRange", returnsObject().noParams()) { it.target?.requiredPlayerRange }
+                .function("setRequiredPlayerRange", returnsObject().params(Type.OBJECT)) { it.target?.setRequiredPlayerRange(it.getInt(0).toInt()) }
+                .function("spawnRange", returnsObject().noParams()) { it.target?.spawnRange }
+                .function("setSpawnRange", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnRange(it.getInt(0).toInt()) }
+                .function("spawnedEntity", returnsObject().noParams()) { it.target?.spawnedEntity }
+                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
+                .function("addPotentialSpawn", returnsObject().params(Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPotentialSpawn(it.getRef(0) as SpawnerEntry)
                     } else {
                         it.target?.addPotentialSpawn(
-                            it.getArgument(0) as EntitySnapshot,
-                            it.getNumber(1).toInt(),
-                            it.getArgument(2) as SpawnRule
+                            it.getRef(0) as EntitySnapshot,
+                            it.getInt(1).toInt(),
+                            it.getRef(2) as SpawnRule
                         )
                     }
                 }
-                .function(
-                    "setPotentialSpawns",
-                    1
-                ) { it.target?.setPotentialSpawns(it.getArgument(0) as Collection<SpawnerEntry>) }
-                .function("potentialSpawns", 0) { it.target?.potentialSpawns }
+                .function("addPotentialSpawn", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 1) {
+                        it.target?.addPotentialSpawn(it.getRef(0) as SpawnerEntry)
+                    } else {
+                        it.target?.addPotentialSpawn(
+                            it.getRef(0) as EntitySnapshot,
+                            it.getInt(1).toInt(),
+                            it.getRef(2) as SpawnRule
+                        )
+                    }
+                }
+                .function("setPotentialSpawns", returnsObject().params(Type.OBJECT)) { it.target?.setPotentialSpawns(it.getRef(0) as Collection<SpawnerEntry>) }
+                .function("potentialSpawns", returnsObject().noParams()) { it.target?.potentialSpawns }
         }
     }
 }

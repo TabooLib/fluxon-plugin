@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.Conduit"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,15 @@ object FnConduit {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Conduit::class.java)
-                .function("isActive", 0) { it.target?.isActive }
-                .function("isHunting", 0) { it.target?.isHunting }
-                .function("frameBlocks", 0) { it.target?.frameBlocks }
-                .function("frameBlockCount", 0) { it.target?.frameBlockCount }
-                .function("range", 0) { it.target?.range }
-                .function("setTarget", 1) { it.target?.setTarget(it.getArgument(0) as LivingEntity) }
-                .function("target", 0) { it.target?.target }
-                .function("hasTarget", 0) { it.target?.hasTarget() }
-                .function("huntingArea", 0) { it.target?.huntingArea }
+                .function("isActive", returns(Type.Z).noParams()) { it.target?.isActive }
+                .function("isHunting", returns(Type.Z).noParams()) { it.target?.isHunting }
+                .function("frameBlocks", returnsObject().noParams()) { it.target?.frameBlocks }
+                .function("frameBlockCount", returnsObject().noParams()) { it.target?.frameBlockCount }
+                .function("range", returnsObject().noParams()) { it.target?.range }
+                .function("setTarget", returnsObject().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as LivingEntity) }
+                .function("target", returnsObject().noParams()) { it.target?.target }
+                .function("hasTarget", returns(Type.Z).noParams()) { it.target?.hasTarget() }
+                .function("huntingArea", returnsObject().noParams()) { it.target?.huntingArea }
         }
     }
 }

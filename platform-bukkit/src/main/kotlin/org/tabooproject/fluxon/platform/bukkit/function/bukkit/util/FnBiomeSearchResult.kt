@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.BiomeSearchResult"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnBiomeSearchResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeSearchResult::class.java)
-                .function("biome", 0) { it.target?.biome }
-                .function("location", 0) { it.target?.location }
+                .function("biome", returnsObject().noParams()) { it.target?.biome }
+                .function("location", returnsObject().noParams()) { it.target?.location }
         }
     }
 }

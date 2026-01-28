@@ -13,6 +13,9 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.structure.Structure"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,39 +25,63 @@ object FnStructure {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Structure::class.java)
-                .function("size", 0) { it.target?.size }
-                .function("palettes", 0) { it.target?.palettes }
-                .function("paletteCount", 0) { it.target?.paletteCount }
-                .function("entities", 0) { it.target?.entities }
-                .function("entityCount", 0) { it.target?.entityCount }
-                .function("place", listOf(7, 8)) {
-                    if (it.arguments.size == 7) {
+                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("palettes", returnsObject().noParams()) { it.target?.palettes }
+                .function("paletteCount", returnsObject().noParams()) { it.target?.paletteCount }
+                .function("entities", returnsObject().noParams()) { it.target?.entities }
+                .function("entityCount", returnsObject().noParams()) { it.target?.entityCount }
+                .function("place", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 7) {
                         it.target?.place(
-                            it.getArgument(0) as Location,
-                            it.getBoolean(1),
-                            it.getArgument(2) as StructureRotation,
-                            it.getArgument(3) as Mirror,
-                            it.getNumber(4).toInt(),
-                            it.getNumber(5).toFloat(),
-                            it.getArgument(6) as Random
+                            it.getRef(0) as Location,
+                            it.getBool(1),
+                            it.getRef(2) as StructureRotation,
+                            it.getRef(3) as Mirror,
+                            it.getInt(4).toInt(),
+                            it.getFloat(5),
+                            it.getRef(6) as Random
                         )
                     } else {
                         it.target?.place(
-                            it.getArgument(0) as RegionAccessor,
-                            it.getArgument(1) as BlockVector,
-                            it.getBoolean(2),
-                            it.getArgument(3) as StructureRotation,
-                            it.getArgument(4) as Mirror,
-                            it.getNumber(5).toInt(),
-                            it.getNumber(6).toFloat(),
-                            it.getArgument(7) as Random
+                            it.getRef(0) as RegionAccessor,
+                            it.getRef(1) as BlockVector,
+                            it.getBool(2),
+                            it.getRef(3) as StructureRotation,
+                            it.getRef(4) as Mirror,
+                            it.getInt(5).toInt(),
+                            it.getFloat(6),
+                            it.getRef(7) as Random
                         )
                     }
                 }
-                .function("fill", 3) {
-                    when (val var2 = it.getArgument(1)) {
-                        is Location -> it.target?.fill(it.getArgument(0) as Location, var2, it.getBoolean(2))
-                        is BlockVector -> it.target?.fill(it.getArgument(0) as Location, var2, it.getBoolean(2))
+                .function("place", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    if (it.argumentCount == 7) {
+                        it.target?.place(
+                            it.getRef(0) as Location,
+                            it.getBool(1),
+                            it.getRef(2) as StructureRotation,
+                            it.getRef(3) as Mirror,
+                            it.getInt(4).toInt(),
+                            it.getFloat(5),
+                            it.getRef(6) as Random
+                        )
+                    } else {
+                        it.target?.place(
+                            it.getRef(0) as RegionAccessor,
+                            it.getRef(1) as BlockVector,
+                            it.getBool(2),
+                            it.getRef(3) as StructureRotation,
+                            it.getRef(4) as Mirror,
+                            it.getInt(5).toInt(),
+                            it.getFloat(6),
+                            it.getRef(7) as Random
+                        )
+                    }
+                }
+                .function("fill", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    when (val var2 = it.getRef(1)) {
+                        is Location -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
+                        is BlockVector -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
                         else -> throw IllegalArgumentException("第二个参数必须是 Location 或 BlockVector 类型")
                     }
                 }

@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
 import org.tabooproject.fluxon.platform.bukkit.nms.PacketWrapper
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.java.Export
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -92,34 +94,43 @@ object FunctionParticle {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(ParticlePacketBuilder::class.java)
             // Particle
-            registerFunction("particle", 1) {
-                val name = it.getArgument(0).toString()
+            registerFunction("particle", returnsObject().params(Type.STRING)) {
+                val name = it.getString(0)!!
                 XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")
             }
-            registerFunction("particleOrNull", 1) {
-                val name = it.getArgument(0).toString()
+            registerFunction("particleOrNull", returnsObject().params(Type.STRING)) {
+                val name = it.getString(0)!!
                 XParticle.of(name).getOrNull()?.get()
             }
             // BuildParticle
-            registerFunction("buildParticle", listOf(1, 2)) {
-                val name = it.getArgument(0).toString()
+            registerFunction("buildParticle", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                val name = it.getString(0)!!
                 val particle = particleCacheMap.computeIfAbsent(name) {
                     XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")
                 }
-                val location = it.getArgumentByType(1, Location::class.java)!!
+                val location = it.getRef(1) as Location
                 ParticlePacketBuilder(particle, location)
             }
             // ParticleData
-            registerFunction("dustOptions", listOf(1, 2)) {
-                val color = it.getArgumentByType(0, Color::class.java)!!
-                val size = it.getArgument(1) as? Number ?: 1.0f
-                DustOptions(color, size.toFloat())
+            registerFunction("dustOptions", returnsObject().params(Type.OBJECT)) {
+                val color = it.getRef(0) as Color
+                DustOptions(color, 1.0f)
             }
-            registerFunction("dustTransition", listOf(2, 3)) {
-                val fromColor = it.getArgumentByType(0, Color::class.java)!!
-                val toColor = it.getArgumentByType(1, Color::class.java)!!
-                val size = it.getArgument(2) as? Number ?: 1.0f
-                Particle.DustTransition(fromColor, toColor, size.toFloat())
+            registerFunction("dustOptions", returnsObject().params(Type.OBJECT, Type.F)) {
+                val color = it.getRef(0) as Color
+                val size = it.getFloat(1)
+                DustOptions(color, size)
+            }
+            registerFunction("dustTransition", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                val fromColor = it.getRef(0) as Color
+                val toColor = it.getRef(1) as Color
+                Particle.DustTransition(fromColor, toColor, 1.0f)
+            }
+            registerFunction("dustTransition", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.F)) {
+                val fromColor = it.getRef(0) as Color
+                val toColor = it.getRef(1) as Color
+                val size = it.getFloat(2)
+                Particle.DustTransition(fromColor, toColor, size)
             }
         }
     }

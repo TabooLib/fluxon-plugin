@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.scoreboard.Score"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnScore {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Score::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("entry", 0) { it.target?.entry }
-                .function("objective", 0) { it.target?.objective }
-                .function("score", 0) { it.target?.score }
-                .function("setScore", 1) { it.target?.setScore(it.getNumber(0).toInt()) }
-                .function("isScoreSet", 0) { it.target?.isScoreSet }
-                .function("scoreboard", 0) { it.target?.scoreboard }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("entry", returnsObject().noParams()) { it.target?.entry }
+                .function("objective", returnsObject().noParams()) { it.target?.objective }
+                .function("score", returnsObject().noParams()) { it.target?.score }
+                .function("setScore", returnsObject().params(Type.OBJECT)) { it.target?.setScore(it.getInt(0).toInt()) }
+                .function("isScoreSet", returns(Type.Z).noParams()) { it.target?.isScoreSet }
+                .function("scoreboard", returnsObject().noParams()) { it.target?.scoreboard }
         }
     }
 }

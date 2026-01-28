@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.FlowerPot"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnFlowerPot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FlowerPot::class.java)
-                .function("contents", 0) { it.target?.contents }
-                .function("setContents", 1) { it.target?.setContents(it.getArgument(0) as MaterialData) }
-                .function("toString", 0) { it.target?.toString() }
-                .function("clone", 0) { it.target?.clone() }
+                .function("contents", returnsObject().noParams()) { it.target?.contents }
+                .function("setContents", returnsObject().params(Type.OBJECT)) { it.target?.setContents(it.getRef(0) as MaterialData) }
+                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

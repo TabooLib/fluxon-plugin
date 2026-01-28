@@ -2,6 +2,9 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
 import org.bukkit.Art
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
@@ -16,14 +19,14 @@ object FnArt {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Art::class.java)
-                .function("blockWidth", 0) { it.target?.blockWidth }
-                .function("blockHeight", 0) { it.target?.blockHeight }
-                .function("id", 0) { it.target?.id }
-                .function("key", 0) { it.target?.key }
+                .function("blockWidth", returns(Type.I).noParams()) { it.target?.blockWidth }
+                .function("blockHeight", returns(Type.I).noParams()) { it.target?.blockHeight }
+                .function("id", returns(Type.I).noParams()) { it.target?.id }
+                .function("key", returnsObject().noParams()) { it.target?.key }
                 // static
-                .function("getById", 1) { Art.getById(it.getNumber(0).toInt()) }
+                .function("getById", returnsObject().params(Type.I)) { Art.getById(it.getInt(0)) }
                 // static
-                .function("getByName", 1) { Art.getByName(it.getString(0)!!) }
+                .function("getByName", returnsObject().params(Type.STRING)) { Art.getByName(it.getString(0)!!) }
         }
     }
 }

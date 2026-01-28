@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.attribute.AttributeInstance"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,14 +19,14 @@ object FnAttributeInstance {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AttributeInstance::class.java)
-                .function("attribute", 0) { it.target?.attribute }
-                .function("baseValue", 0) { it.target?.baseValue }
-                .function("setBaseValue", 1) { it.target?.setBaseValue(it.getNumber(0).toDouble()) }
-                .function("modifiers", 0) { it.target?.modifiers }
-                .function("addModifier", 1) { it.target?.addModifier(it.getArgument(0) as AttributeModifier) }
-                .function("removeModifier", 1) { it.target?.removeModifier(it.getArgument(0) as AttributeModifier) }
-                .function("value", 0) { it.target?.value }
-                .function("defaultValue", 0) { it.target?.defaultValue }
+                .function("attribute", returnsObject().noParams()) { it.target?.attribute }
+                .function("baseValue", returnsObject().noParams()) { it.target?.baseValue }
+                .function("setBaseValue", returnsObject().params(Type.OBJECT)) { it.target?.setBaseValue(it.getAsDouble(0)) }
+                .function("modifiers", returnsObject().noParams()) { it.target?.modifiers }
+                .function("addModifier", returnsObject().params(Type.OBJECT)) { it.target?.addModifier(it.getRef(0) as AttributeModifier) }
+                .function("removeModifier", returnsObject().params(Type.OBJECT)) { it.target?.removeModifier(it.getRef(0) as AttributeModifier) }
+                .function("value", returnsObject().noParams()) { it.target?.value }
+                .function("defaultValue", returnsObject().noParams()) { it.target?.defaultValue }
         }
     }
 }

@@ -11,28 +11,38 @@ fun Environment.getFluxonScript(): FluxonScript? {
 }
 
 // 原始的 invoke 函数，不带性能追踪
+@Suppress("UNCHECKED_CAST")
 fun Function.invoke(env: Environment, args: Array<Any?>, target: Any?): Any? {
     val pool = FunctionContextPool.local()
-    val borrowed = pool.borrow(this, target, args, env)
-    return try {
+    val borrowed = pool.borrow(this, target, args as Array<Any>, env)
+    try {
         call(borrowed)
+        return borrowed.returnRef
     } finally {
-        pool.release(borrowed)
+        borrowed.close()
     }
 }
 
 // 原始的 invokeInline 函数，不带性能追踪
+@Suppress("UNCHECKED_CAST")
 fun Function.invokeInline(env: Environment, count: Int, args0: Any?, args1: Any?, args2: Any?, args3: Any?, target: Any?): Any? {
     val pool = FunctionContextPool.local()
-    val borrowed = pool.borrowInline(this, target, count, args0, args1, args2, args3, env)
-    return try {
+    val args = arrayOfNulls<Any>(count)
+    if (count > 0) args[0] = args0
+    if (count > 1) args[1] = args1
+    if (count > 2) args[2] = args2
+    if (count > 3) args[3] = args3
+    val borrowed = pool.borrow(this, target, args as Array<Any>, env)
+    try {
         call(borrowed)
+        return borrowed.returnRef
     } finally {
-        pool.release(borrowed)
+        borrowed.close()
     }
 }
 
 // 带性能追踪的 invoke 函数，仅在性能分析时使用
+@Suppress("UNCHECKED_CAST")
 fun Function.invokeWithProfiling(env: Environment, args: Array<Any?>, target: Any?): Any? {
     val event = FunctionCallEvent()
     event.begin()
@@ -40,13 +50,14 @@ fun Function.invokeWithProfiling(env: Environment, args: Array<Any?>, target: An
     event.argumentCount = args.size
     event.hasTarget = target != null
     event.targetType = target?.javaClass?.simpleName ?: "null"
-    return try {
+    try {
         val pool = FunctionContextPool.local()
-        val borrowed = pool.borrow(this, target, args, env)
+        val borrowed = pool.borrow(this, target, args as Array<Any>, env)
         try {
             call(borrowed)
+            return borrowed.returnRef
         } finally {
-            pool.release(borrowed)
+            borrowed.close()
         }
     } finally {
         event.commit()
@@ -54,6 +65,7 @@ fun Function.invokeWithProfiling(env: Environment, args: Array<Any?>, target: An
 }
 
 // 带性能追踪的 invokeInline 函数，仅在性能分析时使用
+@Suppress("UNCHECKED_CAST")
 fun Function.invokeInlineWithProfiling(env: Environment, count: Int, args0: Any?, args1: Any?, args2: Any?, args3: Any?, target: Any?): Any? {
     val event = FunctionCallEvent()
     event.begin()
@@ -61,13 +73,19 @@ fun Function.invokeInlineWithProfiling(env: Environment, count: Int, args0: Any?
     event.argumentCount = count
     event.hasTarget = target != null
     event.targetType = target?.javaClass?.simpleName ?: "null"
-    return try {
+    try {
         val pool = FunctionContextPool.local()
-        val borrowed = pool.borrowInline(this, target, count, args0, args1, args2, args3, env)
+        val args = arrayOfNulls<Any>(count)
+        if (count > 0) args[0] = args0
+        if (count > 1) args[1] = args1
+        if (count > 2) args[2] = args2
+        if (count > 3) args[3] = args3
+        val borrowed = pool.borrow(this, target, args as Array<Any>, env)
         try {
             call(borrowed)
+            return borrowed.returnRef
         } finally {
-            pool.release(borrowed)
+            borrowed.close()
         }
     } finally {
         event.commit()

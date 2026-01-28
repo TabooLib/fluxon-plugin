@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.ServerTickManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,24 +20,31 @@ object FnServerTickManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerTickManager::class.java)
-                .function("isRunningNormally", 0) { it.target?.isRunningNormally }
-                .function("isStepping", 0) { it.target?.isStepping }
-                .function("isSprinting", 0) { it.target?.isSprinting }
-                .function("isFrozen", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("isRunningNormally", returns(Type.Z).noParams()) { it.target?.isRunningNormally }
+                .function("isStepping", returns(Type.Z).noParams()) { it.target?.isStepping }
+                .function("isSprinting", returns(Type.Z).noParams()) { it.target?.isSprinting }
+                .function("isFrozen", returns(Type.Z).noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.isFrozen
                     } else {
-                        it.target?.isFrozen(it.getArgument(0) as Entity)
+                        it.target?.isFrozen(it.getRef(0) as Entity)
                     }
                 }
-                .function("tickRate", 0) { it.target?.tickRate }
-                .function("setTickRate", 1) { it.target?.setTickRate(it.getNumber(0).toFloat()) }
-                .function("setFrozen", 1) { it.target?.setFrozen(it.getBoolean(0)) }
-                .function("stepGameIfFrozen", 1) { it.target?.stepGameIfFrozen(it.getNumber(0).toInt()) }
-                .function("stopStepping", 0) { it.target?.stopStepping() }
-                .function("requestGameToSprint", 1) { it.target?.requestGameToSprint(it.getNumber(0).toInt()) }
-                .function("stopSprinting", 0) { it.target?.stopSprinting() }
-                .function("frozenTicksToRun", 0) { it.target?.frozenTicksToRun }
+                .function("isFrozen", returns(Type.Z).params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.isFrozen
+                    } else {
+                        it.target?.isFrozen(it.getRef(0) as Entity)
+                    }
+                }
+                .function("tickRate", returnsObject().noParams()) { it.target?.tickRate }
+                .function("setTickRate", returnsObject().params(Type.OBJECT)) { it.target?.setTickRate(it.getFloat(0)) }
+                .function("setFrozen", returnsObject().params(Type.OBJECT)) { it.target?.setFrozen(it.getBool(0)) }
+                .function("stepGameIfFrozen", returnsObject().params(Type.OBJECT)) { it.target?.stepGameIfFrozen(it.getInt(0).toInt()) }
+                .function("stopStepping", returnsObject().noParams()) { it.target?.stopStepping() }
+                .function("requestGameToSprint", returnsObject().params(Type.OBJECT)) { it.target?.requestGameToSprint(it.getInt(0).toInt()) }
+                .function("stopSprinting", returnsObject().noParams()) { it.target?.stopSprinting() }
+                .function("frozenTicksToRun", returnsObject().noParams()) { it.target?.frozenTicksToRun }
         }
     }
 }

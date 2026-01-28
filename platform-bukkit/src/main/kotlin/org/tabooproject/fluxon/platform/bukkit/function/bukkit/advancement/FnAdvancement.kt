@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.advancement.Advancement"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnAdvancement {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Advancement::class.java)
-                .function("criteria", 0) { it.target?.criteria }
-                .function("display", 0) { it.target?.display }
+                .function("criteria", returnsObject().noParams()) { it.target?.criteria }
+                .function("display", returnsObject().noParams()) { it.target?.display }
         }
     }
 }

@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.SoundGroup"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +18,13 @@ object FnSoundGroup {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SoundGroup::class.java)
-                .function("volume", 0) { it.target?.volume }
-                .function("pitch", 0) { it.target?.pitch }
-                .function("breakSound", 0) { it.target?.breakSound }
-                .function("stepSound", 0) { it.target?.stepSound }
-                .function("placeSound", 0) { it.target?.placeSound }
-                .function("hitSound", 0) { it.target?.hitSound }
-                .function("fallSound", 0) { it.target?.fallSound }
+                .function("volume", returnsObject().noParams()) { it.target?.volume }
+                .function("pitch", returnsObject().noParams()) { it.target?.pitch }
+                .function("breakSound", returnsObject().noParams()) { it.target?.breakSound }
+                .function("stepSound", returnsObject().noParams()) { it.target?.stepSound }
+                .function("placeSound", returnsObject().noParams()) { it.target?.placeSound }
+                .function("hitSound", returnsObject().noParams()) { it.target?.hitSound }
+                .function("fallSound", returnsObject().noParams()) { it.target?.fallSound }
         }
     }
 }

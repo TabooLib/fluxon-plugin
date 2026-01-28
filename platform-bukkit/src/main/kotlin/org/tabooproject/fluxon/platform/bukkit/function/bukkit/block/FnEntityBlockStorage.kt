@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.EntityBlockStorage"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,12 @@ object FnEntityBlockStorage {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBlockStorage::class.java)
-                .function("isFull", 0) { it.target?.isFull }
-                .function("entityCount", 0) { it.target?.entityCount }
-                .function("maxEntities", 0) { it.target?.maxEntities }
-                .function("setMaxEntities", 1) { it.target?.setMaxEntities(it.getNumber(0).toInt()) }
-                .function("releaseEntities", 0) { it.target?.releaseEntities() }
-                .function(
-                    "addEntity",
-                    1
-                ) { (it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getArgument(0) as Entity) }
+                .function("isFull", returns(Type.Z).noParams()) { it.target?.isFull }
+                .function("entityCount", returnsObject().noParams()) { it.target?.entityCount }
+                .function("maxEntities", returnsObject().noParams()) { it.target?.maxEntities }
+                .function("setMaxEntities", returnsObject().params(Type.OBJECT)) { it.target?.setMaxEntities(it.getInt(0).toInt()) }
+                .function("releaseEntities", returnsObject().noParams()) { it.target?.releaseEntities() }
+                .function("addEntity", returnsObject().params(Type.OBJECT)) { (it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getRef(0) as Entity) }
         }
     }
 }

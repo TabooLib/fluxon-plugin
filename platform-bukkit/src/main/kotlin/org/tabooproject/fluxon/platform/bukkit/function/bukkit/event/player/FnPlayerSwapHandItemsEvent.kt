@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerSwapHandItemsEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,15 +20,15 @@ object FnPlayerSwapHandItemsEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSwapHandItemsEvent::class.java)
-                .function("mainHandItem", 0) { it.target?.mainHandItem }
-                .function("setMainHandItem", 1) { it.target?.setMainHandItem(it.getArgument(0) as ItemStack) }
-                .function("offHandItem", 0) { it.target?.offHandItem }
-                .function("setOffHandItem", 1) { it.target?.setOffHandItem(it.getArgument(0) as ItemStack) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("mainHandItem", returnsObject().noParams()) { it.target?.mainHandItem }
+                .function("setMainHandItem", returnsObject().params(Type.OBJECT)) { it.target?.setMainHandItem(it.getRef(0) as ItemStack) }
+                .function("offHandItem", returnsObject().noParams()) { it.target?.offHandItem }
+                .function("setOffHandItem", returnsObject().params(Type.OBJECT)) { it.target?.setOffHandItem(it.getRef(0) as ItemStack) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerSwapHandItemsEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerSwapHandItemsEvent.getHandlerList() }
         }
     }
 }

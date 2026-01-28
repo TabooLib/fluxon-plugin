@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.IronGolem"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +19,8 @@ object FnIronGolem {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(IronGolem::class.java)
-                .function("isPlayerCreated", 0) { it.target?.isPlayerCreated }
-                .function("setPlayerCreated", 1) { it.target?.setPlayerCreated(it.getBoolean(0)) }
+                .function("isPlayerCreated", returns(Type.Z).noParams()) { it.target?.isPlayerCreated }
+                .function("setPlayerCreated", returnsObject().params(Type.OBJECT)) { it.target?.setPlayerCreated(it.getBool(0)) }
         }
     }
 }

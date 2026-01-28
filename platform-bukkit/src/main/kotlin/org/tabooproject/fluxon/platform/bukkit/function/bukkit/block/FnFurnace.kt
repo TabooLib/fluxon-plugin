@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Furnace"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +18,14 @@ object FnFurnace {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Furnace::class.java)
-                .function("burnTime", 0) { it.target?.burnTime }
-                .function("setBurnTime", 1) { it.target?.setBurnTime(it.getNumber(0).toShort()) }
-                .function("cookTime", 0) { it.target?.cookTime }
-                .function("setCookTime", 1) { it.target?.setCookTime(it.getNumber(0).toShort()) }
-                .function("cookTimeTotal", 0) { it.target?.cookTimeTotal }
-                .function("setCookTimeTotal", 1) { it.target?.setCookTimeTotal(it.getNumber(0).toInt()) }
-                .function("inventory", 0) { it.target?.inventory }
-                .function("snapshotInventory", 0) { it.target?.snapshotInventory }
+                .function("burnTime", returnsObject().noParams()) { it.target?.burnTime }
+                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.target?.setBurnTime(it.getInt(0).toShort()) }
+                .function("cookTime", returnsObject().noParams()) { it.target?.cookTime }
+                .function("setCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setCookTime(it.getInt(0).toShort()) }
+                .function("cookTimeTotal", returnsObject().noParams()) { it.target?.cookTimeTotal }
+                .function("setCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.target?.setCookTimeTotal(it.getInt(0).toInt()) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
         }
     }
 }

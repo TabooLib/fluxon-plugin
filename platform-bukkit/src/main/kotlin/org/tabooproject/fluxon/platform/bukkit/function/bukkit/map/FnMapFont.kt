@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapFont"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,18 +19,18 @@ object FnMapFont {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont::class.java)
-                .function("setChar", 2) {
+                .function("setChar", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.setChar(
                         it.getString(0)?.firstOrNull()!!,
-                        it.getArgument(1) as MapFont.CharacterSprite
+                        it.getRef(1) as MapFont.CharacterSprite
                     )
                 }
-                .function("getChar", 1) { it.target?.getChar(it.getString(0)?.firstOrNull()!!) }
-                .function("getWidth", 1) { it.target?.getWidth(it.getString(0)!!) }
-                .function("height", 0) {
+                .function("getChar", returnsObject().params(Type.OBJECT)) { it.target?.getChar(it.getString(0)?.firstOrNull()!!) }
+                .function("getWidth", returnsObject().params(Type.OBJECT)) { it.target?.getWidth(it.getString(0)!!) }
+                .function("height", returnsObject().noParams()) {
                     it.target?.height
                 }
-                .function("isValid", 1) { it.target?.isValid(it.getString(0)!!) }
+                .function("isValid", returns(Type.Z).params(Type.OBJECT)) { it.target?.isValid(it.getString(0)!!) }
         }
     }
 }
@@ -40,8 +43,8 @@ object FnMapFontCharacterSprite {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont.CharacterSprite::class.java)
-                .function("get", 2) { it.target?.get(it.getNumber(0).toInt(), it.getNumber(1).toInt()) }
-                .function("width", 0) { it.target?.width }
+                .function("get", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt()) }
+                .function("width", returnsObject().noParams()) { it.target?.width }
         }
     }
 }

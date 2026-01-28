@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.Repairable"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +19,10 @@ object FnRepairable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repairable::class.java)
-                .function("hasRepairCost", 0) { it.target?.hasRepairCost() }
-                .function("repairCost", 0) { it.target?.repairCost }
-                .function("setRepairCost", 1) { it.target?.setRepairCost(it.getNumber(0).toInt()) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("hasRepairCost", returns(Type.Z).noParams()) { it.target?.hasRepairCost() }
+                .function("repairCost", returnsObject().noParams()) { it.target?.repairCost }
+                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCost(it.getInt(0).toInt()) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

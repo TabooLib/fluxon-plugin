@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Horse"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,13 +19,13 @@ object FnHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Horse::class.java)
-                .function("color", 0) { it.target?.color }
-                .function("setColor", 1) { it.target?.setColor(it.getArgument(0) as Horse.Color) }
-                .function("style", 0) { it.target?.style }
-                .function("setStyle", 1) { it.target?.setStyle(it.getArgument(0) as Horse.Style) }
-                .function("isCarryingChest", 0) { it.target?.isCarryingChest }
-                .function("setCarryingChest", 1) { it.target?.setCarryingChest(it.getBoolean(0)) }
-                .function("inventory", 0) { it.target?.inventory }
+                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Horse.Color) }
+                .function("style", returnsObject().noParams()) { it.target?.style }
+                .function("setStyle", returnsObject().params(Type.OBJECT)) { it.target?.setStyle(it.getRef(0) as Horse.Style) }
+                .function("isCarryingChest", returns(Type.Z).noParams()) { it.target?.isCarryingChest }
+                .function("setCarryingChest", returnsObject().params(Type.OBJECT)) { it.target?.setCarryingChest(it.getBool(0)) }
+                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
         }
     }
 }

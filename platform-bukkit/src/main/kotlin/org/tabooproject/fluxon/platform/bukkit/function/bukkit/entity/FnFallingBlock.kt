@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.FallingBlock"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,18 +19,18 @@ object FnFallingBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FallingBlock::class.java)
-                .function("material", 0) { it.target?.material }
-                .function("blockData", 0) { it.target?.blockData }
-                .function("dropItem", 0) { it.target?.dropItem }
-                .function("setDropItem", 1) { it.target?.setDropItem(it.getBoolean(0)) }
-                .function("cancelDrop", 0) { it.target?.cancelDrop }
-                .function("setCancelDrop", 1) { it.target?.setCancelDrop(it.getBoolean(0)) }
-                .function("canHurtEntities", 0) { it.target?.canHurtEntities() }
-                .function("setHurtEntities", 1) { it.target?.setHurtEntities(it.getBoolean(0)) }
-                .function("damagePerBlock", 0) { it.target?.damagePerBlock }
-                .function("setDamagePerBlock", 1) { it.target?.setDamagePerBlock(it.getNumber(0).toFloat()) }
-                .function("maxDamage", 0) { it.target?.maxDamage }
-                .function("setMaxDamage", 1) { it.target?.setMaxDamage(it.getNumber(0).toInt()) }
+                .function("material", returnsObject().noParams()) { it.target?.material }
+                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
+                .function("dropItem", returnsObject().noParams()) { it.target?.dropItem }
+                .function("setDropItem", returnsObject().params(Type.OBJECT)) { it.target?.setDropItem(it.getBool(0)) }
+                .function("cancelDrop", returnsObject().noParams()) { it.target?.cancelDrop }
+                .function("setCancelDrop", returnsObject().params(Type.OBJECT)) { it.target?.setCancelDrop(it.getBool(0)) }
+                .function("canHurtEntities", returns(Type.Z).noParams()) { it.target?.canHurtEntities() }
+                .function("setHurtEntities", returnsObject().params(Type.OBJECT)) { it.target?.setHurtEntities(it.getBool(0)) }
+                .function("damagePerBlock", returnsObject().noParams()) { it.target?.damagePerBlock }
+                .function("setDamagePerBlock", returnsObject().params(Type.OBJECT)) { it.target?.setDamagePerBlock(it.getFloat(0)) }
+                .function("maxDamage", returnsObject().noParams()) { it.target?.maxDamage }
+                .function("setMaxDamage", returnsObject().params(Type.OBJECT)) { it.target?.setMaxDamage(it.getInt(0).toInt()) }
         }
     }
 }

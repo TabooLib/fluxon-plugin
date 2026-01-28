@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.EntityFactory"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnEntityFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityFactory::class.java)
-                .function("createEntitySnapshot", 1) { it.target?.createEntitySnapshot(it.getString(0)!!) }
+                .function("createEntitySnapshot", returnsObject().params(Type.OBJECT)) { it.target?.createEntitySnapshot(it.getString(0)!!) }
         }
     }
 }

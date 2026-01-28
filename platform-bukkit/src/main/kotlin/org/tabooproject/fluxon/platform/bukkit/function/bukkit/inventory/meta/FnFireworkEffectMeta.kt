@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.FireworkEffectMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,10 +20,10 @@ object FnFireworkEffectMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffectMeta::class.java)
-                .function("setEffect", 1) { it.target?.setEffect(it.getArgument(0) as FireworkEffect) }
-                .function("hasEffect", 0) { it.target?.hasEffect() }
-                .function("effect", 0) { it.target?.effect }
-                .function("clone", 0) { it.target?.clone() }
+                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as FireworkEffect) }
+                .function("hasEffect", returns(Type.Z).noParams()) { it.target?.hasEffect() }
+                .function("effect", returnsObject().noParams()) { it.target?.effect }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

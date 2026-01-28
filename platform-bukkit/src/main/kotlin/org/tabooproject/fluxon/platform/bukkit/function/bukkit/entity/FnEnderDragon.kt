@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.EnderDragon"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,10 +18,10 @@ object FnEnderDragon {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderDragon::class.java)
-                .function("phase", 0) { it.target?.phase }
-                .function("setPhase", 1) { it.target?.setPhase(it.getArgument(0) as EnderDragon.Phase) }
-                .function("dragonBattle", 0) { it.target?.dragonBattle }
-                .function("deathAnimationTicks", 0) { it.target?.deathAnimationTicks }
+                .function("phase", returnsObject().noParams()) { it.target?.phase }
+                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.target?.setPhase(it.getRef(0) as EnderDragon.Phase) }
+                .function("dragonBattle", returnsObject().noParams()) { it.target?.dragonBattle }
+                .function("deathAnimationTicks", returnsObject().noParams()) { it.target?.deathAnimationTicks }
         }
     }
 }

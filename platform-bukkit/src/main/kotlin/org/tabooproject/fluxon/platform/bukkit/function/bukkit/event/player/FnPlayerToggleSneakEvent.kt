@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerToggleSneakEvent"])
@@ -17,12 +20,12 @@ object FnPlayerToggleSneakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerToggleSneakEvent::class.java)
-                .function("isSneaking", 0) { it.target?.isSneaking }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("isSneaking", returns(Type.Z).noParams()) { it.target?.isSneaking }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerToggleSneakEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerToggleSneakEvent.getHandlerList() }
         }
     }
 }

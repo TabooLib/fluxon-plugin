@@ -7,6 +7,8 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockDamageAbortEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,11 +18,11 @@ object FnBlockDamageAbortEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageAbortEvent::class.java)
-                .function("player", 0) { it.target?.player }
-                .function("itemInHand", 0) { it.target?.itemInHand }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.target?.player }
+                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { BlockDamageAbortEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { BlockDamageAbortEvent.getHandlerList() }
         }
     }
 }

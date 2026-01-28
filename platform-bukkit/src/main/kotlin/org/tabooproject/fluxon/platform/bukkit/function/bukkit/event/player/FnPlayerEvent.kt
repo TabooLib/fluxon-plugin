@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerEvent"])
@@ -17,7 +19,7 @@ object FnPlayerEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEvent::class.java)
-                .function("player", 0) { it.target?.getPlayer() }
+                .function("player", returnsObject().noParams()) { it.target?.getPlayer() }
         }
     }
 }

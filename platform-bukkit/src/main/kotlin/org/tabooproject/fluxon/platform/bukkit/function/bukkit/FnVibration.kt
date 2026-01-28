@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Vibration"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnVibration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration::class.java)
-                .function("origin", 0) { it.target?.origin }
-                .function("destination", 0) { it.target?.destination }
-                .function("arrivalTime", 0) { it.target?.arrivalTime }
+                .function("origin", returnsObject().noParams()) { it.target?.origin }
+                .function("destination", returnsObject().noParams()) { it.target?.destination }
+                .function("arrivalTime", returnsObject().noParams()) { it.target?.arrivalTime }
         }
     }
 }
@@ -31,7 +33,7 @@ object FnVibrationDestinationEntityDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.EntityDestination::class.java)
-                .function("entity", 0) { it.target?.entity }
+                .function("entity", returnsObject().noParams()) { it.target?.entity }
         }
     }
 }
@@ -44,8 +46,8 @@ object FnVibrationDestinationBlockDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.BlockDestination::class.java)
-                .function("location", 0) { it.target?.location }
-                .function("block", 0) { it.target?.block }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("block", returnsObject().noParams()) { it.target?.block }
         }
     }
 }

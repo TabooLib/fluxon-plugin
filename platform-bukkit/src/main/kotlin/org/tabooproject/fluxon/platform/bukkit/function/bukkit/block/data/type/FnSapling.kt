@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Sapling"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnSapling {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sapling::class.java)
-                .function("stage", 0) { it.target?.stage }
-                .function("setStage", 1) { it.target?.setStage(it.getNumber(0).toInt()) }
-                .function("maximumStage", 0) { it.target?.maximumStage }
+                .function("stage", returnsObject().noParams()) { it.target?.stage }
+                .function("setStage", returnsObject().params(Type.OBJECT)) { it.target?.setStage(it.getInt(0).toInt()) }
+                .function("maximumStage", returnsObject().noParams()) { it.target?.maximumStage }
         }
     }
 }

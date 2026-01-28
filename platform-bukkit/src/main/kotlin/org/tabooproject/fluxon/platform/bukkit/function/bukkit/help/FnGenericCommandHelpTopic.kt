@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.help.GenericCommandHelpTopic"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,7 +20,7 @@ object FnGenericCommandHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericCommandHelpTopic::class.java)
-                .function("canSee", 1) { it.target?.canSee(it.getArgument(0) as CommandSender) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.target?.canSee(it.getRef(0) as CommandSender) }
         }
     }
 }

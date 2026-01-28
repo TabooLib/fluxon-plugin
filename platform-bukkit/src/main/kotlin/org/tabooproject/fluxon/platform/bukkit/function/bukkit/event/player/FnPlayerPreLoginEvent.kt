@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerPreLoginEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,23 +19,23 @@ object FnPlayerPreLoginEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPreLoginEvent::class.java)
-                .function("result", 0) { it.target?.result }
-                .function("setResult", 1) { it.target?.setResult(it.getArgument(0) as PlayerPreLoginEvent.Result) }
-                .function("kickMessage", 0) { it.target?.kickMessage }
-                .function("setKickMessage", 1) { it.target?.setKickMessage(it.getString(0)!!) }
-                .function("allow", 0) { it.target?.allow() }
-                .function("disallow", 2) {
+                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as PlayerPreLoginEvent.Result) }
+                .function("kickMessage", returnsObject().noParams()) { it.target?.kickMessage }
+                .function("setKickMessage", returnsObject().params(Type.OBJECT)) { it.target?.setKickMessage(it.getString(0)!!) }
+                .function("allow", returnsObject().noParams()) { it.target?.allow() }
+                .function("disallow", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.target?.disallow(
-                        it.getArgument(0) as PlayerPreLoginEvent.Result,
+                        it.getRef(0) as PlayerPreLoginEvent.Result,
                         it.getString(1)!!
                     )
                 }
-                .function("name", 0) { it.target?.name }
-                .function("address", 0) { it.target?.address }
-                .function("handlers", 0) { it.target?.handlers }
-                .function("uniqueId", 0) { it.target?.uniqueId }
+                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("address", returnsObject().noParams()) { it.target?.address }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("uniqueId", returnsObject().noParams()) { it.target?.uniqueId }
                 // static
-                .function("handlerList", 0) { PlayerPreLoginEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerPreLoginEvent.getHandlerList() }
         }
     }
 }

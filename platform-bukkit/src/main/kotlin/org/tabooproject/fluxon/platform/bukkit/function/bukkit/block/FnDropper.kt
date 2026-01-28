@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.Dropper"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,7 +18,7 @@ object FnDropper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dropper::class.java)
-                .function("drop", 0) { it.target?.drop() }
+                .function("drop", returnsObject().noParams()) { it.target?.drop() }
         }
     }
 }

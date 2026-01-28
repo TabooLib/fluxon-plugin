@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Beehive"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,9 +18,9 @@ object FnBeehive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beehive::class.java)
-                .function("honeyLevel", 0) { it.target?.honeyLevel }
-                .function("setHoneyLevel", 1) { it.target?.setHoneyLevel(it.getNumber(0).toInt()) }
-                .function("maximumHoneyLevel", 0) { it.target?.maximumHoneyLevel }
+                .function("honeyLevel", returnsObject().noParams()) { it.target?.honeyLevel }
+                .function("setHoneyLevel", returnsObject().params(Type.OBJECT)) { it.target?.setHoneyLevel(it.getInt(0).toInt()) }
+                .function("maximumHoneyLevel", returnsObject().noParams()) { it.target?.maximumHoneyLevel }
         }
     }
 }

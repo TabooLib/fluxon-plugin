@@ -8,6 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.FireworkMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,22 +20,29 @@ object FnFireworkMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkMeta::class.java)
-                .function("addEffect", 1) { it.target?.addEffect(it.getArgument(0) as FireworkEffect) }
-                .function("addEffects", listOf(0, 1)) {
-                    if (it.arguments.isEmpty()) {
+                .function("addEffect", returnsObject().params(Type.OBJECT)) { it.target?.addEffect(it.getRef(0) as FireworkEffect) }
+                .function("addEffects", returnsObject().noParams()) {
+                    if ((it.argumentCount == 0)) {
                         it.target?.addEffects()
                     } else {
-                        it.target?.addEffects(it.getArgument(0) as Iterable<FireworkEffect>)
+                        it.target?.addEffects(it.getRef(0) as Iterable<FireworkEffect>)
                     }
                 }
-                .function("effects", 0) { it.target?.effects }
-                .function("effectsSize", 0) { it.target?.effectsSize }
-                .function("removeEffect", 1) { it.target?.removeEffect(it.getNumber(0).toInt()) }
-                .function("clearEffects", 0) { it.target?.clearEffects() }
-                .function("hasEffects", 0) { it.target?.hasEffects() }
-                .function("power", 0) { it.target?.power }
-                .function("setPower", 1) { it.target?.setPower(it.getNumber(0).toInt()) }
-                .function("clone", 0) { it.target?.clone() }
+                .function("addEffects", returnsObject().params(Type.OBJECT)) {
+                    if ((it.argumentCount == 0)) {
+                        it.target?.addEffects()
+                    } else {
+                        it.target?.addEffects(it.getRef(0) as Iterable<FireworkEffect>)
+                    }
+                }
+                .function("effects", returnsObject().noParams()) { it.target?.effects }
+                .function("effectsSize", returnsObject().noParams()) { it.target?.effectsSize }
+                .function("removeEffect", returnsObject().params(Type.OBJECT)) { it.target?.removeEffect(it.getInt(0).toInt()) }
+                .function("clearEffects", returnsObject().noParams()) { it.target?.clearEffects() }
+                .function("hasEffects", returns(Type.Z).noParams()) { it.target?.hasEffects() }
+                .function("power", returnsObject().noParams()) { it.target?.power }
+                .function("setPower", returnsObject().params(Type.OBJECT)) { it.target?.setPower(it.getInt(0).toInt()) }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

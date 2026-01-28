@@ -8,6 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.JukeboxInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -17,9 +19,9 @@ object FnJukeboxInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JukeboxInventory::class.java)
-                .function("setRecord", 1) { it.target?.setRecord(it.getArgument(0) as ItemStack) }
-                .function("record", 0) { it.target?.record }
-                .function("holder", 0) { it.target?.holder }
+                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
+                .function("record", returnsObject().noParams()) { it.target?.record }
+                .function("holder", returnsObject().noParams()) { it.target?.holder }
         }
     }
 }

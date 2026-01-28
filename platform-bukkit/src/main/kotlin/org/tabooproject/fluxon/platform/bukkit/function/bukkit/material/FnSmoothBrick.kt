@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.material.SmoothBrick"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnSmoothBrick {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmoothBrick::class.java)
-                .function("textures", 0) { it.target?.textures }
-                .function("clone", 0) { it.target?.clone() }
+                .function("textures", returnsObject().noParams()) { it.target?.textures }
+                .function("clone", returnsObject().noParams()) { it.target?.clone() }
         }
     }
 }

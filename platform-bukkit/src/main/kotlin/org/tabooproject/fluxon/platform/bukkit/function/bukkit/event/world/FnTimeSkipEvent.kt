@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.TimeSkipEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,14 +19,14 @@ object FnTimeSkipEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimeSkipEvent::class.java)
-                .function("skipReason", 0) { it.target?.skipReason }
-                .function("skipAmount", 0) { it.target?.skipAmount }
-                .function("setSkipAmount", 1) { it.target?.setSkipAmount(it.getNumber(0).toLong()) }
-                .function("isCancelled", 0) { it.target?.isCancelled }
-                .function("setCancelled", 1) { it.target?.setCancelled(it.getBoolean(0)) }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("skipReason", returnsObject().noParams()) { it.target?.skipReason }
+                .function("skipAmount", returnsObject().noParams()) { it.target?.skipAmount }
+                .function("setSkipAmount", returnsObject().params(Type.OBJECT)) { it.target?.setSkipAmount(it.getInt(0).toLong()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { TimeSkipEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { TimeSkipEvent.getHandlerList() }
         }
     }
 }

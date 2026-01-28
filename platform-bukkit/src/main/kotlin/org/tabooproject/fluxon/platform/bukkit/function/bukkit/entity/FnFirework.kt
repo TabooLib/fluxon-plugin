@@ -9,6 +9,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Firework"])
 @PlatformSide(Platform.BUKKIT)
@@ -18,18 +21,18 @@ object FnFirework {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Firework::class.java)
-                .function("fireworkMeta", 0) { it.target?.fireworkMeta }
-                .function("setFireworkMeta", 1) { it.target?.setFireworkMeta(it.getArgument(0) as FireworkMeta) }
-                .function("setAttachedTo", 1) { it.target?.setAttachedTo(it.getArgument(0) as LivingEntity) }
-                .function("attachedTo", 0) { it.target?.attachedTo }
-                .function("setLife", 1) { it.target?.setLife(it.getNumber(0).toInt()) }
-                .function("life", 0) { it.target?.life }
-                .function("setMaxLife", 1) { it.target?.setMaxLife(it.getNumber(0).toInt()) }
-                .function("maxLife", 0) { it.target?.maxLife }
-                .function("detonate", 0) { it.target?.detonate() }
-                .function("isDetonated", 0) { it.target?.isDetonated }
-                .function("isShotAtAngle", 0) { it.target?.isShotAtAngle }
-                .function("setShotAtAngle", 1) { it.target?.setShotAtAngle(it.getBoolean(0)) }
+                .function("fireworkMeta", returnsObject().noParams()) { it.target?.fireworkMeta }
+                .function("setFireworkMeta", returnsObject().params(Type.OBJECT)) { it.target?.setFireworkMeta(it.getRef(0) as FireworkMeta) }
+                .function("setAttachedTo", returnsObject().params(Type.OBJECT)) { it.target?.setAttachedTo(it.getRef(0) as LivingEntity) }
+                .function("attachedTo", returnsObject().noParams()) { it.target?.attachedTo }
+                .function("setLife", returnsObject().params(Type.OBJECT)) { it.target?.setLife(it.getInt(0).toInt()) }
+                .function("life", returnsObject().noParams()) { it.target?.life }
+                .function("setMaxLife", returnsObject().params(Type.OBJECT)) { it.target?.setMaxLife(it.getInt(0).toInt()) }
+                .function("maxLife", returnsObject().noParams()) { it.target?.maxLife }
+                .function("detonate", returnsObject().noParams()) { it.target?.detonate() }
+                .function("isDetonated", returns(Type.Z).noParams()) { it.target?.isDetonated }
+                .function("isShotAtAngle", returns(Type.Z).noParams()) { it.target?.isShotAtAngle }
+                .function("setShotAtAngle", returnsObject().params(Type.OBJECT)) { it.target?.setShotAtAngle(it.getBool(0)) }
         }
     }
 }

@@ -7,6 +7,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.Raid"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,18 +19,18 @@ object FnRaid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Raid::class.java)
-                .function("isStarted", 0) { it.target?.isStarted }
-                .function("activeTicks", 0) { it.target?.activeTicks }
-                .function("badOmenLevel", 0) { it.target?.badOmenLevel }
-                .function("setBadOmenLevel", 1) { it.target?.setBadOmenLevel(it.getNumber(0).toInt()) }
-                .function("location", 0) { it.target?.location }
-                .function("status", 0) { it.target?.status }
-                .function("spawnedGroups", 0) { it.target?.spawnedGroups }
-                .function("totalGroups", 0) { it.target?.totalGroups }
-                .function("totalWaves", 0) { it.target?.totalWaves }
-                .function("totalHealth", 0) { it.target?.totalHealth }
-                .function("heroes", 0) { it.target?.heroes }
-                .function("raiders", 0) { it.target?.raiders }
+                .function("isStarted", returns(Type.Z).noParams()) { it.target?.isStarted }
+                .function("activeTicks", returnsObject().noParams()) { it.target?.activeTicks }
+                .function("badOmenLevel", returnsObject().noParams()) { it.target?.badOmenLevel }
+                .function("setBadOmenLevel", returnsObject().params(Type.OBJECT)) { it.target?.setBadOmenLevel(it.getInt(0).toInt()) }
+                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("status", returnsObject().noParams()) { it.target?.status }
+                .function("spawnedGroups", returnsObject().noParams()) { it.target?.spawnedGroups }
+                .function("totalGroups", returnsObject().noParams()) { it.target?.totalGroups }
+                .function("totalWaves", returnsObject().noParams()) { it.target?.totalWaves }
+                .function("totalHealth", returnsObject().noParams()) { it.target?.totalHealth }
+                .function("heroes", returnsObject().noParams()) { it.target?.heroes }
+                .function("raiders", returnsObject().noParams()) { it.target?.raiders }
         }
     }
 }

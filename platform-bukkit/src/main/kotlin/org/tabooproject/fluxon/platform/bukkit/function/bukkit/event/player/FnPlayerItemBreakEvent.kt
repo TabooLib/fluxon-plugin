@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 
 @Requires(classes = ["org.bukkit.event.player.PlayerItemBreakEvent"])
@@ -17,10 +19,10 @@ object FnPlayerItemBreakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemBreakEvent::class.java)
-                .function("brokenItem", 0) { it.target?.brokenItem }
-                .function("handlers", 0) { it.target?.handlers }
+                .function("brokenItem", returnsObject().noParams()) { it.target?.brokenItem }
+                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
                 // static
-                .function("handlerList", 0) { PlayerItemBreakEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { PlayerItemBreakEvent.getHandlerList() }
         }
     }
 }

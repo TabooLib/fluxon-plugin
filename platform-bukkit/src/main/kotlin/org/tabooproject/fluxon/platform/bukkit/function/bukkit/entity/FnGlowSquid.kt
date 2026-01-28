@@ -7,6 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.GlowSquid"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,8 +18,8 @@ object FnGlowSquid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GlowSquid::class.java)
-                .function("darkTicksRemaining", 0) { it.target?.darkTicksRemaining }
-                .function("setDarkTicksRemaining", 1) { it.target?.setDarkTicksRemaining(it.getNumber(0).toInt()) }
+                .function("darkTicksRemaining", returnsObject().noParams()) { it.target?.darkTicksRemaining }
+                .function("setDarkTicksRemaining", returnsObject().params(Type.OBJECT)) { it.target?.setDarkTicksRemaining(it.getInt(0).toInt()) }
         }
     }
 }
