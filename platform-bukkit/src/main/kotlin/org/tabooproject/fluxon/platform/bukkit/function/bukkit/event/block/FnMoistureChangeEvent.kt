@@ -19,12 +19,12 @@ object FnMoistureChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MoistureChangeEvent::class.java)
-                .function("newState", returnsObject().noParams()) { it.target?.newState }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("newState", returnsObject().noParams()) { it.setReturnRef(it.target?.newState) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { MoistureChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(MoistureChangeEvent.getHandlerList()) }
         }
     }
 }

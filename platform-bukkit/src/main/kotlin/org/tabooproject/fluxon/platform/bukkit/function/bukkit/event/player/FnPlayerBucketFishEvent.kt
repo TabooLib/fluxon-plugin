@@ -18,9 +18,9 @@ object FnPlayerBucketFishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketFishEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("waterBucket", returnsObject().noParams()) { it.target?.waterBucket }
-                .function("fishBucket", returnsObject().noParams()) { it.target?.fishBucket }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("waterBucket", returnsObject().noParams()) { it.setReturnRef(it.target?.waterBucket) }
+                .function("fishBucket", returnsObject().noParams()) { it.setReturnRef(it.target?.fishBucket) }
         }
     }
 }

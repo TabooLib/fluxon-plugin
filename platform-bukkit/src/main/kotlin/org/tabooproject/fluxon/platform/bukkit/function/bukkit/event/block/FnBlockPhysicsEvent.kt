@@ -19,13 +19,13 @@ object FnBlockPhysicsEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPhysicsEvent::class.java)
-                .function("sourceBlock", returnsObject().noParams()) { it.target?.sourceBlock }
-                .function("changedType", returnsObject().noParams()) { it.target?.changedType }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("sourceBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceBlock) }
+                .function("changedType", returnsObject().noParams()) { it.setReturnRef(it.target?.changedType) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockPhysicsEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockPhysicsEvent.getHandlerList()) }
         }
     }
 }

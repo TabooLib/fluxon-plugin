@@ -19,8 +19,8 @@ object FnShulkerBullet {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShulkerBullet::class.java)
-                .function("target", returnsObject().noParams()) { it.target?.target }
-                .function("setTarget", returnsObject().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as Entity) }
+                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
+                .function("setTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTarget(it.getRef(0) as Entity)) }
         }
     }
 }

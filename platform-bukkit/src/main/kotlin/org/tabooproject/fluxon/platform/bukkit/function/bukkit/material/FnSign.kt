@@ -20,12 +20,12 @@ object FnSign {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sign::class.java)
-                .function("isWallSign", returns(Type.Z).noParams()) { it.target?.isWallSign }
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isWallSign", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isWallSign) }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

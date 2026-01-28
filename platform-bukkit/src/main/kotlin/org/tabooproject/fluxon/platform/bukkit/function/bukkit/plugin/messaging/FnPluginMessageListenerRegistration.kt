@@ -19,12 +19,12 @@ object FnPluginMessageListenerRegistration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageListenerRegistration::class.java)
-                .function("channel", returnsObject().noParams()) { it.target?.channel }
-                .function("listener", returnsObject().noParams()) { it.target?.listener }
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
-                .function("isValid", returns(Type.Z).noParams()) { it.target?.isValid }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
+                .function("channel", returnsObject().noParams()) { it.setReturnRef(it.target?.channel) }
+                .function("listener", returnsObject().noParams()) { it.setReturnRef(it.target?.listener) }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("isValid", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isValid) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
         }
     }
 }

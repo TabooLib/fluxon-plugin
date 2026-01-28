@@ -19,10 +19,10 @@ object FnMemoryKey {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemoryKey::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("memoryClass", returnsObject().noParams()) { it.target?.getMemoryClass() }
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { MemoryKey.getByKey(it.getRef(0) as NamespacedKey) }
-                .function("values", returnsObject().noParams()) { MemoryKey.values() }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("memoryClass", returnsObject().noParams()) { it.setReturnRef(it.target?.getMemoryClass()) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MemoryKey.getByKey(it.getRef(0) as NamespacedKey)) }
+                .function("values", returnsObject().noParams()) { it.setReturnRef(MemoryKey.values()) }
         }
     }
 }

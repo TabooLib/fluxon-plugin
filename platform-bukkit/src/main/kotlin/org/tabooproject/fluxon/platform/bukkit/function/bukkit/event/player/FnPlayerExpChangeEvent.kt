@@ -18,11 +18,11 @@ object FnPlayerExpChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerExpChangeEvent::class.java)
-                .function("amount", returnsObject().noParams()) { it.target?.amount }
-                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAmount(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("amount", returnsObject().noParams()) { it.setReturnRef(it.target?.amount) }
+                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAmount(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerExpChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerExpChangeEvent.getHandlerList()) }
         }
     }
 }

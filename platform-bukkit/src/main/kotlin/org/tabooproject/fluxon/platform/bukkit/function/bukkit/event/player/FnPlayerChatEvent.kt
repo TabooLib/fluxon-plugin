@@ -20,17 +20,17 @@ object FnPlayerChatEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChatEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("message", returnsObject().noParams()) { it.target?.message }
-                .function("setMessage", returnsObject().params(Type.OBJECT)) { it.target?.setMessage(it.getString(0)!!) }
-                .function("setPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setPlayer(it.getRef(0) as Player) }
-                .function("format", returnsObject().noParams()) { it.target?.format }
-                .function("setFormat", returnsObject().params(Type.OBJECT)) { it.target?.setFormat(it.getString(0)!!) }
-                .function("recipients", returnsObject().noParams()) { it.target?.recipients }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("message", returnsObject().noParams()) { it.setReturnRef(it.target?.message) }
+                .function("setMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMessage(it.getString(0)!!)) }
+                .function("setPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlayer(it.getRef(0) as Player)) }
+                .function("format", returnsObject().noParams()) { it.setReturnRef(it.target?.format) }
+                .function("setFormat", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFormat(it.getString(0)!!)) }
+                .function("recipients", returnsObject().noParams()) { it.setReturnRef(it.target?.recipients) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerChatEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChatEvent.getHandlerList()) }
         }
     }
 }

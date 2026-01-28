@@ -18,11 +18,11 @@ object FnPlayerResourcePackStatusEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerResourcePackStatusEvent::class.java)
-                .function("iD", returnsObject().noParams()) { it.target?.id }
-                .function("status", returnsObject().noParams()) { it.target?.status }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("iD", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
+                .function("status", returnsObject().noParams()) { it.setReturnRef(it.target?.status) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerResourcePackStatusEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerResourcePackStatusEvent.getHandlerList()) }
         }
     }
 }

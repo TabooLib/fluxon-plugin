@@ -18,10 +18,10 @@ object FnPlayerHideEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerHideEntityEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerHideEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerHideEntityEvent.getHandlerList()) }
         }
     }
 }

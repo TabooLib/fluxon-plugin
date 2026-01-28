@@ -19,10 +19,10 @@ object FnVault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vault::class.java)
-                .function("trialSpawnerState", returnsObject().noParams()) { it.target?.trialSpawnerState }
-                .function("setTrialSpawnerState", returnsObject().params(Type.OBJECT)) { it.target?.setTrialSpawnerState(it.getRef(0) as Vault.State) }
-                .function("isOminous", returns(Type.Z).noParams()) { it.target?.isOminous }
-                .function("setOminous", returnsObject().params(Type.OBJECT)) { it.target?.setOminous(it.getBool(0)) }
+                .function("trialSpawnerState", returnsObject().noParams()) { it.setReturnRef(it.target?.trialSpawnerState) }
+                .function("setTrialSpawnerState", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrialSpawnerState(it.getRef(0) as Vault.State)) }
+                .function("isOminous", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOminous) }
+                .function("setOminous", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOminous(it.getBool(0))) }
         }
     }
 }

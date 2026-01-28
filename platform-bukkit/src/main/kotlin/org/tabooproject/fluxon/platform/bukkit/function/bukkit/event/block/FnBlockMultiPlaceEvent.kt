@@ -18,7 +18,7 @@ object FnBlockMultiPlaceEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockMultiPlaceEvent::class.java)
-                .function("replacedBlockStates", returnsObject().noParams()) { it.target?.replacedBlockStates }
+                .function("replacedBlockStates", returnsObject().noParams()) { it.setReturnRef(it.target?.replacedBlockStates) }
         }
     }
 }

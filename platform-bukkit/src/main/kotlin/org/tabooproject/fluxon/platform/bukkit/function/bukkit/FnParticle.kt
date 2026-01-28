@@ -19,7 +19,7 @@ object FnParticle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }
@@ -32,8 +32,8 @@ object FnParticleDustOptions {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle.DustOptions::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("size", returns(Type.I).noParams()) { it.target?.size }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
         }
     }
 }
@@ -46,7 +46,7 @@ object FnParticleDustTransition {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Particle.DustTransition::class.java)
-                .function("toColor", returnsObject().noParams()) { it.target?.toColor }
+                .function("toColor", returnsObject().noParams()) { it.setReturnRef(it.target?.toColor) }
         }
     }
 }

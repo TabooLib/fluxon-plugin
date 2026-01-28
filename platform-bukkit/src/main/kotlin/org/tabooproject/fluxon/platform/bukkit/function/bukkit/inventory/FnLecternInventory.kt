@@ -18,7 +18,7 @@ object FnLecternInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LecternInventory::class.java)
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

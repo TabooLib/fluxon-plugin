@@ -19,10 +19,10 @@ object FnLootable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lootable::class.java)
-                .function("setLootTable", returnsObject().params(Type.OBJECT)) { it.target?.setLootTable(it.getRef(0) as LootTable) }
-                .function("lootTable", returnsObject().noParams()) { it.target?.lootTable }
-                .function("setSeed", returnsObject().params(Type.OBJECT)) { it.target?.setSeed(it.getInt(0).toLong()) }
-                .function("seed", returnsObject().noParams()) { it.target?.seed }
+                .function("setLootTable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLootTable(it.getRef(0) as LootTable)) }
+                .function("lootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.lootTable) }
+                .function("setSeed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSeed(it.getInt(0).toLong())) }
+                .function("seed", returnsObject().noParams()) { it.setReturnRef(it.target?.seed) }
         }
     }
 }

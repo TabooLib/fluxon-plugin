@@ -19,15 +19,15 @@ object FnPlayerPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPortalEvent::class.java)
-                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
-                .function("searchRadius", returnsObject().noParams()) { it.target?.searchRadius }
-                .function("canCreatePortal", returns(Type.Z).noParams()) { it.target?.canCreatePortal }
-                .function("setCanCreatePortal", returnsObject().params(Type.OBJECT)) { it.target?.setCanCreatePortal(it.getBool(0)) }
-                .function("setCreationRadius", returnsObject().params(Type.OBJECT)) { it.target?.setCreationRadius(it.getInt(0).toInt()) }
-                .function("creationRadius", returnsObject().noParams()) { it.target?.creationRadius }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSearchRadius(it.getInt(0).toInt())) }
+                .function("searchRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.searchRadius) }
+                .function("canCreatePortal", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canCreatePortal) }
+                .function("setCanCreatePortal", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCanCreatePortal(it.getBool(0))) }
+                .function("setCreationRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCreationRadius(it.getInt(0).toInt())) }
+                .function("creationRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.creationRadius) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerPortalEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerPortalEvent.getHandlerList()) }
         }
     }
 }

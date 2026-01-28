@@ -18,13 +18,13 @@ object FnSoundGroup {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SoundGroup::class.java)
-                .function("volume", returnsObject().noParams()) { it.target?.volume }
-                .function("pitch", returnsObject().noParams()) { it.target?.pitch }
-                .function("breakSound", returnsObject().noParams()) { it.target?.breakSound }
-                .function("stepSound", returnsObject().noParams()) { it.target?.stepSound }
-                .function("placeSound", returnsObject().noParams()) { it.target?.placeSound }
-                .function("hitSound", returnsObject().noParams()) { it.target?.hitSound }
-                .function("fallSound", returnsObject().noParams()) { it.target?.fallSound }
+                .function("volume", returnsObject().noParams()) { it.setReturnRef(it.target?.volume) }
+                .function("pitch", returnsObject().noParams()) { it.setReturnRef(it.target?.pitch) }
+                .function("breakSound", returnsObject().noParams()) { it.setReturnRef(it.target?.breakSound) }
+                .function("stepSound", returnsObject().noParams()) { it.setReturnRef(it.target?.stepSound) }
+                .function("placeSound", returnsObject().noParams()) { it.setReturnRef(it.target?.placeSound) }
+                .function("hitSound", returnsObject().noParams()) { it.setReturnRef(it.target?.hitSound) }
+                .function("fallSound", returnsObject().noParams()) { it.setReturnRef(it.target?.fallSound) }
         }
     }
 }

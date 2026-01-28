@@ -18,7 +18,7 @@ object FnKeyed {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Keyed::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

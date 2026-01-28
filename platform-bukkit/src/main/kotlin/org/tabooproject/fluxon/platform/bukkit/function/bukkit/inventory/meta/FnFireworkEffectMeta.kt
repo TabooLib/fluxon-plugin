@@ -20,10 +20,10 @@ object FnFireworkEffectMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffectMeta::class.java)
-                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as FireworkEffect) }
-                .function("hasEffect", returns(Type.Z).noParams()) { it.target?.hasEffect() }
-                .function("effect", returnsObject().noParams()) { it.target?.effect }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEffect(it.getRef(0) as FireworkEffect)) }
+                .function("hasEffect", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEffect()) }
+                .function("effect", returnsObject().noParams()) { it.setReturnRef(it.target?.effect) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

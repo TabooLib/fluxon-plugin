@@ -18,11 +18,11 @@ object FnPlayerRiptideEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRiptideEvent::class.java)
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("velocity", returnsObject().noParams()) { it.target?.velocity }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("velocity", returnsObject().noParams()) { it.setReturnRef(it.target?.velocity) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerRiptideEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRiptideEvent.getHandlerList()) }
         }
     }
 }

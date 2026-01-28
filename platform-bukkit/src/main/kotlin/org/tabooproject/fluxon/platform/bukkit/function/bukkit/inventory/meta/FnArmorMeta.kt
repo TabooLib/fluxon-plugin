@@ -20,10 +20,10 @@ object FnArmorMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorMeta::class.java)
-                .function("hasTrim", returns(Type.Z).noParams()) { it.target?.hasTrim() }
-                .function("setTrim", returnsObject().params(Type.OBJECT)) { it.target?.setTrim(it.getRef(0) as ArmorTrim) }
-                .function("trim", returnsObject().noParams()) { it.target?.trim }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasTrim", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasTrim()) }
+                .function("setTrim", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrim(it.getRef(0) as ArmorTrim)) }
+                .function("trim", returnsObject().noParams()) { it.setReturnRef(it.target?.trim) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

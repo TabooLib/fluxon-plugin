@@ -19,10 +19,10 @@ object FnPlayerItemBreakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemBreakEvent::class.java)
-                .function("brokenItem", returnsObject().noParams()) { it.target?.brokenItem }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("brokenItem", returnsObject().noParams()) { it.setReturnRef(it.target?.brokenItem) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerItemBreakEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemBreakEvent.getHandlerList()) }
         }
     }
 }

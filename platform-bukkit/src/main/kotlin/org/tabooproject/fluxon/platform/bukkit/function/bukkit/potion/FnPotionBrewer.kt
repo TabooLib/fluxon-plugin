@@ -21,19 +21,19 @@ object FnPotionBrewer {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionBrewer::class.java)
                 .function("createEffect", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.createEffect(
+                    it.setReturnRef(it.target?.createEffect(
                         it.getRef(0) as PotionEffectType,
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    )
+                    ))
                 }
-                .function("getEffectsFromDamage", returnsObject().params(Type.OBJECT)) { it.target?.getEffectsFromDamage(it.getInt(0).toInt()) }
+                .function("getEffectsFromDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getEffectsFromDamage(it.getInt(0).toInt())) }
                 .function("getEffects", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.getEffects(
+                    it.setReturnRef(it.target?.getEffects(
                         it.getRef(0) as PotionType,
                         it.getBool(1),
                         it.getBool(2)
-                    )
+                    ))
                 }
         }
     }

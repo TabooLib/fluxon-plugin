@@ -20,15 +20,15 @@ object FnPlayerBucketEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketEvent::class.java)
-                .function("bucket", returnsObject().noParams()) { it.target?.bucket }
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
-                .function("block", returnsObject().noParams()) { it.target?.block }
-                .function("blockClicked", returnsObject().noParams()) { it.target?.blockClicked }
-                .function("blockFace", returnsObject().noParams()) { it.target?.blockFace }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("bucket", returnsObject().noParams()) { it.setReturnRef(it.target?.bucket) }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItemStack(it.getRef(0) as ItemStack)) }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
+                .function("blockClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.blockClicked) }
+                .function("blockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.blockFace) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
         }
     }
 }

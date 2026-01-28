@@ -18,9 +18,9 @@ object FnServiceRegisterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServiceRegisterEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ServiceRegisterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ServiceRegisterEvent.getHandlerList()) }
         }
     }
 }

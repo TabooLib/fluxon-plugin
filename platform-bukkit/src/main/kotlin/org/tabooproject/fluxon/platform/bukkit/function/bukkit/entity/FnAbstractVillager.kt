@@ -18,7 +18,7 @@ object FnAbstractVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractVillager::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

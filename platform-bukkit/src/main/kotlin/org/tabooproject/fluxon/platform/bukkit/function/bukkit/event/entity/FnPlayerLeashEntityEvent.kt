@@ -19,15 +19,15 @@ object FnPlayerLeashEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerLeashEntityEvent::class.java)
-                .function("leashHolder", returnsObject().noParams()) { it.target?.leashHolder }
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("leashHolder", returnsObject().noParams()) { it.setReturnRef(it.target?.leashHolder) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerLeashEntityEvent.getHandlerList() }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerLeashEntityEvent.getHandlerList()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
         }
     }
 }

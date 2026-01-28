@@ -18,8 +18,8 @@ object FnScoreboardManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ScoreboardManager::class.java)
-                .function("mainScoreboard", returnsObject().noParams()) { it.target?.mainScoreboard }
-                .syncFunction("newScoreboard", returnsObject().noParams()) { it.target?.newScoreboard }
+                .function("mainScoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.mainScoreboard) }
+                .syncFunction("newScoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.newScoreboard) }
         }
     }
 }

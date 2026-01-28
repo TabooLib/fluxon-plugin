@@ -19,13 +19,13 @@ object FnEntityResurrectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityResurrectEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityResurrectEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityResurrectEvent.getHandlerList()) }
         }
     }
 }

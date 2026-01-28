@@ -19,18 +19,18 @@ object FnSpawnRule {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnRule::class.java)
-                .function("minBlockLight", returnsObject().noParams()) { it.target?.minBlockLight }
-                .function("setMinBlockLight", returnsObject().params(Type.OBJECT)) { it.target?.setMinBlockLight(it.getInt(0).toInt()) }
-                .function("maxBlockLight", returnsObject().noParams()) { it.target?.maxBlockLight }
-                .function("setMaxBlockLight", returnsObject().params(Type.OBJECT)) { it.target?.setMaxBlockLight(it.getInt(0).toInt()) }
-                .function("minSkyLight", returnsObject().noParams()) { it.target?.minSkyLight }
-                .function("setMinSkyLight", returnsObject().params(Type.OBJECT)) { it.target?.setMinSkyLight(it.getInt(0).toInt()) }
-                .function("maxSkyLight", returnsObject().noParams()) { it.target?.maxSkyLight }
-                .function("setMaxSkyLight", returnsObject().params(Type.OBJECT)) { it.target?.setMaxSkyLight(it.getInt(0).toInt()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("deserialize", returnsObject().params(Type.OBJECT)) { SpawnRule.deserialize(it.getRef(0) as Map<String, Any>) }
+                .function("minBlockLight", returnsObject().noParams()) { it.setReturnRef(it.target?.minBlockLight) }
+                .function("setMinBlockLight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMinBlockLight(it.getInt(0).toInt())) }
+                .function("maxBlockLight", returnsObject().noParams()) { it.setReturnRef(it.target?.maxBlockLight) }
+                .function("setMaxBlockLight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxBlockLight(it.getInt(0).toInt())) }
+                .function("minSkyLight", returnsObject().noParams()) { it.setReturnRef(it.target?.minSkyLight) }
+                .function("setMinSkyLight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMinSkyLight(it.getInt(0).toInt())) }
+                .function("maxSkyLight", returnsObject().noParams()) { it.setReturnRef(it.target?.maxSkyLight) }
+                .function("setMaxSkyLight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxSkyLight(it.getInt(0).toInt())) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(SpawnRule.deserialize(it.getRef(0) as Map<String, Any>)) }
         }
     }
 }

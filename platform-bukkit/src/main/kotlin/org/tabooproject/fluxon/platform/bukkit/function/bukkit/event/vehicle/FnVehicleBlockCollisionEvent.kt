@@ -18,10 +18,10 @@ object FnVehicleBlockCollisionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleBlockCollisionEvent::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.block }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleBlockCollisionEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleBlockCollisionEvent.getHandlerList()) }
         }
     }
 }

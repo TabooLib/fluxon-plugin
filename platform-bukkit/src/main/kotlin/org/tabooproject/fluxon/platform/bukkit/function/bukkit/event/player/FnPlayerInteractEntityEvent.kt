@@ -20,13 +20,13 @@ object FnPlayerInteractEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInteractEntityEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("rightClicked", returnsObject().noParams()) { it.target?.rightClicked }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("rightClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.rightClicked) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerInteractEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerInteractEntityEvent.getHandlerList()) }
         }
     }
 }

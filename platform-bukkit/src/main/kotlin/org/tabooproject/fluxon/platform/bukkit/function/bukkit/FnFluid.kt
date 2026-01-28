@@ -18,7 +18,7 @@ object FnFluid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fluid::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

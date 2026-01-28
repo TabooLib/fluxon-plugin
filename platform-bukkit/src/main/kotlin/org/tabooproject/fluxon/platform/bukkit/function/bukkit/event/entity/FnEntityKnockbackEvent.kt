@@ -20,17 +20,17 @@ object FnEntityKnockbackEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityKnockbackEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("force", returnsObject().noParams()) { it.target?.force }
-                .function("knockback", returnsObject().noParams()) { it.target?.knockback }
-                .function("finalKnockback", returnsObject().noParams()) { it.target?.finalKnockback }
-                .function("setFinalKnockback", returnsObject().params(Type.OBJECT)) { it.target?.setFinalKnockback(it.getRef(0) as Vector) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("force", returnsObject().noParams()) { it.setReturnRef(it.target?.force) }
+                .function("knockback", returnsObject().noParams()) { it.setReturnRef(it.target?.knockback) }
+                .function("finalKnockback", returnsObject().noParams()) { it.setReturnRef(it.target?.finalKnockback) }
+                .function("setFinalKnockback", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFinalKnockback(it.getRef(0) as Vector)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityKnockbackEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityKnockbackEvent.getHandlerList()) }
         }
     }
 }

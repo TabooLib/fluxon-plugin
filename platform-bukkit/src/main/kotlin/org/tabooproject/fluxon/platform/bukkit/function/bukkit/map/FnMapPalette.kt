@@ -21,12 +21,12 @@ object FnMapPalette {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapPalette::class.java)
                 // static
-                .function("resizeImage", returnsObject().params(Type.OBJECT)) { MapPalette.resizeImage(it.getRef(0) as Image) }
+                .function("resizeImage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.resizeImage(it.getRef(0) as Image)) }
                 // static
-                .function("imageToBytes", returnsObject().params(Type.OBJECT)) { MapPalette.imageToBytes(it.getRef(0) as Image) }
+                .function("imageToBytes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.imageToBytes(it.getRef(0) as Image)) }
                 // static
                 .function("matchColor", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         MapPalette.matchColor(it.getRef(0) as java.awt.Color)
                     } else {
                         MapPalette.matchColor(
@@ -34,10 +34,10 @@ object FnMapPalette {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("matchColor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         MapPalette.matchColor(it.getRef(0) as java.awt.Color)
                     } else {
                         MapPalette.matchColor(
@@ -45,12 +45,12 @@ object FnMapPalette {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 // static
-                .function("getColor", returnsObject().params(Type.OBJECT)) { MapPalette.getColor(it.getInt(0).toByte()) }
+                .function("getColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.getColor(it.getInt(0).toByte())) }
                 // static
-                .function("setMapColorCache", returnsObject().params(Type.OBJECT)) { MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache) }
+                .function("setMapColorCache", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache)) }
         }
     }
 }
@@ -63,7 +63,7 @@ object FnMapPaletteMapColorCache {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapPalette.MapColorCache::class.java)
-                .function("isCached", returns(Type.Z).noParams()) { it.target?.isCached }
+                .function("isCached", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCached) }
         }
     }
 }

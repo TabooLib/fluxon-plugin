@@ -18,7 +18,7 @@ object FnWorldEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldEvent::class.java)
-                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
         }
     }
 }

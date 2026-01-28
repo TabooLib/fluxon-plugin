@@ -18,7 +18,7 @@ object FnTranslatable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Translatable::class.java)
-                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
+                .function("translationKey", returnsObject().noParams()) { it.setReturnRef(it.target?.translationKey) }
         }
     }
 }

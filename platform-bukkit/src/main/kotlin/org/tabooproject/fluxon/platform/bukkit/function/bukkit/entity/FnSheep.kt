@@ -19,8 +19,8 @@ object FnSheep {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sheep::class.java)
-                .function("isSheared", returns(Type.Z).noParams()) { it.target?.isSheared }
-                .function("setSheared", returnsObject().params(Type.OBJECT)) { it.target?.setSheared(it.getBool(0)) }
+                .function("isSheared", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSheared) }
+                .function("setSheared", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSheared(it.getBool(0))) }
         }
     }
 }

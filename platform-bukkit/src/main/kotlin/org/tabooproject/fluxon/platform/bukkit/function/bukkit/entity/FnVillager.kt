@@ -19,18 +19,18 @@ object FnVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Villager::class.java)
-                .function("profession", returnsObject().noParams()) { it.target?.profession }
-                .function("setProfession", returnsObject().params(Type.OBJECT)) { it.target?.setProfession(it.getRef(0) as Villager.Profession) }
-                .function("villagerType", returnsObject().noParams()) { it.target?.villagerType }
-                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
-                .function("villagerLevel", returnsObject().noParams()) { it.target?.villagerLevel }
-                .function("setVillagerLevel", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerLevel(it.getInt(0).toInt()) }
-                .function("villagerExperience", returnsObject().noParams()) { it.target?.villagerExperience }
-                .function("setVillagerExperience", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerExperience(it.getInt(0).toInt()) }
-                .function("sleep", returnsObject().params(Type.OBJECT)) { it.target?.sleep(it.getRef(0) as Location) }
-                .function("wakeup", returnsObject().noParams()) { it.target?.wakeup() }
-                .function("shakeHead", returnsObject().noParams()) { it.target?.shakeHead() }
-                .function("zombify", returnsObject().noParams()) { it.target?.zombify() }
+                .function("profession", returnsObject().noParams()) { it.setReturnRef(it.target?.profession) }
+                .function("setProfession", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setProfession(it.getRef(0) as Villager.Profession)) }
+                .function("villagerType", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerType) }
+                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerType(it.getRef(0) as Villager.Type)) }
+                .function("villagerLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerLevel) }
+                .function("setVillagerLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerLevel(it.getInt(0).toInt())) }
+                .function("villagerExperience", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerExperience) }
+                .function("setVillagerExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerExperience(it.getInt(0).toInt())) }
+                .function("sleep", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.sleep(it.getRef(0) as Location)) }
+                .function("wakeup", returnsObject().noParams()) { it.setReturnRef(it.target?.wakeup()) }
+                .function("shakeHead", returnsObject().noParams()) { it.setReturnRef(it.target?.shakeHead()) }
+                .function("zombify", returnsObject().noParams()) { it.setReturnRef(it.target?.zombify()) }
         }
     }
 }
@@ -43,7 +43,7 @@ object FnVillagerType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Villager.Type::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }
@@ -56,7 +56,7 @@ object FnVillagerProfession {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Villager.Profession::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

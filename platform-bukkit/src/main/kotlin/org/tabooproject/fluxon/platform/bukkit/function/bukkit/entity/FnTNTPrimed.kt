@@ -19,10 +19,10 @@ object FnTNTPrimed {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TNTPrimed::class.java)
-                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
-                .function("fuseTicks", returnsObject().noParams()) { it.target?.fuseTicks }
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("setSource", returnsObject().params(Type.OBJECT)) { it.target?.setSource(it.getRef(0) as Entity) }
+                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuseTicks(it.getInt(0).toInt())) }
+                .function("fuseTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.fuseTicks) }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("setSource", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSource(it.getRef(0) as Entity)) }
         }
     }
 }

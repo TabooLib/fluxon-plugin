@@ -20,10 +20,10 @@ object FnMultipleFacing {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MultipleFacing::class.java)
-                .function("hasFace", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasFace(it.getRef(0) as BlockFace) }
-                .function("setFace", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setFace(it.getRef(0) as BlockFace, it.getBool(1)) }
-                .function("faces", returnsObject().noParams()) { it.target?.faces }
-                .function("allowedFaces", returnsObject().noParams()) { it.target?.allowedFaces }
+                .function("hasFace", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasFace(it.getRef(0) as BlockFace)) }
+                .function("setFace", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setFace(it.getRef(0) as BlockFace, it.getBool(1))) }
+                .function("faces", returnsObject().noParams()) { it.setReturnRef(it.target?.faces) }
+                .function("allowedFaces", returnsObject().noParams()) { it.setReturnRef(it.target?.allowedFaces) }
         }
     }
 }

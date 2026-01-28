@@ -19,10 +19,10 @@ object FnRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry::class.java)
-                .function("get", returnsObject().params(Type.OBJECT)) { it.target?.get(it.getRef(0) as NamespacedKey) }
-                .function("stream", returnsObject().noParams()) { it.target?.stream() }
-                .function("iterator", returnsObject().noParams()) { it.target?.iterator() }
-                .function("match", returnsObject().noParams()) { it.target?.match(it.getString(0)!!) }
+                .function("get", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
+                .function("stream", returnsObject().noParams()) { it.setReturnRef(it.target?.stream()) }
+                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
+                .function("match", returnsObject().noParams()) { it.setReturnRef(it.target?.match(it.getString(0)!!)) }
         }
     }
 }
@@ -35,10 +35,10 @@ object FnRegistrySimpleRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry.SimpleRegistry::class.java)
-                .function("get", returnsObject().params(Type.OBJECT)) { it.target?.get(it.getRef(0) as NamespacedKey) }
-                .function("stream", returnsObject().noParams()) { it.target?.stream() }
-                .function("iterator", returnsObject().noParams()) { it.target?.iterator() }
-                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("get", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
+                .function("stream", returnsObject().noParams()) { it.setReturnRef(it.target?.stream()) }
+                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
         }
     }
 }

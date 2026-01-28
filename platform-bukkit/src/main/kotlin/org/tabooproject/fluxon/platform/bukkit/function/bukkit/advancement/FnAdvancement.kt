@@ -18,8 +18,8 @@ object FnAdvancement {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Advancement::class.java)
-                .function("criteria", returnsObject().noParams()) { it.target?.criteria }
-                .function("display", returnsObject().noParams()) { it.target?.display }
+                .function("criteria", returnsObject().noParams()) { it.setReturnRef(it.target?.criteria) }
+                .function("display", returnsObject().noParams()) { it.setReturnRef(it.target?.display) }
         }
     }
 }

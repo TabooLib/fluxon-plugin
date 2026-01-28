@@ -18,8 +18,8 @@ object FnFixedMetadataValue {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FixedMetadataValue::class.java)
-                .function("invalidate", returnsObject().noParams()) { it.target?.invalidate() }
-                .function("value", returnsObject().noParams()) { it.target?.value() }
+                .function("invalidate", returnsObject().noParams()) { it.setReturnRef(it.target?.invalidate()) }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value()) }
         }
     }
 }

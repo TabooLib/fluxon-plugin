@@ -18,12 +18,12 @@ object FnCampfireStartEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CampfireStartEvent::class.java)
-                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
-                .function("totalCookTime", returnsObject().noParams()) { it.target?.totalCookTime }
-                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalCookTime(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("totalCookTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalCookTime) }
+                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTotalCookTime(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { CampfireStartEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(CampfireStartEvent.getHandlerList()) }
         }
     }
 }

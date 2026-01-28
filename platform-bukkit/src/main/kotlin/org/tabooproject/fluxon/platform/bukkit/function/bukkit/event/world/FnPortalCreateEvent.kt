@@ -19,14 +19,14 @@ object FnPortalCreateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PortalCreateEvent::class.java)
-                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PortalCreateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PortalCreateEvent.getHandlerList()) }
         }
     }
 }

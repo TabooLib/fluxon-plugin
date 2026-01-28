@@ -19,8 +19,8 @@ object FnVoxelShape {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VoxelShape::class.java)
-                .function("boundingBoxes", returnsObject().noParams()) { it.target?.boundingBoxes }
-                .function("overlaps", returnsObject().params(Type.OBJECT)) { it.target?.overlaps(it.getRef(0) as BoundingBox) }
+                .function("boundingBoxes", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBoxes) }
+                .function("overlaps", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.overlaps(it.getRef(0) as BoundingBox)) }
         }
     }
 }

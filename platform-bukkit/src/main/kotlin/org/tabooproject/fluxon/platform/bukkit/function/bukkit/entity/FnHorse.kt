@@ -19,13 +19,13 @@ object FnHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Horse::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Horse.Color) }
-                .function("style", returnsObject().noParams()) { it.target?.style }
-                .function("setStyle", returnsObject().params(Type.OBJECT)) { it.target?.setStyle(it.getRef(0) as Horse.Style) }
-                .function("isCarryingChest", returns(Type.Z).noParams()) { it.target?.isCarryingChest }
-                .function("setCarryingChest", returnsObject().params(Type.OBJECT)) { it.target?.setCarryingChest(it.getBool(0)) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as Horse.Color)) }
+                .function("style", returnsObject().noParams()) { it.setReturnRef(it.target?.style) }
+                .function("setStyle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStyle(it.getRef(0) as Horse.Style)) }
+                .function("isCarryingChest", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCarryingChest) }
+                .function("setCarryingChest", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarryingChest(it.getBool(0))) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

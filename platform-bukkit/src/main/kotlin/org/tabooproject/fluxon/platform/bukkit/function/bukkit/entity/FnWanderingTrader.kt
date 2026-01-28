@@ -18,8 +18,8 @@ object FnWanderingTrader {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WanderingTrader::class.java)
-                .function("despawnDelay", returnsObject().noParams()) { it.target?.despawnDelay }
-                .function("setDespawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDespawnDelay(it.getInt(0).toInt()) }
+                .function("despawnDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.despawnDelay) }
+                .function("setDespawnDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDespawnDelay(it.getInt(0).toInt())) }
         }
     }
 }

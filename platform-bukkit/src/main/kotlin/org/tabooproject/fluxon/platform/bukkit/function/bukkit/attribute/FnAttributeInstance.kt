@@ -19,14 +19,14 @@ object FnAttributeInstance {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AttributeInstance::class.java)
-                .function("attribute", returnsObject().noParams()) { it.target?.attribute }
-                .function("baseValue", returnsObject().noParams()) { it.target?.baseValue }
-                .function("setBaseValue", returnsObject().params(Type.OBJECT)) { it.target?.setBaseValue(it.getAsDouble(0)) }
-                .function("modifiers", returnsObject().noParams()) { it.target?.modifiers }
-                .function("addModifier", returnsObject().params(Type.OBJECT)) { it.target?.addModifier(it.getRef(0) as AttributeModifier) }
-                .function("removeModifier", returnsObject().params(Type.OBJECT)) { it.target?.removeModifier(it.getRef(0) as AttributeModifier) }
-                .function("value", returnsObject().noParams()) { it.target?.value }
-                .function("defaultValue", returnsObject().noParams()) { it.target?.defaultValue }
+                .function("attribute", returnsObject().noParams()) { it.setReturnRef(it.target?.attribute) }
+                .function("baseValue", returnsObject().noParams()) { it.setReturnRef(it.target?.baseValue) }
+                .function("setBaseValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBaseValue(it.getAsDouble(0))) }
+                .function("modifiers", returnsObject().noParams()) { it.setReturnRef(it.target?.modifiers) }
+                .function("addModifier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addModifier(it.getRef(0) as AttributeModifier)) }
+                .function("removeModifier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeModifier(it.getRef(0) as AttributeModifier)) }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
+                .function("defaultValue", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultValue) }
         }
     }
 }

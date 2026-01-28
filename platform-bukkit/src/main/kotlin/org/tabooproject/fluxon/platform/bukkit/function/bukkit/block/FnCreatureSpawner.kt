@@ -22,28 +22,28 @@ object FnCreatureSpawner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CreatureSpawner::class.java)
-                .function("spawnedType", returnsObject().noParams()) { it.target?.spawnedType }
-                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
-                .function("setCreatureTypeByName", returnsObject().params(Type.OBJECT)) { it.target?.setCreatureTypeByName(it.getString(0)) }
-                .function("creatureTypeName", returnsObject().noParams()) { it.target?.creatureTypeName }
-                .function("delay", returnsObject().noParams()) { it.target?.delay }
-                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
-                .function("minSpawnDelay", returnsObject().noParams()) { it.target?.minSpawnDelay }
-                .function("setMinSpawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setMinSpawnDelay(it.getInt(0).toInt()) }
-                .function("maxSpawnDelay", returnsObject().noParams()) { it.target?.maxSpawnDelay }
-                .function("setMaxSpawnDelay", returnsObject().params(Type.OBJECT)) { it.target?.setMaxSpawnDelay(it.getInt(0).toInt()) }
-                .function("spawnCount", returnsObject().noParams()) { it.target?.spawnCount }
-                .function("setSpawnCount", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnCount(it.getInt(0).toInt()) }
-                .function("maxNearbyEntities", returnsObject().noParams()) { it.target?.maxNearbyEntities }
-                .function("setMaxNearbyEntities", returnsObject().params(Type.OBJECT)) { it.target?.setMaxNearbyEntities(it.getInt(0).toInt()) }
-                .function("requiredPlayerRange", returnsObject().noParams()) { it.target?.requiredPlayerRange }
-                .function("setRequiredPlayerRange", returnsObject().params(Type.OBJECT)) { it.target?.setRequiredPlayerRange(it.getInt(0).toInt()) }
-                .function("spawnRange", returnsObject().noParams()) { it.target?.spawnRange }
-                .function("setSpawnRange", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnRange(it.getInt(0).toInt()) }
-                .function("spawnedEntity", returnsObject().noParams()) { it.target?.spawnedEntity }
-                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
+                .function("spawnedType", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedType) }
+                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnedType(it.getRef(0) as EntityType)) }
+                .function("setCreatureTypeByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCreatureTypeByName(it.getString(0))) }
+                .function("creatureTypeName", returnsObject().noParams()) { it.setReturnRef(it.target?.creatureTypeName) }
+                .function("delay", returnsObject().noParams()) { it.setReturnRef(it.target?.delay) }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDelay(it.getInt(0).toInt())) }
+                .function("minSpawnDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.minSpawnDelay) }
+                .function("setMinSpawnDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMinSpawnDelay(it.getInt(0).toInt())) }
+                .function("maxSpawnDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.maxSpawnDelay) }
+                .function("setMaxSpawnDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxSpawnDelay(it.getInt(0).toInt())) }
+                .function("spawnCount", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnCount) }
+                .function("setSpawnCount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnCount(it.getInt(0).toInt())) }
+                .function("maxNearbyEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.maxNearbyEntities) }
+                .function("setMaxNearbyEntities", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxNearbyEntities(it.getInt(0).toInt())) }
+                .function("requiredPlayerRange", returnsObject().noParams()) { it.setReturnRef(it.target?.requiredPlayerRange) }
+                .function("setRequiredPlayerRange", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRequiredPlayerRange(it.getInt(0).toInt())) }
+                .function("spawnRange", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnRange) }
+                .function("setSpawnRange", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnRange(it.getInt(0).toInt())) }
+                .function("spawnedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedEntity) }
+                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot)) }
                 .function("addPotentialSpawn", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.addPotentialSpawn(it.getRef(0) as SpawnerEntry)
                     } else {
                         it.target?.addPotentialSpawn(
@@ -51,10 +51,10 @@ object FnCreatureSpawner {
                             it.getInt(1).toInt(),
                             it.getRef(2) as SpawnRule
                         )
-                    }
+                    })
                 }
                 .function("addPotentialSpawn", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.addPotentialSpawn(it.getRef(0) as SpawnerEntry)
                     } else {
                         it.target?.addPotentialSpawn(
@@ -62,10 +62,10 @@ object FnCreatureSpawner {
                             it.getInt(1).toInt(),
                             it.getRef(2) as SpawnRule
                         )
-                    }
+                    })
                 }
-                .function("setPotentialSpawns", returnsObject().params(Type.OBJECT)) { it.target?.setPotentialSpawns(it.getRef(0) as Collection<SpawnerEntry>) }
-                .function("potentialSpawns", returnsObject().noParams()) { it.target?.potentialSpawns }
+                .function("setPotentialSpawns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPotentialSpawns(it.getRef(0) as Collection<SpawnerEntry>)) }
+                .function("potentialSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.potentialSpawns) }
         }
     }
 }

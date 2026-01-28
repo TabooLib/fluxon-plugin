@@ -18,7 +18,7 @@ object FnEntityBreakDoorEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBreakDoorEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
         }
     }
 }

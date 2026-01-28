@@ -19,8 +19,8 @@ object FnDaylightDetector {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DaylightDetector::class.java)
-                .function("isInverted", returns(Type.Z).noParams()) { it.target?.isInverted }
-                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.target?.setInverted(it.getBool(0)) }
+                .function("isInverted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInverted) }
+                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInverted(it.getBool(0))) }
         }
     }
 }

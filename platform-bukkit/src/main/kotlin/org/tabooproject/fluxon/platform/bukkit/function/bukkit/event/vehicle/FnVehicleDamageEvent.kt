@@ -19,14 +19,14 @@ object FnVehicleDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleDamageEvent::class.java)
-                .function("attacker", returnsObject().noParams()) { it.target?.attacker }
-                .function("damage", returnsObject().noParams()) { it.target?.damage }
-                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getAsDouble(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("attacker", returnsObject().noParams()) { it.setReturnRef(it.target?.attacker) }
+                .function("damage", returnsObject().noParams()) { it.setReturnRef(it.target?.damage) }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDamage(it.getAsDouble(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleDamageEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleDamageEvent.getHandlerList()) }
         }
     }
 }

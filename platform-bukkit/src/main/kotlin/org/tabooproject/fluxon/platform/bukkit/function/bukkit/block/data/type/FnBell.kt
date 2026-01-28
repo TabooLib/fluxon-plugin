@@ -18,8 +18,8 @@ object FnBell {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bell::class.java)
-                .function("attachment", returnsObject().noParams()) { it.target?.attachment }
-                .function("setAttachment", returnsObject().params(Type.OBJECT)) { it.target?.setAttachment(it.getRef(0) as Bell.Attachment) }
+                .function("attachment", returnsObject().noParams()) { it.setReturnRef(it.target?.attachment) }
+                .function("setAttachment", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAttachment(it.getRef(0) as Bell.Attachment)) }
         }
     }
 }

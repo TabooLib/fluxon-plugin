@@ -19,11 +19,11 @@ object FnBlockExpEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExpEvent::class.java)
-                .function("expToDrop", returnsObject().noParams()) { it.target?.expToDrop }
-                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.target?.setExpToDrop(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("expToDrop", returnsObject().noParams()) { it.setReturnRef(it.target?.expToDrop) }
+                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExpToDrop(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockExpEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockExpEvent.getHandlerList()) }
         }
     }
 }

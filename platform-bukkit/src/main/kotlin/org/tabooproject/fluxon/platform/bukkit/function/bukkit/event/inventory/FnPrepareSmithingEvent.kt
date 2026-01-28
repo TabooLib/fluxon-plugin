@@ -18,10 +18,10 @@ object FnPrepareSmithingEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareSmithingEvent::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PrepareSmithingEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PrepareSmithingEvent.getHandlerList()) }
         }
     }
 }

@@ -23,13 +23,13 @@ object FnBanList {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanList::class.java)
                 .function("getBanEntry", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.getBanEntry(var1)
                         else -> (it.target as? BanList<Any>)?.getBanEntry(var1!!)
-                    }
+                    })
                 }
                 .function("addBan", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.addBan(
                             var1,
                             it.getString(1),
@@ -61,21 +61,21 @@ object FnBanList {
 
                             else -> throw IllegalArgumentException("参数 3 必须是 Date, Instant, 或 Duration 类型")
                         }
-                    }
+                    })
                 }
-                .function("banEntries", returnsObject().noParams()) { it.target?.banEntries }
-                .function("entries", returnsObject().noParams()) { it.target?.getEntries() }
+                .function("banEntries", returnsObject().noParams()) { it.setReturnRef(it.target?.banEntries) }
+                .function("entries", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntries()) }
                 .function("isBanned", returns(Type.Z).params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isBanned(var1)
                         else -> (it.target as? BanList<Any>)?.isBanned(var1!!)
-                    }
+                    })
                 }
                 .function("pardon", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.pardon(var1)
                         else -> (it.target as? BanList<Any>)?.pardon(var1!!)
-                    }
+                    })
                 }
         }
     }

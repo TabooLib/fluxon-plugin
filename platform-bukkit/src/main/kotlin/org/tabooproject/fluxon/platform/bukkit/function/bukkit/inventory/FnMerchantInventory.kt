@@ -18,9 +18,9 @@ object FnMerchantInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MerchantInventory::class.java)
-                .function("selectedRecipeIndex", returnsObject().noParams()) { it.target?.selectedRecipeIndex }
-                .function("selectedRecipe", returnsObject().noParams()) { it.target?.selectedRecipe }
-                .function("merchant", returnsObject().noParams()) { it.target?.merchant }
+                .function("selectedRecipeIndex", returnsObject().noParams()) { it.setReturnRef(it.target?.selectedRecipeIndex) }
+                .function("selectedRecipe", returnsObject().noParams()) { it.setReturnRef(it.target?.selectedRecipe) }
+                .function("merchant", returnsObject().noParams()) { it.setReturnRef(it.target?.merchant) }
         }
     }
 }

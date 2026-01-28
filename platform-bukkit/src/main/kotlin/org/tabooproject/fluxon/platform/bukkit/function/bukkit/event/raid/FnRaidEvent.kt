@@ -18,7 +18,7 @@ object FnRaidEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidEvent::class.java)
-                .function("raid", returnsObject().noParams()) { it.target?.raid }
+                .function("raid", returnsObject().noParams()) { it.setReturnRef(it.target?.raid) }
         }
     }
 }

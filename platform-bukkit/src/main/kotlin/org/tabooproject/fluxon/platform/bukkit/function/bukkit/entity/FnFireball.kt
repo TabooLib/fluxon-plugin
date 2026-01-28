@@ -19,10 +19,10 @@ object FnFireball {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fireball::class.java)
-                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.target?.setDirection(it.getRef(0) as Vector) }
-                .function("direction", returnsObject().noParams()) { it.target?.direction }
-                .function("setAcceleration", returnsObject().params(Type.OBJECT)) { it.target?.setAcceleration(it.getRef(0) as Vector) }
-                .function("acceleration", returnsObject().noParams()) { it.target?.acceleration }
+                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDirection(it.getRef(0) as Vector)) }
+                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("setAcceleration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAcceleration(it.getRef(0) as Vector)) }
+                .function("acceleration", returnsObject().noParams()) { it.setReturnRef(it.target?.acceleration) }
         }
     }
 }

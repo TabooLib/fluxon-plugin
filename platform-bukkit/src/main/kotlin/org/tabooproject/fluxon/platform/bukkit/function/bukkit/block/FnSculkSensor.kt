@@ -18,11 +18,11 @@ object FnSculkSensor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkSensor::class.java)
-                .function("lastVibrationFrequency", returnsObject().noParams()) { it.target?.lastVibrationFrequency }
+                .function("lastVibrationFrequency", returnsObject().noParams()) { it.setReturnRef(it.target?.lastVibrationFrequency) }
                 .function("setLastVibrationFrequency", returnsObject().params(Type.OBJECT)) {
-                    it.target?.setLastVibrationFrequency(
+                    it.setReturnRef(it.target?.setLastVibrationFrequency(
                         it.getInt(0).toInt()
-                    )
+                    ))
                 }
         }
     }

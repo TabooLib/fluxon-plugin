@@ -18,11 +18,11 @@ object FnPlayerLevelChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerLevelChangeEvent::class.java)
-                .function("oldLevel", returnsObject().noParams()) { it.target?.oldLevel }
-                .function("newLevel", returnsObject().noParams()) { it.target?.newLevel }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("oldLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.oldLevel) }
+                .function("newLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.newLevel) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerLevelChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerLevelChangeEvent.getHandlerList()) }
         }
     }
 }

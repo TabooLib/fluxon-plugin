@@ -20,7 +20,7 @@ object FnGenericCommandHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericCommandHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.target?.canSee(it.getRef(0) as CommandSender) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canSee(it.getRef(0) as CommandSender)) }
         }
     }
 }

@@ -20,10 +20,10 @@ object FnTree {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tree::class.java)
-                .function("direction", returnsObject().noParams()) { it.target?.direction }
-                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.target?.setDirection(it.getRef(0) as BlockFace) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("setDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDirection(it.getRef(0) as BlockFace)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

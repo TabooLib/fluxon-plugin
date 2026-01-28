@@ -19,7 +19,7 @@ object FnRedstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Redstone::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
         }
     }
 }

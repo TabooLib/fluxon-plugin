@@ -18,9 +18,9 @@ object FnLevelled {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Levelled::class.java)
-                .function("level", returnsObject().noParams()) { it.target?.level }
-                .function("setLevel", returnsObject().params(Type.OBJECT)) { it.target?.setLevel(it.getInt(0).toInt()) }
-                .function("maximumLevel", returnsObject().noParams()) { it.target?.maximumLevel }
+                .function("level", returnsObject().noParams()) { it.setReturnRef(it.target?.level) }
+                .function("setLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLevel(it.getInt(0).toInt())) }
+                .function("maximumLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumLevel) }
         }
     }
 }

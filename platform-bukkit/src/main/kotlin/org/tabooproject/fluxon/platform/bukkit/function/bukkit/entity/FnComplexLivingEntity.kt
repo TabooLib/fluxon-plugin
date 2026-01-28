@@ -18,7 +18,7 @@ object FnComplexLivingEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ComplexLivingEntity::class.java)
-                .function("parts", returnsObject().noParams()) { it.target?.parts }
+                .function("parts", returnsObject().noParams()) { it.setReturnRef(it.target?.parts) }
         }
     }
 }

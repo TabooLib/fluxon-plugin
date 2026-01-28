@@ -19,13 +19,13 @@ object FnScore {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Score::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("entry", returnsObject().noParams()) { it.target?.entry }
-                .function("objective", returnsObject().noParams()) { it.target?.objective }
-                .function("score", returnsObject().noParams()) { it.target?.score }
-                .function("setScore", returnsObject().params(Type.OBJECT)) { it.target?.setScore(it.getInt(0).toInt()) }
-                .function("isScoreSet", returns(Type.Z).noParams()) { it.target?.isScoreSet }
-                .function("scoreboard", returnsObject().noParams()) { it.target?.scoreboard }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("entry", returnsObject().noParams()) { it.setReturnRef(it.target?.entry) }
+                .function("objective", returnsObject().noParams()) { it.setReturnRef(it.target?.objective) }
+                .function("score", returnsObject().noParams()) { it.setReturnRef(it.target?.score) }
+                .function("setScore", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setScore(it.getInt(0).toInt())) }
+                .function("isScoreSet", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isScoreSet) }
+                .function("scoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.scoreboard) }
         }
     }
 }

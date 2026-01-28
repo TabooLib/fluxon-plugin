@@ -21,15 +21,15 @@ object FnNotePlayEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NotePlayEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
-                .function("note", returnsObject().noParams()) { it.target?.note }
-                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as Instrument) }
-                .function("setNote", returnsObject().params(Type.OBJECT)) { it.target?.setNote(it.getRef(0) as Note) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("instrument", returnsObject().noParams()) { it.setReturnRef(it.target?.instrument) }
+                .function("note", returnsObject().noParams()) { it.setReturnRef(it.target?.note) }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInstrument(it.getRef(0) as Instrument)) }
+                .function("setNote", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNote(it.getRef(0) as Note)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { NotePlayEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(NotePlayEvent.getHandlerList()) }
         }
     }
 }

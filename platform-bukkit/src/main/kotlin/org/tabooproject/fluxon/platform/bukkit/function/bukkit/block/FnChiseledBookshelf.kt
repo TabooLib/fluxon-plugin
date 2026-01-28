@@ -19,11 +19,11 @@ object FnChiseledBookshelf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
-                .function("lastInteractedSlot", returnsObject().noParams()) { it.target?.lastInteractedSlot }
-                .function("setLastInteractedSlot", returnsObject().params(Type.OBJECT)) { it.target?.setLastInteractedSlot(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
-                .function("getSlot", returnsObject().params(Type.OBJECT)) { it.target?.getSlot(it.getRef(0) as Vector) }
+                .function("lastInteractedSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.lastInteractedSlot) }
+                .function("setLastInteractedSlot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLastInteractedSlot(it.getInt(0).toInt())) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
+                .function("getSlot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getSlot(it.getRef(0) as Vector)) }
         }
     }
 }

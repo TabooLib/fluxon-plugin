@@ -20,11 +20,11 @@ object FnSpawnEggMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnEggMeta::class.java)
-                .function("spawnedType", returnsObject().noParams()) { it.target?.spawnedType }
-                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
-                .function("spawnedEntity", returnsObject().noParams()) { it.target?.spawnedEntity }
-                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("spawnedType", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedType) }
+                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnedType(it.getRef(0) as EntityType)) }
+                .function("spawnedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedEntity) }
+                .function("setSpawnedEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot)) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

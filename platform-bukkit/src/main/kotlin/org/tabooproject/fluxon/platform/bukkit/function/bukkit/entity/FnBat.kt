@@ -19,8 +19,8 @@ object FnBat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bat::class.java)
-                .function("isAwake", returns(Type.Z).noParams()) { it.target?.isAwake }
-                .function("setAwake", returnsObject().params(Type.OBJECT)) { it.target?.setAwake(it.getBool(0)) }
+                .function("isAwake", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAwake) }
+                .function("setAwake", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAwake(it.getBool(0))) }
         }
     }
 }

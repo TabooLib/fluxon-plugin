@@ -19,9 +19,9 @@ object FnLeatherArmorMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LeatherArmorMeta::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as Color)) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -18,11 +18,11 @@ object FnBrewingStartEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStartEvent::class.java)
-                .function("totalBrewTime", returnsObject().noParams()) { it.target?.totalBrewTime }
-                .function("setTotalBrewTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalBrewTime(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("totalBrewTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalBrewTime) }
+                .function("setTotalBrewTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTotalBrewTime(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BrewingStartEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BrewingStartEvent.getHandlerList()) }
         }
     }
 }

@@ -27,13 +27,9 @@ object FunctionEntityInstance {
                     it.target?.respawn()
                 }
                 // 属性
-                .function("location", returnsObject().noParams()) {
-                    it.target?.getLocation()
-                }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.getLocation()) }
                 // 载具
-                .function("passengers", returns(Type.LIST).noParams()) {
-                    it.target?.getPassengers()
-                }
+                .function("passengers", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.getPassengers()) }
                 .function("refreshPassenger", returnsVoid().noParams()) {
                     it.target?.refreshPassenger()
                 }
@@ -54,53 +50,35 @@ object FunctionEntityInstance {
                         it.target?.removePersistentTag(it.getString(0)!!)
                     }
                 }
-                .function("hasTag", returns(Type.Z).params(Type.STRING)) {
-                    it.target?.hasTag(it.getString(0)!!)
-                }
-                .function("hasPersistentTag", returns(Type.Z).params(Type.STRING)) {
-                    it.target?.hasPersistentTag(it.getString(0)!!)
-                }
-                .function("getTag", returnsObject().params(Type.STRING)) {
-                    it.target?.getTag(it.getString(0)!!)
-                }
+                .function("hasTag", returns(Type.Z).params(Type.STRING)) { it.setReturnRef(it.target?.hasTag(it.getString(0)!!)) }
+                .function("hasPersistentTag", returns(Type.Z).params(Type.STRING)) { it.setReturnRef(it.target?.hasPersistentTag(it.getString(0)!!)) }
+                .function("getTag", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getTag(it.getString(0)!!)) }
                 .function("consumeTag", returnsObject().params(Type.STRING)) {
                     val id = it.getString(0)!!
                     val find = it.target?.getTag(id)
                     it.target?.removeTag(id)
-                    find
-                }
-                .function("getPersistentTag", returns(Type.STRING).params(Type.STRING)) {
-                    it.target?.getPersistentTag(it.getString(0)!!)
-                }
+                    it.setReturnRef(find)}
+                .function("getPersistentTag", returns(Type.STRING).params(Type.STRING)) { it.setReturnRef(it.target?.getPersistentTag(it.getString(0)!!)) }
                 .function("consumePersistentTag", returns(Type.STRING).params(Type.STRING)) {
                     val id = it.getString(0)!!
                     val find = it.target?.getPersistentTag(id)
                     it.target?.removePersistentTag(id)
-                    find
-                }
-                .function("tags", returns(Type.MAP).noParams()) {
-                    it.target?.getTags()
-                }
-                .function("persistentTags", returns(Type.MAP).noParams()) {
-                    it.target?.getPersistentTags()
-                }
+                    it.setReturnRef(find)}
+                .function("tags", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.getTags()) }
+                .function("persistentTags", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.getPersistentTags()) }
                 // 模型
                 .function("modelEngineName", returns(Type.STRING).noParams()) {
                     val target = it.target as ModelEngine
-                    target.modelEngineName
-                }
+                    it.setReturnRef(target.modelEngineName)}
                 .function("modelEngineUniqueId", returnsObject().noParams()) {
                     val target = it.target as ModelEngine
-                    target.modelEngineUniqueId
-                }
+                    it.setReturnRef(target.modelEngineUniqueId)}
                 .function("refreshModelEngine", returnsVoid().noParams()) {
                     val target = it.target as ModelEngine
                     target.refreshModelEngine()
                 }
                 // 管理器
-                .function("manager", returnsObject().noParams()) {
-                    it.target?.manager
-                }
+                .function("manager", returnsObject().noParams()) { it.setReturnRef(it.target?.manager) }
         }
     }
 }

@@ -20,11 +20,11 @@ object FnPluginMessageListener {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageListener::class.java)
                 .function("onPluginMessageReceived", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.onPluginMessageReceived(
+                    it.setReturnRef(it.target?.onPluginMessageReceived(
                         it.getString(0)!!,
                         it.getRef(1) as Player,
                         it.getRef(2) as ByteArray
-                    )
+                    ))
                 }
         }
     }

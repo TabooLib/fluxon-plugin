@@ -18,8 +18,8 @@ object FnBiomeSearchResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeSearchResult::class.java)
-                .function("biome", returnsObject().noParams()) { it.target?.biome }
-                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("biome", returnsObject().noParams()) { it.setReturnRef(it.target?.biome) }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
         }
     }
 }

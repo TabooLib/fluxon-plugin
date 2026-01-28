@@ -19,12 +19,12 @@ object FnCrafter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
-                .function("isCrafting", returns(Type.Z).noParams()) { it.target?.isCrafting }
-                .function("setCrafting", returnsObject().params(Type.OBJECT)) { it.target?.setCrafting(it.getBool(0)) }
-                .function("isTriggered", returns(Type.Z).noParams()) { it.target?.isTriggered }
-                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.target?.setTriggered(it.getBool(0)) }
-                .function("orientation", returnsObject().noParams()) { it.target?.orientation }
-                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.target?.setOrientation(it.getRef(0) as Crafter.Orientation) }
+                .function("isCrafting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCrafting) }
+                .function("setCrafting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCrafting(it.getBool(0))) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTriggered) }
+                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTriggered(it.getBool(0))) }
+                .function("orientation", returnsObject().noParams()) { it.setReturnRef(it.target?.orientation) }
+                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOrientation(it.getRef(0) as Crafter.Orientation)) }
         }
     }
 }

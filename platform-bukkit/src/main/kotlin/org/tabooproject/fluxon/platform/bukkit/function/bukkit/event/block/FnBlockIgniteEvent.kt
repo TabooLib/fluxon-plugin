@@ -19,15 +19,15 @@ object FnBlockIgniteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockIgniteEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("ignitingEntity", returnsObject().noParams()) { it.target?.ignitingEntity }
-                .function("ignitingBlock", returnsObject().noParams()) { it.target?.ignitingBlock }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("ignitingEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.ignitingEntity) }
+                .function("ignitingBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.ignitingBlock) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockIgniteEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockIgniteEvent.getHandlerList()) }
         }
     }
 }

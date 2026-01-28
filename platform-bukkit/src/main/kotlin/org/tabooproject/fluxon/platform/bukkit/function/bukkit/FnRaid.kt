@@ -19,18 +19,18 @@ object FnRaid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Raid::class.java)
-                .function("isStarted", returns(Type.Z).noParams()) { it.target?.isStarted }
-                .function("activeTicks", returnsObject().noParams()) { it.target?.activeTicks }
-                .function("badOmenLevel", returnsObject().noParams()) { it.target?.badOmenLevel }
-                .function("setBadOmenLevel", returnsObject().params(Type.OBJECT)) { it.target?.setBadOmenLevel(it.getInt(0).toInt()) }
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("status", returnsObject().noParams()) { it.target?.status }
-                .function("spawnedGroups", returnsObject().noParams()) { it.target?.spawnedGroups }
-                .function("totalGroups", returnsObject().noParams()) { it.target?.totalGroups }
-                .function("totalWaves", returnsObject().noParams()) { it.target?.totalWaves }
-                .function("totalHealth", returnsObject().noParams()) { it.target?.totalHealth }
-                .function("heroes", returnsObject().noParams()) { it.target?.heroes }
-                .function("raiders", returnsObject().noParams()) { it.target?.raiders }
+                .function("isStarted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isStarted) }
+                .function("activeTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.activeTicks) }
+                .function("badOmenLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.badOmenLevel) }
+                .function("setBadOmenLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBadOmenLevel(it.getInt(0).toInt())) }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("status", returnsObject().noParams()) { it.setReturnRef(it.target?.status) }
+                .function("spawnedGroups", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedGroups) }
+                .function("totalGroups", returnsObject().noParams()) { it.setReturnRef(it.target?.totalGroups) }
+                .function("totalWaves", returnsObject().noParams()) { it.setReturnRef(it.target?.totalWaves) }
+                .function("totalHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.totalHealth) }
+                .function("heroes", returnsObject().noParams()) { it.setReturnRef(it.target?.heroes) }
+                .function("raiders", returnsObject().noParams()) { it.setReturnRef(it.target?.raiders) }
         }
     }
 }

@@ -19,15 +19,15 @@ object FnAsyncStructureSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncStructureSpawnEvent::class.java)
-                .function("structure", returnsObject().noParams()) { it.target?.structure }
-                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
-                .function("chunkX", returnsObject().noParams()) { it.target?.chunkX }
-                .function("chunkZ", returnsObject().noParams()) { it.target?.chunkZ }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("structure", returnsObject().noParams()) { it.setReturnRef(it.target?.structure) }
+                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
+                .function("chunkX", returnsObject().noParams()) { it.setReturnRef(it.target?.chunkX) }
+                .function("chunkZ", returnsObject().noParams()) { it.setReturnRef(it.target?.chunkZ) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { AsyncStructureSpawnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncStructureSpawnEvent.getHandlerList()) }
         }
     }
 }

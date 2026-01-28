@@ -19,8 +19,8 @@ object FnLlamaInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LlamaInventory::class.java)
-                .function("decor", returnsObject().noParams()) { it.target?.decor }
-                .function("setDecor", returnsObject().params(Type.OBJECT)) { it.target?.setDecor(it.getRef(0) as ItemStack) }
+                .function("decor", returnsObject().noParams()) { it.setReturnRef(it.target?.decor) }
+                .function("setDecor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDecor(it.getRef(0) as ItemStack)) }
         }
     }
 }

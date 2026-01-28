@@ -21,11 +21,9 @@ object FnShapedRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShapedRecipe::class.java)
-                .function("shape", returnsObject().noParams()) {
-                    it.target?.shape
-                }
+                .function("shape", returnsObject().noParams()) { it.setReturnRef(it.target?.shape) }
                 .function("setIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         when (val var2 = it.getRef(1)) {
                             is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
@@ -38,10 +36,10 @@ object FnShapedRecipe {
                             it.getRef(1) as Material,
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("setIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         when (val var2 = it.getRef(1)) {
                             is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
                             is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
@@ -54,7 +52,7 @@ object FnShapedRecipe {
                             it.getRef(1) as Material,
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
         }
     }

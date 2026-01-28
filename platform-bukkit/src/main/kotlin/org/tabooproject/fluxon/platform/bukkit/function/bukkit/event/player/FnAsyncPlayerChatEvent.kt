@@ -19,16 +19,16 @@ object FnAsyncPlayerChatEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncPlayerChatEvent::class.java)
-                .function("message", returnsObject().noParams()) { it.target?.message }
-                .function("setMessage", returnsObject().params(Type.OBJECT)) { it.target?.setMessage(it.getString(0)!!) }
-                .function("format", returnsObject().noParams()) { it.target?.format }
-                .function("setFormat", returnsObject().params(Type.OBJECT)) { it.target?.setFormat(it.getString(0)!!) }
-                .function("recipients", returnsObject().noParams()) { it.target?.recipients }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("message", returnsObject().noParams()) { it.setReturnRef(it.target?.message) }
+                .function("setMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMessage(it.getString(0)!!)) }
+                .function("format", returnsObject().noParams()) { it.setReturnRef(it.target?.format) }
+                .function("setFormat", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFormat(it.getString(0)!!)) }
+                .function("recipients", returnsObject().noParams()) { it.setReturnRef(it.target?.recipients) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { AsyncPlayerChatEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncPlayerChatEvent.getHandlerList()) }
         }
     }
 }

@@ -28,7 +28,7 @@ object FunctionListener {
             registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -39,13 +39,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenBukkit - 3 参数 (class, priority/ignoreCancelled, fn)
             registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -58,13 +58,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenBukkit - 4 参数 (class, priority, ignoreCancelled, fn)
             registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.Z, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -77,13 +77,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenBungee - 2 参数
             registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -94,13 +94,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenBungee - 3 参数
             registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -114,13 +114,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenBungee - 4 参数
             registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.I, Type.Z, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -133,13 +133,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenVelocity - 2 参数
             registerFunction("listenVelocity", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -150,13 +150,13 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
             // listenVelocity - 3 参数
             registerFunction("listenVelocity", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
-                if (script == null) {
+                it.setReturnRef(if (script == null) {
                     warning("无法注册监听器：没有找到脚本环境。")
                     null
                 } else {
@@ -168,7 +168,7 @@ object FunctionListener {
                             fn.invokeInline(env, 1, event, null, null, null, event)
                         }.registerResource(script)
                     }
-                }
+                })
             }
         }
     }

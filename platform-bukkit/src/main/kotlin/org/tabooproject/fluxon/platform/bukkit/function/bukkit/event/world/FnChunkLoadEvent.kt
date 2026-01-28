@@ -19,10 +19,10 @@ object FnChunkLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkLoadEvent::class.java)
-                .function("isNewChunk", returns(Type.Z).noParams()) { it.target?.isNewChunk }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isNewChunk", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isNewChunk) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ChunkLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkLoadEvent.getHandlerList()) }
         }
     }
 }

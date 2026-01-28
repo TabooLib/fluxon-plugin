@@ -20,17 +20,17 @@ object FnPersistentDataContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataContainer::class.java)
-                .function("has", returnsObject().params(Type.OBJECT)) { it.target?.has(it.getRef(0) as NamespacedKey) }
-                .function("keys", returnsObject().noParams()) { it.target?.keys }
-                .function("remove", returnsObject().params(Type.OBJECT)) { it.target?.remove(it.getRef(0) as NamespacedKey) }
-                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
+                .function("has", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.has(it.getRef(0) as NamespacedKey)) }
+                .function("keys", returnsObject().noParams()) { it.setReturnRef(it.target?.keys) }
+                .function("remove", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.remove(it.getRef(0) as NamespacedKey)) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
                 .function("copyTo", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.copyTo(
+                    it.setReturnRef(it.target?.copyTo(
                         it.getRef(0) as PersistentDataContainer,
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("adapterContext", returnsObject().noParams()) { it.target?.adapterContext }
+                .function("adapterContext", returnsObject().noParams()) { it.setReturnRef(it.target?.adapterContext) }
         }
     }
 }

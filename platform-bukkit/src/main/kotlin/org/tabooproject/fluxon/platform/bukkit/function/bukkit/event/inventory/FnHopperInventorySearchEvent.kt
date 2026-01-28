@@ -19,13 +19,13 @@ object FnHopperInventorySearchEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HopperInventorySearchEvent::class.java)
-                .function("setInventory", returnsObject().params(Type.OBJECT)) { it.target?.setInventory(it.getRef(0) as Inventory) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("containerType", returnsObject().noParams()) { it.target?.containerType }
-                .function("searchBlock", returnsObject().noParams()) { it.target?.searchBlock }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("setInventory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInventory(it.getRef(0) as Inventory)) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("containerType", returnsObject().noParams()) { it.setReturnRef(it.target?.containerType) }
+                .function("searchBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.searchBlock) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { HopperInventorySearchEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(HopperInventorySearchEvent.getHandlerList()) }
         }
     }
 }

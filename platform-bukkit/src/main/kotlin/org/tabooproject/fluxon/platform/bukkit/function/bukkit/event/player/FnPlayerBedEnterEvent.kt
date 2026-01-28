@@ -20,14 +20,14 @@ object FnPlayerBedEnterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBedEnterEvent::class.java)
-                .function("bedEnterResult", returnsObject().noParams()) { it.target?.bedEnterResult }
-                .function("setUseBed", returnsObject().params(Type.OBJECT)) { it.target?.setUseBed(it.getRef(0) as Event.Result) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("bed", returnsObject().noParams()) { it.target?.bed }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("bedEnterResult", returnsObject().noParams()) { it.setReturnRef(it.target?.bedEnterResult) }
+                .function("setUseBed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setUseBed(it.getRef(0) as Event.Result)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("bed", returnsObject().noParams()) { it.setReturnRef(it.target?.bed) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerBedEnterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerBedEnterEvent.getHandlerList()) }
         }
     }
 }

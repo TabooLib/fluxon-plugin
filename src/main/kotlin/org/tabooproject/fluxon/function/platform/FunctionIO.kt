@@ -15,9 +15,9 @@ object FunctionIO {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("isPrimaryThread", returns(Type.Z).noParams()) { isPrimaryThread }
-            registerFunction("server", returnsObject().noParams()) { server() }
-            registerFunction("dataFolder", returns(Type.FILE).noParams()) { getDataFolder() }
+            registerFunction("isPrimaryThread", returns(Type.Z).noParams()) { it.setReturnBool(isPrimaryThread) }
+            registerFunction("server", returnsObject().noParams()) { it.setReturnRef(server()) }
+            registerFunction("dataFolder", returns(Type.FILE).noParams()) { it.setReturnRef(getDataFolder()) }
         }
     }
 }

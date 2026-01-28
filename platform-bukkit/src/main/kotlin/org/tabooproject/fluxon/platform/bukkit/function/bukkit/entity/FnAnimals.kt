@@ -22,17 +22,17 @@ object FnAnimals {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Animals::class.java)
-                .function("breedCause", returnsObject().noParams()) { it.target?.breedCause }
-                .function("setBreedCause", returnsObject().params(Type.OBJECT)) { it.target?.setBreedCause(UUID.fromString(it.getString(0))) }
-                .function("isLoveMode", returns(Type.Z).noParams()) { it.target?.isLoveMode }
-                .function("loveModeTicks", returnsObject().noParams()) { it.target?.loveModeTicks }
-                .function("setLoveModeTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLoveModeTicks(it.getInt(0).toInt()) }
+                .function("breedCause", returnsObject().noParams()) { it.setReturnRef(it.target?.breedCause) }
+                .function("setBreedCause", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBreedCause(UUID.fromString(it.getString(0)))) }
+                .function("isLoveMode", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLoveMode) }
+                .function("loveModeTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.loveModeTicks) }
+                .function("setLoveModeTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLoveModeTicks(it.getInt(0).toInt())) }
                 .function("isBreedItem", returns(Type.Z).params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is ItemStack -> it.target?.isBreedItem(var1)
                         is Material -> it.target?.isBreedItem(var1)
                         else -> throw IllegalArgumentException("参数必须是 ItemStack 或 Material 类型")
-                    }
+                    })
                 }
         }
     }

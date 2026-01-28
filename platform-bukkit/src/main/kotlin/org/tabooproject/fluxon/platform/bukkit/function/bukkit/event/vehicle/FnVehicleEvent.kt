@@ -18,7 +18,7 @@ object FnVehicleEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleEvent::class.java)
-                .function("vehicle", returnsObject().noParams()) { it.target?.getVehicle() }
+                .function("vehicle", returnsObject().noParams()) { it.setReturnRef(it.target?.getVehicle()) }
         }
     }
 }

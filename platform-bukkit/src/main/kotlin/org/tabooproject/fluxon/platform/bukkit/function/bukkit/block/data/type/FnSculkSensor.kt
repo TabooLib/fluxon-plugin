@@ -18,8 +18,8 @@ object FnSculkSensor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkSensor::class.java)
-                .function("phase", returnsObject().noParams()) { it.target?.phase }
-                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.target?.setPhase(it.getRef(0) as SculkSensor.Phase) }
+                .function("phase", returnsObject().noParams()) { it.setReturnRef(it.target?.phase) }
+                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPhase(it.getRef(0) as SculkSensor.Phase)) }
         }
     }
 }

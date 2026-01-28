@@ -20,40 +20,40 @@ object FnNumberConversions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NumberConversions::class.java)
                 // static
-                .function("floor", returnsObject().params(Type.OBJECT)) { NumberConversions.floor(it.getAsDouble(0)) }
+                .function("floor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.floor(it.getAsDouble(0))) }
                 // static
-                .function("ceil", returnsObject().params(Type.OBJECT)) { NumberConversions.ceil(it.getAsDouble(0)) }
+                .function("ceil", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.ceil(it.getAsDouble(0))) }
                 // static
-                .function("round", returnsObject().params(Type.OBJECT)) { NumberConversions.round(it.getAsDouble(0)) }
+                .function("round", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.round(it.getAsDouble(0))) }
                 // static
-                .function("square", returnsObject().params(Type.OBJECT)) { NumberConversions.square(it.getAsDouble(0)) }
+                .function("square", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.square(it.getAsDouble(0))) }
                 // static
-                .function("toInt", returnsObject().params(Type.OBJECT)) { NumberConversions.toInt(it.getRef(0)) }
+                .function("toInt", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toInt(it.getRef(0))) }
                 // static
-                .function("toFloat", returnsObject().params(Type.OBJECT)) { NumberConversions.toFloat(it.getRef(0)) }
+                .function("toFloat", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toFloat(it.getRef(0))) }
                 // static
-                .function("toDouble", returnsObject().params(Type.OBJECT)) { NumberConversions.toDouble(it.getRef(0)) }
+                .function("toDouble", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toDouble(it.getRef(0))) }
                 // static
-                .function("toLong", returnsObject().params(Type.OBJECT)) { NumberConversions.toLong(it.getRef(0)) }
+                .function("toLong", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toLong(it.getRef(0))) }
                 // static
-                .function("toShort", returnsObject().params(Type.OBJECT)) { NumberConversions.toShort(it.getRef(0)) }
+                .function("toShort", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toShort(it.getRef(0))) }
                 // static
-                .function("toByte", returnsObject().params(Type.OBJECT)) { NumberConversions.toByte(it.getRef(0)) }
+                .function("toByte", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toByte(it.getRef(0))) }
                 // static
                 .function("isFinite", returns(Type.Z).params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Double -> NumberConversions.isFinite(var1)
                         is Float -> NumberConversions.isFinite(var1)
                         else -> throw IllegalArgumentException("参数必须是 Double 或 Float 类型")
-                    }
+                    })
                 }
                 // static
                 .function("checkFinite", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Double -> NumberConversions.checkFinite(var1, it.getString(1)!!)
                         is Float -> NumberConversions.checkFinite(var1, it.getString(1)!!)
                         else -> throw IllegalArgumentException("第一个参数必须是 Double 或 Float 类型")
-                    }
+                    })
                 }
         }
     }

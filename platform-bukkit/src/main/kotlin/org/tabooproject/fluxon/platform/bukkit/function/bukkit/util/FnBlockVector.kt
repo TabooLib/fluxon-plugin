@@ -19,11 +19,11 @@ object FnBlockVector {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockVector::class.java)
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
                 // static
-                .function("deserialize", returnsObject().params(Type.OBJECT)) { BlockVector.deserialize(it.getRef(0) as Map<String, Any>) }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(BlockVector.deserialize(it.getRef(0) as Map<String, Any>)) }
         }
     }
 }

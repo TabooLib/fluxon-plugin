@@ -20,11 +20,11 @@ object FnBlockBreakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockBreakEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("setDropItems", returnsObject().params(Type.OBJECT)) { it.target?.setDropItems(it.getBool(0)) }
-                .function("isDropItems", returns(Type.Z).noParams()) { it.target?.isDropItems }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("setDropItems", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDropItems(it.getBool(0))) }
+                .function("isDropItems", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDropItems) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
         }
     }
 }

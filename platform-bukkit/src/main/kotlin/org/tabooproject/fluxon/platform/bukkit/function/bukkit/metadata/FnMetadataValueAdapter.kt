@@ -18,15 +18,15 @@ object FnMetadataValueAdapter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MetadataValueAdapter::class.java)
-                .function("owningPlugin", returnsObject().noParams()) { it.target?.getOwningPlugin() }
-                .function("asInt", returnsObject().noParams()) { it.target?.asInt() }
-                .function("asFloat", returnsObject().noParams()) { it.target?.asFloat() }
-                .function("asDouble", returnsObject().noParams()) { it.target?.asDouble() }
-                .function("asLong", returnsObject().noParams()) { it.target?.asLong() }
-                .function("asShort", returnsObject().noParams()) { it.target?.asShort() }
-                .function("asByte", returnsObject().noParams()) { it.target?.asByte() }
-                .function("asBoolean", returnsObject().noParams()) { it.target?.asBoolean() }
-                .function("asString", returnsObject().noParams()) { it.target?.asString() }
+                .function("owningPlugin", returnsObject().noParams()) { it.setReturnRef(it.target?.getOwningPlugin()) }
+                .function("asInt", returnsObject().noParams()) { it.setReturnRef(it.target?.asInt()) }
+                .function("asFloat", returnsObject().noParams()) { it.setReturnRef(it.target?.asFloat()) }
+                .function("asDouble", returnsObject().noParams()) { it.setReturnRef(it.target?.asDouble()) }
+                .function("asLong", returnsObject().noParams()) { it.setReturnRef(it.target?.asLong()) }
+                .function("asShort", returnsObject().noParams()) { it.setReturnRef(it.target?.asShort()) }
+                .function("asByte", returnsObject().noParams()) { it.setReturnRef(it.target?.asByte()) }
+                .function("asBoolean", returnsObject().noParams()) { it.setReturnRef(it.target?.asBoolean()) }
+                .function("asString", returnsObject().noParams()) { it.setReturnRef(it.target?.asString()) }
         }
     }
 }

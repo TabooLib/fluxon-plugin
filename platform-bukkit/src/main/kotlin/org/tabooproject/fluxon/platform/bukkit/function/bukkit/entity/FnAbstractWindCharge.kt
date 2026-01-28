@@ -18,7 +18,7 @@ object FnAbstractWindCharge {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractWindCharge::class.java)
-                .function("explode", returnsObject().noParams()) { it.target?.explode() }
+                .function("explode", returnsObject().noParams()) { it.setReturnRef(it.target?.explode()) }
         }
     }
 }

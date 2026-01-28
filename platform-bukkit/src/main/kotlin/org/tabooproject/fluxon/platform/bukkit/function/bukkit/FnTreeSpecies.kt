@@ -18,9 +18,9 @@ object FnTreeSpecies {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TreeSpecies::class.java)
-                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
                 // static
-                .function("getByData", returnsObject().params(Type.OBJECT)) { TreeSpecies.getByData(it.getInt(0).toByte()) }
+                .function("getByData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(TreeSpecies.getByData(it.getInt(0).toByte())) }
         }
     }
 }

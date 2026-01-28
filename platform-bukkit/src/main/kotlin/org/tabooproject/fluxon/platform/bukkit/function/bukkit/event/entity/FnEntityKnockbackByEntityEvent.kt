@@ -18,7 +18,7 @@ object FnEntityKnockbackByEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityKnockbackByEntityEvent::class.java)
-                .function("sourceEntity", returnsObject().noParams()) { it.target?.sourceEntity }
+                .function("sourceEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceEntity) }
         }
     }
 }

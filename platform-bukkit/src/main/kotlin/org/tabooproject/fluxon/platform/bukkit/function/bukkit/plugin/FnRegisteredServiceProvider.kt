@@ -19,11 +19,11 @@ object FnRegisteredServiceProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegisteredServiceProvider::class.java)
-                .function("service", returnsObject().noParams()) { it.target?.getService() }
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
-                .function("provider", returnsObject().noParams()) { it.target?.getProvider() }
-                .function("priority", returnsObject().noParams()) { it.target?.priority }
-                .function("compareTo", returns(Type.I).params(Type.OBJECT)) { it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>) }
+                .function("service", returnsObject().noParams()) { it.setReturnRef(it.target?.getService()) }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("provider", returnsObject().noParams()) { it.setReturnRef(it.target?.getProvider()) }
+                .function("priority", returnsObject().noParams()) { it.setReturnRef(it.target?.priority) }
+                .function("compareTo", returns(Type.I).params(Type.OBJECT)) { it.setReturnRef(it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>)) }
         }
     }
 }

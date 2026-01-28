@@ -20,14 +20,14 @@ object FnPiglin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Piglin::class.java)
-                .function("isAbleToHunt", returns(Type.Z).noParams()) { it.target?.isAbleToHunt }
-                .function("setIsAbleToHunt", returnsObject().params(Type.OBJECT)) { it.target?.setIsAbleToHunt(it.getBool(0)) }
-                .function("addBarterMaterial", returnsObject().params(Type.OBJECT)) { it.target?.addBarterMaterial(it.getRef(0) as Material) }
-                .function("removeBarterMaterial", returnsObject().params(Type.OBJECT)) { it.target?.removeBarterMaterial(it.getRef(0) as Material) }
-                .function("addMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.target?.addMaterialOfInterest(it.getRef(0) as Material) }
-                .function("removeMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.target?.removeMaterialOfInterest(it.getRef(0) as Material) }
-                .function("interestList", returnsObject().noParams()) { it.target?.interestList }
-                .function("barterList", returnsObject().noParams()) { it.target?.barterList }
+                .function("isAbleToHunt", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAbleToHunt) }
+                .function("setIsAbleToHunt", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIsAbleToHunt(it.getBool(0))) }
+                .function("addBarterMaterial", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addBarterMaterial(it.getRef(0) as Material)) }
+                .function("removeBarterMaterial", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeBarterMaterial(it.getRef(0) as Material)) }
+                .function("addMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addMaterialOfInterest(it.getRef(0) as Material)) }
+                .function("removeMaterialOfInterest", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeMaterialOfInterest(it.getRef(0) as Material)) }
+                .function("interestList", returnsObject().noParams()) { it.setReturnRef(it.target?.interestList) }
+                .function("barterList", returnsObject().noParams()) { it.setReturnRef(it.target?.barterList) }
         }
     }
 }

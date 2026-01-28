@@ -18,9 +18,9 @@ object FnCommandMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandMinecart::class.java)
-                .function("command", returnsObject().noParams()) { it.target?.command }
-                .function("setCommand", returnsObject().params(Type.OBJECT)) { it.target?.setCommand(it.getString(0)) }
-                .function("setName", returnsObject().params(Type.OBJECT)) { it.target?.setName(it.getString(0)) }
+                .function("command", returnsObject().noParams()) { it.setReturnRef(it.target?.command) }
+                .function("setCommand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCommand(it.getString(0))) }
+                .function("setName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setName(it.getString(0))) }
         }
     }
 }

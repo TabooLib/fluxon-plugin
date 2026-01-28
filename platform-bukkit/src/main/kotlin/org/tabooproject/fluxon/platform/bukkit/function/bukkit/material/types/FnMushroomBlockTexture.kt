@@ -19,12 +19,12 @@ object FnMushroomBlockTexture {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MushroomBlockTexture::class.java)
-                .function("data", returnsObject().noParams()) { it.target?.data }
-                .function("capFace", returnsObject().noParams()) { it.target?.capFace }
+                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
+                .function("capFace", returnsObject().noParams()) { it.setReturnRef(it.target?.capFace) }
                 // static
-                .function("getByData", returnsObject().params(Type.OBJECT)) { MushroomBlockTexture.getByData(it.getInt(0).toByte()) }
+                .function("getByData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MushroomBlockTexture.getByData(it.getInt(0).toByte())) }
                 // static
-                .function("getCapByFace", returnsObject().params(Type.OBJECT)) { MushroomBlockTexture.getCapByFace(it.getRef(0) as BlockFace) }
+                .function("getCapByFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MushroomBlockTexture.getCapByFace(it.getRef(0) as BlockFace)) }
         }
     }
 }

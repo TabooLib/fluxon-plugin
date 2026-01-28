@@ -15,7 +15,7 @@ object FunctionMessage {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("raw", returnsObject().params(Type.STRING)) { Message.raw(it.getString(0)!!) }
+            registerFunction("raw", returnsObject().params(Type.STRING)) { it.setReturnRef(Message.raw(it.getString(0)!!)) }
         }
     }
 }

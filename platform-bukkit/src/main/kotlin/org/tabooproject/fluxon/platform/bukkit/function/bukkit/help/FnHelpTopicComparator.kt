@@ -20,14 +20,14 @@ object FnHelpTopicComparator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicComparator::class.java)
                 // static
-                .function("topicNameComparatorInstance", returnsObject().noParams()) { HelpTopicComparator.topicNameComparatorInstance() }
+                .function("topicNameComparatorInstance", returnsObject().noParams()) { it.setReturnRef(HelpTopicComparator.topicNameComparatorInstance()) }
                 // static
-                .function("helpTopicComparatorInstance", returnsObject().noParams()) { HelpTopicComparator.helpTopicComparatorInstance() }
+                .function("helpTopicComparatorInstance", returnsObject().noParams()) { it.setReturnRef(HelpTopicComparator.helpTopicComparatorInstance()) }
                 .function("compare", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.compare(
+                    it.setReturnRef(it.target?.compare(
                         it.getRef(0) as HelpTopic,
                         it.getRef(1) as HelpTopic
-                    )
+                    ))
                 }
         }
     }
@@ -41,7 +41,7 @@ object FnHelpTopicComparatorTopicNameComparator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicComparator.TopicNameComparator::class.java)
-                .function("compare", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.compare(it.getString(0)!!, it.getRef(1) as String) }
+                .function("compare", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.compare(it.getString(0)!!, it.getRef(1) as String)) }
         }
     }
 }

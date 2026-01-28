@@ -18,9 +18,9 @@ object FnWorldLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldLoadEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { WorldLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(WorldLoadEvent.getHandlerList()) }
         }
     }
 }

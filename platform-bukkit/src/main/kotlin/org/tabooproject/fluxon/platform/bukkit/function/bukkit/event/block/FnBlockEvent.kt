@@ -19,7 +19,7 @@ object FnBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockEvent::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.getBlock() }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.getBlock()) }
         }
     }
 }

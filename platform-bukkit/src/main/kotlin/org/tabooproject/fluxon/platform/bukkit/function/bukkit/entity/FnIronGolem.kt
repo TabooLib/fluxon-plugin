@@ -19,8 +19,8 @@ object FnIronGolem {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(IronGolem::class.java)
-                .function("isPlayerCreated", returns(Type.Z).noParams()) { it.target?.isPlayerCreated }
-                .function("setPlayerCreated", returnsObject().params(Type.OBJECT)) { it.target?.setPlayerCreated(it.getBool(0)) }
+                .function("isPlayerCreated", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlayerCreated) }
+                .function("setPlayerCreated", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlayerCreated(it.getBool(0))) }
         }
     }
 }

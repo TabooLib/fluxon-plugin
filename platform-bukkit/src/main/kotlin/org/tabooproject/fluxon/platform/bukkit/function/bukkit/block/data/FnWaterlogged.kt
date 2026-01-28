@@ -19,8 +19,8 @@ object FnWaterlogged {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Waterlogged::class.java)
-                .function("isWaterlogged", returns(Type.Z).noParams()) { it.target?.isWaterlogged }
-                .function("setWaterlogged", returnsObject().params(Type.OBJECT)) { it.target?.setWaterlogged(it.getBool(0)) }
+                .function("isWaterlogged", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isWaterlogged) }
+                .function("setWaterlogged", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWaterlogged(it.getBool(0))) }
         }
     }
 }

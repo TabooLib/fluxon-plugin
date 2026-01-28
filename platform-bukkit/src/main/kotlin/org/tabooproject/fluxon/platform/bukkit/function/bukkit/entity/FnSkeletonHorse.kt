@@ -19,10 +19,10 @@ object FnSkeletonHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SkeletonHorse::class.java)
-                .function("isTrapped", returns(Type.Z).noParams()) { it.target?.isTrapped }
-                .function("setTrapped", returnsObject().params(Type.OBJECT)) { it.target?.setTrapped(it.getBool(0)) }
-                .function("trapTime", returnsObject().noParams()) { it.target?.trapTime }
-                .function("setTrapTime", returnsObject().params(Type.OBJECT)) { it.target?.setTrapTime(it.getInt(0).toInt()) }
+                .function("isTrapped", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTrapped) }
+                .function("setTrapped", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrapped(it.getBool(0))) }
+                .function("trapTime", returnsObject().noParams()) { it.setReturnRef(it.target?.trapTime) }
+                .function("setTrapTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrapTime(it.getInt(0).toInt())) }
         }
     }
 }

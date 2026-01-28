@@ -19,10 +19,10 @@ object FnFrog {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Frog::class.java)
-                .function("tongueTarget", returnsObject().noParams()) { it.target?.tongueTarget }
-                .function("setTongueTarget", returnsObject().params(Type.OBJECT)) { it.target?.setTongueTarget(it.getRef(0) as Entity) }
-                .function("variant", returnsObject().noParams()) { it.target?.variant }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Frog.Variant) }
+                .function("tongueTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.tongueTarget) }
+                .function("setTongueTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTongueTarget(it.getRef(0) as Entity)) }
+                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Frog.Variant)) }
         }
     }
 }
@@ -35,7 +35,7 @@ object FnFrogVariant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Frog.Variant::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

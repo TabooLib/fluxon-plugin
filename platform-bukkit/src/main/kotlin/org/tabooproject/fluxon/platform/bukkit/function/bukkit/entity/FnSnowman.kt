@@ -19,8 +19,8 @@ object FnSnowman {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Snowman::class.java)
-                .function("isDerp", returns(Type.Z).noParams()) { it.target?.isDerp }
-                .function("setDerp", returnsObject().params(Type.OBJECT)) { it.target?.setDerp(it.getBool(0)) }
+                .function("isDerp", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDerp) }
+                .function("setDerp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDerp(it.getBool(0))) }
         }
     }
 }

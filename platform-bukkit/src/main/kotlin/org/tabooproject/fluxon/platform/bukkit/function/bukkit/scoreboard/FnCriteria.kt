@@ -22,12 +22,12 @@ object FnCriteria {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Criteria::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("isReadOnly", returns(Type.Z).noParams()) { it.target?.isReadOnly }
-                .function("defaultRenderType", returnsObject().noParams()) { it.target?.defaultRenderType }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("isReadOnly", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isReadOnly) }
+                .function("defaultRenderType", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultRenderType) }
                 // static
                 .function("statistic", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         Criteria.statistic(it.getRef(0) as Statistic)
                     } else {
                         when (val var2 = it.getRef(1)) {
@@ -35,10 +35,10 @@ object FnCriteria {
                             is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
                             else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
                         }
-                    }
+                    })
                 }
                 .function("statistic", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         Criteria.statistic(it.getRef(0) as Statistic)
                     } else {
                         when (val var2 = it.getRef(1)) {
@@ -46,10 +46,10 @@ object FnCriteria {
                             is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
                             else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
                         }
-                    }
+                    })
                 }
                 // static
-                .function("create", returnsObject().params(Type.OBJECT)) { Criteria.create(it.getString(0)!!) }
+                .function("create", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Criteria.create(it.getString(0)!!)) }
         }
     }
 }

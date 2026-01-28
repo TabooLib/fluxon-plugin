@@ -19,8 +19,8 @@ object FnBlockDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDisplay::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.block }
-                .function("setBlock", returnsObject().params(Type.OBJECT)) { it.target?.setBlock(it.getRef(0) as BlockData) }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
+                .function("setBlock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBlock(it.getRef(0) as BlockData)) }
         }
     }
 }

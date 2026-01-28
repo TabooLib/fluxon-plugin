@@ -20,17 +20,17 @@ object FnRails {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rails::class.java)
-                .function("isOnSlope", returns(Type.Z).noParams()) { it.target?.isOnSlope }
-                .function("isCurve", returns(Type.Z).noParams()) { it.target?.isCurve }
-                .function("direction", returnsObject().noParams()) { it.target?.direction }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("isOnSlope", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOnSlope) }
+                .function("isCurve", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCurve) }
+                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 .function("setDirection", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setDirection(
+                    it.setReturnRef(it.target?.setDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

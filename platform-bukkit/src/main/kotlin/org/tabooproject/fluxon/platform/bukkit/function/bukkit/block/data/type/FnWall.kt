@@ -20,14 +20,14 @@ object FnWall {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wall::class.java)
-                .function("isUp", returns(Type.Z).noParams()) { it.target?.isUp }
-                .function("setUp", returnsObject().params(Type.OBJECT)) { it.target?.setUp(it.getBool(0)) }
-                .function("getHeight", returnsObject().params(Type.OBJECT)) { it.target?.getHeight(it.getRef(0) as BlockFace) }
+                .function("isUp", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUp) }
+                .function("setUp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setUp(it.getBool(0))) }
+                .function("getHeight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getHeight(it.getRef(0) as BlockFace)) }
                 .function("setHeight", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setHeight(
+                    it.setReturnRef(it.target?.setHeight(
                         it.getRef(0) as BlockFace,
                         it.getRef(1) as Wall.Height
-                    )
+                    ))
                 }
         }
     }

@@ -19,11 +19,11 @@ object FnPointedDripstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PointedDripstone::class.java)
-                .function("verticalDirection", returnsObject().noParams()) { it.target?.verticalDirection }
-                .function("setVerticalDirection", returnsObject().params(Type.OBJECT)) { it.target?.setVerticalDirection(it.getRef(0) as BlockFace) }
-                .function("verticalDirections", returnsObject().noParams()) { it.target?.verticalDirections }
-                .function("thickness", returnsObject().noParams()) { it.target?.thickness }
-                .function("setThickness", returnsObject().params(Type.OBJECT)) { it.target?.setThickness(it.getRef(0) as PointedDripstone.Thickness) }
+                .function("verticalDirection", returnsObject().noParams()) { it.setReturnRef(it.target?.verticalDirection) }
+                .function("setVerticalDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVerticalDirection(it.getRef(0) as BlockFace)) }
+                .function("verticalDirections", returnsObject().noParams()) { it.setReturnRef(it.target?.verticalDirections) }
+                .function("thickness", returnsObject().noParams()) { it.setReturnRef(it.target?.thickness) }
+                .function("setThickness", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setThickness(it.getRef(0) as PointedDripstone.Thickness)) }
         }
     }
 }

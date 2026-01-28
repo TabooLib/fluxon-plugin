@@ -20,7 +20,7 @@ object FnChatPaginator {
             registerExtension(ChatPaginator::class.java)
                 // static
                 .function("paginate", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt())
                     } else {
                         ChatPaginator.paginate(
@@ -29,10 +29,10 @@ object FnChatPaginator {
                             it.getInt(2).toInt(),
                             it.getInt(3).toInt()
                         )
-                    }
+                    })
                 }
                 .function("paginate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt())
                     } else {
                         ChatPaginator.paginate(
@@ -41,10 +41,10 @@ object FnChatPaginator {
                             it.getInt(2).toInt(),
                             it.getInt(3).toInt()
                         )
-                    }
+                    })
                 }
                 // static
-                .function("wordWrap", returnsObject().params(Type.OBJECT, Type.OBJECT)) { ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt()) }
+                .function("wordWrap", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt())) }
         }
     }
 }
@@ -57,9 +57,9 @@ object FnChatPaginatorChatPage {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator.ChatPage::class.java)
-                .function("pageNumber", returnsObject().noParams()) { it.target?.pageNumber }
-                .function("totalPages", returnsObject().noParams()) { it.target?.totalPages }
-                .function("lines", returnsObject().noParams()) { it.target?.lines }
+                .function("pageNumber", returnsObject().noParams()) { it.setReturnRef(it.target?.pageNumber) }
+                .function("totalPages", returnsObject().noParams()) { it.setReturnRef(it.target?.totalPages) }
+                .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
         }
     }
 }

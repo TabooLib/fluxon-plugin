@@ -18,7 +18,7 @@ object FnEntityFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityFactory::class.java)
-                .function("createEntitySnapshot", returnsObject().params(Type.OBJECT)) { it.target?.createEntitySnapshot(it.getString(0)!!) }
+                .function("createEntitySnapshot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.createEntitySnapshot(it.getString(0)!!)) }
         }
     }
 }

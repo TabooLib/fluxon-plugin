@@ -19,12 +19,12 @@ object FnRaidTriggerEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidTriggerEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { RaidTriggerEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(RaidTriggerEvent.getHandlerList()) }
         }
     }
 }

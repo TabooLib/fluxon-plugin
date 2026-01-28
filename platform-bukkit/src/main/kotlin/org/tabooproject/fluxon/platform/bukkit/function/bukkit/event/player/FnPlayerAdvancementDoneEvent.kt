@@ -18,10 +18,10 @@ object FnPlayerAdvancementDoneEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerAdvancementDoneEvent::class.java)
-                .function("advancement", returnsObject().noParams()) { it.target?.advancement }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("advancement", returnsObject().noParams()) { it.setReturnRef(it.target?.advancement) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerAdvancementDoneEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerAdvancementDoneEvent.getHandlerList()) }
         }
     }
 }

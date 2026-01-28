@@ -18,10 +18,10 @@ object FnInstrument {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Instrument::class.java)
-                .function("sound", returnsObject().noParams()) { it.target?.sound }
-                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("sound", returnsObject().noParams()) { it.setReturnRef(it.target?.sound) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
                 // static
-                .function("getByType", returnsObject().params(Type.OBJECT)) { Instrument.getByType(it.getInt(0).toByte()) }
+                .function("getByType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Instrument.getByType(it.getInt(0).toByte())) }
         }
     }
 }

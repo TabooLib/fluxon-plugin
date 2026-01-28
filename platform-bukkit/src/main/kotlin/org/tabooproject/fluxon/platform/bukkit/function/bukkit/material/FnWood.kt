@@ -20,10 +20,10 @@ object FnWood {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wood::class.java)
-                .function("species", returnsObject().noParams()) { it.target?.species }
-                .function("setSpecies", returnsObject().params(Type.OBJECT)) { it.target?.setSpecies(it.getRef(0) as TreeSpecies) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("species", returnsObject().noParams()) { it.setReturnRef(it.target?.species) }
+                .function("setSpecies", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpecies(it.getRef(0) as TreeSpecies)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

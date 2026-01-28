@@ -19,15 +19,15 @@ object FnEntityEnterLoveModeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEnterLoveModeEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("humanEntity", returnsObject().noParams()) { it.target?.humanEntity }
-                .function("ticksInLove", returnsObject().noParams()) { it.target?.ticksInLove }
-                .function("setTicksInLove", returnsObject().params(Type.OBJECT)) { it.target?.setTicksInLove(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("humanEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.humanEntity) }
+                .function("ticksInLove", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksInLove) }
+                .function("setTicksInLove", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTicksInLove(it.getInt(0).toInt())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityEnterLoveModeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityEnterLoveModeEvent.getHandlerList()) }
         }
     }
 }

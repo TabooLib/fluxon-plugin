@@ -19,8 +19,8 @@ object FnSizedFireball {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SizedFireball::class.java)
-                .function("displayItem", returnsObject().noParams()) { it.target?.displayItem }
-                .function("setDisplayItem", returnsObject().params(Type.OBJECT)) { it.target?.setDisplayItem(it.getRef(0) as ItemStack) }
+                .function("displayItem", returnsObject().noParams()) { it.setReturnRef(it.target?.displayItem) }
+                .function("setDisplayItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisplayItem(it.getRef(0) as ItemStack)) }
         }
     }
 }

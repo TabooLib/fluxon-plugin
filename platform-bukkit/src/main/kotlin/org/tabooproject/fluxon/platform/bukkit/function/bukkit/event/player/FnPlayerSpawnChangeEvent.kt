@@ -20,16 +20,16 @@ object FnPlayerSpawnChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSpawnChangeEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("isForced", returns(Type.Z).noParams()) { it.target?.isForced }
-                .function("setForced", returnsObject().params(Type.OBJECT)) { it.target?.setForced(it.getBool(0)) }
-                .function("newSpawn", returnsObject().noParams()) { it.target?.newSpawn }
-                .function("setNewSpawn", returnsObject().params(Type.OBJECT)) { it.target?.setNewSpawn(it.getRef(0) as Location) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("isForced", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isForced) }
+                .function("setForced", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setForced(it.getBool(0))) }
+                .function("newSpawn", returnsObject().noParams()) { it.setReturnRef(it.target?.newSpawn) }
+                .function("setNewSpawn", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewSpawn(it.getRef(0) as Location)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerSpawnChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerSpawnChangeEvent.getHandlerList()) }
         }
     }
 }

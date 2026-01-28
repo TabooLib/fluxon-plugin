@@ -18,9 +18,9 @@ object FnFurnaceExtractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceExtractEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("itemType", returnsObject().noParams()) { it.target?.itemType }
-                .function("itemAmount", returnsObject().noParams()) { it.target?.itemAmount }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
+                .function("itemAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.itemAmount) }
         }
     }
 }

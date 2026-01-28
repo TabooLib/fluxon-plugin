@@ -19,8 +19,8 @@ object FnGhast {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ghast::class.java)
-                .function("isCharging", returns(Type.Z).noParams()) { it.target?.isCharging }
-                .function("setCharging", returnsObject().params(Type.OBJECT)) { it.target?.setCharging(it.getBool(0)) }
+                .function("isCharging", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCharging) }
+                .function("setCharging", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCharging(it.getBool(0))) }
         }
     }
 }

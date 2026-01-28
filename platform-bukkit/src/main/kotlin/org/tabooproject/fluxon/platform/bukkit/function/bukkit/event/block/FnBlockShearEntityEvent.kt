@@ -19,13 +19,13 @@ object FnBlockShearEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockShearEntityEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("tool", returnsObject().noParams()) { it.target?.tool }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("tool", returnsObject().noParams()) { it.setReturnRef(it.target?.tool) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockShearEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockShearEntityEvent.getHandlerList()) }
         }
     }
 }

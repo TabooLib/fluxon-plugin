@@ -18,9 +18,9 @@ object FnBukkitWorker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitWorker::class.java)
-                .function("taskId", returnsObject().noParams()) { it.target?.taskId }
-                .function("owner", returnsObject().noParams()) { it.target?.owner }
-                .function("thread", returnsObject().noParams()) { it.target?.thread }
+                .function("taskId", returnsObject().noParams()) { it.setReturnRef(it.target?.taskId) }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("thread", returnsObject().noParams()) { it.setReturnRef(it.target?.thread) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnSmithingTrimRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingTrimRecipe::class.java)
-                .function("template", returnsObject().noParams()) { it.target?.template }
+                .function("template", returnsObject().noParams()) { it.setReturnRef(it.target?.template) }
         }
     }
 }

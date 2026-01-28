@@ -26,37 +26,37 @@ object FnBlockData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockData::class.java)
-//                .function("isRandomlyTicked", returns(Type.Z).noParams()) { it.target?.isRandomlyTicked }
-                .function("material", returnsObject().noParams()) { it.target?.material }
-                .function("asString", returnsObject().noParams()) { it.target?.asString }
-                .function("getAsString", returnsObject().params(Type.OBJECT)) { it.target?.getAsString(it.getBool(0)) }
-                .function("merge", returnsObject().params(Type.OBJECT)) { it.target?.merge(it.getRef(0) as BlockData) }
-                .function("matches", returnsObject().params(Type.OBJECT)) { it.target?.matches(it.getRef(0) as BlockData) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("soundGroup", returnsObject().noParams()) { it.target?.soundGroup }
-                .function("lightEmission", returnsObject().noParams()) { it.target?.lightEmission }
-                .function("isOccluding", returns(Type.Z).noParams()) { it.target?.isOccluding }
-                .function("requiresCorrectToolForDrops", returnsObject().noParams()) { it.target?.requiresCorrectToolForDrops() }
-                .function("isPreferredTool", returns(Type.Z).params(Type.OBJECT)) { it.target?.isPreferredTool(it.getRef(0) as ItemStack) }
-                .function("pistonMoveReaction", returnsObject().noParams()) { it.target?.pistonMoveReaction }
+//                .function("isRandomlyTicked", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRandomlyTicked) }
+                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
+                .function("asString", returnsObject().noParams()) { it.setReturnRef(it.target?.asString) }
+                .function("getAsString", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getAsString(it.getBool(0))) }
+                .function("merge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.merge(it.getRef(0) as BlockData)) }
+                .function("matches", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.matches(it.getRef(0) as BlockData)) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("soundGroup", returnsObject().noParams()) { it.setReturnRef(it.target?.soundGroup) }
+                .function("lightEmission", returnsObject().noParams()) { it.setReturnRef(it.target?.lightEmission) }
+                .function("isOccluding", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOccluding) }
+                .function("requiresCorrectToolForDrops", returnsObject().noParams()) { it.setReturnRef(it.target?.requiresCorrectToolForDrops()) }
+                .function("isPreferredTool", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isPreferredTool(it.getRef(0) as ItemStack)) }
+                .function("pistonMoveReaction", returnsObject().noParams()) { it.setReturnRef(it.target?.pistonMoveReaction) }
                 .function("isSupported", returns(Type.Z).params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Block -> it.target?.isSupported(var1)
                         is Location -> it.target?.isSupported(var1)
                         else -> throw IllegalArgumentException("参数必须是 Block 或 Location 类型")
-                    }
+                    })
                 }
                 .function("isFaceSturdy", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.isFaceSturdy(
+                    it.setReturnRef(it.target?.isFaceSturdy(
                         it.getRef(0) as BlockFace,
                         it.getRef(1) as BlockSupport
-                    )
+                    ))
                 }
-                .function("mapColor", returnsObject().noParams()) { it.target?.mapColor }
-                .function("placementMaterial", returnsObject().noParams()) { it.target?.placementMaterial }
-                .function("rotate", returnsObject().params(Type.OBJECT)) { it.target?.rotate(it.getRef(0) as StructureRotation) }
-                .function("mirror", returnsObject().params(Type.OBJECT)) { it.target?.mirror(it.getRef(0) as Mirror) }
-                .function("copyTo", returnsObject().params(Type.OBJECT)) { it.target?.copyTo(it.getRef(0) as BlockData) }
+                .function("mapColor", returnsObject().noParams()) { it.setReturnRef(it.target?.mapColor) }
+                .function("placementMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.placementMaterial) }
+                .function("rotate", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.rotate(it.getRef(0) as StructureRotation)) }
+                .function("mirror", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.mirror(it.getRef(0) as Mirror)) }
+                .function("copyTo", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.copyTo(it.getRef(0) as BlockData)) }
         }
     }
 }

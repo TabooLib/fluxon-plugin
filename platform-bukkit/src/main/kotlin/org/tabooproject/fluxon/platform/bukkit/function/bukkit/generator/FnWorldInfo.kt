@@ -19,12 +19,12 @@ object FnWorldInfo {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldInfo::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("uID", returnsObject().noParams()) { it.target?.uid }
-                .function("seed", returnsObject().noParams()) { it.target?.seed }
-                .function("minHeight", returnsObject().noParams()) { it.target?.minHeight }
-                .function("maxHeight", returnsObject().noParams()) { it.target?.maxHeight }
-                .function("environment", returnsObject().noParams()) { it.target?.environment }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("uID", returnsObject().noParams()) { it.setReturnRef(it.target?.uid) }
+                .function("seed", returnsObject().noParams()) { it.setReturnRef(it.target?.seed) }
+                .function("minHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.minHeight) }
+                .function("maxHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.maxHeight) }
+                .function("environment", returnsObject().noParams()) { it.setReturnRef(it.target?.environment) }
         }
     }
 }

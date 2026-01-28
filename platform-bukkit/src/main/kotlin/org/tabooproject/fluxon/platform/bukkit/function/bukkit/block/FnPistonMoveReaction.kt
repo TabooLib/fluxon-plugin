@@ -18,9 +18,9 @@ object FnPistonMoveReaction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonMoveReaction::class.java)
-                .function("id", returnsObject().noParams()) { it.target?.id }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
                 // static
-                .function("getById", returnsObject().params(Type.OBJECT)) { PistonMoveReaction.getById(it.getInt(0).toInt()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PistonMoveReaction.getById(it.getInt(0).toInt())) }
         }
     }
 }

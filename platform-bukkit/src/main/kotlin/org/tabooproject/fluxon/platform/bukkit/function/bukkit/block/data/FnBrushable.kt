@@ -18,9 +18,9 @@ object FnBrushable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Brushable::class.java)
-                .function("dusted", returnsObject().noParams()) { it.target?.dusted }
-                .function("setDusted", returnsObject().params(Type.OBJECT)) { it.target?.setDusted(it.getInt(0).toInt()) }
-                .function("maximumDusted", returnsObject().noParams()) { it.target?.maximumDusted }
+                .function("dusted", returnsObject().noParams()) { it.setReturnRef(it.target?.dusted) }
+                .function("setDusted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDusted(it.getInt(0).toInt())) }
+                .function("maximumDusted", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumDusted) }
         }
     }
 }

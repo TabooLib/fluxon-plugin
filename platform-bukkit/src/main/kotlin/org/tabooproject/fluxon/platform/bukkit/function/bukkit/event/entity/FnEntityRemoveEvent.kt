@@ -18,10 +18,10 @@ object FnEntityRemoveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityRemoveEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityRemoveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityRemoveEvent.getHandlerList()) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnPersistentDataHolder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataHolder::class.java)
-                .function("persistentDataContainer", returnsObject().noParams()) { it.target?.persistentDataContainer }
+                .function("persistentDataContainer", returnsObject().noParams()) { it.setReturnRef(it.target?.persistentDataContainer) }
         }
     }
 }

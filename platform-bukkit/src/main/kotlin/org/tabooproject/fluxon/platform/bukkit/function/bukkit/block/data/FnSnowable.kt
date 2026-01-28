@@ -19,8 +19,8 @@ object FnSnowable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Snowable::class.java)
-                .function("isSnowy", returns(Type.Z).noParams()) { it.target?.isSnowy }
-                .function("setSnowy", returnsObject().params(Type.OBJECT)) { it.target?.setSnowy(it.getBool(0)) }
+                .function("isSnowy", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSnowy) }
+                .function("setSnowy", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSnowy(it.getBool(0))) }
         }
     }
 }

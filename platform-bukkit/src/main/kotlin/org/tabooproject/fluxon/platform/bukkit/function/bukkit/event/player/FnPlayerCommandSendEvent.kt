@@ -18,10 +18,10 @@ object FnPlayerCommandSendEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerCommandSendEvent::class.java)
-                .function("commands", returnsObject().noParams()) { it.target?.commands }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("commands", returnsObject().noParams()) { it.setReturnRef(it.target?.commands) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerCommandSendEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerCommandSendEvent.getHandlerList()) }
         }
     }
 }

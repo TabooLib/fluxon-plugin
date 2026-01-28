@@ -19,7 +19,7 @@ object FnAbstractSkeleton {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractSkeleton::class.java)
-                .function("setSkeletonType", returnsObject().params(Type.OBJECT)) { it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType) }
+                .function("setSkeletonType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType)) }
         }
     }
 }

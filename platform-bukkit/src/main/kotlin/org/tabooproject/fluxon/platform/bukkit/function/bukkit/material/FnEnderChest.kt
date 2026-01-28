@@ -18,7 +18,7 @@ object FnEnderChest {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderChest::class.java)
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

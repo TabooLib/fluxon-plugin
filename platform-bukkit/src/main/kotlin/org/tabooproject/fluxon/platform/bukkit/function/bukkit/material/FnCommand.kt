@@ -19,10 +19,10 @@ object FnCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Command::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPowered(it.getBool(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

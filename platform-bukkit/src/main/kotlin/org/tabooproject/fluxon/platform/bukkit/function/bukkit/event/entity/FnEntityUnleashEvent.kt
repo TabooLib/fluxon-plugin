@@ -18,10 +18,10 @@ object FnEntityUnleashEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityUnleashEvent::class.java)
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityUnleashEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityUnleashEvent.getHandlerList()) }
         }
     }
 }

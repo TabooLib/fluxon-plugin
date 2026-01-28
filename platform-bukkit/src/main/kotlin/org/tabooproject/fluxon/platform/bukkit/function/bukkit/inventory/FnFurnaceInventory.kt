@@ -19,13 +19,13 @@ object FnFurnaceInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceInventory::class.java)
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
-                .function("smelting", returnsObject().noParams()) { it.target?.smelting }
-                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("setSmelting", returnsObject().params(Type.OBJECT)) { it.target?.setSmelting(it.getRef(0) as ItemStack) }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("smelting", returnsObject().noParams()) { it.setReturnRef(it.target?.smelting) }
+                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuel(it.getRef(0) as ItemStack)) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as ItemStack)) }
+                .function("setSmelting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSmelting(it.getRef(0) as ItemStack)) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

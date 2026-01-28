@@ -18,8 +18,8 @@ object FnSpellcaster {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Spellcaster::class.java)
-                .function("spell", returnsObject().noParams()) { it.target?.spell }
-                .function("setSpell", returnsObject().params(Type.OBJECT)) { it.target?.setSpell(it.getRef(0) as Spellcaster.Spell) }
+                .function("spell", returnsObject().noParams()) { it.setReturnRef(it.target?.spell) }
+                .function("setSpell", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpell(it.getRef(0) as Spellcaster.Spell)) }
         }
     }
 }

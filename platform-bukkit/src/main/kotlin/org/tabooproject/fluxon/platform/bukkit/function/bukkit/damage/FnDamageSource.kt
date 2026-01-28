@@ -22,15 +22,15 @@ object FnDamageSource {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageSource::class.java)
-                .function("damageType", returnsObject().noParams()) { it.target?.damageType }
-                .function("causingEntity", returnsObject().noParams()) { it.target?.causingEntity }
-                .function("directEntity", returnsObject().noParams()) { it.target?.directEntity }
-                .function("damageLocation", returnsObject().noParams()) { it.target?.damageLocation }
-                .function("sourceLocation", returnsObject().noParams()) { it.target?.sourceLocation }
-                .function("isIndirect", returns(Type.Z).noParams()) { it.target?.isIndirect }
-                .function("foodExhaustion", returnsObject().noParams()) { it.target?.foodExhaustion }
-                .function("scalesWithDifficulty", returnsObject().noParams()) { it.target?.scalesWithDifficulty() }
-                .function("builder", returnsObject().params(Type.OBJECT)) { DamageSource.builder(it.getRef(0) as DamageType) }
+                .function("damageType", returnsObject().noParams()) { it.setReturnRef(it.target?.damageType) }
+                .function("causingEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.causingEntity) }
+                .function("directEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.directEntity) }
+                .function("damageLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.damageLocation) }
+                .function("sourceLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceLocation) }
+                .function("isIndirect", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIndirect) }
+                .function("foodExhaustion", returnsObject().noParams()) { it.setReturnRef(it.target?.foodExhaustion) }
+                .function("scalesWithDifficulty", returnsObject().noParams()) { it.setReturnRef(it.target?.scalesWithDifficulty()) }
+                .function("builder", returnsObject().params(Type.OBJECT)) { it.setReturnRef(DamageSource.builder(it.getRef(0) as DamageType)) }
         }
     }
 }
@@ -43,10 +43,10 @@ object FnDamageSourceBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageSource.Builder::class.java)
-                .function("withCausingEntity", returnsObject().params(Type.OBJECT)) { it.target?.withCausingEntity(it.getRef(0) as Entity) }
-                .function("withDirectEntity", returnsObject().params(Type.OBJECT)) { it.target?.withDirectEntity(it.getRef(0) as Entity) }
-                .function("withDamageLocation", returnsObject().params(Type.OBJECT)) { it.target?.withDamageLocation(it.getRef(0) as Location) }
-                .function("build", returnsObject().noParams()) { it.target?.build() }
+                .function("withCausingEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.withCausingEntity(it.getRef(0) as Entity)) }
+                .function("withDirectEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.withDirectEntity(it.getRef(0) as Entity)) }
+                .function("withDamageLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.withDamageLocation(it.getRef(0) as Location)) }
+                .function("build", returnsObject().noParams()) { it.setReturnRef(it.target?.build()) }
         }
     }
 }

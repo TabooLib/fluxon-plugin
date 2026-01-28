@@ -18,19 +18,19 @@ object FnPlayerDeathEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerDeathEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("setDeathMessage", returnsObject().params(Type.OBJECT)) { it.target?.setDeathMessage(it.getString(0)) }
-                .function("deathMessage", returnsObject().noParams()) { it.target?.deathMessage }
-                .function("newExp", returnsObject().noParams()) { it.target?.newExp }
-                .function("setNewExp", returnsObject().params(Type.OBJECT)) { it.target?.setNewExp(it.getInt(0).toInt()) }
-                .function("newLevel", returnsObject().noParams()) { it.target?.newLevel }
-                .function("setNewLevel", returnsObject().params(Type.OBJECT)) { it.target?.setNewLevel(it.getInt(0).toInt()) }
-                .function("newTotalExp", returnsObject().noParams()) { it.target?.newTotalExp }
-                .function("setNewTotalExp", returnsObject().params(Type.OBJECT)) { it.target?.setNewTotalExp(it.getInt(0).toInt()) }
-                .function("keepLevel", returnsObject().noParams()) { it.target?.keepLevel }
-                .function("setKeepLevel", returnsObject().params(Type.OBJECT)) { it.target?.setKeepLevel(it.getBool(0)) }
-                .function("setKeepInventory", returnsObject().params(Type.OBJECT)) { it.target?.setKeepInventory(it.getBool(0)) }
-                .function("keepInventory", returnsObject().noParams()) { it.target?.keepInventory }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("setDeathMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDeathMessage(it.getString(0))) }
+                .function("deathMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.deathMessage) }
+                .function("newExp", returnsObject().noParams()) { it.setReturnRef(it.target?.newExp) }
+                .function("setNewExp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewExp(it.getInt(0).toInt())) }
+                .function("newLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.newLevel) }
+                .function("setNewLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewLevel(it.getInt(0).toInt())) }
+                .function("newTotalExp", returnsObject().noParams()) { it.setReturnRef(it.target?.newTotalExp) }
+                .function("setNewTotalExp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewTotalExp(it.getInt(0).toInt())) }
+                .function("keepLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.keepLevel) }
+                .function("setKeepLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setKeepLevel(it.getBool(0))) }
+                .function("setKeepInventory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setKeepInventory(it.getBool(0))) }
+                .function("keepInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.keepInventory) }
         }
     }
 }

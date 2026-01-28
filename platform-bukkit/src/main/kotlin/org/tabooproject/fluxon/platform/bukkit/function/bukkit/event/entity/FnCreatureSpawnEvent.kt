@@ -18,8 +18,8 @@ object FnCreatureSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CreatureSpawnEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("spawnReason", returnsObject().noParams()) { it.target?.spawnReason }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("spawnReason", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnReason) }
         }
     }
 }

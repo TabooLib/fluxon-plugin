@@ -19,12 +19,12 @@ object FnClickType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ClickType::class.java)
-                .function("isKeyboardClick", returns(Type.Z).noParams()) { it.target?.isKeyboardClick }
-                .function("isMouseClick", returns(Type.Z).noParams()) { it.target?.isMouseClick }
-                .function("isCreativeAction", returns(Type.Z).noParams()) { it.target?.isCreativeAction }
-                .function("isRightClick", returns(Type.Z).noParams()) { it.target?.isRightClick }
-                .function("isLeftClick", returns(Type.Z).noParams()) { it.target?.isLeftClick }
-                .function("isShiftClick", returns(Type.Z).noParams()) { it.target?.isShiftClick }
+                .function("isKeyboardClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isKeyboardClick) }
+                .function("isMouseClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isMouseClick) }
+                .function("isCreativeAction", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCreativeAction) }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRightClick) }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLeftClick) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShiftClick) }
         }
     }
 }

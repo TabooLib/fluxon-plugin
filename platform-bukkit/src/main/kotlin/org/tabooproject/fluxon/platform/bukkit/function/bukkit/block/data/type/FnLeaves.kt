@@ -19,10 +19,10 @@ object FnLeaves {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Leaves::class.java)
-                .function("isPersistent", returns(Type.Z).noParams()) { it.target?.isPersistent }
-                .function("setPersistent", returnsObject().params(Type.OBJECT)) { it.target?.setPersistent(it.getBool(0)) }
-                .function("distance", returnsObject().noParams()) { it.target?.distance }
-                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.target?.setDistance(it.getInt(0).toInt()) }
+                .function("isPersistent", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPersistent) }
+                .function("setPersistent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPersistent(it.getBool(0))) }
+                .function("distance", returnsObject().noParams()) { it.setReturnRef(it.target?.distance) }
+                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDistance(it.getInt(0).toInt())) }
         }
     }
 }

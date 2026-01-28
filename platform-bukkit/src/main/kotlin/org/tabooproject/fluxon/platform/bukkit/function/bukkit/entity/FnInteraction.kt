@@ -19,14 +19,14 @@ object FnInteraction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction::class.java)
-                .function("interactionWidth", returnsObject().noParams()) { it.target?.interactionWidth }
-                .function("setInteractionWidth", returnsObject().params(Type.OBJECT)) { it.target?.setInteractionWidth(it.getFloat(0)) }
-                .function("interactionHeight", returnsObject().noParams()) { it.target?.interactionHeight }
-                .function("setInteractionHeight", returnsObject().params(Type.OBJECT)) { it.target?.setInteractionHeight(it.getFloat(0)) }
-                .function("isResponsive", returns(Type.Z).noParams()) { it.target?.isResponsive }
-                .function("setResponsive", returnsObject().params(Type.OBJECT)) { it.target?.setResponsive(it.getBool(0)) }
-                .function("lastAttack", returnsObject().noParams()) { it.target?.lastAttack }
-                .function("lastInteraction", returnsObject().noParams()) { it.target?.lastInteraction }
+                .function("interactionWidth", returnsObject().noParams()) { it.setReturnRef(it.target?.interactionWidth) }
+                .function("setInteractionWidth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInteractionWidth(it.getFloat(0))) }
+                .function("interactionHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.interactionHeight) }
+                .function("setInteractionHeight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInteractionHeight(it.getFloat(0))) }
+                .function("isResponsive", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isResponsive) }
+                .function("setResponsive", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResponsive(it.getBool(0))) }
+                .function("lastAttack", returnsObject().noParams()) { it.setReturnRef(it.target?.lastAttack) }
+                .function("lastInteraction", returnsObject().noParams()) { it.setReturnRef(it.target?.lastInteraction) }
         }
     }
 }
@@ -39,8 +39,8 @@ object FnInteractionPreviousInteraction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction.PreviousInteraction::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("timestamp", returnsObject().noParams()) { it.target?.timestamp }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("timestamp", returnsObject().noParams()) { it.setReturnRef(it.target?.timestamp) }
         }
     }
 }

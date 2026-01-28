@@ -19,13 +19,13 @@ object FnPlayerTakeLecternBookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerTakeLecternBookEvent::class.java)
-                .function("lectern", returnsObject().noParams()) { it.target?.lectern }
-                .function("book", returnsObject().noParams()) { it.target?.book }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("lectern", returnsObject().noParams()) { it.setReturnRef(it.target?.lectern) }
+                .function("book", returnsObject().noParams()) { it.setReturnRef(it.target?.book) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerTakeLecternBookEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerTakeLecternBookEvent.getHandlerList()) }
         }
     }
 }

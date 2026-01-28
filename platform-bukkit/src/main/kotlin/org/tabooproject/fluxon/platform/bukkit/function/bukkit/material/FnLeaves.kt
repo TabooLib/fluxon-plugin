@@ -19,12 +19,12 @@ object FnLeaves {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Leaves::class.java)
-                .function("isDecaying", returns(Type.Z).noParams()) { it.target?.isDecaying }
-                .function("setDecaying", returnsObject().params(Type.OBJECT)) { it.target?.setDecaying(it.getBool(0)) }
-                .function("isDecayable", returns(Type.Z).noParams()) { it.target?.isDecayable }
-                .function("setDecayable", returnsObject().params(Type.OBJECT)) { it.target?.setDecayable(it.getBool(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isDecaying", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDecaying) }
+                .function("setDecaying", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDecaying(it.getBool(0))) }
+                .function("isDecayable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDecayable) }
+                .function("setDecayable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDecayable(it.getBool(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

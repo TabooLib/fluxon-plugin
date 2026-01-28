@@ -19,8 +19,8 @@ object FnBubbleColumn {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BubbleColumn::class.java)
-                .function("isDrag", returns(Type.Z).noParams()) { it.target?.isDrag }
-                .function("setDrag", returnsObject().params(Type.OBJECT)) { it.target?.setDrag(it.getBool(0)) }
+                .function("isDrag", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDrag) }
+                .function("setDrag", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDrag(it.getBool(0))) }
         }
     }
 }

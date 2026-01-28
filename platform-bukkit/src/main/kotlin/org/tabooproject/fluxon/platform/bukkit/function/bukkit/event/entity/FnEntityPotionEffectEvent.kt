@@ -19,18 +19,18 @@ object FnEntityPotionEffectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPotionEffectEvent::class.java)
-                .function("oldEffect", returnsObject().noParams()) { it.target?.oldEffect }
-                .function("newEffect", returnsObject().noParams()) { it.target?.newEffect }
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("action", returnsObject().noParams()) { it.target?.action }
-                .function("modifiedType", returnsObject().noParams()) { it.target?.modifiedType }
-                .function("isOverride", returns(Type.Z).noParams()) { it.target?.isOverride }
-                .function("setOverride", returnsObject().params(Type.OBJECT)) { it.target?.setOverride(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("oldEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.oldEffect) }
+                .function("newEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.newEffect) }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("action", returnsObject().noParams()) { it.setReturnRef(it.target?.action) }
+                .function("modifiedType", returnsObject().noParams()) { it.setReturnRef(it.target?.modifiedType) }
+                .function("isOverride", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOverride) }
+                .function("setOverride", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOverride(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityPotionEffectEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPotionEffectEvent.getHandlerList()) }
         }
     }
 }

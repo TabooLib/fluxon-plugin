@@ -18,7 +18,7 @@ object FnDamageEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageEffect::class.java)
-                .function("sound", returnsObject().noParams()) { it.target?.sound }
+                .function("sound", returnsObject().noParams()) { it.setReturnRef(it.target?.sound) }
         }
     }
 }

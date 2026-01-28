@@ -19,9 +19,9 @@ object FnHusk {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Husk::class.java)
-                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
-                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
+                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
         }
     }
 }

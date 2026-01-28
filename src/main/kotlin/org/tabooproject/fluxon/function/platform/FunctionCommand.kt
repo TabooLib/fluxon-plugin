@@ -26,7 +26,7 @@ object FunctionCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(CommandBuilder::class.java)
-            registerFunction("command", returnsObject().params(Type.STRING)) { CommandBuilder(it.getString(0)!!, it.environment) }
+            registerFunction("command", returnsObject().params(Type.STRING)) { it.setReturnRef(CommandBuilder(it.getString(0)!!, it.environment)) }
             registerFunction("unregisterCommand", returnsVoid().params(Type.STRING)) { unregisterCommand(it.getString(0)!!) }
         }
     }

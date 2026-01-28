@@ -18,8 +18,8 @@ object FnComparator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Comparator::class.java)
-                .function("mode", returnsObject().noParams()) { it.target?.mode }
-                .function("setMode", returnsObject().params(Type.OBJECT)) { it.target?.setMode(it.getRef(0) as Comparator.Mode) }
+                .function("mode", returnsObject().noParams()) { it.setReturnRef(it.target?.mode) }
+                .function("setMode", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMode(it.getRef(0) as Comparator.Mode)) }
         }
     }
 }

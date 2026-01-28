@@ -19,10 +19,10 @@ object FnOcelot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ocelot::class.java)
-                .function("isTrusting", returns(Type.Z).noParams()) { it.target?.isTrusting }
-                .function("setTrusting", returnsObject().params(Type.OBJECT)) { it.target?.setTrusting(it.getBool(0)) }
-                .function("catType", returnsObject().noParams()) { it.target?.catType }
-                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.target?.setCatType(it.getRef(0) as Ocelot.Type) }
+                .function("isTrusting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTrusting) }
+                .function("setTrusting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrusting(it.getBool(0))) }
+                .function("catType", returnsObject().noParams()) { it.setReturnRef(it.target?.catType) }
+                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCatType(it.getRef(0) as Ocelot.Type)) }
         }
     }
 }
@@ -35,9 +35,9 @@ object FnOcelotType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ocelot.Type::class.java)
-                .function("id", returnsObject().noParams()) { it.target?.id }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
                 // static
-                .function("getType", returnsObject().params(Type.OBJECT)) { Ocelot.Type.getType(it.getInt(0).toInt()) }
+                .function("getType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Ocelot.Type.getType(it.getInt(0).toInt())) }
         }
     }
 }

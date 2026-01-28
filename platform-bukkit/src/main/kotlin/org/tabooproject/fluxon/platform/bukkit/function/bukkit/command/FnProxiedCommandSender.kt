@@ -18,8 +18,8 @@ object FnProxiedCommandSender {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProxiedCommandSender::class.java)
-                .function("caller", returnsObject().noParams()) { it.target?.caller }
-                .function("callee", returnsObject().noParams()) { it.target?.callee }
+                .function("caller", returnsObject().noParams()) { it.setReturnRef(it.target?.caller) }
+                .function("callee", returnsObject().noParams()) { it.setReturnRef(it.target?.callee) }
         }
     }
 }

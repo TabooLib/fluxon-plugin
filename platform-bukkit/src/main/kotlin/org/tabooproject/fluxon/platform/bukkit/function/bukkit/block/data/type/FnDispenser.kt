@@ -19,8 +19,8 @@ object FnDispenser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dispenser::class.java)
-                .function("isTriggered", returns(Type.Z).noParams()) { it.target?.isTriggered }
-                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.target?.setTriggered(it.getBool(0)) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTriggered) }
+                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTriggered(it.getBool(0))) }
         }
     }
 }

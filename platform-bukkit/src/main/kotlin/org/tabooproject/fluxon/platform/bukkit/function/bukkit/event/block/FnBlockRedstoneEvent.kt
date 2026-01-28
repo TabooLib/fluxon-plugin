@@ -18,12 +18,12 @@ object FnBlockRedstoneEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockRedstoneEvent::class.java)
-                .function("oldCurrent", returnsObject().noParams()) { it.target?.oldCurrent }
-                .function("newCurrent", returnsObject().noParams()) { it.target?.newCurrent }
-                .function("setNewCurrent", returnsObject().params(Type.OBJECT)) { it.target?.setNewCurrent(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("oldCurrent", returnsObject().noParams()) { it.setReturnRef(it.target?.oldCurrent) }
+                .function("newCurrent", returnsObject().noParams()) { it.setReturnRef(it.target?.newCurrent) }
+                .function("setNewCurrent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewCurrent(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockRedstoneEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockRedstoneEvent.getHandlerList()) }
         }
     }
 }

@@ -18,11 +18,11 @@ object FnFurnaceStartSmeltEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceStartSmeltEvent::class.java)
-                .function("totalCookTime", returnsObject().noParams()) { it.target?.totalCookTime }
-                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setTotalCookTime(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("totalCookTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalCookTime) }
+                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTotalCookTime(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { FurnaceStartSmeltEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(FurnaceStartSmeltEvent.getHandlerList()) }
         }
     }
 }

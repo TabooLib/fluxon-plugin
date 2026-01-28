@@ -19,11 +19,11 @@ object FnBukkitTask {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitTask::class.java)
-                .function("taskId", returnsObject().noParams()) { it.target?.taskId }
-                .function("owner", returnsObject().noParams()) { it.target?.owner }
-                .function("isSync", returns(Type.Z).noParams()) { it.target?.isSync }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("cancel", returnsObject().noParams()) { it.target?.cancel() }
+                .function("taskId", returnsObject().noParams()) { it.setReturnRef(it.target?.taskId) }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("isSync", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSync) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("cancel", returnsObject().noParams()) { it.setReturnRef(it.target?.cancel()) }
         }
     }
 }

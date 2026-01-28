@@ -18,7 +18,7 @@ object FnStructurePiece {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructurePiece::class.java)
-                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
+                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
         }
     }
 }

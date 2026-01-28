@@ -18,10 +18,10 @@ object FnBellResonateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BellResonateEvent::class.java)
-                .function("resonatedEntities", returnsObject().noParams()) { it.target?.resonatedEntities }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("resonatedEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.resonatedEntities) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BellResonateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BellResonateEvent.getHandlerList()) }
         }
     }
 }

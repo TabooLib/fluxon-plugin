@@ -18,10 +18,10 @@ object FnPlayerChannelEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChannelEvent::class.java)
-                .function("channel", returnsObject().noParams()) { it.target?.channel }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("channel", returnsObject().noParams()) { it.setReturnRef(it.target?.channel) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerChannelEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChannelEvent.getHandlerList()) }
         }
     }
 }

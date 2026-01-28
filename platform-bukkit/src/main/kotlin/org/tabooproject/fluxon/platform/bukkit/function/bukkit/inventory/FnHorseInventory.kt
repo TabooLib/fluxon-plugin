@@ -19,8 +19,8 @@ object FnHorseInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HorseInventory::class.java)
-                .function("armor", returnsObject().noParams()) { it.target?.armor }
-                .function("setArmor", returnsObject().params(Type.OBJECT)) { it.target?.setArmor(it.getRef(0) as ItemStack) }
+                .function("armor", returnsObject().noParams()) { it.setReturnRef(it.target?.armor) }
+                .function("setArmor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setArmor(it.getRef(0) as ItemStack)) }
         }
     }
 }

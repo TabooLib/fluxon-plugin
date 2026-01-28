@@ -20,11 +20,11 @@ object FnKnowledgeBookMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(KnowledgeBookMeta::class.java)
-                .function("hasRecipes", returns(Type.Z).noParams()) { it.target?.hasRecipes() }
-                .function("recipes", returnsObject().noParams()) { it.target?.recipes }
-                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.target?.setRecipes(it.getRef(0) as List<NamespacedKey>) }
-                .function("addRecipe", returnsObject().noParams()) { it.target?.addRecipe() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasRecipes", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRecipes()) }
+                .function("recipes", returnsObject().noParams()) { it.setReturnRef(it.target?.recipes) }
+                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecipes(it.getRef(0) as List<NamespacedKey>)) }
+                .function("addRecipe", returnsObject().noParams()) { it.setReturnRef(it.target?.addRecipe()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

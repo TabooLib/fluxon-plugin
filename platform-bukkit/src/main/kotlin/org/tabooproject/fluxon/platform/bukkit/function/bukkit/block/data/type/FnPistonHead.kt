@@ -19,8 +19,8 @@ object FnPistonHead {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonHead::class.java)
-                .function("isShort", returns(Type.Z).noParams()) { it.target?.isShort }
-                .function("setShort", returnsObject().params(Type.OBJECT)) { it.target?.setShort(it.getBool(0)) }
+                .function("isShort", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShort) }
+                .function("setShort", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShort(it.getBool(0))) }
         }
     }
 }

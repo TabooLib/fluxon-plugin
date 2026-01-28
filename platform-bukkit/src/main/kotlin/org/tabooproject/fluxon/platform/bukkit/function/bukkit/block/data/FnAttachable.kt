@@ -19,8 +19,8 @@ object FnAttachable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Attachable::class.java)
-                .function("isAttached", returns(Type.Z).noParams()) { it.target?.isAttached }
-                .function("setAttached", returnsObject().params(Type.OBJECT)) { it.target?.setAttached(it.getBool(0)) }
+                .function("isAttached", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAttached) }
+                .function("setAttached", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAttached(it.getBool(0))) }
         }
     }
 }

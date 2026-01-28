@@ -18,11 +18,11 @@ object FnVehicleMoveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleMoveEvent::class.java)
-                .function("from", returnsObject().noParams()) { it.target?.from }
-                .function("to", returnsObject().noParams()) { it.target?.to }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("from", returnsObject().noParams()) { it.setReturnRef(it.target?.from) }
+                .function("to", returnsObject().noParams()) { it.setReturnRef(it.target?.to) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleMoveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleMoveEvent.getHandlerList()) }
         }
     }
 }

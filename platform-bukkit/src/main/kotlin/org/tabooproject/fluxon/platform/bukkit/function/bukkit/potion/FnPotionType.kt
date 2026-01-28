@@ -20,27 +20,15 @@ object FnPotionType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionType::class.java)
-                .function("effectType", returnsObject().noParams()) {
-                    it.target?.effectType
-                }
-                .function("potionEffects", returnsObject().noParams()) {
-                    it.target?.potionEffects
-                }
-                .function("isInstant", returns(Type.Z).noParams()) {
-                    it.target?.isInstant
-                }
-                .function("isUpgradeable", returns(Type.Z).noParams()) {
-                    it.target?.isUpgradeable
-                }
-                .function("isExtendable", returns(Type.Z).noParams()) {
-                    it.target?.isExtendable
-                }
-                .function("maxLevel", returnsObject().noParams()) {
-                    it.target?.maxLevel
-                }
+                .function("effectType", returnsObject().noParams()) { it.setReturnRef(it.target?.effectType) }
+                .function("potionEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.potionEffects) }
+                .function("isInstant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInstant) }
+                .function("isUpgradeable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUpgradeable) }
+                .function("isExtendable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExtendable) }
+                .function("maxLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.maxLevel) }
                 // statics
-                .function("getByEffect", returnsObject().params(Type.OBJECT)) { PotionType.getByEffect(it.getRef(0) as PotionEffectType) }
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("getByEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionType.getByEffect(it.getRef(0) as PotionEffectType)) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

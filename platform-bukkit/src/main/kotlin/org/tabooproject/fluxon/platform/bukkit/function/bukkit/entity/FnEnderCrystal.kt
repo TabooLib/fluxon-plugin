@@ -20,10 +20,10 @@ object FnEnderCrystal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderCrystal::class.java)
-                .function("isShowingBottom", returns(Type.Z).noParams()) { it.target?.isShowingBottom }
-                .function("setShowingBottom", returnsObject().params(Type.OBJECT)) { it.target?.setShowingBottom(it.getBool(0)) }
-                .function("beamTarget", returnsObject().noParams()) { it.target?.beamTarget }
-                .function("setBeamTarget", returnsObject().params(Type.OBJECT)) { it.target?.setBeamTarget(it.getRef(0) as Location) }
+                .function("isShowingBottom", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShowingBottom) }
+                .function("setShowingBottom", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShowingBottom(it.getBool(0))) }
+                .function("beamTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.beamTarget) }
+                .function("setBeamTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBeamTarget(it.getRef(0) as Location)) }
         }
     }
 }

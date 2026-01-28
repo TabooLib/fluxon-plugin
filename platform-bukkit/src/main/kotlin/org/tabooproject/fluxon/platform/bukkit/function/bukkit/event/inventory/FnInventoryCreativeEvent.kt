@@ -19,8 +19,8 @@ object FnInventoryCreativeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryCreativeEvent::class.java)
-                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
+                .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
         }
     }
 }

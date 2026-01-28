@@ -18,9 +18,9 @@ object FnGameMode {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameMode::class.java)
-                .function("value", returnsObject().noParams()) { it.target?.value }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
                 // static
-                .function("getByValue", returnsObject().params(Type.OBJECT)) { GameMode.getByValue(it.getInt(0).toInt()) }
+                .function("getByValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(GameMode.getByValue(it.getInt(0).toInt())) }
         }
     }
 }

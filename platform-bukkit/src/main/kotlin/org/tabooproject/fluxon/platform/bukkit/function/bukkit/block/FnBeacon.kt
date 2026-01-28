@@ -19,12 +19,12 @@ object FnBeacon {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beacon::class.java)
-                .function("entitiesInRange", returnsObject().noParams()) { it.target?.entitiesInRange }
-                .function("tier", returnsObject().noParams()) { it.target?.tier }
-                .function("primaryEffect", returnsObject().noParams()) { it.target?.primaryEffect }
-                .function("setPrimaryEffect", returnsObject().params(Type.OBJECT)) { it.target?.setPrimaryEffect(it.getRef(0) as PotionEffectType) }
-                .function("secondaryEffect", returnsObject().noParams()) { it.target?.secondaryEffect }
-                .function("setSecondaryEffect", returnsObject().params(Type.OBJECT)) { it.target?.setSecondaryEffect(it.getRef(0) as PotionEffectType) }
+                .function("entitiesInRange", returnsObject().noParams()) { it.setReturnRef(it.target?.entitiesInRange) }
+                .function("tier", returnsObject().noParams()) { it.setReturnRef(it.target?.tier) }
+                .function("primaryEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.primaryEffect) }
+                .function("setPrimaryEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPrimaryEffect(it.getRef(0) as PotionEffectType)) }
+                .function("secondaryEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.secondaryEffect) }
+                .function("setSecondaryEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSecondaryEffect(it.getRef(0) as PotionEffectType)) }
         }
     }
 }

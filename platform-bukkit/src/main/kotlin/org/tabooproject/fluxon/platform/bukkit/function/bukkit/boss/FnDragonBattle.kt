@@ -20,29 +20,29 @@ object FnDragonBattle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DragonBattle::class.java)
-                .function("enderDragon", returnsObject().noParams()) { it.target?.enderDragon }
-                .function("bossBar", returnsObject().noParams()) { it.target?.bossBar }
-                .function("endPortalLocation", returnsObject().noParams()) { it.target?.endPortalLocation }
-                .function("generateEndPortal", returnsObject().params(Type.OBJECT)) { it.target?.generateEndPortal(it.getBool(0)) }
-                .function("hasBeenPreviouslyKilled", returns(Type.Z).noParams()) { it.target?.hasBeenPreviouslyKilled() }
-                .function("setPreviouslyKilled", returnsObject().params(Type.OBJECT)) { it.target?.setPreviouslyKilled(it.getBool(0)) }
+                .function("enderDragon", returnsObject().noParams()) { it.setReturnRef(it.target?.enderDragon) }
+                .function("bossBar", returnsObject().noParams()) { it.setReturnRef(it.target?.bossBar) }
+                .function("endPortalLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.endPortalLocation) }
+                .function("generateEndPortal", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.generateEndPortal(it.getBool(0))) }
+                .function("hasBeenPreviouslyKilled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBeenPreviouslyKilled()) }
+                .function("setPreviouslyKilled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPreviouslyKilled(it.getBool(0))) }
                 .function("initiateRespawn", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.initiateRespawn()
                     } else {
                         it.target?.initiateRespawn(it.getRef(0) as Collection<EnderCrystal>)
-                    }
+                    })
                 }
                 .function("initiateRespawn", returnsObject().params(Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.initiateRespawn()
                     } else {
                         it.target?.initiateRespawn(it.getRef(0) as Collection<EnderCrystal>)
-                    }
+                    })
                 }
-                .function("respawnPhase", returnsObject().noParams()) { it.target?.respawnPhase }
-                .function("setRespawnPhase", returnsObject().params(Type.OBJECT)) { it.target?.setRespawnPhase(it.getRef(0) as DragonBattle.RespawnPhase) }
-                .function("resetCrystals", returnsObject().noParams()) { it.target?.resetCrystals() }
+                .function("respawnPhase", returnsObject().noParams()) { it.setReturnRef(it.target?.respawnPhase) }
+                .function("setRespawnPhase", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRespawnPhase(it.getRef(0) as DragonBattle.RespawnPhase)) }
+                .function("resetCrystals", returnsObject().noParams()) { it.setReturnRef(it.target?.resetCrystals()) }
         }
     }
 }

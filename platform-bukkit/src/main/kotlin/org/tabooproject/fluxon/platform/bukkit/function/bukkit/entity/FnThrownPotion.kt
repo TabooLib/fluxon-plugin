@@ -19,9 +19,9 @@ object FnThrownPotion {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ThrownPotion::class.java)
-                .function("effects", returnsObject().noParams()) { it.target?.effects }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("effects", returnsObject().noParams()) { it.setReturnRef(it.target?.effects) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
         }
     }
 }

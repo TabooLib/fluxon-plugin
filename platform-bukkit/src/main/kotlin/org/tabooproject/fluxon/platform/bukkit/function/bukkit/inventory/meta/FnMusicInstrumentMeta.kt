@@ -19,9 +19,9 @@ object FnMusicInstrumentMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MusicInstrumentMeta::class.java)
-                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as MusicInstrument) }
-                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInstrument(it.getRef(0) as MusicInstrument)) }
+                .function("instrument", returnsObject().noParams()) { it.setReturnRef(it.target?.instrument) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

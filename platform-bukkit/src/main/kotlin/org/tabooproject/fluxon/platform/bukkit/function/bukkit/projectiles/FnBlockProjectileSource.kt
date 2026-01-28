@@ -18,7 +18,7 @@ object FnBlockProjectileSource {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockProjectileSource::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
         }
     }
 }

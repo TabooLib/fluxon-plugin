@@ -19,17 +19,17 @@ object FnCrafter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
-                .function("craftingTicks", returnsObject().noParams()) { it.target?.craftingTicks }
-                .function("setCraftingTicks", returnsObject().params(Type.OBJECT)) { it.target?.setCraftingTicks(it.getInt(0).toInt()) }
-                .function("isSlotDisabled", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSlotDisabled(it.getInt(0).toInt()) }
+                .function("craftingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.craftingTicks) }
+                .function("setCraftingTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCraftingTicks(it.getInt(0).toInt())) }
+                .function("isSlotDisabled", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isSlotDisabled(it.getInt(0).toInt())) }
                 .function("setSlotDisabled", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setSlotDisabled(
+                    it.setReturnRef(it.target?.setSlotDisabled(
                         it.getInt(0).toInt(),
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("isTriggered", returns(Type.Z).noParams()) { it.target?.isTriggered }
-                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.target?.setTriggered(it.getBool(0)) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTriggered) }
+                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTriggered(it.getBool(0))) }
         }
     }
 }

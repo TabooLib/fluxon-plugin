@@ -20,17 +20,15 @@ object FnMapFont {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont::class.java)
                 .function("setChar", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setChar(
+                    it.setReturnRef(it.target?.setChar(
                         it.getString(0)?.firstOrNull()!!,
                         it.getRef(1) as MapFont.CharacterSprite
-                    )
+                    ))
                 }
-                .function("getChar", returnsObject().params(Type.OBJECT)) { it.target?.getChar(it.getString(0)?.firstOrNull()!!) }
-                .function("getWidth", returnsObject().params(Type.OBJECT)) { it.target?.getWidth(it.getString(0)!!) }
-                .function("height", returnsObject().noParams()) {
-                    it.target?.height
-                }
-                .function("isValid", returns(Type.Z).params(Type.OBJECT)) { it.target?.isValid(it.getString(0)!!) }
+                .function("getChar", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getChar(it.getString(0)?.firstOrNull()!!)) }
+                .function("getWidth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getWidth(it.getString(0)!!)) }
+                .function("height", returnsObject().noParams()) { it.setReturnRef(it.target?.height) }
+                .function("isValid", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isValid(it.getString(0)!!)) }
         }
     }
 }
@@ -43,8 +41,8 @@ object FnMapFontCharacterSprite {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont.CharacterSprite::class.java)
-                .function("get", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt()) }
-                .function("width", returnsObject().noParams()) { it.target?.width }
+                .function("get", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt())) }
+                .function("width", returnsObject().noParams()) { it.setReturnRef(it.target?.width) }
         }
     }
 }

@@ -19,12 +19,12 @@ object FnThunderChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ThunderChangeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("toThunderState", returnsObject().noParams()) { it.target?.toThunderState() }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("toThunderState", returnsObject().noParams()) { it.setReturnRef(it.target?.toThunderState()) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ThunderChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ThunderChangeEvent.getHandlerList()) }
         }
     }
 }

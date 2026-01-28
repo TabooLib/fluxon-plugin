@@ -20,14 +20,14 @@ object FnStonecuttingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StonecuttingRecipe::class.java)
-                .function("setInput", returnsObject().params(Type.OBJECT)) { it.target?.setInput(it.getRef(0) as Material) }
-                .function("input", returnsObject().noParams()) { it.target?.input }
-                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.target?.setInputChoice(it.getRef(0) as RecipeChoice) }
-                .function("inputChoice", returnsObject().noParams()) { it.target?.inputChoice }
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("group", returnsObject().noParams()) { it.target?.group }
-                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.target?.setGroup(it.getString(0)!!) }
+                .function("setInput", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInput(it.getRef(0) as Material)) }
+                .function("input", returnsObject().noParams()) { it.setReturnRef(it.target?.input) }
+                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
+                .function("inputChoice", returnsObject().noParams()) { it.setReturnRef(it.target?.inputChoice) }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("group", returnsObject().noParams()) { it.setReturnRef(it.target?.group) }
+                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGroup(it.getString(0)!!)) }
         }
     }
 }

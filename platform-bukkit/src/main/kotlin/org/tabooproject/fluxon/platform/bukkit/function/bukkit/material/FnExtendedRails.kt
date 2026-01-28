@@ -20,14 +20,14 @@ object FnExtendedRails {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExtendedRails::class.java)
-                .function("isCurve", returns(Type.Z).noParams()) { it.target?.isCurve }
+                .function("isCurve", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCurve) }
                 .function("setDirection", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setDirection(
+                    it.setReturnRef(it.target?.setDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

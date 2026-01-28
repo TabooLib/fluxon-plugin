@@ -18,12 +18,12 @@ object FnPlayerExpCooldownChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerExpCooldownChangeEvent::class.java)
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("newCooldown", returnsObject().noParams()) { it.target?.newCooldown }
-                .function("setNewCooldown", returnsObject().params(Type.OBJECT)) { it.target?.setNewCooldown(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("newCooldown", returnsObject().noParams()) { it.setReturnRef(it.target?.newCooldown) }
+                .function("setNewCooldown", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewCooldown(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerExpCooldownChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerExpCooldownChangeEvent.getHandlerList()) }
         }
     }
 }

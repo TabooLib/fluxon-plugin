@@ -19,14 +19,14 @@ object FnPlayerShearEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerShearEntityEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerShearEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerShearEntityEvent.getHandlerList()) }
         }
     }
 }

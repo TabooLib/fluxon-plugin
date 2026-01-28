@@ -20,18 +20,18 @@ object FnMerchant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Merchant::class.java)
-                .function("recipes", returnsObject().noParams()) { it.target?.recipes }
-                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>) }
-                .function("getRecipe", returnsObject().params(Type.OBJECT)) { it.target?.getRecipe(it.getInt(0).toInt()) }
+                .function("recipes", returnsObject().noParams()) { it.setReturnRef(it.target?.recipes) }
+                .function("setRecipes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>)) }
+                .function("getRecipe", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getRecipe(it.getInt(0).toInt())) }
                 .function("setRecipe", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setRecipe(
+                    it.setReturnRef(it.target?.setRecipe(
                         it.getInt(0).toInt(),
                         it.getRef(1) as MerchantRecipe
-                    )
+                    ))
                 }
-                .function("recipeCount", returnsObject().noParams()) { it.target?.recipeCount }
-                .function("isTrading", returns(Type.Z).noParams()) { it.target?.isTrading }
-                .function("trader", returnsObject().noParams()) { it.target?.trader }
+                .function("recipeCount", returnsObject().noParams()) { it.setReturnRef(it.target?.recipeCount) }
+                .function("isTrading", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTrading) }
+                .function("trader", returnsObject().noParams()) { it.setReturnRef(it.target?.trader) }
         }
     }
 }

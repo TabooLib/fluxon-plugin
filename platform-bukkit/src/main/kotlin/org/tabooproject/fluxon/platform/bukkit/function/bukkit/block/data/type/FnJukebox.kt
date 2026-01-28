@@ -19,7 +19,7 @@ object FnJukebox {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jukebox::class.java)
-                .function("hasRecord", returns(Type.Z).noParams()) { it.target?.hasRecord() }
+                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRecord()) }
         }
     }
 }

@@ -19,9 +19,9 @@ object FnDetectorRail {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DetectorRail::class.java)
-                .function("isPressed", returns(Type.Z).noParams()) { it.target?.isPressed }
-                .function("setPressed", returnsObject().params(Type.OBJECT)) { it.target?.setPressed(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPressed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPressed) }
+                .function("setPressed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPressed(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -18,11 +18,11 @@ object FnBlockDamageAbortEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageAbortEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockDamageAbortEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockDamageAbortEvent.getHandlerList()) }
         }
     }
 }

@@ -19,8 +19,8 @@ object FnEndermite {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Endermite::class.java)
-                .function("isPlayerSpawned", returns(Type.Z).noParams()) { it.target?.isPlayerSpawned }
-                .function("setPlayerSpawned", returnsObject().params(Type.OBJECT)) { it.target?.setPlayerSpawned(it.getBool(0)) }
+                .function("isPlayerSpawned", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlayerSpawned) }
+                .function("setPlayerSpawned", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlayerSpawned(it.getBool(0))) }
         }
     }
 }

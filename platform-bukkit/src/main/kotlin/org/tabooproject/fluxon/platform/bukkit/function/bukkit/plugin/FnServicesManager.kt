@@ -19,10 +19,8 @@ object FnServicesManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServicesManager::class.java)
-                .function("unregisterAll", returnsObject().params(Type.OBJECT)) { it.target?.unregisterAll(it.getRef(0) as Plugin) }
-                .function("unregister", returnsObject().params(Type.OBJECT)) {
-                    it.target?.unregister(it.getRef(0)!!)
-                }
+                .function("unregisterAll", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.unregisterAll(it.getRef(0) as Plugin)) }
+                .function("unregister", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.unregister(it.getRef(0)!!)) }
         }
     }
 }

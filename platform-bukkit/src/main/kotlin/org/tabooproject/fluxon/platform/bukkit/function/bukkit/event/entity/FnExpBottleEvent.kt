@@ -18,14 +18,14 @@ object FnExpBottleEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExpBottleEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("showEffect", returnsObject().noParams()) { it.target?.showEffect }
-                .function("setShowEffect", returnsObject().params(Type.OBJECT)) { it.target?.setShowEffect(it.getBool(0)) }
-                .function("experience", returnsObject().noParams()) { it.target?.experience }
-                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("showEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.showEffect) }
+                .function("setShowEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShowEffect(it.getBool(0))) }
+                .function("experience", returnsObject().noParams()) { it.setReturnRef(it.target?.experience) }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExperience(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ExpBottleEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ExpBottleEvent.getHandlerList()) }
         }
     }
 }

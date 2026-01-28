@@ -20,16 +20,16 @@ object FnWolf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wolf::class.java)
-                .function("isAngry", returns(Type.Z).noParams()) { it.target?.isAngry }
-                .function("setAngry", returnsObject().params(Type.OBJECT)) { it.target?.setAngry(it.getBool(0)) }
-                .function("collarColor", returnsObject().noParams()) { it.target?.collarColor }
-                .function("setCollarColor", returnsObject().params(Type.OBJECT)) { it.target?.setCollarColor(it.getRef(0) as DyeColor) }
-                .function("isWet", returns(Type.Z).noParams()) { it.target?.isWet }
-                .function("tailAngle", returnsObject().noParams()) { it.target?.tailAngle }
-                .function("isInterested", returns(Type.Z).noParams()) { it.target?.isInterested }
-                .function("setInterested", returnsObject().params(Type.OBJECT)) { it.target?.setInterested(it.getBool(0)) }
-                .function("variant", returnsObject().noParams()) { it.target?.variant }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Wolf.Variant) }
+                .function("isAngry", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAngry) }
+                .function("setAngry", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAngry(it.getBool(0))) }
+                .function("collarColor", returnsObject().noParams()) { it.setReturnRef(it.target?.collarColor) }
+                .function("setCollarColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCollarColor(it.getRef(0) as DyeColor)) }
+                .function("isWet", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isWet) }
+                .function("tailAngle", returnsObject().noParams()) { it.setReturnRef(it.target?.tailAngle) }
+                .function("isInterested", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInterested) }
+                .function("setInterested", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInterested(it.getBool(0))) }
+                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Wolf.Variant)) }
         }
     }
 }

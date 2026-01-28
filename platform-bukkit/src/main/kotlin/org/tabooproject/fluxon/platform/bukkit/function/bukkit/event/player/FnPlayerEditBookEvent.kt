@@ -20,17 +20,17 @@ object FnPlayerEditBookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEditBookEvent::class.java)
-                .function("previousBookMeta", returnsObject().noParams()) { it.target?.previousBookMeta }
-                .function("newBookMeta", returnsObject().noParams()) { it.target?.newBookMeta }
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
-                .function("setNewBookMeta", returnsObject().params(Type.OBJECT)) { it.target?.setNewBookMeta(it.getRef(0) as BookMeta) }
-                .function("isSigning", returns(Type.Z).noParams()) { it.target?.isSigning }
-                .function("setSigning", returnsObject().params(Type.OBJECT)) { it.target?.setSigning(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("previousBookMeta", returnsObject().noParams()) { it.setReturnRef(it.target?.previousBookMeta) }
+                .function("newBookMeta", returnsObject().noParams()) { it.setReturnRef(it.target?.newBookMeta) }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("setNewBookMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewBookMeta(it.getRef(0) as BookMeta)) }
+                .function("isSigning", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSigning) }
+                .function("setSigning", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSigning(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerEditBookEvent.getHandlerList() }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerEditBookEvent.getHandlerList()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
         }
     }
 }

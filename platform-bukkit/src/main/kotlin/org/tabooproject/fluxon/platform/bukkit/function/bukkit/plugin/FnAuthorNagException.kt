@@ -18,7 +18,7 @@ object FnAuthorNagException {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AuthorNagException::class.java)
-                .function("message", returnsObject().noParams()) { it.target?.message }
+                .function("message", returnsObject().noParams()) { it.setReturnRef(it.target?.message) }
         }
     }
 }

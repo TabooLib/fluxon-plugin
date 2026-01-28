@@ -19,9 +19,9 @@ object FnBlockIterator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockIterator::class.java)
-                .function("hasNext", returns(Type.Z).noParams()) { it.target?.hasNext() }
-                .function("next", returnsObject().noParams()) { it.target?.next() }
-                .function("remove", returnsObject().noParams()) { it.target?.remove() }
+                .function("hasNext", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasNext()) }
+                .function("next", returnsObject().noParams()) { it.setReturnRef(it.target?.next()) }
+                .function("remove", returnsObject().noParams()) { it.setReturnRef(it.target?.remove()) }
         }
     }
 }

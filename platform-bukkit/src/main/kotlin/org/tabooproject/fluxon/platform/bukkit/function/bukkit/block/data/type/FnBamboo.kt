@@ -18,8 +18,8 @@ object FnBamboo {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bamboo::class.java)
-                .function("leaves", returnsObject().noParams()) { it.target?.leaves }
-                .function("setLeaves", returnsObject().params(Type.OBJECT)) { it.target?.setLeaves(it.getRef(0) as Bamboo.Leaves) }
+                .function("leaves", returnsObject().noParams()) { it.setReturnRef(it.target?.leaves) }
+                .function("setLeaves", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLeaves(it.getRef(0) as Bamboo.Leaves)) }
         }
     }
 }

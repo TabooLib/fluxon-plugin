@@ -18,10 +18,10 @@ object FnPlayerInteractAtEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInteractAtEntityEvent::class.java)
-                .function("clickedPosition", returnsObject().noParams()) { it.target?.clickedPosition }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("clickedPosition", returnsObject().noParams()) { it.setReturnRef(it.target?.clickedPosition) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerInteractAtEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerInteractAtEntityEvent.getHandlerList()) }
         }
     }
 }

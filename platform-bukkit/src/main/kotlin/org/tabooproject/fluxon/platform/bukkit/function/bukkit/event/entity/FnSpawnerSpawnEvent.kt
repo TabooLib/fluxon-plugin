@@ -18,7 +18,7 @@ object FnSpawnerSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerSpawnEvent::class.java)
-                .function("spawner", returnsObject().noParams()) { it.target?.spawner }
+                .function("spawner", returnsObject().noParams()) { it.setReturnRef(it.target?.spawner) }
         }
     }
 }

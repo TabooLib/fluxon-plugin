@@ -19,9 +19,9 @@ object FnNoiseGenerator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NoiseGenerator::class.java)
                 // static
-                .function("floor", returnsObject().params(Type.OBJECT)) { NoiseGenerator.floor(it.getAsDouble(0)) }
+                .function("floor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NoiseGenerator.floor(it.getAsDouble(0))) }
                 .function("noise", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -89,10 +89,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -160,10 +160,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -231,10 +231,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -302,10 +302,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -373,10 +373,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -444,10 +444,10 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.noise(it.getAsDouble(0))
                         2 -> it.target?.noise(it.getAsDouble(0), it.getAsDouble(1))
                         3 -> it.target?.noise(
@@ -515,7 +515,7 @@ object FnNoiseGenerator {
                             it.getBool(6)
                         )
                         else -> error("NoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
         }
     }

@@ -19,9 +19,9 @@ object FnInventoryType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryType::class.java)
-                .function("defaultSize", returnsObject().noParams()) { it.target?.defaultSize }
-                .function("defaultTitle", returnsObject().noParams()) { it.target?.defaultTitle }
-                .function("isCreatable", returns(Type.Z).noParams()) { it.target?.isCreatable }
+                .function("defaultSize", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultSize) }
+                .function("defaultTitle", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultTitle) }
+                .function("isCreatable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCreatable) }
         }
     }
 }

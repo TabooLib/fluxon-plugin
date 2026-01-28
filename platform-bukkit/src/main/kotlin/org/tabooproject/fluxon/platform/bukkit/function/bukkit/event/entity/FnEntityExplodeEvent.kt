@@ -19,15 +19,15 @@ object FnEntityExplodeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityExplodeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("blockList", returnsObject().noParams()) { it.target?.blockList() }
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("yield", returnsObject().noParams()) { it.target?.yield }
-                .function("setYield", returnsObject().params(Type.OBJECT)) { it.target?.setYield(it.getFloat(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("blockList", returnsObject().noParams()) { it.setReturnRef(it.target?.blockList()) }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("yield", returnsObject().noParams()) { it.setReturnRef(it.target?.yield) }
+                .function("setYield", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setYield(it.getFloat(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityExplodeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityExplodeEvent.getHandlerList()) }
         }
     }
 }

@@ -19,7 +19,7 @@ object FnPluginCommandYamlParser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginCommandYamlParser::class.java)
-                .function("parse", returnsObject().params(Type.OBJECT)) { PluginCommandYamlParser.parse(it.getRef(0) as Plugin) }
+                .function("parse", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PluginCommandYamlParser.parse(it.getRef(0) as Plugin)) }
         }
     }
 }

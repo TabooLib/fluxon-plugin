@@ -18,8 +18,8 @@ object FnCraftItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CraftItemEvent::class.java)
-                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

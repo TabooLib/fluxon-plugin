@@ -20,12 +20,12 @@ object FnCompassMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CompassMeta::class.java)
-                .function("hasLodestone", returns(Type.Z).noParams()) { it.target?.hasLodestone() }
-                .function("lodestone", returnsObject().noParams()) { it.target?.lodestone }
-                .function("setLodestone", returnsObject().params(Type.OBJECT)) { it.target?.setLodestone(it.getRef(0) as Location) }
-                .function("isLodestoneTracked", returns(Type.Z).noParams()) { it.target?.isLodestoneTracked }
-                .function("setLodestoneTracked", returnsObject().params(Type.OBJECT)) { it.target?.setLodestoneTracked(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasLodestone", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasLodestone()) }
+                .function("lodestone", returnsObject().noParams()) { it.setReturnRef(it.target?.lodestone) }
+                .function("setLodestone", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLodestone(it.getRef(0) as Location)) }
+                .function("isLodestoneTracked", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLodestoneTracked) }
+                .function("setLodestoneTracked", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLodestoneTracked(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

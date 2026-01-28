@@ -20,28 +20,28 @@ object FnWither {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wither::class.java)
                 .function("setTarget", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setTarget(it.getRef(0) as LivingEntity)
                     } else {
                         it.target?.setTarget(
                             it.getRef(0) as Wither.Head,
                             it.getRef(1) as LivingEntity
                         )
-                    }
+                    })
                 }
                 .function("setTarget", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setTarget(it.getRef(0) as LivingEntity)
                     } else {
                         it.target?.setTarget(
                             it.getRef(0) as Wither.Head,
                             it.getRef(1) as LivingEntity
                         )
-                    }
+                    })
                 }
-                .function("getTarget", returnsObject().params(Type.OBJECT)) { it.target?.getTarget(it.getRef(0) as Wither.Head) }
-                .function("invulnerabilityTicks", returnsObject().noParams()) { it.target?.invulnerabilityTicks }
-                .function("setInvulnerabilityTicks", returnsObject().params(Type.OBJECT)) { it.target?.setInvulnerabilityTicks(it.getInt(0).toInt()) }
+                .function("getTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getTarget(it.getRef(0) as Wither.Head)) }
+                .function("invulnerabilityTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.invulnerabilityTicks) }
+                .function("setInvulnerabilityTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInvulnerabilityTicks(it.getInt(0).toInt())) }
         }
     }
 }

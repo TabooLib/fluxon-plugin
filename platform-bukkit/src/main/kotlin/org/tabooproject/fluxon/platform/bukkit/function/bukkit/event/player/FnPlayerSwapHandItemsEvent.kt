@@ -20,15 +20,15 @@ object FnPlayerSwapHandItemsEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSwapHandItemsEvent::class.java)
-                .function("mainHandItem", returnsObject().noParams()) { it.target?.mainHandItem }
-                .function("setMainHandItem", returnsObject().params(Type.OBJECT)) { it.target?.setMainHandItem(it.getRef(0) as ItemStack) }
-                .function("offHandItem", returnsObject().noParams()) { it.target?.offHandItem }
-                .function("setOffHandItem", returnsObject().params(Type.OBJECT)) { it.target?.setOffHandItem(it.getRef(0) as ItemStack) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("mainHandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.mainHandItem) }
+                .function("setMainHandItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMainHandItem(it.getRef(0) as ItemStack)) }
+                .function("offHandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.offHandItem) }
+                .function("setOffHandItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOffHandItem(it.getRef(0) as ItemStack)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerSwapHandItemsEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerSwapHandItemsEvent.getHandlerList()) }
         }
     }
 }

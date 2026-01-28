@@ -21,19 +21,19 @@ object FnEntityType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityType::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("ordinal", returnsObject().noParams()) { it.target?.ordinal }
-                .function("entityName", returnsObject().noParams()) { it.target?.getName() }
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("typeId", returnsObject().noParams()) { it.target?.typeId }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("ordinal", returnsObject().noParams()) { it.setReturnRef(it.target?.ordinal) }
+                .function("entityName", returnsObject().noParams()) { it.setReturnRef(it.target?.getName()) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("typeId", returnsObject().noParams()) { it.setReturnRef(it.target?.typeId) }
                 // static
-                .function("fromName", returnsObject().params(Type.OBJECT)) { EntityType.fromName(it.getString(0)) }
+                .function("fromName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(EntityType.fromName(it.getString(0))) }
                 // static
-                .function("fromId", returnsObject().params(Type.OBJECT)) { EntityType.fromId(it.getInt(0).toInt()) }
-                .function("isSpawnable", returns(Type.Z).noParams()) { it.target?.isSpawnable }
-                .function("isAlive", returns(Type.Z).noParams()) { it.target?.isAlive }
-                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
-                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.target?.isEnabledByFeature(it.getRef(0) as World) }
+                .function("fromId", returnsObject().params(Type.OBJECT)) { it.setReturnRef(EntityType.fromId(it.getInt(0).toInt())) }
+                .function("isSpawnable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSpawnable) }
+                .function("isAlive", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAlive) }
+                .function("translationKey", returnsObject().noParams()) { it.setReturnRef(it.target?.translationKey) }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isEnabledByFeature(it.getRef(0) as World)) }
         }
     }
 }

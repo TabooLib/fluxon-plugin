@@ -19,8 +19,8 @@ object FnCamel {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Camel::class.java)
-                .function("isDashing", returns(Type.Z).noParams()) { it.target?.isDashing }
-                .function("setDashing", returnsObject().params(Type.OBJECT)) { it.target?.setDashing(it.getBool(0)) }
+                .function("isDashing", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDashing) }
+                .function("setDashing", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDashing(it.getBool(0))) }
         }
     }
 }

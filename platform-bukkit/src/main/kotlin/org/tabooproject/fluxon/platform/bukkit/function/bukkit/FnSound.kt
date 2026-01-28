@@ -20,15 +20,13 @@ object FnSound {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sound::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
             registerFunction("sound", returnsObject().params(Type.STRING)) {
                 val name = it.getRef(0).toString()
-                XSound.of(name).getOrNull()?.get() ?: error("音效不存在: $name")
-            }
+                it.setReturnRef(XSound.of(name).getOrNull()?.get() ?: error("音效不存在: $name"))}
             registerFunction("soundOrNull", returnsObject().params(Type.STRING)) {
                 val name = it.getRef(0).toString()
-                XSound.of(name).getOrNull()?.get()
-            }
+                it.setReturnRef(XSound.of(name).getOrNull()?.get())}
         }
     }
 }

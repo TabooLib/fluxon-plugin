@@ -19,7 +19,7 @@ object FnPluginLogger {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginLogger::class.java)
-                .function("log", returnsObject().params(Type.OBJECT)) { it.target?.log(it.getRef(0) as LogRecord) }
+                .function("log", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.log(it.getRef(0) as LogRecord)) }
         }
     }
 }

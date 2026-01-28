@@ -17,11 +17,9 @@ object FunctionBukkit {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("bukkit", returnsObject().noParams()) { Bukkit.getServer() }
-            registerFunction("server", returnsObject().noParams()) { Bukkit.getServer() }
-            registerFunction("broadcast", returns(Type.I).params(Type.STRING)) {
-                Bukkit.broadcastMessage(it.getString(0)!!)
-            }
+            registerFunction("bukkit", returnsObject().noParams()) { it.setReturnRef(Bukkit.getServer()) }
+            registerFunction("server", returnsObject().noParams()) { it.setReturnRef(Bukkit.getServer()) }
+            registerFunction("broadcast", returns(Type.I).params(Type.STRING)) { it.setReturnInt(Bukkit.broadcastMessage(it.getString(0)!!)) }
         }
     }
 }

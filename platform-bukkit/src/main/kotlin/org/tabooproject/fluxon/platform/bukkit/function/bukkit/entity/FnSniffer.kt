@@ -20,13 +20,13 @@ object FnSniffer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sniffer::class.java)
-                .function("exploredLocations", returnsObject().noParams()) { it.target?.exploredLocations }
-                .function("removeExploredLocation", returnsObject().params(Type.OBJECT)) { it.target?.removeExploredLocation(it.getRef(0) as Location) }
-                .function("addExploredLocation", returnsObject().params(Type.OBJECT)) { it.target?.addExploredLocation(it.getRef(0) as Location) }
-                .function("state", returnsObject().noParams()) { it.target?.state }
-                .function("setState", returnsObject().params(Type.OBJECT)) { it.target?.setState(it.getRef(0) as Sniffer.State) }
-                .function("findPossibleDigLocation", returnsObject().noParams()) { it.target?.findPossibleDigLocation() }
-                .function("canDig", returns(Type.Z).noParams()) { it.target?.canDig() }
+                .function("exploredLocations", returnsObject().noParams()) { it.setReturnRef(it.target?.exploredLocations) }
+                .function("removeExploredLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeExploredLocation(it.getRef(0) as Location)) }
+                .function("addExploredLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addExploredLocation(it.getRef(0) as Location)) }
+                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
+                .function("setState", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setState(it.getRef(0) as Sniffer.State)) }
+                .function("findPossibleDigLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.findPossibleDigLocation()) }
+                .function("canDig", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canDig()) }
         }
     }
 }

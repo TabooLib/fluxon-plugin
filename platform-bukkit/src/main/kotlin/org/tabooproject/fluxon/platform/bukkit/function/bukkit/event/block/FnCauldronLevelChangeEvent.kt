@@ -19,17 +19,17 @@ object FnCauldronLevelChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CauldronLevelChangeEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("newState", returnsObject().noParams()) { it.target?.newState }
-                .function("oldLevel", returnsObject().noParams()) { it.target?.oldLevel }
-                .function("newLevel", returnsObject().noParams()) { it.target?.newLevel }
-                .function("setNewLevel", returnsObject().params(Type.OBJECT)) { it.target?.setNewLevel(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("newState", returnsObject().noParams()) { it.setReturnRef(it.target?.newState) }
+                .function("oldLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.oldLevel) }
+                .function("newLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.newLevel) }
+                .function("setNewLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewLevel(it.getInt(0).toInt())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { CauldronLevelChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(CauldronLevelChangeEvent.getHandlerList()) }
         }
     }
 }

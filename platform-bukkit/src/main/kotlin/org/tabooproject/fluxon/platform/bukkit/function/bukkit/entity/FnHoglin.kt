@@ -19,13 +19,13 @@ object FnHoglin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hoglin::class.java)
-                .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.target?.isImmuneToZombification }
-                .function("setImmuneToZombification", returnsObject().params(Type.OBJECT)) { it.target?.setImmuneToZombification(it.getBool(0)) }
-                .function("isAbleToBeHunted", returns(Type.Z).noParams()) { it.target?.isAbleToBeHunted }
-                .function("setIsAbleToBeHunted", returnsObject().params(Type.OBJECT)) { it.target?.setIsAbleToBeHunted(it.getBool(0)) }
-                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
-                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
+                .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isImmuneToZombification) }
+                .function("setImmuneToZombification", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setImmuneToZombification(it.getBool(0))) }
+                .function("isAbleToBeHunted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAbleToBeHunted) }
+                .function("setIsAbleToBeHunted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIsAbleToBeHunted(it.getBool(0))) }
+                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
         }
     }
 }

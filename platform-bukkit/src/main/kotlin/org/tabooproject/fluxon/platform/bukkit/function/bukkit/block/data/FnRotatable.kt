@@ -19,8 +19,8 @@ object FnRotatable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rotatable::class.java)
-                .function("rotation", returnsObject().noParams()) { it.target?.rotation }
-                .function("setRotation", returnsObject().params(Type.OBJECT)) { it.target?.setRotation(it.getRef(0) as BlockFace) }
+                .function("rotation", returnsObject().noParams()) { it.setReturnRef(it.target?.rotation) }
+                .function("setRotation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRotation(it.getRef(0) as BlockFace)) }
         }
     }
 }

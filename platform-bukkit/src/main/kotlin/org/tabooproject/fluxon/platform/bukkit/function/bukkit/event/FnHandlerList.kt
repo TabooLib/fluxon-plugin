@@ -19,8 +19,8 @@ object FnHandlerList {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HandlerList::class.java)
-                .function("registerAll", returnsObject().params(Type.OBJECT)) { it.target?.registerAll(it.getRef(0) as Collection<RegisteredListener>) }
-                .function("registeredListeners", returnsObject().noParams()) { it.target?.registeredListeners }
+                .function("registerAll", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.registerAll(it.getRef(0) as Collection<RegisteredListener>)) }
+                .function("registeredListeners", returnsObject().noParams()) { it.setReturnRef(it.target?.registeredListeners) }
         }
     }
 }

@@ -20,10 +20,10 @@ object FnNetherWarts {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NetherWarts::class.java)
-                .function("state", returnsObject().noParams()) { it.target?.state }
-                .function("setState", returnsObject().params(Type.OBJECT)) { it.target?.setState(it.getRef(0) as NetherWartsState) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
+                .function("setState", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setState(it.getRef(0) as NetherWartsState)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

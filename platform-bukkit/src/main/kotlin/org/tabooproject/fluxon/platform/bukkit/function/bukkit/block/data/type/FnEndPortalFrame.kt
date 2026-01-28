@@ -19,8 +19,8 @@ object FnEndPortalFrame {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EndPortalFrame::class.java)
-                .function("hasEye", returns(Type.Z).noParams()) { it.target?.hasEye() }
-                .function("setEye", returnsObject().params(Type.OBJECT)) { it.target?.setEye(it.getBool(0)) }
+                .function("hasEye", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEye()) }
+                .function("setEye", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEye(it.getBool(0))) }
         }
     }
 }

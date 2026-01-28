@@ -19,13 +19,13 @@ object FnLingeringPotionSplashEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LingeringPotionSplashEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("areaEffectCloud", returnsObject().noParams()) { it.target?.areaEffectCloud }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("areaEffectCloud", returnsObject().noParams()) { it.setReturnRef(it.target?.areaEffectCloud) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { LingeringPotionSplashEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(LingeringPotionSplashEvent.getHandlerList()) }
         }
     }
 }

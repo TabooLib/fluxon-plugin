@@ -20,9 +20,9 @@ object FnBeehive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beehive::class.java)
-                .function("flower", returnsObject().noParams()) { it.target?.flower }
-                .function("setFlower", returnsObject().params(Type.OBJECT)) { it.target?.setFlower(it.getRef(0) as Location) }
-                .function("isSedated", returns(Type.Z).noParams()) { it.target?.isSedated }
+                .function("flower", returnsObject().noParams()) { it.setReturnRef(it.target?.flower) }
+                .function("setFlower", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFlower(it.getRef(0) as Location)) }
+                .function("isSedated", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSedated) }
         }
     }
 }

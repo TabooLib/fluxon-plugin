@@ -20,14 +20,14 @@ object FnPlayerItemDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemDamageEvent::class.java)
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("damage", returnsObject().noParams()) { it.target?.damage }
-                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("damage", returnsObject().noParams()) { it.setReturnRef(it.target?.damage) }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDamage(it.getInt(0).toInt())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerItemDamageEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemDamageEvent.getHandlerList()) }
         }
     }
 }

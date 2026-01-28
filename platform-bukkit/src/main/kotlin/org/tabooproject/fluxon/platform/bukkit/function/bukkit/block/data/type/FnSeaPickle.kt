@@ -18,10 +18,10 @@ object FnSeaPickle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SeaPickle::class.java)
-                .function("pickles", returnsObject().noParams()) { it.target?.pickles }
-                .function("setPickles", returnsObject().params(Type.OBJECT)) { it.target?.setPickles(it.getInt(0).toInt()) }
-                .function("minimumPickles", returnsObject().noParams()) { it.target?.minimumPickles }
-                .function("maximumPickles", returnsObject().noParams()) { it.target?.maximumPickles }
+                .function("pickles", returnsObject().noParams()) { it.setReturnRef(it.target?.pickles) }
+                .function("setPickles", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPickles(it.getInt(0).toInt())) }
+                .function("minimumPickles", returnsObject().noParams()) { it.setReturnRef(it.target?.minimumPickles) }
+                .function("maximumPickles", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumPickles) }
         }
     }
 }

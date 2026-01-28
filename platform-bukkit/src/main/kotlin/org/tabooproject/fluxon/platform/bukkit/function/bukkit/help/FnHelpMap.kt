@@ -20,17 +20,17 @@ object FnHelpMap {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpMap::class.java)
-                .function("getHelpTopic", returnsObject().params(Type.OBJECT)) { it.target?.getHelpTopic(it.getString(0)!!) }
-                .function("helpTopics", returnsObject().noParams()) { it.target?.helpTopics }
-                .function("addTopic", returnsObject().params(Type.OBJECT)) { it.target?.addTopic(it.getRef(0) as HelpTopic) }
-                .function("clear", returnsObject().noParams()) { it.target?.clear() }
+                .function("getHelpTopic", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getHelpTopic(it.getString(0)!!)) }
+                .function("helpTopics", returnsObject().noParams()) { it.setReturnRef(it.target?.helpTopics) }
+                .function("addTopic", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addTopic(it.getRef(0) as HelpTopic)) }
+                .function("clear", returnsObject().noParams()) { it.setReturnRef(it.target?.clear()) }
                 .function("registerHelpTopicFactory", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.registerHelpTopicFactory(
+                    it.setReturnRef(it.target?.registerHelpTopicFactory(
                         Class.forName(it.getString(0)),
                         it.getRef(1) as HelpTopicFactory<*>
-                    )
+                    ))
                 }
-                .function("ignoredPlugins", returnsObject().noParams()) { it.target?.ignoredPlugins }
+                .function("ignoredPlugins", returnsObject().noParams()) { it.setReturnRef(it.target?.ignoredPlugins) }
         }
     }
 }

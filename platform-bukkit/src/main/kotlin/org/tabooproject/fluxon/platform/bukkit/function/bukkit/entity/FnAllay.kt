@@ -20,29 +20,29 @@ object FnAllay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Allay::class.java)
-                .function("canDuplicate", returns(Type.Z).noParams()) { it.target?.canDuplicate() }
-                .function("setCanDuplicate", returnsObject().params(Type.OBJECT)) { it.target?.setCanDuplicate(it.getBool(0)) }
-                .function("duplicationCooldown", returnsObject().noParams()) { it.target?.duplicationCooldown }
-                .function("setDuplicationCooldown", returnsObject().params(Type.OBJECT)) { it.target?.setDuplicationCooldown(it.getInt(0).toLong()) }
-                .function("resetDuplicationCooldown", returnsObject().noParams()) { it.target?.resetDuplicationCooldown() }
-                .function("isDancing", returns(Type.Z).noParams()) { it.target?.isDancing }
+                .function("canDuplicate", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canDuplicate()) }
+                .function("setCanDuplicate", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCanDuplicate(it.getBool(0))) }
+                .function("duplicationCooldown", returnsObject().noParams()) { it.setReturnRef(it.target?.duplicationCooldown) }
+                .function("setDuplicationCooldown", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDuplicationCooldown(it.getInt(0).toLong())) }
+                .function("resetDuplicationCooldown", returnsObject().noParams()) { it.setReturnRef(it.target?.resetDuplicationCooldown()) }
+                .function("isDancing", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDancing) }
                 .function("startDancing", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.startDancing()
                     } else {
                         it.target?.startDancing(it.getRef(0) as Location)
-                    }
+                    })
                 }
                 .function("startDancing", returnsObject().params(Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.startDancing()
                     } else {
                         it.target?.startDancing(it.getRef(0) as Location)
-                    }
+                    })
                 }
-                .function("stopDancing", returnsObject().noParams()) { it.target?.stopDancing() }
-                .function("duplicateAllay", returnsObject().noParams()) { it.target?.duplicateAllay() }
-                .function("jukebox", returnsObject().noParams()) { it.target?.jukebox }
+                .function("stopDancing", returnsObject().noParams()) { it.setReturnRef(it.target?.stopDancing()) }
+                .function("duplicateAllay", returnsObject().noParams()) { it.setReturnRef(it.target?.duplicateAllay()) }
+                .function("jukebox", returnsObject().noParams()) { it.setReturnRef(it.target?.jukebox) }
         }
     }
 }

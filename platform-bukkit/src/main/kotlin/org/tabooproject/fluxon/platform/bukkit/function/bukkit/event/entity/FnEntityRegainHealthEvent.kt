@@ -20,14 +20,14 @@ object FnEntityRegainHealthEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityRegainHealthEvent::class.java)
-                .function("amount", returnsObject().noParams()) { it.target?.amount }
-                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAmount(it.getAsDouble(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("regainReason", returnsObject().noParams()) { it.target?.regainReason }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("amount", returnsObject().noParams()) { it.setReturnRef(it.target?.amount) }
+                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAmount(it.getAsDouble(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("regainReason", returnsObject().noParams()) { it.setReturnRef(it.target?.regainReason) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityRegainHealthEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityRegainHealthEvent.getHandlerList()) }
         }
     }
 }

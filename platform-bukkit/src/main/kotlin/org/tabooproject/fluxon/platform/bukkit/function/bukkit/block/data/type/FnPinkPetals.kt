@@ -18,9 +18,9 @@ object FnPinkPetals {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PinkPetals::class.java)
-                .function("flowerAmount", returnsObject().noParams()) { it.target?.flowerAmount }
-                .function("setFlowerAmount", returnsObject().params(Type.OBJECT)) { it.target?.setFlowerAmount(it.getInt(0).toInt()) }
-                .function("maximumFlowerAmount", returnsObject().noParams()) { it.target?.maximumFlowerAmount }
+                .function("flowerAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.flowerAmount) }
+                .function("setFlowerAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFlowerAmount(it.getInt(0).toInt())) }
+                .function("maximumFlowerAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumFlowerAmount) }
         }
     }
 }

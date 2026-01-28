@@ -20,19 +20,19 @@ object FnEnchantmentStorageMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentStorageMeta::class.java)
-                .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.target?.hasStoredEnchants() }
-                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasStoredEnchant(it.getRef(0) as Enchantment) }
-                .function("getStoredEnchantLevel", returnsObject().params(Type.OBJECT)) { it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment) }
+                .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasStoredEnchants()) }
+                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasStoredEnchant(it.getRef(0) as Enchantment)) }
+                .function("getStoredEnchantLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment)) }
                 .function("addStoredEnchant", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.addStoredEnchant(
+                    it.setReturnRef(it.target?.addStoredEnchant(
                         it.getRef(0) as Enchantment,
                         it.getInt(1).toInt(),
                         it.getBool(2)
-                    )
+                    ))
                 }
-                .function("removeStoredEnchant", returnsObject().params(Type.OBJECT)) { it.target?.removeStoredEnchant(it.getRef(0) as Enchantment) }
-                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("removeStoredEnchant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeStoredEnchant(it.getRef(0) as Enchantment)) }
+                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment)) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

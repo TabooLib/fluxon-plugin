@@ -19,8 +19,8 @@ object FnTripwire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tripwire::class.java)
-                .function("isDisarmed", returns(Type.Z).noParams()) { it.target?.isDisarmed }
-                .function("setDisarmed", returnsObject().params(Type.OBJECT)) { it.target?.setDisarmed(it.getBool(0)) }
+                .function("isDisarmed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDisarmed) }
+                .function("setDisarmed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisarmed(it.getBool(0))) }
         }
     }
 }

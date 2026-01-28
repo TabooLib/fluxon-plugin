@@ -18,10 +18,10 @@ object FnSpawnChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnChangeEvent::class.java)
-                .function("previousLocation", returnsObject().noParams()) { it.target?.previousLocation }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("previousLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.previousLocation) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { SpawnChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(SpawnChangeEvent.getHandlerList()) }
         }
     }
 }

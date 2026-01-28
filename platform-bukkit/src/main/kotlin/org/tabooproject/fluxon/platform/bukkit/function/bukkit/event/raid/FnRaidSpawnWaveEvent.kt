@@ -18,11 +18,11 @@ object FnRaidSpawnWaveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidSpawnWaveEvent::class.java)
-                .function("patrolLeader", returnsObject().noParams()) { it.target?.patrolLeader }
-                .function("raiders", returnsObject().noParams()) { it.target?.raiders }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("patrolLeader", returnsObject().noParams()) { it.setReturnRef(it.target?.patrolLeader) }
+                .function("raiders", returnsObject().noParams()) { it.setReturnRef(it.target?.raiders) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { RaidSpawnWaveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(RaidSpawnWaveEvent.getHandlerList()) }
         }
     }
 }

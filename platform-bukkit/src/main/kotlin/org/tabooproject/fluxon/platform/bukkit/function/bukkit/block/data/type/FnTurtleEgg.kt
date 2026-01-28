@@ -18,10 +18,10 @@ object FnTurtleEgg {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TurtleEgg::class.java)
-                .function("eggs", returnsObject().noParams()) { it.target?.eggs }
-                .function("setEggs", returnsObject().params(Type.OBJECT)) { it.target?.setEggs(it.getInt(0).toInt()) }
-                .function("minimumEggs", returnsObject().noParams()) { it.target?.minimumEggs }
-                .function("maximumEggs", returnsObject().noParams()) { it.target?.maximumEggs }
+                .function("eggs", returnsObject().noParams()) { it.setReturnRef(it.target?.eggs) }
+                .function("setEggs", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEggs(it.getInt(0).toInt())) }
+                .function("minimumEggs", returnsObject().noParams()) { it.setReturnRef(it.target?.minimumEggs) }
+                .function("maximumEggs", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumEggs) }
         }
     }
 }

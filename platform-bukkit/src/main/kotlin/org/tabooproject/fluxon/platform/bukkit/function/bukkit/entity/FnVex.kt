@@ -20,13 +20,13 @@ object FnVex {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vex::class.java)
-                .function("isCharging", returns(Type.Z).noParams()) { it.target?.isCharging }
-                .function("setCharging", returnsObject().params(Type.OBJECT)) { it.target?.setCharging(it.getBool(0)) }
-                .function("bound", returnsObject().noParams()) { it.target?.bound }
-                .function("setBound", returnsObject().params(Type.OBJECT)) { it.target?.setBound(it.getRef(0) as Location) }
-                .function("lifeTicks", returnsObject().noParams()) { it.target?.lifeTicks }
-                .function("setLifeTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
-                .function("hasLimitedLife", returns(Type.Z).noParams()) { it.target?.hasLimitedLife() }
+                .function("isCharging", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCharging) }
+                .function("setCharging", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCharging(it.getBool(0))) }
+                .function("bound", returnsObject().noParams()) { it.setReturnRef(it.target?.bound) }
+                .function("setBound", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBound(it.getRef(0) as Location)) }
+                .function("lifeTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.lifeTicks) }
+                .function("setLifeTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLifeTicks(it.getInt(0).toInt())) }
+                .function("hasLimitedLife", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasLimitedLife()) }
         }
     }
 }

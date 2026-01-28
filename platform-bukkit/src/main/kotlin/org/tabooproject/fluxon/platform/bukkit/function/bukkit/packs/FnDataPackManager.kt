@@ -23,16 +23,16 @@ object FnDataPackManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DataPackManager::class.java)
-                .function("dataPacks", returnsObject().noParams()) { it.target?.dataPacks }
-                .function("getDataPack", returnsObject().params(Type.OBJECT)) { it.target?.getDataPack(it.getRef(0) as NamespacedKey) }
-                .function("getEnabledDataPacks", returnsObject().params(Type.OBJECT)) { it.target?.getEnabledDataPacks(it.getRef(0) as World) }
-                .function("getDisabledDataPacks", returnsObject().params(Type.OBJECT)) { it.target?.getDisabledDataPacks(it.getRef(0) as World) }
+                .function("dataPacks", returnsObject().noParams()) { it.setReturnRef(it.target?.dataPacks) }
+                .function("getDataPack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDataPack(it.getRef(0) as NamespacedKey)) }
+                .function("getEnabledDataPacks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getEnabledDataPacks(it.getRef(0) as World)) }
+                .function("getDisabledDataPacks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDisabledDataPacks(it.getRef(0) as World)) }
                 .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.isEnabledByFeature(var1, it.getRef(1) as World)
                         is EntityType -> it.target?.isEnabledByFeature(var1, it.getRef(1) as World)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 EntityType 类型")
-                    }
+                    })
                 }
         }
     }

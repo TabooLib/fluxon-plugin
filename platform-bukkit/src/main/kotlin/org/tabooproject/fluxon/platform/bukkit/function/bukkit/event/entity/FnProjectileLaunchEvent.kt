@@ -19,9 +19,9 @@ object FnProjectileLaunchEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProjectileLaunchEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
         }
     }
 }

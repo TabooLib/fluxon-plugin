@@ -19,14 +19,14 @@ object FnPlayerBedLeaveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBedLeaveEvent::class.java)
-                .function("bed", returnsObject().noParams()) { it.target?.bed }
-                .function("shouldSetSpawnLocation", returns(Type.Z).noParams()) { it.target?.shouldSetSpawnLocation() }
-                .function("setSpawnLocation", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnLocation(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("bed", returnsObject().noParams()) { it.setReturnRef(it.target?.bed) }
+                .function("shouldSetSpawnLocation", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.shouldSetSpawnLocation()) }
+                .function("setSpawnLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnLocation(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerBedLeaveEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerBedLeaveEvent.getHandlerList()) }
         }
     }
 }

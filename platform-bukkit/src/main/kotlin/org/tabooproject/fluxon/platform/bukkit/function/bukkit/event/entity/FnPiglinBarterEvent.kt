@@ -19,14 +19,14 @@ object FnPiglinBarterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PiglinBarterEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("input", returnsObject().noParams()) { it.target?.input }
-                .function("outcome", returnsObject().noParams()) { it.target?.outcome }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("input", returnsObject().noParams()) { it.setReturnRef(it.target?.input) }
+                .function("outcome", returnsObject().noParams()) { it.setReturnRef(it.target?.outcome) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PiglinBarterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PiglinBarterEvent.getHandlerList()) }
         }
     }
 }

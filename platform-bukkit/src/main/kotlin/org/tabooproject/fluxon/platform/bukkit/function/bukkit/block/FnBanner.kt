@@ -20,20 +20,20 @@ object FnBanner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Banner::class.java)
-                .function("baseColor", returnsObject().noParams()) { it.target?.baseColor }
-                .function("setBaseColor", returnsObject().params(Type.OBJECT)) { it.target?.setBaseColor(it.getRef(0) as DyeColor) }
-                .function("patterns", returnsObject().noParams()) { it.target?.patterns }
-                .function("setPatterns", returnsObject().params(Type.OBJECT)) { it.target?.setPatterns(it.getRef(0) as List<Pattern>) }
-                .function("addPattern", returnsObject().params(Type.OBJECT)) { it.target?.addPattern(it.getRef(0) as Pattern) }
-                .function("getPattern", returnsObject().params(Type.OBJECT)) { it.target?.getPattern(it.getInt(0).toInt()) }
-                .function("removePattern", returnsObject().params(Type.OBJECT)) { it.target?.removePattern(it.getInt(0).toInt()) }
+                .function("baseColor", returnsObject().noParams()) { it.setReturnRef(it.target?.baseColor) }
+                .function("setBaseColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBaseColor(it.getRef(0) as DyeColor)) }
+                .function("patterns", returnsObject().noParams()) { it.setReturnRef(it.target?.patterns) }
+                .function("setPatterns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPatterns(it.getRef(0) as List<Pattern>)) }
+                .function("addPattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addPattern(it.getRef(0) as Pattern)) }
+                .function("getPattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getPattern(it.getInt(0).toInt())) }
+                .function("removePattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removePattern(it.getInt(0).toInt())) }
                 .function("setPattern", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setPattern(
+                    it.setReturnRef(it.target?.setPattern(
                         it.getInt(0).toInt(),
                         it.getRef(1) as Pattern
-                    )
+                    ))
                 }
-                .function("numberOfPatterns", returnsObject().noParams()) { it.target?.numberOfPatterns() }
+                .function("numberOfPatterns", returnsObject().noParams()) { it.setReturnRef(it.target?.numberOfPatterns()) }
         }
     }
 }

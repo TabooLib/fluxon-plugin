@@ -19,11 +19,11 @@ object FnChunkUnloadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkUnloadEvent::class.java)
-                .function("isSaveChunk", returns(Type.Z).noParams()) { it.target?.isSaveChunk }
-                .function("setSaveChunk", returnsObject().params(Type.OBJECT)) { it.target?.setSaveChunk(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isSaveChunk", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSaveChunk) }
+                .function("setSaveChunk", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSaveChunk(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ChunkUnloadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkUnloadEvent.getHandlerList()) }
         }
     }
 }

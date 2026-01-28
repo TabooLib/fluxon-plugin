@@ -19,8 +19,8 @@ object FnChestedHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChestedHorse::class.java)
-                .function("isCarryingChest", returns(Type.Z).noParams()) { it.target?.isCarryingChest }
-                .function("setCarryingChest", returnsObject().params(Type.OBJECT)) { it.target?.setCarryingChest(it.getBool(0)) }
+                .function("isCarryingChest", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCarryingChest) }
+                .function("setCarryingChest", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarryingChest(it.getBool(0))) }
         }
     }
 }

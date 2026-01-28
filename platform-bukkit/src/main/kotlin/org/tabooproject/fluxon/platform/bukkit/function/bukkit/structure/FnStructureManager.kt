@@ -23,16 +23,16 @@ object FnStructureManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureManager::class.java)
-                .function("getStructure", returnsObject().params(Type.OBJECT)) { it.target?.getStructure(it.getRef(0) as NamespacedKey) }
+                .function("getStructure", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getStructure(it.getRef(0) as NamespacedKey)) }
                 .function("registerStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.registerStructure(
+                    it.setReturnRef(it.target?.registerStructure(
                         it.getRef(0) as NamespacedKey,
                         it.getRef(1) as Structure
-                    )
+                    ))
                 }
-                .function("unregisterStructure", returnsObject().params(Type.OBJECT)) { it.target?.unregisterStructure(it.getRef(0) as NamespacedKey) }
+                .function("unregisterStructure", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.unregisterStructure(it.getRef(0) as NamespacedKey)) }
                 .function("loadStructure", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         when (val var1 = it.getRef(0)) {
                             is NamespacedKey -> it.target?.loadStructure(var1)
                             is File -> it.target?.loadStructure(var1)
@@ -44,10 +44,10 @@ object FnStructureManager {
                             it.getRef(0) as NamespacedKey,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("loadStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         when (val var1 = it.getRef(0)) {
                             is NamespacedKey -> it.target?.loadStructure(var1)
                             is File -> it.target?.loadStructure(var1)
@@ -59,10 +59,10 @@ object FnStructureManager {
                             it.getRef(0) as NamespacedKey,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("saveStructure", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.saveStructure(it.getRef(0) as NamespacedKey)
                     } else {
                         when (val var1 = it.getRef(0)) {
@@ -71,10 +71,10 @@ object FnStructureManager {
                             is OutputStream -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
                             else -> throw IllegalArgumentException("第一个参数必须是 NamespacedKey、File 或 OutputStream 类型")
                         }
-                    }
+                    })
                 }
                 .function("saveStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.saveStructure(it.getRef(0) as NamespacedKey)
                     } else {
                         when (val var1 = it.getRef(0)) {
@@ -83,31 +83,31 @@ object FnStructureManager {
                             is OutputStream -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
                             else -> throw IllegalArgumentException("第一个参数必须是 NamespacedKey、File 或 OutputStream 类型")
                         }
-                    }
+                    })
                 }
                 .function("deleteStructure", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.deleteStructure(it.getRef(0) as NamespacedKey)
                     } else {
                         it.target?.deleteStructure(
                             it.getRef(0) as NamespacedKey,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("deleteStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.deleteStructure(it.getRef(0) as NamespacedKey)
                     } else {
                         it.target?.deleteStructure(
                             it.getRef(0) as NamespacedKey,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
-                .function("getStructureFile", returnsObject().params(Type.OBJECT)) { it.target?.getStructureFile(it.getRef(0) as NamespacedKey) }
-                .function("createStructure", returnsObject().noParams()) { it.target?.createStructure() }
-                .function("copy", returnsObject().params(Type.OBJECT)) { it.target?.copy(it.getRef(0) as Structure) }
+                .function("getStructureFile", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getStructureFile(it.getRef(0) as NamespacedKey)) }
+                .function("createStructure", returnsObject().noParams()) { it.setReturnRef(it.target?.createStructure()) }
+                .function("copy", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.copy(it.getRef(0) as Structure)) }
         }
     }
 }

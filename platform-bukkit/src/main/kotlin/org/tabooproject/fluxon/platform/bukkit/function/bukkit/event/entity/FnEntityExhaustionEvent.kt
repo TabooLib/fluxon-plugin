@@ -19,15 +19,15 @@ object FnEntityExhaustionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityExhaustionEvent::class.java)
-                .function("exhaustionReason", returnsObject().noParams()) { it.target?.exhaustionReason }
-                .function("exhaustion", returnsObject().noParams()) { it.target?.exhaustion }
-                .function("setExhaustion", returnsObject().params(Type.OBJECT)) { it.target?.setExhaustion(it.getFloat(0)) }
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("exhaustionReason", returnsObject().noParams()) { it.setReturnRef(it.target?.exhaustionReason) }
+                .function("exhaustion", returnsObject().noParams()) { it.setReturnRef(it.target?.exhaustion) }
+                .function("setExhaustion", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExhaustion(it.getFloat(0))) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityExhaustionEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityExhaustionEvent.getHandlerList()) }
         }
     }
 }

@@ -22,7 +22,7 @@ object FunctionAdyeshach {
     fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(AdyeshachApi::class.java)
-            registerFunction("aapi", returnsObject().noParams()) { AdyeshachApi }
+            registerFunction("aapi", returnsObject().noParams()) { it.setReturnRef(AdyeshachApi) }
         }
     }
 

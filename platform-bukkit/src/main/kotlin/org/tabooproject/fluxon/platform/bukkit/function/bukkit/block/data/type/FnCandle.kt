@@ -18,9 +18,9 @@ object FnCandle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Candle::class.java)
-                .function("candles", returnsObject().noParams()) { it.target?.candles }
-                .function("setCandles", returnsObject().params(Type.OBJECT)) { it.target?.setCandles(it.getInt(0).toInt()) }
-                .function("maximumCandles", returnsObject().noParams()) { it.target?.maximumCandles }
+                .function("candles", returnsObject().noParams()) { it.setReturnRef(it.target?.candles) }
+                .function("setCandles", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCandles(it.getInt(0).toInt())) }
+                .function("maximumCandles", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumCandles) }
         }
     }
 }

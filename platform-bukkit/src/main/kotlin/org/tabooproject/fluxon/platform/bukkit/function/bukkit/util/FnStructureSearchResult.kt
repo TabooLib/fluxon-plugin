@@ -18,8 +18,8 @@ object FnStructureSearchResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureSearchResult::class.java)
-                .function("structure", returnsObject().noParams()) { it.target?.structure }
-                .function("location", returnsObject().noParams()) { it.target?.location }
+                .function("structure", returnsObject().noParams()) { it.setReturnRef(it.target?.structure) }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
         }
     }
 }

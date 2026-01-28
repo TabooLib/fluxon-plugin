@@ -19,10 +19,10 @@ object FnCauldron {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cauldron::class.java)
-                .function("isFull", returns(Type.Z).noParams()) { it.target?.isFull }
-                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isFull", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFull) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

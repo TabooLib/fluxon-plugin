@@ -19,12 +19,12 @@ object FnVehicleExitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleExitEvent::class.java)
-                .function("exited", returnsObject().noParams()) { it.target?.exited }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("exited", returnsObject().noParams()) { it.setReturnRef(it.target?.exited) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleExitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleExitEvent.getHandlerList()) }
         }
     }
 }

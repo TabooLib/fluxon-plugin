@@ -20,14 +20,14 @@ object FnBlockCanBuildEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCanBuildEvent::class.java)
-                .function("isBuildable", returns(Type.Z).noParams()) { it.target?.isBuildable }
-                .function("setBuildable", returnsObject().params(Type.OBJECT)) { it.target?.setBuildable(it.getBool(0)) }
-                .function("material", returnsObject().noParams()) { it.target?.material }
-                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isBuildable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBuildable) }
+                .function("setBuildable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBuildable(it.getBool(0))) }
+                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
+                .function("blockData", returnsObject().noParams()) { it.setReturnRef(it.target?.blockData) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockCanBuildEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockCanBuildEvent.getHandlerList()) }
         }
     }
 }

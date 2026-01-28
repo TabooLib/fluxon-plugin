@@ -18,8 +18,8 @@ object FnRabbit {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rabbit::class.java)
-                .function("rabbitType", returnsObject().noParams()) { it.target?.rabbitType }
-                .function("setRabbitType", returnsObject().params(Type.OBJECT)) { it.target?.setRabbitType(it.getRef(0) as Rabbit.Type) }
+                .function("rabbitType", returnsObject().noParams()) { it.setReturnRef(it.target?.rabbitType) }
+                .function("setRabbitType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRabbitType(it.getRef(0) as Rabbit.Type)) }
         }
     }
 }

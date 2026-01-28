@@ -18,10 +18,10 @@ object FnPermissionAttachmentInfo {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionAttachmentInfo::class.java)
-                .function("permissible", returnsObject().noParams()) { it.target?.permissible }
-                .function("permission", returnsObject().noParams()) { it.target?.permission }
-                .function("attachment", returnsObject().noParams()) { it.target?.attachment }
-                .function("value", returnsObject().noParams()) { it.target?.value }
+                .function("permissible", returnsObject().noParams()) { it.setReturnRef(it.target?.permissible) }
+                .function("permission", returnsObject().noParams()) { it.setReturnRef(it.target?.permission) }
+                .function("attachment", returnsObject().noParams()) { it.setReturnRef(it.target?.attachment) }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
         }
     }
 }

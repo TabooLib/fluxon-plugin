@@ -19,20 +19,20 @@ object FnPanda {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Panda::class.java)
-                .function("mainGene", returnsObject().noParams()) { it.target?.mainGene }
-                .function("setMainGene", returnsObject().params(Type.OBJECT)) { it.target?.setMainGene(it.getRef(0) as Panda.Gene) }
-                .function("hiddenGene", returnsObject().noParams()) { it.target?.hiddenGene }
-                .function("setHiddenGene", returnsObject().params(Type.OBJECT)) { it.target?.setHiddenGene(it.getRef(0) as Panda.Gene) }
-                .function("isRolling", returns(Type.Z).noParams()) { it.target?.isRolling }
-                .function("setRolling", returnsObject().params(Type.OBJECT)) { it.target?.setRolling(it.getBool(0)) }
-                .function("isSneezing", returns(Type.Z).noParams()) { it.target?.isSneezing }
-                .function("setSneezing", returnsObject().params(Type.OBJECT)) { it.target?.setSneezing(it.getBool(0)) }
-                .function("isOnBack", returns(Type.Z).noParams()) { it.target?.isOnBack }
-                .function("setOnBack", returnsObject().params(Type.OBJECT)) { it.target?.setOnBack(it.getBool(0)) }
-                .function("isEating", returns(Type.Z).noParams()) { it.target?.isEating }
-                .function("setEating", returnsObject().params(Type.OBJECT)) { it.target?.setEating(it.getBool(0)) }
-                .function("isScared", returns(Type.Z).noParams()) { it.target?.isScared }
-                .function("unhappyTicks", returnsObject().noParams()) { it.target?.unhappyTicks }
+                .function("mainGene", returnsObject().noParams()) { it.setReturnRef(it.target?.mainGene) }
+                .function("setMainGene", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMainGene(it.getRef(0) as Panda.Gene)) }
+                .function("hiddenGene", returnsObject().noParams()) { it.setReturnRef(it.target?.hiddenGene) }
+                .function("setHiddenGene", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHiddenGene(it.getRef(0) as Panda.Gene)) }
+                .function("isRolling", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRolling) }
+                .function("setRolling", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRolling(it.getBool(0))) }
+                .function("isSneezing", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSneezing) }
+                .function("setSneezing", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSneezing(it.getBool(0))) }
+                .function("isOnBack", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOnBack) }
+                .function("setOnBack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOnBack(it.getBool(0))) }
+                .function("isEating", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEating) }
+                .function("setEating", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEating(it.getBool(0))) }
+                .function("isScared", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isScared) }
+                .function("unhappyTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.unhappyTicks) }
         }
     }
 }
@@ -45,7 +45,7 @@ object FnPandaGene {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Panda.Gene::class.java)
-                .function("isRecessive", returns(Type.Z).noParams()) { it.target?.isRecessive }
+                .function("isRecessive", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRecessive) }
         }
     }
 }

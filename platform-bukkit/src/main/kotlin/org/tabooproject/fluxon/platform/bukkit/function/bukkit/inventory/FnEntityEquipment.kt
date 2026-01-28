@@ -21,7 +21,7 @@ object FnEntityEquipment {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEquipment::class.java)
                 .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setItem(
                             it.getRef(0) as EquipmentSlot,
                             it.getRef(1) as ItemStack
@@ -32,10 +32,10 @@ object FnEntityEquipment {
                             it.getRef(1) as ItemStack,
                             it.getBool(2)
                         )
-                    }
+                    })
                 }
                 .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setItem(
                             it.getRef(0) as EquipmentSlot,
                             it.getRef(1) as ItemStack
@@ -46,153 +46,153 @@ object FnEntityEquipment {
                             it.getRef(1) as ItemStack,
                             it.getBool(2)
                         )
-                    }
+                    })
                 }
-                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getRef(0) as EquipmentSlot) }
-                .function("itemInMainHand", returnsObject().noParams()) { it.target?.itemInMainHand }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getItem(it.getRef(0) as EquipmentSlot)) }
+                .function("itemInMainHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInMainHand) }
                 .function("setItemInMainHand", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setItemInMainHand(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setItemInMainHand(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("setItemInMainHand", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setItemInMainHand(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setItemInMainHand(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
-                .function("itemInOffHand", returnsObject().noParams()) { it.target?.itemInOffHand }
+                .function("itemInOffHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInOffHand) }
                 .function("setItemInOffHand", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setItemInOffHand(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setItemInOffHand(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("setItemInOffHand", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setItemInOffHand(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setItemInOffHand(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
-                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
-                .function("setItemInHand", returnsObject().params(Type.OBJECT)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }
-                .function("helmet", returnsObject().noParams()) { it.target?.helmet }
+                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
+                .function("setItemInHand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItemInHand(it.getRef(0) as ItemStack)) }
+                .function("helmet", returnsObject().noParams()) { it.setReturnRef(it.target?.helmet) }
                 .function("setHelmet", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setHelmet(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setHelmet(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
                 .function("setHelmet", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setHelmet(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setHelmet(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
-                .function("chestplate", returnsObject().noParams()) { it.target?.chestplate }
+                .function("chestplate", returnsObject().noParams()) { it.setReturnRef(it.target?.chestplate) }
                 .function("setChestplate", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setChestplate(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setChestplate(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
                 .function("setChestplate", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setChestplate(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setChestplate(
                             it.getRef(0) as ItemStack,
                             it.getBool(1)
                         )
-                    }
+                    })
                 }
-                .function("leggings", returnsObject().noParams()) { it.target?.leggings }
+                .function("leggings", returnsObject().noParams()) { it.setReturnRef(it.target?.leggings) }
                 .function("setLeggings", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setLeggings(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setLeggings(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
                 .function("setLeggings", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setLeggings(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setLeggings(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
-                .function("boots", returnsObject().noParams()) { it.target?.boots }
+                .function("boots", returnsObject().noParams()) { it.setReturnRef(it.target?.boots) }
                 .function("setBoots", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setBoots(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setBoots(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
                 .function("setBoots", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setBoots(it.getRef(0) as ItemStack)
                     } else {
                         it.target?.setBoots(it.getRef(0) as ItemStack, it.getBool(1))
-                    }
+                    })
                 }
-                .function("armorContents", returnsObject().noParams()) { it.target?.armorContents }
-                .function("setArmorContents", returnsObject().params(Type.OBJECT)) { it.target?.setArmorContents(it.getRef(0) as Array<ItemStack>) }
-                .function("clear", returnsObject().noParams()) { it.target?.clear() }
-                .function("itemInHandDropChance", returnsObject().noParams()) { it.target?.itemInHandDropChance }
+                .function("armorContents", returnsObject().noParams()) { it.setReturnRef(it.target?.armorContents) }
+                .function("setArmorContents", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setArmorContents(it.getRef(0) as Array<ItemStack>)) }
+                .function("clear", returnsObject().noParams()) { it.setReturnRef(it.target?.clear()) }
+                .function("itemInHandDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHandDropChance) }
                 .function("setItemInHandDropChance", returnsObject().params(Type.OBJECT)) {
-                    it.target?.setItemInHandDropChance(
+                    it.setReturnRef(it.target?.setItemInHandDropChance(
                         it.getFloat(0)
-                    )
+                    ))
                 }
-                .function("itemInMainHandDropChance", returnsObject().noParams()) { it.target?.itemInMainHandDropChance }
+                .function("itemInMainHandDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInMainHandDropChance) }
                 .function("setItemInMainHandDropChance", returnsObject().params(Type.OBJECT)) {
-                    it.target?.setItemInMainHandDropChance(
+                    it.setReturnRef(it.target?.setItemInMainHandDropChance(
                         it.getFloat(0)
-                    )
+                    ))
                 }
-                .function("itemInOffHandDropChance", returnsObject().noParams()) { it.target?.itemInOffHandDropChance }
+                .function("itemInOffHandDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInOffHandDropChance) }
                 .function("setItemInOffHandDropChance", returnsObject().params(Type.OBJECT)) {
-                    it.target?.setItemInOffHandDropChance(
+                    it.setReturnRef(it.target?.setItemInOffHandDropChance(
                         it.getFloat(0)
-                    )
+                    ))
                 }
-                .function("helmetDropChance", returnsObject().noParams()) { it.target?.helmetDropChance }
-                .function("setHelmetDropChance", returnsObject().params(Type.OBJECT)) { it.target?.setHelmetDropChance(it.getFloat(0)) }
-                .function("chestplateDropChance", returnsObject().noParams()) { it.target?.chestplateDropChance }
+                .function("helmetDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.helmetDropChance) }
+                .function("setHelmetDropChance", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHelmetDropChance(it.getFloat(0))) }
+                .function("chestplateDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.chestplateDropChance) }
                 .function("setChestplateDropChance", returnsObject().params(Type.OBJECT)) {
-                    it.target?.setChestplateDropChance(
+                    it.setReturnRef(it.target?.setChestplateDropChance(
                         it.getFloat(0)
-                    )
+                    ))
                 }
-                .function("leggingsDropChance", returnsObject().noParams()) { it.target?.leggingsDropChance }
-                .function("setLeggingsDropChance", returnsObject().params(Type.OBJECT)) { it.target?.setLeggingsDropChance(it.getFloat(0)) }
-                .function("bootsDropChance", returnsObject().noParams()) { it.target?.bootsDropChance }
-                .function("setBootsDropChance", returnsObject().params(Type.OBJECT)) { it.target?.setBootsDropChance(it.getFloat(0)) }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("leggingsDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.leggingsDropChance) }
+                .function("setLeggingsDropChance", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLeggingsDropChance(it.getFloat(0))) }
+                .function("bootsDropChance", returnsObject().noParams()) { it.setReturnRef(it.target?.bootsDropChance) }
+                .function("setBootsDropChance", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBootsDropChance(it.getFloat(0))) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

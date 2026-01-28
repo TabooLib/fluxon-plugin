@@ -18,9 +18,9 @@ object FnVibration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration::class.java)
-                .function("origin", returnsObject().noParams()) { it.target?.origin }
-                .function("destination", returnsObject().noParams()) { it.target?.destination }
-                .function("arrivalTime", returnsObject().noParams()) { it.target?.arrivalTime }
+                .function("origin", returnsObject().noParams()) { it.setReturnRef(it.target?.origin) }
+                .function("destination", returnsObject().noParams()) { it.setReturnRef(it.target?.destination) }
+                .function("arrivalTime", returnsObject().noParams()) { it.setReturnRef(it.target?.arrivalTime) }
         }
     }
 }
@@ -33,7 +33,7 @@ object FnVibrationDestinationEntityDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.EntityDestination::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
         }
     }
 }
@@ -46,8 +46,8 @@ object FnVibrationDestinationBlockDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.BlockDestination::class.java)
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
         }
     }
 }

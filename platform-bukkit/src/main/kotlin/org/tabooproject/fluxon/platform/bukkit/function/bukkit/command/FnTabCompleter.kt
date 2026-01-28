@@ -21,12 +21,12 @@ object FnTabCompleter {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TabCompleter::class.java)
                 .function("onTabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.onTabComplete(
+                    it.setReturnRef(it.target?.onTabComplete(
                         it.getRef(0) as CommandSender,
                         it.getRef(1) as Command,
                         it.getString(2)!!,
                         it.getRef(3) as Array<String>
-                    )
+                    ))
                 }
         }
     }

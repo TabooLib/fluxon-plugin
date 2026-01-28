@@ -18,9 +18,9 @@ object FnHatchable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hatchable::class.java)
-                .function("hatch", returnsObject().noParams()) { it.target?.hatch }
-                .function("setHatch", returnsObject().params(Type.OBJECT)) { it.target?.setHatch(it.getInt(0).toInt()) }
-                .function("maximumHatch", returnsObject().noParams()) { it.target?.maximumHatch }
+                .function("hatch", returnsObject().noParams()) { it.setReturnRef(it.target?.hatch) }
+                .function("setHatch", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHatch(it.getInt(0).toInt())) }
+                .function("maximumHatch", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumHatch) }
         }
     }
 }

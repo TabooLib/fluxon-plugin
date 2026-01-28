@@ -19,10 +19,10 @@ object FnCat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cat::class.java)
-                .function("catType", returnsObject().noParams()) { it.target?.catType }
-                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.target?.setCatType(it.getRef(0) as Cat.Type) }
-                .function("collarColor", returnsObject().noParams()) { it.target?.collarColor }
-                .function("setCollarColor", returnsObject().params(Type.OBJECT)) { it.target?.setCollarColor(it.getRef(0) as DyeColor) }
+                .function("catType", returnsObject().noParams()) { it.setReturnRef(it.target?.catType) }
+                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCatType(it.getRef(0) as Cat.Type)) }
+                .function("collarColor", returnsObject().noParams()) { it.setReturnRef(it.target?.collarColor) }
+                .function("setCollarColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCollarColor(it.getRef(0) as DyeColor)) }
         }
     }
 }
@@ -35,7 +35,7 @@ object FnCatType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cat.Type::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

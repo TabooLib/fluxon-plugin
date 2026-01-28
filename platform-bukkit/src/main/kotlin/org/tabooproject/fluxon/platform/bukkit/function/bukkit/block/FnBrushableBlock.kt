@@ -19,8 +19,8 @@ object FnBrushableBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrushableBlock::class.java)
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
         }
     }
 }

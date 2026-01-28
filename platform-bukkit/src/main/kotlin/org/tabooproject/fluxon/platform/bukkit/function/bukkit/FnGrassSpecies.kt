@@ -18,9 +18,9 @@ object FnGrassSpecies {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GrassSpecies::class.java)
-                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
                 // static
-                .function("getByData", returnsObject().params(Type.OBJECT)) { GrassSpecies.getByData(it.getInt(0).toByte()) }
+                .function("getByData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(GrassSpecies.getByData(it.getInt(0).toByte())) }
         }
     }
 }

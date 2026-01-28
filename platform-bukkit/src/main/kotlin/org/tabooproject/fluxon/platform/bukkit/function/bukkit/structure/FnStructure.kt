@@ -25,13 +25,13 @@ object FnStructure {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Structure::class.java)
-                .function("size", returns(Type.I).noParams()) { it.target?.size }
-                .function("palettes", returnsObject().noParams()) { it.target?.palettes }
-                .function("paletteCount", returnsObject().noParams()) { it.target?.paletteCount }
-                .function("entities", returnsObject().noParams()) { it.target?.entities }
-                .function("entityCount", returnsObject().noParams()) { it.target?.entityCount }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
+                .function("palettes", returnsObject().noParams()) { it.setReturnRef(it.target?.palettes) }
+                .function("paletteCount", returnsObject().noParams()) { it.setReturnRef(it.target?.paletteCount) }
+                .function("entities", returnsObject().noParams()) { it.setReturnRef(it.target?.entities) }
+                .function("entityCount", returnsObject().noParams()) { it.setReturnRef(it.target?.entityCount) }
                 .function("place", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 7) {
+                    it.setReturnRef(if (it.argumentCount == 7) {
                         it.target?.place(
                             it.getRef(0) as Location,
                             it.getBool(1),
@@ -52,10 +52,10 @@ object FnStructure {
                             it.getFloat(6),
                             it.getRef(7) as Random
                         )
-                    }
+                    })
                 }
                 .function("place", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 7) {
+                    it.setReturnRef(if (it.argumentCount == 7) {
                         it.target?.place(
                             it.getRef(0) as Location,
                             it.getBool(1),
@@ -76,14 +76,14 @@ object FnStructure {
                             it.getFloat(6),
                             it.getRef(7) as Random
                         )
-                    }
+                    })
                 }
                 .function("fill", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (val var2 = it.getRef(1)) {
+                    it.setReturnRef(when (val var2 = it.getRef(1)) {
                         is Location -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
                         is BlockVector -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
                         else -> throw IllegalArgumentException("第二个参数必须是 Location 或 BlockVector 类型")
-                    }
+                    })
                 }
         }
     }

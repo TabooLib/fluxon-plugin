@@ -20,9 +20,9 @@ object FnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Event::class.java)
-                .function("eventName", returnsObject().noParams()) { it.target?.eventName }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
-                .function("isAsynchronous", returns(Type.Z).noParams()) { it.target?.isAsynchronous }
+                .function("eventName", returnsObject().noParams()) { it.setReturnRef(it.target?.eventName) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("isAsynchronous", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAsynchronous) }
         }
     }
 }

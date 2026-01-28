@@ -19,14 +19,14 @@ object FnGuardian {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Guardian::class.java)
-                .function("setLaser", returnsObject().params(Type.OBJECT)) { it.target?.setLaser(it.getBool(0)) }
-                .function("hasLaser", returns(Type.Z).noParams()) { it.target?.hasLaser() }
-                .function("laserDuration", returnsObject().noParams()) { it.target?.laserDuration }
-                .function("setLaserTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLaserTicks(it.getInt(0).toInt()) }
-                .function("laserTicks", returnsObject().noParams()) { it.target?.laserTicks }
-                .function("isElder", returns(Type.Z).noParams()) { it.target?.isElder }
-                .function("setElder", returnsObject().params(Type.OBJECT)) { it.target?.setElder(it.getBool(0)) }
-                .function("isMoving", returns(Type.Z).noParams()) { it.target?.isMoving }
+                .function("setLaser", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLaser(it.getBool(0))) }
+                .function("hasLaser", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasLaser()) }
+                .function("laserDuration", returnsObject().noParams()) { it.setReturnRef(it.target?.laserDuration) }
+                .function("setLaserTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLaserTicks(it.getInt(0).toInt())) }
+                .function("laserTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.laserTicks) }
+                .function("isElder", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isElder) }
+                .function("setElder", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setElder(it.getBool(0))) }
+                .function("isMoving", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isMoving) }
         }
     }
 }

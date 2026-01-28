@@ -19,13 +19,13 @@ object FnAdvancementProgress {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AdvancementProgress::class.java)
-                .function("advancement", returnsObject().noParams()) { it.target?.advancement }
-                .function("isDone", returns(Type.Z).noParams()) { it.target?.isDone }
-                .function("awardCriteria", returnsObject().params(Type.OBJECT)) { it.target?.awardCriteria(it.getString(0)!!) }
-                .function("revokeCriteria", returnsObject().params(Type.OBJECT)) { it.target?.revokeCriteria(it.getString(0)!!) }
-                .function("getDateAwarded", returnsObject().params(Type.OBJECT)) { it.target?.getDateAwarded(it.getString(0)!!) }
-                .function("remainingCriteria", returnsObject().noParams()) { it.target?.remainingCriteria }
-                .function("awardedCriteria", returnsObject().noParams()) { it.target?.awardedCriteria }
+                .function("advancement", returnsObject().noParams()) { it.setReturnRef(it.target?.advancement) }
+                .function("isDone", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDone) }
+                .function("awardCriteria", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.awardCriteria(it.getString(0)!!)) }
+                .function("revokeCriteria", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.revokeCriteria(it.getString(0)!!)) }
+                .function("getDateAwarded", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDateAwarded(it.getString(0)!!)) }
+                .function("remainingCriteria", returnsObject().noParams()) { it.setReturnRef(it.target?.remainingCriteria) }
+                .function("awardedCriteria", returnsObject().noParams()) { it.setReturnRef(it.target?.awardedCriteria) }
         }
     }
 }

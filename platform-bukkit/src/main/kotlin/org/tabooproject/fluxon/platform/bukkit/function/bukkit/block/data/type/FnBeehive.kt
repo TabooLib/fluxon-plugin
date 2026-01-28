@@ -18,9 +18,9 @@ object FnBeehive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beehive::class.java)
-                .function("honeyLevel", returnsObject().noParams()) { it.target?.honeyLevel }
-                .function("setHoneyLevel", returnsObject().params(Type.OBJECT)) { it.target?.setHoneyLevel(it.getInt(0).toInt()) }
-                .function("maximumHoneyLevel", returnsObject().noParams()) { it.target?.maximumHoneyLevel }
+                .function("honeyLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.honeyLevel) }
+                .function("setHoneyLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHoneyLevel(it.getInt(0).toInt())) }
+                .function("maximumHoneyLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumHoneyLevel) }
         }
     }
 }

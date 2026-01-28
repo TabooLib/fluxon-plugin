@@ -20,9 +20,9 @@ object FnIndexHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(IndexHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.target?.canSee(it.getRef(0) as CommandSender) }
-                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.target?.amendCanSee(it.getString(0)) }
-                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.target?.getFullText(it.getRef(0) as CommandSender) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canSee(it.getRef(0) as CommandSender)) }
+                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.amendCanSee(it.getString(0))) }
+                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
         }
     }
 }

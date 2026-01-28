@@ -18,13 +18,13 @@ object FnAnvilInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnvilInventory::class.java)
-                .function("renameText", returnsObject().noParams()) { it.target?.renameText }
-                .function("repairCostAmount", returnsObject().noParams()) { it.target?.repairCostAmount }
-                .function("setRepairCostAmount", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCostAmount(it.getInt(0).toInt()) }
-                .function("repairCost", returnsObject().noParams()) { it.target?.repairCost }
-                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCost(it.getInt(0).toInt()) }
-                .function("maximumRepairCost", returnsObject().noParams()) { it.target?.maximumRepairCost }
-                .function("setMaximumRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setMaximumRepairCost(it.getInt(0).toInt()) }
+                .function("renameText", returnsObject().noParams()) { it.setReturnRef(it.target?.renameText) }
+                .function("repairCostAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.repairCostAmount) }
+                .function("setRepairCostAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRepairCostAmount(it.getInt(0).toInt())) }
+                .function("repairCost", returnsObject().noParams()) { it.setReturnRef(it.target?.repairCost) }
+                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRepairCost(it.getInt(0).toInt())) }
+                .function("maximumRepairCost", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumRepairCost) }
+                .function("setMaximumRepairCost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaximumRepairCost(it.getInt(0).toInt())) }
         }
     }
 }

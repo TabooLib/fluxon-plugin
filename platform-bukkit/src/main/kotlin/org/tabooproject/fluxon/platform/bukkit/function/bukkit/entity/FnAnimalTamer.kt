@@ -19,8 +19,8 @@ object FnAnimalTamer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnimalTamer::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("uniqueId", returnsObject().noParams()) { it.target?.uniqueId }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("uniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.uniqueId) }
         }
     }
 }

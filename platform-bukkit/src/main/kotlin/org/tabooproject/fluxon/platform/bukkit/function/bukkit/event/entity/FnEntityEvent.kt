@@ -19,8 +19,8 @@ object FnEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("entityType", returnsObject().noParams()) { it.target?.entityType }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("entityType", returnsObject().noParams()) { it.setReturnRef(it.target?.entityType) }
         }
     }
 }

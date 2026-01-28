@@ -18,7 +18,7 @@ object FnFurnace {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Furnace::class.java)
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

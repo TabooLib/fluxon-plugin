@@ -21,14 +21,14 @@ object FnEntityTransformer {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTransformer::class.java)
                 .function("transform", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.transform(
+                    it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt(),
                         it.getInt(3).toInt(),
                         it.getRef(4) as Entity,
                         it.getBool(5)
-                    )
+                    ))
                 }
         }
     }

@@ -19,12 +19,12 @@ object FnVehicleEnterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleEnterEvent::class.java)
-                .function("entered", returnsObject().noParams()) { it.target?.entered }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entered", returnsObject().noParams()) { it.setReturnRef(it.target?.entered) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleEnterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleEnterEvent.getHandlerList()) }
         }
     }
 }

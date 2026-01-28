@@ -18,9 +18,9 @@ object FnDoubleChestInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DoubleChestInventory::class.java)
-                .function("leftSide", returnsObject().noParams()) { it.target?.leftSide }
-                .function("rightSide", returnsObject().noParams()) { it.target?.rightSide }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("leftSide", returnsObject().noParams()) { it.setReturnRef(it.target?.leftSide) }
+                .function("rightSide", returnsObject().noParams()) { it.setReturnRef(it.target?.rightSide) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

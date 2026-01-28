@@ -21,29 +21,29 @@ object FnCommandSender {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandSender::class.java)
-                .syncFunction("performCommand", returnsObject().params(Type.OBJECT)) { adaptCommandSender(it.target!!).performCommand(it.getString(0)!!) }
+                .syncFunction("performCommand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(adaptCommandSender(it.target!!).performCommand(it.getString(0)!!)) }
                 .function("sendMessage", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.sendMessage(it.getString(0))
                     } else {
                         it.target?.sendMessage(
                             UUID.fromString(it.getString(0)),
                             it.getString(1)
                         )
-                    }
+                    })
                 }
                 .function("sendMessage", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.sendMessage(it.getString(0))
                     } else {
                         it.target?.sendMessage(
                             UUID.fromString(it.getString(0)),
                             it.getString(1)
                         )
-                    }
+                    })
                 }
-                .function("server", returnsObject().noParams()) { it.target?.server }
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("server", returnsObject().noParams()) { it.setReturnRef(it.target?.server) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
         }
     }
 }

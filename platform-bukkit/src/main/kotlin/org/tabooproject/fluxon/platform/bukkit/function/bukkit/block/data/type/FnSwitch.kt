@@ -18,8 +18,8 @@ object FnSwitch {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Switch::class.java)
-                .function("face", returnsObject().noParams()) { it.target?.face }
-                .function("setFace", returnsObject().params(Type.OBJECT)) { it.target?.setFace(it.getRef(0) as Switch.Face) }
+                .function("face", returnsObject().noParams()) { it.setReturnRef(it.target?.face) }
+                .function("setFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFace(it.getRef(0) as Switch.Face)) }
         }
     }
 }

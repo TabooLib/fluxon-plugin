@@ -18,9 +18,9 @@ object FnRespawnAnchor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RespawnAnchor::class.java)
-                .function("charges", returnsObject().noParams()) { it.target?.charges }
-                .function("setCharges", returnsObject().params(Type.OBJECT)) { it.target?.setCharges(it.getInt(0).toInt()) }
-                .function("maximumCharges", returnsObject().noParams()) { it.target?.maximumCharges }
+                .function("charges", returnsObject().noParams()) { it.setReturnRef(it.target?.charges) }
+                .function("setCharges", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCharges(it.getInt(0).toInt())) }
+                .function("maximumCharges", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumCharges) }
         }
     }
 }

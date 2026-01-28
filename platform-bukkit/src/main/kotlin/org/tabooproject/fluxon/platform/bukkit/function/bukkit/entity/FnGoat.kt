@@ -19,12 +19,12 @@ object FnGoat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Goat::class.java)
-                .function("hasLeftHorn", returns(Type.Z).noParams()) { it.target?.hasLeftHorn() }
-                .function("setLeftHorn", returnsObject().params(Type.OBJECT)) { it.target?.setLeftHorn(it.getBool(0)) }
-                .function("hasRightHorn", returns(Type.Z).noParams()) { it.target?.hasRightHorn() }
-                .function("setRightHorn", returnsObject().params(Type.OBJECT)) { it.target?.setRightHorn(it.getBool(0)) }
-                .function("isScreaming", returns(Type.Z).noParams()) { it.target?.isScreaming }
-                .function("setScreaming", returnsObject().params(Type.OBJECT)) { it.target?.setScreaming(it.getBool(0)) }
+                .function("hasLeftHorn", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasLeftHorn()) }
+                .function("setLeftHorn", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLeftHorn(it.getBool(0))) }
+                .function("hasRightHorn", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRightHorn()) }
+                .function("setRightHorn", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRightHorn(it.getBool(0))) }
+                .function("isScreaming", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isScreaming) }
+                .function("setScreaming", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setScreaming(it.getBool(0))) }
         }
     }
 }

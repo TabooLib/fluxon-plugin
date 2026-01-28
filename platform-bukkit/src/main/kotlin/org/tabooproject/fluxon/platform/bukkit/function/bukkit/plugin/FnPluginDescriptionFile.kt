@@ -19,27 +19,27 @@ object FnPluginDescriptionFile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginDescriptionFile::class.java)
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("provides", returnsObject().noParams()) { it.target?.provides }
-                .function("version", returnsObject().noParams()) { it.target?.version }
-                .function("main", returnsObject().noParams()) { it.target?.main }
-                .function("description", returnsObject().noParams()) { it.target?.description }
-                .function("load", returnsObject().noParams()) { it.target?.load }
-                .function("authors", returnsObject().noParams()) { it.target?.authors }
-                .function("contributors", returnsObject().noParams()) { it.target?.contributors }
-                .function("website", returnsObject().noParams()) { it.target?.website }
-                .function("depend", returnsObject().noParams()) { it.target?.depend }
-                .function("softDepend", returnsObject().noParams()) { it.target?.softDepend }
-                .function("loadBefore", returnsObject().noParams()) { it.target?.loadBefore }
-                .function("prefix", returnsObject().noParams()) { it.target?.prefix }
-                .function("permissions", returnsObject().noParams()) { it.target?.permissions }
-                .function("permissionDefault", returnsObject().noParams()) { it.target?.permissionDefault }
-                .function("awareness", returnsObject().noParams()) { it.target?.awareness }
-                .function("fullName", returnsObject().noParams()) { it.target?.fullName }
-                .function("aPIVersion", returnsObject().noParams()) { it.target?.apiVersion }
-                .function("libraries", returnsObject().noParams()) { it.target?.libraries }
-                .function("classLoaderOf", returnsObject().noParams()) { it.target?.classLoaderOf }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("provides", returnsObject().noParams()) { it.setReturnRef(it.target?.provides) }
+                .function("version", returnsObject().noParams()) { it.setReturnRef(it.target?.version) }
+                .function("main", returnsObject().noParams()) { it.setReturnRef(it.target?.main) }
+                .function("description", returnsObject().noParams()) { it.setReturnRef(it.target?.description) }
+                .function("load", returnsObject().noParams()) { it.setReturnRef(it.target?.load) }
+                .function("authors", returnsObject().noParams()) { it.setReturnRef(it.target?.authors) }
+                .function("contributors", returnsObject().noParams()) { it.setReturnRef(it.target?.contributors) }
+                .function("website", returnsObject().noParams()) { it.setReturnRef(it.target?.website) }
+                .function("depend", returnsObject().noParams()) { it.setReturnRef(it.target?.depend) }
+                .function("softDepend", returnsObject().noParams()) { it.setReturnRef(it.target?.softDepend) }
+                .function("loadBefore", returnsObject().noParams()) { it.setReturnRef(it.target?.loadBefore) }
+                .function("prefix", returnsObject().noParams()) { it.setReturnRef(it.target?.prefix) }
+                .function("permissions", returnsObject().noParams()) { it.setReturnRef(it.target?.permissions) }
+                .function("permissionDefault", returnsObject().noParams()) { it.setReturnRef(it.target?.permissionDefault) }
+                .function("awareness", returnsObject().noParams()) { it.setReturnRef(it.target?.awareness) }
+                .function("fullName", returnsObject().noParams()) { it.setReturnRef(it.target?.fullName) }
+                .function("aPIVersion", returnsObject().noParams()) { it.setReturnRef(it.target?.apiVersion) }
+                .function("libraries", returnsObject().noParams()) { it.setReturnRef(it.target?.libraries) }
+                .function("classLoaderOf", returnsObject().noParams()) { it.setReturnRef(it.target?.classLoaderOf) }
         }
     }
 }

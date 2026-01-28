@@ -19,16 +19,16 @@ object FnAttributeModifier {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AttributeModifier::class.java)
-                .function("uniqueId", returnsObject().noParams()) { it.target?.uniqueId }
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("amount", returnsObject().noParams()) { it.target?.amount }
-                .function("operation", returnsObject().noParams()) { it.target?.operation }
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
-                .function("slotGroup", returnsObject().noParams()) { it.target?.slotGroup }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("deserialize", returnsObject().params(Type.OBJECT)) { AttributeModifier.deserialize(it.getRef(0) as Map<String, Any>) }
+                .function("uniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.uniqueId) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("amount", returnsObject().noParams()) { it.setReturnRef(it.target?.amount) }
+                .function("operation", returnsObject().noParams()) { it.setReturnRef(it.target?.operation) }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("slotGroup", returnsObject().noParams()) { it.setReturnRef(it.target?.slotGroup) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("deserialize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(AttributeModifier.deserialize(it.getRef(0) as Map<String, Any>)) }
         }
     }
 }

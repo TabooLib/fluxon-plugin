@@ -19,8 +19,8 @@ object FnCommandBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandBlock::class.java)
-                .function("isConditional", returns(Type.Z).noParams()) { it.target?.isConditional }
-                .function("setConditional", returnsObject().params(Type.OBJECT)) { it.target?.setConditional(it.getBool(0)) }
+                .function("isConditional", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConditional) }
+                .function("setConditional", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConditional(it.getBool(0))) }
         }
     }
 }

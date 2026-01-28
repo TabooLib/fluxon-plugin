@@ -18,8 +18,8 @@ object FnJigsaw {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jigsaw::class.java)
-                .function("orientation", returnsObject().noParams()) { it.target?.orientation }
-                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.target?.setOrientation(it.getRef(0) as Jigsaw.Orientation) }
+                .function("orientation", returnsObject().noParams()) { it.setReturnRef(it.target?.orientation) }
+                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOrientation(it.getRef(0) as Jigsaw.Orientation)) }
         }
     }
 }

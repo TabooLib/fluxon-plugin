@@ -20,10 +20,10 @@ object FnNoteBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NoteBlock::class.java)
-                .function("instrument", returnsObject().noParams()) { it.target?.instrument }
-                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.target?.setInstrument(it.getRef(0) as Instrument) }
-                .function("note", returnsObject().noParams()) { it.target?.note }
-                .function("setNote", returnsObject().params(Type.OBJECT)) { it.target?.setNote(it.getRef(0) as Note) }
+                .function("instrument", returnsObject().noParams()) { it.setReturnRef(it.target?.instrument) }
+                .function("setInstrument", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInstrument(it.getRef(0) as Instrument)) }
+                .function("note", returnsObject().noParams()) { it.setReturnRef(it.target?.note) }
+                .function("setNote", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNote(it.getRef(0) as Note)) }
         }
     }
 }

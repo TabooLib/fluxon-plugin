@@ -19,17 +19,17 @@ object FnPrepareItemEnchantEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareItemEnchantEvent::class.java)
-                .function("enchanter", returnsObject().noParams()) { it.target?.enchanter }
-                .function("enchantBlock", returnsObject().noParams()) { it.target?.enchantBlock }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("expLevelCostsOffered", returnsObject().noParams()) { it.target?.expLevelCostsOffered }
-                .function("offers", returnsObject().noParams()) { it.target?.offers }
-                .function("enchantmentBonus", returnsObject().noParams()) { it.target?.enchantmentBonus }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("enchanter", returnsObject().noParams()) { it.setReturnRef(it.target?.enchanter) }
+                .function("enchantBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantBlock) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("expLevelCostsOffered", returnsObject().noParams()) { it.setReturnRef(it.target?.expLevelCostsOffered) }
+                .function("offers", returnsObject().noParams()) { it.setReturnRef(it.target?.offers) }
+                .function("enchantmentBonus", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantmentBonus) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PrepareItemEnchantEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PrepareItemEnchantEvent.getHandlerList()) }
         }
     }
 }

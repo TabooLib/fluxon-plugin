@@ -20,12 +20,12 @@ object FnEndGateway {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EndGateway::class.java)
-                .function("exitLocation", returnsObject().noParams()) { it.target?.exitLocation }
-                .function("setExitLocation", returnsObject().params(Type.OBJECT)) { it.target?.setExitLocation(it.getRef(0) as Location) }
-                .function("isExactTeleport", returns(Type.Z).noParams()) { it.target?.isExactTeleport }
-                .function("setExactTeleport", returnsObject().params(Type.OBJECT)) { it.target?.setExactTeleport(it.getBool(0)) }
-                .function("age", returnsObject().noParams()) { it.target?.age }
-                .function("setAge", returnsObject().params(Type.OBJECT)) { it.target?.setAge(it.getInt(0).toLong()) }
+                .function("exitLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.exitLocation) }
+                .function("setExitLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExitLocation(it.getRef(0) as Location)) }
+                .function("isExactTeleport", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExactTeleport) }
+                .function("setExactTeleport", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExactTeleport(it.getBool(0))) }
+                .function("age", returnsObject().noParams()) { it.setReturnRef(it.target?.age) }
+                .function("setAge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAge(it.getInt(0).toLong())) }
         }
     }
 }

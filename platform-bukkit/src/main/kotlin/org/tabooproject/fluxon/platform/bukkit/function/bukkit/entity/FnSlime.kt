@@ -19,8 +19,8 @@ object FnSlime {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Slime::class.java)
-                .function("size", returns(Type.I).noParams()) { it.target?.size }
-                .function("setSize", returnsObject().params(Type.OBJECT)) { it.target?.setSize(it.getInt(0).toInt()) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
+                .function("setSize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSize(it.getInt(0).toInt())) }
         }
     }
 }

@@ -19,9 +19,9 @@ object FnSmithingInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingInventory::class.java)
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as ItemStack)) }
+                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
         }
     }
 }

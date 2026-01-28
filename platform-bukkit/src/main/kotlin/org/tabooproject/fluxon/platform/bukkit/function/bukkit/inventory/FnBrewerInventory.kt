@@ -19,11 +19,11 @@ object FnBrewerInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewerInventory::class.java)
-                .function("ingredient", returnsObject().noParams()) { it.target?.ingredient }
-                .function("setIngredient", returnsObject().params(Type.OBJECT)) { it.target?.setIngredient(it.getRef(0) as ItemStack) }
-                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
-                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("ingredient", returnsObject().noParams()) { it.setReturnRef(it.target?.ingredient) }
+                .function("setIngredient", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIngredient(it.getRef(0) as ItemStack)) }
+                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuel(it.getRef(0) as ItemStack)) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

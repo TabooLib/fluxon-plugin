@@ -18,8 +18,8 @@ object FnGlowSquid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GlowSquid::class.java)
-                .function("darkTicksRemaining", returnsObject().noParams()) { it.target?.darkTicksRemaining }
-                .function("setDarkTicksRemaining", returnsObject().params(Type.OBJECT)) { it.target?.setDarkTicksRemaining(it.getInt(0).toInt()) }
+                .function("darkTicksRemaining", returnsObject().noParams()) { it.setReturnRef(it.target?.darkTicksRemaining) }
+                .function("setDarkTicksRemaining", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDarkTicksRemaining(it.getInt(0).toInt())) }
         }
     }
 }

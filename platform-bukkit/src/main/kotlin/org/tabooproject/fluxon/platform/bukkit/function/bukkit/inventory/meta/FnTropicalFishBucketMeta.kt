@@ -21,13 +21,13 @@ object FnTropicalFishBucketMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFishBucketMeta::class.java)
-                .function("patternColor", returnsObject().noParams()) { it.target?.patternColor }
-                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
-                .function("bodyColor", returnsObject().noParams()) { it.target?.bodyColor }
-                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
-                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
-                .function("hasVariant", returns(Type.Z).noParams()) { it.target?.hasVariant() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("patternColor", returnsObject().noParams()) { it.setReturnRef(it.target?.patternColor) }
+                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPatternColor(it.getRef(0) as DyeColor)) }
+                .function("bodyColor", returnsObject().noParams()) { it.setReturnRef(it.target?.bodyColor) }
+                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBodyColor(it.getRef(0) as DyeColor)) }
+                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern)) }
+                .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasVariant()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

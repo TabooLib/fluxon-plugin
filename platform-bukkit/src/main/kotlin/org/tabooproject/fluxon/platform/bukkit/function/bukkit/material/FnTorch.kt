@@ -19,9 +19,9 @@ object FnTorch {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Torch::class.java)
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

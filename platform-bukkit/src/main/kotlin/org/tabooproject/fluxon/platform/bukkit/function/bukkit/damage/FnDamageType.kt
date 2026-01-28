@@ -18,11 +18,11 @@ object FnDamageType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DamageType::class.java)
-                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
-                .function("damageScaling", returnsObject().noParams()) { it.target?.damageScaling }
-                .function("damageEffect", returnsObject().noParams()) { it.target?.damageEffect }
-                .function("deathMessageType", returnsObject().noParams()) { it.target?.deathMessageType }
-                .function("exhaustion", returnsObject().noParams()) { it.target?.exhaustion }
+                .function("translationKey", returnsObject().noParams()) { it.setReturnRef(it.target?.translationKey) }
+                .function("damageScaling", returnsObject().noParams()) { it.setReturnRef(it.target?.damageScaling) }
+                .function("damageEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.damageEffect) }
+                .function("deathMessageType", returnsObject().noParams()) { it.setReturnRef(it.target?.deathMessageType) }
+                .function("exhaustion", returnsObject().noParams()) { it.setReturnRef(it.target?.exhaustion) }
         }
     }
 }

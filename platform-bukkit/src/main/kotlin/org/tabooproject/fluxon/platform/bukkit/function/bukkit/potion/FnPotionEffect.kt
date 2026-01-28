@@ -20,19 +20,19 @@ object FnPotionEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffect::class.java)
-                .syncFunction("apply", returnsObject().params(Type.OBJECT)) { it.target?.apply(it.getRef(0) as LivingEntity) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("amplifier", returnsObject().noParams()) { it.target?.amplifier }
-                .function("duration", returnsObject().noParams()) { it.target?.duration }
-                .function("isInfinite", returns(Type.Z).noParams()) { it.target?.isInfinite }
-                .function("isShorterThan", returns(Type.Z).params(Type.OBJECT)) { it.target?.isShorterThan(it.getRef(0) as PotionEffect) }
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("isAmbient", returns(Type.Z).noParams()) { it.target?.isAmbient }
-                .function("hasParticles", returns(Type.Z).noParams()) { it.target?.hasParticles() }
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("hasIcon", returns(Type.Z).noParams()) { it.target?.hasIcon() }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .syncFunction("apply", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.apply(it.getRef(0) as LivingEntity)) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("amplifier", returnsObject().noParams()) { it.setReturnRef(it.target?.amplifier) }
+                .function("duration", returnsObject().noParams()) { it.setReturnRef(it.target?.duration) }
+                .function("isInfinite", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInfinite) }
+                .function("isShorterThan", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isShorterThan(it.getRef(0) as PotionEffect)) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("isAmbient", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAmbient) }
+                .function("hasParticles", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasParticles()) }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("hasIcon", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasIcon()) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

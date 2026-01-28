@@ -18,14 +18,14 @@ object FnPlayerArmorStandManipulateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerArmorStandManipulateEvent::class.java)
-                .function("playerItem", returnsObject().noParams()) { it.target?.playerItem }
-                .function("armorStandItem", returnsObject().noParams()) { it.target?.armorStandItem }
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("rightClicked", returnsObject().noParams()) { it.target?.rightClicked }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("playerItem", returnsObject().noParams()) { it.setReturnRef(it.target?.playerItem) }
+                .function("armorStandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.armorStandItem) }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("rightClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.rightClicked) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerArmorStandManipulateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerArmorStandManipulateEvent.getHandlerList()) }
         }
     }
 }

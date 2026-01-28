@@ -18,10 +18,10 @@ object FnBlockSpreadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockSpreadEvent::class.java)
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockSpreadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockSpreadEvent.getHandlerList()) }
         }
     }
 }

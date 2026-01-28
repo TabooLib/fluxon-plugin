@@ -18,11 +18,11 @@ object FnPlayerJoinEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerJoinEvent::class.java)
-                .function("joinMessage", returnsObject().noParams()) { it.target?.joinMessage }
-                .function("setJoinMessage", returnsObject().params(Type.OBJECT)) { it.target?.setJoinMessage(it.getString(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("joinMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.joinMessage) }
+                .function("setJoinMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setJoinMessage(it.getString(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerJoinEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerJoinEvent.getHandlerList()) }
         }
     }
 }

@@ -19,16 +19,16 @@ object FnPlayerStatisticIncrementEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerStatisticIncrementEvent::class.java)
-                .function("statistic", returnsObject().noParams()) { it.target?.getStatistic() }
-                .function("previousValue", returnsObject().noParams()) { it.target?.previousValue }
-                .function("newValue", returnsObject().noParams()) { it.target?.newValue }
-                .function("entityType", returnsObject().noParams()) { it.target?.entityType }
-                .function("material", returnsObject().noParams()) { it.target?.material }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("statistic", returnsObject().noParams()) { it.setReturnRef(it.target?.getStatistic()) }
+                .function("previousValue", returnsObject().noParams()) { it.setReturnRef(it.target?.previousValue) }
+                .function("newValue", returnsObject().noParams()) { it.setReturnRef(it.target?.newValue) }
+                .function("entityType", returnsObject().noParams()) { it.setReturnRef(it.target?.entityType) }
+                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerStatisticIncrementEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerStatisticIncrementEvent.getHandlerList()) }
         }
     }
 }

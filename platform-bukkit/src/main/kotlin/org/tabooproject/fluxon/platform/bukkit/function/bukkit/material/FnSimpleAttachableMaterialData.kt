@@ -19,9 +19,9 @@ object FnSimpleAttachableMaterialData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimpleAttachableMaterialData::class.java)
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

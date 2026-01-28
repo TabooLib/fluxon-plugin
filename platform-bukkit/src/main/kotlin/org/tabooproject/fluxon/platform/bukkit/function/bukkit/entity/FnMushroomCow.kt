@@ -21,19 +21,19 @@ object FnMushroomCow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MushroomCow::class.java)
-                .function("hasEffectsForNextStew", returns(Type.Z).noParams()) { it.target?.hasEffectsForNextStew() }
-                .function("effectsForNextStew", returnsObject().noParams()) { it.target?.effectsForNextStew }
+                .function("hasEffectsForNextStew", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEffectsForNextStew()) }
+                .function("effectsForNextStew", returnsObject().noParams()) { it.setReturnRef(it.target?.effectsForNextStew) }
                 .function("addEffectToNextStew", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.addEffectToNextStew(
+                    it.setReturnRef(it.target?.addEffectToNextStew(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("removeEffectFromNextStew", returnsObject().params(Type.OBJECT)) { it.target?.removeEffectFromNextStew(it.getRef(0) as PotionEffectType) }
-                .function("hasEffectForNextStew", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasEffectForNextStew(it.getRef(0) as PotionEffectType) }
-                .function("clearEffectsForNextStew", returnsObject().noParams()) { it.target?.clearEffectsForNextStew() }
-                .function("variant", returnsObject().noParams()) { it.target?.variant }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as MushroomCow.Variant) }
+                .function("removeEffectFromNextStew", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeEffectFromNextStew(it.getRef(0) as PotionEffectType)) }
+                .function("hasEffectForNextStew", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasEffectForNextStew(it.getRef(0) as PotionEffectType)) }
+                .function("clearEffectsForNextStew", returnsObject().noParams()) { it.setReturnRef(it.target?.clearEffectsForNextStew()) }
+                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as MushroomCow.Variant)) }
         }
     }
 }

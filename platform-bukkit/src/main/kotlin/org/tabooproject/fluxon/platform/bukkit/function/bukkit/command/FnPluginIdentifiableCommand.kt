@@ -18,7 +18,7 @@ object FnPluginIdentifiableCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginIdentifiableCommand::class.java)
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
         }
     }
 }

@@ -21,13 +21,13 @@ object FnEntitySnapshot {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntitySnapshot::class.java)
                 .function("createEntity", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is World -> it.target?.createEntity(var1)
                         is Location -> it.target?.createEntity(var1)
                         else -> throw IllegalArgumentException("参数必须是 World 或 Location 类型")
-                    }
+                    })
                 }
-                .function("entityType", returnsObject().noParams()) { it.target?.entityType }
+                .function("entityType", returnsObject().noParams()) { it.setReturnRef(it.target?.entityType) }
         }
     }
 }

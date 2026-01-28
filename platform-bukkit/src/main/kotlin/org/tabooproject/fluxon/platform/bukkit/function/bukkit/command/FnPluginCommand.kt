@@ -23,25 +23,25 @@ object FnPluginCommand {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginCommand::class.java)
                 .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.execute(
+                    it.setReturnRef(it.target?.execute(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!,
                         it.getRef(2) as Array<String>
-                    )
+                    ))
                 }
-                .function("setExecutor", returnsObject().params(Type.OBJECT)) { it.target?.setExecutor(it.getRef(0) as CommandExecutor) }
-                .function("executor", returnsObject().noParams()) { it.target?.executor }
-                .function("setTabCompleter", returnsObject().params(Type.OBJECT)) { it.target?.setTabCompleter(it.getRef(0) as TabCompleter) }
-                .function("tabCompleter", returnsObject().noParams()) { it.target?.tabCompleter }
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("setExecutor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExecutor(it.getRef(0) as CommandExecutor)) }
+                .function("executor", returnsObject().noParams()) { it.setReturnRef(it.target?.executor) }
+                .function("setTabCompleter", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTabCompleter(it.getRef(0) as TabCompleter)) }
+                .function("tabCompleter", returnsObject().noParams()) { it.setReturnRef(it.target?.tabCompleter) }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
                 .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.tabComplete(
+                    it.setReturnRef(it.target?.tabComplete(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!,
                         it.getRef(2) as Array<String>
-                    )
+                    ))
                 }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

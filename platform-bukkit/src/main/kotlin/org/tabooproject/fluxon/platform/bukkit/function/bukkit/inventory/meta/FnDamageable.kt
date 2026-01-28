@@ -19,13 +19,13 @@ object FnDamageable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
-                .function("hasDamage", returns(Type.Z).noParams()) { it.target?.hasDamage() }
-                .function("damage", returnsObject().noParams()) { it.target?.damage }
-                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.target?.setDamage(it.getInt(0).toInt()) }
-                .function("hasMaxDamage", returns(Type.Z).noParams()) { it.target?.hasMaxDamage() }
-                .function("maxDamage", returnsObject().noParams()) { it.target?.maxDamage }
-                .function("setMaxDamage", returnsObject().params(Type.OBJECT)) { it.target?.setMaxDamage(it.getInt(0).toInt()) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasDamage", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasDamage()) }
+                .function("damage", returnsObject().noParams()) { it.setReturnRef(it.target?.damage) }
+                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDamage(it.getInt(0).toInt())) }
+                .function("hasMaxDamage", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasMaxDamage()) }
+                .function("maxDamage", returnsObject().noParams()) { it.setReturnRef(it.target?.maxDamage) }
+                .function("setMaxDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxDamage(it.getInt(0).toInt())) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

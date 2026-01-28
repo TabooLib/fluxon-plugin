@@ -19,9 +19,9 @@ object FnBed {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bed::class.java)
-                .function("part", returnsObject().noParams()) { it.target?.part }
-                .function("setPart", returnsObject().params(Type.OBJECT)) { it.target?.setPart(it.getRef(0) as Bed.Part) }
-                .function("isOccupied", returns(Type.Z).noParams()) { it.target?.isOccupied }
+                .function("part", returnsObject().noParams()) { it.setReturnRef(it.target?.part) }
+                .function("setPart", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPart(it.getRef(0) as Bed.Part)) }
+                .function("isOccupied", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOccupied) }
         }
     }
 }

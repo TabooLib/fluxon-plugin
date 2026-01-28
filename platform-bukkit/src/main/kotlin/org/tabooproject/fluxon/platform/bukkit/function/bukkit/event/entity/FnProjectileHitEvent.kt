@@ -20,15 +20,15 @@ object FnProjectileHitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProjectileHitEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("hitBlock", returnsObject().noParams()) { it.target?.hitBlock }
-                .function("hitBlockFace", returnsObject().noParams()) { it.target?.hitBlockFace }
-                .function("hitEntity", returnsObject().noParams()) { it.target?.hitEntity }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("hitBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlock) }
+                .function("hitBlockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlockFace) }
+                .function("hitEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.hitEntity) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ProjectileHitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ProjectileHitEvent.getHandlerList()) }
         }
     }
 }

@@ -19,16 +19,16 @@ object FnFurnaceBurnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceBurnEvent::class.java)
-                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
-                .function("burnTime", returnsObject().noParams()) { it.target?.burnTime }
-                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.target?.setBurnTime(it.getInt(0).toInt()) }
-                .function("isBurning", returns(Type.Z).noParams()) { it.target?.isBurning }
-                .function("setBurning", returnsObject().params(Type.OBJECT)) { it.target?.setBurning(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("burnTime", returnsObject().noParams()) { it.setReturnRef(it.target?.burnTime) }
+                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBurnTime(it.getInt(0).toInt())) }
+                .function("isBurning", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBurning) }
+                .function("setBurning", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBurning(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { FurnaceBurnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(FurnaceBurnEvent.getHandlerList()) }
         }
     }
 }

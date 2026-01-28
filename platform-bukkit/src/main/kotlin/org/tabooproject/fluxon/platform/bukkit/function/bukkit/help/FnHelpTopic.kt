@@ -20,12 +20,12 @@ object FnHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.target?.canSee(it.getRef(0) as CommandSender) }
-                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.target?.amendCanSee(it.getString(0)) }
-                .function("name", returns(Type.STRING).noParams()) { it.target?.getName() }
-                .function("shortText", returnsObject().noParams()) { it.target?.getShortText() }
-                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.target?.getFullText(it.getRef(0) as CommandSender) }
-                .function("amendTopic", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.amendTopic(it.getString(0), it.getString(1)) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canSee(it.getRef(0) as CommandSender)) }
+                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.amendCanSee(it.getString(0))) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.getName()) }
+                .function("shortText", returnsObject().noParams()) { it.setReturnRef(it.target?.getShortText()) }
+                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
+                .function("amendTopic", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.amendTopic(it.getString(0), it.getString(1))) }
         }
     }
 }

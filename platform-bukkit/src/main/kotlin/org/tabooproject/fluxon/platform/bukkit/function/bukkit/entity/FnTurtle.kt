@@ -19,8 +19,8 @@ object FnTurtle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Turtle::class.java)
-                .function("hasEgg", returns(Type.Z).noParams()) { it.target?.hasEgg() }
-                .function("isLayingEgg", returns(Type.Z).noParams()) { it.target?.isLayingEgg }
+                .function("hasEgg", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEgg()) }
+                .function("isLayingEgg", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLayingEgg) }
         }
     }
 }

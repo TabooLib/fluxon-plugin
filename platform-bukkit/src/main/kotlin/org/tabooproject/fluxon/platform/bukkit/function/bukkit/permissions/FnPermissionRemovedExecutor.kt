@@ -19,7 +19,7 @@ object FnPermissionRemovedExecutor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionRemovedExecutor::class.java)
-                .function("attachmentRemoved", returnsObject().params(Type.OBJECT)) { it.target?.attachmentRemoved(it.getRef(0) as PermissionAttachment) }
+                .function("attachmentRemoved", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.attachmentRemoved(it.getRef(0) as PermissionAttachment)) }
         }
     }
 }

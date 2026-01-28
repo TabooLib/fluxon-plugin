@@ -18,8 +18,8 @@ object FnPoweredMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PoweredMinecart::class.java)
-                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
-                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.target?.setFuel(it.getInt(0).toInt()) }
+                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("setFuel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuel(it.getInt(0).toInt())) }
         }
     }
 }

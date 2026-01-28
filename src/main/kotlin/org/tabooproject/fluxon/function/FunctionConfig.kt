@@ -21,11 +21,9 @@ object FunctionConfig {
         IndexAccessorRegistry.getInstance().registerAccessor(ConfigIndexAccessor)
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(YamlApi::class.java)
-            registerFunction("yaml", returnsObject().noParams()) { YamlApi }
+            registerFunction("yaml", returnsObject().noParams()) { it.setReturnRef(YamlApi) }
             registerExtension(Configuration::class.java)
-                .function("file", returns(Type.FILE).noParams()) {
-                    it.target?.file
-                }
+                .function("file", returns(Type.FILE).noParams()) { it.setReturnRef(it.target?.file) }
                 .function("save", returnsVoid().noParams()) {
                     it.target?.saveToFile()
                 }
@@ -33,45 +31,21 @@ object FunctionConfig {
                     it.target?.saveToFile(it.getRef(0) as File)
                 }
             registerExtension(ConfigurationSection::class.java)
-                .function("primitiveConfig", returnsObject().noParams()) {
-                    it.target?.primitiveConfig
-                }
-                .function("parent", returnsObject().noParams()) {
-                    it.target?.parent
-                }
-                .function("name", returns(Type.STRING).noParams()) {
-                    it.target?.name
-                }
-                .function("type", returns(Type.STRING).noParams()) {
-                    it.target?.type?.name
-                }
-                .function("keys", returns(Type.LIST).noParams()) {
-                    it.target?.getKeys(false)
-                }
-                .function("keys", returns(Type.LIST).params(Type.Z)) {
-                    it.target?.getKeys(it.getBool(0))
-                }
-                .function("values", returns(Type.MAP).noParams()) {
-                    it.target?.getValues(false)
-                }
-                .function("values", returns(Type.MAP).params(Type.Z)) {
-                    it.target?.getValues(it.getBool(0))
-                }
-                .function("contains", returns(Type.Z).params(Type.STRING)) {
-                    it.target?.contains(it.getString(0)!!)
-                }
-                .function("get", returnsObject().params(Type.STRING)) {
-                    it.target?.get(it.getString(0)!!)
-                }
-                .function("get", returnsObject().params(Type.STRING, Type.OBJECT)) {
-                    it.target?.get(it.getString(0)!!, it.getRef(1))
-                }
+                .function("primitiveConfig", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveConfig) }
+                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("type", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.type?.name) }
+                .function("keys", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.getKeys(false)) }
+                .function("keys", returns(Type.LIST).params(Type.Z)) { it.setReturnRef(it.target?.getKeys(it.getBool(0))) }
+                .function("values", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.getValues(false)) }
+                .function("values", returns(Type.MAP).params(Type.Z)) { it.setReturnRef(it.target?.getValues(it.getBool(0))) }
+                .function("contains", returns(Type.Z).params(Type.STRING)) { it.setReturnRef(it.target?.contains(it.getString(0)!!)) }
+                .function("get", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.get(it.getString(0)!!)) }
+                .function("get", returnsObject().params(Type.STRING, Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getString(0)!!, it.getRef(1))) }
                 .function("set", returnsVoid().params(Type.STRING, Type.OBJECT)) {
                     it.target?.set(it.getString(0)!!, it.getRef(1))
                 }
-                .function("toMap", returns(Type.MAP).noParams()) {
-                    it.target?.toMap()
-                }
+                .function("toMap", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.toMap()) }
                 .function("clear", returnsVoid().noParams()) {
                     it.target?.clear()
                 }

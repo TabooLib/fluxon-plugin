@@ -18,9 +18,9 @@ object FnGeneratedStructure {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GeneratedStructure::class.java)
-                .function("boundingBox", returnsObject().noParams()) { it.target?.boundingBox }
-                .function("structure", returnsObject().noParams()) { it.target?.structure }
-                .function("pieces", returnsObject().noParams()) { it.target?.pieces }
+                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
+                .function("structure", returnsObject().noParams()) { it.setReturnRef(it.target?.structure) }
+                .function("pieces", returnsObject().noParams()) { it.setReturnRef(it.target?.pieces) }
         }
     }
 }

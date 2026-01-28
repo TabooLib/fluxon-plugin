@@ -21,9 +21,9 @@ object FnBlockDataMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDataMeta::class.java)
-                .function("hasBlockData", returns(Type.Z).noParams()) { it.target?.hasBlockData() }
-                .function("getBlockData", returnsObject().params(Type.OBJECT)) { it.target?.getBlockData(it.getRef(0) as Material) }
-                .function("setBlockData", returnsObject().params(Type.OBJECT)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
+                .function("hasBlockData", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBlockData()) }
+                .function("getBlockData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBlockData(it.getRef(0) as Material)) }
+                .function("setBlockData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBlockData(it.getRef(0) as BlockData)) }
         }
     }
 }

@@ -19,23 +19,23 @@ object FnExplosiveMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExplosiveMinecart::class.java)
-                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
-                .function("fuseTicks", returnsObject().noParams()) { it.target?.fuseTicks }
-                .function("ignite", returnsObject().noParams()) { it.target?.ignite() }
-                .function("isIgnited", returns(Type.Z).noParams()) { it.target?.isIgnited }
+                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuseTicks(it.getInt(0).toInt())) }
+                .function("fuseTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.fuseTicks) }
+                .function("ignite", returnsObject().noParams()) { it.setReturnRef(it.target?.ignite()) }
+                .function("isIgnited", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIgnited) }
                 .function("explode", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.explode()
                     } else {
                         it.target?.explode(it.getAsDouble(0))
-                    }
+                    })
                 }
                 .function("explode", returnsObject().params(Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.explode()
                     } else {
                         it.target?.explode(it.getAsDouble(0))
-                    }
+                    })
                 }
         }
     }

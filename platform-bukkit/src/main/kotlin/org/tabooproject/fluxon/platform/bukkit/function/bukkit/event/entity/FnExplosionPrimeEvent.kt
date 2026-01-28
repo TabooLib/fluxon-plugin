@@ -19,15 +19,15 @@ object FnExplosionPrimeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExplosionPrimeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("radius", returnsObject().noParams()) { it.target?.radius }
-                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.target?.setRadius(it.getFloat(0)) }
-                .function("fire", returnsObject().noParams()) { it.target?.fire }
-                .function("setFire", returnsObject().params(Type.OBJECT)) { it.target?.setFire(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("radius", returnsObject().noParams()) { it.setReturnRef(it.target?.radius) }
+                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRadius(it.getFloat(0))) }
+                .function("fire", returnsObject().noParams()) { it.setReturnRef(it.target?.fire) }
+                .function("setFire", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFire(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ExplosionPrimeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ExplosionPrimeEvent.getHandlerList()) }
         }
     }
 }

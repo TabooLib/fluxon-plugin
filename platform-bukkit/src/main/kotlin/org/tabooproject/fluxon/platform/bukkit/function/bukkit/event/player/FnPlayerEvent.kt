@@ -19,7 +19,7 @@ object FnPlayerEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.getPlayer() }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.getPlayer()) }
         }
     }
 }

@@ -19,12 +19,12 @@ object FnPlayerRecipeBookSettingsChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRecipeBookSettingsChangeEvent::class.java)
-                .function("recipeBookType", returnsObject().noParams()) { it.target?.recipeBookType }
-                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
-                .function("isFiltering", returns(Type.Z).noParams()) { it.target?.isFiltering }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("recipeBookType", returnsObject().noParams()) { it.setReturnRef(it.target?.recipeBookType) }
+                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOpen) }
+                .function("isFiltering", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFiltering) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerRecipeBookSettingsChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRecipeBookSettingsChangeEvent.getHandlerList()) }
         }
     }
 }

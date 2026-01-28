@@ -20,14 +20,14 @@ object FnStairs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Stairs::class.java)
-                .function("ascendingDirection", returnsObject().noParams()) { it.target?.ascendingDirection }
-                .function("descendingDirection", returnsObject().noParams()) { it.target?.descendingDirection }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("isInverted", returns(Type.Z).noParams()) { it.target?.isInverted }
-                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.target?.setInverted(it.getBool(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("ascendingDirection", returnsObject().noParams()) { it.setReturnRef(it.target?.ascendingDirection) }
+                .function("descendingDirection", returnsObject().noParams()) { it.setReturnRef(it.target?.descendingDirection) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("isInverted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInverted) }
+                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInverted(it.getBool(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

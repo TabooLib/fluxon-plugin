@@ -19,9 +19,9 @@ object FnSculkShrieker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkShrieker::class.java)
-                .function("warningLevel", returnsObject().noParams()) { it.target?.warningLevel }
-                .function("setWarningLevel", returnsObject().params(Type.OBJECT)) { it.target?.setWarningLevel(it.getInt(0).toInt()) }
-                .function("tryShriek", returnsObject().params(Type.OBJECT)) { it.target?.tryShriek(it.getRef(0) as Player) }
+                .function("warningLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.warningLevel) }
+                .function("setWarningLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWarningLevel(it.getInt(0).toInt())) }
+                .function("tryShriek", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.tryShriek(it.getRef(0) as Player)) }
         }
     }
 }

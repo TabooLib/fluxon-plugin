@@ -20,10 +20,10 @@ object FnProjectile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Projectile::class.java)
-                .function("shooter", returnsObject().noParams()) { it.target?.shooter }
-                .function("setShooter", returnsObject().params(Type.OBJECT)) { it.target?.setShooter(it.getRef(0) as ProjectileSource) }
-                .function("doesBounce", returnsObject().noParams()) { it.target?.doesBounce() }
-                .function("setBounce", returnsObject().params(Type.OBJECT)) { it.target?.setBounce(it.getBool(0)) }
+                .function("shooter", returnsObject().noParams()) { it.setReturnRef(it.target?.shooter) }
+                .function("setShooter", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShooter(it.getRef(0) as ProjectileSource)) }
+                .function("doesBounce", returnsObject().noParams()) { it.setReturnRef(it.target?.doesBounce()) }
+                .function("setBounce", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBounce(it.getBool(0))) }
         }
     }
 }

@@ -20,34 +20,34 @@ object FnPlayerTextures {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerTextures::class.java)
-                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
-                .function("clear", returnsObject().noParams()) { it.target?.clear() }
-                .function("skin", returnsObject().noParams()) { it.target?.skin }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
+                .function("clear", returnsObject().noParams()) { it.setReturnRef(it.target?.clear()) }
+                .function("skin", returnsObject().noParams()) { it.setReturnRef(it.target?.skin) }
                 .function("setSkin", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setSkin(URL(it.getString(0)))
                     } else {
                         it.target?.setSkin(
                             URL(it.getString(0)),
                             it.getRef(1) as PlayerTextures.SkinModel
                         )
-                    }
+                    })
                 }
                 .function("setSkin", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setSkin(URL(it.getString(0)))
                     } else {
                         it.target?.setSkin(
                             URL(it.getString(0)),
                             it.getRef(1) as PlayerTextures.SkinModel
                         )
-                    }
+                    })
                 }
-                .function("skinModel", returnsObject().noParams()) { it.target?.skinModel }
-                .function("cape", returnsObject().noParams()) { it.target?.cape }
-                .function("setCape", returnsObject().params(Type.OBJECT)) { it.target?.setCape(URL(it.getString(0))) }
-                .function("timestamp", returnsObject().noParams()) { it.target?.timestamp }
-                .function("isSigned", returns(Type.Z).noParams()) { it.target?.isSigned }
+                .function("skinModel", returnsObject().noParams()) { it.setReturnRef(it.target?.skinModel) }
+                .function("cape", returnsObject().noParams()) { it.setReturnRef(it.target?.cape) }
+                .function("setCape", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCape(URL(it.getString(0)))) }
+                .function("timestamp", returnsObject().noParams()) { it.setReturnRef(it.target?.timestamp) }
+                .function("isSigned", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSigned) }
         }
     }
 }

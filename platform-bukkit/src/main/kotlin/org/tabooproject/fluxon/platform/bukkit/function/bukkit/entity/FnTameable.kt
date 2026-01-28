@@ -21,11 +21,11 @@ object FnTameable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tameable::class.java)
-//                .function("ownerUniqueId", returnsObject().noParams()) { it.target?.ownerUniqueId?.toString() }
-                .function("isTamed", returns(Type.Z).noParams()) { it.target?.isTamed }
-                .function("setTamed", returnsObject().params(Type.OBJECT)) { it.target?.setTamed(it.getBool(0)) }
-                .function("owner", returnsObject().noParams()) { it.target?.owner }
-                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.target?.setOwner(it.getRef(0) as AnimalTamer) }
+//                .function("ownerUniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.ownerUniqueId?.toString()) }
+                .function("isTamed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTamed) }
+                .function("setTamed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTamed(it.getBool(0))) }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOwner(it.getRef(0) as AnimalTamer)) }
         }
     }
 }

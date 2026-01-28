@@ -20,12 +20,12 @@ object FnBlockBurnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockBurnEvent::class.java)
-                .function("ignitingBlock", returnsObject().noParams()) { it.target?.ignitingBlock }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("ignitingBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.ignitingBlock) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockBurnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockBurnEvent.getHandlerList()) }
         }
     }
 }

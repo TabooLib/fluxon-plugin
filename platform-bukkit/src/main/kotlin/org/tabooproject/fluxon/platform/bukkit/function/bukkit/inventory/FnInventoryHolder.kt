@@ -18,7 +18,7 @@ object FnInventoryHolder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryHolder::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

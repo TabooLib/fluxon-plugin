@@ -19,12 +19,12 @@ object FnEnchantmentOffer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentOffer::class.java)
-                .function("enchantment", returnsObject().noParams()) { it.target?.enchantment }
-                .function("setEnchantment", returnsObject().params(Type.OBJECT)) { it.target?.setEnchantment(it.getRef(0) as Enchantment) }
-                .function("enchantmentLevel", returnsObject().noParams()) { it.target?.enchantmentLevel }
-                .function("setEnchantmentLevel", returnsObject().params(Type.OBJECT)) { it.target?.setEnchantmentLevel(it.getInt(0).toInt()) }
-                .function("cost", returnsObject().noParams()) { it.target?.cost }
-                .function("setCost", returnsObject().params(Type.OBJECT)) { it.target?.setCost(it.getInt(0).toInt()) }
+                .function("enchantment", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantment) }
+                .function("setEnchantment", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEnchantment(it.getRef(0) as Enchantment)) }
+                .function("enchantmentLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantmentLevel) }
+                .function("setEnchantmentLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEnchantmentLevel(it.getInt(0).toInt())) }
+                .function("cost", returnsObject().noParams()) { it.setReturnRef(it.target?.cost) }
+                .function("setCost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCost(it.getInt(0).toInt())) }
         }
     }
 }

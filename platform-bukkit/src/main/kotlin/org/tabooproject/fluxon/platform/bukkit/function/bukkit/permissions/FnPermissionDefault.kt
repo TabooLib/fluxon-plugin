@@ -19,10 +19,10 @@ object FnPermissionDefault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionDefault::class.java)
-                .function("getValue", returnsObject().params(Type.OBJECT)) { it.target?.getValue(it.getBool(0)) }
+                .function("getValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getValue(it.getBool(0))) }
                 // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { PermissionDefault.getByName(it.getString(0)!!) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PermissionDefault.getByName(it.getString(0)!!)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

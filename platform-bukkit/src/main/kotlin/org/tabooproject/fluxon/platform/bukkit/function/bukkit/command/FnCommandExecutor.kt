@@ -21,12 +21,12 @@ object FnCommandExecutor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandExecutor::class.java)
                 .function("onCommand", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.onCommand(
+                    it.setReturnRef(it.target?.onCommand(
                         it.getRef(0) as CommandSender,
                         it.getRef(1) as Command,
                         it.getString(2)!!,
                         it.getRef(3) as Array<String>,
-                    )
+                    ))
                 }
         }
     }

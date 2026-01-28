@@ -19,8 +19,8 @@ object FnSculkCatalyst {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkCatalyst::class.java)
-                .function("isBloom", returns(Type.Z).noParams()) { it.target?.isBloom }
-                .function("setBloom", returnsObject().params(Type.OBJECT)) { it.target?.setBloom(it.getBool(0)) }
+                .function("isBloom", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBloom) }
+                .function("setBloom", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBloom(it.getBool(0))) }
         }
     }
 }

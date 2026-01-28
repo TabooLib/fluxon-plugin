@@ -20,15 +20,15 @@ object FnDecoratedPot {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DecoratedPot::class.java)
                 .function("setSherd", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setSherd(
+                    it.setReturnRef(it.target?.setSherd(
                         it.getRef(0) as DecoratedPot.Side,
                         it.getRef(1) as Material
-                    )
+                    ))
                 }
-                .function("getSherd", returnsObject().params(Type.OBJECT)) { it.target?.getSherd(it.getRef(0) as DecoratedPot.Side) }
-                .function("shards", returnsObject().noParams()) { it.target?.shards }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("getSherd", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getSherd(it.getRef(0) as DecoratedPot.Side)) }
+                .function("shards", returnsObject().noParams()) { it.setReturnRef(it.target?.shards) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

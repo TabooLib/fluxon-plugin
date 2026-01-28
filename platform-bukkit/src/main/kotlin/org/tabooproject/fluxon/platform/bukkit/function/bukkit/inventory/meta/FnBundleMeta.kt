@@ -20,10 +20,10 @@ object FnBundleMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BundleMeta::class.java)
-                .function("hasItems", returns(Type.Z).noParams()) { it.target?.hasItems() }
-                .function("items", returnsObject().noParams()) { it.target?.items }
-                .function("setItems", returnsObject().params(Type.OBJECT)) { it.target?.setItems(it.getRef(0) as List<ItemStack>) }
-                .function("addItem", returnsObject().params(Type.OBJECT)) { it.target?.addItem(it.getRef(0) as ItemStack) }
+                .function("hasItems", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasItems()) }
+                .function("items", returnsObject().noParams()) { it.setReturnRef(it.target?.items) }
+                .function("setItems", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItems(it.getRef(0) as List<ItemStack>)) }
+                .function("addItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addItem(it.getRef(0) as ItemStack)) }
         }
     }
 }

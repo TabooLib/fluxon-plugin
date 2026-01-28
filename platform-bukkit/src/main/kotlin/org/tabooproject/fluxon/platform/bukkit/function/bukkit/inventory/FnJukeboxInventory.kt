@@ -19,9 +19,9 @@ object FnJukeboxInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JukeboxInventory::class.java)
-                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
-                .function("record", returnsObject().noParams()) { it.target?.record }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecord(it.getRef(0) as ItemStack)) }
+                .function("record", returnsObject().noParams()) { it.setReturnRef(it.target?.record) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

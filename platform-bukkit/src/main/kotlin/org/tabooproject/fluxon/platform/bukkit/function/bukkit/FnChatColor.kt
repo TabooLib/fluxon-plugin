@@ -19,28 +19,28 @@ object FnChatColor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatColor::class.java)
-                .function("char", returnsObject().noParams()) { it.target?.char }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("isFormat", returns(Type.Z).noParams()) { it.target?.isFormat }
-                .function("isColor", returns(Type.Z).noParams()) { it.target?.isColor }
+                .function("char", returnsObject().noParams()) { it.setReturnRef(it.target?.char) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("isFormat", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFormat) }
+                .function("isColor", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isColor) }
                 // static
                 .function("getByChar", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Char -> ChatColor.getByChar(var1)
                         is String -> ChatColor.getByChar(var1)
                         else -> throw IllegalArgumentException("参数必须是 Char 或 String 类型")
-                    }
+                    })
                 }
                 // static
-                .function("stripColor", returnsObject().params(Type.OBJECT)) { ChatColor.stripColor(it.getString(0)) }
+                .function("stripColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(ChatColor.stripColor(it.getString(0))) }
                 // static
                 .function("translateAlternateColorCodes", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    ChatColor.translateAlternateColorCodes(
+                    it.setReturnRef(ChatColor.translateAlternateColorCodes(
                         it.getString(0)?.firstOrNull()!!, it.getString(1)!!
-                    )
+                    ))
                 }
                 // static
-                .function("getLastColors", returnsObject().params(Type.OBJECT)) { ChatColor.getLastColors(it.getString(0)!!) }
+                .function("getLastColors", returnsObject().params(Type.OBJECT)) { it.setReturnRef(ChatColor.getLastColors(it.getString(0)!!)) }
         }
     }
 }

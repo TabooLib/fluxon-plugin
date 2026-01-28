@@ -20,9 +20,9 @@ object FnRecipeChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.test(it.getRef(0) as ItemStack)) }
         }
     }
 }
@@ -35,13 +35,13 @@ object FnRecipeChoiceMaterialChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.MaterialChoice::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
-                .function("choices", returnsObject().noParams()) { it.target?.choices }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.test(it.getRef(0) as ItemStack)) }
+                .function("choices", returnsObject().noParams()) { it.setReturnRef(it.target?.choices) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }
@@ -54,13 +54,13 @@ object FnRecipeChoiceExactChoice {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RecipeChoice.ExactChoice::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("test", returnsObject().params(Type.OBJECT)) { it.target?.test(it.getRef(0) as ItemStack) }
-                .function("choices", returnsObject().noParams()) { it.target?.choices }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("test", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.test(it.getRef(0) as ItemStack)) }
+                .function("choices", returnsObject().noParams()) { it.setReturnRef(it.target?.choices) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

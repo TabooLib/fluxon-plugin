@@ -20,14 +20,14 @@ object FnTrapDoor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TrapDoor::class.java)
-                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
-                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.target?.setOpen(it.getBool(0)) }
-                .function("isInverted", returns(Type.Z).noParams()) { it.target?.isInverted }
-                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.target?.setInverted(it.getBool(0)) }
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOpen) }
+                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOpen(it.getBool(0))) }
+                .function("isInverted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInverted) }
+                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInverted(it.getBool(0))) }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

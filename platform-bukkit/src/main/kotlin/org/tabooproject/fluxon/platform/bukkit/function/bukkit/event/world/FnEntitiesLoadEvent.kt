@@ -18,10 +18,10 @@ object FnEntitiesLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntitiesLoadEvent::class.java)
-                .function("entities", returnsObject().noParams()) { it.target?.entities }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entities", returnsObject().noParams()) { it.setReturnRef(it.target?.entities) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntitiesLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntitiesLoadEvent.getHandlerList()) }
         }
     }
 }

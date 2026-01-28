@@ -20,10 +20,10 @@ object FnSpawnEgg {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnEgg::class.java)
-                .function("spawnedType", returnsObject().noParams()) { it.target?.spawnedType }
-                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("spawnedType", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedType) }
+                .function("setSpawnedType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnedType(it.getRef(0) as EntityType)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

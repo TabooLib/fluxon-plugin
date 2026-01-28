@@ -20,10 +20,10 @@ object FnCrossbowMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CrossbowMeta::class.java)
-                .function("hasChargedProjectiles", returns(Type.Z).noParams()) { it.target?.hasChargedProjectiles() }
-                .function("chargedProjectiles", returnsObject().noParams()) { it.target?.chargedProjectiles }
-                .function("setChargedProjectiles", returnsObject().params(Type.OBJECT)) { it.target?.setChargedProjectiles(it.getRef(0) as List<ItemStack>) }
-                .function("addChargedProjectile", returnsObject().params(Type.OBJECT)) { it.target?.addChargedProjectile(it.getRef(0) as ItemStack) }
+                .function("hasChargedProjectiles", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasChargedProjectiles()) }
+                .function("chargedProjectiles", returnsObject().noParams()) { it.setReturnRef(it.target?.chargedProjectiles) }
+                .function("setChargedProjectiles", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setChargedProjectiles(it.getRef(0) as List<ItemStack>)) }
+                .function("addChargedProjectile", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addChargedProjectile(it.getRef(0) as ItemStack)) }
         }
     }
 }

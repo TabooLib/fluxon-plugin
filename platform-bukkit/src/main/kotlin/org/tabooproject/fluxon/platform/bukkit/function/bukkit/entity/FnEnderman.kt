@@ -21,12 +21,12 @@ object FnEnderman {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Enderman::class.java)
-                .function("carriedMaterial", returnsObject().noParams()) { it.target?.carriedMaterial }
-                .function("setCarriedMaterial", returnsObject().params(Type.OBJECT)) { it.target?.setCarriedMaterial(it.getRef(0) as MaterialData) }
-                .function("carriedBlock", returnsObject().noParams()) { it.target?.carriedBlock }
-                .function("setCarriedBlock", returnsObject().params(Type.OBJECT)) { it.target?.setCarriedBlock(it.getRef(0) as BlockData) }
-                .function("teleport", returnsObject().noParams()) { it.target?.teleport() }
-                .function("teleportTowards", returnsObject().params(Type.OBJECT)) { it.target?.teleportTowards(it.getRef(0) as Entity) }
+                .function("carriedMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedMaterial) }
+                .function("setCarriedMaterial", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarriedMaterial(it.getRef(0) as MaterialData)) }
+                .function("carriedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedBlock) }
+                .function("setCarriedBlock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarriedBlock(it.getRef(0) as BlockData)) }
+                .function("teleport", returnsObject().noParams()) { it.setReturnRef(it.target?.teleport()) }
+                .function("teleportTowards", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.teleportTowards(it.getRef(0) as Entity)) }
         }
     }
 }

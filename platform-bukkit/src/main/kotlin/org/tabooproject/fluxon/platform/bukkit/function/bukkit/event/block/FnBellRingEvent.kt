@@ -19,13 +19,13 @@ object FnBellRingEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BellRingEvent::class.java)
-                .function("direction", returnsObject().noParams()) { it.target?.direction }
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BellRingEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BellRingEvent.getHandlerList()) }
         }
     }
 }

@@ -19,8 +19,8 @@ object FnCaveVinesPlant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CaveVinesPlant::class.java)
-                .function("isBerries", returns(Type.Z).noParams()) { it.target?.isBerries }
-                .function("setBerries", returnsObject().params(Type.OBJECT)) { it.target?.setBerries(it.getBool(0)) }
+                .function("isBerries", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBerries) }
+                .function("setBerries", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBerries(it.getBool(0))) }
         }
     }
 }

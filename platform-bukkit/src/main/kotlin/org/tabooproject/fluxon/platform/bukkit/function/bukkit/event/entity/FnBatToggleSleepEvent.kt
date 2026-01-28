@@ -19,12 +19,12 @@ object FnBatToggleSleepEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BatToggleSleepEvent::class.java)
-                .function("isAwake", returns(Type.Z).noParams()) { it.target?.isAwake }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isAwake", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAwake) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BatToggleSleepEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BatToggleSleepEvent.getHandlerList()) }
         }
     }
 }

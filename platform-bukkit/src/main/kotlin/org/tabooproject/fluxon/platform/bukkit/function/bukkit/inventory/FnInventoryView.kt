@@ -19,29 +19,27 @@ object FnInventoryView {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryView::class.java)
-                .function("topInventory", returnsObject().noParams()) { it.target?.topInventory }
-                .function("bottomInventory", returnsObject().noParams()) { it.target?.bottomInventory }
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("type", returnsObject().noParams()) {
-                    it.target?.type
-                }
-                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack) }
-                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getInt(0).toInt()) }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
-                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
-                .function("getInventory", returnsObject().params(Type.OBJECT)) { it.target?.getInventory(it.getInt(0).toInt()) }
-                .function("convertSlot", returnsObject().params(Type.OBJECT)) { it.target?.convertSlot(it.getInt(0).toInt()) }
-                .function("close", returnsObject().noParams()) { it.target?.close() }
-                .function("countSlots", returnsObject().noParams()) { it.target?.countSlots() }
+                .function("topInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.topInventory) }
+                .function("bottomInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.bottomInventory) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack)) }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getItem(it.getInt(0).toInt())) }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
+                .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
+                .function("getInventory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getInventory(it.getInt(0).toInt())) }
+                .function("convertSlot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.convertSlot(it.getInt(0).toInt())) }
+                .function("close", returnsObject().noParams()) { it.setReturnRef(it.target?.close()) }
+                .function("countSlots", returnsObject().noParams()) { it.setReturnRef(it.target?.countSlots()) }
                 .function("setProperty", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setProperty(
+                    it.setReturnRef(it.target?.setProperty(
                         it.getRef(0) as InventoryView.Property,
                         it.getInt(1).toInt()
-                    )
+                    ))
                 }
-                .function("title", returnsObject().noParams()) { it.target?.title }
-                .function("originalTitle", returnsObject().noParams()) { it.target?.originalTitle }
-                .function("setTitle", returnsObject().params(Type.OBJECT)) { it.target?.setTitle(it.getString(0)!!) }
+                .function("title", returnsObject().noParams()) { it.setReturnRef(it.target?.title) }
+                .function("originalTitle", returnsObject().noParams()) { it.setReturnRef(it.target?.originalTitle) }
+                .function("setTitle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTitle(it.getString(0)!!)) }
         }
     }
 }
@@ -54,7 +52,7 @@ object FnInventoryViewProperty {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryView.Property::class.java)
-                .function("id", returnsObject().noParams()) { it.target?.getId() }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.getId()) }
         }
     }
 }

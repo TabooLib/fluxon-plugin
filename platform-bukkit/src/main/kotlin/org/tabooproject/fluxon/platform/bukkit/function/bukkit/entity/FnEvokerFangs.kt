@@ -20,10 +20,10 @@ object FnEvokerFangs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EvokerFangs::class.java)
-                .function("owner", returnsObject().noParams()) { it.target?.owner }
-                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.target?.setOwner(it.getRef(0) as LivingEntity) }
-                .function("attackDelay", returnsObject().noParams()) { it.target?.attackDelay }
-                .function("setAttackDelay", returnsObject().params(Type.OBJECT)) { it.target?.setAttackDelay(it.getInt(0).toInt()) }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOwner(it.getRef(0) as LivingEntity)) }
+                .function("attackDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.attackDelay) }
+                .function("setAttackDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAttackDelay(it.getInt(0).toInt())) }
         }
     }
 }

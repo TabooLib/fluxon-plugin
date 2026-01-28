@@ -19,8 +19,8 @@ object FnOpenable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Openable::class.java)
-                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
-                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.target?.setOpen(it.getBool(0)) }
+                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOpen) }
+                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOpen(it.getBool(0))) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnBlockDispenseArmorEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDispenseArmorEvent::class.java)
-                .function("targetEntity", returnsObject().noParams()) { it.target?.targetEntity }
+                .function("targetEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.targetEntity) }
         }
     }
 }

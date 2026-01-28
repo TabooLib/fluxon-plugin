@@ -19,10 +19,10 @@ object FnRepairable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repairable::class.java)
-                .function("hasRepairCost", returns(Type.Z).noParams()) { it.target?.hasRepairCost() }
-                .function("repairCost", returnsObject().noParams()) { it.target?.repairCost }
-                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.target?.setRepairCost(it.getInt(0).toInt()) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasRepairCost", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRepairCost()) }
+                .function("repairCost", returnsObject().noParams()) { it.setReturnRef(it.target?.repairCost) }
+                .function("setRepairCost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRepairCost(it.getInt(0).toInt())) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

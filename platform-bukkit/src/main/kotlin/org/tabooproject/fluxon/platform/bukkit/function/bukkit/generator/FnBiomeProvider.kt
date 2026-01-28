@@ -21,7 +21,7 @@ object FnBiomeProvider {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeProvider::class.java)
                 .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 4) {
+                    it.setReturnRef(if (it.argumentCount == 4) {
                         it.target?.getBiome(
                             it.getRef(0) as WorldInfo,
                             it.getInt(1).toInt(),
@@ -36,10 +36,10 @@ object FnBiomeProvider {
                             it.getInt(3).toInt(),
                             it.getRef(4) as BiomeParameterPoint
                         )
-                    }
+                    })
                 }
                 .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 4) {
+                    it.setReturnRef(if (it.argumentCount == 4) {
                         it.target?.getBiome(
                             it.getRef(0) as WorldInfo,
                             it.getInt(1).toInt(),
@@ -54,9 +54,9 @@ object FnBiomeProvider {
                             it.getInt(3).toInt(),
                             it.getRef(4) as BiomeParameterPoint
                         )
-                    }
+                    })
                 }
-                .function("getBiomes", returnsObject().params(Type.OBJECT)) { it.target?.getBiomes(it.getRef(0) as WorldInfo) }
+                .function("getBiomes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBiomes(it.getRef(0) as WorldInfo)) }
         }
     }
 }

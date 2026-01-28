@@ -20,13 +20,13 @@ object FnDiode {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Diode::class.java)
-                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
-                .function("delay", returnsObject().noParams()) { it.target?.delay }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDelay(it.getInt(0).toInt())) }
+                .function("delay", returnsObject().noParams()) { it.setReturnRef(it.target?.delay) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
         }
     }
 }

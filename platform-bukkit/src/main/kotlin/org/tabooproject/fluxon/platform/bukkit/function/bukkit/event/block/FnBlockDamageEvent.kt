@@ -20,15 +20,15 @@ object FnBlockDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("instaBreak", returnsObject().noParams()) { it.target?.instaBreak }
-                .function("setInstaBreak", returnsObject().params(Type.OBJECT)) { it.target?.setInstaBreak(it.getBool(0)) }
-                .function("itemInHand", returnsObject().noParams()) { it.target?.itemInHand }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("instaBreak", returnsObject().noParams()) { it.setReturnRef(it.target?.instaBreak) }
+                .function("setInstaBreak", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInstaBreak(it.getBool(0))) }
+                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockDamageEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockDamageEvent.getHandlerList()) }
         }
     }
 }

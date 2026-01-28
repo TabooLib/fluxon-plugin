@@ -19,12 +19,12 @@ object FnTropicalFish {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFish::class.java)
-                .function("patternColor", returnsObject().noParams()) { it.target?.patternColor }
-                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
-                .function("bodyColor", returnsObject().noParams()) { it.target?.bodyColor }
-                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
-                .function("pattern", returnsObject().noParams()) { it.target?.pattern }
-                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
+                .function("patternColor", returnsObject().noParams()) { it.setReturnRef(it.target?.patternColor) }
+                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPatternColor(it.getRef(0) as DyeColor)) }
+                .function("bodyColor", returnsObject().noParams()) { it.setReturnRef(it.target?.bodyColor) }
+                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBodyColor(it.getRef(0) as DyeColor)) }
+                .function("pattern", returnsObject().noParams()) { it.setReturnRef(it.target?.pattern) }
+                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern)) }
         }
     }
 }

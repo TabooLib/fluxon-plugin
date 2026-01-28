@@ -19,9 +19,9 @@ object FnPressurePlate {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PressurePlate::class.java)
-                .function("isPressed", returns(Type.Z).noParams()) { it.target?.isPressed }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPressed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPressed) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -20,10 +20,10 @@ object FnHanging {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hanging::class.java)
                 .function("setFacingDirection", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setFacingDirection(
+                    it.setReturnRef(it.target?.setFacingDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
-                    )
+                    ))
                 }
         }
     }

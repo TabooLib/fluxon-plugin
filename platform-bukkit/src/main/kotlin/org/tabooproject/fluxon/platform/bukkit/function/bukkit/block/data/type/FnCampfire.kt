@@ -19,8 +19,8 @@ object FnCampfire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Campfire::class.java)
-                .function("isSignalFire", returns(Type.Z).noParams()) { it.target?.isSignalFire }
-                .function("setSignalFire", returnsObject().params(Type.OBJECT)) { it.target?.setSignalFire(it.getBool(0)) }
+                .function("isSignalFire", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSignalFire) }
+                .function("setSignalFire", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSignalFire(it.getBool(0))) }
         }
     }
 }

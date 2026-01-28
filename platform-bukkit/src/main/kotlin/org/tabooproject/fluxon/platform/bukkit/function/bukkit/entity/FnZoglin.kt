@@ -19,8 +19,8 @@ object FnZoglin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Zoglin::class.java)
-                .function("isBaby", returns(Type.Z).noParams()) { it.target?.isBaby }
-                .function("setBaby", returnsObject().params(Type.OBJECT)) { it.target?.setBaby(it.getBool(0)) }
+                .function("isBaby", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBaby) }
+                .function("setBaby", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBaby(it.getBool(0))) }
         }
     }
 }

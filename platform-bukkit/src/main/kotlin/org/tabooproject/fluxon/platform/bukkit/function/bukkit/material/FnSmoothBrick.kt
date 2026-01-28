@@ -18,8 +18,8 @@ object FnSmoothBrick {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmoothBrick::class.java)
-                .function("textures", returnsObject().noParams()) { it.target?.textures }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

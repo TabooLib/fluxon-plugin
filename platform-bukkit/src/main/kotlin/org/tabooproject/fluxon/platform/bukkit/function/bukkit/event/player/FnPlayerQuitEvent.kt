@@ -18,11 +18,11 @@ object FnPlayerQuitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerQuitEvent::class.java)
-                .function("quitMessage", returnsObject().noParams()) { it.target?.quitMessage }
-                .function("setQuitMessage", returnsObject().params(Type.OBJECT)) { it.target?.setQuitMessage(it.getString(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("quitMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.quitMessage) }
+                .function("setQuitMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setQuitMessage(it.getString(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerQuitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerQuitEvent.getHandlerList()) }
         }
     }
 }

@@ -19,19 +19,19 @@ object FnEnchantItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantItemEvent::class.java)
-                .function("enchanter", returnsObject().noParams()) { it.target?.enchanter }
-                .function("enchantBlock", returnsObject().noParams()) { it.target?.enchantBlock }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("expLevelCost", returnsObject().noParams()) { it.target?.expLevelCost }
-                .function("setExpLevelCost", returnsObject().params(Type.OBJECT)) { it.target?.setExpLevelCost(it.getInt(0).toInt()) }
-                .function("enchantmentHint", returnsObject().noParams()) { it.target?.enchantmentHint }
-                .function("levelHint", returnsObject().noParams()) { it.target?.levelHint }
-                .function("whichButton", returnsObject().noParams()) { it.target?.whichButton() }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("enchanter", returnsObject().noParams()) { it.setReturnRef(it.target?.enchanter) }
+                .function("enchantBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantBlock) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("expLevelCost", returnsObject().noParams()) { it.setReturnRef(it.target?.expLevelCost) }
+                .function("setExpLevelCost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExpLevelCost(it.getInt(0).toInt())) }
+                .function("enchantmentHint", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantmentHint) }
+                .function("levelHint", returnsObject().noParams()) { it.setReturnRef(it.target?.levelHint) }
+                .function("whichButton", returnsObject().noParams()) { it.setReturnRef(it.target?.whichButton()) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EnchantItemEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EnchantItemEvent.getHandlerList()) }
         }
     }
 }

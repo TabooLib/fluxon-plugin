@@ -18,16 +18,16 @@ object FnOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OctaveGenerator::class.java)
-                .function("setScale", returnsObject().params(Type.OBJECT)) { it.target?.setScale(it.getAsDouble(0)) }
-                .function("xScale", returnsObject().noParams()) { it.target?.getXScale() }
-                .function("setXScale", returnsObject().params(Type.OBJECT)) { it.target?.setXScale(it.getAsDouble(0)) }
-                .function("yScale", returnsObject().noParams()) { it.target?.getYScale() }
-                .function("setYScale", returnsObject().params(Type.OBJECT)) { it.target?.setYScale(it.getAsDouble(0)) }
-                .function("zScale", returnsObject().noParams()) { it.target?.getZScale() }
-                .function("setZScale", returnsObject().params(Type.OBJECT)) { it.target?.setZScale(it.getAsDouble(0)) }
-                .function("octaves", returnsObject().noParams()) { it.target?.getOctaves() }
+                .function("setScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setScale(it.getAsDouble(0))) }
+                .function("xScale", returnsObject().noParams()) { it.setReturnRef(it.target?.getXScale()) }
+                .function("setXScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setXScale(it.getAsDouble(0))) }
+                .function("yScale", returnsObject().noParams()) { it.setReturnRef(it.target?.getYScale()) }
+                .function("setYScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setYScale(it.getAsDouble(0))) }
+                .function("zScale", returnsObject().noParams()) { it.setReturnRef(it.target?.getZScale()) }
+                .function("setZScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setZScale(it.getAsDouble(0))) }
+                .function("octaves", returnsObject().noParams()) { it.setReturnRef(it.target?.getOctaves()) }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         3 -> it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -81,10 +81,10 @@ object FnOctaveGenerator {
                             it.getBool(5)
                         )
                         else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         3 -> it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -138,10 +138,10 @@ object FnOctaveGenerator {
                             it.getBool(5)
                         )
                         else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         3 -> it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -195,10 +195,10 @@ object FnOctaveGenerator {
                             it.getBool(5)
                         )
                         else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         3 -> it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -252,7 +252,7 @@ object FnOctaveGenerator {
                             it.getBool(5)
                         )
                         else -> error("OctaveGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
         }
     }

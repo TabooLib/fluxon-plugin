@@ -24,23 +24,23 @@ object FnArrow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Arrow::class.java)
-                .function("setBasePotionData", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
-                .function("basePotionData", returnsObject().noParams()) { it.target?.basePotionData }
-                .function("setBasePotionType", returnsObject().params(Type.OBJECT)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
-                .function("basePotionType", returnsObject().noParams()) { it.target?.basePotionType }
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
-                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.target?.hasCustomEffects() }
-                .function("customEffects", returnsObject().noParams()) { it.target?.customEffects }
+                .function("setBasePotionData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBasePotionData(it.getRef(0) as PotionData)) }
+                .function("basePotionData", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionData) }
+                .function("setBasePotionType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBasePotionType(it.getRef(0) as PotionType)) }
+                .function("basePotionType", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionType) }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as Color)) }
+                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasCustomEffects()) }
+                .function("customEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.customEffects) }
                 .function("addCustomEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.addCustomEffect(
+                    it.setReturnRef(it.target?.addCustomEffect(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) }
-                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) }
-                .function("clearCustomEffects", returnsObject().noParams()) { it.target?.clearCustomEffects() }
+                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType)) }
+                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType)) }
+                .function("clearCustomEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.clearCustomEffects()) }
         }
     }
 }

@@ -18,11 +18,11 @@ object FnSimplexOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexOctaveGenerator::class.java)
-                .function("setScale", returnsObject().params(Type.OBJECT)) { it.target?.setScale(it.getAsDouble(0)) }
-                .function("wScale", returnsObject().noParams()) { it.target?.wScale }
-                .function("setWScale", returnsObject().params(Type.OBJECT)) { it.target?.setWScale(it.getAsDouble(0)) }
+                .function("setScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setScale(it.getAsDouble(0))) }
+                .function("wScale", returnsObject().noParams()) { it.setReturnRef(it.target?.wScale) }
+                .function("setWScale", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWScale(it.getAsDouble(0))) }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 6) {
+                    it.setReturnRef(if (it.argumentCount == 6) {
                         it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -41,10 +41,10 @@ object FnSimplexOctaveGenerator {
                             it.getAsDouble(5),
                             it.getBool(6)
                         )
-                    }
+                    })
                 }
                 .function("noise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 6) {
+                    it.setReturnRef(if (it.argumentCount == 6) {
                         it.target?.noise(
                             it.getAsDouble(0),
                             it.getAsDouble(1),
@@ -63,7 +63,7 @@ object FnSimplexOctaveGenerator {
                             it.getAsDouble(5),
                             it.getBool(6)
                         )
-                    }
+                    })
                 }
         }
     }

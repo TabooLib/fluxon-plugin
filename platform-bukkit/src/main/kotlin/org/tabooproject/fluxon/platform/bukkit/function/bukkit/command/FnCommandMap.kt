@@ -22,13 +22,13 @@ object FnCommandMap {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandMap::class.java)
                 .function("registerAll", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.registerAll(
+                    it.setReturnRef(it.target?.registerAll(
                         it.getString(0)!!,
                         it.getRef(1) as List<Command>
-                    )
+                    ))
                 }
                 .function("register", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.register(it.getString(0)!!, it.getRef(1) as Command)
                     } else {
                         it.target?.register(
@@ -36,10 +36,10 @@ object FnCommandMap {
                             it.getString(1)!!,
                             it.getRef(2) as Command
                         )
-                    }
+                    })
                 }
                 .function("register", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.register(it.getString(0)!!, it.getRef(1) as Command)
                     } else {
                         it.target?.register(
@@ -47,13 +47,13 @@ object FnCommandMap {
                             it.getString(1)!!,
                             it.getRef(2) as Command
                         )
-                    }
+                    })
                 }
-                .function("dispatch", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.dispatch(it.getRef(0) as CommandSender, it.getString(1)!!) }
-                .function("clearCommands", returnsObject().noParams()) { it.target?.clearCommands() }
-                .function("getCommand", returnsObject().params(Type.OBJECT)) { it.target?.getCommand(it.getString(0)!!) }
+                .function("dispatch", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.dispatch(it.getRef(0) as CommandSender, it.getString(1)!!)) }
+                .function("clearCommands", returnsObject().noParams()) { it.setReturnRef(it.target?.clearCommands()) }
+                .function("getCommand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getCommand(it.getString(0)!!)) }
                 .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.tabComplete(
                             it.getRef(0) as CommandSender,
                             it.getString(1)!!
@@ -64,10 +64,10 @@ object FnCommandMap {
                             it.getString(1)!!,
                             it.getRef(2) as Location
                         )
-                    }
+                    })
                 }
                 .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.tabComplete(
                             it.getRef(0) as CommandSender,
                             it.getString(1)!!
@@ -78,7 +78,7 @@ object FnCommandMap {
                             it.getString(1)!!,
                             it.getRef(2) as Location
                         )
-                    }
+                    })
                 }
         }
     }

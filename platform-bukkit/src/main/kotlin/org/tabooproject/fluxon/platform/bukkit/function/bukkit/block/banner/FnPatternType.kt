@@ -18,8 +18,8 @@ object FnPatternType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PatternType::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("identifier", returnsObject().noParams()) { it.target?.identifier }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("identifier", returnsObject().noParams()) { it.setReturnRef(it.target?.identifier) }
         }
     }
 }

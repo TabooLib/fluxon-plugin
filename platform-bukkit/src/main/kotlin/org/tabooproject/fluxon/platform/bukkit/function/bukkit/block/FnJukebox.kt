@@ -21,17 +21,17 @@ object FnJukebox {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jukebox::class.java)
-                .function("playing", returnsObject().noParams()) { it.target?.playing }
-                .function("setPlaying", returnsObject().params(Type.OBJECT)) { it.target?.setPlaying(it.getRef(0) as Material) }
-                .function("hasRecord", returns(Type.Z).noParams()) { it.target?.hasRecord() }
-                .function("record", returnsObject().noParams()) { it.target?.record }
-                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
-                .function("isPlaying", returns(Type.Z).noParams()) { it.target?.isPlaying }
-                .function("startPlaying", returnsObject().noParams()) { it.target?.startPlaying() }
-                .function("stopPlaying", returnsObject().noParams()) { it.target?.stopPlaying() }
-                .function("eject", returnsObject().noParams()) { it.target?.eject() }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("playing", returnsObject().noParams()) { it.setReturnRef(it.target?.playing) }
+                .function("setPlaying", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlaying(it.getRef(0) as Material)) }
+                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRecord()) }
+                .function("record", returnsObject().noParams()) { it.setReturnRef(it.target?.record) }
+                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecord(it.getRef(0) as ItemStack)) }
+                .function("isPlaying", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlaying) }
+                .function("startPlaying", returnsObject().noParams()) { it.setReturnRef(it.target?.startPlaying()) }
+                .function("stopPlaying", returnsObject().noParams()) { it.setReturnRef(it.target?.stopPlaying()) }
+                .function("eject", returnsObject().noParams()) { it.setReturnRef(it.target?.eject()) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

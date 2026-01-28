@@ -18,9 +18,9 @@ object FnCake {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cake::class.java)
-                .function("bites", returnsObject().noParams()) { it.target?.bites }
-                .function("setBites", returnsObject().params(Type.OBJECT)) { it.target?.setBites(it.getInt(0).toInt()) }
-                .function("maximumBites", returnsObject().noParams()) { it.target?.maximumBites }
+                .function("bites", returnsObject().noParams()) { it.setReturnRef(it.target?.bites) }
+                .function("setBites", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBites(it.getInt(0).toInt())) }
+                .function("maximumBites", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumBites) }
         }
     }
 }

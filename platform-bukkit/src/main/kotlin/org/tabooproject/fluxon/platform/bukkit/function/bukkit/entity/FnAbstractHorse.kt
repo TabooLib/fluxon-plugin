@@ -20,16 +20,16 @@ object FnAbstractHorse {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractHorse::class.java)
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Horse.Variant) }
-                .function("domestication", returnsObject().noParams()) { it.target?.domestication }
-                .function("setDomestication", returnsObject().params(Type.OBJECT)) { it.target?.setDomestication(it.getInt(0).toInt()) }
-                .function("maxDomestication", returnsObject().noParams()) { it.target?.maxDomestication }
-                .function("setMaxDomestication", returnsObject().params(Type.OBJECT)) { it.target?.setMaxDomestication(it.getInt(0).toInt()) }
-                .function("jumpStrength", returnsObject().noParams()) { it.target?.jumpStrength }
-                .function("setJumpStrength", returnsObject().params(Type.OBJECT)) { it.target?.setJumpStrength(it.getAsDouble(0)) }
-                .function("isEatingHaystack", returns(Type.Z).noParams()) { it.target?.isEatingHaystack }
-                .function("setEatingHaystack", returnsObject().params(Type.OBJECT)) { it.target?.setEatingHaystack(it.getBool(0)) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Horse.Variant)) }
+                .function("domestication", returnsObject().noParams()) { it.setReturnRef(it.target?.domestication) }
+                .function("setDomestication", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDomestication(it.getInt(0).toInt())) }
+                .function("maxDomestication", returnsObject().noParams()) { it.setReturnRef(it.target?.maxDomestication) }
+                .function("setMaxDomestication", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxDomestication(it.getInt(0).toInt())) }
+                .function("jumpStrength", returnsObject().noParams()) { it.setReturnRef(it.target?.jumpStrength) }
+                .function("setJumpStrength", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setJumpStrength(it.getAsDouble(0))) }
+                .function("isEatingHaystack", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEatingHaystack) }
+                .function("setEatingHaystack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEatingHaystack(it.getBool(0))) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

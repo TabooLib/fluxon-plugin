@@ -19,10 +19,10 @@ object FnBreedable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Breedable::class.java)
-                .function("setAgeLock", returnsObject().params(Type.OBJECT)) { it.target?.setAgeLock(it.getBool(0)) }
-                .function("ageLock", returnsObject().noParams()) { it.target?.ageLock }
-                .function("canBreed", returns(Type.Z).noParams()) { it.target?.canBreed() }
-                .function("setBreed", returnsObject().params(Type.OBJECT)) { it.target?.setBreed(it.getBool(0)) }
+                .function("setAgeLock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAgeLock(it.getBool(0))) }
+                .function("ageLock", returnsObject().noParams()) { it.setReturnRef(it.target?.ageLock) }
+                .function("canBreed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canBreed()) }
+                .function("setBreed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBreed(it.getBool(0))) }
         }
     }
 }

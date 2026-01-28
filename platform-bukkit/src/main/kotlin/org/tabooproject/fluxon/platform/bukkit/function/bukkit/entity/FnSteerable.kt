@@ -19,13 +19,13 @@ object FnSteerable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Steerable::class.java)
-                .function("hasSaddle", returns(Type.Z).noParams()) { it.target?.hasSaddle() }
-                .function("setSaddle", returnsObject().params(Type.OBJECT)) { it.target?.setSaddle(it.getBool(0)) }
-                .function("boostTicks", returnsObject().noParams()) { it.target?.boostTicks }
-                .function("setBoostTicks", returnsObject().params(Type.OBJECT)) { it.target?.setBoostTicks(it.getInt(0).toInt()) }
-                .function("currentBoostTicks", returnsObject().noParams()) { it.target?.currentBoostTicks }
-                .function("setCurrentBoostTicks", returnsObject().params(Type.OBJECT)) { it.target?.setCurrentBoostTicks(it.getInt(0).toInt()) }
-                .function("steerMaterial", returnsObject().noParams()) { it.target?.steerMaterial }
+                .function("hasSaddle", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasSaddle()) }
+                .function("setSaddle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSaddle(it.getBool(0))) }
+                .function("boostTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.boostTicks) }
+                .function("setBoostTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBoostTicks(it.getInt(0).toInt())) }
+                .function("currentBoostTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.currentBoostTicks) }
+                .function("setCurrentBoostTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCurrentBoostTicks(it.getInt(0).toInt())) }
+                .function("steerMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.steerMaterial) }
         }
     }
 }

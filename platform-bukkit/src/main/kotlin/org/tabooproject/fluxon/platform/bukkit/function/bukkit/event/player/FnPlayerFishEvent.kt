@@ -20,25 +20,25 @@ object FnPlayerFishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerFishEvent::class.java)
-                .function("caught", returnsObject().noParams()) { it.target?.caught }
-                .function("hook", returnsObject().noParams()) { it.target?.hook }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("expToDrop", returnsObject().noParams()) { it.target?.expToDrop }
-                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.target?.setExpToDrop(it.getInt(0).toInt()) }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("state", returnsObject().noParams()) { it.target?.state }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("caught", returnsObject().noParams()) { it.setReturnRef(it.target?.caught) }
+                .function("hook", returnsObject().noParams()) { it.setReturnRef(it.target?.hook) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("expToDrop", returnsObject().noParams()) { it.setReturnRef(it.target?.expToDrop) }
+                .function("setExpToDrop", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExpToDrop(it.getInt(0).toInt())) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerFishEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerFishEvent.getHandlerList()) }
 
-                .function("isFishing", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING } }
-                .function("isCaughtFish", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH } }
-                .function("isCaughtEntity", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_ENTITY } }
-                .function("isInGround", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.IN_GROUND } }
-                .function("isFailedAttempt", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.FAILED_ATTEMPT } }
-                .function("isReelIn", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.REEL_IN } }
-                .function("isBite", returns(Type.Z).noParams()) { it.target?.let { e -> e.state == PlayerFishEvent.State.BITE } }
+                .function("isFishing", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING }) }
+                .function("isCaughtFish", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH }) }
+                .function("isCaughtEntity", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_ENTITY }) }
+                .function("isInGround", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.IN_GROUND }) }
+                .function("isFailedAttempt", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.FAILED_ATTEMPT }) }
+                .function("isReelIn", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.REEL_IN }) }
+                .function("isBite", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.let { e -> e.state == PlayerFishEvent.State.BITE }) }
         }
     }
 }

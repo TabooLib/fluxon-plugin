@@ -19,10 +19,10 @@ object FnOminousItemSpawner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OminousItemSpawner::class.java)
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("spawnItemAfterTicks", returnsObject().noParams()) { it.target?.spawnItemAfterTicks }
-                .function("setSpawnItemAfterTicks", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnItemAfterTicks(it.getInt(0).toLong()) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
+                .function("spawnItemAfterTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnItemAfterTicks) }
+                .function("setSpawnItemAfterTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnItemAfterTicks(it.getInt(0).toLong())) }
         }
     }
 }

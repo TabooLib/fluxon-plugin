@@ -20,7 +20,7 @@ object FnCommandPermissions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandPermissions::class.java)
                 // static
-                .function("registerPermissions", returnsObject().params(Type.OBJECT)) { CommandPermissions.registerPermissions(it.getRef(0) as Permission) }
+                .function("registerPermissions", returnsObject().params(Type.OBJECT)) { it.setReturnRef(CommandPermissions.registerPermissions(it.getRef(0) as Permission)) }
         }
     }
 }

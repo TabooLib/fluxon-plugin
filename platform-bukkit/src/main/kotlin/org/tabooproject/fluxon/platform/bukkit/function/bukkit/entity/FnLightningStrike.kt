@@ -20,14 +20,14 @@ object FnLightningStrike {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LightningStrike::class.java)
-                .function("isEffect", returns(Type.Z).noParams()) { it.target?.isEffect }
-                .function("flashes", returnsObject().noParams()) { it.target?.flashes }
-                .function("setFlashes", returnsObject().params(Type.OBJECT)) { it.target?.setFlashes(it.getInt(0).toInt()) }
-                .function("lifeTicks", returnsObject().noParams()) { it.target?.lifeTicks }
-                .function("setLifeTicks", returnsObject().params(Type.OBJECT)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
-                .function("causingPlayer", returnsObject().noParams()) { it.target?.causingPlayer }
-                .function("setCausingPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setCausingPlayer(it.getRef(0) as Player) }
-                .function("isSilent", returns(Type.Z).noParams()) { it.target?.isSilent }
+                .function("isEffect", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEffect) }
+                .function("flashes", returnsObject().noParams()) { it.setReturnRef(it.target?.flashes) }
+                .function("setFlashes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFlashes(it.getInt(0).toInt())) }
+                .function("lifeTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.lifeTicks) }
+                .function("setLifeTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLifeTicks(it.getInt(0).toInt())) }
+                .function("causingPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.causingPlayer) }
+                .function("setCausingPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCausingPlayer(it.getRef(0) as Player)) }
+                .function("isSilent", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSilent) }
         }
     }
 }

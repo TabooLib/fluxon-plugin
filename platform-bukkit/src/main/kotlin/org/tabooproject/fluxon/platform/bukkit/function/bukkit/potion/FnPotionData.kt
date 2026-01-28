@@ -19,11 +19,11 @@ object FnPotionData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionData::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("isUpgraded", returns(Type.Z).noParams()) { it.target?.isUpgraded }
-                .function("isExtended", returns(Type.Z).noParams()) { it.target?.isExtended }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("isUpgraded", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUpgraded) }
+                .function("isExtended", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExtended) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
         }
     }
 }

@@ -19,11 +19,11 @@ object FnStep {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Step::class.java)
-                .function("textures", returnsObject().noParams()) { it.target?.textures }
-                .function("isInverted", returns(Type.Z).noParams()) { it.target?.isInverted }
-                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.target?.setInverted(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("isInverted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInverted) }
+                .function("setInverted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInverted(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

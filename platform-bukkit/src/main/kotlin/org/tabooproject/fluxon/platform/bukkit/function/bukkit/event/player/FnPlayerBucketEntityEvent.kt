@@ -19,15 +19,15 @@ object FnPlayerBucketEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketEntityEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("originalBucket", returnsObject().noParams()) { it.target?.originalBucket }
-                .function("entityBucket", returnsObject().noParams()) { it.target?.entityBucket }
-                .function("hand", returnsObject().noParams()) { it.target?.hand }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("originalBucket", returnsObject().noParams()) { it.setReturnRef(it.target?.originalBucket) }
+                .function("entityBucket", returnsObject().noParams()) { it.setReturnRef(it.target?.entityBucket) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerBucketEntityEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerBucketEntityEvent.getHandlerList()) }
         }
     }
 }

@@ -20,10 +20,10 @@ object FnInventoryInteractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryInteractEvent::class.java)
-                .function("whoClicked", returnsObject().noParams()) { it.target?.whoClicked }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as Event.Result) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("whoClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.whoClicked) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as Event.Result)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
         }
     }
 }

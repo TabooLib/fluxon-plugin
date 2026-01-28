@@ -18,9 +18,9 @@ object FnDifficulty {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Difficulty::class.java)
-                .function("value", returnsObject().noParams()) { it.target?.value }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
                 // static
-                .function("getByValue", returnsObject().params(Type.OBJECT)) { Difficulty.getByValue(it.getInt(0).toInt()) }
+                .function("getByValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Difficulty.getByValue(it.getInt(0).toInt())) }
         }
     }
 }

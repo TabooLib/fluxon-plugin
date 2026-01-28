@@ -18,12 +18,12 @@ object FnTradeSelectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TradeSelectEvent::class.java)
-                .function("index", returnsObject().noParams()) { it.target?.index }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("merchant", returnsObject().noParams()) { it.target?.merchant }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("index", returnsObject().noParams()) { it.setReturnRef(it.target?.index) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("merchant", returnsObject().noParams()) { it.setReturnRef(it.target?.merchant) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { TradeSelectEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(TradeSelectEvent.getHandlerList()) }
         }
     }
 }

@@ -20,10 +20,10 @@ object FnSandstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sandstone::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("setType", returnsObject().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as SandstoneType) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("setType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setType(it.getRef(0) as SandstoneType)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

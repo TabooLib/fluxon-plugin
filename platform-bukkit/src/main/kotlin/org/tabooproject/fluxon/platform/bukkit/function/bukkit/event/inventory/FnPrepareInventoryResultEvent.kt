@@ -19,11 +19,11 @@ object FnPrepareInventoryResultEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareInventoryResultEvent::class.java)
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as ItemStack)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PrepareInventoryResultEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PrepareInventoryResultEvent.getHandlerList()) }
         }
     }
 }

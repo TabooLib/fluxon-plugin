@@ -20,9 +20,9 @@ object FnMusicInstrument {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MusicInstrument::class.java)
                 // static
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { MusicInstrument.getByKey(it.getRef(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MusicInstrument.getByKey(it.getRef(0) as NamespacedKey)) }
                 // static
-                .function("values", returnsObject().noParams()) { MusicInstrument.values() }
+                .function("values", returnsObject().noParams()) { it.setReturnRef(MusicInstrument.values()) }
         }
     }
 }

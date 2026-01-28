@@ -25,7 +25,7 @@ object FnRegionAccessor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegionAccessor::class.java)
                 .function("getBiome", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBiome(it.getRef(0) as Location)
                     } else {
                         it.target?.getBiome(
@@ -33,10 +33,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBiome(it.getRef(0) as Location)
                     } else {
                         it.target?.getBiome(
@@ -44,10 +44,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .syncFunction("setBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setBiome(
                             it.getRef(0) as Location,
                             it.getRef(1) as Biome
@@ -59,10 +59,10 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as Biome
                         )
-                    }
+                    })
                 }
                 .syncFunction("setBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setBiome(
                             it.getRef(0) as Location,
                             it.getRef(1) as Biome
@@ -74,10 +74,10 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as Biome
                         )
-                    }
+                    })
                 }
                 .function("getBlockState", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBlockState(it.getRef(0) as Location)
                     } else {
                         it.target?.getBlockState(
@@ -85,10 +85,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getBlockState", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBlockState(it.getRef(0) as Location)
                     } else {
                         it.target?.getBlockState(
@@ -96,10 +96,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getBlockData", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBlockData(it.getRef(0) as Location)
                     } else {
                         it.target?.getBlockData(
@@ -107,10 +107,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getBlockData(it.getRef(0) as Location)
                     } else {
                         it.target?.getBlockData(
@@ -118,10 +118,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getType", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getType(it.getRef(0) as Location)
                     } else {
                         it.target?.getType(
@@ -129,10 +129,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("getType", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.getType(it.getRef(0) as Location)
                     } else {
                         it.target?.getType(
@@ -140,10 +140,10 @@ object FnRegionAccessor {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .syncFunction("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setBlockData(
                             it.getRef(0) as Location,
                             it.getRef(1) as BlockData
@@ -155,10 +155,10 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as BlockData
                         )
-                    }
+                    })
                 }
                 .syncFunction("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setBlockData(
                             it.getRef(0) as Location,
                             it.getRef(1) as BlockData
@@ -170,10 +170,10 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as BlockData
                         )
-                    }
+                    })
                 }
                 .syncFunction("setType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setType(
                             it.getRef(0) as Location,
                             it.getRef(1) as Material
@@ -185,10 +185,10 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as Material
                         )
-                    }
+                    })
                 }
                 .syncFunction("setType", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.setType(
                             it.getRef(0) as Location,
                             it.getRef(1) as Material
@@ -200,17 +200,17 @@ object FnRegionAccessor {
                             it.getInt(2).toInt(),
                             it.getRef(3) as Material
                         )
-                    }
+                    })
                 }
                 .syncFunction("generateTree", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.generateTree(
+                    it.setReturnRef(it.target?.generateTree(
                         it.getRef(0) as Location,
                         it.getRef(1) as java.util.Random,
                         it.getRef(2) as org.bukkit.TreeType
-                    )
+                    ))
                 }
                 .syncFunction("spawnEntity", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.spawnEntity(
                             it.getRef(0) as Location,
                             it.getRef(1) as EntityType
@@ -221,10 +221,10 @@ object FnRegionAccessor {
                             it.getRef(1) as EntityType,
                             it.getBool(2)
                         )
-                    }
+                    })
                 }
                 .syncFunction("spawnEntity", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 2) {
+                    it.setReturnRef(if (it.argumentCount == 2) {
                         it.target?.spawnEntity(
                             it.getRef(0) as Location,
                             it.getRef(1) as EntityType
@@ -235,13 +235,13 @@ object FnRegionAccessor {
                             it.getRef(1) as EntityType,
                             it.getBool(2)
                         )
-                    }
+                    })
                 }
-                .function("entities", returnsObject().noParams()) { it.target?.entities }
-                .function("livingEntities", returnsObject().noParams()) { it.target?.livingEntities }
-                .function("entitiesByClasses", returnsObject().noParams()) { it.target?.getEntitiesByClasses() }
+                .function("entities", returnsObject().noParams()) { it.setReturnRef(it.target?.entities) }
+                .function("livingEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.livingEntities) }
+                .function("entitiesByClasses", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntitiesByClasses()) }
                 .function("getHighestBlockYAt", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.getHighestBlockYAt(it.getRef(0) as Location)
                         2 -> when (val var1 = it.getRef(0)) {
                             is Int -> it.target?.getHighestBlockYAt(var1, it.getInt(1).toInt())
@@ -255,10 +255,10 @@ object FnRegionAccessor {
                             it.getRef(2) as HeightMap
                         )
                         else -> error("RegionAccessor#highestBlockYAt 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getHighestBlockYAt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.getHighestBlockYAt(it.getRef(0) as Location)
                         2 -> when (val var1 = it.getRef(0)) {
                             is Int -> it.target?.getHighestBlockYAt(var1, it.getInt(1).toInt())
@@ -272,10 +272,10 @@ object FnRegionAccessor {
                             it.getRef(2) as HeightMap
                         )
                         else -> error("RegionAccessor#highestBlockYAt 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getHighestBlockYAt", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.getHighestBlockYAt(it.getRef(0) as Location)
                         2 -> when (val var1 = it.getRef(0)) {
                             is Int -> it.target?.getHighestBlockYAt(var1, it.getInt(1).toInt())
@@ -289,7 +289,7 @@ object FnRegionAccessor {
                             it.getRef(2) as HeightMap
                         )
                         else -> error("RegionAccessor#highestBlockYAt 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
         }
     }

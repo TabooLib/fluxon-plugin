@@ -20,9 +20,9 @@ object FnAxolotlBucketMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AxolotlBucketMeta::class.java)
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
-                .function("hasVariant", returns(Type.Z).noParams()) { it.target?.hasVariant() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Axolotl.Variant)) }
+                .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasVariant()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

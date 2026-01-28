@@ -18,7 +18,7 @@ object FnLazyMetadataValue {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LazyMetadataValue::class.java)
-                .function("value", returnsObject().noParams()) { it.target?.value() }
+                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value()) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnWeatherEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WeatherEvent::class.java)
-                .function("world", returnsObject().noParams()) { it.target?.getWorld() }
+                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.getWorld()) }
         }
     }
 }

@@ -20,19 +20,19 @@ object FnWarden {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Warden::class.java)
-                .function("anger", returnsObject().noParams()) { it.target?.anger }
-                .function("getAnger", returnsObject().params(Type.OBJECT)) { it.target?.getAnger(it.getRef(0) as Entity) }
+                .function("anger", returnsObject().noParams()) { it.setReturnRef(it.target?.anger) }
+                .function("getAnger", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getAnger(it.getRef(0) as Entity)) }
                 .function("increaseAnger", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.increaseAnger(
+                    it.setReturnRef(it.target?.increaseAnger(
                         it.getRef(0) as Entity,
                         it.getInt(1).toInt()
-                    )
+                    ))
                 }
-                .function("setAnger", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setAnger(it.getRef(0) as Entity, it.getInt(1).toInt()) }
-                .function("clearAnger", returnsObject().params(Type.OBJECT)) { it.target?.clearAnger(it.getRef(0) as Entity) }
-                .function("entityAngryAt", returnsObject().noParams()) { it.target?.entityAngryAt }
-                .function("setDisturbanceLocation", returnsObject().params(Type.OBJECT)) { it.target?.setDisturbanceLocation(it.getRef(0) as Location) }
-                .function("angerLevel", returnsObject().noParams()) { it.target?.angerLevel }
+                .function("setAnger", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setAnger(it.getRef(0) as Entity, it.getInt(1).toInt())) }
+                .function("clearAnger", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.clearAnger(it.getRef(0) as Entity)) }
+                .function("entityAngryAt", returnsObject().noParams()) { it.setReturnRef(it.target?.entityAngryAt) }
+                .function("setDisturbanceLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisturbanceLocation(it.getRef(0) as Location)) }
+                .function("angerLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.angerLevel) }
         }
     }
 }

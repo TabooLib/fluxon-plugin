@@ -18,12 +18,12 @@ object FnBrewingStand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStand::class.java)
-                .function("brewingTime", returnsObject().noParams()) { it.target?.brewingTime }
-                .function("setBrewingTime", returnsObject().params(Type.OBJECT)) { it.target?.setBrewingTime(it.getInt(0).toInt()) }
-                .function("fuelLevel", returnsObject().noParams()) { it.target?.fuelLevel }
-                .function("setFuelLevel", returnsObject().params(Type.OBJECT)) { it.target?.setFuelLevel(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("brewingTime", returnsObject().noParams()) { it.setReturnRef(it.target?.brewingTime) }
+                .function("setBrewingTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBrewingTime(it.getInt(0).toInt())) }
+                .function("fuelLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuelLevel) }
+                .function("setFuelLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuelLevel(it.getInt(0).toInt())) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

@@ -20,16 +20,16 @@ object FnPlayerEggThrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEggThrowEvent::class.java)
-                .function("egg", returnsObject().noParams()) { it.target?.egg }
-                .function("isHatching", returns(Type.Z).noParams()) { it.target?.isHatching }
-                .function("setHatching", returnsObject().params(Type.OBJECT)) { it.target?.setHatching(it.getBool(0)) }
-                .function("hatchingType", returnsObject().noParams()) { it.target?.hatchingType }
-                .function("setHatchingType", returnsObject().params(Type.OBJECT)) { it.target?.setHatchingType(it.getRef(0) as EntityType) }
-                .function("numHatches", returnsObject().noParams()) { it.target?.numHatches }
-                .function("setNumHatches", returnsObject().params(Type.OBJECT)) { it.target?.setNumHatches(it.getInt(0).toByte()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("egg", returnsObject().noParams()) { it.setReturnRef(it.target?.egg) }
+                .function("isHatching", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isHatching) }
+                .function("setHatching", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHatching(it.getBool(0))) }
+                .function("hatchingType", returnsObject().noParams()) { it.setReturnRef(it.target?.hatchingType) }
+                .function("setHatchingType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHatchingType(it.getRef(0) as EntityType)) }
+                .function("numHatches", returnsObject().noParams()) { it.setReturnRef(it.target?.numHatches) }
+                .function("setNumHatches", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNumHatches(it.getInt(0).toByte())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerEggThrowEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerEggThrowEvent.getHandlerList()) }
         }
     }
 }

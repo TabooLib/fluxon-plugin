@@ -18,8 +18,8 @@ object FnEvoker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Evoker::class.java)
-                .function("currentSpell", returnsObject().noParams()) { it.target?.currentSpell }
-                .function("setCurrentSpell", returnsObject().params(Type.OBJECT)) { it.target?.setCurrentSpell(it.getRef(0) as Evoker.Spell) }
+                .function("currentSpell", returnsObject().noParams()) { it.setReturnRef(it.target?.currentSpell) }
+                .function("setCurrentSpell", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCurrentSpell(it.getRef(0) as Evoker.Spell)) }
         }
     }
 }

@@ -18,8 +18,8 @@ object FnFaceAttachable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FaceAttachable::class.java)
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("setAttachedFace", returnsObject().params(Type.OBJECT)) { it.target?.setAttachedFace(it.getRef(0) as FaceAttachable.AttachedFace) }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("setAttachedFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAttachedFace(it.getRef(0) as FaceAttachable.AttachedFace)) }
         }
     }
 }

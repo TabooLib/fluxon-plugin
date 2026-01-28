@@ -18,10 +18,10 @@ object FnEntityPortalEnterEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalEnterEvent::class.java)
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityPortalEnterEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPortalEnterEvent.getHandlerList()) }
         }
     }
 }

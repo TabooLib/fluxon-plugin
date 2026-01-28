@@ -19,14 +19,14 @@ object FnSlimeSplitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SlimeSplitEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("count", returns(Type.I).noParams()) { it.target?.count }
-                .function("setCount", returnsObject().params(Type.OBJECT)) { it.target?.setCount(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
+                .function("setCount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCount(it.getInt(0).toInt())) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { SlimeSplitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(SlimeSplitEvent.getHandlerList()) }
         }
     }
 }

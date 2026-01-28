@@ -20,11 +20,11 @@ object FnTexturedMaterial {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TexturedMaterial::class.java)
-                .function("textures", returnsObject().noParams()) { it.target?.textures }
-                .function("material", returnsObject().noParams()) { it.target?.material }
-                .function("setMaterial", returnsObject().params(Type.OBJECT)) { it.target?.setMaterial(it.getRef(0) as Material) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
+                .function("setMaterial", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaterial(it.getRef(0) as Material)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

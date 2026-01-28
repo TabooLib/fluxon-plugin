@@ -19,7 +19,7 @@ object FnPressureSensor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PressureSensor::class.java)
-                .function("isPressed", returns(Type.Z).noParams()) { it.target?.isPressed }
+                .function("isPressed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPressed) }
         }
     }
 }

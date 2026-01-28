@@ -20,17 +20,17 @@ object FnCampfire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Campfire::class.java)
-                .function("size", returns(Type.I).noParams()) { it.target?.size }
-                .function("getItem", returnsObject().params(Type.OBJECT)) { it.target?.getItem(it.getInt(0).toInt()) }
-                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack) }
-                .function("getCookTime", returnsObject().params(Type.OBJECT)) { it.target?.getCookTime(it.getInt(0).toInt()) }
-                .function("setCookTime", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setCookTime(it.getInt(0).toInt(), it.getInt(1).toInt()) }
-                .function("getCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.target?.getCookTimeTotal(it.getInt(0).toInt()) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
+                .function("getItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getItem(it.getInt(0).toInt())) }
+                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack)) }
+                .function("getCookTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getCookTime(it.getInt(0).toInt())) }
+                .function("setCookTime", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setCookTime(it.getInt(0).toInt(), it.getInt(1).toInt())) }
+                .function("getCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getCookTimeTotal(it.getInt(0).toInt())) }
                 .function("setCookTimeTotal", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setCookTimeTotal(
+                    it.setReturnRef(it.target?.setCookTimeTotal(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt()
-                    )
+                    ))
                 }
         }
     }

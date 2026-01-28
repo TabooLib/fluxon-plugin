@@ -19,14 +19,14 @@ object FnPlayerSignOpenEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSignOpenEvent::class.java)
-                .function("sign", returnsObject().noParams()) { it.target?.sign }
-                .function("side", returnsObject().noParams()) { it.target?.side }
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("sign", returnsObject().noParams()) { it.setReturnRef(it.target?.sign) }
+                .function("side", returnsObject().noParams()) { it.setReturnRef(it.target?.side) }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerSignOpenEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerSignOpenEvent.getHandlerList()) }
         }
     }
 }

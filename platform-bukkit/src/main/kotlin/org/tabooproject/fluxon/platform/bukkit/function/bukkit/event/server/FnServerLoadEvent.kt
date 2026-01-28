@@ -18,10 +18,10 @@ object FnServerLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerLoadEvent::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ServerLoadEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ServerLoadEvent.getHandlerList()) }
         }
     }
 }

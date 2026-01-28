@@ -18,8 +18,8 @@ object FnNameable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Nameable::class.java)
-                .function("customName", returnsObject().noParams()) { it.target?.customName }
-                .function("setCustomName", returnsObject().params(Type.OBJECT)) { it.target?.setCustomName(it.getString(0)) }
+                .function("customName", returnsObject().noParams()) { it.setReturnRef(it.target?.customName) }
+                .function("setCustomName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCustomName(it.getString(0))) }
         }
     }
 }

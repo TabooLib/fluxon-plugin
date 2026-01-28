@@ -19,8 +19,8 @@ object FnVindicator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vindicator::class.java)
-                .function("isJohnny", returns(Type.Z).noParams()) { it.target?.isJohnny }
-                .function("setJohnny", returnsObject().params(Type.OBJECT)) { it.target?.setJohnny(it.getBool(0)) }
+                .function("isJohnny", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isJohnny) }
+                .function("setJohnny", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setJohnny(it.getBool(0))) }
         }
     }
 }

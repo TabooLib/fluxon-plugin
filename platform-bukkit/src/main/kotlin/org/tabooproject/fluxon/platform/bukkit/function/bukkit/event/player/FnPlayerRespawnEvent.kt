@@ -20,14 +20,14 @@ object FnPlayerRespawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRespawnEvent::class.java)
-                .function("respawnLocation", returnsObject().noParams()) { it.target?.respawnLocation }
-                .function("setRespawnLocation", returnsObject().params(Type.OBJECT)) { it.target?.setRespawnLocation(it.getRef(0) as Location) }
-                .function("isBedSpawn", returns(Type.Z).noParams()) { it.target?.isBedSpawn }
-                .function("isAnchorSpawn", returns(Type.Z).noParams()) { it.target?.isAnchorSpawn }
-                .function("respawnReason", returnsObject().noParams()) { it.target?.respawnReason }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("respawnLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.respawnLocation) }
+                .function("setRespawnLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRespawnLocation(it.getRef(0) as Location)) }
+                .function("isBedSpawn", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBedSpawn) }
+                .function("isAnchorSpawn", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAnchorSpawn) }
+                .function("respawnReason", returnsObject().noParams()) { it.setReturnRef(it.target?.respawnReason) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerRespawnEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRespawnEvent.getHandlerList()) }
         }
     }
 }

@@ -19,20 +19,20 @@ object FnPainting {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Painting::class.java)
-                .function("art", returnsObject().noParams()) { it.target?.art }
+                .function("art", returnsObject().noParams()) { it.setReturnRef(it.target?.art) }
                 .function("setArt", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setArt(it.getRef(0) as Art)
                     } else {
                         it.target?.setArt(it.getRef(0) as Art, it.getBool(1))
-                    }
+                    })
                 }
                 .function("setArt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.setArt(it.getRef(0) as Art)
                     } else {
                         it.target?.setArt(it.getRef(0) as Art, it.getBool(1))
-                    }
+                    })
                 }
         }
     }

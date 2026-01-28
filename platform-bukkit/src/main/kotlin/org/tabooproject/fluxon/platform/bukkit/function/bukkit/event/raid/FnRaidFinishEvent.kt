@@ -18,10 +18,10 @@ object FnRaidFinishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RaidFinishEvent::class.java)
-                .function("winners", returnsObject().noParams()) { it.target?.winners }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("winners", returnsObject().noParams()) { it.setReturnRef(it.target?.winners) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { RaidFinishEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(RaidFinishEvent.getHandlerList()) }
         }
     }
 }

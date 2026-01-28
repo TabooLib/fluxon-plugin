@@ -22,7 +22,7 @@ object FnFurnaceRecipe {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceRecipe::class.java)
                 .function("setInput", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         when (val var1 = it.getRef(0)) {
                             is MaterialData -> it.target?.setInput(var1)
                             is Material -> it.target?.setInput(var1)
@@ -30,10 +30,10 @@ object FnFurnaceRecipe {
                         }
                     } else {
                         it.target?.setInput(it.getRef(0) as Material, it.getInt(1).toInt())
-                    }
+                    })
                 }
                 .function("setInput", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         when (val var1 = it.getRef(0)) {
                             is MaterialData -> it.target?.setInput(var1)
                             is Material -> it.target?.setInput(var1)
@@ -41,9 +41,9 @@ object FnFurnaceRecipe {
                         }
                     } else {
                         it.target?.setInput(it.getRef(0) as Material, it.getInt(1).toInt())
-                    }
+                    })
                 }
-                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.target?.setInputChoice(it.getRef(0) as RecipeChoice) }
+                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
         }
     }
 }

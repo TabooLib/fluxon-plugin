@@ -22,7 +22,7 @@ object FnBell {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bell::class.java)
                 .function("ring", returnsObject().noParams()) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         0 -> it.target?.ring()
                         1 -> when (val var1 = it.getRef(0)) {
                             is Entity -> it.target?.ring(var1)
@@ -32,10 +32,10 @@ object FnBell {
 
                         2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
                         else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("ring", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         0 -> it.target?.ring()
                         1 -> when (val var1 = it.getRef(0)) {
                             is Entity -> it.target?.ring(var1)
@@ -45,10 +45,10 @@ object FnBell {
 
                         2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
                         else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("ring", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         0 -> it.target?.ring()
                         1 -> when (val var1 = it.getRef(0)) {
                             is Entity -> it.target?.ring(var1)
@@ -58,12 +58,12 @@ object FnBell {
 
                         2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
                         else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
-                .function("isShaking", returns(Type.Z).noParams()) { it.target?.isShaking }
-                .function("shakingTicks", returnsObject().noParams()) { it.target?.shakingTicks }
-                .function("isResonating", returns(Type.Z).noParams()) { it.target?.isResonating }
-                .function("resonatingTicks", returnsObject().noParams()) { it.target?.resonatingTicks }
+                .function("isShaking", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShaking) }
+                .function("shakingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.shakingTicks) }
+                .function("isResonating", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isResonating) }
+                .function("resonatingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.resonatingTicks) }
         }
     }
 }

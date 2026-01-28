@@ -20,15 +20,15 @@ object FnSheepDyeWoolEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SheepDyeWoolEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as DyeColor) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as DyeColor)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { SheepDyeWoolEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(SheepDyeWoolEvent.getHandlerList()) }
         }
     }
 }

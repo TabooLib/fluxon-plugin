@@ -19,11 +19,11 @@ object FnResourcePack {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ResourcePack::class.java)
-                .function("id", returnsObject().noParams()) { it.target?.id }
-                .function("url", returnsObject().noParams()) { it.target?.url }
-                .function("hash", returnsObject().noParams()) { it.target?.hash }
-                .function("prompt", returnsObject().noParams()) { it.target?.prompt }
-                .function("isRequired", returns(Type.Z).noParams()) { it.target?.isRequired }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
+                .function("url", returnsObject().noParams()) { it.setReturnRef(it.target?.url) }
+                .function("hash", returnsObject().noParams()) { it.setReturnRef(it.target?.hash) }
+                .function("prompt", returnsObject().noParams()) { it.setReturnRef(it.target?.prompt) }
+                .function("isRequired", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRequired) }
         }
     }
 }

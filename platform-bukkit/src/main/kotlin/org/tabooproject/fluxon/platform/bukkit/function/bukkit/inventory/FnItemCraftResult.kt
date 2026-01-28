@@ -18,9 +18,9 @@ object FnItemCraftResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemCraftResult::class.java)
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("resultingMatrix", returnsObject().noParams()) { it.target?.resultingMatrix }
-                .function("overflowItems", returnsObject().noParams()) { it.target?.overflowItems }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("resultingMatrix", returnsObject().noParams()) { it.setReturnRef(it.target?.resultingMatrix) }
+                .function("overflowItems", returnsObject().noParams()) { it.setReturnRef(it.target?.overflowItems) }
         }
     }
 }

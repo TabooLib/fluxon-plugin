@@ -18,9 +18,9 @@ object FnPlayerBucketFillEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketFillEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerBucketFillEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerBucketFillEvent.getHandlerList()) }
         }
     }
 }

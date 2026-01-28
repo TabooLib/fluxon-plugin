@@ -19,9 +19,9 @@ object FnOrientable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Orientable::class.java)
-                .function("axis", returnsObject().noParams()) { it.target?.axis }
-                .function("setAxis", returnsObject().params(Type.OBJECT)) { it.target?.setAxis(it.getRef(0) as Axis) }
-                .function("axes", returnsObject().noParams()) { it.target?.axes }
+                .function("axis", returnsObject().noParams()) { it.setReturnRef(it.target?.axis) }
+                .function("setAxis", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAxis(it.getRef(0) as Axis)) }
+                .function("axes", returnsObject().noParams()) { it.setReturnRef(it.target?.axes) }
         }
     }
 }

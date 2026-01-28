@@ -19,27 +19,27 @@ object FnMaterialData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MaterialData::class.java)
-                .function("data", returnsObject().noParams()) { it.target?.data }
-                .function("setData", returnsObject().params(Type.OBJECT)) { it.target?.setData(it.getInt(0).toByte()) }
-                .function("itemType", returnsObject().noParams()) { it.target?.itemType }
+                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
+                .function("setData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setData(it.getInt(0).toByte())) }
+                .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
                 .function("toItemStack", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.toItemStack()
                     } else {
                         it.target?.toItemStack(it.getInt(0).toInt())
-                    }
+                    })
                 }
                 .function("toItemStack", returnsObject().params(Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.toItemStack()
                     } else {
                         it.target?.toItemStack(it.getInt(0).toInt())
-                    }
+                    })
                 }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -18,8 +18,8 @@ object FnDoor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Door::class.java)
-                .function("hinge", returnsObject().noParams()) { it.target?.hinge }
-                .function("setHinge", returnsObject().params(Type.OBJECT)) { it.target?.setHinge(it.getRef(0) as Door.Hinge) }
+                .function("hinge", returnsObject().noParams()) { it.setReturnRef(it.target?.hinge) }
+                .function("setHinge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHinge(it.getRef(0) as Door.Hinge)) }
         }
     }
 }

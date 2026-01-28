@@ -18,7 +18,7 @@ object FnAdvancementDisplayType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AdvancementDisplayType::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
         }
     }
 }

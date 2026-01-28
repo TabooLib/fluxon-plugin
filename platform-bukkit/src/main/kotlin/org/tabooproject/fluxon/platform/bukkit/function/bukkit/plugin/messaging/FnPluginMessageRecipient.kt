@@ -20,13 +20,13 @@ object FnPluginMessageRecipient {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageRecipient::class.java)
                 .function("sendPluginMessage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.sendPluginMessage(
+                    it.setReturnRef(it.target?.sendPluginMessage(
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
                         it.getRef(2) as ByteArray
-                    )
+                    ))
                 }
-                .function("listeningPluginChannels", returnsObject().noParams()) { it.target?.listeningPluginChannels }
+                .function("listeningPluginChannels", returnsObject().noParams()) { it.setReturnRef(it.target?.listeningPluginChannels) }
         }
     }
 }

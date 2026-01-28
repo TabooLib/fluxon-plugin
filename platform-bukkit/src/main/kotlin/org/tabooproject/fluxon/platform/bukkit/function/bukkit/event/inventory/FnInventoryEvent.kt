@@ -18,12 +18,12 @@ object FnInventoryEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryEvent::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("viewers", returnsObject().noParams()) { it.target?.viewers }
-                .function("view", returnsObject().noParams()) { it.target?.view }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("viewers", returnsObject().noParams()) { it.setReturnRef(it.target?.viewers) }
+                .function("view", returnsObject().noParams()) { it.setReturnRef(it.target?.view) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryEvent.getHandlerList()) }
         }
     }
 }

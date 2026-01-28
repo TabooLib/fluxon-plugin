@@ -21,28 +21,14 @@ object FunctionEntityManager {
     fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerManager::class.java)
-                .function("owner", returnsObject().noParams()) {
-                    it.target?.owner
-                }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
             registerExtension(Manager::class.java)
-                .function("isValid", returns(Type.Z).noParams()) {
-                    it.target?.isValid()
-                }
-                .function("isPublic", returns(Type.Z).noParams()) {
-                    it.target?.isPublic()
-                }
-                .function("isTemporary", returns(Type.Z).noParams()) {
-                    it.target?.isTemporary()
-                }
-                .function("entity", returnsObject().params(Type.STRING)) {
-                    it.target?.getEntityById(it.getString(0)!!)?.firstOrNull()
-                }
-                .function("entities", returns(Type.LIST).noParams()) {
-                    it.target?.getEntities()
-                }
-                .function("entities", returns(Type.LIST).params(Type.STRING)) {
-                    it.target?.getEntityById(it.getString(0)!!)
-                }
+                .function("isValid", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isValid()) }
+                .function("isPublic", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPublic()) }
+                .function("isTemporary", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTemporary()) }
+                .function("entity", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getEntityById(it.getString(0)!!)?.firstOrNull()) }
+                .function("entities", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.getEntities()) }
+                .function("entities", returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getEntityById(it.getString(0)!!)) }
         }
     }
 }

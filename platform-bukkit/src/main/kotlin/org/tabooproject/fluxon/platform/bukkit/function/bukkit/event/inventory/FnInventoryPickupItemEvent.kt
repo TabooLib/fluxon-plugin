@@ -19,13 +19,13 @@ object FnInventoryPickupItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryPickupItemEvent::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryPickupItemEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryPickupItemEvent.getHandlerList()) }
         }
     }
 }

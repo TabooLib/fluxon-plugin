@@ -20,7 +20,7 @@ object FnPerlinNoiseGenerator {
             registerExtension(PerlinNoiseGenerator::class.java)
                 // static
                 .function("getNoise", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -57,10 +57,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -97,10 +97,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -137,10 +137,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -177,10 +177,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -217,10 +217,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> PerlinNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> PerlinNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -257,10 +257,10 @@ object FnPerlinNoiseGenerator {
                             it.getAsDouble(5)
                         )
                         else -> error("PerlinNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 // static
-                .function("instance", returnsObject().noParams()) { PerlinNoiseGenerator.getInstance() }
+                .function("instance", returnsObject().noParams()) { it.setReturnRef(PerlinNoiseGenerator.getInstance()) }
         }
     }
 }

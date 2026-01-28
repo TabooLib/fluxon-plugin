@@ -22,16 +22,16 @@ object FnItem {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Item::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
-                .function("pickupDelay", returnsObject().noParams()) { it.target?.pickupDelay }
-                .function("setPickupDelay", returnsObject().params(Type.OBJECT)) { it.target?.setPickupDelay(it.getInt(0).toInt()) }
-                .function("setUnlimitedLifetime", returnsObject().params(Type.OBJECT)) { it.target?.setUnlimitedLifetime(it.getBool(0)) }
-                .function("isUnlimitedLifetime", returns(Type.Z).noParams()) { it.target?.isUnlimitedLifetime }
-                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.target?.setOwner(UUID.fromString(it.getString(0))) }
-                .function("owner", returnsObject().noParams()) { it.target?.owner }
-                .function("setThrower", returnsObject().params(Type.OBJECT)) { it.target?.setThrower(UUID.fromString(it.getString(0))) }
-                .function("thrower", returnsObject().noParams()) { it.target?.thrower }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItemStack(it.getRef(0) as ItemStack)) }
+                .function("pickupDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.pickupDelay) }
+                .function("setPickupDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPickupDelay(it.getInt(0).toInt())) }
+                .function("setUnlimitedLifetime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setUnlimitedLifetime(it.getBool(0))) }
+                .function("isUnlimitedLifetime", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUnlimitedLifetime) }
+                .function("setOwner", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOwner(UUID.fromString(it.getString(0)))) }
+                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("setThrower", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setThrower(UUID.fromString(it.getString(0)))) }
+                .function("thrower", returnsObject().noParams()) { it.setReturnRef(it.target?.thrower) }
         }
     }
 }

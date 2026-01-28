@@ -19,16 +19,16 @@ object FnCreeper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Creeper::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
-                .function("setMaxFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setMaxFuseTicks(it.getInt(0).toInt()) }
-                .function("maxFuseTicks", returnsObject().noParams()) { it.target?.maxFuseTicks }
-                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
-                .function("fuseTicks", returnsObject().noParams()) { it.target?.fuseTicks }
-                .function("setExplosionRadius", returnsObject().params(Type.OBJECT)) { it.target?.setExplosionRadius(it.getInt(0).toInt()) }
-                .function("explosionRadius", returnsObject().noParams()) { it.target?.explosionRadius }
-                .function("explode", returnsObject().noParams()) { it.target?.explode() }
-                .function("ignite", returnsObject().noParams()) { it.target?.ignite() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPowered(it.getBool(0))) }
+                .function("setMaxFuseTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxFuseTicks(it.getInt(0).toInt())) }
+                .function("maxFuseTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.maxFuseTicks) }
+                .function("setFuseTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuseTicks(it.getInt(0).toInt())) }
+                .function("fuseTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.fuseTicks) }
+                .function("setExplosionRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExplosionRadius(it.getInt(0).toInt())) }
+                .function("explosionRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.explosionRadius) }
+                .function("explode", returnsObject().noParams()) { it.setReturnRef(it.target?.explode()) }
+                .function("ignite", returnsObject().noParams()) { it.setReturnRef(it.target?.ignite()) }
         }
     }
 }

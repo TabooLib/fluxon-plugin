@@ -20,14 +20,14 @@ object FnEnderSignal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderSignal::class.java)
-                .function("targetLocation", returnsObject().noParams()) { it.target?.targetLocation }
-                .function("setTargetLocation", returnsObject().params(Type.OBJECT)) { it.target?.setTargetLocation(it.getRef(0) as Location) }
-                .function("dropItem", returnsObject().noParams()) { it.target?.dropItem }
-                .function("setDropItem", returnsObject().params(Type.OBJECT)) { it.target?.setDropItem(it.getBool(0)) }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("despawnTimer", returnsObject().noParams()) { it.target?.despawnTimer }
-                .function("setDespawnTimer", returnsObject().params(Type.OBJECT)) { it.target?.setDespawnTimer(it.getInt(0).toInt()) }
+                .function("targetLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.targetLocation) }
+                .function("setTargetLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTargetLocation(it.getRef(0) as Location)) }
+                .function("dropItem", returnsObject().noParams()) { it.setReturnRef(it.target?.dropItem) }
+                .function("setDropItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDropItem(it.getBool(0))) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
+                .function("despawnTimer", returnsObject().noParams()) { it.setReturnRef(it.target?.despawnTimer) }
+                .function("setDespawnTimer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDespawnTimer(it.getInt(0).toInt())) }
         }
     }
 }

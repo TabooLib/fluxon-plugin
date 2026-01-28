@@ -20,14 +20,14 @@ object FnExperienceOrb {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExperienceOrb::class.java)
-//                .function("isFromBottle", returns(Type.Z).noParams()) { it.target?.isFromBottle }
-//                .function("triggerEntityId", returnsObject().noParams()) { it.target?.triggerEntityId?.toString() }
-//                .function("sourceEntityId", returnsObject().noParams()) { it.target?.sourceEntityId?.toString() }
-//                .function("spawnReason", returnsObject().noParams()) { it.target?.spawnReason?.name }
-//                .function("count", returns(Type.I).noParams()) { it.target?.count }
-//                .function("setCount", returnsObject().params(Type.OBJECT)) { it.target?.apply { count = it.getInt(0).toInt() } }
-                .function("experience", returnsObject().noParams()) { it.target?.experience }
-                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getInt(0).toInt()) }
+//                .function("isFromBottle", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFromBottle) }
+//                .function("triggerEntityId", returnsObject().noParams()) { it.setReturnRef(it.target?.triggerEntityId?.toString()) }
+//                .function("sourceEntityId", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceEntityId?.toString()) }
+//                .function("spawnReason", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnReason?.name) }
+//                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
+//                .function("setCount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.apply { count = it.getInt(0).toInt() }) }
+                .function("experience", returnsObject().noParams()) { it.setReturnRef(it.target?.experience) }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExperience(it.getInt(0).toInt())) }
         }
     }
 }

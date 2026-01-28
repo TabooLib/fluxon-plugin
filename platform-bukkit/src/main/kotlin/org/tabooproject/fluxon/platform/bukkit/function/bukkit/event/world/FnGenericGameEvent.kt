@@ -19,16 +19,16 @@ object FnGenericGameEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericGameEvent::class.java)
-                .function("event", returnsObject().noParams()) { it.target?.event }
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("radius", returnsObject().noParams()) { it.target?.radius }
-                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.target?.setRadius(it.getInt(0).toInt()) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("event", returnsObject().noParams()) { it.setReturnRef(it.target?.event) }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("radius", returnsObject().noParams()) { it.setReturnRef(it.target?.radius) }
+                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRadius(it.getInt(0).toInt())) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { GenericGameEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(GenericGameEvent.getHandlerList()) }
         }
     }
 }

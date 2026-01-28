@@ -18,7 +18,7 @@ object FnEventException {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventException::class.java)
-                .function("cause", returnsObject().noParams()) { it.target?.cause }
+                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
         }
     }
 }

@@ -19,15 +19,15 @@ object FnChiseledBookshelf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
-                .function("isSlotOccupied", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSlotOccupied(it.getInt(0).toInt()) }
+                .function("isSlotOccupied", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isSlotOccupied(it.getInt(0).toInt())) }
                 .function("setSlotOccupied", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setSlotOccupied(
+                    it.setReturnRef(it.target?.setSlotOccupied(
                         it.getInt(0).toInt(),
                         it.getBool(1)
-                    )
+                    ))
                 }
-                .function("occupiedSlots", returnsObject().noParams()) { it.target?.occupiedSlots }
-                .function("maximumOccupiedSlots", returnsObject().noParams()) { it.target?.maximumOccupiedSlots }
+                .function("occupiedSlots", returnsObject().noParams()) { it.setReturnRef(it.target?.occupiedSlots) }
+                .function("maximumOccupiedSlots", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumOccupiedSlots) }
         }
     }
 }

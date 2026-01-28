@@ -20,9 +20,9 @@ object FnLimitedRegion {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LimitedRegion::class.java)
-                .function("buffer", returnsObject().noParams()) { it.target?.buffer }
+                .function("buffer", returnsObject().noParams()) { it.setReturnRef(it.target?.buffer) }
                 .function("isInRegion", returns(Type.Z).params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.isInRegion(it.getRef(0) as Location)
                     } else {
                         it.target?.isInRegion(
@@ -30,10 +30,10 @@ object FnLimitedRegion {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
                 .function("isInRegion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.isInRegion(it.getRef(0) as Location)
                     } else {
                         it.target?.isInRegion(
@@ -41,9 +41,9 @@ object FnLimitedRegion {
                             it.getInt(1).toInt(),
                             it.getInt(2).toInt()
                         )
-                    }
+                    })
                 }
-                .function("tileEntities", returnsObject().noParams()) { it.target?.tileEntities }
+                .function("tileEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.tileEntities) }
         }
     }
 }

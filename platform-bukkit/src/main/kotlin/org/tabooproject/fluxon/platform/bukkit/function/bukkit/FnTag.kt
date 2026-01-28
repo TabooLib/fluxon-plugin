@@ -20,8 +20,8 @@ object FnTag {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tag::class.java)
-                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) { (it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed) }
-                .function("values", returnsObject().noParams()) { it.target?.getValues() }
+                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef((it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed)) }
+                .function("values", returnsObject().noParams()) { it.setReturnRef(it.target?.getValues()) }
         }
     }
 }

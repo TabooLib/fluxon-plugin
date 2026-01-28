@@ -20,22 +20,22 @@ object FnInventoryClickEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryClickEvent::class.java)
-                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
-                .function("currentItem", returnsObject().noParams()) { it.target?.currentItem }
-                .function("isRightClick", returns(Type.Z).noParams()) { it.target?.isRightClick }
-                .function("isLeftClick", returns(Type.Z).noParams()) { it.target?.isLeftClick }
-                .function("isShiftClick", returns(Type.Z).noParams()) { it.target?.isShiftClick }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
-                .function("setCurrentItem", returnsObject().params(Type.OBJECT)) { it.target?.setCurrentItem(it.getRef(0) as ItemStack) }
-                .function("clickedInventory", returnsObject().noParams()) { it.target?.clickedInventory }
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
-                .function("rawSlot", returnsObject().noParams()) { it.target?.rawSlot }
-                .function("hotbarButton", returnsObject().noParams()) { it.target?.hotbarButton }
-                .function("action", returnsObject().noParams()) { it.target?.action }
-                .function("click", returnsObject().noParams()) { it.target?.click }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
+                .function("currentItem", returnsObject().noParams()) { it.setReturnRef(it.target?.currentItem) }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRightClick) }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLeftClick) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShiftClick) }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
+                .function("setCurrentItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCurrentItem(it.getRef(0) as ItemStack)) }
+                .function("clickedInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.clickedInventory) }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("rawSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.rawSlot) }
+                .function("hotbarButton", returnsObject().noParams()) { it.setReturnRef(it.target?.hotbarButton) }
+                .function("action", returnsObject().noParams()) { it.setReturnRef(it.target?.action) }
+                .function("click", returnsObject().noParams()) { it.setReturnRef(it.target?.click) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryClickEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryClickEvent.getHandlerList()) }
         }
     }
 }

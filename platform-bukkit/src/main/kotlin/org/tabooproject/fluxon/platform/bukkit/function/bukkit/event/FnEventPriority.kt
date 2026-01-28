@@ -18,7 +18,7 @@ object FnEventPriority {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventPriority::class.java)
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
         }
     }
 }

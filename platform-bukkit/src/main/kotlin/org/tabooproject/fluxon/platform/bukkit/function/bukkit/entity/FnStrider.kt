@@ -19,8 +19,8 @@ object FnStrider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Strider::class.java)
-                .function("isShivering", returns(Type.Z).noParams()) { it.target?.isShivering }
-                .function("setShivering", returnsObject().params(Type.OBJECT)) { it.target?.setShivering(it.getBool(0)) }
+                .function("isShivering", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShivering) }
+                .function("setShivering", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShivering(it.getBool(0))) }
         }
     }
 }

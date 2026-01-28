@@ -19,13 +19,13 @@ object FnPigZombie {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PigZombie::class.java)
-                .function("anger", returnsObject().noParams()) { it.target?.anger }
-                .function("setAnger", returnsObject().params(Type.OBJECT)) { it.target?.setAnger(it.getInt(0).toInt()) }
-                .function("setAngry", returnsObject().params(Type.OBJECT)) { it.target?.setAngry(it.getBool(0)) }
-                .function("isAngry", returns(Type.Z).noParams()) { it.target?.isAngry }
-                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
-                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("anger", returnsObject().noParams()) { it.setReturnRef(it.target?.anger) }
+                .function("setAnger", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAnger(it.getInt(0).toInt())) }
+                .function("setAngry", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAngry(it.getBool(0))) }
+                .function("isAngry", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAngry) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
+                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
         }
     }
 }

@@ -20,19 +20,19 @@ object FnServerListPingEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerListPingEvent::class.java)
-                .function("hostname", returnsObject().noParams()) { it.target?.hostname }
-                .function("address", returnsObject().noParams()) { it.target?.address }
-                .function("motd", returnsObject().noParams()) { it.target?.motd }
-                .function("setMotd", returnsObject().params(Type.OBJECT)) { it.target?.setMotd(it.getString(0)!!) }
-                .function("numPlayers", returnsObject().noParams()) { it.target?.numPlayers }
-                .function("maxPlayers", returnsObject().noParams()) { it.target?.maxPlayers }
-                .function("shouldSendChatPreviews", returns(Type.Z).noParams()) { it.target?.shouldSendChatPreviews() }
-                .function("setMaxPlayers", returnsObject().params(Type.OBJECT)) { it.target?.setMaxPlayers(it.getInt(0).toInt()) }
-                .function("setServerIcon", returnsObject().noParams()) { it.target?.setServerIcon(it.getRef(0) as CachedServerIcon) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("hostname", returnsObject().noParams()) { it.setReturnRef(it.target?.hostname) }
+                .function("address", returnsObject().noParams()) { it.setReturnRef(it.target?.address) }
+                .function("motd", returnsObject().noParams()) { it.setReturnRef(it.target?.motd) }
+                .function("setMotd", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMotd(it.getString(0)!!)) }
+                .function("numPlayers", returnsObject().noParams()) { it.setReturnRef(it.target?.numPlayers) }
+                .function("maxPlayers", returnsObject().noParams()) { it.setReturnRef(it.target?.maxPlayers) }
+                .function("shouldSendChatPreviews", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.shouldSendChatPreviews()) }
+                .function("setMaxPlayers", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxPlayers(it.getInt(0).toInt())) }
+                .function("setServerIcon", returnsObject().noParams()) { it.setReturnRef(it.target?.setServerIcon(it.getRef(0) as CachedServerIcon)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ServerListPingEvent.getHandlerList() }
-                .function("iterator", returnsObject().noParams()) { it.target?.iterator() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ServerListPingEvent.getHandlerList()) }
+                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
         }
     }
 }

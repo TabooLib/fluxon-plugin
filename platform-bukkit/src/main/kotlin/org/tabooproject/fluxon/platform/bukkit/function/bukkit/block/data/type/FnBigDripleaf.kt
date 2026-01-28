@@ -18,8 +18,8 @@ object FnBigDripleaf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BigDripleaf::class.java)
-                .function("tilt", returnsObject().noParams()) { it.target?.tilt }
-                .function("setTilt", returnsObject().params(Type.OBJECT)) { it.target?.setTilt(it.getRef(0) as BigDripleaf.Tilt) }
+                .function("tilt", returnsObject().noParams()) { it.setReturnRef(it.target?.tilt) }
+                .function("setTilt", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTilt(it.getRef(0) as BigDripleaf.Tilt)) }
         }
     }
 }

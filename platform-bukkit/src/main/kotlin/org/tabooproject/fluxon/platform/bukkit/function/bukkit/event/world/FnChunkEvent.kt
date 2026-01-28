@@ -18,7 +18,7 @@ object FnChunkEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkEvent::class.java)
-                .function("chunk", returnsObject().noParams()) { it.target?.getChunk() }
+                .function("chunk", returnsObject().noParams()) { it.setReturnRef(it.target?.getChunk()) }
         }
     }
 }

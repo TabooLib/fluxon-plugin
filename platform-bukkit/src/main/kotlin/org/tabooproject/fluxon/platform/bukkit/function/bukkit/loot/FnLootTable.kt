@@ -22,17 +22,17 @@ object FnLootTable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootTable::class.java)
                 .function("populateLoot", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.populateLoot(
+                    it.setReturnRef(it.target?.populateLoot(
                         it.getRef(0) as Random,
                         it.getRef(1) as LootContext
-                    )
+                    ))
                 }
                 .function("fillInventory", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.fillInventory(
+                    it.setReturnRef(it.target?.fillInventory(
                         it.getRef(0) as Inventory,
                         it.getRef(1) as Random,
                         it.getRef(2) as LootContext
-                    )
+                    ))
                 }
         }
     }

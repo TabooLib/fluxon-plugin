@@ -18,9 +18,9 @@ object FnSapling {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sapling::class.java)
-                .function("stage", returnsObject().noParams()) { it.target?.stage }
-                .function("setStage", returnsObject().params(Type.OBJECT)) { it.target?.setStage(it.getInt(0).toInt()) }
-                .function("maximumStage", returnsObject().noParams()) { it.target?.maximumStage }
+                .function("stage", returnsObject().noParams()) { it.setReturnRef(it.target?.stage) }
+                .function("setStage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStage(it.getInt(0).toInt())) }
+                .function("maximumStage", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumStage) }
         }
     }
 }

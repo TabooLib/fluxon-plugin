@@ -18,8 +18,8 @@ object FnSpectralArrow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpectralArrow::class.java)
-                .function("glowingTicks", returnsObject().noParams()) { it.target?.glowingTicks }
-                .function("setGlowingTicks", returnsObject().params(Type.OBJECT)) { it.target?.setGlowingTicks(it.getInt(0).toInt()) }
+                .function("glowingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.glowingTicks) }
+                .function("setGlowingTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGlowingTicks(it.getInt(0).toInt())) }
         }
     }
 }

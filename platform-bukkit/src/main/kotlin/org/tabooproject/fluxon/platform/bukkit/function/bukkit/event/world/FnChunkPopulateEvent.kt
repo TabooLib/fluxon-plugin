@@ -18,9 +18,9 @@ object FnChunkPopulateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkPopulateEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { ChunkPopulateEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkPopulateEvent.getHandlerList()) }
         }
     }
 }

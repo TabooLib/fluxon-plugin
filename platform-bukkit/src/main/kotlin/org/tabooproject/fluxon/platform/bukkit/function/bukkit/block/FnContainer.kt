@@ -18,8 +18,8 @@ object FnContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Container::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

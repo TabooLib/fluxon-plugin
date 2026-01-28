@@ -19,14 +19,14 @@ object FnArt {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Art::class.java)
-                .function("blockWidth", returns(Type.I).noParams()) { it.target?.blockWidth }
-                .function("blockHeight", returns(Type.I).noParams()) { it.target?.blockHeight }
-                .function("id", returns(Type.I).noParams()) { it.target?.id }
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("blockWidth", returns(Type.I).noParams()) { it.setReturnRef(it.target?.blockWidth) }
+                .function("blockHeight", returns(Type.I).noParams()) { it.setReturnRef(it.target?.blockHeight) }
+                .function("id", returns(Type.I).noParams()) { it.setReturnRef(it.target?.id) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
                 // static
-                .function("getById", returnsObject().params(Type.I)) { Art.getById(it.getInt(0)) }
+                .function("getById", returnsObject().params(Type.I)) { it.setReturnRef(Art.getById(it.getInt(0))) }
                 // static
-                .function("getByName", returnsObject().params(Type.STRING)) { Art.getByName(it.getString(0)!!) }
+                .function("getByName", returnsObject().params(Type.STRING)) { it.setReturnRef(Art.getByName(it.getString(0)!!)) }
         }
     }
 }

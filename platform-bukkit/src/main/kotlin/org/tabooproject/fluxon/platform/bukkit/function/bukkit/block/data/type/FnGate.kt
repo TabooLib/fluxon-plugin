@@ -19,8 +19,8 @@ object FnGate {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Gate::class.java)
-                .function("isInWall", returns(Type.Z).noParams()) { it.target?.isInWall }
-                .function("setInWall", returnsObject().params(Type.OBJECT)) { it.target?.setInWall(it.getBool(0)) }
+                .function("isInWall", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInWall) }
+                .function("setInWall", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInWall(it.getBool(0))) }
         }
     }
 }

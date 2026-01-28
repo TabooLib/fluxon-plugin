@@ -18,7 +18,7 @@ object FnHangingEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HangingEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
         }
     }
 }

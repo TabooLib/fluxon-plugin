@@ -19,12 +19,12 @@ object FnTripwire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tripwire::class.java)
-                .function("isActivated", returns(Type.Z).noParams()) { it.target?.isActivated }
-                .function("setActivated", returnsObject().params(Type.OBJECT)) { it.target?.setActivated(it.getBool(0)) }
-                .function("isObjectTriggering", returns(Type.Z).noParams()) { it.target?.isObjectTriggering }
-                .function("setObjectTriggering", returnsObject().params(Type.OBJECT)) { it.target?.setObjectTriggering(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("isActivated", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isActivated) }
+                .function("setActivated", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setActivated(it.getBool(0))) }
+                .function("isObjectTriggering", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isObjectTriggering) }
+                .function("setObjectTriggering", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setObjectTriggering(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

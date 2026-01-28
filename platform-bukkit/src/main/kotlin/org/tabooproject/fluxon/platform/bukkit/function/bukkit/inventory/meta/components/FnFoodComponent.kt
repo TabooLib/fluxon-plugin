@@ -20,21 +20,21 @@ object FnFoodComponent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FoodComponent::class.java)
-                .function("nutrition", returnsObject().noParams()) { it.target?.nutrition }
-                .function("setNutrition", returnsObject().params(Type.OBJECT)) { it.target?.setNutrition(it.getInt(0).toInt()) }
-                .function("saturation", returnsObject().noParams()) { it.target?.saturation }
-                .function("setSaturation", returnsObject().params(Type.OBJECT)) { it.target?.setSaturation(it.getFloat(0)) }
-                .function("canAlwaysEat", returns(Type.Z).noParams()) { it.target?.canAlwaysEat() }
-                .function("setCanAlwaysEat", returnsObject().params(Type.OBJECT)) { it.target?.setCanAlwaysEat(it.getBool(0)) }
-                .function("eatSeconds", returnsObject().noParams()) { it.target?.eatSeconds }
-                .function("setEatSeconds", returnsObject().params(Type.OBJECT)) { it.target?.setEatSeconds(it.getFloat(0)) }
-                .function("effects", returnsObject().noParams()) { it.target?.effects }
-                .function("setEffects", returnsObject().params(Type.OBJECT)) { it.target?.setEffects(it.getRef(0) as List<FoodComponent.FoodEffect>) }
+                .function("nutrition", returnsObject().noParams()) { it.setReturnRef(it.target?.nutrition) }
+                .function("setNutrition", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNutrition(it.getInt(0).toInt())) }
+                .function("saturation", returnsObject().noParams()) { it.setReturnRef(it.target?.saturation) }
+                .function("setSaturation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSaturation(it.getFloat(0))) }
+                .function("canAlwaysEat", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canAlwaysEat()) }
+                .function("setCanAlwaysEat", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCanAlwaysEat(it.getBool(0))) }
+                .function("eatSeconds", returnsObject().noParams()) { it.setReturnRef(it.target?.eatSeconds) }
+                .function("setEatSeconds", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEatSeconds(it.getFloat(0))) }
+                .function("effects", returnsObject().noParams()) { it.setReturnRef(it.target?.effects) }
+                .function("setEffects", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEffects(it.getRef(0) as List<FoodComponent.FoodEffect>)) }
                 .function("addEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.addEffect(
+                    it.setReturnRef(it.target?.addEffect(
                         it.getRef(0) as PotionEffect,
                         it.getFloat(1)
-                    )
+                    ))
                 }
         }
     }
@@ -48,10 +48,10 @@ object FnFoodComponentFoodEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FoodComponent.FoodEffect::class.java)
-                .function("effect", returnsObject().noParams()) { it.target?.effect }
-                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as PotionEffect) }
-                .function("probability", returnsObject().noParams()) { it.target?.probability }
-                .function("setProbability", returnsObject().params(Type.OBJECT)) { it.target?.setProbability(it.getFloat(0)) }
+                .function("effect", returnsObject().noParams()) { it.setReturnRef(it.target?.effect) }
+                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEffect(it.getRef(0) as PotionEffect)) }
+                .function("probability", returnsObject().noParams()) { it.setReturnRef(it.target?.probability) }
+                .function("setProbability", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setProbability(it.getFloat(0))) }
         }
     }
 }

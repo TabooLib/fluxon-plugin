@@ -18,8 +18,8 @@ object FnPufferFish {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PufferFish::class.java)
-                .function("puffState", returnsObject().noParams()) { it.target?.puffState }
-                .function("setPuffState", returnsObject().params(Type.OBJECT)) { it.target?.setPuffState(it.getInt(0).toInt()) }
+                .function("puffState", returnsObject().noParams()) { it.setReturnRef(it.target?.puffState) }
+                .function("setPuffState", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPuffState(it.getInt(0).toInt())) }
         }
     }
 }

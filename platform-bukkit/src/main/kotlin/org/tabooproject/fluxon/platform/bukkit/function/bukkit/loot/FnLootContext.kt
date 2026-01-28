@@ -20,11 +20,11 @@ object FnLootContext {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext::class.java)
-                .function("location", returnsObject().noParams()) { it.target?.location }
-                .function("luck", returnsObject().noParams()) { it.target?.luck }
-                .function("lootingModifier", returnsObject().noParams()) { it.target?.lootingModifier }
-                .function("lootedEntity", returnsObject().noParams()) { it.target?.lootedEntity }
-                .function("killer", returnsObject().noParams()) { it.target?.killer }
+                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
+                .function("luck", returnsObject().noParams()) { it.setReturnRef(it.target?.luck) }
+                .function("lootingModifier", returnsObject().noParams()) { it.setReturnRef(it.target?.lootingModifier) }
+                .function("lootedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.lootedEntity) }
+                .function("killer", returnsObject().noParams()) { it.setReturnRef(it.target?.killer) }
         }
     }
 }
@@ -37,11 +37,11 @@ object FnLootContextBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext.Builder::class.java)
-                .function("luck", returnsObject().params(Type.OBJECT)) { it.target?.luck(it.getFloat(0)) }
-                .function("lootingModifier", returnsObject().params(Type.OBJECT)) { it.target?.lootingModifier(it.getInt(0).toInt()) }
-                .function("lootedEntity", returnsObject().params(Type.OBJECT)) { it.target?.lootedEntity(it.getRef(0) as Entity) }
-                .function("killer", returnsObject().params(Type.OBJECT)) { it.target?.killer(it.getRef(0) as HumanEntity) }
-                .function("build", returnsObject().noParams()) { it.target?.build() }
+                .function("luck", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.luck(it.getFloat(0))) }
+                .function("lootingModifier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.lootingModifier(it.getInt(0).toInt())) }
+                .function("lootedEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.lootedEntity(it.getRef(0) as Entity)) }
+                .function("killer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.killer(it.getRef(0) as HumanEntity)) }
+                .function("build", returnsObject().noParams()) { it.setReturnRef(it.target?.build()) }
         }
     }
 }

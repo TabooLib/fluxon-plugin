@@ -19,9 +19,9 @@ object FnDispenser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dispenser::class.java)
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -19,14 +19,14 @@ object FnRedstoneWire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RedstoneWire::class.java)
-                .function("getFace", returnsObject().params(Type.OBJECT)) { it.target?.getFace(it.getRef(0) as BlockFace) }
+                .function("getFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getFace(it.getRef(0) as BlockFace)) }
                 .function("setFace", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setFace(
+                    it.setReturnRef(it.target?.setFace(
                         it.getRef(0) as BlockFace,
                         it.getRef(1) as RedstoneWire.Connection
-                    )
+                    ))
                 }
-                .function("allowedFaces", returnsObject().noParams()) { it.target?.allowedFaces }
+                .function("allowedFaces", returnsObject().noParams()) { it.setReturnRef(it.target?.allowedFaces) }
         }
     }
 }

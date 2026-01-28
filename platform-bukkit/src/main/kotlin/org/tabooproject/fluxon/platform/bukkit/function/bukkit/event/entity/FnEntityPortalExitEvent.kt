@@ -19,12 +19,12 @@ object FnEntityPortalExitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalExitEvent::class.java)
-                .function("before", returnsObject().noParams()) { it.target?.before }
-                .function("after", returnsObject().noParams()) { it.target?.after }
-                .function("setAfter", returnsObject().params(Type.OBJECT)) { it.target?.setAfter(it.getRef(0) as Vector) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("before", returnsObject().noParams()) { it.setReturnRef(it.target?.before) }
+                .function("after", returnsObject().noParams()) { it.setReturnRef(it.target?.after) }
+                .function("setAfter", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAfter(it.getRef(0) as Vector)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityPortalExitEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPortalExitEvent.getHandlerList()) }
         }
     }
 }

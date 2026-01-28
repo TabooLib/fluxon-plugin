@@ -21,20 +21,20 @@ object FnCookingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CookingRecipe::class.java)
-                .function("setInput", returnsObject().params(Type.OBJECT)) { it.target?.setInput(it.getRef(0) as Material) }
-                .function("input", returnsObject().noParams()) { it.target?.input }
-                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.target?.setInputChoice(it.getRef(0) as RecipeChoice) }
-                .function("inputChoice", returnsObject().noParams()) { it.target?.inputChoice }
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.target?.setExperience(it.getFloat(0)) }
-                .function("experience", returnsObject().noParams()) { it.target?.experience }
-                .function("setCookingTime", returnsObject().params(Type.OBJECT)) { it.target?.setCookingTime(it.getInt(0).toInt()) }
-                .function("cookingTime", returnsObject().noParams()) { it.target?.cookingTime }
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("group", returnsObject().noParams()) { it.target?.group }
-                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.target?.setGroup(it.getString(0)!!) }
-                .function("category", returnsObject().noParams()) { it.target?.category }
-                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CookingBookCategory) }
+                .function("setInput", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInput(it.getRef(0) as Material)) }
+                .function("input", returnsObject().noParams()) { it.setReturnRef(it.target?.input) }
+                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
+                .function("inputChoice", returnsObject().noParams()) { it.setReturnRef(it.target?.inputChoice) }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExperience(it.getFloat(0))) }
+                .function("experience", returnsObject().noParams()) { it.setReturnRef(it.target?.experience) }
+                .function("setCookingTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCookingTime(it.getInt(0).toInt())) }
+                .function("cookingTime", returnsObject().noParams()) { it.setReturnRef(it.target?.cookingTime) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("group", returnsObject().noParams()) { it.setReturnRef(it.target?.group) }
+                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGroup(it.getString(0)!!)) }
+                .function("category", returnsObject().noParams()) { it.setReturnRef(it.target?.category) }
+                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCategory(it.getRef(0) as CookingBookCategory)) }
         }
     }
 }

@@ -20,12 +20,12 @@ object FnEntityBlockStorage {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBlockStorage::class.java)
-                .function("isFull", returns(Type.Z).noParams()) { it.target?.isFull }
-                .function("entityCount", returnsObject().noParams()) { it.target?.entityCount }
-                .function("maxEntities", returnsObject().noParams()) { it.target?.maxEntities }
-                .function("setMaxEntities", returnsObject().params(Type.OBJECT)) { it.target?.setMaxEntities(it.getInt(0).toInt()) }
-                .function("releaseEntities", returnsObject().noParams()) { it.target?.releaseEntities() }
-                .function("addEntity", returnsObject().params(Type.OBJECT)) { (it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getRef(0) as Entity) }
+                .function("isFull", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFull) }
+                .function("entityCount", returnsObject().noParams()) { it.setReturnRef(it.target?.entityCount) }
+                .function("maxEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.maxEntities) }
+                .function("setMaxEntities", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxEntities(it.getInt(0).toInt())) }
+                .function("releaseEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.releaseEntities()) }
+                .function("addEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef((it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getRef(0) as Entity)) }
         }
     }
 }

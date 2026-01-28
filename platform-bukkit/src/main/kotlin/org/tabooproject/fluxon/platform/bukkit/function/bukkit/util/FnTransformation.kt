@@ -19,13 +19,13 @@ object FnTransformation {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Transformation::class.java)
-//                .function("translation", returnsObject().noParams()) { it.target?.translation }
-//                .function("leftRotation", returnsObject().noParams()) { it.target?.leftRotation }
-//                .function("scale", returnsObject().noParams()) { it.target?.scale }
-//                .function("rightRotation", returnsObject().noParams()) { it.target?.rightRotation }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+//                .function("translation", returnsObject().noParams()) { it.setReturnRef(it.target?.translation) }
+//                .function("leftRotation", returnsObject().noParams()) { it.setReturnRef(it.target?.leftRotation) }
+//                .function("scale", returnsObject().noParams()) { it.setReturnRef(it.target?.scale) }
+//                .function("rightRotation", returnsObject().noParams()) { it.setReturnRef(it.target?.rightRotation) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

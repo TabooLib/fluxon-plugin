@@ -18,8 +18,8 @@ object FnLootTables {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootTables::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("lootTable", returnsObject().noParams()) { it.target?.lootTable }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("lootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.lootTable) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnBiome {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Biome::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

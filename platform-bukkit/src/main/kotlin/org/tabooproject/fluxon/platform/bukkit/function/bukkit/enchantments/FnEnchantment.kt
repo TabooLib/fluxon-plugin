@@ -21,20 +21,20 @@ object FnEnchantment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Enchantment::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("maxLevel", returnsObject().noParams()) { it.target?.maxLevel }
-                .function("startLevel", returnsObject().noParams()) { it.target?.startLevel }
-                .function("itemTarget", returnsObject().noParams()) { it.target?.itemTarget }
-                .function("isTreasure", returns(Type.Z).noParams()) { it.target?.isTreasure }
-                .function("isCursed", returns(Type.Z).noParams()) { it.target?.isCursed }
-                .function("conflictsWith", returnsObject().params(Type.OBJECT)) { it.target?.conflictsWith(it.getRef(0) as Enchantment) }
-                .function("canEnchantItem", returns(Type.Z).params(Type.OBJECT)) { it.target?.canEnchantItem(it.getRef(0) as ItemStack) }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("maxLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.maxLevel) }
+                .function("startLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.startLevel) }
+                .function("itemTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.itemTarget) }
+                .function("isTreasure", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTreasure) }
+                .function("isCursed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCursed) }
+                .function("conflictsWith", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.conflictsWith(it.getRef(0) as Enchantment)) }
+                .function("canEnchantItem", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canEnchantItem(it.getRef(0) as ItemStack)) }
                 // static
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { Enchantment.getByKey(it.getRef(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Enchantment.getByKey(it.getRef(0) as NamespacedKey)) }
                 // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { Enchantment.getByName(it.getString(0)) }
+                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Enchantment.getByName(it.getString(0))) }
                 // static
-                .function("values", returnsObject().noParams()) { Enchantment.values() }
+                .function("values", returnsObject().noParams()) { it.setReturnRef(Enchantment.values()) }
         }
     }
 }

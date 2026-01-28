@@ -21,14 +21,14 @@ object FnSpawnerEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry::class.java)
-                .function("snapshot", returnsObject().noParams()) { it.target?.snapshot }
-                .function("setSnapshot", returnsObject().params(Type.OBJECT)) { it.target?.setSnapshot(it.getRef(0) as EntitySnapshot) }
-                .function("spawnWeight", returnsObject().noParams()) { it.target?.spawnWeight }
-                .function("setSpawnWeight", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnWeight(it.getInt(0).toInt()) }
-                .function("spawnRule", returnsObject().noParams()) { it.target?.spawnRule }
-                .function("setSpawnRule", returnsObject().params(Type.OBJECT)) { it.target?.setSpawnRule(it.getRef(0) as SpawnRule) }
-                .function("equipment", returnsObject().noParams()) { it.target?.equipment }
-                .function("setEquipment", returnsObject().params(Type.OBJECT)) { it.target?.setEquipment(it.getRef(0) as SpawnerEntry.Equipment) }
+                .function("snapshot", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshot) }
+                .function("setSnapshot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSnapshot(it.getRef(0) as EntitySnapshot)) }
+                .function("spawnWeight", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnWeight) }
+                .function("setSpawnWeight", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnWeight(it.getInt(0).toInt())) }
+                .function("spawnRule", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnRule) }
+                .function("setSpawnRule", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnRule(it.getRef(0) as SpawnRule)) }
+                .function("equipment", returnsObject().noParams()) { it.setReturnRef(it.target?.equipment) }
+                .function("setEquipment", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEquipment(it.getRef(0) as SpawnerEntry.Equipment)) }
         }
     }
 }
@@ -41,8 +41,8 @@ object FnSpawnerEntryEquipment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry.Equipment::class.java)
-                .function("equipmentLootTable", returnsObject().noParams()) { it.target?.equipmentLootTable }
-                .function("setEquipmentLootTable", returnsObject().params(Type.OBJECT)) { it.target?.setEquipmentLootTable(it.getRef(0) as LootTable) }
+                .function("equipmentLootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.equipmentLootTable) }
+                .function("setEquipmentLootTable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEquipmentLootTable(it.getRef(0) as LootTable)) }
         }
     }
 }

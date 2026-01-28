@@ -22,32 +22,32 @@ object FnMetadataStore {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MetadataStore::class.java)
                 .function("setMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? MetadataStore<Any>)?.setMetadata(
+                    it.setReturnRef((it.target as? MetadataStore<Any>)?.setMetadata(
                         it.getRef(0)!!,
                         it.getString(1)!!,
                         it.getRef(2) as MetadataValue
-                    )
+                    ))
                 }
                 .function("getMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? MetadataStore<Any>)?.getMetadata(
+                    it.setReturnRef((it.target as? MetadataStore<Any>)?.getMetadata(
                         it.getRef(0)!!,
                         it.getString(1)!!
-                    )
+                    ))
                 }
                 .function("hasMetadata", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? MetadataStore<Any>)?.hasMetadata(
+                    it.setReturnRef((it.target as? MetadataStore<Any>)?.hasMetadata(
                         it.getRef(0)!!,
                         it.getString(1)!!
-                    )
+                    ))
                 }
                 .function("removeMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? MetadataStore<Any>)?.removeMetadata(
+                    it.setReturnRef((it.target as? MetadataStore<Any>)?.removeMetadata(
                         it.getRef(0)!!,
                         it.getString(1)!!,
                         it.getRef(2) as Plugin
-                    )
+                    ))
                 }
-                .function("invalidateAll", returnsObject().params(Type.OBJECT)) { it.target?.invalidateAll(it.getRef(0) as Plugin) }
+                .function("invalidateAll", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.invalidateAll(it.getRef(0) as Plugin)) }
         }
     }
 }

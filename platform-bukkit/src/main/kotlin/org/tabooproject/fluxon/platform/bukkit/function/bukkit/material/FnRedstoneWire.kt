@@ -19,9 +19,9 @@ object FnRedstoneWire {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RedstoneWire::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

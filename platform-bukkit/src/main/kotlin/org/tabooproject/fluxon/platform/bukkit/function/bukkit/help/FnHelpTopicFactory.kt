@@ -19,7 +19,7 @@ object FnHelpTopicFactory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicFactory::class.java)
-                .function("createTopic", returnsObject().params(Type.OBJECT)) { (it.target as? HelpTopicFactory<Command>)?.createTopic(it.getRef(0) as Command) }
+                .function("createTopic", returnsObject().params(Type.OBJECT)) { it.setReturnRef((it.target as? HelpTopicFactory<Command>)?.createTopic(it.getRef(0) as Command)) }
         }
     }
 }

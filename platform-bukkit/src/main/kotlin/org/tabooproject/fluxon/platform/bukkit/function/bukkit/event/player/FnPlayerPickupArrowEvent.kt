@@ -18,7 +18,7 @@ object FnPlayerPickupArrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPickupArrowEvent::class.java)
-                .function("arrow", returnsObject().noParams()) { it.target?.arrow }
+                .function("arrow", returnsObject().noParams()) { it.setReturnRef(it.target?.arrow) }
         }
     }
 }

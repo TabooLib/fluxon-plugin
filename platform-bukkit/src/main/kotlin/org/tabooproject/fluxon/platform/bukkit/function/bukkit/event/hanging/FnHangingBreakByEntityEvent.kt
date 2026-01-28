@@ -18,7 +18,7 @@ object FnHangingBreakByEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HangingBreakByEntityEvent::class.java)
-                .function("remover", returnsObject().noParams()) { it.target?.remover }
+                .function("remover", returnsObject().noParams()) { it.setReturnRef(it.target?.remover) }
         }
     }
 }

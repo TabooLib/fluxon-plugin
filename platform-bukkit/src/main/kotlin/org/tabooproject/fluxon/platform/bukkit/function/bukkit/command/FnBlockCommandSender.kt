@@ -18,7 +18,7 @@ object FnBlockCommandSender {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCommandSender::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.block }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
         }
     }
 }

@@ -19,8 +19,8 @@ object FnWitherSkull {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WitherSkull::class.java)
-                .function("setCharged", returnsObject().params(Type.OBJECT)) { it.target?.setCharged(it.getBool(0)) }
-                .function("isCharged", returns(Type.Z).noParams()) { it.target?.isCharged }
+                .function("setCharged", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCharged(it.getBool(0))) }
+                .function("isCharged", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCharged) }
         }
     }
 }

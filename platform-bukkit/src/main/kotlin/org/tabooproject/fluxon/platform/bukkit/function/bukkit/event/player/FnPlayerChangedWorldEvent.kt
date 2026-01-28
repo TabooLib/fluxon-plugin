@@ -18,10 +18,10 @@ object FnPlayerChangedWorldEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChangedWorldEvent::class.java)
-                .function("from", returnsObject().noParams()) { it.target?.from }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("from", returnsObject().noParams()) { it.setReturnRef(it.target?.from) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerChangedWorldEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChangedWorldEvent.getHandlerList()) }
         }
     }
 }

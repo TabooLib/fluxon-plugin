@@ -21,11 +21,11 @@ object FnEnchantmentTarget {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentTarget::class.java)
                 .function("includes", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.includes(var1)
                         is ItemStack -> it.target?.includes(var1)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                    }
+                    })
                 }
         }
     }

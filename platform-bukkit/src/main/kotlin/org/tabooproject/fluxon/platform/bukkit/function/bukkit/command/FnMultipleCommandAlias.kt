@@ -19,13 +19,13 @@ object FnMultipleCommandAlias {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MultipleCommandAlias::class.java)
-                .function("commands", returnsObject().noParams()) { it.target?.commands }
+                .function("commands", returnsObject().noParams()) { it.setReturnRef(it.target?.commands) }
                 .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.execute(
+                    it.setReturnRef(it.target?.execute(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!,
                         it.getRef(2) as Array<String>
-                    )
+                    ))
                 }
         }
     }

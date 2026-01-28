@@ -20,11 +20,11 @@ object FnRegisteredListener {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegisteredListener::class.java)
-                .function("listener", returnsObject().noParams()) { it.target?.listener }
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
-                .function("priority", returnsObject().noParams()) { it.target?.priority }
-                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
-                .function("isIgnoringCancelled", returns(Type.Z).noParams()) { it.target?.isIgnoringCancelled }
+                .function("listener", returnsObject().noParams()) { it.setReturnRef(it.target?.listener) }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("priority", returnsObject().noParams()) { it.setReturnRef(it.target?.priority) }
+                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.callEvent(it.getRef(0) as Event)) }
+                .function("isIgnoringCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIgnoringCancelled) }
         }
     }
 }

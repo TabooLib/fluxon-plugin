@@ -19,9 +19,9 @@ object FnParrot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Parrot::class.java)
-                .function("variant", returnsObject().noParams()) { it.target?.variant }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Parrot.Variant) }
-                .function("isDancing", returns(Type.Z).noParams()) { it.target?.isDancing }
+                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Parrot.Variant)) }
+                .function("isDancing", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDancing) }
         }
     }
 }

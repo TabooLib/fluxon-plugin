@@ -18,8 +18,8 @@ object FnEntityDamageByBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByBlockEvent::class.java)
-                .function("damager", returnsObject().noParams()) { it.target?.damager }
-                .function("damagerBlockState", returnsObject().noParams()) { it.target?.damagerBlockState }
+                .function("damager", returnsObject().noParams()) { it.setReturnRef(it.target?.damager) }
+                .function("damagerBlockState", returnsObject().noParams()) { it.setReturnRef(it.target?.damagerBlockState) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnPluginEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginEvent::class.java)
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
         }
     }
 }

@@ -19,10 +19,10 @@ object FnGameRule {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameRule::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
-                .function("type", returnsObject().noParams()) { it.target?.getType() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.getType()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

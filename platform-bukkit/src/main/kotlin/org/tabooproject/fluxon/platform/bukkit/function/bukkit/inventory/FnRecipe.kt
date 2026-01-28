@@ -18,7 +18,7 @@ object FnRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Recipe::class.java)
-                .function("result", returnsObject().noParams()) { it.target?.result }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
         }
     }
 }

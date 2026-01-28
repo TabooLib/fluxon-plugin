@@ -19,10 +19,10 @@ object FnPattern {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Pattern::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("pattern", returnsObject().noParams()) { it.target?.pattern }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("pattern", returnsObject().noParams()) { it.setReturnRef(it.target?.pattern) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
         }
     }
 }

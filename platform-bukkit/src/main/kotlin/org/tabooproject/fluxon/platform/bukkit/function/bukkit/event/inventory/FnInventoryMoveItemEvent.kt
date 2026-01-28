@@ -20,16 +20,16 @@ object FnInventoryMoveItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryMoveItemEvent::class.java)
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("destination", returnsObject().noParams()) { it.target?.destination }
-                .function("initiator", returnsObject().noParams()) { it.target?.initiator }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
+                .function("destination", returnsObject().noParams()) { it.setReturnRef(it.target?.destination) }
+                .function("initiator", returnsObject().noParams()) { it.setReturnRef(it.target?.initiator) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryMoveItemEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryMoveItemEvent.getHandlerList()) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnBoss {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Boss::class.java)
-                .function("bossBar", returnsObject().noParams()) { it.target?.bossBar }
+                .function("bossBar", returnsObject().noParams()) { it.setReturnRef(it.target?.bossBar) }
         }
     }
 }

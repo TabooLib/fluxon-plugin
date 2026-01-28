@@ -20,16 +20,16 @@ object FnFox {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fox::class.java)
-                .function("foxType", returnsObject().noParams()) { it.target?.foxType }
-                .function("setFoxType", returnsObject().params(Type.OBJECT)) { it.target?.setFoxType(it.getRef(0) as Fox.Type) }
-                .function("isCrouching", returns(Type.Z).noParams()) { it.target?.isCrouching }
-                .function("setCrouching", returnsObject().params(Type.OBJECT)) { it.target?.setCrouching(it.getBool(0)) }
-                .function("setSleeping", returnsObject().params(Type.OBJECT)) { it.target?.setSleeping(it.getBool(0)) }
-                .function("firstTrustedPlayer", returnsObject().noParams()) { it.target?.firstTrustedPlayer }
-                .function("setFirstTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setFirstTrustedPlayer(it.getRef(0) as AnimalTamer) }
-                .function("secondTrustedPlayer", returnsObject().noParams()) { it.target?.secondTrustedPlayer }
-                .function("setSecondTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setSecondTrustedPlayer(it.getRef(0) as AnimalTamer) }
-                .function("isFaceplanted", returns(Type.Z).noParams()) { it.target?.isFaceplanted }
+                .function("foxType", returnsObject().noParams()) { it.setReturnRef(it.target?.foxType) }
+                .function("setFoxType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFoxType(it.getRef(0) as Fox.Type)) }
+                .function("isCrouching", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCrouching) }
+                .function("setCrouching", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCrouching(it.getBool(0))) }
+                .function("setSleeping", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSleeping(it.getBool(0))) }
+                .function("firstTrustedPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.firstTrustedPlayer) }
+                .function("setFirstTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFirstTrustedPlayer(it.getRef(0) as AnimalTamer)) }
+                .function("secondTrustedPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.secondTrustedPlayer) }
+                .function("setSecondTrustedPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSecondTrustedPlayer(it.getRef(0) as AnimalTamer)) }
+                .function("isFaceplanted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFaceplanted) }
         }
     }
 }

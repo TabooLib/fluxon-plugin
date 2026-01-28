@@ -20,16 +20,16 @@ object FnPlayerItemMendEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemMendEvent::class.java)
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("slot", returnsObject().noParams()) { it.target?.slot }
-                .function("experienceOrb", returnsObject().noParams()) { it.target?.experienceOrb }
-                .function("repairAmount", returnsObject().noParams()) { it.target?.repairAmount }
-                .function("setRepairAmount", returnsObject().params(Type.OBJECT)) { it.target?.setRepairAmount(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("experienceOrb", returnsObject().noParams()) { it.setReturnRef(it.target?.experienceOrb) }
+                .function("repairAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.repairAmount) }
+                .function("setRepairAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRepairAmount(it.getInt(0).toInt())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerItemMendEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemMendEvent.getHandlerList()) }
         }
     }
 }

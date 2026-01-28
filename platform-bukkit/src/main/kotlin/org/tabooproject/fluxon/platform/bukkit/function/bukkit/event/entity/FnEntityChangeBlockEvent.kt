@@ -19,14 +19,14 @@ object FnEntityChangeBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityChangeBlockEvent::class.java)
-                .function("block", returnsObject().noParams()) { it.target?.block }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("to", returnsObject().noParams()) { it.target?.to }
-                .function("blockData", returnsObject().noParams()) { it.target?.blockData }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("to", returnsObject().noParams()) { it.setReturnRef(it.target?.to) }
+                .function("blockData", returnsObject().noParams()) { it.setReturnRef(it.target?.blockData) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityChangeBlockEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityChangeBlockEvent.getHandlerList()) }
         }
     }
 }

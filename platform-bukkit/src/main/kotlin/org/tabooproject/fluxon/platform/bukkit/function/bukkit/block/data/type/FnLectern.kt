@@ -19,7 +19,7 @@ object FnLectern {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lectern::class.java)
-                .function("hasBook", returns(Type.Z).noParams()) { it.target?.hasBook() }
+                .function("hasBook", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBook()) }
         }
     }
 }

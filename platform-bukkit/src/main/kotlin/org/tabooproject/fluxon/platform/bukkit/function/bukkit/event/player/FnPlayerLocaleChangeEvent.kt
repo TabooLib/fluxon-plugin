@@ -18,10 +18,10 @@ object FnPlayerLocaleChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerLocaleChangeEvent::class.java)
-                .function("locale", returnsObject().noParams()) { it.target?.locale }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("locale", returnsObject().noParams()) { it.setReturnRef(it.target?.locale) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerLocaleChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerLocaleChangeEvent.getHandlerList()) }
         }
     }
 }

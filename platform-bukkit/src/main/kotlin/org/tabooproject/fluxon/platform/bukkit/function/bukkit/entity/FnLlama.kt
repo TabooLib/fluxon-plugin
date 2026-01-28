@@ -18,11 +18,11 @@ object FnLlama {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Llama::class.java)
-                .function("color", returnsObject().noParams()) { it.target?.color }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Llama.Color) }
-                .function("strength", returnsObject().noParams()) { it.target?.strength }
-                .function("setStrength", returnsObject().params(Type.OBJECT)) { it.target?.setStrength(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as Llama.Color)) }
+                .function("strength", returnsObject().noParams()) { it.setReturnRef(it.target?.strength) }
+                .function("setStrength", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStrength(it.getInt(0).toInt())) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

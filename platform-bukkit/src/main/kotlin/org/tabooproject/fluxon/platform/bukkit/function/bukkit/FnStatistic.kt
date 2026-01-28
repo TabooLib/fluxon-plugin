@@ -19,10 +19,10 @@ object FnStatistic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Statistic::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("isSubstatistic", returns(Type.Z).noParams()) { it.target?.isSubstatistic }
-                .function("isBlock", returns(Type.Z).noParams()) { it.target?.isBlock }
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("isSubstatistic", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSubstatistic) }
+                .function("isBlock", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBlock) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

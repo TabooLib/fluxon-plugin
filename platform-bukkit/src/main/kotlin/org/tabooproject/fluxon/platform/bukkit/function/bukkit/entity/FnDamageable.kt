@@ -21,26 +21,26 @@ object FnDamageable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
                 .function("damage", returnsObject().params(Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.damage(it.getAsDouble(0))
                     } else {
                         it.target?.damage(it.getAsDouble(0), it.getRef(1) as Entity)
-                    }
+                    })
                 }
                 .function("damage", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 1) {
+                    it.setReturnRef(if (it.argumentCount == 1) {
                         it.target?.damage(it.getAsDouble(0))
                     } else {
                         it.target?.damage(it.getAsDouble(0), it.getRef(1) as Entity)
-                    }
+                    })
                 }
-                .function("health", returnsObject().noParams()) { it.target?.health }
-                .function("setHealth", returnsObject().params(Type.OBJECT)) { it.target?.setHealth(it.getAsDouble(0)) }
-                .function("absorptionAmount", returnsObject().noParams()) { it.target?.absorptionAmount }
-                .function("setAbsorptionAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAbsorptionAmount(it.getAsDouble(0)) }
-                .function("maxHealth", returnsObject().noParams()) { it.target?.maxHealth }
-                .function("setMaxHealth", returnsObject().params(Type.OBJECT)) { it.target?.setMaxHealth(it.getAsDouble(0)) }
-                .function("resetMaxHealth", returnsObject().noParams()) { it.target?.resetMaxHealth() }
+                .function("health", returnsObject().noParams()) { it.setReturnRef(it.target?.health) }
+                .function("setHealth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHealth(it.getAsDouble(0))) }
+                .function("absorptionAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.absorptionAmount) }
+                .function("setAbsorptionAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAbsorptionAmount(it.getAsDouble(0))) }
+                .function("maxHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.maxHealth) }
+                .function("setMaxHealth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxHealth(it.getAsDouble(0))) }
+                .function("resetMaxHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.resetMaxHealth()) }
         }
     }
 }

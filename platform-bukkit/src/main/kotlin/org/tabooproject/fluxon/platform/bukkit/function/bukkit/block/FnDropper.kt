@@ -18,7 +18,7 @@ object FnDropper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dropper::class.java)
-                .function("drop", returnsObject().noParams()) { it.target?.drop() }
+                .function("drop", returnsObject().noParams()) { it.setReturnRef(it.target?.drop()) }
         }
     }
 }

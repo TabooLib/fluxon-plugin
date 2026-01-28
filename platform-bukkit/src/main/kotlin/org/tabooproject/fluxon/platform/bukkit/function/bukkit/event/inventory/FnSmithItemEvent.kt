@@ -18,7 +18,7 @@ object FnSmithItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithItemEvent::class.java)
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

@@ -18,8 +18,8 @@ object FnBisected {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bisected::class.java)
-                .function("half", returnsObject().noParams()) { it.target?.half }
-                .function("setHalf", returnsObject().params(Type.OBJECT)) { it.target?.setHalf(it.getRef(0) as Bisected.Half) }
+                .function("half", returnsObject().noParams()) { it.setReturnRef(it.target?.half) }
+                .function("setHalf", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHalf(it.getRef(0) as Bisected.Half)) }
         }
     }
 }

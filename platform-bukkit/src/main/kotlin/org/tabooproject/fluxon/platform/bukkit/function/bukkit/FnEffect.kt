@@ -18,11 +18,11 @@ object FnEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Effect::class.java)
-                .function("id", returnsObject().noParams()) { it.target?.id }
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("data", returnsObject().noParams()) { it.target?.data }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
                 // static
-                .function("getById", returnsObject().params(Type.OBJECT)) { Effect.getById(it.getInt(0).toInt()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Effect.getById(it.getInt(0).toInt())) }
         }
     }
 }

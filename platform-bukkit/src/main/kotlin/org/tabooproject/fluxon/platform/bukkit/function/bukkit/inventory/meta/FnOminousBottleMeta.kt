@@ -19,10 +19,10 @@ object FnOminousBottleMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OminousBottleMeta::class.java)
-                .function("hasAmplifier", returns(Type.Z).noParams()) { it.target?.hasAmplifier() }
-                .function("amplifier", returnsObject().noParams()) { it.target?.amplifier }
-                .function("setAmplifier", returnsObject().params(Type.OBJECT)) { it.target?.setAmplifier(it.getInt(0).toInt()) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("hasAmplifier", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasAmplifier()) }
+                .function("amplifier", returnsObject().noParams()) { it.setReturnRef(it.target?.amplifier) }
+                .function("setAmplifier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAmplifier(it.getInt(0).toInt())) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

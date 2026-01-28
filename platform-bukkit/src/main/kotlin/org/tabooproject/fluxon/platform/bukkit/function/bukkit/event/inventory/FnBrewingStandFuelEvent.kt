@@ -19,16 +19,16 @@ object FnBrewingStandFuelEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStandFuelEvent::class.java)
-                .function("fuel", returnsObject().noParams()) { it.target?.fuel }
-                .function("fuelPower", returnsObject().noParams()) { it.target?.fuelPower }
-                .function("setFuelPower", returnsObject().params(Type.OBJECT)) { it.target?.setFuelPower(it.getInt(0).toInt()) }
-                .function("isConsuming", returns(Type.Z).noParams()) { it.target?.isConsuming }
-                .function("setConsuming", returnsObject().params(Type.OBJECT)) { it.target?.setConsuming(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("fuelPower", returnsObject().noParams()) { it.setReturnRef(it.target?.fuelPower) }
+                .function("setFuelPower", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFuelPower(it.getInt(0).toInt())) }
+                .function("isConsuming", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConsuming) }
+                .function("setConsuming", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConsuming(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BrewingStandFuelEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BrewingStandFuelEvent.getHandlerList()) }
         }
     }
 }

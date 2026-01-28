@@ -18,7 +18,7 @@ object FnChiseledBookshelfInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelfInventory::class.java)
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

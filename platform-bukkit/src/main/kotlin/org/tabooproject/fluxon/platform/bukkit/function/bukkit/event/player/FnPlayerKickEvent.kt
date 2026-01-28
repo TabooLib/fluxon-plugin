@@ -19,15 +19,15 @@ object FnPlayerKickEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerKickEvent::class.java)
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("leaveMessage", returnsObject().noParams()) { it.target?.leaveMessage }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("setReason", returnsObject().params(Type.OBJECT)) { it.target?.setReason(it.getString(0)!!) }
-                .function("setLeaveMessage", returnsObject().params(Type.OBJECT)) { it.target?.setLeaveMessage(it.getString(0)!!) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("leaveMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.leaveMessage) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("setReason", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setReason(it.getString(0)!!)) }
+                .function("setLeaveMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLeaveMessage(it.getString(0)!!)) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerKickEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerKickEvent.getHandlerList()) }
         }
     }
 }

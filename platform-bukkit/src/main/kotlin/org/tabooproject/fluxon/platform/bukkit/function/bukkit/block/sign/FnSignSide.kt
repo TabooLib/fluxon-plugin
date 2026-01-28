@@ -19,11 +19,11 @@ object FnSignSide {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
-                .function("lines", returnsObject().noParams()) { it.target?.lines }
-                .function("getLine", returnsObject().params(Type.OBJECT)) { it.target?.getLine(it.getInt(0).toInt()) }
-                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!) }
-                .function("isGlowingText", returns(Type.Z).noParams()) { it.target?.isGlowingText }
-                .function("setGlowingText", returnsObject().params(Type.OBJECT)) { it.target?.setGlowingText(it.getBool(0)) }
+                .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
+                .function("getLine", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!)) }
+                .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isGlowingText) }
+                .function("setGlowingText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGlowingText(it.getBool(0))) }
         }
     }
 }

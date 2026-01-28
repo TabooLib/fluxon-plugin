@@ -18,11 +18,11 @@ object FnEntityPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalEvent::class.java)
-                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
-                .function("searchRadius", returnsObject().noParams()) { it.target?.searchRadius }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSearchRadius(it.getInt(0).toInt())) }
+                .function("searchRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.searchRadius) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityPortalEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPortalEvent.getHandlerList()) }
         }
     }
 }

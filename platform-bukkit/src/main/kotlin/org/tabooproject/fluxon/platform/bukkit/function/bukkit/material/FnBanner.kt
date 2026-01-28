@@ -20,12 +20,12 @@ object FnBanner {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Banner::class.java)
-                .function("isWallBanner", returns(Type.Z).noParams()) { it.target?.isWallBanner }
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isWallBanner", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isWallBanner) }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -18,8 +18,8 @@ object FnTechnicalPiston {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TechnicalPiston::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("setType", returnsObject().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as TechnicalPiston.Type) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("setType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setType(it.getRef(0) as TechnicalPiston.Type)) }
         }
     }
 }

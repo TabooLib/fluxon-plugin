@@ -18,7 +18,7 @@ object FnConsumer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Consumer::class.java)
-                .function("accept", returnsObject().params(Type.OBJECT)) { (it.target as? Consumer<Any>)?.accept(it.getRef(0)!!) }
+                .function("accept", returnsObject().params(Type.OBJECT)) { it.setReturnRef((it.target as? Consumer<Any>)?.accept(it.getRef(0)!!)) }
         }
     }
 }

@@ -19,16 +19,16 @@ object FnSignChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignChangeEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("lines", returnsObject().noParams()) { it.target?.lines }
-                .function("getLine", returnsObject().params(Type.OBJECT)) { it.target?.getLine(it.getInt(0).toInt()) }
-                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)) }
-                .function("side", returnsObject().noParams()) { it.target?.side }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
+                .function("getLine", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setLine(it.getInt(0).toInt(), it.getString(1))) }
+                .function("side", returnsObject().noParams()) { it.setReturnRef(it.target?.side) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { SignChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(SignChangeEvent.getHandlerList()) }
         }
     }
 }

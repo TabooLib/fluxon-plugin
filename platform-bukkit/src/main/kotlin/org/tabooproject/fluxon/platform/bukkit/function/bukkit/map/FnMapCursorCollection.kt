@@ -20,11 +20,11 @@ object FnMapCursorCollection {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursorCollection::class.java)
-                .function("size", returns(Type.I).noParams()) { it.target?.size() }
-                .function("getCursor", returnsObject().params(Type.OBJECT)) { it.target?.getCursor(it.getInt(0).toInt()) }
-                .function("removeCursor", returnsObject().params(Type.OBJECT)) { it.target?.removeCursor(it.getRef(0) as MapCursor) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size()) }
+                .function("getCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getCursor(it.getInt(0).toInt())) }
+                .function("removeCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCursor(it.getRef(0) as MapCursor)) }
                 .function("addCursor", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
                             it.getInt(0).toInt(),
@@ -56,10 +56,10 @@ object FnMapCursorCollection {
                             it.getString(5)
                         )
                         else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
                             it.getInt(0).toInt(),
@@ -91,10 +91,10 @@ object FnMapCursorCollection {
                             it.getString(5)
                         )
                         else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
                             it.getInt(0).toInt(),
@@ -126,10 +126,10 @@ object FnMapCursorCollection {
                             it.getString(5)
                         )
                         else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
                             it.getInt(0).toInt(),
@@ -161,10 +161,10 @@ object FnMapCursorCollection {
                             it.getString(5)
                         )
                         else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addCursor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> it.target?.addCursor(it.getRef(0) as MapCursor)
                         3 -> it.target?.addCursor(
                             it.getInt(0).toInt(),
@@ -196,7 +196,7 @@ object FnMapCursorCollection {
                             it.getString(5)
                         )
                         else -> error("MapCursorCollection#addCursor 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
         }
     }

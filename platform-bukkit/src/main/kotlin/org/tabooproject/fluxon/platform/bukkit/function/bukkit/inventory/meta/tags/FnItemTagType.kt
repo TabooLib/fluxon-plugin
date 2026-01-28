@@ -20,31 +20,31 @@ object FnItemTagType {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType::class.java)
                 .function("primitiveType", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                             it.getRef(0)!!,
                             it.getRef(1) as ItemTagAdapterContext
                         )
-                    }
+                    })
                 }
                 .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                             it.getRef(0)!!,
                             it.getRef(1) as ItemTagAdapterContext
                         )
-                    }
+                    })
                 }
-                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
                 .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
+                    it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
-                    )
+                    ))
                 }
         }
     }
@@ -59,31 +59,31 @@ object FnItemTagTypePrimitiveTagType {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType.PrimitiveTagType::class.java)
                 .function("primitiveType", returnsObject().noParams()) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                             it.getRef(0)!!,
                             it.getRef(1) as ItemTagAdapterContext
                         )
-                    }
+                    })
                 }
                 .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    if ((it.argumentCount == 0)) {
+                    it.setReturnRef(if ((it.argumentCount == 0)) {
                         it.target?.primitiveType
                     } else {
                         (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                             it.getRef(0)!!,
                             it.getRef(1) as ItemTagAdapterContext
                         )
-                    }
+                    })
                 }
-                .function("complexType", returnsObject().noParams()) { it.target?.complexType }
+                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
                 .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    (it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
+                    it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
-                    )
+                    ))
                 }
         }
     }

@@ -18,10 +18,10 @@ object FnMapInitializeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapInitializeEvent::class.java)
-                .function("map", returnsObject().noParams()) { it.target?.map }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("map", returnsObject().noParams()) { it.setReturnRef(it.target?.map) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { MapInitializeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(MapInitializeEvent.getHandlerList()) }
         }
     }
 }

@@ -19,17 +19,17 @@ object FnEntityDeathEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDeathEvent::class.java)
-//                .function("reviveHealth", returnsObject().noParams()) { it.target?.reviveHealth }
-//                .function("setReviveHealth", returnsObject().params(Type.OBJECT)) { it.target?reviveHealth = it.getAsDouble(0) }
-                .function("killer", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
-                .function("damageSource", returnsObject().noParams()) { it.target?.damageSource }
-                .function("droppedExp", returnsObject().noParams()) { it.target?.droppedExp }
-                .function("setDroppedExp", returnsObject().params(Type.OBJECT)) { it.target?.setDroppedExp(it.getInt(0).toInt()) }
-                .function("drops", returnsObject().noParams()) { it.target?.drops }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+//                .function("reviveHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.reviveHealth) }
+//                .function("setReviveHealth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?reviveHealth = it.getAsDouble(0)) }
+                .function("killer", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("damageSource", returnsObject().noParams()) { it.setReturnRef(it.target?.damageSource) }
+                .function("droppedExp", returnsObject().noParams()) { it.setReturnRef(it.target?.droppedExp) }
+                .function("setDroppedExp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDroppedExp(it.getInt(0).toInt())) }
+                .function("drops", returnsObject().noParams()) { it.setReturnRef(it.target?.drops) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityDeathEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityDeathEvent.getHandlerList()) }
         }
     }
 }

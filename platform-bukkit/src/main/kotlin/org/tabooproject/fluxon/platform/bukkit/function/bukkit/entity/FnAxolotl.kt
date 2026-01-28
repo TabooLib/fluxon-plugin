@@ -19,10 +19,10 @@ object FnAxolotl {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Axolotl::class.java)
-                .function("isPlayingDead", returns(Type.Z).noParams()) { it.target?.isPlayingDead }
-                .function("setPlayingDead", returnsObject().params(Type.OBJECT)) { it.target?.setPlayingDead(it.getBool(0)) }
-                .function("variant", returnsObject().noParams()) { it.target?.variant }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
+                .function("isPlayingDead", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlayingDead) }
+                .function("setPlayingDead", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlayingDead(it.getBool(0))) }
+                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Axolotl.Variant)) }
         }
     }
 }

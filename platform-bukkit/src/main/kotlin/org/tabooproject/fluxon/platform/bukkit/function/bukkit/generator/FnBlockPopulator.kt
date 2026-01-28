@@ -24,7 +24,7 @@ object FnBlockPopulator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPopulator::class.java)
                 .function("populate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 3) {
+                    it.setReturnRef(if (it.argumentCount == 3) {
                         it.target?.populate(
                             it.getRef(0) as World,
                             it.getRef(1) as Random,
@@ -38,10 +38,10 @@ object FnBlockPopulator {
                             it.getInt(3).toInt(),
                             it.getRef(4) as LimitedRegion
                         )
-                    }
+                    })
                 }
                 .function("populate", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    if (it.argumentCount == 3) {
+                    it.setReturnRef(if (it.argumentCount == 3) {
                         it.target?.populate(
                             it.getRef(0) as World,
                             it.getRef(1) as Random,
@@ -55,7 +55,7 @@ object FnBlockPopulator {
                             it.getInt(3).toInt(),
                             it.getRef(4) as LimitedRegion
                         )
-                    }
+                    })
                 }
         }
     }

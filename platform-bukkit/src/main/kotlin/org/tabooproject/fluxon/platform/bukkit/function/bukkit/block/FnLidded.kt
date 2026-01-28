@@ -18,8 +18,8 @@ object FnLidded {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lidded::class.java)
-                .function("open", returnsObject().noParams()) { it.target?.open() }
-                .function("close", returnsObject().noParams()) { it.target?.close() }
+                .function("open", returnsObject().noParams()) { it.setReturnRef(it.target?.open()) }
+                .function("close", returnsObject().noParams()) { it.setReturnRef(it.target?.close()) }
         }
     }
 }

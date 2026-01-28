@@ -19,8 +19,8 @@ object FnPowerable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Powerable::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPowered(it.getBool(0))) }
         }
     }
 }

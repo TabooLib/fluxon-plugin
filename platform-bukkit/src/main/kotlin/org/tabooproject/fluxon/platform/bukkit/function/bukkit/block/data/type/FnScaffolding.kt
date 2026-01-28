@@ -19,11 +19,11 @@ object FnScaffolding {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Scaffolding::class.java)
-                .function("isBottom", returns(Type.Z).noParams()) { it.target?.isBottom }
-                .function("setBottom", returnsObject().params(Type.OBJECT)) { it.target?.setBottom(it.getBool(0)) }
-                .function("distance", returnsObject().noParams()) { it.target?.distance }
-                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.target?.setDistance(it.getInt(0).toInt()) }
-                .function("maximumDistance", returnsObject().noParams()) { it.target?.maximumDistance }
+                .function("isBottom", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBottom) }
+                .function("setBottom", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBottom(it.getBool(0))) }
+                .function("distance", returnsObject().noParams()) { it.setReturnRef(it.target?.distance) }
+                .function("setDistance", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDistance(it.getInt(0).toInt())) }
+                .function("maximumDistance", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumDistance) }
         }
     }
 }

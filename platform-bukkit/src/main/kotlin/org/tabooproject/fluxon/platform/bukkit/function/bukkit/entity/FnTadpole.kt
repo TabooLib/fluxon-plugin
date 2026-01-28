@@ -18,8 +18,8 @@ object FnTadpole {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tadpole::class.java)
-                .function("age", returnsObject().noParams()) { it.target?.age }
-                .function("setAge", returnsObject().params(Type.OBJECT)) { it.target?.setAge(it.getInt(0).toInt()) }
+                .function("age", returnsObject().noParams()) { it.setReturnRef(it.target?.age) }
+                .function("setAge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAge(it.getInt(0).toInt())) }
         }
     }
 }

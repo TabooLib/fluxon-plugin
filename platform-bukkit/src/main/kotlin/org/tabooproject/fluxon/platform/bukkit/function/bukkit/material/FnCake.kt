@@ -19,12 +19,12 @@ object FnCake {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cake::class.java)
-                .function("slicesEaten", returnsObject().noParams()) { it.target?.slicesEaten }
-                .function("slicesRemaining", returnsObject().noParams()) { it.target?.slicesRemaining }
-                .function("setSlicesEaten", returnsObject().params(Type.OBJECT)) { it.target?.setSlicesEaten(it.getInt(0).toInt()) }
-                .function("setSlicesRemaining", returnsObject().params(Type.OBJECT)) { it.target?.setSlicesRemaining(it.getInt(0).toInt()) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("slicesEaten", returnsObject().noParams()) { it.setReturnRef(it.target?.slicesEaten) }
+                .function("slicesRemaining", returnsObject().noParams()) { it.setReturnRef(it.target?.slicesRemaining) }
+                .function("setSlicesEaten", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSlicesEaten(it.getInt(0).toInt())) }
+                .function("setSlicesRemaining", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSlicesRemaining(it.getInt(0).toInt())) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

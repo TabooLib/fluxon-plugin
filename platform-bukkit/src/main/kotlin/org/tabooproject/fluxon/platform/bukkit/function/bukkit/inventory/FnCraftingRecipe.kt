@@ -19,12 +19,12 @@ object FnCraftingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CraftingRecipe::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("group", returnsObject().noParams()) { it.target?.group }
-                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.target?.setGroup(it.getString(0)!!) }
-                .function("category", returnsObject().noParams()) { it.target?.category }
-                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CraftingBookCategory) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("group", returnsObject().noParams()) { it.setReturnRef(it.target?.group) }
+                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGroup(it.getString(0)!!)) }
+                .function("category", returnsObject().noParams()) { it.setReturnRef(it.target?.category) }
+                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCategory(it.getRef(0) as CraftingBookCategory)) }
         }
     }
 }

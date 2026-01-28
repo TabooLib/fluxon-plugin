@@ -19,10 +19,10 @@ object FnSculkShrieker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkShrieker::class.java)
-                .function("isCanSummon", returns(Type.Z).noParams()) { it.target?.isCanSummon }
-                .function("setCanSummon", returnsObject().params(Type.OBJECT)) { it.target?.setCanSummon(it.getBool(0)) }
-                .function("isShrieking", returns(Type.Z).noParams()) { it.target?.isShrieking }
-                .function("setShrieking", returnsObject().params(Type.OBJECT)) { it.target?.setShrieking(it.getBool(0)) }
+                .function("isCanSummon", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCanSummon) }
+                .function("setCanSummon", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCanSummon(it.getBool(0))) }
+                .function("isShrieking", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShrieking) }
+                .function("setShrieking", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShrieking(it.getBool(0))) }
         }
     }
 }

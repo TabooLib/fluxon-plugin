@@ -19,9 +19,9 @@ object FnDirectional {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Directional::class.java)
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("setFacing", returnsObject().params(Type.OBJECT)) { it.target?.setFacing(it.getRef(0) as BlockFace) }
-                .function("faces", returnsObject().noParams()) { it.target?.faces }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("setFacing", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacing(it.getRef(0) as BlockFace)) }
+                .function("faces", returnsObject().noParams()) { it.setReturnRef(it.target?.faces) }
         }
     }
 }

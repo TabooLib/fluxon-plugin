@@ -18,9 +18,9 @@ object FnAnaloguePowerable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnaloguePowerable::class.java)
-                .function("power", returnsObject().noParams()) { it.target?.power }
-                .function("setPower", returnsObject().params(Type.OBJECT)) { it.target?.setPower(it.getInt(0).toInt()) }
-                .function("maximumPower", returnsObject().noParams()) { it.target?.maximumPower }
+                .function("power", returnsObject().noParams()) { it.setReturnRef(it.target?.power) }
+                .function("setPower", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPower(it.getInt(0).toInt())) }
+                .function("maximumPower", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumPower) }
         }
     }
 }

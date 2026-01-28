@@ -20,11 +20,11 @@ object FnVine {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vine::class.java)
-                .function("isOnFace", returns(Type.Z).params(Type.OBJECT)) { it.target?.isOnFace(it.getRef(0) as BlockFace) }
-                .function("putOnFace", returnsObject().params(Type.OBJECT)) { it.target?.putOnFace(it.getRef(0) as BlockFace) }
-                .function("removeFromFace", returnsObject().params(Type.OBJECT)) { it.target?.removeFromFace(it.getRef(0) as BlockFace) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isOnFace", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isOnFace(it.getRef(0) as BlockFace)) }
+                .function("putOnFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.putOnFace(it.getRef(0) as BlockFace)) }
+                .function("removeFromFace", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeFromFace(it.getRef(0) as BlockFace)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

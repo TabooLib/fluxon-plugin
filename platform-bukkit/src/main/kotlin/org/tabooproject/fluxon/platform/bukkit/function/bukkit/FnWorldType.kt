@@ -19,9 +19,9 @@ object FnWorldType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldType::class.java)
-                .function("name", returns(Type.STRING).noParams()) { it.target?.getName() }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.getName()) }
                 // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { WorldType.getByName(it.getString(0)!!) }
+                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(WorldType.getByName(it.getString(0)!!)) }
         }
     }
 }

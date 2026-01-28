@@ -19,12 +19,12 @@ object FnEntityToggleSwimEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityToggleSwimEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isSwimming", returns(Type.Z).noParams()) { it.target?.isSwimming }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isSwimming", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSwimming) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityToggleSwimEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityToggleSwimEvent.getHandlerList()) }
         }
     }
 }

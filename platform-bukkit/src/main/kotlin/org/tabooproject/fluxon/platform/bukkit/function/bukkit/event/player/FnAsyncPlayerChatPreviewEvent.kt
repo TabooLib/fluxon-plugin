@@ -18,9 +18,9 @@ object FnAsyncPlayerChatPreviewEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncPlayerChatPreviewEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { AsyncPlayerChatPreviewEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncPlayerChatPreviewEvent.getHandlerList()) }
         }
     }
 }

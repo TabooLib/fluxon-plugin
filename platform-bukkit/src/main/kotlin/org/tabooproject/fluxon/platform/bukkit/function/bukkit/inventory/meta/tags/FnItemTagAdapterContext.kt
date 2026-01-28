@@ -18,7 +18,7 @@ object FnItemTagAdapterContext {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagAdapterContext::class.java)
-                .function("newTagContainer", returnsObject().noParams()) { it.target?.newTagContainer() }
+                .function("newTagContainer", returnsObject().noParams()) { it.setReturnRef(it.target?.newTagContainer()) }
         }
     }
 }

@@ -18,10 +18,10 @@ object FnInventoryCloseEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryCloseEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.target?.player }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryCloseEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryCloseEvent.getHandlerList()) }
         }
     }
 }

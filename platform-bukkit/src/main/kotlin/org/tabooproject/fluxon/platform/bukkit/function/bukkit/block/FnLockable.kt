@@ -19,9 +19,9 @@ object FnLockable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lockable::class.java)
-                .function("isLocked", returns(Type.Z).noParams()) { it.target?.isLocked }
-                .function("lock", returnsObject().noParams()) { it.target?.lock }
-                .function("setLock", returnsObject().params(Type.OBJECT)) { it.target?.setLock(it.getString(0)) }
+                .function("isLocked", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLocked) }
+                .function("lock", returnsObject().noParams()) { it.setReturnRef(it.target?.lock) }
+                .function("setLock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLock(it.getString(0))) }
         }
     }
 }

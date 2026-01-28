@@ -18,8 +18,8 @@ object FnRotation {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rotation::class.java)
-                .function("rotateClockwise", returnsObject().noParams()) { it.target?.rotateClockwise() }
-                .function("rotateCounterClockwise", returnsObject().noParams()) { it.target?.rotateCounterClockwise() }
+                .function("rotateClockwise", returnsObject().noParams()) { it.setReturnRef(it.target?.rotateClockwise()) }
+                .function("rotateCounterClockwise", returnsObject().noParams()) { it.setReturnRef(it.target?.rotateCounterClockwise()) }
         }
     }
 }

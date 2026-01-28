@@ -21,15 +21,15 @@ object FnBlockFace {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockFace::class.java)
                 // 橙汁喵: 枚举类语法
-                .function("name", returns(Type.STRING).noParams()) { it.target?.name }
+                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 // 橙汁喵: 枚举类语法
-                .function("ordinal", returnsObject().noParams()) { it.target?.ordinal }
-                .function("modX", returnsObject().noParams()) { it.target?.modX }
-                .function("modY", returnsObject().noParams()) { it.target?.modY }
-                .function("modZ", returnsObject().noParams()) { it.target?.modZ }
-                .function("direction", returnsObject().noParams()) { it.target?.direction }
-                .function("isCartesian", returns(Type.Z).noParams()) { it.target?.isCartesian }
-                .function("oppositeFace", returnsObject().noParams()) { it.target?.oppositeFace }
+                .function("ordinal", returnsObject().noParams()) { it.setReturnRef(it.target?.ordinal) }
+                .function("modX", returnsObject().noParams()) { it.setReturnRef(it.target?.modX) }
+                .function("modY", returnsObject().noParams()) { it.setReturnRef(it.target?.modY) }
+                .function("modZ", returnsObject().noParams()) { it.setReturnRef(it.target?.modZ) }
+                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("isCartesian", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCartesian) }
+                .function("oppositeFace", returnsObject().noParams()) { it.setReturnRef(it.target?.oppositeFace) }
         }
     }
 }

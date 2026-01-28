@@ -20,13 +20,13 @@ object FnPlayerItemHeldEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemHeldEvent::class.java)
-                .function("previousSlot", returnsObject().noParams()) { it.target?.previousSlot }
-                .function("newSlot", returnsObject().noParams()) { it.target?.newSlot }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("previousSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.previousSlot) }
+                .function("newSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.newSlot) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerItemHeldEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemHeldEvent.getHandlerList()) }
         }
     }
 }

@@ -18,7 +18,7 @@ object FnItemSpawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemSpawnEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.getEntity() }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
         }
     }
 }

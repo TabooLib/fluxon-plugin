@@ -18,7 +18,7 @@ object FnEntityBlockFormEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityBlockFormEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
         }
     }
 }

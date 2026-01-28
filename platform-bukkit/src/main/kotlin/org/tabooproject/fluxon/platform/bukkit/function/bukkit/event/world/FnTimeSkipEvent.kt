@@ -19,14 +19,14 @@ object FnTimeSkipEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimeSkipEvent::class.java)
-                .function("skipReason", returnsObject().noParams()) { it.target?.skipReason }
-                .function("skipAmount", returnsObject().noParams()) { it.target?.skipAmount }
-                .function("setSkipAmount", returnsObject().params(Type.OBJECT)) { it.target?.setSkipAmount(it.getInt(0).toLong()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("skipReason", returnsObject().noParams()) { it.setReturnRef(it.target?.skipReason) }
+                .function("skipAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.skipAmount) }
+                .function("setSkipAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSkipAmount(it.getInt(0).toLong())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { TimeSkipEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(TimeSkipEvent.getHandlerList()) }
         }
     }
 }

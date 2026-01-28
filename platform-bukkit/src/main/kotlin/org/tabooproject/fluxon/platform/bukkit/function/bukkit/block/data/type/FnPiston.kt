@@ -19,8 +19,8 @@ object FnPiston {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Piston::class.java)
-                .function("isExtended", returns(Type.Z).noParams()) { it.target?.isExtended }
-                .function("setExtended", returnsObject().params(Type.OBJECT)) { it.target?.setExtended(it.getBool(0)) }
+                .function("isExtended", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExtended) }
+                .function("setExtended", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExtended(it.getBool(0))) }
         }
     }
 }

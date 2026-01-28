@@ -19,8 +19,8 @@ object FnTNT {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TNT::class.java)
-                .function("isUnstable", returns(Type.Z).noParams()) { it.target?.isUnstable }
-                .function("setUnstable", returnsObject().params(Type.OBJECT)) { it.target?.setUnstable(it.getBool(0)) }
+                .function("isUnstable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUnstable) }
+                .function("setUnstable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setUnstable(it.getBool(0))) }
         }
     }
 }

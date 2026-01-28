@@ -18,8 +18,8 @@ object FnDispenser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dispenser::class.java)
-                .function("blockProjectileSource", returnsObject().noParams()) { it.target?.blockProjectileSource }
-                .function("dispense", returnsObject().noParams()) { it.target?.dispense() }
+                .function("blockProjectileSource", returnsObject().noParams()) { it.setReturnRef(it.target?.blockProjectileSource) }
+                .function("dispense", returnsObject().noParams()) { it.setReturnRef(it.target?.dispense()) }
         }
     }
 }

@@ -18,12 +18,12 @@ object FnPlayerChatTabCompleteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChatTabCompleteEvent::class.java)
-                .function("chatMessage", returnsObject().noParams()) { it.target?.chatMessage }
-                .function("lastToken", returnsObject().noParams()) { it.target?.lastToken }
-                .function("tabCompletions", returnsObject().noParams()) { it.target?.tabCompletions }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("chatMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.chatMessage) }
+                .function("lastToken", returnsObject().noParams()) { it.setReturnRef(it.target?.lastToken) }
+                .function("tabCompletions", returnsObject().noParams()) { it.setReturnRef(it.target?.tabCompletions) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerChatTabCompleteEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChatTabCompleteEvent.getHandlerList()) }
         }
     }
 }

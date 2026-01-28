@@ -18,10 +18,10 @@ object FnLectern {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lectern::class.java)
-                .function("page", returnsObject().noParams()) { it.target?.page }
-                .function("setPage", returnsObject().params(Type.OBJECT)) { it.target?.setPage(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("page", returnsObject().noParams()) { it.setReturnRef(it.target?.page) }
+                .function("setPage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPage(it.getInt(0).toInt())) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

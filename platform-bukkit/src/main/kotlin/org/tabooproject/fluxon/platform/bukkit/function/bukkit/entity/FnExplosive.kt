@@ -19,10 +19,10 @@ object FnExplosive {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Explosive::class.java)
-                .function("setYield", returnsObject().params(Type.OBJECT)) { it.target?.setYield(it.getFloat(0)) }
-                .function("yield", returnsObject().noParams()) { it.target?.yield }
-                .function("setIsIncendiary", returnsObject().params(Type.OBJECT)) { it.target?.setIsIncendiary(it.getBool(0)) }
-                .function("isIncendiary", returns(Type.Z).noParams()) { it.target?.isIncendiary }
+                .function("setYield", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setYield(it.getFloat(0))) }
+                .function("yield", returnsObject().noParams()) { it.setReturnRef(it.target?.yield) }
+                .function("setIsIncendiary", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIsIncendiary(it.getBool(0))) }
+                .function("isIncendiary", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIncendiary) }
         }
     }
 }

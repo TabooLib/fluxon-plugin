@@ -18,14 +18,14 @@ object FnFurnace {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Furnace::class.java)
-                .function("burnTime", returnsObject().noParams()) { it.target?.burnTime }
-                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.target?.setBurnTime(it.getInt(0).toShort()) }
-                .function("cookTime", returnsObject().noParams()) { it.target?.cookTime }
-                .function("setCookTime", returnsObject().params(Type.OBJECT)) { it.target?.setCookTime(it.getInt(0).toShort()) }
-                .function("cookTimeTotal", returnsObject().noParams()) { it.target?.cookTimeTotal }
-                .function("setCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.target?.setCookTimeTotal(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("snapshotInventory", returnsObject().noParams()) { it.target?.snapshotInventory }
+                .function("burnTime", returnsObject().noParams()) { it.setReturnRef(it.target?.burnTime) }
+                .function("setBurnTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBurnTime(it.getInt(0).toShort())) }
+                .function("cookTime", returnsObject().noParams()) { it.setReturnRef(it.target?.cookTime) }
+                .function("setCookTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCookTime(it.getInt(0).toShort())) }
+                .function("cookTimeTotal", returnsObject().noParams()) { it.setReturnRef(it.target?.cookTimeTotal) }
+                .function("setCookTimeTotal", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCookTimeTotal(it.getInt(0).toInt())) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

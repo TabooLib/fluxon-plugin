@@ -20,10 +20,10 @@ object FnStringUtil {
             registerExtension(StringUtil::class.java)
                 // static
                 .function("startsWithIgnoreCase", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    StringUtil.startsWithIgnoreCase(
+                    it.setReturnRef(StringUtil.startsWithIgnoreCase(
                         it.getString(0)!!,
                         it.getString(1)!!
-                    )
+                    ))
                 }
         }
     }

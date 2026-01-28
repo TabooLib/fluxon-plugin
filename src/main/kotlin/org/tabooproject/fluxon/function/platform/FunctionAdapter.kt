@@ -13,12 +13,12 @@ object FunctionAdapter {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
-            registerFunction("console", returnsObject().noParams()) { console() }
-            registerFunction("onlinePlayers", returns(Type.LIST).noParams()) { onlinePlayers() }
-            registerFunction("adaptPlayer", returnsObject().params(Type.OBJECT)) { adaptPlayer(it.getRef(0)!!) }
-            registerFunction("adaptCommandSender", returnsObject().params(Type.OBJECT)) { adaptCommandSender(it.getRef(0)!!) }
-            registerFunction("adaptLocation", returnsObject().params(Type.OBJECT)) { adaptLocation(it.getRef(0)!!) }
-            registerFunction("allWorlds", returns(Type.LIST).noParams()) { allWorlds() }
+            registerFunction("console", returnsObject().noParams()) { it.setReturnRef(console()) }
+            registerFunction("onlinePlayers", returns(Type.LIST).noParams()) { it.setReturnRef(onlinePlayers()) }
+            registerFunction("adaptPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(adaptPlayer(it.getRef(0)!!)) }
+            registerFunction("adaptCommandSender", returnsObject().params(Type.OBJECT)) { it.setReturnRef(adaptCommandSender(it.getRef(0)!!)) }
+            registerFunction("adaptLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(adaptLocation(it.getRef(0)!!)) }
+            registerFunction("allWorlds", returns(Type.LIST).noParams()) { it.setReturnRef(allWorlds()) }
         }
     }
 }

@@ -19,8 +19,8 @@ object FnLightable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lightable::class.java)
-                .function("isLit", returns(Type.Z).noParams()) { it.target?.isLit }
-                .function("setLit", returnsObject().params(Type.OBJECT)) { it.target?.setLit(it.getBool(0)) }
+                .function("isLit", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLit) }
+                .function("setLit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLit(it.getBool(0))) }
         }
     }
 }

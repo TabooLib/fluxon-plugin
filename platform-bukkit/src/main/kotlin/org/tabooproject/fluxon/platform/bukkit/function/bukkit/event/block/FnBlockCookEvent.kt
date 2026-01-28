@@ -20,14 +20,14 @@ object FnBlockCookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCookEvent::class.java)
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as ItemStack)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockCookEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockCookEvent.getHandlerList()) }
         }
     }
 }

@@ -19,18 +19,18 @@ object FnBanEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanEntry::class.java)
-                .function("target", returnsObject().noParams()) { it.target?.target }
-                .function("banTarget", returnsObject().noParams()) { it.target?.getBanTarget() }
-                .function("created", returnsObject().noParams()) { it.target?.created }
-                .function("setCreated", returnsObject().params(Type.OBJECT)) { it.target?.setCreated(Date(it.getInt(0).toLong())) }
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("setSource", returnsObject().params(Type.OBJECT)) { it.target?.setSource(it.getString(0)!!) }
-                .function("expiration", returnsObject().noParams()) { it.target?.expiration }
-                .function("setExpiration", returnsObject().params(Type.OBJECT)) { it.target?.setExpiration(Date(it.getInt(0).toLong())) }
-                .function("reason", returnsObject().noParams()) { it.target?.reason }
-                .function("setReason", returnsObject().params(Type.OBJECT)) { it.target?.setReason(it.getString(0)) }
-                .function("save", returnsObject().noParams()) { it.target?.save() }
-                .function("remove", returnsObject().noParams()) { it.target?.remove() }
+                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
+                .function("banTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.getBanTarget()) }
+                .function("created", returnsObject().noParams()) { it.setReturnRef(it.target?.created) }
+                .function("setCreated", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCreated(Date(it.getInt(0).toLong()))) }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("setSource", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSource(it.getString(0)!!)) }
+                .function("expiration", returnsObject().noParams()) { it.setReturnRef(it.target?.expiration) }
+                .function("setExpiration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExpiration(Date(it.getInt(0).toLong()))) }
+                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("setReason", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setReason(it.getString(0))) }
+                .function("save", returnsObject().noParams()) { it.setReturnRef(it.target?.save()) }
+                .function("remove", returnsObject().noParams()) { it.setReturnRef(it.target?.remove()) }
         }
     }
 }

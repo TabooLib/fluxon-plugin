@@ -21,12 +21,12 @@ object FnProfileBanList {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ProfileBanList::class.java)
                 .function("addBan", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.addBan(
+                    it.setReturnRef(it.target?.addBan(
                         it.getRef(0) as PlayerProfile,
                         it.getString(1),
                         Date(it.getInt(2).toLong()),
                         it.getString(3)
-                    )
+                    ))
                 }
         }
     }

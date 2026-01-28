@@ -20,11 +20,11 @@ object FnFormattedCommandAlias {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FormattedCommandAlias::class.java)
                 .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.execute(
+                    it.setReturnRef(it.target?.execute(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!,
                         it.getRef(2) as Array<String>
-                    )
+                    ))
                 }
         }
     }

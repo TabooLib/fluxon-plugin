@@ -18,10 +18,10 @@ object FnInventoryBlockStartEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryBlockStartEvent::class.java)
-                .function("source", returnsObject().noParams()) { it.target?.source }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryBlockStartEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryBlockStartEvent.getHandlerList()) }
         }
     }
 }

@@ -20,11 +20,11 @@ object FnTimedRegisteredListener {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimedRegisteredListener::class.java)
-                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
-                .function("reset", returnsObject().noParams()) { it.target?.reset() }
-                .function("count", returns(Type.I).noParams()) { it.target?.count }
-                .function("totalTime", returnsObject().noParams()) { it.target?.totalTime }
-                .function("hasMultiple", returns(Type.Z).noParams()) { it.target?.hasMultiple() }
+                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.callEvent(it.getRef(0) as Event)) }
+                .function("reset", returnsObject().noParams()) { it.setReturnRef(it.target?.reset()) }
+                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
+                .function("totalTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalTime) }
+                .function("hasMultiple", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasMultiple()) }
         }
     }
 }

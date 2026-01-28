@@ -18,7 +18,7 @@ object FnChest {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Chest::class.java)
-                .function("blockInventory", returnsObject().noParams()) { it.target?.blockInventory }
+                .function("blockInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.blockInventory) }
         }
     }
 }

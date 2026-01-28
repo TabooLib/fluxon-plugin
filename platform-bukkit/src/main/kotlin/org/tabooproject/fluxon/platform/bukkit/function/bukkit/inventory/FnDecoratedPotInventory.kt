@@ -19,9 +19,9 @@ object FnDecoratedPotInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DecoratedPotInventory::class.java)
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("item", returnsObject().noParams()) { it.target?.item }
-                .function("holder", returnsObject().noParams()) { it.target?.holder }
+                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
+                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
+                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

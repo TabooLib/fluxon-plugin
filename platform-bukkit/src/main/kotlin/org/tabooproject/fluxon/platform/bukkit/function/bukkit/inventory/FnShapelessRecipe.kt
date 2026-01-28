@@ -22,7 +22,7 @@ object FnShapelessRecipe {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShapelessRecipe::class.java)
                 .function("addIngredient", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is MaterialData -> it.target?.addIngredient(var1)
                             is Material -> it.target?.addIngredient(var1)
@@ -47,10 +47,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#addIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is MaterialData -> it.target?.addIngredient(var1)
                             is Material -> it.target?.addIngredient(var1)
@@ -75,10 +75,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#addIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("addIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is MaterialData -> it.target?.addIngredient(var1)
                             is Material -> it.target?.addIngredient(var1)
@@ -103,10 +103,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#addIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("removeIngredient", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is RecipeChoice -> it.target?.removeIngredient(var1)
                             is Material -> it.target?.removeIngredient(var1)
@@ -131,10 +131,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#removeIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("removeIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is RecipeChoice -> it.target?.removeIngredient(var1)
                             is Material -> it.target?.removeIngredient(var1)
@@ -159,10 +159,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#removeIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("removeIngredient", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> when (val var1 = it.getRef(0)) {
                             is RecipeChoice -> it.target?.removeIngredient(var1)
                             is Material -> it.target?.removeIngredient(var1)
@@ -187,10 +187,10 @@ object FnShapelessRecipe {
                             it.getInt(2).toInt()
                         )
                         else -> error("ShapelessRecipe#removeIngredient 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
-                .function("ingredientList", returnsObject().noParams()) { it.target?.ingredientList }
-                .function("choiceList", returnsObject().noParams()) { it.target?.choiceList }
+                .function("ingredientList", returnsObject().noParams()) { it.setReturnRef(it.target?.ingredientList) }
+                .function("choiceList", returnsObject().noParams()) { it.setReturnRef(it.target?.choiceList) }
         }
     }
 }

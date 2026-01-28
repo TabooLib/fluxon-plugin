@@ -20,13 +20,13 @@ object FnFluidLevelChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FluidLevelChangeEvent::class.java)
-                .function("newData", returnsObject().noParams()) { it.target?.newData }
-                .function("setNewData", returnsObject().params(Type.OBJECT)) { it.target?.setNewData(it.getRef(0) as BlockData) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("newData", returnsObject().noParams()) { it.setReturnRef(it.target?.newData) }
+                .function("setNewData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewData(it.getRef(0) as BlockData)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { FluidLevelChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(FluidLevelChangeEvent.getHandlerList()) }
         }
     }
 }

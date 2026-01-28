@@ -20,8 +20,8 @@ object FnServerOperator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerOperator::class.java)
-                .function("isOp", returns(Type.Z).noParams()) { it.target?.isOp }
-                .function("setOp", returnsObject().params(Type.OBJECT)) { it.target?.setOp(it.getBool(0)) }
+                .function("isOp", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOp) }
+                .function("setOp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOp(it.getBool(0))) }
         }
     }
 }

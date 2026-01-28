@@ -21,10 +21,10 @@ object FnEventExecutor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventExecutor::class.java)
                 .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.execute(
+                    it.setReturnRef(it.target?.execute(
                         it.getRef(0) as Listener,
                         it.getRef(1) as Event
-                    )
+                    ))
                 }
         }
     }

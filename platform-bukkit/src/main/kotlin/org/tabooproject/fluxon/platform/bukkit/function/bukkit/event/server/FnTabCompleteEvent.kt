@@ -19,15 +19,15 @@ object FnTabCompleteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TabCompleteEvent::class.java)
-                .function("sender", returnsObject().noParams()) { it.target?.sender }
-                .function("buffer", returnsObject().noParams()) { it.target?.buffer }
-                .function("completions", returnsObject().noParams()) { it.target?.completions }
-                .function("setCompletions", returnsObject().params(Type.OBJECT)) { it.target?.setCompletions(it.getRef(0) as List<String>) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("sender", returnsObject().noParams()) { it.setReturnRef(it.target?.sender) }
+                .function("buffer", returnsObject().noParams()) { it.setReturnRef(it.target?.buffer) }
+                .function("completions", returnsObject().noParams()) { it.setReturnRef(it.target?.completions) }
+                .function("setCompletions", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCompletions(it.getRef(0) as List<String>)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { TabCompleteEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(TabCompleteEvent.getHandlerList()) }
         }
     }
 }

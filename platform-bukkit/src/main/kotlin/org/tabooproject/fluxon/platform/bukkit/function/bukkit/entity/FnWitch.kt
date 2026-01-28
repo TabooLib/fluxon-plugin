@@ -19,7 +19,7 @@ object FnWitch {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Witch::class.java)
-                .function("isDrinkingPotion", returns(Type.Z).noParams()) { it.target?.isDrinkingPotion }
+                .function("isDrinkingPotion", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDrinkingPotion) }
         }
     }
 }

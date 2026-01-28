@@ -20,9 +20,9 @@ object FnBlockStateMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockStateMeta::class.java)
-                .function("hasBlockState", returns(Type.Z).noParams()) { it.target?.hasBlockState() }
-                .function("blockState", returnsObject().noParams()) { it.target?.blockState }
-                .function("setBlockState", returnsObject().params(Type.OBJECT)) { it.target?.setBlockState(it.getRef(0) as BlockState) }
+                .function("hasBlockState", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBlockState()) }
+                .function("blockState", returnsObject().noParams()) { it.setReturnRef(it.target?.blockState) }
+                .function("setBlockState", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBlockState(it.getRef(0) as BlockState)) }
         }
     }
 }

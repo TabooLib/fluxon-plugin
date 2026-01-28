@@ -19,13 +19,13 @@ object FnEntityAirChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityAirChangeEvent::class.java)
-                .function("amount", returnsObject().noParams()) { it.target?.amount }
-                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.target?.setAmount(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("amount", returnsObject().noParams()) { it.setReturnRef(it.target?.amount) }
+                .function("setAmount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAmount(it.getInt(0).toInt())) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityAirChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityAirChangeEvent.getHandlerList()) }
         }
     }
 }

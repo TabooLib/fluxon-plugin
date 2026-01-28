@@ -19,11 +19,11 @@ object FnBlockPistonExtendEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonExtendEvent::class.java)
-                .function("length", returns(Type.I).noParams()) { it.target?.length }
-                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("length", returns(Type.I).noParams()) { it.setReturnRef(it.target?.length) }
+                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockPistonExtendEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockPistonExtendEvent.getHandlerList()) }
         }
     }
 }

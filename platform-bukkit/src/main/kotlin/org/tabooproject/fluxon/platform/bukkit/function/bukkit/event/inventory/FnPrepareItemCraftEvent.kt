@@ -19,12 +19,12 @@ object FnPrepareItemCraftEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PrepareItemCraftEvent::class.java)
-                .function("recipe", returnsObject().noParams()) { it.target?.recipe }
-                .function("inventory", returnsObject().noParams()) { it.target?.inventory }
-                .function("isRepair", returns(Type.Z).noParams()) { it.target?.isRepair }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("isRepair", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRepair) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PrepareItemCraftEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PrepareItemCraftEvent.getHandlerList()) }
         }
     }
 }

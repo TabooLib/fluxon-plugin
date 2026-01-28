@@ -21,14 +21,14 @@ object FnBlockTransformer {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer::class.java)
                 .function("transform", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.transform(
+                    it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt(),
                         it.getInt(3).toInt(),
                         it.getRef(4) as BlockState,
                         it.getRef(5) as BlockTransformer.TransformationState
-                    )
+                    ))
                 }
         }
     }
@@ -42,8 +42,8 @@ object FnBlockTransformerTransformationState {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer.TransformationState::class.java)
-                .function("original", returnsObject().noParams()) { it.target?.original }
-                .function("world", returnsObject().noParams()) { it.target?.world }
+                .function("original", returnsObject().noParams()) { it.setReturnRef(it.target?.original) }
+                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
         }
     }
 }

@@ -19,13 +19,13 @@ object FnRayTraceResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RayTraceResult::class.java)
-                .function("hitPosition", returnsObject().noParams()) { it.target?.hitPosition }
-                .function("hitBlock", returnsObject().noParams()) { it.target?.hitBlock }
-                .function("hitBlockFace", returnsObject().noParams()) { it.target?.hitBlockFace }
-                .function("hitEntity", returnsObject().noParams()) { it.target?.hitEntity }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("hitPosition", returnsObject().noParams()) { it.setReturnRef(it.target?.hitPosition) }
+                .function("hitBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlock) }
+                .function("hitBlockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlockFace) }
+                .function("hitEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.hitEntity) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

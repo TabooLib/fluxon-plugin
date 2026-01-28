@@ -20,10 +20,10 @@ object FnFlowerPot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FlowerPot::class.java)
-                .function("contents", returnsObject().noParams()) { it.target?.contents }
-                .function("setContents", returnsObject().params(Type.OBJECT)) { it.target?.setContents(it.getRef(0) as MaterialData) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("contents", returnsObject().noParams()) { it.setReturnRef(it.target?.contents) }
+                .function("setContents", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setContents(it.getRef(0) as MaterialData)) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

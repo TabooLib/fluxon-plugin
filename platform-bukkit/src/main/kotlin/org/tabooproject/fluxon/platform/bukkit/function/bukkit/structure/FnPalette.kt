@@ -18,8 +18,8 @@ object FnPalette {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Palette::class.java)
-                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
-                .function("blockCount", returnsObject().noParams()) { it.target?.blockCount }
+                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("blockCount", returnsObject().noParams()) { it.setReturnRef(it.target?.blockCount) }
         }
     }
 }

@@ -18,10 +18,10 @@ object FnPlayerChangedMainHandEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChangedMainHandEvent::class.java)
-                .function("mainHand", returnsObject().noParams()) { it.target?.mainHand }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("mainHand", returnsObject().noParams()) { it.setReturnRef(it.target?.mainHand) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { PlayerChangedMainHandEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChangedMainHandEvent.getHandlerList()) }
         }
     }
 }

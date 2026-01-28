@@ -18,8 +18,8 @@ object FnStairs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Stairs::class.java)
-                .function("shape", returnsObject().noParams()) { it.target?.shape }
-                .function("setShape", returnsObject().params(Type.OBJECT)) { it.target?.setShape(it.getRef(0) as Stairs.Shape) }
+                .function("shape", returnsObject().noParams()) { it.setReturnRef(it.target?.shape) }
+                .function("setShape", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShape(it.getRef(0) as Stairs.Shape)) }
         }
     }
 }

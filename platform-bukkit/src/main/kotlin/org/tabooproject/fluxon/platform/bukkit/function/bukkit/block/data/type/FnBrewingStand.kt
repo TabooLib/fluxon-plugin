@@ -19,10 +19,10 @@ object FnBrewingStand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStand::class.java)
-                .function("hasBottle", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasBottle(it.getInt(0).toInt()) }
-                .function("setBottle", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.target?.setBottle(it.getInt(0).toInt(), it.getBool(1)) }
-                .function("bottles", returnsObject().noParams()) { it.target?.bottles }
-                .function("maximumBottles", returnsObject().noParams()) { it.target?.maximumBottles }
+                .function("hasBottle", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasBottle(it.getInt(0).toInt())) }
+                .function("setBottle", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setBottle(it.getInt(0).toInt(), it.getBool(1))) }
+                .function("bottles", returnsObject().noParams()) { it.setReturnRef(it.target?.bottles) }
+                .function("maximumBottles", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumBottles) }
         }
     }
 }

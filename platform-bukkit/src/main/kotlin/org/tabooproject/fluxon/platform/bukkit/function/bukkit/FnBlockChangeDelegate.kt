@@ -21,27 +21,27 @@ object FnBlockChangeDelegate {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockChangeDelegate::class.java)
                 .function("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setBlockData(
+                    it.setReturnRef(it.target?.setBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt(),
                         it.getRef(3) as BlockData
-                    )
+                    ))
                 }
                 .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.getBlockData(
+                    it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    )
+                    ))
                 }
-                .function("height", returnsObject().noParams()) { it.target?.height }
+                .function("height", returnsObject().noParams()) { it.setReturnRef(it.target?.height) }
                 .function("isEmpty", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.target?.isEmpty(
+                    it.setReturnRef(it.target?.isEmpty(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    )
+                    ))
                 }
         }
     }

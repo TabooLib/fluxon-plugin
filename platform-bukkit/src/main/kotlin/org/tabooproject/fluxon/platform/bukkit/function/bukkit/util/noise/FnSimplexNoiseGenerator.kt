@@ -20,7 +20,7 @@ object FnSimplexNoiseGenerator {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
                 .function("getNoise", returnsObject().params(Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> SimplexNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -40,10 +40,10 @@ object FnSimplexNoiseGenerator {
                             it.getAsDouble(3)
                         )
                         else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> SimplexNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -63,10 +63,10 @@ object FnSimplexNoiseGenerator {
                             it.getAsDouble(3)
                         )
                         else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> SimplexNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -86,10 +86,10 @@ object FnSimplexNoiseGenerator {
                             it.getAsDouble(3)
                         )
                         else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    when (it.argumentCount) {
+                    it.setReturnRef(when (it.argumentCount) {
                         1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
                         2 -> SimplexNoiseGenerator.getNoise(
                             it.getAsDouble(0),
@@ -109,10 +109,10 @@ object FnSimplexNoiseGenerator {
                             it.getAsDouble(3)
                         )
                         else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    }
+                    })
                 }
                 // static
-                .function("instance", returnsObject().noParams()) { SimplexNoiseGenerator.getInstance() }
+                .function("instance", returnsObject().noParams()) { it.setReturnRef(SimplexNoiseGenerator.getInstance()) }
         }
     }
 }

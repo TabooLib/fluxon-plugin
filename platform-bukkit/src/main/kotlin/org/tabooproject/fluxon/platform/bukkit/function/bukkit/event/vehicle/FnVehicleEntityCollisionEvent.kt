@@ -19,16 +19,16 @@ object FnVehicleEntityCollisionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleEntityCollisionEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.target?.entity }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isPickupCancelled", returns(Type.Z).noParams()) { it.target?.isPickupCancelled }
-                .function("setPickupCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setPickupCancelled(it.getBool(0)) }
-                .function("isCollisionCancelled", returns(Type.Z).noParams()) { it.target?.isCollisionCancelled }
-                .function("setCollisionCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCollisionCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isPickupCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPickupCancelled) }
+                .function("setPickupCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPickupCancelled(it.getBool(0))) }
+                .function("isCollisionCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCollisionCancelled) }
+                .function("setCollisionCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCollisionCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { VehicleEntityCollisionEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleEntityCollisionEvent.getHandlerList()) }
         }
     }
 }

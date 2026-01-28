@@ -18,7 +18,7 @@ object FnPotionEffectTypeWrapper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffectTypeWrapper::class.java)
-                .function("type", returnsObject().noParams()) { it.target?.type }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
         }
     }
 }

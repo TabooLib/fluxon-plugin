@@ -19,8 +19,8 @@ object FnSittable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sittable::class.java)
-                .function("isSitting", returns(Type.Z).noParams()) { it.target?.isSitting }
-                .function("setSitting", returnsObject().params(Type.OBJECT)) { it.target?.setSitting(it.getBool(0)) }
+                .function("isSitting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSitting) }
+                .function("setSitting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSitting(it.getBool(0))) }
         }
     }
 }

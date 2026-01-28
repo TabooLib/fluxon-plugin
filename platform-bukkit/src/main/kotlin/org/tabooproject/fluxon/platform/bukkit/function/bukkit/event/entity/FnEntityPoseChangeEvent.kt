@@ -18,10 +18,10 @@ object FnEntityPoseChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPoseChangeEvent::class.java)
-                .function("pose", returnsObject().noParams()) { it.target?.pose }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("pose", returnsObject().noParams()) { it.setReturnRef(it.target?.pose) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityPoseChangeEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPoseChangeEvent.getHandlerList()) }
         }
     }
 }

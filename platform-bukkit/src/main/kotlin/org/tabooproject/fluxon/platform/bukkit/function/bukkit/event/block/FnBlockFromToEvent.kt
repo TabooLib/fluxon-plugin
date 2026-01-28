@@ -19,13 +19,13 @@ object FnBlockFromToEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockFromToEvent::class.java)
-                .function("face", returnsObject().noParams()) { it.target?.getFace() }
-                .function("toBlock", returnsObject().noParams()) { it.target?.toBlock }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("face", returnsObject().noParams()) { it.setReturnRef(it.target?.getFace()) }
+                .function("toBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.toBlock) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockFromToEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockFromToEvent.getHandlerList()) }
         }
     }
 }

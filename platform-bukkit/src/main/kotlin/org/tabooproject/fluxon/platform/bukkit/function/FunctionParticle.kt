@@ -96,12 +96,10 @@ object FunctionParticle {
             // Particle
             registerFunction("particle", returnsObject().params(Type.STRING)) {
                 val name = it.getString(0)!!
-                XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")
-            }
+                it.setReturnRef(XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name"))}
             registerFunction("particleOrNull", returnsObject().params(Type.STRING)) {
                 val name = it.getString(0)!!
-                XParticle.of(name).getOrNull()?.get()
-            }
+                it.setReturnRef(XParticle.of(name).getOrNull()?.get())}
             // BuildParticle
             registerFunction("buildParticle", returnsObject().params(Type.STRING, Type.OBJECT)) {
                 val name = it.getString(0)!!
@@ -109,29 +107,24 @@ object FunctionParticle {
                     XParticle.of(name).getOrNull()?.get() ?: error("粒子不存在: $name")
                 }
                 val location = it.getRef(1) as Location
-                ParticlePacketBuilder(particle, location)
-            }
+                it.setReturnRef(ParticlePacketBuilder(particle, location))}
             // ParticleData
             registerFunction("dustOptions", returnsObject().params(Type.OBJECT)) {
                 val color = it.getRef(0) as Color
-                DustOptions(color, 1.0f)
-            }
+                it.setReturnRef(DustOptions(color, 1.0f))}
             registerFunction("dustOptions", returnsObject().params(Type.OBJECT, Type.F)) {
                 val color = it.getRef(0) as Color
                 val size = it.getFloat(1)
-                DustOptions(color, size)
-            }
+                it.setReturnRef(DustOptions(color, size))}
             registerFunction("dustTransition", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                 val fromColor = it.getRef(0) as Color
                 val toColor = it.getRef(1) as Color
-                Particle.DustTransition(fromColor, toColor, 1.0f)
-            }
+                it.setReturnRef(Particle.DustTransition(fromColor, toColor, 1.0f))}
             registerFunction("dustTransition", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.F)) {
                 val fromColor = it.getRef(0) as Color
                 val toColor = it.getRef(1) as Color
                 val size = it.getFloat(2)
-                Particle.DustTransition(fromColor, toColor, size)
-            }
+                it.setReturnRef(Particle.DustTransition(fromColor, toColor, size))}
         }
     }
 }

@@ -18,10 +18,10 @@ object FnSmithingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingRecipe::class.java)
-                .function("base", returnsObject().noParams()) { it.target?.base }
-                .function("addition", returnsObject().noParams()) { it.target?.addition }
-                .function("result", returnsObject().noParams()) { it.target?.result }
-                .function("key", returnsObject().noParams()) { it.target?.key }
+                .function("base", returnsObject().noParams()) { it.setReturnRef(it.target?.base) }
+                .function("addition", returnsObject().noParams()) { it.setReturnRef(it.target?.addition) }
+                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

@@ -18,11 +18,11 @@ object FnBlockPistonRetractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonRetractEvent::class.java)
-                .function("retractLocation", returnsObject().noParams()) { it.target?.retractLocation }
-                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("retractLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.retractLocation) }
+                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockPistonRetractEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockPistonRetractEvent.getHandlerList()) }
         }
     }
 }

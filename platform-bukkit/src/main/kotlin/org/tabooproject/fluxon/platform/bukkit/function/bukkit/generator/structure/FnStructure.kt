@@ -18,7 +18,7 @@ object FnStructure {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Structure::class.java)
-                .function("structureType", returnsObject().noParams()) { it.target?.structureType }
+                .function("structureType", returnsObject().noParams()) { it.setReturnRef(it.target?.structureType) }
         }
     }
 }

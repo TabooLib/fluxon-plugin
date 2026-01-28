@@ -20,9 +20,9 @@ object FnGameEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameEvent::class.java)
                 // static
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { GameEvent.getByKey(it.getRef(0) as NamespacedKey) }
+                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(GameEvent.getByKey(it.getRef(0) as NamespacedKey)) }
                 // static
-                .function("values", returnsObject().noParams()) { GameEvent.values() }
+                .function("values", returnsObject().noParams()) { it.setReturnRef(GameEvent.values()) }
         }
     }
 }

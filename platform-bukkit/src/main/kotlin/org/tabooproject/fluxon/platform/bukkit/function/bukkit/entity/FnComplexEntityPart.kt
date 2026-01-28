@@ -18,7 +18,7 @@ object FnComplexEntityPart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ComplexEntityPart::class.java)
-                .function("parent", returnsObject().noParams()) { it.target?.parent }
+                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
         }
     }
 }

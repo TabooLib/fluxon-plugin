@@ -20,13 +20,13 @@ object FnCocoaPlant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CocoaPlant::class.java)
-                .function("size", returns(Type.I).noParams()) { it.target?.size }
-                .function("setSize", returnsObject().params(Type.OBJECT)) { it.target?.setSize(it.getRef(0) as CocoaPlant.CocoaPlantSize) }
-                .function("attachedFace", returnsObject().noParams()) { it.target?.attachedFace }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
+                .function("setSize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSize(it.getRef(0) as CocoaPlant.CocoaPlantSize)) }
+                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }

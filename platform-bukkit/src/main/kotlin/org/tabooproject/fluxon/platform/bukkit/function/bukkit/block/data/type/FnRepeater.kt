@@ -19,12 +19,12 @@ object FnRepeater {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repeater::class.java)
-                .function("delay", returnsObject().noParams()) { it.target?.delay }
-                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.target?.setDelay(it.getInt(0).toInt()) }
-                .function("minimumDelay", returnsObject().noParams()) { it.target?.minimumDelay }
-                .function("maximumDelay", returnsObject().noParams()) { it.target?.maximumDelay }
-                .function("isLocked", returns(Type.Z).noParams()) { it.target?.isLocked }
-                .function("setLocked", returnsObject().params(Type.OBJECT)) { it.target?.setLocked(it.getBool(0)) }
+                .function("delay", returnsObject().noParams()) { it.setReturnRef(it.target?.delay) }
+                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDelay(it.getInt(0).toInt())) }
+                .function("minimumDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.minimumDelay) }
+                .function("maximumDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumDelay) }
+                .function("isLocked", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLocked) }
+                .function("setLocked", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLocked(it.getBool(0))) }
         }
     }
 }

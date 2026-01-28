@@ -20,25 +20,25 @@ object FnPermissionAttachment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionAttachment::class.java)
-                .function("plugin", returnsObject().noParams()) { it.target?.plugin }
-                .function("setRemovalCallback", returnsObject().params(Type.OBJECT)) { it.target?.setRemovalCallback(it.getRef(0) as PermissionRemovedExecutor) }
-                .function("removalCallback", returnsObject().noParams()) { it.target?.removalCallback }
-                .function("permissible", returnsObject().noParams()) { it.target?.permissible }
+                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("setRemovalCallback", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRemovalCallback(it.getRef(0) as PermissionRemovedExecutor)) }
+                .function("removalCallback", returnsObject().noParams()) { it.setReturnRef(it.target?.removalCallback) }
+                .function("permissible", returnsObject().noParams()) { it.setReturnRef(it.target?.permissible) }
                 .function("setPermission", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.setPermission(var1, it.getBool(1))
                         is Permission -> it.target?.setPermission(var1, it.getBool(1))
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
-                    }
+                    })
                 }
                 .function("unsetPermission", returnsObject().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.unsetPermission(var1)
                         is Permission -> it.target?.unsetPermission(var1)
                         else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
-                    }
+                    })
                 }
-                .function("remove", returnsObject().noParams()) { it.target?.remove() }
+                .function("remove", returnsObject().noParams()) { it.setReturnRef(it.target?.remove()) }
         }
     }
 }

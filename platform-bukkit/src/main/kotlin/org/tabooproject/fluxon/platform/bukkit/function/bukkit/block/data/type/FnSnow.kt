@@ -18,10 +18,10 @@ object FnSnow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Snow::class.java)
-                .function("layers", returnsObject().noParams()) { it.target?.layers }
-                .function("setLayers", returnsObject().params(Type.OBJECT)) { it.target?.setLayers(it.getInt(0).toInt()) }
-                .function("minimumLayers", returnsObject().noParams()) { it.target?.minimumLayers }
-                .function("maximumLayers", returnsObject().noParams()) { it.target?.maximumLayers }
+                .function("layers", returnsObject().noParams()) { it.setReturnRef(it.target?.layers) }
+                .function("setLayers", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLayers(it.getInt(0).toInt())) }
+                .function("minimumLayers", returnsObject().noParams()) { it.setReturnRef(it.target?.minimumLayers) }
+                .function("maximumLayers", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumLayers) }
         }
     }
 }

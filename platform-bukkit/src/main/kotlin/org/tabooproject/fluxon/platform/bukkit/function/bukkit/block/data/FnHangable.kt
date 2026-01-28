@@ -19,8 +19,8 @@ object FnHangable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hangable::class.java)
-                .function("isHanging", returns(Type.Z).noParams()) { it.target?.isHanging }
-                .function("setHanging", returnsObject().params(Type.OBJECT)) { it.target?.setHanging(it.getBool(0)) }
+                .function("isHanging", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isHanging) }
+                .function("setHanging", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHanging(it.getBool(0))) }
         }
     }
 }

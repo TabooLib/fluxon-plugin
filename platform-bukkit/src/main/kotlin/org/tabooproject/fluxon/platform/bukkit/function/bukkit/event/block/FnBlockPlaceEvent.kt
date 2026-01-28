@@ -19,19 +19,19 @@ object FnBlockPlaceEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPlaceEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("player", returnsObject().noParams()) { it.target?.getPlayer() }
-                .function("blockPlaced", returnsObject().noParams()) { it.target?.blockPlaced }
-                .function("blockReplacedState", returnsObject().noParams()) { it.target?.blockReplacedState }
-                .function("blockAgainst", returnsObject().noParams()) { it.target?.blockAgainst }
-                .function("itemInHand", returnsObject().noParams()) { it.target?.getItemInHand() }
-                .function("hand", returnsObject().noParams()) { it.target?.getHand() }
-                .function("canBuild", returns(Type.Z).noParams()) { it.target?.canBuild() }
-                .function("setBuild", returnsObject().params(Type.OBJECT)) { it.target?.setBuild(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.getPlayer()) }
+                .function("blockPlaced", returnsObject().noParams()) { it.setReturnRef(it.target?.blockPlaced) }
+                .function("blockReplacedState", returnsObject().noParams()) { it.setReturnRef(it.target?.blockReplacedState) }
+                .function("blockAgainst", returnsObject().noParams()) { it.setReturnRef(it.target?.blockAgainst) }
+                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.getItemInHand()) }
+                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.getHand()) }
+                .function("canBuild", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canBuild()) }
+                .function("setBuild", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBuild(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { BlockPlaceEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockPlaceEvent.getHandlerList()) }
         }
     }
 }

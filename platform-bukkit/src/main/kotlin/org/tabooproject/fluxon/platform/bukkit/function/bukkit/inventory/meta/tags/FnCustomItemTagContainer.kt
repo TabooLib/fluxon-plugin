@@ -20,9 +20,9 @@ object FnCustomItemTagContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CustomItemTagContainer::class.java)
-                .function("removeCustomTag", returnsObject().params(Type.OBJECT)) { it.target?.removeCustomTag(it.getRef(0) as NamespacedKey) }
-                .function("isEmpty", returns(Type.Z).noParams()) { it.target?.isEmpty }
-                .function("adapterContext", returnsObject().noParams()) { it.target?.adapterContext }
+                .function("removeCustomTag", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCustomTag(it.getRef(0) as NamespacedKey)) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
+                .function("adapterContext", returnsObject().noParams()) { it.setReturnRef(it.target?.adapterContext) }
         }
     }
 }

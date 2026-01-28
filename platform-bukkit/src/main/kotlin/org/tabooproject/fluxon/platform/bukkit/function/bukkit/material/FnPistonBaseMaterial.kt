@@ -20,12 +20,12 @@ object FnPistonBaseMaterial {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonBaseMaterial::class.java)
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
-                .function("isSticky", returns(Type.Z).noParams()) { it.target?.isSticky }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPowered(it.getBool(0))) }
+                .function("isSticky", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSticky) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -22,18 +22,18 @@ object FnDoor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Door::class.java)
                 // static
-                .function("getWoodDoorOfSpecies", returnsObject().params(Type.OBJECT)) { Door.getWoodDoorOfSpecies(it.getRef(0) as TreeSpecies) }
-                .function("isOpen", returns(Type.Z).noParams()) { it.target?.isOpen }
-                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.target?.setOpen(it.getBool(0)) }
-                .function("isTopHalf", returns(Type.Z).noParams()) { it.target?.isTopHalf }
-                .function("setTopHalf", returnsObject().params(Type.OBJECT)) { it.target?.setTopHalf(it.getBool(0)) }
-                .function("hingeCorner", returnsObject().noParams()) { it.target?.hingeCorner }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.target?.facing }
-                .function("hinge", returnsObject().noParams()) { it.target?.hinge }
-                .function("setHinge", returnsObject().params(Type.OBJECT)) { it.target?.setHinge(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("getWoodDoorOfSpecies", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Door.getWoodDoorOfSpecies(it.getRef(0) as TreeSpecies)) }
+                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOpen) }
+                .function("setOpen", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOpen(it.getBool(0))) }
+                .function("isTopHalf", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTopHalf) }
+                .function("setTopHalf", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTopHalf(it.getBool(0))) }
+                .function("hingeCorner", returnsObject().noParams()) { it.setReturnRef(it.target?.hingeCorner) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
+                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("hinge", returnsObject().noParams()) { it.setReturnRef(it.target?.hinge) }
+                .function("setHinge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHinge(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

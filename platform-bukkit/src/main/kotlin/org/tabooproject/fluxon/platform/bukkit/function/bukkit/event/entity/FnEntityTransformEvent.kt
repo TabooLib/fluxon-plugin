@@ -19,14 +19,14 @@ object FnEntityTransformEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTransformEvent::class.java)
-                .function("transformedEntity", returnsObject().noParams()) { it.target?.transformedEntity }
-                .function("transformedEntities", returnsObject().noParams()) { it.target?.transformedEntities }
-                .function("transformReason", returnsObject().noParams()) { it.target?.transformReason }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("transformedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.transformedEntity) }
+                .function("transformedEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.transformedEntities) }
+                .function("transformReason", returnsObject().noParams()) { it.setReturnRef(it.target?.transformReason) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { EntityTransformEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityTransformEvent.getHandlerList()) }
         }
     }
 }

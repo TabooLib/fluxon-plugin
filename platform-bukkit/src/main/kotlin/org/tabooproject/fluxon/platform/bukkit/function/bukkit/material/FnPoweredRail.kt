@@ -19,9 +19,9 @@ object FnPoweredRail {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PoweredRail::class.java)
-                .function("isPowered", returns(Type.Z).noParams()) { it.target?.isPowered }
-                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.target?.setPowered(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.target?.clone() }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
+                .function("setPowered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPowered(it.getBool(0))) }
+                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

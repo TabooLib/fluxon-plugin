@@ -18,7 +18,7 @@ object FnEntityCombustByEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityCombustByEntityEvent::class.java)
-                .function("combuster", returnsObject().noParams()) { it.target?.combuster }
+                .function("combuster", returnsObject().noParams()) { it.setReturnRef(it.target?.combuster) }
         }
     }
 }

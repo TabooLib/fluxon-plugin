@@ -19,15 +19,15 @@ object FnInventoryDragEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryDragEvent::class.java)
-                .function("rawSlots", returnsObject().noParams()) { it.target?.rawSlots }
-                .function("inventorySlots", returnsObject().noParams()) { it.target?.inventorySlots }
-                .function("cursor", returnsObject().noParams()) { it.target?.cursor }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
-                .function("oldCursor", returnsObject().noParams()) { it.target?.oldCursor }
-                .function("type", returnsObject().noParams()) { it.target?.type }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("rawSlots", returnsObject().noParams()) { it.setReturnRef(it.target?.rawSlots) }
+                .function("inventorySlots", returnsObject().noParams()) { it.setReturnRef(it.target?.inventorySlots) }
+                .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
+                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
+                .function("oldCursor", returnsObject().noParams()) { it.setReturnRef(it.target?.oldCursor) }
+                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { InventoryDragEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(InventoryDragEvent.getHandlerList()) }
         }
     }
 }

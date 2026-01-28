@@ -20,23 +20,21 @@ object FnNote {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Note::class.java)
                 // static
-                .function("flat", returnsObject().params(Type.OBJECT, Type.OBJECT)) { Note.flat(it.getInt(0).toInt(), it.getRef(1) as Note.Tone) }
+                .function("flat", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(Note.flat(it.getInt(0).toInt(), it.getRef(1) as Note.Tone)) }
                 // static
-                .function("sharp", returnsObject().params(Type.OBJECT, Type.OBJECT)) { Note.sharp(it.getInt(0).toInt(), it.getRef(1) as Note.Tone) }
+                .function("sharp", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(Note.sharp(it.getInt(0).toInt(), it.getRef(1) as Note.Tone)) }
                 // static
-                .function("natural", returnsObject().params(Type.OBJECT, Type.OBJECT)) { Note.natural(it.getInt(0).toInt(), it.getRef(1) as Note.Tone) }
-                .function("sharped", returnsObject().noParams()) { it.target?.sharped() }
-                .function("flattened", returnsObject().noParams()) { it.target?.flattened() }
-                .function("id", returnsObject().noParams()) {
-                    it.target?.id
-                }
-                .function("octave", returnsObject().noParams()) { it.target?.octave }
-                .function("tone", returnsObject().noParams()) { it.target?.tone }
-                .function("isSharped", returns(Type.Z).noParams()) { it.target?.isSharped }
-                .function("pitch", returnsObject().noParams()) { it.target?.pitch }
-                .function("hashCode", returns(Type.I).noParams()) { it.target?.hashCode() }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.target?.equals(it.getRef(0)) }
-                .function("toString", returns(Type.STRING).noParams()) { it.target?.toString() }
+                .function("natural", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(Note.natural(it.getInt(0).toInt(), it.getRef(1) as Note.Tone)) }
+                .function("sharped", returnsObject().noParams()) { it.setReturnRef(it.target?.sharped()) }
+                .function("flattened", returnsObject().noParams()) { it.setReturnRef(it.target?.flattened()) }
+                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
+                .function("octave", returnsObject().noParams()) { it.setReturnRef(it.target?.octave) }
+                .function("tone", returnsObject().noParams()) { it.setReturnRef(it.target?.tone) }
+                .function("isSharped", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSharped) }
+                .function("pitch", returnsObject().noParams()) { it.setReturnRef(it.target?.pitch) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }
 }
@@ -49,11 +47,11 @@ object FnNoteTone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Note.Tone::class.java)
-                .function("getId", returnsObject().params(Type.OBJECT)) { it.target?.getId(it.getBool(0)) }
-                .function("isSharpable", returns(Type.Z).noParams()) { it.target?.isSharpable }
-                .function("isSharped", returns(Type.Z).params(Type.OBJECT)) { it.target?.isSharped(it.getInt(0).toByte()) }
+                .function("getId", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getId(it.getBool(0))) }
+                .function("isSharpable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSharpable) }
+                .function("isSharped", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isSharped(it.getInt(0).toByte())) }
                 // static
-                .function("getById", returnsObject().params(Type.OBJECT)) { Note.Tone.getById(it.getInt(0).toByte()) }
+                .function("getById", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Note.Tone.getById(it.getInt(0).toByte())) }
         }
     }
 }

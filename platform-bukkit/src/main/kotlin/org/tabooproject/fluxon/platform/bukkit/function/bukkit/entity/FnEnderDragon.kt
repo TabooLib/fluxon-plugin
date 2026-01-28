@@ -18,10 +18,10 @@ object FnEnderDragon {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderDragon::class.java)
-                .function("phase", returnsObject().noParams()) { it.target?.phase }
-                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.target?.setPhase(it.getRef(0) as EnderDragon.Phase) }
-                .function("dragonBattle", returnsObject().noParams()) { it.target?.dragonBattle }
-                .function("deathAnimationTicks", returnsObject().noParams()) { it.target?.deathAnimationTicks }
+                .function("phase", returnsObject().noParams()) { it.setReturnRef(it.target?.phase) }
+                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPhase(it.getRef(0) as EnderDragon.Phase)) }
+                .function("dragonBattle", returnsObject().noParams()) { it.setReturnRef(it.target?.dragonBattle) }
+                .function("deathAnimationTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.deathAnimationTicks) }
         }
     }
 }

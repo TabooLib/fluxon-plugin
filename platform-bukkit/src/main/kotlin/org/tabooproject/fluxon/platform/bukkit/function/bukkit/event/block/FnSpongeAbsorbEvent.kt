@@ -19,12 +19,12 @@ object FnSpongeAbsorbEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpongeAbsorbEvent::class.java)
-                .function("blocks", returnsObject().noParams()) { it.target?.blocks }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.target?.isCancelled }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.target?.handlers }
+                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { SpongeAbsorbEvent.getHandlerList() }
+                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(SpongeAbsorbEvent.getHandlerList()) }
         }
     }
 }

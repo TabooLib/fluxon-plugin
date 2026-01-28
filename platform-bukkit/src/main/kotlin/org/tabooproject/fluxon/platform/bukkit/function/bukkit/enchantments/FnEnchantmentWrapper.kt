@@ -18,7 +18,7 @@ object FnEnchantmentWrapper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentWrapper::class.java)
-                .function("enchantment", returnsObject().noParams()) { it.target?.enchantment }
+                .function("enchantment", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantment) }
         }
     }
 }

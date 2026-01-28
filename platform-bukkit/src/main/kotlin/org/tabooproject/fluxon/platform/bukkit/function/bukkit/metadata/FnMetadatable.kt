@@ -25,31 +25,23 @@ object FnMetadatable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Metadatable::class.java)
-                .function("setMeta", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setMeta(it.getRef(0)!!.toString(), it.getRef(1)!!)
-                }
-                .function("removeMeta", returnsObject().params(Type.OBJECT)) {
-                    it.target?.removeMeta(it.getRef(0)!!.toString())
-                }
-                .function("hasMeta", returns(Type.Z).params(Type.OBJECT)) {
-                    it.target?.hasMeta(it.getRef(0)!!.toString())
-                }
-                .function("getMeta", returnsObject().params(Type.OBJECT)) {
-                    it.target?.getMetaFirstOrNull(it.getRef(0)!!.toString())?.value()
-                }
+                .function("setMeta", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setMeta(it.getRef(0)!!.toString(), it.getRef(1)!!)) }
+                .function("removeMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeMeta(it.getRef(0)!!.toString())) }
+                .function("hasMeta", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasMeta(it.getRef(0)!!.toString())) }
+                .function("getMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getMetaFirstOrNull(it.getRef(0)!!.toString())?.value()) }
                 .function("setMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.setMetadata(
+                    it.setReturnRef(it.target?.setMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as MetadataValue
-                    )
+                    ))
                 }
-                .function("getMetadata", returnsObject().params(Type.OBJECT)) { it.target?.getMetadata(it.getString(0)!!) }
-                .function("hasMetadata", returns(Type.Z).params(Type.OBJECT)) { it.target?.hasMetadata(it.getString(0)!!) }
+                .function("getMetadata", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getMetadata(it.getString(0)!!)) }
+                .function("hasMetadata", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasMetadata(it.getString(0)!!)) }
                 .function("removeMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.target?.removeMetadata(
+                    it.setReturnRef(it.target?.removeMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as Plugin
-                    )
+                    ))
                 }
         }
     }

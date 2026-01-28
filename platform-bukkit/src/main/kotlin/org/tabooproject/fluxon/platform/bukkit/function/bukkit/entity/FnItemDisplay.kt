@@ -19,10 +19,10 @@ object FnItemDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemDisplay::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.target?.itemStack }
-                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
-                .function("itemDisplayTransform", returnsObject().noParams()) { it.target?.itemDisplayTransform }
-                .function("setItemDisplayTransform", returnsObject().params(Type.OBJECT)) { it.target?.setItemDisplayTransform(it.getRef(0) as ItemDisplay.ItemDisplayTransform) }
+                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("setItemStack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItemStack(it.getRef(0) as ItemStack)) }
+                .function("itemDisplayTransform", returnsObject().noParams()) { it.setReturnRef(it.target?.itemDisplayTransform) }
+                .function("setItemDisplayTransform", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItemDisplayTransform(it.getRef(0) as ItemDisplay.ItemDisplayTransform)) }
         }
     }
 }

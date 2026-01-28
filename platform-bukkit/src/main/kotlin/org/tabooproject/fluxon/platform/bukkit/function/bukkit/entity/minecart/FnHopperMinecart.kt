@@ -19,8 +19,8 @@ object FnHopperMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HopperMinecart::class.java)
-                .function("isEnabled", returns(Type.Z).noParams()) { it.target?.isEnabled }
-                .function("setEnabled", returnsObject().params(Type.OBJECT)) { it.target?.setEnabled(it.getBool(0)) }
+                .function("isEnabled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEnabled) }
+                .function("setEnabled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEnabled(it.getBool(0))) }
         }
     }
 }

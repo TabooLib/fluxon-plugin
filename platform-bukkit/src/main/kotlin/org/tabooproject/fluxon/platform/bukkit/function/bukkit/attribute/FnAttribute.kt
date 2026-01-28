@@ -18,8 +18,8 @@ object FnAttribute {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Attribute::class.java)
-                .function("key", returnsObject().noParams()) { it.target?.key }
-                .function("translationKey", returnsObject().noParams()) { it.target?.translationKey }
+                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("translationKey", returnsObject().noParams()) { it.setReturnRef(it.target?.translationKey) }
         }
     }
 }

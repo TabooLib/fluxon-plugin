@@ -21,13 +21,13 @@ object FnZombieVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ZombieVillager::class.java)
-                .function("setVillagerProfession", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
-                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
-                .function("isConverting", returns(Type.Z).noParams()) { it.target?.isConverting }
-                .function("conversionTime", returnsObject().noParams()) { it.target?.conversionTime }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
-                .function("conversionPlayer", returnsObject().noParams()) { it.target?.conversionPlayer }
-                .function("setConversionPlayer", returnsObject().params(Type.OBJECT)) { it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer) }
+                .function("setVillagerProfession", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession)) }
+                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerType(it.getRef(0) as Villager.Type)) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
+                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
+                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
+                .function("conversionPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionPlayer) }
+                .function("setConversionPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer)) }
         }
     }
 }
