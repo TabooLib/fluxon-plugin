@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnEventExecutor {
 
+    val TYPE = Type.fromClass(EventExecutor::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

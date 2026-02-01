@@ -9,18 +9,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryCreativeEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryCreativeEvent {
 
+    val TYPE = Type.fromClass(InventoryCreativeEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryCreativeEvent::class.java)
                 .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
+                .function("setCursor", returnsVoid().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
         }
     }
 }

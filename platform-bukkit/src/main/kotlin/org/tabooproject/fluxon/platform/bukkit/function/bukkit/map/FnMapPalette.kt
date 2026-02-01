@@ -9,12 +9,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.map.MapPalette"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapPalette {
+
+    val TYPE = Type.fromClass(MapPalette::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -25,32 +28,22 @@ object FnMapPalette {
                 // static
                 .function("imageToBytes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.imageToBytes(it.getRef(0) as Image)) }
                 // static
-                .function("matchColor", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        MapPalette.matchColor(it.getRef(0) as java.awt.Color)
-                    } else {
-                        MapPalette.matchColor(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("matchColor", returns(Type.I).params(Type.OBJECT)) {
+                    it.setReturnInt(MapPalette.matchColor(it.getRef(0) as java.awt.Color).toInt())
                 }
-                .function("matchColor", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        MapPalette.matchColor(it.getRef(0) as java.awt.Color)
-                    } else {
-                        MapPalette.matchColor(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("matchColor", returns(Type.I).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnInt(MapPalette.matchColor(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    ).toInt())
                 }
                 // static
-                .function("getColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.getColor(it.getInt(0).toByte())) }
+                .function("getColor", returnsObject().params(Type.I)) { it.setReturnRef(MapPalette.getColor(it.getInt(0).toByte())) }
                 // static
-                .function("setMapColorCache", returnsObject().params(Type.OBJECT)) { it.setReturnRef(MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache)) }
+                .function("setMapColorCache", returnsVoid().params(Type.OBJECT)) {
+                    MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache)
+                }
         }
     }
 }
@@ -59,11 +52,13 @@ object FnMapPalette {
 @PlatformSide(Platform.BUKKIT)
 object FnMapPaletteMapColorCache {
 
+    val TYPE = Type.fromClass(MapPalette.MapColorCache::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapPalette.MapColorCache::class.java)
-                .function("isCached", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCached) }
+                .function("isCached", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCached ?: false) }
         }
     }
 }

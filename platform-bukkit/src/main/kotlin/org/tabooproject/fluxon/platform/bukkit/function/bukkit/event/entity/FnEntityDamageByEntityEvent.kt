@@ -16,13 +16,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEntityDamageByEntityEvent {
 
+    val TYPE = Type.fromClass(EntityDamageByEntityEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByEntityEvent::class.java)
                 .function("damager", returnsObject().noParams()) { it.setReturnRef(it.target?.damager) }
                 .function("realDamager", returnsObject().noParams()) { it.setReturnRef(it.target?.attacker) } // 在发射弓箭的情况下也能获取到发射者
-//                .function("isCritical", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCritical) }
+//              .function("isCritical", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCritical ?: false) }
         }
     }
 }

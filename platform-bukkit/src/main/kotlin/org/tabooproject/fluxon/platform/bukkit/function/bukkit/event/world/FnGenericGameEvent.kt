@@ -8,12 +8,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.GenericGameEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnGenericGameEvent {
+
+    val TYPE = Type.fromClass(GenericGameEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,9 +26,9 @@ object FnGenericGameEvent {
                 .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
                 .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
                 .function("radius", returnsObject().noParams()) { it.setReturnRef(it.target?.radius) }
-                .function("setRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRadius(it.getInt(0).toInt())) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("setRadius", returnsVoid().params(Type.I)) { it.target?.setRadius(it.getInt(0).toInt()) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(GenericGameEvent.getHandlerList()) }

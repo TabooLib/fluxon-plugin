@@ -14,6 +14,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnEnderChest {
 
+    val TYPE = Type.fromClass(EnderChest::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

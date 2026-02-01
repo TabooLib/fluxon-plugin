@@ -10,6 +10,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -17,102 +18,66 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnInventory {
 
+    val TYPE = Type.fromClass(Inventory::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Inventory::class.java)
-                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
-                .function("maxStackSize", returnsObject().noParams()) { it.setReturnRef(it.target?.maxStackSize) }
-                .function("setMaxStackSize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxStackSize(it.getInt(0).toInt())) }
-                .function("getItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getItem(it.getInt(0).toInt())) }
-                .function("setItem", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack)) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size ?: 0) }
+                .function("maxStackSize", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxStackSize ?: 0) }
+                .function("setMaxStackSize", returnsVoid().params(Type.I)) { it.target?.setMaxStackSize(it.getInt(0).toInt()) }
+                .function("getItem", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getItem(it.getInt(0).toInt())) }
+                .function("setItem", returnsVoid().params(Type.I, Type.OBJECT)) {
+                    it.target?.setItem(it.getInt(0).toInt(), it.getRef(1) as ItemStack)
+                }
                 .function("contents", returnsObject().noParams()) { it.setReturnRef(it.target?.contents) }
-                .function("setContents", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setContents(it.getRef(0) as Array<ItemStack>)) }
+                .function("setContents", returnsVoid().params(Type.OBJECT)) { it.target?.setContents(it.getRef(0) as Array<ItemStack>) }
                 .function("storageContents", returnsObject().noParams()) { it.setReturnRef(it.target?.storageContents) }
-                .function("setStorageContents", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStorageContents(it.getRef(0) as Array<ItemStack>)) }
-                .function("contains", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        when (val var1 = it.getRef(0)) {
-                            is Material -> it.target?.contains(var1)
-                            is ItemStack -> it.target?.contains(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                        }
-                    } else {
-                        when (val var1 = it.getRef(0)) {
-                            is Material -> it.target?.contains(var1, it.getInt(1).toInt())
-                            is ItemStack -> it.target?.contains(var1, it.getInt(1).toInt())
-                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                        }
-                    })
+                .function("setStorageContents", returnsVoid().params(Type.OBJECT)) { it.target?.setStorageContents(it.getRef(0) as Array<ItemStack>) }
+                .function("contains", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
+                        is Material -> it.target?.contains(var1)
+                        is ItemStack -> it.target?.contains(var1)
+                        else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                    } ?: false)
                 }
-                .function("contains", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        when (val var1 = it.getRef(0)) {
-                            is Material -> it.target?.contains(var1)
-                            is ItemStack -> it.target?.contains(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                        }
-                    } else {
-                        when (val var1 = it.getRef(0)) {
-                            is Material -> it.target?.contains(var1, it.getInt(1).toInt())
-                            is ItemStack -> it.target?.contains(var1, it.getInt(1).toInt())
-                            else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                        }
-                    })
+                .function("contains", returns(Type.Z).params(Type.OBJECT, Type.I)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
+                        is Material -> it.target?.contains(var1, it.getInt(1).toInt())
+                        is ItemStack -> it.target?.contains(var1, it.getInt(1).toInt())
+                        else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
+                    } ?: false)
                 }
-                .function("containsAtLeast", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.containsAtLeast(
+                .function("containsAtLeast", returns(Type.Z).params(Type.OBJECT, Type.I)) {
+                    it.setReturnBool(it.target?.containsAtLeast(
                         it.getRef(0) as ItemStack,
                         it.getInt(1).toInt()
-                    ))
+                    ) ?: false)
                 }
-                .function("first", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                .function("first", returns(Type.I).params(Type.OBJECT)) {
+                    it.setReturnInt(when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.first(var1)
                         is ItemStack -> it.target?.first(var1)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                    })
+                    } ?: -1)
                 }
-                .function("firstEmpty", returnsObject().noParams()) { it.setReturnRef(it.target?.firstEmpty()) }
-                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
-                .function("remove", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                .function("firstEmpty", returns(Type.I).noParams()) { it.setReturnInt(it.target?.firstEmpty() ?: -1) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
+                .function("remove", returnsVoid().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is Material -> it.target?.remove(var1)
                         is ItemStack -> it.target?.remove(var1)
                         else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                    })
+                    }
                 }
-                .function("clear", returnsObject().noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.clear()
-                    } else {
-                        it.target?.clear(it.getInt(0).toInt())
-                    })
-                }
-                .function("clear", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.clear()
-                    } else {
-                        it.target?.clear(it.getInt(0).toInt())
-                    })
-                }
+                .function("clear", returnsVoid().noParams()) { it.target?.clear() }
+                .function("clear", returnsVoid().params(Type.I)) { it.target?.clear(it.getInt(0).toInt()) }
                 .function("viewers", returnsObject().noParams()) { it.setReturnRef(it.target?.viewers) }
                 .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
                 .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
-                .function("iterator", returnsObject().noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.iterator()
-                    } else {
-                        it.target?.iterator(it.getInt(0).toInt())
-                    })
-                }
-                .function("iterator", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.iterator()
-                    } else {
-                        it.target?.iterator(it.getInt(0).toInt())
-                    })
-                }
+                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
+                .function("iterator", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.iterator(it.getInt(0).toInt())) }
                 .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
         }
     }

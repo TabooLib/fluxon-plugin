@@ -9,11 +9,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryDragEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryDragEvent {
+
+    val TYPE = Type.fromClass(InventoryDragEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -22,7 +25,7 @@ object FnInventoryDragEvent {
                 .function("rawSlots", returnsObject().noParams()) { it.setReturnRef(it.target?.rawSlots) }
                 .function("inventorySlots", returnsObject().noParams()) { it.setReturnRef(it.target?.inventorySlots) }
                 .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
+                .function("setCursor", returnsVoid().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
                 .function("oldCursor", returnsObject().noParams()) { it.setReturnRef(it.target?.oldCursor) }
                 .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }

@@ -8,18 +8,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.FurnaceStartSmeltEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnFurnaceStartSmeltEvent {
 
+    val TYPE = Type.fromClass(FurnaceStartSmeltEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceStartSmeltEvent::class.java)
                 .function("totalCookTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalCookTime) }
-                .function("setTotalCookTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTotalCookTime(it.getInt(0).toInt())) }
+                .function("setTotalCookTime", returnsVoid().params(Type.I)) { it.target?.setTotalCookTime(it.getInt(0).toInt()) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(FurnaceStartSmeltEvent.getHandlerList()) }

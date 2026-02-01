@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,15 +17,17 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnTimedRegisteredListener {
 
+    val TYPE = Type.fromClass(TimedRegisteredListener::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimedRegisteredListener::class.java)
-                .function("callEvent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.callEvent(it.getRef(0) as Event)) }
-                .function("reset", returnsObject().noParams()) { it.setReturnRef(it.target?.reset()) }
-                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
-                .function("totalTime", returnsObject().noParams()) { it.setReturnRef(it.target?.totalTime) }
-                .function("hasMultiple", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasMultiple()) }
+                .function("callEvent", returnsVoid().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
+                .function("reset", returnsVoid().noParams()) { it.target?.reset() }
+                .function("count", returns(Type.I).noParams()) { it.setReturnInt(it.target?.count ?: 0) }
+                .function("totalTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.totalTime ?: 0L) }
+                .function("hasMultiple", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMultiple() ?: false) }
         }
     }
 }

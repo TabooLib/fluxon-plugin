@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnLootContext {
 
+    val TYPE = Type.fromClass(LootContext::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -33,12 +35,16 @@ object FnLootContext {
 @PlatformSide(Platform.BUKKIT)
 object FnLootContextBuilder {
 
+    val TYPE = Type.fromClass(LootContext.Builder::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootContext.Builder::class.java)
-                .function("luck", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.luck(it.getFloat(0))) }
-                .function("lootingModifier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.lootingModifier(it.getInt(0).toInt())) }
+                .function("luck", returnsObject().params(Type.F)) { it.setReturnRef(it.target?.luck(it.getFloat(0))) }
+                .function("lootingModifier", returnsObject().params(Type.I)) {
+                    it.setReturnRef(it.target?.lootingModifier(it.getInt(0).toInt()))
+                }
                 .function("lootedEntity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.lootedEntity(it.getRef(0) as Entity)) }
                 .function("killer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.killer(it.getRef(0) as HumanEntity)) }
                 .function("build", returnsObject().noParams()) { it.setReturnRef(it.target?.build()) }

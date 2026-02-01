@@ -9,18 +9,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.Rotatable"])
 @PlatformSide(Platform.BUKKIT)
 object FnRotatable {
 
+    val TYPE = Type.fromClass(Rotatable::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Rotatable::class.java)
                 .function("rotation", returnsObject().noParams()) { it.setReturnRef(it.target?.rotation) }
-                .function("setRotation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRotation(it.getRef(0) as BlockFace)) }
+                .function("setRotation", returnsVoid().params(Type.OBJECT)) { it.target?.setRotation(it.getRef(0) as BlockFace) }
         }
     }
 }

@@ -14,6 +14,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnMetadataValueAdapter {
 
+    val TYPE = Type.fromClass(MetadataValueAdapter::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

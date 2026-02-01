@@ -9,12 +9,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.world.LootGenerateEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnLootGenerateEvent {
+
+    val TYPE = Type.fromClass(LootGenerateEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,11 +27,11 @@ object FnLootGenerateEvent {
                 .function("inventoryHolder", returnsObject().noParams()) { it.setReturnRef(it.target?.inventoryHolder) }
                 .function("lootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.lootTable) }
                 .function("lootContext", returnsObject().noParams()) { it.setReturnRef(it.target?.lootContext) }
-                .function("setLoot", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLoot(it.getRef(0) as Collection<ItemStack>)) }
+                .function("setLoot", returnsVoid().params(Type.OBJECT)) { it.target?.setLoot(it.getRef(0) as Collection<ItemStack>) }
                 .function("loot", returnsObject().noParams()) { it.setReturnRef(it.target?.loot) }
-                .function("isPlugin", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlugin) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
+                .function("isPlugin", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlugin ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(LootGenerateEvent.getHandlerList()) }

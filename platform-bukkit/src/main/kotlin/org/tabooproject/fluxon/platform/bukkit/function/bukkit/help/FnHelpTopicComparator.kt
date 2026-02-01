@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnHelpTopicComparator {
 
+    val TYPE = Type.fromClass(HelpTopicComparator::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -36,6 +38,8 @@ object FnHelpTopicComparator {
 @Requires(classes = ["org.bukkit.help.HelpTopicComparator.TopicNameComparator"])
 @PlatformSide(Platform.BUKKIT)
 object FnHelpTopicComparatorTopicNameComparator {
+
+    val TYPE = Type.fromClass(HelpTopicComparator.TopicNameComparator::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

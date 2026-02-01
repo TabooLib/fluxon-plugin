@@ -17,6 +17,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnMetadataStore {
 
+    val TYPE = Type.fromClass(MetadataStore::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

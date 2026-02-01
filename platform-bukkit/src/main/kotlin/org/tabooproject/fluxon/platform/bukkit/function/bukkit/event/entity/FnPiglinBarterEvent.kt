@@ -8,12 +8,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.PiglinBarterEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnPiglinBarterEvent {
+
+    val TYPE = Type.fromClass(PiglinBarterEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -22,8 +25,8 @@ object FnPiglinBarterEvent {
                 .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("input", returnsObject().noParams()) { it.setReturnRef(it.target?.input) }
                 .function("outcome", returnsObject().noParams()) { it.setReturnRef(it.target?.outcome) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PiglinBarterEvent.getHandlerList()) }

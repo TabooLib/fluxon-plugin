@@ -14,6 +14,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -21,27 +22,37 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnMetadatable {
 
+    val TYPE = Type.fromClass(Metadatable::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Metadatable::class.java)
-                .function("setMeta", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setMeta(it.getRef(0)!!.toString(), it.getRef(1)!!)) }
-                .function("removeMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeMeta(it.getRef(0)!!.toString())) }
-                .function("hasMeta", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasMeta(it.getRef(0)!!.toString())) }
-                .function("getMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getMetaFirstOrNull(it.getRef(0)!!.toString())?.value()) }
-                .function("setMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setMetadata(
+                .function("setMeta", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.setMeta(it.getString(0)!!, it.getRef(1)!!)
+                }
+                .function("removeMeta", returnsVoid().params(Type.STRING)) { it.target?.removeMeta(it.getString(0)!!) }
+                .function("hasMeta", returns(Type.Z).params(Type.STRING)) {
+                    it.setReturnBool(it.target?.hasMeta(it.getString(0)!!) ?: false)
+                }
+                .function("getMeta", returnsObject().params(Type.STRING)) {
+                    it.setReturnRef(it.target?.getMetaFirstOrNull(it.getString(0)!!)?.value())
+                }
+                .function("setMetadata", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.setMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as MetadataValue
-                    ))
+                    )
                 }
-                .function("getMetadata", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getMetadata(it.getString(0)!!)) }
-                .function("hasMetadata", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasMetadata(it.getString(0)!!)) }
-                .function("removeMetadata", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.removeMetadata(
+                .function("getMetadata", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getMetadata(it.getString(0)!!)) }
+                .function("hasMetadata", returns(Type.Z).params(Type.STRING)) {
+                    it.setReturnBool(it.target?.hasMetadata(it.getString(0)!!) ?: false)
+                }
+                .function("removeMetadata", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.removeMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as Plugin
-                    ))
+                    )
                 }
         }
     }

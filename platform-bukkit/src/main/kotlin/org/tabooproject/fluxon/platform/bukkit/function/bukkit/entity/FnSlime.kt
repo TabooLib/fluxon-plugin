@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,12 +16,14 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnSlime {
 
+    val TYPE = Type.fromClass(Slime::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Slime::class.java)
-                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
-                .function("setSize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSize(it.getInt(0).toInt())) }
+                .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size ?: 0) }
+                .function("setSize", returnsVoid().params(Type.I)) { it.target?.setSize(it.getInt(0).toInt()) }
         }
     }
 }

@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,30 +16,24 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnMaterialData {
 
+    val TYPE = Type.fromClass(MaterialData::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MaterialData::class.java)
-                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
-                .function("setData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setData(it.getInt(0).toByte())) }
+                .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
+                .function("setData", returnsVoid().params(Type.I)) { it.target?.setData(it.getInt(0).toByte()) }
                 .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
-                .function("toItemStack", returnsObject().noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.toItemStack()
-                    } else {
-                        it.target?.toItemStack(it.getInt(0).toInt())
-                    })
-                }
-                .function("toItemStack", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.toItemStack()
-                    } else {
-                        it.target?.toItemStack(it.getInt(0).toInt())
-                    })
+                .function("toItemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.toItemStack()) }
+                .function("toItemStack", returnsObject().params(Type.I)) {
+                    it.setReturnRef(it.target?.toItemStack(it.getInt(0).toInt()))
                 }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

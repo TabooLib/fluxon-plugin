@@ -9,18 +9,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.AbstractHorseInventory"])
 @PlatformSide(Platform.BUKKIT)
 object FnAbstractHorseInventory {
 
+    val TYPE = Type.fromClass(AbstractHorseInventory::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractHorseInventory::class.java)
                 .function("saddle", returnsObject().noParams()) { it.setReturnRef(it.target?.saddle) }
-                .function("setSaddle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSaddle(it.getRef(0) as ItemStack)) }
+                .function("setSaddle", returnsVoid().params(Type.OBJECT)) { it.target?.setSaddle(it.getRef(0) as ItemStack) }
         }
     }
 }

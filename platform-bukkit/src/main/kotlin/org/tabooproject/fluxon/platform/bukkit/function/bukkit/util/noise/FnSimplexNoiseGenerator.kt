@@ -7,6 +7,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 
@@ -14,105 +15,41 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnSimplexNoiseGenerator {
 
+    val TYPE = Type.fromClass(SimplexNoiseGenerator::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
-                .function("getNoise", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
-                        2 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1)
-                        )
-
-                        3 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    })
+                .function("getNoise", returns(Type.D).params(Type.D)) {
+                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(it.getDouble(0)))
                 }
-                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
-                        2 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1)
-                        )
-
-                        3 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    })
+                .function("getNoise", returns(Type.D).params(Type.D, Type.D)) {
+                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(
+                        it.getDouble(0),
+                        it.getDouble(1)
+                    ))
                 }
-                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
-                        2 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1)
-                        )
-
-                        3 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    })
+                .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D)) {
+                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2)
+                    ))
                 }
-                .function("getNoise", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> SimplexNoiseGenerator.getNoise(it.getAsDouble(0))
-                        2 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1)
-                        )
-
-                        3 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> SimplexNoiseGenerator.getNoise(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                        else -> error("SimplexNoiseGenerator#noise 函数参数数量错误: ${"args"}")
-                    })
+                .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D)) {
+                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getDouble(3)
+                    ))
                 }
                 // static
-                .function("instance", returnsObject().noParams()) { it.setReturnRef(SimplexNoiseGenerator.getInstance()) }
+                .function("instance", returnsObject().noParams()) {
+                    it.setReturnRef(SimplexNoiseGenerator.getInstance())
+                }
         }
     }
 }

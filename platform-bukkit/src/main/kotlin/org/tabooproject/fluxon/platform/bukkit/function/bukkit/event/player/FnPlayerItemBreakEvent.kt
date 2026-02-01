@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerItemBreakEvent {
 
+    val TYPE = Type.fromClass(PlayerItemBreakEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

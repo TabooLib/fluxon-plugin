@@ -16,11 +16,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnTag {
 
+    val TYPE = Type.fromClass(Tag::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tag::class.java)
-                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef((it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed)) }
+                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool((it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed) ?: false)
+                }
                 .function("values", returnsObject().noParams()) { it.setReturnRef(it.target?.getValues()) }
         }
     }

@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,15 +16,19 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnSignSide {
 
+    val TYPE = Type.fromClass(SignSide::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
                 .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
-                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!)) }
-                .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isGlowingText) }
-                .function("setGlowingText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGlowingText(it.getBool(0))) }
+                .function("getLine", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) {
+                    it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!)
+                }
+                .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isGlowingText ?: false) }
+                .function("setGlowingText", returnsVoid().params(Type.Z)) { it.target?.setGlowingText(it.getBool(0)) }
         }
     }
 }

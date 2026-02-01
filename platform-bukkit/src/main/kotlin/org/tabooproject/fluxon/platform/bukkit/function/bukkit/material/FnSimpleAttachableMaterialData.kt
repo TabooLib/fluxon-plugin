@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnSimpleAttachableMaterialData {
 
+    val TYPE = Type.fromClass(SimpleAttachableMaterialData::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

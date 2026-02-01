@@ -16,45 +16,28 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnBiomeProvider {
 
+    val TYPE = Type.fromClass(BiomeProvider::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeProvider::class.java)
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 4) {
-                        it.target?.getBiome(
-                            it.getRef(0) as WorldInfo,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    } else {
-                        it.target?.getBiome(
-                            it.getRef(0) as WorldInfo,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt(),
-                            it.getRef(4) as BiomeParameterPoint
-                        )
-                    })
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.I, Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getBiome(
+                        it.getRef(0) as WorldInfo,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt()
+                    ))
                 }
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 4) {
-                        it.target?.getBiome(
-                            it.getRef(0) as WorldInfo,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    } else {
-                        it.target?.getBiome(
-                            it.getRef(0) as WorldInfo,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt(),
-                            it.getRef(4) as BiomeParameterPoint
-                        )
-                    })
+                .function("getBiome", returnsObject().params(Type.OBJECT, Type.I, Type.I, Type.I, Type.OBJECT)) {
+                    it.setReturnRef(it.target?.getBiome(
+                        it.getRef(0) as WorldInfo,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt(),
+                        it.getRef(4) as BiomeParameterPoint
+                    ))
                 }
                 .function("getBiomes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBiomes(it.getRef(0) as WorldInfo)) }
         }

@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnJukebox {
 
+    val TYPE = Type.fromClass(Jukebox::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jukebox::class.java)
-                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRecord()) }
+                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRecord() ?: false) }
         }
     }
 }

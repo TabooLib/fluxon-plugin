@@ -14,6 +14,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnInstrument {
 
+    val TYPE = Type.fromClass(Instrument::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -21,7 +23,7 @@ object FnInstrument {
                 .function("sound", returnsObject().noParams()) { it.setReturnRef(it.target?.sound) }
                 .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
                 // static
-                .function("getByType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Instrument.getByType(it.getInt(0).toByte())) }
+                .function("getByType", returnsObject().params(Type.I)) { it.setReturnRef(Instrument.getByType(it.getInt(0).toByte())) }
         }
     }
 }

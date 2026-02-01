@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,14 +16,16 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnAxolotl {
 
+    val TYPE = Type.fromClass(Axolotl::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Axolotl::class.java)
-                .function("isPlayingDead", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlayingDead) }
-                .function("setPlayingDead", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlayingDead(it.getBool(0))) }
+                .function("isPlayingDead", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlayingDead ?: false) }
+                .function("setPlayingDead", returnsVoid().params(Type.Z)) { it.target?.setPlayingDead(it.getBool(0)) }
                 .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as Axolotl.Variant)) }
+                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
         }
     }
 }

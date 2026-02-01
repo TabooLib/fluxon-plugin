@@ -16,16 +16,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPotionType {
 
+    val TYPE = Type.fromClass(PotionType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionType::class.java)
                 .function("effectType", returnsObject().noParams()) { it.setReturnRef(it.target?.effectType) }
                 .function("potionEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.potionEffects) }
-                .function("isInstant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInstant) }
-                .function("isUpgradeable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUpgradeable) }
-                .function("isExtendable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExtendable) }
-                .function("maxLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.maxLevel) }
+                .function("isInstant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInstant ?: false) }
+                .function("isUpgradeable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUpgradeable ?: false) }
+                .function("isExtendable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExtendable ?: false) }
+                .function("maxLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLevel ?: 0) }
                 // statics
                 .function("getByEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionType.getByEffect(it.getRef(0) as PotionEffectType)) }
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }

@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPluginDescriptionFile {
 
+    val TYPE = Type.fromClass(PluginDescriptionFile::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

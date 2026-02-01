@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockPistonExtendEvent {
 
+    val TYPE = Type.fromClass(BlockPistonExtendEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonExtendEvent::class.java)
-                .function("length", returns(Type.I).noParams()) { it.setReturnRef(it.target?.length) }
+                .function("length", returns(Type.I).noParams()) { it.setReturnInt(it.target?.length ?: 0) }
                 .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

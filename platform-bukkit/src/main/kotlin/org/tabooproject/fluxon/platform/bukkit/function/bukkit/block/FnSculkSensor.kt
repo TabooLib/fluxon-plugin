@@ -7,22 +7,26 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.SculkSensor"])
 @PlatformSide(Platform.BUKKIT)
 object FnSculkSensor {
 
+    val TYPE = Type.fromClass(SculkSensor::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkSensor::class.java)
-                .function("lastVibrationFrequency", returnsObject().noParams()) { it.setReturnRef(it.target?.lastVibrationFrequency) }
-                .function("setLastVibrationFrequency", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setLastVibrationFrequency(
+                .function("lastVibrationFrequency", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lastVibrationFrequency ?: 0) }
+                .function("setLastVibrationFrequency", returnsVoid().params(Type.I)) {
+                    it.target?.setLastVibrationFrequency(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
         }
     }

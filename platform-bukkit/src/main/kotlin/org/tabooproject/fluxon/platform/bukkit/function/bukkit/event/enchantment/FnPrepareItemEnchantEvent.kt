@@ -8,12 +8,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.enchantment.PrepareItemEnchantEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnPrepareItemEnchantEvent {
+
+    val TYPE = Type.fromClass(PrepareItemEnchantEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,9 +27,9 @@ object FnPrepareItemEnchantEvent {
                 .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
                 .function("expLevelCostsOffered", returnsObject().noParams()) { it.setReturnRef(it.target?.expLevelCostsOffered) }
                 .function("offers", returnsObject().noParams()) { it.setReturnRef(it.target?.offers) }
-                .function("enchantmentBonus", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantmentBonus) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("enchantmentBonus", returns(Type.I).noParams()) { it.setReturnInt(it.target?.enchantmentBonus ?: 0) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PrepareItemEnchantEvent.getHandlerList()) }

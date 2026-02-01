@@ -15,12 +15,16 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPluginBase {
 
+    val TYPE = Type.fromClass(PluginBase::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginBase::class.java)
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
         }
     }

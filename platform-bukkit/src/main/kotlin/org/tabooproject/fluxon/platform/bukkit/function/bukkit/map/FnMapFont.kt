@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,20 +16,22 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnMapFont {
 
+    val TYPE = Type.fromClass(MapFont::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont::class.java)
-                .function("setChar", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setChar(
+                .function("setChar", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.setChar(
                         it.getString(0)?.firstOrNull()!!,
                         it.getRef(1) as MapFont.CharacterSprite
-                    ))
+                    )
                 }
-                .function("getChar", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getChar(it.getString(0)?.firstOrNull()!!)) }
-                .function("getWidth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getWidth(it.getString(0)!!)) }
-                .function("height", returnsObject().noParams()) { it.setReturnRef(it.target?.height) }
-                .function("isValid", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isValid(it.getString(0)!!)) }
+                .function("getChar", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getChar(it.getString(0)?.firstOrNull()!!)) }
+                .function("getWidth", returns(Type.I).params(Type.STRING)) { it.setReturnInt(it.target?.getWidth(it.getString(0)!!) ?: 0) }
+                .function("height", returns(Type.I).noParams()) { it.setReturnInt(it.target?.height ?: 0) }
+                .function("isValid", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isValid(it.getString(0)!!) ?: false) }
         }
     }
 }
@@ -37,12 +40,16 @@ object FnMapFont {
 @PlatformSide(Platform.BUKKIT)
 object FnMapFontCharacterSprite {
 
+    val TYPE = Type.fromClass(MapFont.CharacterSprite::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont.CharacterSprite::class.java)
-                .function("get", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt())) }
-                .function("width", returnsObject().noParams()) { it.setReturnRef(it.target?.width) }
+                .function("get", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt()) ?: false)
+                }
+                .function("width", returns(Type.I).noParams()) { it.setReturnInt(it.target?.width ?: 0) }
         }
     }
 }

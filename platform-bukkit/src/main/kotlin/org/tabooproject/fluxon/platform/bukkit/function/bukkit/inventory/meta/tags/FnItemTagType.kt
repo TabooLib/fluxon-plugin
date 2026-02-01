@@ -15,33 +15,22 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnItemTagType {
 
+    val TYPE = Type.fromClass(ItemTagType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType::class.java)
-                .function("primitiveType", returnsObject().noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.primitiveType
-                    } else {
-                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getRef(0)!!,
-                            it.getRef(1) as ItemTagAdapterContext
-                        )
-                    })
-                }
-                .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.primitiveType
-                    } else {
-                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getRef(0)!!,
-                            it.getRef(1) as ItemTagAdapterContext
-                        )
-                    })
-                }
+                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
                 .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
                 .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
+                        it.getRef(0)!!,
+                        it.getRef(1) as ItemTagAdapterContext
+                    ))
+                }
+                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
                     ))
@@ -54,33 +43,22 @@ object FnItemTagType {
 @PlatformSide(Platform.BUKKIT)
 object FnItemTagTypePrimitiveTagType {
 
+    val TYPE = Type.fromClass(ItemTagType.PrimitiveTagType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType.PrimitiveTagType::class.java)
-                .function("primitiveType", returnsObject().noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.primitiveType
-                    } else {
-                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getRef(0)!!,
-                            it.getRef(1) as ItemTagAdapterContext
-                        )
-                    })
-                }
-                .function("primitiveType", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.primitiveType
-                    } else {
-                        (it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
-                            it.getRef(0)!!,
-                            it.getRef(1) as ItemTagAdapterContext
-                        )
-                    })
-                }
+                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
                 .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
                 .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
+                        it.getRef(0)!!,
+                        it.getRef(1) as ItemTagAdapterContext
+                    ))
+                }
+                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
                     ))

@@ -10,20 +10,23 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.event.player.PlayerPortalEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerPortalEvent {
 
+    val TYPE = Type.fromClass(PlayerPortalEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPortalEvent::class.java)
-                .function("setSearchRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSearchRadius(it.getInt(0).toInt())) }
+                .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
                 .function("searchRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.searchRadius) }
-                .function("canCreatePortal", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canCreatePortal) }
-                .function("setCanCreatePortal", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCanCreatePortal(it.getBool(0))) }
-                .function("setCreationRadius", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCreationRadius(it.getInt(0).toInt())) }
+                .function("canCreatePortal", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canCreatePortal ?: false) }
+                .function("setCanCreatePortal", returnsVoid().params(Type.Z)) { it.target?.setCanCreatePortal(it.getBool(0)) }
+                .function("setCreationRadius", returnsVoid().params(Type.I)) { it.target?.setCreationRadius(it.getInt(0).toInt()) }
                 .function("creationRadius", returnsObject().noParams()) { it.setReturnRef(it.target?.creationRadius) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

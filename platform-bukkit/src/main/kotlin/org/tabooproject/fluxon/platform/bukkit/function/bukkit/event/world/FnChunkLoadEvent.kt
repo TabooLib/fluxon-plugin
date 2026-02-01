@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnChunkLoadEvent {
 
+    val TYPE = Type.fromClass(ChunkLoadEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkLoadEvent::class.java)
-                .function("isNewChunk", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isNewChunk) }
+                .function("isNewChunk", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isNewChunk ?: false) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkLoadEvent.getHandlerList()) }

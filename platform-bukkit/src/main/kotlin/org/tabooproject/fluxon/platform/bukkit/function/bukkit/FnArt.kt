@@ -15,13 +15,15 @@ import taboolib.common.Requires
 @PlatformSide(Platform.BUKKIT)
 object FnArt {
 
+    val TYPE = Type.fromClass(Art::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Art::class.java)
-                .function("blockWidth", returns(Type.I).noParams()) { it.setReturnRef(it.target?.blockWidth) }
-                .function("blockHeight", returns(Type.I).noParams()) { it.setReturnRef(it.target?.blockHeight) }
-                .function("id", returns(Type.I).noParams()) { it.setReturnRef(it.target?.id) }
+                .function("blockWidth", returns(Type.I).noParams()) { it.setReturnInt(it.target?.blockWidth ?: 0) }
+                .function("blockHeight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.blockHeight ?: 0) }
+                .function("id", returns(Type.I).noParams()) { it.setReturnInt(it.target?.id ?: 0) }
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
                 // static
                 .function("getById", returnsObject().params(Type.I)) { it.setReturnRef(Art.getById(it.getInt(0))) }

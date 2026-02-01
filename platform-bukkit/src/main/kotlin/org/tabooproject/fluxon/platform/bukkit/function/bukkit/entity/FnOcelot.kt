@@ -7,22 +7,25 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Ocelot"])
 @PlatformSide(Platform.BUKKIT)
 object FnOcelot {
 
+    val TYPE = Type.fromClass(Ocelot::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ocelot::class.java)
-                .function("isTrusting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTrusting) }
-                .function("setTrusting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrusting(it.getBool(0))) }
+                .function("isTrusting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTrusting ?: false) }
+                .function("setTrusting", returnsVoid().params(Type.Z)) { it.target?.setTrusting(it.getBool(0)) }
                 .function("catType", returnsObject().noParams()) { it.setReturnRef(it.target?.catType) }
-                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCatType(it.getRef(0) as Ocelot.Type)) }
+                .function("setCatType", returnsVoid().params(Type.OBJECT)) { it.target?.setCatType(it.getRef(0) as Ocelot.Type) }
         }
     }
 }
@@ -31,13 +34,15 @@ object FnOcelot {
 @PlatformSide(Platform.BUKKIT)
 object FnOcelotType {
 
+    val TYPE = Type.fromClass(Ocelot.Type::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ocelot.Type::class.java)
-                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
+                .function("id", returns(Type.I).noParams()) { it.setReturnInt(it.target?.id ?: 0) }
                 // static
-                .function("getType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Ocelot.Type.getType(it.getInt(0).toInt())) }
+                .function("getType", returnsObject().params(Type.I)) { it.setReturnRef(Ocelot.Type.getType(it.getInt(0).toInt())) }
         }
     }
 }

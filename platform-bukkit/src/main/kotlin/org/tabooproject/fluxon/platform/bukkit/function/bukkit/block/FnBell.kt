@@ -17,53 +17,30 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBell {
 
+    val TYPE = Type.fromClass(Bell::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bell::class.java)
-                .function("ring", returnsObject().noParams()) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        0 -> it.target?.ring()
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Entity -> it.target?.ring(var1)
-                            is BlockFace -> it.target?.ring(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
-                        }
-
-                        2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
-                        else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    })
+                .function("ring", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.ring() ?: false) }
+                .function("ring", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
+                        is Entity -> it.target?.ring(var1)
+                        is BlockFace -> it.target?.ring(var1)
+                        else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
+                    } ?: false)
                 }
-                .function("ring", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        0 -> it.target?.ring()
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Entity -> it.target?.ring(var1)
-                            is BlockFace -> it.target?.ring(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
-                        }
-
-                        2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
-                        else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    })
+                .function("ring", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.ring(
+                        it.getRef(0) as Entity,
+                        it.getRef(1) as BlockFace
+                    ) ?: false)
                 }
-                .function("ring", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        0 -> it.target?.ring()
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Entity -> it.target?.ring(var1)
-                            is BlockFace -> it.target?.ring(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
-                        }
-
-                        2 -> it.target?.ring(it.getRef(0) as Entity, it.getRef(1) as BlockFace)
-                        else -> error("Bell#ring 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("isShaking", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShaking) }
-                .function("shakingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.shakingTicks) }
-                .function("isResonating", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isResonating) }
-                .function("resonatingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.resonatingTicks) }
+                .function("isShaking", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShaking ?: false) }
+                .function("shakingTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.shakingTicks ?: 0) }
+                .function("isResonating", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isResonating ?: false) }
+                .function("resonatingTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.resonatingTicks ?: 0) }
         }
     }
 }

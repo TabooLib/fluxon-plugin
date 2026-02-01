@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,16 +16,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnRepeater {
 
+    val TYPE = Type.fromClass(Repeater::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repeater::class.java)
-                .function("delay", returnsObject().noParams()) { it.setReturnRef(it.target?.delay) }
-                .function("setDelay", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDelay(it.getInt(0).toInt())) }
-                .function("minimumDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.minimumDelay) }
-                .function("maximumDelay", returnsObject().noParams()) { it.setReturnRef(it.target?.maximumDelay) }
-                .function("isLocked", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLocked) }
-                .function("setLocked", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLocked(it.getBool(0))) }
+                .function("delay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.delay ?: 0) }
+                .function("setDelay", returnsVoid().params(Type.I)) { it.target?.setDelay(it.getInt(0).toInt()) }
+                .function("minimumDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minimumDelay ?: 0) }
+                .function("maximumDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumDelay ?: 0) }
+                .function("isLocked", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLocked ?: false) }
+                .function("setLocked", returnsVoid().params(Type.Z)) { it.target?.setLocked(it.getBool(0)) }
         }
     }
 }

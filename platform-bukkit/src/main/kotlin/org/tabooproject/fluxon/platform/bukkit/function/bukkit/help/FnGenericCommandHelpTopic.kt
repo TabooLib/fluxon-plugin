@@ -16,11 +16,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnGenericCommandHelpTopic {
 
+    val TYPE = Type.fromClass(GenericCommandHelpTopic::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericCommandHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canSee(it.getRef(0) as CommandSender)) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
         }
     }
 }

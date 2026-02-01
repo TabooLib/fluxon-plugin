@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,12 +17,14 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockCanBuildEvent {
 
+    val TYPE = Type.fromClass(BlockCanBuildEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCanBuildEvent::class.java)
-                .function("isBuildable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBuildable) }
-                .function("setBuildable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBuildable(it.getBool(0))) }
+                .function("isBuildable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBuildable ?: false) }
+                .function("setBuildable", returnsVoid().params(Type.Z)) { it.target?.setBuildable(it.getBool(0)) }
                 .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
                 .function("blockData", returnsObject().noParams()) { it.setReturnRef(it.target?.blockData) }
                 .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }

@@ -10,23 +10,29 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Enderman"])
 @PlatformSide(Platform.BUKKIT)
 object FnEnderman {
 
+    val TYPE = Type.fromClass(Enderman::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Enderman::class.java)
                 .function("carriedMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedMaterial) }
-                .function("setCarriedMaterial", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarriedMaterial(it.getRef(0) as MaterialData)) }
+                .function("setCarriedMaterial", returnsVoid().params(Type.OBJECT)) { it.target?.setCarriedMaterial(it.getRef(0) as MaterialData) }
                 .function("carriedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedBlock) }
-                .function("setCarriedBlock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCarriedBlock(it.getRef(0) as BlockData)) }
-                .function("teleport", returnsObject().noParams()) { it.setReturnRef(it.target?.teleport()) }
-                .function("teleportTowards", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.teleportTowards(it.getRef(0) as Entity)) }
+                .function("setCarriedBlock", returnsVoid().params(Type.OBJECT)) { it.target?.setCarriedBlock(it.getRef(0) as BlockData) }
+                .function("teleport", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.teleport() == true) }
+                .function("teleportTowards", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.teleportTowards(it.getRef(0) as Entity) == true)
+                }
         }
     }
 }

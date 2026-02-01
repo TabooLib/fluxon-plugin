@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,15 +16,17 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBukkitTask {
 
+    val TYPE = Type.fromClass(BukkitTask::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitTask::class.java)
-                .function("taskId", returnsObject().noParams()) { it.setReturnRef(it.target?.taskId) }
+                .function("taskId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.taskId ?: 0) }
                 .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
-                .function("isSync", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSync) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("cancel", returnsObject().noParams()) { it.setReturnRef(it.target?.cancel()) }
+                .function("isSync", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSync ?: false) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("cancel", returnsVoid().noParams()) { it.target?.cancel() }
         }
     }
 }

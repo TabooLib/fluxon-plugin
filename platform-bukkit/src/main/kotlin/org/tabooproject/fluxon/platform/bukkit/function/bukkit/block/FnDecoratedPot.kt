@@ -9,21 +9,24 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.DecoratedPot"])
 @PlatformSide(Platform.BUKKIT)
 object FnDecoratedPot {
 
+    val TYPE = Type.fromClass(DecoratedPot::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DecoratedPot::class.java)
-                .function("setSherd", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setSherd(
+                .function("setSherd", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                    it.target?.setSherd(
                         it.getRef(0) as DecoratedPot.Side,
                         it.getRef(1) as Material
-                    ))
+                    )
                 }
                 .function("getSherd", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getSherd(it.getRef(0) as DecoratedPot.Side)) }
                 .function("shards", returnsObject().noParams()) { it.setReturnRef(it.target?.shards) }

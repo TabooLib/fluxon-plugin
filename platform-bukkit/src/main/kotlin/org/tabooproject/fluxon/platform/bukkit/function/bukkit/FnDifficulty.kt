@@ -8,19 +8,22 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Difficulty"])
 @PlatformSide(Platform.BUKKIT)
 object FnDifficulty {
 
+    val TYPE = Type.fromClass(Difficulty::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Difficulty::class.java)
-                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
+                .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value ?: 0) }
                 // static
-                .function("getByValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Difficulty.getByValue(it.getInt(0).toInt())) }
+                .function("getByValue", returnsObject().params(Type.I)) { it.setReturnRef(Difficulty.getByValue(it.getInt(0).toInt())) }
         }
     }
 }

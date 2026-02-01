@@ -12,6 +12,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -19,29 +20,31 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBossBar {
 
+    val TYPE = Type.fromClass(BossBar::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BossBar::class.java)
-                .function("title", returnsObject().noParams()) { it.setReturnRef(it.target?.title) }
-                .function("setTitle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTitle(it.getString(0))) }
+                .function("title", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.title) }
+                .function("setTitle", returnsVoid().params(Type.STRING)) { it.target?.setTitle(it.getString(0)) }
                 .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as BarColor)) }
+                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as BarColor) }
                 .function("style", returnsObject().noParams()) { it.setReturnRef(it.target?.style) }
-                .function("setStyle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStyle(it.getRef(0) as BarStyle)) }
-                .function("removeFlag", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeFlag(it.getRef(0) as BarFlag)) }
-                .function("addFlag", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addFlag(it.getRef(0) as BarFlag)) }
-                .function("hasFlag", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasFlag(it.getRef(0) as BarFlag)) }
-                .function("setProgress", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setProgress(it.getAsDouble(0))) }
-                .function("progress", returnsObject().noParams()) { it.setReturnRef(it.target?.progress) }
-                .function("addPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addPlayer(it.getRef(0) as Player)) }
-                .function("removePlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removePlayer(it.getRef(0) as Player)) }
-                .function("removeAll", returnsObject().noParams()) { it.setReturnRef(it.target?.removeAll()) }
+                .function("setStyle", returnsVoid().params(Type.OBJECT)) { it.target?.setStyle(it.getRef(0) as BarStyle) }
+                .function("removeFlag", returnsVoid().params(Type.OBJECT)) { it.target?.removeFlag(it.getRef(0) as BarFlag) }
+                .function("addFlag", returnsVoid().params(Type.OBJECT)) { it.target?.addFlag(it.getRef(0) as BarFlag) }
+                .function("hasFlag", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasFlag(it.getRef(0) as BarFlag) ?: false) }
+                .function("setProgress", returnsVoid().params(Type.D)) { it.target?.setProgress(it.getDouble(0)) }
+                .function("progress", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.progress ?: 0.0) }
+                .function("addPlayer", returnsVoid().params(Type.OBJECT)) { it.target?.addPlayer(it.getRef(0) as Player) }
+                .function("removePlayer", returnsVoid().params(Type.OBJECT)) { it.target?.removePlayer(it.getRef(0) as Player) }
+                .function("removeAll", returnsVoid().noParams()) { it.target?.removeAll() }
                 .function("players", returnsObject().noParams()) { it.setReturnRef(it.target?.players) }
-                .function("setVisible", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVisible(it.getBool(0))) }
-                .function("isVisible", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isVisible) }
-                .function("show", returnsObject().noParams()) { it.setReturnRef(it.target?.show()) }
-                .function("hide", returnsObject().noParams()) { it.setReturnRef(it.target?.hide()) }
+                .function("setVisible", returnsVoid().params(Type.Z)) { it.target?.setVisible(it.getBool(0)) }
+                .function("isVisible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVisible ?: false) }
+                .function("show", returnsVoid().noParams()) { it.target?.show() }
+                .function("hide", returnsVoid().noParams()) { it.target?.hide() }
         }
     }
 }

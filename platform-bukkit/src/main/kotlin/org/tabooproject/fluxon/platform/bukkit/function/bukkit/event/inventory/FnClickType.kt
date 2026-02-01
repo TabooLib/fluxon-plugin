@@ -15,16 +15,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnClickType {
 
+    val TYPE = Type.fromClass(ClickType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ClickType::class.java)
-                .function("isKeyboardClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isKeyboardClick) }
-                .function("isMouseClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isMouseClick) }
-                .function("isCreativeAction", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCreativeAction) }
-                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRightClick) }
-                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLeftClick) }
-                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShiftClick) }
+                .function("isKeyboardClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isKeyboardClick ?: false) }
+                .function("isMouseClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isMouseClick ?: false) }
+                .function("isCreativeAction", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCreativeAction ?: false) }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRightClick ?: false) }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLeftClick ?: false) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShiftClick ?: false) }
         }
     }
 }

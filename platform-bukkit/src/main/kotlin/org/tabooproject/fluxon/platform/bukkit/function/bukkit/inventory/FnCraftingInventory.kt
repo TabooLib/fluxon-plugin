@@ -9,11 +9,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.CraftingInventory"])
 @PlatformSide(Platform.BUKKIT)
 object FnCraftingInventory {
+
+    val TYPE = Type.fromClass(CraftingInventory::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -21,8 +24,8 @@ object FnCraftingInventory {
             registerExtension(CraftingInventory::class.java)
                 .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
                 .function("matrix", returnsObject().noParams()) { it.setReturnRef(it.target?.matrix) }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as ItemStack)) }
-                .function("setMatrix", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMatrix(it.getRef(0) as Array<ItemStack>)) }
+                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("setMatrix", returnsVoid().params(Type.OBJECT)) { it.target?.setMatrix(it.getRef(0) as Array<ItemStack>) }
                 .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
         }
     }

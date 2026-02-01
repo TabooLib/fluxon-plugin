@@ -8,18 +8,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.SculkSensor"])
 @PlatformSide(Platform.BUKKIT)
 object FnSculkSensor {
 
+    val TYPE = Type.fromClass(SculkSensor::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkSensor::class.java)
                 .function("phase", returnsObject().noParams()) { it.setReturnRef(it.target?.phase) }
-                .function("setPhase", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPhase(it.getRef(0) as SculkSensor.Phase)) }
+                .function("setPhase", returnsVoid().params(Type.OBJECT)) { it.target?.setPhase(it.getRef(0) as SculkSensor.Phase) }
         }
     }
 }

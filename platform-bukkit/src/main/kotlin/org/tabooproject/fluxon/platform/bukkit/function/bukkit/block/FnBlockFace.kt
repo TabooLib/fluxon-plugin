@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockFace {
 
+    val TYPE = Type.fromClass(BlockFace::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -23,12 +25,12 @@ object FnBlockFace {
                 // 橙汁喵: 枚举类语法
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 // 橙汁喵: 枚举类语法
-                .function("ordinal", returnsObject().noParams()) { it.setReturnRef(it.target?.ordinal) }
-                .function("modX", returnsObject().noParams()) { it.setReturnRef(it.target?.modX) }
-                .function("modY", returnsObject().noParams()) { it.setReturnRef(it.target?.modY) }
-                .function("modZ", returnsObject().noParams()) { it.setReturnRef(it.target?.modZ) }
+                .function("ordinal", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ordinal ?: 0) }
+                .function("modX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modX ?: 0) }
+                .function("modY", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modY ?: 0) }
+                .function("modZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modZ ?: 0) }
                 .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
-                .function("isCartesian", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCartesian) }
+                .function("isCartesian", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCartesian ?: false) }
                 .function("oppositeFace", returnsObject().noParams()) { it.setReturnRef(it.target?.oppositeFace) }
         }
     }

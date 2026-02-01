@@ -7,20 +7,22 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.block.data.type.Tripwire"])
 @PlatformSide(Platform.BUKKIT)
 object FnTripwire {
 
+    val TYPE = Type.fromClass(Tripwire::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tripwire::class.java)
-                .function("isDisarmed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDisarmed) }
-                .function("setDisarmed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisarmed(it.getBool(0))) }
+                .function("isDisarmed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDisarmed ?: false) }
+                .function("setDisarmed", returnsVoid().params(Type.Z)) { it.target?.setDisarmed(it.getBool(0)) }
         }
     }
 }

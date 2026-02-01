@@ -8,19 +8,22 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.GameMode"])
 @PlatformSide(Platform.BUKKIT)
 object FnGameMode {
 
+    val TYPE = Type.fromClass(GameMode::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GameMode::class.java)
-                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value) }
+                .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value ?: 0) }
                 // static
-                .function("getByValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(GameMode.getByValue(it.getInt(0).toInt())) }
+                .function("getByValue", returnsObject().params(Type.I)) { it.setReturnRef(GameMode.getByValue(it.getInt(0).toInt())) }
         }
     }
 }

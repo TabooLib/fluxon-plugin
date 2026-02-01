@@ -9,12 +9,15 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityKnockbackEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnEntityKnockbackEvent {
+
+    val TYPE = Type.fromClass(EntityKnockbackEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -25,9 +28,9 @@ object FnEntityKnockbackEvent {
                 .function("force", returnsObject().noParams()) { it.setReturnRef(it.target?.force) }
                 .function("knockback", returnsObject().noParams()) { it.setReturnRef(it.target?.knockback) }
                 .function("finalKnockback", returnsObject().noParams()) { it.setReturnRef(it.target?.finalKnockback) }
-                .function("setFinalKnockback", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFinalKnockback(it.getRef(0) as Vector)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("setFinalKnockback", returnsVoid().params(Type.OBJECT)) { it.target?.setFinalKnockback(it.getRef(0) as Vector) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityKnockbackEvent.getHandlerList()) }

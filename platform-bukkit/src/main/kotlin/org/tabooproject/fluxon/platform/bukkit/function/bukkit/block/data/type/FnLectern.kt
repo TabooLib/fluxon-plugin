@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnLectern {
 
+    val TYPE = Type.fromClass(Lectern::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lectern::class.java)
-                .function("hasBook", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBook()) }
+                .function("hasBook", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBook() ?: false) }
         }
     }
 }

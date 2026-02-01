@@ -15,32 +15,36 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEulerAngle {
 
+    val TYPE = Type.fromClass(EulerAngle::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EulerAngle::class.java)
-                .function("x", returnsObject().noParams()) { it.setReturnRef(it.target?.x) }
-                .function("y", returnsObject().noParams()) { it.setReturnRef(it.target?.y) }
-                .function("z", returnsObject().noParams()) { it.setReturnRef(it.target?.z) }
-                .function("setX", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setX(it.getAsDouble(0))) }
-                .function("setY", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setY(it.getAsDouble(0))) }
-                .function("setZ", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setZ(it.getAsDouble(0))) }
-                .function("add", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.x ?: 0.0) }
+                .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.y ?: 0.0) }
+                .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.z ?: 0.0) }
+                .function("setX", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setX(it.getDouble(0))) }
+                .function("setY", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setY(it.getDouble(0))) }
+                .function("setZ", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setZ(it.getDouble(0))) }
+                .function("add", returnsObject().params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.add(
-                        it.getAsDouble(0),
-                        it.getAsDouble(1),
-                        it.getAsDouble(2)
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2)
                     ))
                 }
-                .function("subtract", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("subtract", returnsObject().params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.subtract(
-                        it.getAsDouble(0),
-                        it.getAsDouble(1),
-                        it.getAsDouble(2)
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2)
                     ))
                 }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
         }
     }
 }

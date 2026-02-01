@@ -15,18 +15,20 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnNumberConversions {
 
+    val TYPE = Type.fromClass(NumberConversions::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NumberConversions::class.java)
                 // static
-                .function("floor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.floor(it.getAsDouble(0))) }
+                .function("floor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.floor(it.getDouble(0))) }
                 // static
-                .function("ceil", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.ceil(it.getAsDouble(0))) }
+                .function("ceil", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.ceil(it.getDouble(0))) }
                 // static
-                .function("round", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.round(it.getAsDouble(0))) }
+                .function("round", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.round(it.getDouble(0))) }
                 // static
-                .function("square", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.square(it.getAsDouble(0))) }
+                .function("square", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.square(it.getDouble(0))) }
                 // static
                 .function("toInt", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toInt(it.getRef(0))) }
                 // static

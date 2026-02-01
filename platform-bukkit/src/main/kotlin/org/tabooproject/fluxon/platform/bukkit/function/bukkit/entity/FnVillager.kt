@@ -8,28 +8,34 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Villager"])
 @PlatformSide(Platform.BUKKIT)
 object FnVillager {
 
+    val TYPE = Type.fromClass(Villager::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Villager::class.java)
                 .function("profession", returnsObject().noParams()) { it.setReturnRef(it.target?.profession) }
-                .function("setProfession", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setProfession(it.getRef(0) as Villager.Profession)) }
+                .function("setProfession", returnsVoid().params(Type.OBJECT)) { it.target?.setProfession(it.getRef(0) as Villager.Profession) }
                 .function("villagerType", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerType) }
-                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerType(it.getRef(0) as Villager.Type)) }
-                .function("villagerLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerLevel) }
-                .function("setVillagerLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerLevel(it.getInt(0).toInt())) }
-                .function("villagerExperience", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerExperience) }
-                .function("setVillagerExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerExperience(it.getInt(0).toInt())) }
-                .function("sleep", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.sleep(it.getRef(0) as Location)) }
-                .function("wakeup", returnsObject().noParams()) { it.setReturnRef(it.target?.wakeup()) }
-                .function("shakeHead", returnsObject().noParams()) { it.setReturnRef(it.target?.shakeHead()) }
+                .function("setVillagerType", returnsVoid().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
+                .function("villagerLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.villagerLevel ?: 0) }
+                .function("setVillagerLevel", returnsVoid().params(Type.I)) { it.target?.setVillagerLevel(it.getInt(0).toInt()) }
+                .function("villagerExperience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.villagerExperience ?: 0) }
+                .function("setVillagerExperience", returnsVoid().params(Type.I)) { it.target?.setVillagerExperience(it.getInt(0).toInt()) }
+                .function("sleep", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.sleep(it.getRef(0) as Location) == true)
+                }
+                .function("wakeup", returnsVoid().noParams()) { it.target?.wakeup() }
+                .function("shakeHead", returnsVoid().noParams()) { it.target?.shakeHead() }
                 .function("zombify", returnsObject().noParams()) { it.setReturnRef(it.target?.zombify()) }
         }
     }
@@ -38,6 +44,8 @@ object FnVillager {
 @Requires(classes = ["org.bukkit.entity.Villager.Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnVillagerType {
+
+    val TYPE = Type.fromClass(Villager.Type::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -51,6 +59,8 @@ object FnVillagerType {
 @Requires(classes = ["org.bukkit.entity.Villager.Profession"])
 @PlatformSide(Platform.BUKKIT)
 object FnVillagerProfession {
+
+    val TYPE = Type.fromClass(Villager.Profession::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

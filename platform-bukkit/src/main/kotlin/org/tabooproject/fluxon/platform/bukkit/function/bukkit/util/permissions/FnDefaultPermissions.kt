@@ -17,6 +17,8 @@ import taboolib.common.Requires
 @PlatformSide(Platform.BUKKIT)
 object FnDefaultPermissions {
 
+    val TYPE = Type.fromClass(DefaultPermissions::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

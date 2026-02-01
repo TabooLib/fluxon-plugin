@@ -10,6 +10,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -17,30 +18,21 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnCommandSender {
 
+    val TYPE = Type.fromClass(CommandSender::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandSender::class.java)
-                .syncFunction("performCommand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(adaptCommandSender(it.target!!).performCommand(it.getString(0)!!)) }
-                .function("sendMessage", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.sendMessage(it.getString(0))
-                    } else {
-                        it.target?.sendMessage(
-                            UUID.fromString(it.getString(0)),
-                            it.getString(1)
-                        )
-                    })
+                .syncFunction("performCommand", returns(Type.Z).params(Type.STRING)) {
+                    it.setReturnBool(adaptCommandSender(it.target!!).performCommand(it.getString(0)!!) ?: false)
                 }
-                .function("sendMessage", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.sendMessage(it.getString(0))
-                    } else {
-                        it.target?.sendMessage(
-                            UUID.fromString(it.getString(0)),
-                            it.getString(1)
-                        )
-                    })
+                .function("sendMessage", returnsVoid().params(Type.STRING)) { it.target?.sendMessage(it.getString(0)) }
+                .function("sendMessage", returnsVoid().params(Type.STRING, Type.STRING)) {
+                    it.target?.sendMessage(
+                        UUID.fromString(it.getString(0)),
+                        it.getString(1)
+                    )
                 }
                 .function("server", returnsObject().noParams()) { it.setReturnRef(it.target?.server) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }

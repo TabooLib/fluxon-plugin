@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,15 +17,17 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerRecipeBookClickEvent {
 
+    val TYPE = Type.fromClass(PlayerRecipeBookClickEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRecipeBookClickEvent::class.java)
                 .function("originalRecipe", returnsObject().noParams()) { it.setReturnRef(it.target?.originalRecipe) }
                 .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
-                .function("setRecipe", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecipe(it.getRef(0) as Recipe)) }
-                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShiftClick) }
-                .function("setShiftClick", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShiftClick(it.getBool(0))) }
+                .function("setRecipe", returnsVoid().params(Type.OBJECT)) { it.target?.setRecipe(it.getRef(0) as Recipe) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShiftClick ?: false) }
+                .function("setShiftClick", returnsVoid().params(Type.Z)) { it.target?.setShiftClick(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRecipeBookClickEvent.getHandlerList()) }

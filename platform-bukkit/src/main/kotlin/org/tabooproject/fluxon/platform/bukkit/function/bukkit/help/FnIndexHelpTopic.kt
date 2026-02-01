@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,13 +17,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnIndexHelpTopic {
 
+    val TYPE = Type.fromClass(IndexHelpTopic::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(IndexHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.canSee(it.getRef(0) as CommandSender)) }
-                .function("amendCanSee", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.amendCanSee(it.getString(0))) }
-                .function("getFullText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
+                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
+                .function("amendCanSee", returnsVoid().params(Type.STRING)) { it.target?.amendCanSee(it.getString(0)) }
+                .function("getFullText", returns(Type.STRING).params(Type.OBJECT)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
         }
     }
 }

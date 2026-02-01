@@ -8,34 +8,37 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.TextDisplay"])
 @PlatformSide(Platform.BUKKIT)
 object FnTextDisplay {
 
+    val TYPE = Type.fromClass(TextDisplay::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TextDisplay::class.java)
-                .function("text", returnsObject().noParams()) { it.setReturnRef(it.target?.text) }
-                .function("setText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setText(it.getString(0))) }
-                .function("lineWidth", returnsObject().noParams()) { it.setReturnRef(it.target?.lineWidth) }
-                .function("setLineWidth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLineWidth(it.getInt(0).toInt())) }
+                .function("text", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.text) }
+                .function("setText", returnsVoid().params(Type.STRING)) { it.target?.setText(it.getString(0)) }
+                .function("lineWidth", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lineWidth ?: 0) }
+                .function("setLineWidth", returnsVoid().params(Type.I)) { it.target?.setLineWidth(it.getInt(0).toInt()) }
                 .function("backgroundColor", returnsObject().noParams()) { it.setReturnRef(it.target?.backgroundColor) }
-                .function("setBackgroundColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBackgroundColor(it.getRef(0) as Color)) }
-                .function("textOpacity", returnsObject().noParams()) { it.setReturnRef(it.target?.textOpacity) }
-                .function("setTextOpacity", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTextOpacity(it.getInt(0).toByte())) }
-                .function("isShadowed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShadowed) }
-                .function("setShadowed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShadowed(it.getBool(0))) }
-                .function("isSeeThrough", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSeeThrough) }
-                .function("setSeeThrough", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSeeThrough(it.getBool(0))) }
-                .function("isDefaultBackground", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDefaultBackground) }
-                .function("setDefaultBackground", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDefaultBackground(it.getBool(0))) }
+                .function("setBackgroundColor", returnsVoid().params(Type.OBJECT)) { it.target?.setBackgroundColor(it.getRef(0) as Color) }
+                .function("textOpacity", returns(Type.I).noParams()) { it.setReturnInt(it.target?.textOpacity?.toInt() ?: 0) }
+                .function("setTextOpacity", returnsVoid().params(Type.I)) { it.target?.setTextOpacity(it.getInt(0).toByte()) }
+                .function("isShadowed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShadowed ?: false) }
+                .function("setShadowed", returnsVoid().params(Type.Z)) { it.target?.setShadowed(it.getBool(0)) }
+                .function("isSeeThrough", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSeeThrough ?: false) }
+                .function("setSeeThrough", returnsVoid().params(Type.Z)) { it.target?.setSeeThrough(it.getBool(0)) }
+                .function("isDefaultBackground", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDefaultBackground ?: false) }
+                .function("setDefaultBackground", returnsVoid().params(Type.Z)) { it.target?.setDefaultBackground(it.getBool(0)) }
                 .function("alignment", returnsObject().noParams()) { it.setReturnRef(it.target?.alignment) }
-                .function("setAlignment", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAlignment(it.getRef(0) as TextDisplay.TextAlignment)) }
+                .function("setAlignment", returnsVoid().params(Type.OBJECT)) { it.target?.setAlignment(it.getRef(0) as TextDisplay.TextAlignment) }
         }
     }
 }

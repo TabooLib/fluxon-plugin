@@ -13,11 +13,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.structure.StructureManager"])
 @PlatformSide(Platform.BUKKIT)
 object FnStructureManager {
+
+    val TYPE = Type.fromClass(StructureManager::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -32,78 +35,38 @@ object FnStructureManager {
                 }
                 .function("unregisterStructure", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.unregisterStructure(it.getRef(0) as NamespacedKey)) }
                 .function("loadStructure", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        when (val var1 = it.getRef(0)) {
-                            is NamespacedKey -> it.target?.loadStructure(var1)
-                            is File -> it.target?.loadStructure(var1)
-                            is InputStream -> it.target?.loadStructure(var1)
-                            else -> throw IllegalArgumentException("参数必须是 NamespacedKey、File 或 InputStream 类型")
-                        }
-                    } else {
-                        it.target?.loadStructure(
-                            it.getRef(0) as NamespacedKey,
-                            it.getBool(1)
-                        )
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                        is NamespacedKey -> it.target?.loadStructure(var1)
+                        is File -> it.target?.loadStructure(var1)
+                        is InputStream -> it.target?.loadStructure(var1)
+                        else -> throw IllegalArgumentException("参数必须是 NamespacedKey、File 或 InputStream 类型")
                     })
                 }
-                .function("loadStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        when (val var1 = it.getRef(0)) {
-                            is NamespacedKey -> it.target?.loadStructure(var1)
-                            is File -> it.target?.loadStructure(var1)
-                            is InputStream -> it.target?.loadStructure(var1)
-                            else -> throw IllegalArgumentException("参数必须是 NamespacedKey、File 或 InputStream 类型")
-                        }
-                    } else {
-                        it.target?.loadStructure(
-                            it.getRef(0) as NamespacedKey,
-                            it.getBool(1)
-                        )
-                    })
+                .function("loadStructure", returnsObject().params(Type.OBJECT, Type.Z)) {
+                    it.setReturnRef(it.target?.loadStructure(
+                        it.getRef(0) as NamespacedKey,
+                        it.getBool(1)
+                    ))
                 }
-                .function("saveStructure", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.saveStructure(it.getRef(0) as NamespacedKey)
-                    } else {
-                        when (val var1 = it.getRef(0)) {
-                            is NamespacedKey -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            is File -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            is OutputStream -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            else -> throw IllegalArgumentException("第一个参数必须是 NamespacedKey、File 或 OutputStream 类型")
-                        }
-                    })
+                .function("saveStructure", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.saveStructure(it.getRef(0) as NamespacedKey)
                 }
-                .function("saveStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.saveStructure(it.getRef(0) as NamespacedKey)
-                    } else {
-                        when (val var1 = it.getRef(0)) {
-                            is NamespacedKey -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            is File -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            is OutputStream -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
-                            else -> throw IllegalArgumentException("第一个参数必须是 NamespacedKey、File 或 OutputStream 类型")
-                        }
-                    })
+                .function("saveStructure", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
+                        is NamespacedKey -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
+                        is File -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
+                        is OutputStream -> it.target?.saveStructure(var1, it.getRef(1) as Structure)
+                        else -> throw IllegalArgumentException("第一个参数必须是 NamespacedKey、File 或 OutputStream 类型")
+                    }
                 }
-                .function("deleteStructure", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.deleteStructure(it.getRef(0) as NamespacedKey)
-                    } else {
-                        it.target?.deleteStructure(
-                            it.getRef(0) as NamespacedKey,
-                            it.getBool(1)
-                        )
-                    })
+                .function("deleteStructure", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.deleteStructure(it.getRef(0) as NamespacedKey)
                 }
-                .function("deleteStructure", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.deleteStructure(it.getRef(0) as NamespacedKey)
-                    } else {
-                        it.target?.deleteStructure(
-                            it.getRef(0) as NamespacedKey,
-                            it.getBool(1)
-                        )
-                    })
+                .function("deleteStructure", returnsVoid().params(Type.OBJECT, Type.Z)) {
+                    it.target?.deleteStructure(
+                        it.getRef(0) as NamespacedKey,
+                        it.getBool(1)
+                    )
                 }
                 .function("getStructureFile", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getStructureFile(it.getRef(0) as NamespacedKey)) }
                 .function("createStructure", returnsObject().noParams()) { it.setReturnRef(it.target?.createStructure()) }

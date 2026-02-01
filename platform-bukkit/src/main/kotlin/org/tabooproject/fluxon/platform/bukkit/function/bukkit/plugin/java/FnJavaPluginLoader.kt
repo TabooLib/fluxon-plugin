@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnJavaPluginLoader {
 
+    val TYPE = Type.fromClass(JavaPluginLoader::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

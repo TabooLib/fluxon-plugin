@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnRegistry {
 
+    val TYPE = Type.fromClass(Registry::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -22,7 +24,7 @@ object FnRegistry {
                 .function("get", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
                 .function("stream", returnsObject().noParams()) { it.setReturnRef(it.target?.stream()) }
                 .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
-                .function("match", returnsObject().noParams()) { it.setReturnRef(it.target?.match(it.getString(0)!!)) }
+                .function("match", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.match(it.getString(0)!!)) }
         }
     }
 }
@@ -30,6 +32,8 @@ object FnRegistry {
 @Requires(classes = ["org.bukkit.Registry.SimpleRegistry"])
 @PlatformSide(Platform.BUKKIT)
 object FnRegistrySimpleRegistry {
+
+    val TYPE = Type.fromClass(Registry.SimpleRegistry::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

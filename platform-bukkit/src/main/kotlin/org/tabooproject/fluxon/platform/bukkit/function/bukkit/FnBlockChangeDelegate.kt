@@ -16,32 +16,34 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockChangeDelegate {
 
+    val TYPE = Type.fromClass(BlockChangeDelegate::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockChangeDelegate::class.java)
-                .function("setBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setBlockData(
+                .function("setBlockData", returns(Type.Z).params(Type.I, Type.I, Type.I, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.setBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt(),
                         it.getRef(3) as BlockData
-                    ))
+                    ) ?: false)
                 }
-                .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("getBlockData", returnsObject().params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("height", returnsObject().noParams()) { it.setReturnRef(it.target?.height) }
-                .function("isEmpty", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.isEmpty(
+                .function("height", returns(Type.I).noParams()) { it.setReturnInt(it.target?.height ?: 0) }
+                .function("isEmpty", returns(Type.Z).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.isEmpty(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    ))
+                    ) ?: false)
                 }
         }
     }

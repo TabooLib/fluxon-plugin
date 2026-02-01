@@ -9,17 +9,20 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.JukeboxInventory"])
 @PlatformSide(Platform.BUKKIT)
 object FnJukeboxInventory {
 
+    val TYPE = Type.fromClass(JukeboxInventory::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JukeboxInventory::class.java)
-                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecord(it.getRef(0) as ItemStack)) }
+                .function("setRecord", returnsVoid().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
                 .function("record", returnsObject().noParams()) { it.setReturnRef(it.target?.record) }
                 .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
         }

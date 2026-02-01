@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,16 +16,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEntityExhaustionEvent {
 
+    val TYPE = Type.fromClass(EntityExhaustionEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityExhaustionEvent::class.java)
                 .function("exhaustionReason", returnsObject().noParams()) { it.setReturnRef(it.target?.exhaustionReason) }
-                .function("exhaustion", returnsObject().noParams()) { it.setReturnRef(it.target?.exhaustion) }
-                .function("setExhaustion", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExhaustion(it.getFloat(0))) }
+                .function("exhaustion", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.exhaustion ?: 0f) }
+                .function("setExhaustion", returnsVoid().params(Type.F)) { it.target?.setExhaustion(it.getFloat(0)) }
                 .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityExhaustionEvent.getHandlerList()) }

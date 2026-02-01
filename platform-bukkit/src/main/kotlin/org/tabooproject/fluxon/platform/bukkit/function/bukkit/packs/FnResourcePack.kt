@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnResourcePack {
 
+    val TYPE = Type.fromClass(ResourcePack::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -23,7 +25,7 @@ object FnResourcePack {
                 .function("url", returnsObject().noParams()) { it.setReturnRef(it.target?.url) }
                 .function("hash", returnsObject().noParams()) { it.setReturnRef(it.target?.hash) }
                 .function("prompt", returnsObject().noParams()) { it.setReturnRef(it.target?.prompt) }
-                .function("isRequired", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRequired) }
+                .function("isRequired", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRequired ?: false) }
         }
     }
 }

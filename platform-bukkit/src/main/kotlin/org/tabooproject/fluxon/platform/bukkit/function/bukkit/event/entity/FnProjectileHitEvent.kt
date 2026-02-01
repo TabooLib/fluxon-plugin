@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @Requires(classes = ["org.bukkit.event.entity.ProjectileHitEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnProjectileHitEvent {
+
+    val TYPE = Type.fromClass(ProjectileHitEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,8 +27,8 @@ object FnProjectileHitEvent {
                 .function("hitBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlock) }
                 .function("hitBlockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlockFace) }
                 .function("hitEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.hitEntity) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ProjectileHitEvent.getHandlerList()) }

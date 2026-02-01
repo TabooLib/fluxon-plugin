@@ -10,12 +10,16 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.CookingRecipe"])
 @PlatformSide(Platform.BUKKIT)
 object FnCookingRecipe {
+
+    val TYPE = Type.fromClass(CookingRecipe::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -26,15 +30,15 @@ object FnCookingRecipe {
                 .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
                 .function("inputChoice", returnsObject().noParams()) { it.setReturnRef(it.target?.inputChoice) }
                 .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("setExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExperience(it.getFloat(0))) }
-                .function("experience", returnsObject().noParams()) { it.setReturnRef(it.target?.experience) }
-                .function("setCookingTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCookingTime(it.getInt(0).toInt())) }
-                .function("cookingTime", returnsObject().noParams()) { it.setReturnRef(it.target?.cookingTime) }
+                .function("setExperience", returnsVoid().params(Type.F)) { it.target?.setExperience(it.getFloat(0)) }
+                .function("experience", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.experience ?: 0f) }
+                .function("setCookingTime", returnsVoid().params(Type.I)) { it.target?.setCookingTime(it.getInt(0)) }
+                .function("cookingTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cookingTime ?: 0) }
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
-                .function("group", returnsObject().noParams()) { it.setReturnRef(it.target?.group) }
-                .function("setGroup", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGroup(it.getString(0)!!)) }
+                .function("group", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.group) }
+                .function("setGroup", returnsVoid().params(Type.STRING)) { it.target?.setGroup(it.getString(0)!!) }
                 .function("category", returnsObject().noParams()) { it.setReturnRef(it.target?.category) }
-                .function("setCategory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCategory(it.getRef(0) as CookingBookCategory)) }
+                .function("setCategory", returnsVoid().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CookingBookCategory) }
         }
     }
 }

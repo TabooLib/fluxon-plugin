@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,16 +17,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockDamageEvent {
 
+    val TYPE = Type.fromClass(BlockDamageEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageEvent::class.java)
                 .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
                 .function("instaBreak", returnsObject().noParams()) { it.setReturnRef(it.target?.instaBreak) }
-                .function("setInstaBreak", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInstaBreak(it.getBool(0))) }
+                .function("setInstaBreak", returnsVoid().params(Type.Z)) { it.target?.setInstaBreak(it.getBool(0)) }
                 .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockDamageEvent.getHandlerList()) }

@@ -10,25 +10,28 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.Raid"])
 @PlatformSide(Platform.BUKKIT)
 object FnRaid {
 
+    val TYPE = Type.fromClass(Raid::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Raid::class.java)
-                .function("isStarted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isStarted) }
-                .function("activeTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.activeTicks) }
-                .function("badOmenLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.badOmenLevel) }
-                .function("setBadOmenLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBadOmenLevel(it.getInt(0).toInt())) }
+                .function("isStarted", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isStarted ?: false) }
+                .function("activeTicks", returns(Type.J).noParams()) { it.setReturnLong(it.target?.activeTicks ?: 0) }
+                .function("badOmenLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.badOmenLevel ?: 0) }
+                .function("setBadOmenLevel", returnsVoid().params(Type.I)) { it.target?.setBadOmenLevel(it.getInt(0).toInt()) }
                 .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
                 .function("status", returnsObject().noParams()) { it.setReturnRef(it.target?.status) }
-                .function("spawnedGroups", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedGroups) }
-                .function("totalGroups", returnsObject().noParams()) { it.setReturnRef(it.target?.totalGroups) }
-                .function("totalWaves", returnsObject().noParams()) { it.setReturnRef(it.target?.totalWaves) }
-                .function("totalHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.totalHealth) }
+                .function("spawnedGroups", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnedGroups ?: 0) }
+                .function("totalGroups", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalGroups ?: 0) }
+                .function("totalWaves", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalWaves ?: 0) }
+                .function("totalHealth", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.totalHealth ?: 0.0f) }
                 .function("heroes", returnsObject().noParams()) { it.setReturnRef(it.target?.heroes) }
                 .function("raiders", returnsObject().noParams()) { it.setReturnRef(it.target?.raiders) }
         }

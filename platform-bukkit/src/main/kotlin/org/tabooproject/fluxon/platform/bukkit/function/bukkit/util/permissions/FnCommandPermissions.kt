@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 @PlatformSide(Platform.BUKKIT)
 object FnCommandPermissions {
 
+    val TYPE = Type.fromClass(CommandPermissions::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

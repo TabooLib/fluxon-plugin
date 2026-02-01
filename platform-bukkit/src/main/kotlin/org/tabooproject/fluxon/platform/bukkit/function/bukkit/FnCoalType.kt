@@ -8,19 +8,22 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.CoalType"])
 @PlatformSide(Platform.BUKKIT)
 object FnCoalType {
 
+    val TYPE = Type.fromClass(CoalType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CoalType::class.java)
-                .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
+                .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(CoalType.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returnsObject().params(Type.I)) { it.setReturnRef(CoalType.getByData(it.getInt(0).toByte())) }
         }
     }
 }

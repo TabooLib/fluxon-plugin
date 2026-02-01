@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,20 +16,22 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerPreLoginEvent {
 
+    val TYPE = Type.fromClass(PlayerPreLoginEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPreLoginEvent::class.java)
                 .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("setResult", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setResult(it.getRef(0) as PlayerPreLoginEvent.Result)) }
+                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as PlayerPreLoginEvent.Result) }
                 .function("kickMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.kickMessage) }
-                .function("setKickMessage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setKickMessage(it.getString(0)!!)) }
-                .function("allow", returnsObject().noParams()) { it.setReturnRef(it.target?.allow()) }
-                .function("disallow", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.disallow(
+                .function("setKickMessage", returnsVoid().params(Type.STRING)) { it.target?.setKickMessage(it.getString(0)!!) }
+                .function("allow", returnsVoid().noParams()) { it.target?.allow() }
+                .function("disallow", returnsVoid().params(Type.OBJECT, Type.STRING)) {
+                    it.target?.disallow(
                         it.getRef(0) as PlayerPreLoginEvent.Result,
                         it.getString(1)!!
-                    ))
+                    )
                 }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 .function("address", returnsObject().noParams()) { it.setReturnRef(it.target?.address) }

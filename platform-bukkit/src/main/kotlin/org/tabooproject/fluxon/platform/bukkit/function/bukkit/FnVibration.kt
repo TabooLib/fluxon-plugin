@@ -8,11 +8,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Vibration"])
 @PlatformSide(Platform.BUKKIT)
 object FnVibration {
+
+    val TYPE = Type.fromClass(Vibration::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -20,7 +23,7 @@ object FnVibration {
             registerExtension(Vibration::class.java)
                 .function("origin", returnsObject().noParams()) { it.setReturnRef(it.target?.origin) }
                 .function("destination", returnsObject().noParams()) { it.setReturnRef(it.target?.destination) }
-                .function("arrivalTime", returnsObject().noParams()) { it.setReturnRef(it.target?.arrivalTime) }
+                .function("arrivalTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.arrivalTime ?: 0) }
         }
     }
 }
@@ -28,6 +31,8 @@ object FnVibration {
 @Requires(classes = ["org.bukkit.Vibration.Destination.EntityDestination"])
 @PlatformSide(Platform.BUKKIT)
 object FnVibrationDestinationEntityDestination {
+
+    val TYPE = Type.fromClass(Vibration.Destination.EntityDestination::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -41,6 +46,8 @@ object FnVibrationDestinationEntityDestination {
 @Requires(classes = ["org.bukkit.Vibration.Destination.BlockDestination"])
 @PlatformSide(Platform.BUKKIT)
 object FnVibrationDestinationBlockDestination {
+
+    val TYPE = Type.fromClass(Vibration.Destination.BlockDestination::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

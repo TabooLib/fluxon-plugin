@@ -15,13 +15,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerRecipeBookSettingsChangeEvent {
 
+    val TYPE = Type.fromClass(PlayerRecipeBookSettingsChangeEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRecipeBookSettingsChangeEvent::class.java)
                 .function("recipeBookType", returnsObject().noParams()) { it.setReturnRef(it.target?.recipeBookType) }
-                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOpen) }
-                .function("isFiltering", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isFiltering) }
+                .function("isOpen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOpen ?: false) }
+                .function("isFiltering", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFiltering ?: false) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRecipeBookSettingsChangeEvent.getHandlerList()) }

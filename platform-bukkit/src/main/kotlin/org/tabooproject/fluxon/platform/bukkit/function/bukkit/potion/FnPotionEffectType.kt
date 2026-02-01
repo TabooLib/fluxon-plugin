@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPotionEffectType {
 
+    val TYPE = Type.fromClass(PotionEffectType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -26,7 +28,7 @@ object FnPotionEffectType {
                         it.getInt(1).toInt()
                     ))
                 }
-                .function("isInstant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInstant) }
+                .function("isInstant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInstant ?: false) }
                 .function("category", returnsObject().noParams()) { it.setReturnRef(it.target?.category) }
                 .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
                 .function("durationModifier", returnsObject().noParams()) { it.setReturnRef(it.target?.durationModifier) }

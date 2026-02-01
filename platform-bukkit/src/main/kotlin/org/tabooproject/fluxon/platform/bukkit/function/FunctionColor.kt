@@ -35,7 +35,7 @@ object FunctionColor {
                 .function("lerp", returnsObject().params(Type.OBJECT, Type.D)) {
                     val fromColor = it.target!!
                     val toColor = it.getRef(0) as Color
-                    val t = it.getAsDouble(1)
+                    val t = it.getDouble(1)
                     it.setReturnRef(Color.fromRGB(
                         (fromColor.red + (toColor.red - fromColor.red) * t).toInt(),
                         (fromColor.green + (toColor.green - fromColor.green) * t).toInt(),

@@ -11,40 +11,33 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.ServerTickManager"])
 @PlatformSide(Platform.BUKKIT)
 object FnServerTickManager {
 
+    val TYPE = Type.fromClass(ServerTickManager::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerTickManager::class.java)
-                .function("isRunningNormally", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRunningNormally) }
-                .function("isStepping", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isStepping) }
-                .function("isSprinting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSprinting) }
-                .function("isFrozen", returns(Type.Z).noParams()) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.isFrozen
-                    } else {
-                        it.target?.isFrozen(it.getRef(0) as Entity)
-                    })
-                }
+                .function("isRunningNormally", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRunningNormally ?: false) }
+                .function("isStepping", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isStepping ?: false) }
+                .function("isSprinting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSprinting ?: false) }
+                .function("isFrozen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFrozen ?: false) }
                 .function("isFrozen", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnRef(if ((it.argumentCount == 0)) {
-                        it.target?.isFrozen
-                    } else {
-                        it.target?.isFrozen(it.getRef(0) as Entity)
-                    })
+                    it.setReturnBool(it.target?.isFrozen(it.getRef(0) as Entity) ?: false)
                 }
-                .function("tickRate", returnsObject().noParams()) { it.setReturnRef(it.target?.tickRate) }
-                .function("setTickRate", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTickRate(it.getFloat(0))) }
-                .function("setFrozen", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFrozen(it.getBool(0))) }
-                .function("stepGameIfFrozen", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.stepGameIfFrozen(it.getInt(0).toInt())) }
-                .function("stopStepping", returnsObject().noParams()) { it.setReturnRef(it.target?.stopStepping()) }
-                .function("requestGameToSprint", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.requestGameToSprint(it.getInt(0).toInt())) }
-                .function("stopSprinting", returnsObject().noParams()) { it.setReturnRef(it.target?.stopSprinting()) }
-                .function("frozenTicksToRun", returnsObject().noParams()) { it.setReturnRef(it.target?.frozenTicksToRun) }
+                .function("tickRate", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.tickRate ?: 0.0f) }
+                .function("setTickRate", returnsVoid().params(Type.F)) { it.target?.setTickRate(it.getFloat(0)) }
+                .function("setFrozen", returnsVoid().params(Type.Z)) { it.target?.setFrozen(it.getBool(0)) }
+                .function("stepGameIfFrozen", returnsVoid().params(Type.I)) { it.target?.stepGameIfFrozen(it.getInt(0).toInt()) }
+                .function("stopStepping", returnsVoid().noParams()) { it.target?.stopStepping() }
+                .function("requestGameToSprint", returnsVoid().params(Type.I)) { it.target?.requestGameToSprint(it.getInt(0).toInt()) }
+                .function("stopSprinting", returnsVoid().noParams()) { it.target?.stopSprinting() }
+                .function("frozenTicksToRun", returns(Type.I).noParams()) { it.setReturnInt(it.target?.frozenTicksToRun ?: 0) }
         }
     }
 }

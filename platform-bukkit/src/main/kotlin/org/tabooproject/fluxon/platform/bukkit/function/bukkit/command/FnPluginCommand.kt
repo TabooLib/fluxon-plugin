@@ -10,28 +10,31 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.PluginCommand"])
 @PlatformSide(Platform.BUKKIT)
 object FnPluginCommand {
 
+    val TYPE = Type.fromClass(PluginCommand::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginCommand::class.java)
-                .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.execute(
+                .function("execute", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.execute(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!,
                         it.getRef(2) as Array<String>
-                    ))
+                    ) == true)
                 }
-                .function("setExecutor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExecutor(it.getRef(0) as CommandExecutor)) }
+                .function("setExecutor", returnsVoid().params(Type.OBJECT)) { it.target?.setExecutor(it.getRef(0) as CommandExecutor) }
                 .function("executor", returnsObject().noParams()) { it.setReturnRef(it.target?.executor) }
-                .function("setTabCompleter", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTabCompleter(it.getRef(0) as TabCompleter)) }
+                .function("setTabCompleter", returnsVoid().params(Type.OBJECT)) { it.target?.setTabCompleter(it.getRef(0) as TabCompleter) }
                 .function("tabCompleter", returnsObject().noParams()) { it.setReturnRef(it.target?.tabCompleter) }
                 .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
                 .function("tabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {

@@ -16,22 +16,24 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEnchantmentStorageMeta {
 
+    val TYPE = Type.fromClass(EnchantmentStorageMeta::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentStorageMeta::class.java)
-                .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasStoredEnchants()) }
-                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasStoredEnchant(it.getRef(0) as Enchantment)) }
-                .function("getStoredEnchantLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment)) }
-                .function("addStoredEnchant", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.addStoredEnchant(
+                .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasStoredEnchants() ?: false) }
+                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
+                .function("getStoredEnchantLevel", returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment) ?: 0) }
+                .function("addStoredEnchant", returns(Type.Z).params(Type.OBJECT, Type.I, Type.Z)) {
+                    it.setReturnBool(it.target?.addStoredEnchant(
                         it.getRef(0) as Enchantment,
-                        it.getInt(1).toInt(),
+                        it.getInt(1),
                         it.getBool(2)
-                    ))
+                    ) ?: false)
                 }
-                .function("removeStoredEnchant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeStoredEnchant(it.getRef(0) as Enchantment)) }
-                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment)) }
+                .function("removeStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.removeStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
+                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

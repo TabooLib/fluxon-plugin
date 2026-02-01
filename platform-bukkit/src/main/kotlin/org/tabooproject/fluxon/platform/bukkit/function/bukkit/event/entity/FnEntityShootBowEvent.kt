@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,6 +17,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @Requires(classes = ["org.bukkit.event.entity.EntityShootBowEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnEntityShootBowEvent {
+
+    val TYPE = Type.fromClass(EntityShootBowEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -25,13 +28,13 @@ object FnEntityShootBowEvent {
                 .function("bow", returnsObject().noParams()) { it.setReturnRef(it.target?.bow) }
                 .function("consumable", returnsObject().noParams()) { it.setReturnRef(it.target?.consumable) }
                 .function("projectile", returnsObject().noParams()) { it.setReturnRef(it.target?.projectile) }
-                .function("setProjectile", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setProjectile(it.getRef(0) as Entity)) }
+                .function("setProjectile", returnsVoid().params(Type.OBJECT)) { it.target?.setProjectile(it.getRef(0) as Entity) }
                 .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("force", returnsObject().noParams()) { it.setReturnRef(it.target?.force) }
-                .function("setConsumeItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConsumeItem(it.getBool(0))) }
-                .function("shouldConsumeItem", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.shouldConsumeItem()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCancelled) }
-                .function("setCancelled", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCancelled(it.getBool(0))) }
+                .function("force", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.force ?: 0f) }
+                .function("setConsumeItem", returnsVoid().params(Type.Z)) { it.target?.setConsumeItem(it.getBool(0)) }
+                .function("shouldConsumeItem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.shouldConsumeItem() ?: false) }
+                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
+                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityShootBowEvent.getHandlerList()) }

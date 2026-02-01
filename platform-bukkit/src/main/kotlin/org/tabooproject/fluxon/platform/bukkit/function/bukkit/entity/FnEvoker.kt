@@ -8,18 +8,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Evoker"])
 @PlatformSide(Platform.BUKKIT)
 object FnEvoker {
 
+    val TYPE = Type.fromClass(Evoker::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Evoker::class.java)
                 .function("currentSpell", returnsObject().noParams()) { it.setReturnRef(it.target?.currentSpell) }
-                .function("setCurrentSpell", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCurrentSpell(it.getRef(0) as Evoker.Spell)) }
+                .function("setCurrentSpell", returnsVoid().params(Type.OBJECT)) { it.target?.setCurrentSpell(it.getRef(0) as Evoker.Spell) }
         }
     }
 }

@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 @PlatformSide(Platform.BUKKIT)
 object FnBroadcastPermissions {
 
+    val TYPE = Type.fromClass(BroadcastPermissions::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

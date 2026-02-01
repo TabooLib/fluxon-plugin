@@ -13,6 +13,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -20,30 +21,36 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPotionMeta {
 
+    val TYPE = Type.fromClass(PotionMeta::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionMeta::class.java)
-                .function("setBasePotionData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBasePotionData(it.getRef(0) as PotionData)) }
+                .function("setBasePotionData", returnsVoid().params(Type.OBJECT)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
                 .function("basePotionData", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionData) }
-                .function("setBasePotionType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBasePotionType(it.getRef(0) as PotionType)) }
+                .function("setBasePotionType", returnsVoid().params(Type.OBJECT)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
                 .function("basePotionType", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionType) }
-                .function("hasBasePotionType", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasBasePotionType()) }
-                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasCustomEffects()) }
+                .function("hasBasePotionType", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBasePotionType() ?: false) }
+                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCustomEffects() ?: false) }
                 .function("customEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.customEffects) }
-                .function("addCustomEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.addCustomEffect(
+                .function("addCustomEffect", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                    it.setReturnBool(it.target?.addCustomEffect(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
-                    ))
+                    ) ?: false)
                 }
-                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType)) }
-                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType)) }
-                .function("setMainEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMainEffect(it.getRef(0) as PotionEffectType)) }
-                .function("clearCustomEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.clearCustomEffects()) }
-                .function("hasColor", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasColor()) }
+                .function("removeCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("setMainEffect", returnsVoid().params(Type.OBJECT)) { it.target?.setMainEffect(it.getRef(0) as PotionEffectType) }
+                .function("clearCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.clearCustomEffects() ?: false) }
+                .function("hasColor", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasColor() ?: false) }
                 .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as Color)) }
+                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

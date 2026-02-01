@@ -15,15 +15,19 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPotionData {
 
+    val TYPE = Type.fromClass(PotionData::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionData::class.java)
                 .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("isUpgraded", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUpgraded) }
-                .function("isExtended", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isExtended) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("isUpgraded", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUpgraded ?: false) }
+                .function("isExtended", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExtended ?: false) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
         }
     }
 }

@@ -17,21 +17,27 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnSuspiciousStewMeta {
 
+    val TYPE = Type.fromClass(SuspiciousStewMeta::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SuspiciousStewMeta::class.java)
-                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasCustomEffects()) }
+                .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCustomEffects() ?: false) }
                 .function("customEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.customEffects) }
-                .function("addCustomEffect", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.addCustomEffect(
+                .function("addCustomEffect", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                    it.setReturnBool(it.target?.addCustomEffect(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
-                    ))
+                    ) ?: false)
                 }
-                .function("removeCustomEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType)) }
-                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType)) }
-                .function("clearCustomEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.clearCustomEffects()) }
+                .function("removeCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("clearCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.clearCustomEffects() ?: false) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

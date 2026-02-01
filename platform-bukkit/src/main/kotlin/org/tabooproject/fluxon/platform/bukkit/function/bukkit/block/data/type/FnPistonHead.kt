@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,12 +16,14 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPistonHead {
 
+    val TYPE = Type.fromClass(PistonHead::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonHead::class.java)
-                .function("isShort", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShort) }
-                .function("setShort", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShort(it.getBool(0))) }
+                .function("isShort", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShort ?: false) }
+                .function("setShort", returnsVoid().params(Type.Z)) { it.target?.setShort(it.getBool(0)) }
         }
     }
 }

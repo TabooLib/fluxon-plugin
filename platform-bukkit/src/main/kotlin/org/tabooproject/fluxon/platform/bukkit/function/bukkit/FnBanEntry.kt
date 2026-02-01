@@ -9,11 +9,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.BanEntry"])
 @PlatformSide(Platform.BUKKIT)
 object FnBanEntry {
+
+    val TYPE = Type.fromClass(BanEntry::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -22,15 +25,15 @@ object FnBanEntry {
                 .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
                 .function("banTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.getBanTarget()) }
                 .function("created", returnsObject().noParams()) { it.setReturnRef(it.target?.created) }
-                .function("setCreated", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCreated(Date(it.getInt(0).toLong()))) }
+                .function("setCreated", returnsVoid().params(Type.J)) { it.target?.setCreated(Date(it.getLong(0))) }
                 .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
-                .function("setSource", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSource(it.getString(0)!!)) }
+                .function("setSource", returnsVoid().params(Type.STRING)) { it.target?.setSource(it.getString(0)!!) }
                 .function("expiration", returnsObject().noParams()) { it.setReturnRef(it.target?.expiration) }
-                .function("setExpiration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExpiration(Date(it.getInt(0).toLong()))) }
+                .function("setExpiration", returnsVoid().params(Type.J)) { it.target?.setExpiration(Date(it.getLong(0))) }
                 .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
-                .function("setReason", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setReason(it.getString(0))) }
-                .function("save", returnsObject().noParams()) { it.setReturnRef(it.target?.save()) }
-                .function("remove", returnsObject().noParams()) { it.setReturnRef(it.target?.remove()) }
+                .function("setReason", returnsVoid().params(Type.STRING)) { it.target?.setReason(it.getString(0)) }
+                .function("save", returnsVoid().noParams()) { it.target?.save() }
+                .function("remove", returnsVoid().noParams()) { it.target?.remove() }
         }
     }
 }

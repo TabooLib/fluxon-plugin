@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,21 +16,23 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnCrafter {
 
+    val TYPE = Type.fromClass(Crafter::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
-                .function("craftingTicks", returnsObject().noParams()) { it.setReturnRef(it.target?.craftingTicks) }
-                .function("setCraftingTicks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCraftingTicks(it.getInt(0).toInt())) }
-                .function("isSlotDisabled", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isSlotDisabled(it.getInt(0).toInt())) }
-                .function("setSlotDisabled", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setSlotDisabled(
-                        it.getInt(0).toInt(),
+                .function("craftingTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.craftingTicks ?: 0) }
+                .function("setCraftingTicks", returnsVoid().params(Type.I)) { it.target?.setCraftingTicks(it.getInt(0)) }
+                .function("isSlotDisabled", returns(Type.Z).params(Type.I)) { it.setReturnBool(it.target?.isSlotDisabled(it.getInt(0)) ?: false) }
+                .function("setSlotDisabled", returnsVoid().params(Type.I, Type.Z)) {
+                    it.target?.setSlotDisabled(
+                        it.getInt(0),
                         it.getBool(1)
-                    ))
+                    )
                 }
-                .function("isTriggered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isTriggered) }
-                .function("setTriggered", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTriggered(it.getBool(0))) }
+                .function("isTriggered", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTriggered ?: false) }
+                .function("setTriggered", returnsVoid().params(Type.Z)) { it.target?.setTriggered(it.getBool(0)) }
         }
     }
 }

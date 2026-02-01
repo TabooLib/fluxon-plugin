@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,12 +17,14 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnServerOperator {
 
+    val TYPE = Type.fromClass(ServerOperator::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerOperator::class.java)
-                .function("isOp", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isOp) }
-                .function("setOp", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOp(it.getBool(0))) }
+                .function("isOp", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOp ?: false) }
+                .function("setOp", returnsVoid().params(Type.Z)) { it.target?.setOp(it.getBool(0)) }
         }
     }
 }

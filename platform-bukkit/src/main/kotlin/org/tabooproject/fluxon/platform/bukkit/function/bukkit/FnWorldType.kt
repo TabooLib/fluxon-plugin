@@ -15,13 +15,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnWorldType {
 
+    val TYPE = Type.fromClass(WorldType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldType::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.getName()) }
                 // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(WorldType.getByName(it.getString(0)!!)) }
+                .function("getByName", returnsObject().params(Type.STRING)) { it.setReturnRef(WorldType.getByName(it.getString(0)!!)) }
         }
     }
 }

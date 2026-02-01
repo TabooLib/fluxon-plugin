@@ -8,20 +8,24 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.SculkShrieker"])
 @PlatformSide(Platform.BUKKIT)
 object FnSculkShrieker {
 
+    val TYPE = Type.fromClass(SculkShrieker::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkShrieker::class.java)
-                .function("warningLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.warningLevel) }
-                .function("setWarningLevel", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWarningLevel(it.getInt(0).toInt())) }
-                .function("tryShriek", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.tryShriek(it.getRef(0) as Player)) }
+                .function("warningLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.warningLevel ?: 0) }
+                .function("setWarningLevel", returnsVoid().params(Type.I)) { it.target?.setWarningLevel(it.getInt(0).toInt()) }
+                .function("tryShriek", returnsVoid().params(Type.OBJECT)) { it.target?.tryShriek(it.getRef(0) as Player) }
         }
     }
 }

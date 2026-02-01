@@ -9,25 +9,32 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.ZombieVillager"])
 @PlatformSide(Platform.BUKKIT)
 object FnZombieVillager {
 
+    val TYPE = Type.fromClass(ZombieVillager::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ZombieVillager::class.java)
-                .function("setVillagerProfession", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession)) }
-                .function("setVillagerType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerType(it.getRef(0) as Villager.Type)) }
-                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
-                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
+                .function("setVillagerProfession", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession)
+                }
+                .function("setVillagerType", returnsVoid().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
+                .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
                 .function("conversionPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionPlayer) }
-                .function("setConversionPlayer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer)) }
+                .function("setConversionPlayer", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer)
+                }
         }
     }
 }

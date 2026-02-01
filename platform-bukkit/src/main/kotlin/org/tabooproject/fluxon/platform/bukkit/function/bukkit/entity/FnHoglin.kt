@@ -7,25 +7,28 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Hoglin"])
 @PlatformSide(Platform.BUKKIT)
 object FnHoglin {
 
+    val TYPE = Type.fromClass(Hoglin::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hoglin::class.java)
-                .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isImmuneToZombification) }
-                .function("setImmuneToZombification", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setImmuneToZombification(it.getBool(0))) }
-                .function("isAbleToBeHunted", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAbleToBeHunted) }
-                .function("setIsAbleToBeHunted", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIsAbleToBeHunted(it.getBool(0))) }
-                .function("conversionTime", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionTime) }
-                .function("setConversionTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setConversionTime(it.getInt(0).toInt())) }
-                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isConverting) }
+                .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isImmuneToZombification ?: false) }
+                .function("setImmuneToZombification", returnsVoid().params(Type.Z)) { it.target?.setImmuneToZombification(it.getBool(0)) }
+                .function("isAbleToBeHunted", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAbleToBeHunted ?: false) }
+                .function("setIsAbleToBeHunted", returnsVoid().params(Type.Z)) { it.target?.setIsAbleToBeHunted(it.getBool(0)) }
+                .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
         }
     }
 }

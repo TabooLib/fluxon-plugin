@@ -9,24 +9,27 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.TropicalFishBucketMeta"])
 @PlatformSide(Platform.BUKKIT)
 object FnTropicalFishBucketMeta {
+
+    val TYPE = Type.fromClass(TropicalFishBucketMeta::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFishBucketMeta::class.java)
                 .function("patternColor", returnsObject().noParams()) { it.setReturnRef(it.target?.patternColor) }
-                .function("setPatternColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPatternColor(it.getRef(0) as DyeColor)) }
+                .function("setPatternColor", returnsVoid().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
                 .function("bodyColor", returnsObject().noParams()) { it.setReturnRef(it.target?.bodyColor) }
-                .function("setBodyColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBodyColor(it.getRef(0) as DyeColor)) }
-                .function("setPattern", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern)) }
-                .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasVariant()) }
+                .function("setBodyColor", returnsVoid().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
+                .function("setPattern", returnsVoid().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
+                .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasVariant() ?: false) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

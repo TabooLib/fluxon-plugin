@@ -9,20 +9,23 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Cat"])
 @PlatformSide(Platform.BUKKIT)
 object FnCat {
 
+    val TYPE = Type.fromClass(Cat::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cat::class.java)
                 .function("catType", returnsObject().noParams()) { it.setReturnRef(it.target?.catType) }
-                .function("setCatType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCatType(it.getRef(0) as Cat.Type)) }
+                .function("setCatType", returnsVoid().params(Type.OBJECT)) { it.target?.setCatType(it.getRef(0) as Cat.Type) }
                 .function("collarColor", returnsObject().noParams()) { it.setReturnRef(it.target?.collarColor) }
-                .function("setCollarColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCollarColor(it.getRef(0) as DyeColor)) }
+                .function("setCollarColor", returnsVoid().params(Type.OBJECT)) { it.target?.setCollarColor(it.getRef(0) as DyeColor) }
         }
     }
 }
@@ -30,6 +33,8 @@ object FnCat {
 @Requires(classes = ["org.bukkit.entity.Cat.Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnCatType {
+
+    val TYPE = Type.fromClass(Cat.Type::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

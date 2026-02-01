@@ -10,6 +10,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -17,22 +18,24 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnFirework {
 
+    val TYPE = Type.fromClass(Firework::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Firework::class.java)
                 .function("fireworkMeta", returnsObject().noParams()) { it.setReturnRef(it.target?.fireworkMeta) }
-                .function("setFireworkMeta", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFireworkMeta(it.getRef(0) as FireworkMeta)) }
-                .function("setAttachedTo", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAttachedTo(it.getRef(0) as LivingEntity)) }
+                .function("setFireworkMeta", returnsVoid().params(Type.OBJECT)) { it.target?.setFireworkMeta(it.getRef(0) as FireworkMeta) }
+                .function("setAttachedTo", returnsVoid().params(Type.OBJECT)) { it.target?.setAttachedTo(it.getRef(0) as LivingEntity) }
                 .function("attachedTo", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedTo) }
-                .function("setLife", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setLife(it.getInt(0).toInt())) }
-                .function("life", returnsObject().noParams()) { it.setReturnRef(it.target?.life) }
-                .function("setMaxLife", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxLife(it.getInt(0).toInt())) }
-                .function("maxLife", returnsObject().noParams()) { it.setReturnRef(it.target?.maxLife) }
-                .function("detonate", returnsObject().noParams()) { it.setReturnRef(it.target?.detonate()) }
-                .function("isDetonated", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDetonated) }
-                .function("isShotAtAngle", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShotAtAngle) }
-                .function("setShotAtAngle", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setShotAtAngle(it.getBool(0))) }
+                .function("setLife", returnsVoid().params(Type.I)) { it.target?.setLife(it.getInt(0)) }
+                .function("life", returns(Type.I).noParams()) { it.setReturnInt(it.target?.life ?: 0) }
+                .function("setMaxLife", returnsVoid().params(Type.I)) { it.target?.setMaxLife(it.getInt(0)) }
+                .function("maxLife", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLife ?: 0) }
+                .function("detonate", returnsVoid().noParams()) { it.target?.detonate() }
+                .function("isDetonated", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDetonated ?: false) }
+                .function("isShotAtAngle", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShotAtAngle ?: false) }
+                .function("setShotAtAngle", returnsVoid().params(Type.Z)) { it.target?.setShotAtAngle(it.getBool(0)) }
         }
     }
 }

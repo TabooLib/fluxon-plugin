@@ -8,20 +8,23 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.ArmorMeta"])
 @PlatformSide(Platform.BUKKIT)
 object FnArmorMeta {
 
+    val TYPE = Type.fromClass(ArmorMeta::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorMeta::class.java)
-                .function("hasTrim", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasTrim()) }
-                .function("setTrim", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTrim(it.getRef(0) as ArmorTrim)) }
+                .function("hasTrim", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasTrim() ?: false) }
+                .function("setTrim", returnsVoid().params(Type.OBJECT)) { it.target?.setTrim(it.getRef(0) as ArmorTrim) }
                 .function("trim", returnsObject().noParams()) { it.setReturnRef(it.target?.trim) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }

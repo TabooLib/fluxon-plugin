@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEquipmentSlotGroup {
 
+    val TYPE = Type.fromClass(EquipmentSlotGroup::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

@@ -8,18 +8,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.data.type.Jigsaw"])
 @PlatformSide(Platform.BUKKIT)
 object FnJigsaw {
 
+    val TYPE = Type.fromClass(Jigsaw::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jigsaw::class.java)
                 .function("orientation", returnsObject().noParams()) { it.setReturnRef(it.target?.orientation) }
-                .function("setOrientation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setOrientation(it.getRef(0) as Jigsaw.Orientation)) }
+                .function("setOrientation", returnsVoid().params(Type.OBJECT)) { it.target?.setOrientation(it.getRef(0) as Jigsaw.Orientation) }
         }
     }
 }

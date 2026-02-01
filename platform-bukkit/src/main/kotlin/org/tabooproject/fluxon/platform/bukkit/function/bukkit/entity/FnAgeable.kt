@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -15,19 +16,21 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnAgeable {
 
+    val TYPE = Type.fromClass(Ageable::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ageable::class.java)
-                .function("age", returnsObject().noParams()) { it.setReturnRef(it.target?.age) }
-                .function("setAge", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAge(it.getInt(0).toInt())) }
-                .function("setAgeLock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAgeLock(it.getBool(0))) }
-                .function("ageLock", returnsObject().noParams()) { it.setReturnRef(it.target?.ageLock) }
-                .function("setBaby", returnsObject().noParams()) { it.setReturnRef(it.target?.setBaby()) }
-                .function("setAdult", returnsObject().noParams()) { it.setReturnRef(it.target?.setAdult()) }
-                .function("isAdult", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAdult) }
-                .function("canBreed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canBreed()) }
-                .function("setBreed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setBreed(it.getBool(0))) }
+                .function("age", returns(Type.I).noParams()) { it.setReturnInt(it.target?.age ?: 0) }
+                .function("setAge", returnsVoid().params(Type.I)) { it.target?.setAge(it.getInt(0)) }
+                .function("setAgeLock", returnsVoid().params(Type.Z)) { it.target?.setAgeLock(it.getBool(0)) }
+                .function("ageLock", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.ageLock ?: false) }
+                .function("setBaby", returnsVoid().noParams()) { it.target?.setBaby() }
+                .function("setAdult", returnsVoid().noParams()) { it.target?.setAdult() }
+                .function("isAdult", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAdult ?: false) }
+                .function("canBreed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canBreed() ?: false) }
+                .function("setBreed", returnsVoid().params(Type.Z)) { it.target?.setBreed(it.getBool(0)) }
         }
     }
 }

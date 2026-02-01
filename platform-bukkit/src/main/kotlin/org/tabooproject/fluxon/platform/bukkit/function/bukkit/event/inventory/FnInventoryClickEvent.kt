@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,21 +17,23 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryClickEvent {
 
+    val TYPE = Type.fromClass(InventoryClickEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryClickEvent::class.java)
                 .function("cursor", returnsObject().noParams()) { it.setReturnRef(it.target?.cursor) }
                 .function("currentItem", returnsObject().noParams()) { it.setReturnRef(it.target?.currentItem) }
-                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRightClick) }
-                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isLeftClick) }
-                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isShiftClick) }
-                .function("setCursor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCursor(it.getRef(0) as ItemStack)) }
-                .function("setCurrentItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCurrentItem(it.getRef(0) as ItemStack)) }
+                .function("isRightClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRightClick ?: false) }
+                .function("isLeftClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLeftClick ?: false) }
+                .function("isShiftClick", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShiftClick ?: false) }
+                .function("setCursor", returnsVoid().params(Type.OBJECT)) { it.target?.setCursor(it.getRef(0) as ItemStack) }
+                .function("setCurrentItem", returnsVoid().params(Type.OBJECT)) { it.target?.setCurrentItem(it.getRef(0) as ItemStack) }
                 .function("clickedInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.clickedInventory) }
-                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
-                .function("rawSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.rawSlot) }
-                .function("hotbarButton", returnsObject().noParams()) { it.setReturnRef(it.target?.hotbarButton) }
+                .function("slot", returns(Type.I).noParams()) { it.setReturnInt(it.target?.slot ?: 0) }
+                .function("rawSlot", returns(Type.I).noParams()) { it.setReturnInt(it.target?.rawSlot ?: 0) }
+                .function("hotbarButton", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hotbarButton ?: 0) }
                 .function("action", returnsObject().noParams()) { it.setReturnRef(it.target?.action) }
                 .function("click", returnsObject().noParams()) { it.setReturnRef(it.target?.click) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }

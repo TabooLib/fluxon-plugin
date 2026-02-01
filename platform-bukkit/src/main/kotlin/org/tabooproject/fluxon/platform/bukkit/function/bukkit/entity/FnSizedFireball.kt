@@ -9,18 +9,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.SizedFireball"])
 @PlatformSide(Platform.BUKKIT)
 object FnSizedFireball {
 
+    val TYPE = Type.fromClass(SizedFireball::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SizedFireball::class.java)
                 .function("displayItem", returnsObject().noParams()) { it.setReturnRef(it.target?.displayItem) }
-                .function("setDisplayItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisplayItem(it.getRef(0) as ItemStack)) }
+                .function("setDisplayItem", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayItem(it.getRef(0) as ItemStack) }
         }
     }
 }

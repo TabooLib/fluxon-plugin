@@ -7,10 +7,13 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.FeatureFlag"])
 @PlatformSide(Platform.BUKKIT)
 object FnFeatureFlag {
+
+    val TYPE = Type.fromClass(FeatureFlag::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

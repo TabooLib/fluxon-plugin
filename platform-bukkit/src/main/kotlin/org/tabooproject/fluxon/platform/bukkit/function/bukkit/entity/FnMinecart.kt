@@ -10,34 +10,37 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Minecart"])
 @PlatformSide(Platform.BUKKIT)
 object FnMinecart {
 
+    val TYPE = Type.fromClass(Minecart::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Minecart::class.java)
-                .function("setDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDamage(it.getAsDouble(0))) }
-                .function("damage", returnsObject().noParams()) { it.setReturnRef(it.target?.damage) }
-                .function("maxSpeed", returnsObject().noParams()) { it.setReturnRef(it.target?.maxSpeed) }
-                .function("setMaxSpeed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxSpeed(it.getAsDouble(0))) }
-                .function("isSlowWhenEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSlowWhenEmpty) }
-                .function("setSlowWhenEmpty", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSlowWhenEmpty(it.getBool(0))) }
+                .function("setDamage", returnsVoid().params(Type.D)) { it.target?.setDamage(it.getDouble(0)) }
+                .function("damage", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damage ?: 0.0) }
+                .function("maxSpeed", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.maxSpeed ?: 0.0) }
+                .function("setMaxSpeed", returnsVoid().params(Type.D)) { it.target?.setMaxSpeed(it.getDouble(0)) }
+                .function("isSlowWhenEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSlowWhenEmpty ?: false) }
+                .function("setSlowWhenEmpty", returnsVoid().params(Type.Z)) { it.target?.setSlowWhenEmpty(it.getBool(0)) }
                 .function("flyingVelocityMod", returnsObject().noParams()) { it.setReturnRef(it.target?.flyingVelocityMod) }
-                .function("setFlyingVelocityMod", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFlyingVelocityMod(it.getRef(0) as Vector)) }
+                .function("setFlyingVelocityMod", returnsVoid().params(Type.OBJECT)) { it.target?.setFlyingVelocityMod(it.getRef(0) as Vector) }
                 .function("derailedVelocityMod", returnsObject().noParams()) { it.setReturnRef(it.target?.derailedVelocityMod) }
-                .function("setDerailedVelocityMod", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDerailedVelocityMod(it.getRef(0) as Vector)) }
-                .function("setDisplayBlock", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisplayBlock(it.getRef(0) as MaterialData)) }
+                .function("setDerailedVelocityMod", returnsVoid().params(Type.OBJECT)) { it.target?.setDerailedVelocityMod(it.getRef(0) as Vector) }
+                .function("setDisplayBlock", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayBlock(it.getRef(0) as MaterialData) }
                 .function("displayBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.displayBlock) }
-                .function("setDisplayBlockData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisplayBlockData(it.getRef(0) as BlockData)) }
+                .function("setDisplayBlockData", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayBlockData(it.getRef(0) as BlockData) }
                 .function("displayBlockData", returnsObject().noParams()) { it.setReturnRef(it.target?.displayBlockData) }
-                .function("setDisplayBlockOffset", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDisplayBlockOffset(it.getInt(0).toInt())) }
-                .function("displayBlockOffset", returnsObject().noParams()) { it.setReturnRef(it.target?.displayBlockOffset) }
+                .function("setDisplayBlockOffset", returnsVoid().params(Type.I)) { it.target?.setDisplayBlockOffset(it.getInt(0).toInt()) }
+                .function("displayBlockOffset", returns(Type.I).noParams()) { it.setReturnInt(it.target?.displayBlockOffset ?: 0) }
         }
     }
 }

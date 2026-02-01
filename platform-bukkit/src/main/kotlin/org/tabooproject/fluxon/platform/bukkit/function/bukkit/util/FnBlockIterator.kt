@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnBlockIterator {
 
+    val TYPE = Type.fromClass(BlockIterator::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockIterator::class.java)
-                .function("hasNext", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasNext()) }
+                .function("hasNext", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasNext() ?: false) }
                 .function("next", returnsObject().noParams()) { it.setReturnRef(it.target?.next()) }
                 .function("remove", returnsObject().noParams()) { it.setReturnRef(it.target?.remove()) }
         }

@@ -15,17 +15,19 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnDataPack {
 
+    val TYPE = Type.fromClass(DataPack::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DataPack::class.java)
                 .function("title", returnsObject().noParams()) { it.setReturnRef(it.target?.title) }
                 .function("description", returnsObject().noParams()) { it.setReturnRef(it.target?.description) }
-                .function("packFormat", returnsObject().noParams()) { it.setReturnRef(it.target?.packFormat) }
-                .function("minSupportedPackFormat", returnsObject().noParams()) { it.setReturnRef(it.target?.minSupportedPackFormat) }
-                .function("maxSupportedPackFormat", returnsObject().noParams()) { it.setReturnRef(it.target?.maxSupportedPackFormat) }
-                .function("isEnabled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEnabled) }
-                .function("isRequired", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRequired) }
+                .function("packFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.packFormat ?: 0) }
+                .function("minSupportedPackFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minSupportedPackFormat ?: 0) }
+                .function("maxSupportedPackFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxSupportedPackFormat ?: 0) }
+                .function("isEnabled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEnabled ?: false) }
+                .function("isRequired", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRequired ?: false) }
                 .function("compatibility", returnsObject().noParams()) { it.setReturnRef(it.target?.compatibility) }
                 .function("requestedFeatures", returnsObject().noParams()) { it.setReturnRef(it.target?.requestedFeatures) }
                 .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }

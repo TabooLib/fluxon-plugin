@@ -16,6 +16,8 @@ import taboolib.common.Requires
 @PlatformSide(Platform.BUKKIT)
 object FnSound {
 
+    val TYPE = Type.fromClass(Sound::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {

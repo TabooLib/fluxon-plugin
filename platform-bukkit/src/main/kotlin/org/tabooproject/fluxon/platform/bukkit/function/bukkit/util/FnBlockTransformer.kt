@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnBlockTransformer {
 
+    val TYPE = Type.fromClass(BlockTransformer::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -37,6 +39,8 @@ object FnBlockTransformer {
 @Requires(classes = ["org.bukkit.util.BlockTransformer.TransformationState"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockTransformerTransformationState {
+
+    val TYPE = Type.fromClass(BlockTransformer.TransformationState::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

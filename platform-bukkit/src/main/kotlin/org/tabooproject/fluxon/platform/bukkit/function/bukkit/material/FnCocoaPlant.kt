@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,14 +17,20 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnCocoaPlant {
 
+    val TYPE = Type.fromClass(CocoaPlant::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CocoaPlant::class.java)
-                .function("size", returns(Type.I).noParams()) { it.setReturnRef(it.target?.size) }
-                .function("setSize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSize(it.getRef(0) as CocoaPlant.CocoaPlantSize)) }
+                .function("size", returnsObject().noParams()) { it.setReturnRef(it.target?.size) }
+                .function("setSize", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.setSize(it.getRef(0) as CocoaPlant.CocoaPlantSize)
+                }
                 .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("setFacingDirection", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.setFacingDirection(it.getRef(0) as BlockFace)
+                }
                 .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }

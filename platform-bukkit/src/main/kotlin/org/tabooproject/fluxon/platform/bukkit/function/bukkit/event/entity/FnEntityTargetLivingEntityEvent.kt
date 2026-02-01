@@ -9,18 +9,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.entity.EntityTargetLivingEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnEntityTargetLivingEntityEvent {
 
+    val TYPE = Type.fromClass(EntityTargetLivingEntityEvent::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTargetLivingEntityEvent::class.java)
                 .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
-                .function("setTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTarget(it.getRef(0) as Entity)) }
+                .function("setTarget", returnsVoid().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as Entity) }
         }
     }
 }

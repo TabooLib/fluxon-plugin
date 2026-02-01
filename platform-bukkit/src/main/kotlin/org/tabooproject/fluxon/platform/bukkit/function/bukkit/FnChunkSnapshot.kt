@@ -17,112 +17,92 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnChunkSnapshot {
 
+    val TYPE = Type.fromClass(ChunkSnapshot::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkSnapshot::class.java)
-                .function("x", returnsObject().noParams()) { it.setReturnRef(it.target?.x) }
-                .function("z", returnsObject().noParams()) { it.setReturnRef(it.target?.z) }
-                .function("worldName", returnsObject().noParams()) { it.setReturnRef(it.target?.worldName) }
-                .function("getBlockType", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("x", returns(Type.I).noParams()) { it.setReturnInt(it.target?.x ?: 0) }
+                .function("z", returns(Type.I).noParams()) { it.setReturnInt(it.target?.z ?: 0) }
+                .function("worldName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.worldName) }
+                .function("getBlockType", returnsObject().params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockType(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getBlockData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("getBlockData", returnsObject().params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.getData(
+                .function("getData", returns(Type.I).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnInt(it.target?.getData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    ))
+                    ) ?: 0)
                 }
-                .function("getBlockSkyLight", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.getBlockSkyLight(
+                .function("getBlockSkyLight", returns(Type.I).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnInt(it.target?.getBlockSkyLight(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    ))
+                    ) ?: 0)
                 }
-                .function("getBlockEmittedLight", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.getBlockEmittedLight(
+                .function("getBlockEmittedLight", returns(Type.I).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnInt(it.target?.getBlockEmittedLight(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    ))
+                    ) ?: 0)
                 }
-                .function("getHighestBlockYAt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.getHighestBlockYAt(
+                .function("getHighestBlockYAt", returns(Type.I).params(Type.I, Type.I)) {
+                    it.setReturnInt(it.target?.getHighestBlockYAt(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: 0)
+                }
+                .function("getBiome", returnsObject().params(Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt()
                     ))
                 }
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())
-                    } else {
-                        it.target?.getBiome(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getBiome", returnsObject().params(Type.I, Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getBiome(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    ))
                 }
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())
-                    } else {
-                        it.target?.getBiome(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getRawBiomeTemperature", returns(Type.D).params(Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getRawBiomeTemperature(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
-                .function("getRawBiomeTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getRawBiomeTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getRawBiomeTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getRawBiomeTemperature", returns(Type.D).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getRawBiomeTemperature(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
-                .function("getRawBiomeTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getRawBiomeTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getRawBiomeTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("captureFullTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.captureFullTime ?: 0L) }
+                .function("isSectionEmpty", returns(Type.Z).params(Type.I)) {
+                    it.setReturnBool(it.target?.isSectionEmpty(it.getInt(0).toInt()) ?: false)
                 }
-                .function("captureFullTime", returnsObject().noParams()) { it.setReturnRef(it.target?.captureFullTime) }
-                .function("isSectionEmpty", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isSectionEmpty(it.getInt(0).toInt())) }
-                .function("contains", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                .function("contains", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is BlockData -> it.target?.contains(var1)
                         is Biome -> it.target?.contains(var1)
                         else -> throw IllegalArgumentException("参数必须是 BlockData 或 Biome 类型")
-                    })
+                    } ?: false)
                 }
         }
     }

@@ -11,6 +11,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -18,21 +19,23 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnSign {
 
+    val TYPE = Type.fromClass(Sign::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sign::class.java)
                 .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
-                .function("setLine", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!)) }
-                .function("isEditable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEditable) }
-                .function("setEditable", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEditable(it.getBool(0))) }
-                .function("isWaxed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isWaxed) }
-                .function("setWaxed", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWaxed(it.getBool(0))) }
-                .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isGlowingText) }
-                .function("setGlowingText", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setGlowingText(it.getBool(0))) }
+                .function("getLine", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("isEditable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEditable ?: false) }
+                .function("setEditable", returnsVoid().params(Type.Z)) { it.target?.setEditable(it.getBool(0)) }
+                .function("isWaxed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isWaxed ?: false) }
+                .function("setWaxed", returnsVoid().params(Type.Z)) { it.target?.setWaxed(it.getBool(0)) }
+                .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isGlowingText ?: false) }
+                .function("setGlowingText", returnsVoid().params(Type.Z)) { it.target?.setGlowingText(it.getBool(0)) }
                 .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setColor(it.getRef(0) as DyeColor)) }
+                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as DyeColor) }
                 .function("getSide", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getSide(it.getRef(0) as Side)) }
                 .function("getTargetSide", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getTargetSide(it.getRef(0) as Player)) }
                 .function("allowedEditor", returnsObject().noParams()) { it.setReturnRef(it.target?.allowedEditor) }

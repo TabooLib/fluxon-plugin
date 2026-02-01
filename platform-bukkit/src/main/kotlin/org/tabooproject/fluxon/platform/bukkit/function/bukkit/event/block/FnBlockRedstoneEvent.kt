@@ -8,11 +8,14 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.block.BlockRedstoneEvent"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockRedstoneEvent {
+
+    val TYPE = Type.fromClass(BlockRedstoneEvent::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -20,7 +23,7 @@ object FnBlockRedstoneEvent {
             registerExtension(BlockRedstoneEvent::class.java)
                 .function("oldCurrent", returnsObject().noParams()) { it.setReturnRef(it.target?.oldCurrent) }
                 .function("newCurrent", returnsObject().noParams()) { it.setReturnRef(it.target?.newCurrent) }
-                .function("setNewCurrent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setNewCurrent(it.getInt(0).toInt())) }
+                .function("setNewCurrent", returnsVoid().params(Type.I)) { it.target?.setNewCurrent(it.getInt(0).toInt()) }
                 .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockRedstoneEvent.getHandlerList()) }

@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,18 +17,20 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnComparator {
 
+    val TYPE = Type.fromClass(Comparator::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Comparator::class.java)
-                .function("setSubtractionMode", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSubtractionMode(it.getBool(0))) }
-                .function("isSubtractionMode", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSubtractionMode) }
-                .function("setFacingDirection", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFacingDirection(it.getRef(0) as BlockFace)) }
+                .function("setSubtractionMode", returnsVoid().params(Type.Z)) { it.target?.setSubtractionMode(it.getBool(0)) }
+                .function("isSubtractionMode", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSubtractionMode ?: false) }
+                .function("setFacingDirection", returnsVoid().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
                 .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
-                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPowered) }
-                .function("isBeingPowered", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBeingPowered) }
+                .function("isPowered", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPowered ?: false) }
+                .function("isBeingPowered", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBeingPowered ?: false) }
         }
     }
 }

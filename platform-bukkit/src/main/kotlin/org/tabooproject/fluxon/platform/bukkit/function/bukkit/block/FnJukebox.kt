@@ -10,6 +10,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -17,18 +18,20 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnJukebox {
 
+    val TYPE = Type.fromClass(Jukebox::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Jukebox::class.java)
                 .function("playing", returnsObject().noParams()) { it.setReturnRef(it.target?.playing) }
-                .function("setPlaying", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPlaying(it.getRef(0) as Material)) }
-                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRecord()) }
+                .function("setPlaying", returnsVoid().params(Type.OBJECT)) { it.target?.setPlaying(it.getRef(0) as Material) }
+                .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRecord() ?: false) }
                 .function("record", returnsObject().noParams()) { it.setReturnRef(it.target?.record) }
-                .function("setRecord", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setRecord(it.getRef(0) as ItemStack)) }
-                .function("isPlaying", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPlaying) }
-                .function("startPlaying", returnsObject().noParams()) { it.setReturnRef(it.target?.startPlaying()) }
-                .function("stopPlaying", returnsObject().noParams()) { it.setReturnRef(it.target?.stopPlaying()) }
+                .function("setRecord", returnsVoid().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
+                .function("isPlaying", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlaying ?: false) }
+                .function("startPlaying", returnsVoid().noParams()) { it.target?.startPlaying() }
+                .function("stopPlaying", returnsVoid().noParams()) { it.target?.stopPlaying() }
                 .function("eject", returnsObject().noParams()) { it.setReturnRef(it.target?.eject()) }
                 .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
                 .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }

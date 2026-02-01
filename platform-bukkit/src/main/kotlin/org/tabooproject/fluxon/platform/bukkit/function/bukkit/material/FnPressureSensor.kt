@@ -15,11 +15,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPressureSensor {
 
+    val TYPE = Type.fromClass(PressureSensor::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PressureSensor::class.java)
-                .function("isPressed", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPressed) }
+                .function("isPressed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPressed ?: false) }
         }
     }
 }

@@ -18,6 +18,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnDamageSource {
 
+    val TYPE = Type.fromClass(DamageSource::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -27,7 +29,7 @@ object FnDamageSource {
                 .function("directEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.directEntity) }
                 .function("damageLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.damageLocation) }
                 .function("sourceLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceLocation) }
-                .function("isIndirect", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIndirect) }
+                .function("isIndirect", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isIndirect ?: false) }
                 .function("foodExhaustion", returnsObject().noParams()) { it.setReturnRef(it.target?.foodExhaustion) }
                 .function("scalesWithDifficulty", returnsObject().noParams()) { it.setReturnRef(it.target?.scalesWithDifficulty()) }
                 .function("builder", returnsObject().params(Type.OBJECT)) { it.setReturnRef(DamageSource.builder(it.getRef(0) as DamageType)) }
@@ -38,6 +40,8 @@ object FnDamageSource {
 @Requires(classes = ["org.bukkit.damage.DamageSource.Builder"])
 @PlatformSide(Platform.BUKKIT)
 object FnDamageSourceBuilder {
+
+    val TYPE = Type.fromClass(DamageSource.Builder::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

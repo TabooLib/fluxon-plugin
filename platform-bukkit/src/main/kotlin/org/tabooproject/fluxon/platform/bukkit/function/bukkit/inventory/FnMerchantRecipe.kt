@@ -8,39 +8,42 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.MerchantRecipe"])
 @PlatformSide(Platform.BUKKIT)
 object FnMerchantRecipe {
+
+    val TYPE = Type.fromClass(MerchantRecipe::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MerchantRecipe::class.java)
                 .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("addIngredient", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.addIngredient(it.getRef(0) as ItemStack)) }
-                .function("removeIngredient", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeIngredient(it.getInt(0).toInt())) }
-                .function("setIngredients", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setIngredients(it.getRef(0) as List<ItemStack>)) }
+                .function("addIngredient", returnsVoid().params(Type.OBJECT)) { it.target?.addIngredient(it.getRef(0) as ItemStack) }
+                .function("removeIngredient", returnsVoid().params(Type.I)) { it.target?.removeIngredient(it.getInt(0)) }
+                .function("setIngredients", returnsVoid().params(Type.OBJECT)) { it.target?.setIngredients(it.getRef(0) as List<ItemStack>) }
                 .function("ingredients", returnsObject().noParams()) { it.setReturnRef(it.target?.ingredients) }
                 .function("adjustedIngredient1", returnsObject().noParams()) { it.setReturnRef(it.target?.adjustedIngredient1) }
-                .function("adjust", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.adjust(it.getRef(0) as ItemStack)) }
-                .function("demand", returnsObject().noParams()) { it.setReturnRef(it.target?.demand) }
-                .function("setDemand", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDemand(it.getInt(0).toInt())) }
-                .function("specialPrice", returnsObject().noParams()) { it.setReturnRef(it.target?.specialPrice) }
-                .function("setSpecialPrice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSpecialPrice(it.getInt(0).toInt())) }
-                .function("uses", returnsObject().noParams()) { it.setReturnRef(it.target?.uses) }
-                .function("setUses", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setUses(it.getInt(0).toInt())) }
-                .function("maxUses", returnsObject().noParams()) { it.setReturnRef(it.target?.maxUses) }
-                .function("setMaxUses", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMaxUses(it.getInt(0).toInt())) }
-                .function("hasExperienceReward", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasExperienceReward()) }
-                .function("setExperienceReward", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setExperienceReward(it.getBool(0))) }
-                .function("villagerExperience", returnsObject().noParams()) { it.setReturnRef(it.target?.villagerExperience) }
-                .function("setVillagerExperience", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVillagerExperience(it.getInt(0).toInt())) }
-                .function("priceMultiplier", returnsObject().noParams()) { it.setReturnRef(it.target?.priceMultiplier) }
-                .function("setPriceMultiplier", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPriceMultiplier(it.getFloat(0))) }
+                .function("adjust", returnsVoid().params(Type.OBJECT)) { it.target?.adjust(it.getRef(0) as ItemStack) }
+                .function("demand", returns(Type.I).noParams()) { it.setReturnInt(it.target?.demand ?: 0) }
+                .function("setDemand", returnsVoid().params(Type.I)) { it.target?.setDemand(it.getInt(0)) }
+                .function("specialPrice", returns(Type.I).noParams()) { it.setReturnInt(it.target?.specialPrice ?: 0) }
+                .function("setSpecialPrice", returnsVoid().params(Type.I)) { it.target?.setSpecialPrice(it.getInt(0)) }
+                .function("uses", returns(Type.I).noParams()) { it.setReturnInt(it.target?.uses ?: 0) }
+                .function("setUses", returnsVoid().params(Type.I)) { it.target?.setUses(it.getInt(0)) }
+                .function("maxUses", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxUses ?: 0) }
+                .function("setMaxUses", returnsVoid().params(Type.I)) { it.target?.setMaxUses(it.getInt(0)) }
+                .function("hasExperienceReward", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasExperienceReward() ?: false) }
+                .function("setExperienceReward", returnsVoid().params(Type.Z)) { it.target?.setExperienceReward(it.getBool(0)) }
+                .function("villagerExperience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.villagerExperience ?: 0) }
+                .function("setVillagerExperience", returnsVoid().params(Type.I)) { it.target?.setVillagerExperience(it.getInt(0)) }
+                .function("priceMultiplier", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.priceMultiplier ?: 0f) }
+                .function("setPriceMultiplier", returnsVoid().params(Type.F)) { it.target?.setPriceMultiplier(it.getFloat(0)) }
         }
     }
 }

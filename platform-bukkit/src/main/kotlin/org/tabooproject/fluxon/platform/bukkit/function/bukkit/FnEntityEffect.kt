@@ -16,17 +16,19 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEntityEffect {
 
+    val TYPE = Type.fromClass(EntityEffect::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEffect::class.java)
                 .function("data", returnsObject().noParams()) { it.setReturnRef(it.target?.data) }
                 .function("isApplicableTo", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is Entity -> it.target?.isApplicableTo(var1)
                         is Class<*> -> it.target?.isApplicableTo(var1 as Class<Entity>)
                         else -> throw IllegalArgumentException("参数必须是 Entity 或 Class<Entity> 类型")
-                    })
+                    } ?: false)
                 }
         }
     }

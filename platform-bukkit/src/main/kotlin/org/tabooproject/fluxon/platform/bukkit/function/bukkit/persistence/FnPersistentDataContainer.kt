@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataContainer {
 
+    val TYPE = Type.fromClass(PersistentDataContainer::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -23,7 +25,7 @@ object FnPersistentDataContainer {
                 .function("has", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.has(it.getRef(0) as NamespacedKey)) }
                 .function("keys", returnsObject().noParams()) { it.setReturnRef(it.target?.keys) }
                 .function("remove", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.remove(it.getRef(0) as NamespacedKey)) }
-                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
                 .function("copyTo", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef(it.target?.copyTo(
                         it.getRef(0) as PersistentDataContainer,

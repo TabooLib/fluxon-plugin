@@ -10,6 +10,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -17,23 +18,29 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnMushroomCow {
 
+    val TYPE = Type.fromClass(MushroomCow::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MushroomCow::class.java)
-                .function("hasEffectsForNextStew", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEffectsForNextStew()) }
+                .function("hasEffectsForNextStew", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEffectsForNextStew() ?: false) }
                 .function("effectsForNextStew", returnsObject().noParams()) { it.setReturnRef(it.target?.effectsForNextStew) }
-                .function("addEffectToNextStew", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.addEffectToNextStew(
+                .function("addEffectToNextStew", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                    it.setReturnBool(it.target?.addEffectToNextStew(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
-                    ))
+                    ) ?: false)
                 }
-                .function("removeEffectFromNextStew", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeEffectFromNextStew(it.getRef(0) as PotionEffectType)) }
-                .function("hasEffectForNextStew", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.hasEffectForNextStew(it.getRef(0) as PotionEffectType)) }
-                .function("clearEffectsForNextStew", returnsObject().noParams()) { it.setReturnRef(it.target?.clearEffectsForNextStew()) }
+                .function("removeEffectFromNextStew", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.removeEffectFromNextStew(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("hasEffectForNextStew", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.hasEffectForNextStew(it.getRef(0) as PotionEffectType) ?: false)
+                }
+                .function("clearEffectsForNextStew", returnsVoid().noParams()) { it.target?.clearEffectsForNextStew() }
                 .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
-                .function("setVariant", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setVariant(it.getRef(0) as MushroomCow.Variant)) }
+                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as MushroomCow.Variant) }
         }
     }
 }

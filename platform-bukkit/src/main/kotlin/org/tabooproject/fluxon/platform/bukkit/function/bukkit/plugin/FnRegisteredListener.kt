@@ -16,6 +16,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnRegisteredListener {
 
+    val TYPE = Type.fromClass(RegisteredListener::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -24,7 +26,7 @@ object FnRegisteredListener {
                 .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
                 .function("priority", returnsObject().noParams()) { it.setReturnRef(it.target?.priority) }
                 .function("callEvent", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.callEvent(it.getRef(0) as Event)) }
-                .function("isIgnoringCancelled", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isIgnoringCancelled) }
+                .function("isIgnoringCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isIgnoringCancelled ?: false) }
         }
     }
 }

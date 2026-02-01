@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.Type
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataType {
 
+    val TYPE = Type.fromClass(PersistentDataType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -41,6 +43,8 @@ object FnPersistentDataType {
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataTypePrimitivePersistentDataType {
 
+    val TYPE = Type.fromClass(PersistentDataType.PrimitivePersistentDataType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -66,6 +70,8 @@ object FnPersistentDataTypePrimitivePersistentDataType {
 @Requires(classes = ["org.bukkit.persistence.PersistentDataType.BooleanPersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataTypeBooleanPersistentDataType {
+
+    val TYPE = Type.fromClass(PersistentDataType.BooleanPersistentDataType::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

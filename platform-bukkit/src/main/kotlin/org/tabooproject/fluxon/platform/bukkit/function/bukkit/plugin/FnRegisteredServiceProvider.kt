@@ -15,6 +15,8 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnRegisteredServiceProvider {
 
+    val TYPE = Type.fromClass(RegisteredServiceProvider::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -23,7 +25,9 @@ object FnRegisteredServiceProvider {
                 .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
                 .function("provider", returnsObject().noParams()) { it.setReturnRef(it.target?.getProvider()) }
                 .function("priority", returnsObject().noParams()) { it.setReturnRef(it.target?.priority) }
-                .function("compareTo", returns(Type.I).params(Type.OBJECT)) { it.setReturnRef(it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>)) }
+                .function("compareTo", returns(Type.I).params(Type.OBJECT)) {
+                    it.setReturnInt(it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>) ?: 0)
+                }
         }
     }
 }

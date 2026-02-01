@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -16,38 +17,29 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPlayerTextures {
 
+    val TYPE = Type.fromClass(PlayerTextures::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerTextures::class.java)
-                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isEmpty) }
-                .function("clear", returnsObject().noParams()) { it.setReturnRef(it.target?.clear()) }
+                .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
+                .function("clear", returnsVoid().noParams()) { it.target?.clear() }
                 .function("skin", returnsObject().noParams()) { it.setReturnRef(it.target?.skin) }
-                .function("setSkin", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.setSkin(URL(it.getString(0)))
-                    } else {
-                        it.target?.setSkin(
-                            URL(it.getString(0)),
-                            it.getRef(1) as PlayerTextures.SkinModel
-                        )
-                    })
+                .function("setSkin", returnsVoid().params(Type.STRING)) {
+                    it.target?.setSkin(URL(it.getString(0)))
                 }
-                .function("setSkin", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.setSkin(URL(it.getString(0)))
-                    } else {
-                        it.target?.setSkin(
-                            URL(it.getString(0)),
-                            it.getRef(1) as PlayerTextures.SkinModel
-                        )
-                    })
+                .function("setSkin", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                    it.target?.setSkin(
+                        URL(it.getString(0)),
+                        it.getRef(1) as PlayerTextures.SkinModel
+                    )
                 }
                 .function("skinModel", returnsObject().noParams()) { it.setReturnRef(it.target?.skinModel) }
                 .function("cape", returnsObject().noParams()) { it.setReturnRef(it.target?.cape) }
-                .function("setCape", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCape(URL(it.getString(0)))) }
-                .function("timestamp", returnsObject().noParams()) { it.setReturnRef(it.target?.timestamp) }
-                .function("isSigned", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSigned) }
+                .function("setCape", returnsVoid().params(Type.STRING)) { it.target?.setCape(URL(it.getString(0))) }
+                .function("timestamp", returns(Type.J).noParams()) { it.setReturnLong(it.target?.timestamp ?: 0L) }
+                .function("isSigned", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSigned ?: false) }
         }
     }
 }

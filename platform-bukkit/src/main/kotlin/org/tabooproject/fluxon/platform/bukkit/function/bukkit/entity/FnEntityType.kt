@@ -17,23 +17,25 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnEntityType {
 
+    val TYPE = Type.fromClass(EntityType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityType::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("ordinal", returnsObject().noParams()) { it.setReturnRef(it.target?.ordinal) }
-                .function("entityName", returnsObject().noParams()) { it.setReturnRef(it.target?.getName()) }
+                .function("ordinal", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ordinal ?: 0) }
+                .function("entityName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.getName()) }
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
-                .function("typeId", returnsObject().noParams()) { it.setReturnRef(it.target?.typeId) }
+                .function("typeId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.typeId?.toInt() ?: 0) }
                 // static
-                .function("fromName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(EntityType.fromName(it.getString(0))) }
+                .function("fromName", returnsObject().params(Type.STRING)) { it.setReturnRef(EntityType.fromName(it.getString(0))) }
                 // static
-                .function("fromId", returnsObject().params(Type.OBJECT)) { it.setReturnRef(EntityType.fromId(it.getInt(0).toInt())) }
-                .function("isSpawnable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSpawnable) }
-                .function("isAlive", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAlive) }
-                .function("translationKey", returnsObject().noParams()) { it.setReturnRef(it.target?.translationKey) }
-                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isEnabledByFeature(it.getRef(0) as World)) }
+                .function("fromId", returnsObject().params(Type.I)) { it.setReturnRef(EntityType.fromId(it.getInt(0))) }
+                .function("isSpawnable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSpawnable ?: false) }
+                .function("isAlive", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAlive ?: false) }
+                .function("translationKey", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.translationKey) }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as World) ?: false) }
         }
     }
 }

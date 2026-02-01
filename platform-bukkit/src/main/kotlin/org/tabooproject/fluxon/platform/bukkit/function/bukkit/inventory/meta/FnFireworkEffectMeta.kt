@@ -8,20 +8,23 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.meta.FireworkEffectMeta"])
 @PlatformSide(Platform.BUKKIT)
 object FnFireworkEffectMeta {
 
+    val TYPE = Type.fromClass(FireworkEffectMeta::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffectMeta::class.java)
-                .function("setEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setEffect(it.getRef(0) as FireworkEffect)) }
-                .function("hasEffect", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasEffect()) }
+                .function("setEffect", returnsVoid().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as FireworkEffect) }
+                .function("hasEffect", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEffect() ?: false) }
                 .function("effect", returnsObject().noParams()) { it.setReturnRef(it.target?.effect) }
                 .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
         }

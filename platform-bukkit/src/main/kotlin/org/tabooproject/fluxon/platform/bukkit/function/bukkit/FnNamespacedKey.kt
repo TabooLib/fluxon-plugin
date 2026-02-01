@@ -16,31 +16,25 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnNamespacedKey {
 
+    val TYPE = Type.fromClass(NamespacedKey::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NamespacedKey::class.java)
                 .function("namespace", returnsObject().noParams()) { it.setReturnRef(it.target?.namespace) }
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 // static
-                .function("minecraft", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NamespacedKey.minecraft(it.getString(0)!!)) }
+                .function("minecraft", returnsObject().params(Type.STRING)) { it.setReturnRef(NamespacedKey.minecraft(it.getString(0)!!)) }
                 // static
-                .function("fromString", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        NamespacedKey.fromString(it.getString(0)!!)
-                    } else {
-                        NamespacedKey.fromString(it.getString(0)!!, it.getRef(1) as Plugin)
-                    })
+                .function("fromString", returnsObject().params(Type.STRING)) {
+                    it.setReturnRef(NamespacedKey.fromString(it.getString(0)!!))
                 }
-                .function("fromString", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        NamespacedKey.fromString(it.getString(0)!!)
-                    } else {
-                        NamespacedKey.fromString(it.getString(0)!!, it.getRef(1) as Plugin)
-                    })
+                .function("fromString", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                    it.setReturnRef(NamespacedKey.fromString(it.getString(0)!!, it.getRef(1) as Plugin))
                 }
         }
     }

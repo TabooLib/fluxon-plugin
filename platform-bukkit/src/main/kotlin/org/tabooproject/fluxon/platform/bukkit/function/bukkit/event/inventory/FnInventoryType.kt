@@ -15,13 +15,15 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryType {
 
+    val TYPE = Type.fromClass(InventoryType::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(InventoryType::class.java)
                 .function("defaultSize", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultSize) }
                 .function("defaultTitle", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultTitle) }
-                .function("isCreatable", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isCreatable) }
+                .function("isCreatable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCreatable ?: false) }
         }
     }
 }

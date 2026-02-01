@@ -29,6 +29,8 @@ import taboolib.common.Requires
 @PlatformSide(Platform.BUKKIT)
 object FnWorld {
 
+    val TYPE = Type.fromClass(World::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
@@ -43,306 +45,160 @@ object FnWorld {
 
             registerExtension(World::class.java)
                 .function("getBlockAt", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getBlockAt(it.getRef(0) as Location)
-                    } else {
-                        it.target?.getBlockAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                    it.setReturnRef(it.target?.getBlockAt(it.getRef(0) as Location))
                 }
-                .function("getBlockAt", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getBlockAt(it.getRef(0) as Location)
-                    } else {
-                        it.target?.getBlockAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getBlockAt", returnsObject().params(Type.I, Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getBlockAt(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    ))
                 }
                 .function("getHighestBlockAt", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.getHighestBlockAt(it.getRef(0) as Location)
-                        2 -> when (val var1 = it.getRef(0)) {
-                            is Int -> it.target?.getHighestBlockAt(var1, it.getInt(1).toInt())
-                            is Location -> it.target?.getHighestBlockAt(var1, it.getRef(1) as HeightMap)
-                            else -> throw IllegalArgumentException("参数必须是 Int 或 Location 类型")
-                        }
-
-                        3 -> it.target?.getHighestBlockAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getRef(2) as HeightMap
-                        )
-                        else -> error("World#highestBlockAt 函数参数数量错误: ${"args"}")
-                    })
+                    it.setReturnRef(it.target?.getHighestBlockAt(it.getRef(0) as Location))
+                }
+                .function("getHighestBlockAt", returnsObject().params(Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getHighestBlockAt(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ))
                 }
                 .function("getHighestBlockAt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.getHighestBlockAt(it.getRef(0) as Location)
-                        2 -> when (val var1 = it.getRef(0)) {
-                            is Int -> it.target?.getHighestBlockAt(var1, it.getInt(1).toInt())
-                            is Location -> it.target?.getHighestBlockAt(var1, it.getRef(1) as HeightMap)
-                            else -> throw IllegalArgumentException("参数必须是 Int 或 Location 类型")
-                        }
-
-                        3 -> it.target?.getHighestBlockAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getRef(2) as HeightMap
-                        )
-                        else -> error("World#highestBlockAt 函数参数数量错误: ${"args"}")
-                    })
+                    it.setReturnRef(it.target?.getHighestBlockAt(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as HeightMap
+                    ))
                 }
-                .function("getHighestBlockAt", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.getHighestBlockAt(it.getRef(0) as Location)
-                        2 -> when (val var1 = it.getRef(0)) {
-                            is Int -> it.target?.getHighestBlockAt(var1, it.getInt(1).toInt())
-                            is Location -> it.target?.getHighestBlockAt(var1, it.getRef(1) as HeightMap)
-                            else -> throw IllegalArgumentException("参数必须是 Int 或 Location 类型")
-                        }
-
-                        3 -> it.target?.getHighestBlockAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getRef(2) as HeightMap
-                        )
-                        else -> error("World#highestBlockAt 函数参数数量错误: ${"args"}")
-                    })
+                .function("getHighestBlockAt", returnsObject().params(Type.I, Type.I, Type.OBJECT)) {
+                    it.setReturnRef(it.target?.getHighestBlockAt(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getRef(2) as HeightMap
+                    ))
                 }
                 .function("getChunkAt", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Location -> it.target?.getChunkAt(var1)
-                            is Block -> it.target?.getChunkAt(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Location 或 Block 类型")
-                        }
-
-                        2 -> it.target?.getChunkAt(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.getChunkAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#chunkAt 函数参数数量错误: ${"args"}")
+                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                        is Location -> it.target?.getChunkAt(var1)
+                        is Block -> it.target?.getChunkAt(var1)
+                        else -> throw IllegalArgumentException("参数必须是 Location 或 Block 类型")
                     })
                 }
-                .function("getChunkAt", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Location -> it.target?.getChunkAt(var1)
-                            is Block -> it.target?.getChunkAt(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Location 或 Block 类型")
-                        }
-
-                        2 -> it.target?.getChunkAt(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.getChunkAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#chunkAt 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("getChunkAt", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> when (val var1 = it.getRef(0)) {
-                            is Location -> it.target?.getChunkAt(var1)
-                            is Block -> it.target?.getChunkAt(var1)
-                            else -> throw IllegalArgumentException("参数必须是 Location 或 Block 类型")
-                        }
-
-                        2 -> it.target?.getChunkAt(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.getChunkAt(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#chunkAt 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("isChunkLoaded", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.isChunkLoaded(it.getRef(0) as Chunk)
-                    } else {
-                        it.target?.isChunkLoaded(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    })
-                }
-                .function("isChunkLoaded", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.isChunkLoaded(it.getRef(0) as Chunk)
-                    } else {
-                        it.target?.isChunkLoaded(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    })
-                }
-                .function("loadedChunks", returnsObject().noParams()) { it.setReturnRef(it.target?.loadedChunks) }
-                .syncFunction("loadChunk", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.loadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.loadChunk(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.loadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#loadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("loadChunk", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.loadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.loadChunk(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.loadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#loadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("loadChunk", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.loadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.loadChunk(it.getInt(0).toInt(), it.getInt(1).toInt())
-                        3 -> it.target?.loadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#loadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("isChunkGenerated", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.isChunkGenerated(
+                .function("getChunkAt", returnsObject().params(Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getChunkAt(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt()
                     ))
                 }
-                .function("isChunkInUse", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.isChunkInUse(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
-                    ))
-                }
-                .syncFunction("unloadChunk", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.unloadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-
-                        3 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#unloadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("unloadChunk", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.unloadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-
-                        3 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#unloadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("unloadChunk", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.unloadChunk(it.getRef(0) as Chunk)
-                        2 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-
-                        3 -> it.target?.unloadChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getBool(2)
-                        )
-                        else -> error("World#unloadChunk 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("unloadChunkRequest", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.unloadChunkRequest(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
-                    ))
-                }
-                .function("regenerateChunk", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.regenerateChunk(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
-                    ))
-                }
-                .function("refreshChunk", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.refreshChunk(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
-                    ))
-                }
-                .function("getPlayersSeeingChunk", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getPlayersSeeingChunk(it.getRef(0) as Chunk)
-                    } else {
-                        it.target?.getPlayersSeeingChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    })
-                }
-                .function("getPlayersSeeingChunk", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getPlayersSeeingChunk(it.getRef(0) as Chunk)
-                    } else {
-                        it.target?.getPlayersSeeingChunk(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    })
-                }
-                .function("isChunkForceLoaded", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.isChunkForceLoaded(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
-                    ))
-                }
-                .function("setChunkForceLoaded", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setChunkForceLoaded(
+                .function("getChunkAt", returnsObject().params(Type.I, Type.I, Type.Z)) {
+                    it.setReturnRef(it.target?.getChunkAt(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getBool(2)
                     ))
                 }
+                .function("isChunkLoaded", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.isChunkLoaded(it.getRef(0) as Chunk) ?: false)
+                }
+                .function("isChunkLoaded", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.isChunkLoaded(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("loadedChunks", returnsObject().noParams()) { it.setReturnRef(it.target?.loadedChunks) }
+                .syncFunction("loadChunk", returnsVoid().params(Type.OBJECT)) {
+                    it.target?.loadChunk(it.getRef(0) as Chunk) ?: false
+                }
+                .syncFunction("loadChunk", returnsVoid().params(Type.I, Type.I)) {
+                    it.target?.loadChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false
+                }
+                .syncFunction("loadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
+                    it.setReturnBool(it.target?.loadChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getBool(2)
+                    ) ?: false)
+                }
+                .function("isChunkGenerated", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.isChunkGenerated(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("isChunkInUse", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.isChunkInUse(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .syncFunction("unloadChunk", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.unloadChunk(it.getRef(0) as Chunk) ?: false)
+                }
+                .syncFunction("unloadChunk", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.unloadChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .syncFunction("unloadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
+                    it.setReturnBool(it.target?.unloadChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getBool(2)
+                    ) ?: false)
+                }
+                .syncFunction("unloadChunkRequest", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.unloadChunkRequest(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("regenerateChunk", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.regenerateChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("refreshChunk", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.refreshChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("getPlayersSeeingChunk", returnsObject().params(Type.OBJECT)) {
+                    it.setReturnRef(it.target?.getPlayersSeeingChunk(it.getRef(0) as Chunk))
+                }
+                .function("getPlayersSeeingChunk", returnsObject().params(Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getPlayersSeeingChunk(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ))
+                }
+                .function("isChunkForceLoaded", returns(Type.Z).params(Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.isChunkForceLoaded(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ) ?: false)
+                }
+                .function("setChunkForceLoaded", returnsVoid().params(Type.I, Type.I, Type.Z)) {
+                    it.target?.setChunkForceLoaded(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getBool(2)
+                    )
+                }
                 .function("forceLoadedChunks", returnsObject().noParams()) { it.setReturnRef(it.target?.forceLoadedChunks) }
-                .function("addPluginChunkTicket", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("addPluginChunkTicket", returnsObject().params(Type.I, Type.I, Type.OBJECT)) {
                     it.setReturnRef(it.target?.addPluginChunkTicket(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getRef(2) as Plugin
                     ))
                 }
-                .function("removePluginChunkTicket", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("removePluginChunkTicket", returnsObject().params(Type.I, Type.I, Type.OBJECT)) {
                     it.setReturnRef(it.target?.removePluginChunkTicket(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -351,7 +207,7 @@ object FnWorld {
                 }
                 .function("removePluginChunkTickets", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removePluginChunkTickets(it.getRef(0) as Plugin)) }
                 .function("pluginChunkTickets", returnsObject().noParams()) { it.setReturnRef(it.target?.pluginChunkTickets) }
-                .function("getPluginChunkTickets", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("getPluginChunkTickets", returnsObject().params(Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getPluginChunkTickets(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt()
@@ -368,33 +224,18 @@ object FnWorld {
                         it.getFloat(3)
                     ))
                 }
-                .syncFunction("generateTree", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.generateTree(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as TreeType
-                        )
-                    } else {
-                        it.target?.generateTree(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as TreeType,
-                            it.getRef(2) as BlockChangeDelegate
-                        )
-                    })
+                .syncFunction("generateTree", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.generateTree(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as TreeType
+                    ) ?: false)
                 }
-                .syncFunction("generateTree", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.generateTree(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as TreeType
-                        )
-                    } else {
-                        it.target?.generateTree(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as TreeType,
-                            it.getRef(2) as BlockChangeDelegate
-                        )
-                    })
+                .syncFunction("generateTree", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.generateTree(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as TreeType,
+                        it.getRef(2) as BlockChangeDelegate
+                    ) ?: false)
                 }
                 .syncFunction("strikeLightning", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.strikeLightning(it.getRef(0) as Location)) }
                 .syncFunction("strikeLightningEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.strikeLightningEffect(it.getRef(0) as Location)) }
@@ -403,717 +244,209 @@ object FnWorld {
                 .function("entitiesByClasses", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntitiesByClasses()) }
                 .function("players", returnsObject().noParams()) { it.setReturnRef(it.target?.players) }
                 .function("getNearbyEntities", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getNearbyEntities(it.getRef(0) as BoundingBox)
-                    } else {
-                        it.target?.getNearbyEntities(
-                            it.getRef(0) as Location,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                    })
+                    it.setReturnRef(it.target?.getNearbyEntities(it.getRef(0) as BoundingBox))
                 }
-                .function("getNearbyEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        it.target?.getNearbyEntities(it.getRef(0) as BoundingBox)
-                    } else {
-                        it.target?.getNearbyEntities(
-                            it.getRef(0) as Location,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                    })
+                .function("getNearbyEntities", returnsObject().params(Type.OBJECT, Type.D, Type.D, Type.D)) {
+                    it.setReturnRef(it.target?.getNearbyEntities(
+                        it.getRef(0) as Location,
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getDouble(3)
+                    ))
                 }
-                .function("rayTraceEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 3) {
-                        it.target?.rayTraceEntities(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2)
-                        )
-                    } else {
-                        it.target?.rayTraceEntities(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                    })
+                .function("rayTraceEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.D)) {
+                    it.setReturnRef(it.target?.rayTraceEntities(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getDouble(2)
+                    ))
                 }
-                .function("rayTraceEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 3) {
-                        it.target?.rayTraceEntities(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2)
-                        )
-                    } else {
-                        it.target?.rayTraceEntities(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getAsDouble(3)
-                        )
-                    })
+                .function("rayTraceEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.D, Type.D)) {
+                    it.setReturnRef(it.target?.rayTraceEntities(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getDouble(2),
+                        it.getDouble(3)
+                    ))
                 }
-                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode
-                        )
-
-                        5 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode,
-                            it.getBool(4)
-                        )
-                        else -> error("World#rayTraceBlocks 函数参数数量错误: ${"args"}")
-                    })
+                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.D)) {
+                    it.setReturnRef(it.target?.rayTraceBlocks(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getDouble(2)
+                    ))
                 }
-                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode
-                        )
-
-                        5 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode,
-                            it.getBool(4)
-                        )
-                        else -> error("World#rayTraceBlocks 函数参数数量错误: ${"args"}")
-                    })
+                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.D, Type.OBJECT)) {
+                    it.setReturnRef(it.target?.rayTraceBlocks(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getDouble(2),
+                        it.getRef(3) as FluidCollisionMode
+                    ))
                 }
-                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2)
-                        )
-
-                        4 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode
-                        )
-
-                        5 -> it.target?.rayTraceBlocks(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Vector,
-                            it.getAsDouble(2),
-                            it.getRef(3) as FluidCollisionMode,
-                            it.getBool(4)
-                        )
-                        else -> error("World#rayTraceBlocks 函数参数数量错误: ${"args"}")
-                    })
+                .function("rayTraceBlocks", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.D, Type.OBJECT, Type.Z)) {
+                    it.setReturnRef(it.target?.rayTraceBlocks(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Vector,
+                        it.getDouble(2),
+                        it.getRef(3) as FluidCollisionMode,
+                        it.getBool(4)
+                    ))
                 }
 //                .function("rayTrace", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
 //                    it.setReturnRef(it.target?.rayTrace(
 //                        it.getRef(0) as Location,
 //                        it.getRef(1) as Vector,
-//                        it.getAsDouble(2),
+//                        it.getDouble(2),
 //                        it.getRef(3) as FluidCollisionMode,
 //                        it.getBool(4),
-//                        it.getAsDouble(5),
+//                        it.getDouble(5),
 //                        it.getRef(6) as Predicate<Entity>
 //                    ))
 //                }
                 .function("spawnLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnLocation) }
-                .function("setSpawnLocation", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.setSpawnLocation(it.getRef(0) as Location)
-                        3 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
+                .function("setSpawnLocation", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.setSpawnLocation(it.getRef(0) as Location) ?: false)
+                }
+                .function("setSpawnLocation", returns(Type.Z).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnBool(it.target?.setSpawnLocation(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    ) ?: false)
+                }
+                .function("setSpawnLocation", returns(Type.Z).params(Type.I, Type.I, Type.I, Type.F)) {
+                    it.setReturnBool(it.target?.setSpawnLocation(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getFloat(3)
+                    ) ?: false)
+                }
+                .function("time", returns(Type.J).noParams()) { it.setReturnLong(it.target?.time ?: 0L) }
+                .function("setTime", returnsVoid().params(Type.J)) { it.target?.setTime(it.getLong(0)) }
+                .function("fullTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.fullTime ?: 0L) }
+                .function("setFullTime", returnsVoid().params(Type.J)) { it.target?.setFullTime(it.getLong(0)) }
+                .function("gameTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.gameTime ?: 0L) }
+                .function("hasStorm", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasStorm() ?: false) }
+                .function("setStorm", returnsVoid().params(Type.Z)) { it.target?.setStorm(it.getBool(0)) }
+                .function("weatherDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.weatherDuration ?: 0) }
+                .function("setWeatherDuration", returnsVoid().params(Type.I)) { it.target?.setWeatherDuration(it.getInt(0).toInt()) }
+                .function("isThundering", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isThundering ?: false) }
+                .function("setThundering", returnsVoid().params(Type.Z)) { it.target?.setThundering(it.getBool(0)) }
+                .function("thunderDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.thunderDuration ?: 0) }
+                .function("setThunderDuration", returnsVoid().params(Type.I)) { it.target?.setThunderDuration(it.getInt(0).toInt()) }
+                .function("isClearWeather", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isClearWeather ?: false) }
+                .function("setClearWeatherDuration", returnsVoid().params(Type.I)) { it.target?.setClearWeatherDuration(it.getInt(0).toInt()) }
+                .function("clearWeatherDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.clearWeatherDuration ?: 0) }
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.createExplosion(
+                        it.getRef(0) as Location,
+                        it.getFloat(1)
+                    ) ?: false)
+                }
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.createExplosion(
+                        it.getRef(0) as Location,
+                        it.getFloat(1),
+                        it.getBool(2)
+                    ) ?: false)
+                }
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(when (it.getRef(0)) {
+                        is Location -> it.target?.createExplosion(
+                            it.getRef(0) as Location,
+                            it.getFloat(1),
+                            it.getBool(2),
+                            it.getBool(3)
                         )
 
-                        4 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
+                        is Number -> it.target?.createExplosion(
+                            it.getDouble(0),
+                            it.getDouble(1),
+                            it.getDouble(2),
                             it.getFloat(3)
                         )
-                        else -> error("World#setSpawnLocation 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("setSpawnLocation", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.setSpawnLocation(it.getRef(0) as Location)
-                        3 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
 
-                        4 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getFloat(3)
-                        )
-                        else -> error("World#setSpawnLocation 函数参数数量错误: ${"args"}")
-                    })
+                        else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
+                    } ?: false)
                 }
-                .function("setSpawnLocation", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        1 -> it.target?.setSpawnLocation(it.getRef(0) as Location)
-                        3 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-
-                        4 -> it.target?.setSpawnLocation(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getFloat(3)
-                        )
-                        else -> error("World#setSpawnLocation 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .function("time", returnsObject().noParams()) { it.setReturnRef(it.target?.time) }
-                .function("setTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTime(it.getInt(0).toLong())) }
-                .function("fullTime", returnsObject().noParams()) { it.setReturnRef(it.target?.fullTime) }
-                .function("setFullTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setFullTime(it.getInt(0).toLong())) }
-                .function("gameTime", returnsObject().noParams()) { it.setReturnRef(it.target?.gameTime) }
-                .function("hasStorm", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasStorm()) }
-                .function("setStorm", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setStorm(it.getBool(0))) }
-                .function("weatherDuration", returnsObject().noParams()) { it.setReturnRef(it.target?.weatherDuration) }
-                .function("setWeatherDuration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWeatherDuration(it.getInt(0).toInt())) }
-                .function("isThundering", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isThundering) }
-                .function("setThundering", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setThundering(it.getBool(0))) }
-                .function("thunderDuration", returnsObject().noParams()) { it.setReturnRef(it.target?.thunderDuration) }
-                .function("setThunderDuration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setThunderDuration(it.getInt(0).toInt())) }
-                .function("isClearWeather", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isClearWeather) }
-                .function("setClearWeatherDuration", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setClearWeatherDuration(it.getInt(0).toInt())) }
-                .function("clearWeatherDuration", returnsObject().noParams()) { it.setReturnRef(it.target?.clearWeatherDuration) }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(when (it.getRef(0)) {
+                        is Location -> it.target?.createExplosion(
                             it.getRef(0) as Location,
                             it.getFloat(1),
-                            it.getBool(2)
+                            it.getBool(2),
+                            it.getBool(3),
+                            it.getRef(4) as Entity?
                         )
 
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
+                        is Number -> it.target?.createExplosion(
+                            it.getDouble(0),
+                            it.getDouble(1),
+                            it.getDouble(2),
                             it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
+                            it.getBool(4)
                         )
 
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
+                        else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
+                    } ?: false)
                 }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1),
-                            it.getBool(2)
-                        )
-
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
-                        )
-
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.createExplosion(
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getFloat(3),
+                        it.getBool(4),
+                        it.getBool(5)
+                    ) ?: false)
                 }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1),
-                            it.getBool(2)
-                        )
-
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
-                        )
-
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1),
-                            it.getBool(2)
-                        )
-
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
-                        )
-
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1),
-                            it.getBool(2)
-                        )
-
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
-                        )
-
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
-                }
-                .syncFunction("createExplosion", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        2 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1)
-                        )
-
-                        3 -> it.target?.createExplosion(
-                            it.getRef(0) as Location,
-                            it.getFloat(1),
-                            it.getBool(2)
-                        )
-
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3)
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Double -> it.target?.createExplosion(
-                                var1,
-                                it.getAsDouble(1),
-                                it.getAsDouble(2),
-                                it.getFloat(3),
-                                it.getBool(4)
-                            )
-
-                            is Location -> it.target?.createExplosion(
-                                var1,
-                                it.getFloat(1),
-                                it.getBool(2),
-                                it.getBool(3),
-                                it.getRef(4) as Entity?
-                            )
-
-                            else -> throw IllegalArgumentException("参数必须是 Double 或 Location 类型")
-                        }
-
-                        6 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5)
-                        )
-
-                        7 -> it.target?.createExplosion(
-                            it.getAsDouble(0),
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getFloat(3),
-                            it.getBool(4),
-                            it.getBool(5),
-                            it.getRef(6) as Entity
-                        )
-                        else -> error("World#createExplosion 函数参数数量错误: ${"args"}")
-                    })
+                .syncFunction("createExplosion", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                    it.setReturnBool(it.target?.createExplosion(
+                        it.getDouble(0),
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getFloat(3),
+                        it.getBool(4),
+                        it.getBool(5),
+                        it.getRef(6) as Entity
+                    ) ?: false)
                 }
                 .function("pvp", returnsObject().noParams()) { it.setReturnRef(it.target?.pvp) }
-                .function("setPVP", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setPVP(it.getBool(0))) }
+                .function("setPVP", returnsVoid().params(Type.Z)) { it.target?.setPVP(it.getBool(0)) }
                 .function("generator", returnsObject().noParams()) { it.setReturnRef(it.target?.generator) }
                 .function("biomeProvider", returnsObject().noParams()) { it.setReturnRef(it.target?.biomeProvider) }
                 .syncFunction("save", returnsObject().noParams()) { it.setReturnRef(it.target?.save()) }
                 .function("populators", returnsObject().noParams()) { it.setReturnRef(it.target?.populators) }
                 .syncFunction("spawnFallingBlock", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        when (val var2 = it.getRef(1)) {
-                            is MaterialData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
-                            is BlockData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
-                            else -> throw IllegalArgumentException("参数必须是 MaterialData 或 BlockData 类型")
-                        }
-                    } else {
-                        it.target?.spawnFallingBlock(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Material,
-                            it.getInt(2).toByte()
-                        )
+                    it.setReturnRef(when (val var2 = it.getRef(1)) {
+                        is MaterialData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
+                        is BlockData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
+                        else -> throw IllegalArgumentException("参数必须是 MaterialData 或 BlockData 类型")
                     })
                 }
-                .syncFunction("spawnFallingBlock", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        when (val var2 = it.getRef(1)) {
-                            is MaterialData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
-                            is BlockData -> it.target?.spawnFallingBlock(it.getRef(0) as Location, var2)
-                            else -> throw IllegalArgumentException("参数必须是 MaterialData 或 BlockData 类型")
-                        }
-                    } else {
-                        it.target?.spawnFallingBlock(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Material,
-                            it.getInt(2).toByte()
-                        )
-                    })
+                .syncFunction("spawnFallingBlock", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.I)) {
+                    it.setReturnRef(it.target?.spawnFallingBlock(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Material,
+                        it.getInt(2).toByte()
+                    ))
                 }
-                .function("playEffect", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 3) {
-                        it.target?.playEffect(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Effect,
-                            it.getInt(2).toInt()
-                        )
-                    } else {
-                        it.target?.playEffect(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Effect,
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    })
+                .function("playEffect", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I)) {
+                    it.target?.playEffect(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Effect,
+                        it.getInt(2).toInt()
+                    )
                 }
-                .function("playEffect", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 3) {
-                        it.target?.playEffect(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Effect,
-                            it.getInt(2).toInt()
-                        )
-                    } else {
-                        it.target?.playEffect(
-                            it.getRef(0) as Location,
-                            it.getRef(1) as Effect,
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    })
+                .function("playEffect", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                    it.target?.playEffect(
+                        it.getRef(0) as Location,
+                        it.getRef(1) as Effect,
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt()
+                    )
                 }
                 .function("getEmptyChunkSnapshot", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef(it.target?.getEmptyChunkSnapshot(
@@ -1123,147 +456,123 @@ object FnWorld {
                         it.getBool(3)
                     ))
                 }
-                .function("setSpawnFlags", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setSpawnFlags(it.getBool(0), it.getBool(1))) }
+                .function("setSpawnFlags", returnsVoid().params(Type.Z, Type.Z)) { it.target?.setSpawnFlags(it.getBool(0), it.getBool(1)) }
                 .function("allowAnimals", returnsObject().noParams()) { it.setReturnRef(it.target?.allowAnimals) }
                 .function("allowMonsters", returnsObject().noParams()) { it.setReturnRef(it.target?.allowMonsters) }
                 .function("getBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())) }
-                .syncFunction("setBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setBiome(
+                .syncFunction("setBiome", returnsVoid().params(Type.I, Type.I, Type.OBJECT)) {
+                    it.target?.setBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getRef(2) as Biome
-                    ))
+                    )
                 }
-                .function("getTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getTemperature", returns(Type.D).params(Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getTemperature(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
-                .function("getTemperature", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getTemperature(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getTemperature", returns(Type.D).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getTemperature(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
-                .function("getHumidity", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getHumidity(it.getInt(0).toInt(), it.getInt(1).toInt())
-                    } else {
-                        it.target?.getHumidity(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getHumidity", returns(Type.D).params(Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getHumidity(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
-                .function("getHumidity", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getHumidity(it.getInt(0).toInt(), it.getInt(1).toInt())
-                    } else {
-                        it.target?.getHumidity(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt()
-                        )
-                    })
+                .function("getHumidity", returns(Type.D).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnDouble(it.target?.getHumidity(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt()
+                    )?.toDouble() ?: 0.0)
                 }
                 .function("logicalHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.logicalHeight) }
-                .function("isNatural", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isNatural) }
-                .function("isBedWorks", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isBedWorks) }
-                .function("hasSkyLight", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasSkyLight()) }
-                .function("hasCeiling", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasCeiling()) }
-                .function("isPiglinSafe", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isPiglinSafe) }
-                .function("isRespawnAnchorWorks", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isRespawnAnchorWorks) }
-                .function("hasRaids", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasRaids()) }
-                .function("isUltraWarm", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isUltraWarm) }
-                .function("seaLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.seaLevel) }
-                .function("keepSpawnInMemory", returnsObject().noParams()) { it.setReturnRef(it.target?.keepSpawnInMemory) }
-                .function("setKeepSpawnInMemory", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setKeepSpawnInMemory(it.getBool(0))) }
-                .function("isAutoSave", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAutoSave) }
-                .function("setAutoSave", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAutoSave(it.getBool(0))) }
-                .function("setDifficulty", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setDifficulty(it.getRef(0) as Difficulty)) }
+                .function("isNatural", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isNatural ?: false) }
+                .function("isBedWorks", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBedWorks ?: false) }
+                .function("hasSkyLight", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasSkyLight() ?: false) }
+                .function("hasCeiling", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCeiling() ?: false) }
+                .function("isPiglinSafe", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPiglinSafe ?: false) }
+                .function("isRespawnAnchorWorks", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRespawnAnchorWorks ?: false) }
+                .function("hasRaids", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRaids() ?: false) }
+                .function("isUltraWarm", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUltraWarm ?: false) }
+                .function("seaLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.seaLevel ?: 0) }
+                .function("keepSpawnInMemory", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.keepSpawnInMemory ?: false) }
+                .function("setKeepSpawnInMemory", returnsVoid().params(Type.Z)) { it.target?.setKeepSpawnInMemory(it.getBool(0)) }
+                .function("isAutoSave", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAutoSave ?: false) }
+                .function("setAutoSave", returnsVoid().params(Type.Z)) { it.target?.setAutoSave(it.getBool(0)) }
+                .function("setDifficulty", returnsVoid().params(Type.OBJECT)) { it.target?.setDifficulty(it.getRef(0) as Difficulty) }
                 .function("difficulty", returnsObject().noParams()) { it.setReturnRef(it.target?.difficulty) }
-                .function("viewDistance", returnsObject().noParams()) { it.setReturnRef(it.target?.viewDistance) }
-                .function("simulationDistance", returnsObject().noParams()) { it.setReturnRef(it.target?.simulationDistance) }
+                .function("viewDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.viewDistance ?: 0) }
+                .function("simulationDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.simulationDistance ?: 0) }
                 .function("worldFolder", returnsObject().noParams()) { it.setReturnRef(it.target?.worldFolder) }
                 .function("worldType", returnsObject().noParams()) { it.setReturnRef(it.target?.worldType) }
-                .function("canGenerateStructures", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.canGenerateStructures()) }
-                .function("isHardcore", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isHardcore) }
-                .function("setHardcore", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setHardcore(it.getBool(0))) }
-                .function("ticksPerAnimalSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerAnimalSpawns) }
-                .function("setTicksPerAnimalSpawns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTicksPerAnimalSpawns(it.getInt(0).toInt())) }
-                .function("ticksPerMonsterSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerMonsterSpawns) }
-                .function("setTicksPerMonsterSpawns", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setTicksPerMonsterSpawns(
+                .function("canGenerateStructures", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canGenerateStructures() ?: false) }
+                .function("isHardcore", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isHardcore ?: false) }
+                .function("setHardcore", returnsVoid().params(Type.Z)) { it.target?.setHardcore(it.getBool(0)) }
+                .function("ticksPerAnimalSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerAnimalSpawns ?: 0) }
+                .function("setTicksPerAnimalSpawns", returnsVoid().params(Type.I)) { it.target?.setTicksPerAnimalSpawns(it.getInt(0).toInt()) }
+                .function("ticksPerMonsterSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerMonsterSpawns ?: 0) }
+                .function("setTicksPerMonsterSpawns", returnsVoid().params(Type.I)) {
+                    it.target?.setTicksPerMonsterSpawns(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
-                .function("ticksPerWaterSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerWaterSpawns) }
-                .function("setTicksPerWaterSpawns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTicksPerWaterSpawns(it.getInt(0).toInt())) }
-                .function("ticksPerWaterAmbientSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerWaterAmbientSpawns) }
-                .function("setTicksPerWaterAmbientSpawns", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setTicksPerWaterAmbientSpawns(
+                .function("ticksPerWaterSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerWaterSpawns ?: 0) }
+                .function("setTicksPerWaterSpawns", returnsVoid().params(Type.I)) { it.target?.setTicksPerWaterSpawns(it.getInt(0).toInt()) }
+                .function("ticksPerWaterAmbientSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerWaterAmbientSpawns ?: 0) }
+                .function("setTicksPerWaterAmbientSpawns", returnsVoid().params(Type.I)) {
+                    it.target?.setTicksPerWaterAmbientSpawns(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
-                .function("ticksPerWaterUndergroundCreatureSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerWaterUndergroundCreatureSpawns) }
-                .function("setTicksPerWaterUndergroundCreatureSpawns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setTicksPerWaterUndergroundCreatureSpawns(it.getInt(0).toInt())) }
-                .function("ticksPerAmbientSpawns", returnsObject().noParams()) { it.setReturnRef(it.target?.ticksPerAmbientSpawns) }
-                .function("setTicksPerAmbientSpawns", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setTicksPerAmbientSpawns(
+                .function("ticksPerWaterUndergroundCreatureSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerWaterUndergroundCreatureSpawns ?: 0) }
+                .function("setTicksPerWaterUndergroundCreatureSpawns", returnsVoid().params(Type.I)) { it.target?.setTicksPerWaterUndergroundCreatureSpawns(it.getInt(0).toInt()) }
+                .function("ticksPerAmbientSpawns", returns(Type.J).noParams()) { it.setReturnLong(it.target?.ticksPerAmbientSpawns ?: 0) }
+                .function("setTicksPerAmbientSpawns", returnsVoid().params(Type.I)) {
+                    it.target?.setTicksPerAmbientSpawns(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
                 .function("getTicksPerSpawns", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getTicksPerSpawns(it.getRef(0) as SpawnCategory)) }
-                .function("setTicksPerSpawns", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setTicksPerSpawns(
+                .function("setTicksPerSpawns", returnsVoid().params(Type.OBJECT, Type.I)) {
+                    it.target?.setTicksPerSpawns(
                         it.getRef(0) as SpawnCategory,
                         it.getInt(1).toInt()
-                    ))
+                    )
                 }
-                .function("monsterSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.monsterSpawnLimit) }
-                .function("setMonsterSpawnLimit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setMonsterSpawnLimit(it.getInt(0).toInt())) }
-                .function("animalSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.animalSpawnLimit) }
-                .function("setAnimalSpawnLimit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAnimalSpawnLimit(it.getInt(0).toInt())) }
-                .function("waterAnimalSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.waterAnimalSpawnLimit) }
-                .function("setWaterAnimalSpawnLimit", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setWaterAnimalSpawnLimit(
+                .function("monsterSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.monsterSpawnLimit ?: 0) }
+                .function("setMonsterSpawnLimit", returnsVoid().params(Type.I)) { it.target?.setMonsterSpawnLimit(it.getInt(0).toInt()) }
+                .function("animalSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.animalSpawnLimit ?: 0) }
+                .function("setAnimalSpawnLimit", returnsVoid().params(Type.I)) { it.target?.setAnimalSpawnLimit(it.getInt(0).toInt()) }
+                .function("waterAnimalSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.waterAnimalSpawnLimit ?: 0) }
+                .function("setWaterAnimalSpawnLimit", returnsVoid().params(Type.I)) {
+                    it.target?.setWaterAnimalSpawnLimit(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
-                .function("waterUndergroundCreatureSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.waterUndergroundCreatureSpawnLimit) }
-                .function("setWaterUndergroundCreatureSpawnLimit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setWaterUndergroundCreatureSpawnLimit(it.getInt(0).toInt())) }
-                .function("waterAmbientSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.waterAmbientSpawnLimit) }
-                .function("setWaterAmbientSpawnLimit", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setWaterAmbientSpawnLimit(
+                .function("waterUndergroundCreatureSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.waterUndergroundCreatureSpawnLimit ?: 0) }
+                .function("setWaterUndergroundCreatureSpawnLimit", returnsVoid().params(Type.I)) { it.target?.setWaterUndergroundCreatureSpawnLimit(it.getInt(0).toInt()) }
+                .function("waterAmbientSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.waterAmbientSpawnLimit ?: 0) }
+                .function("setWaterAmbientSpawnLimit", returnsVoid().params(Type.I)) {
+                    it.target?.setWaterAmbientSpawnLimit(
                         it.getInt(0).toInt()
-                    ))
+                    )
                 }
-                .function("ambientSpawnLimit", returnsObject().noParams()) { it.setReturnRef(it.target?.ambientSpawnLimit) }
-                .function("setAmbientSpawnLimit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setAmbientSpawnLimit(it.getInt(0).toInt())) }
+                .function("ambientSpawnLimit", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ambientSpawnLimit ?: 0) }
+                .function("setAmbientSpawnLimit", returnsVoid().params(Type.I)) { it.target?.setAmbientSpawnLimit(it.getInt(0).toInt()) }
                 .function("getSpawnLimit", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getSpawnLimit(it.getRef(0) as SpawnCategory)) }
-                .function("setSpawnLimit", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.setSpawnLimit(
+                .function("setSpawnLimit", returnsVoid().params(Type.OBJECT, Type.I)) {
+                    it.target?.setSpawnLimit(
                         it.getRef(0) as SpawnCategory,
                         it.getInt(1).toInt()
-                    ))
+                    )
                 }
                 .syncFunction("playNote", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef(it.target?.playNote(
@@ -1272,778 +581,185 @@ object FnWorld {
                         it.getRef(2) as Note
                     ))
                 }
-                .syncFunction("playSound", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                .syncFunction("playSound", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.F, Type.F)) {
+                    when (val var1 = it.getRef(0)) {
+                        is Location -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(var1, var2, it.getFloat(2), it.getFloat(3))
+                            is String -> it.target?.playSound(var1, var2, it.getFloat(2), it.getFloat(3))
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                        is Entity -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(var1, var2, it.getFloat(2), it.getFloat(3))
+                            is String -> it.target?.playSound(var1, var2, it.getFloat(2), it.getFloat(3))
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        6 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
-                        }
-                        else -> error("World#playSound 函数参数数量错误: ${"args"}")
-                    })
+                        else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                    }
                 }
-                .syncFunction("playSound", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
+                .syncFunction("playSound", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.F, Type.F)) {
+                    when (val var1 = it.getRef(0)) {
+                        is Location -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4)
+                            )
 
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
+                            is String -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4)
+                            )
 
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
+                        is Entity -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4)
+                            )
 
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
+                            is String -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4)
+                            )
 
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        6 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
-                        }
-                        else -> error("World#playSound 函数参数数量错误: ${"args"}")
-                    })
+                        else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                    }
                 }
-                .syncFunction("playSound", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        4 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
+                .syncFunction("playSound", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.F, Type.F, Type.J)) {
+                    when (val var1 = it.getRef(0)) {
+                        is Location -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4),
+                                it.getLong(5)
+                            )
 
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
+                            is String -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4),
+                                it.getLong(5)
+                            )
 
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getFloat(2),
-                                    it.getFloat(3)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        5 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
+                        is Entity -> when (val var2 = it.getRef(1)) {
+                            is Sound -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4),
+                                it.getLong(5)
+                            )
 
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
+                            is String -> it.target?.playSound(
+                                var1,
+                                var2,
+                                it.getRef(2) as SoundCategory,
+                                it.getFloat(3),
+                                it.getFloat(4),
+                                it.getLong(5)
+                            )
 
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4)
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                            else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
                         }
 
-                        6 -> when (val var1 = it.getRef(0)) {
-                            is Location -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            is Entity -> when (val var2 = it.getRef(1)) {
-                                is Sound -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                is String -> it.target?.playSound(
-                                    var1,
-                                    var2,
-                                    it.getRef(2) as SoundCategory,
-                                    it.getFloat(3),
-                                    it.getFloat(4),
-                                    it.getInt(5).toLong()
-                                )
-
-                                else -> throw IllegalArgumentException("第二个参数必须是 Sound 或 String 类型")
-                            }
-
-                            else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
-                        }
-                        else -> error("World#playSound 函数参数数量错误: ${"args"}")
-                    })
+                        else -> throw IllegalArgumentException("第一个参数必须是 Location 或 Entity 类型")
+                    }
                 }
                 .function("gameRules", returnsObject().noParams()) { it.setReturnRef(it.target?.gameRules) }
-                .function("getGameRuleValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getGameRuleValue(it.getString(0))) }
-                .function("setGameRuleValue", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.setGameRuleValue(it.getString(0)!!, it.getString(1)!!)) }
-                .function("isGameRule", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isGameRule(it.getString(0)!!)) }
+                .function("getGameRuleValue", returns(Type.STRING).params(Type.STRING)) { it.setReturnRef(it.target?.getGameRuleValue(it.getString(0))) }
+                .function("setGameRuleValue", returns(Type.Z).params(Type.STRING, Type.STRING)) {
+                    it.setReturnBool(it.target?.setGameRuleValue(it.getString(0)!!, it.getString(1)!!) ?: false)
+                }
+                .function("isGameRule", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isGameRule(it.getString(0)!!) ?: false) }
                 .function("worldBorder", returnsObject().noParams()) { it.setReturnRef(it.target?.worldBorder) }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getRef(1) as Location,
+                        it.getInt(2).toInt()
+                    )
                 }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.D, Type.D, Type.D, Type.I)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getDouble(3),
+                        it.getInt(4).toInt()
+                    )
                 }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.D, Type.D, Type.D)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getRef(1) as Location,
+                        it.getInt(2).toInt(),
+                        it.getDouble(3),
+                        it.getDouble(4),
+                        it.getDouble(5)
+                    )
                 }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.D, Type.D, Type.D, Type.D)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getRef(1) as Location,
+                        it.getInt(2).toInt(),
+                        it.getDouble(3),
+                        it.getDouble(4),
+                        it.getDouble(5),
+                        it.getDouble(6)
+                    )
                 }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.D, Type.D, Type.D, Type.I, Type.D, Type.D, Type.D)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getDouble(3),
+                        it.getInt(4).toInt(),
+                        it.getDouble(5),
+                        it.getDouble(6),
+                        it.getDouble(7)
+                    )
                 }
-                .function("spawnParticle", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (it.argumentCount) {
-                        3 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt()
-                        )
-
-                        5 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt()
-                        )
-
-                        6 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5)
-                        )
-
-                        7 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getRef(1) as Location,
-                            it.getInt(2).toInt(),
-                            it.getAsDouble(3),
-                            it.getAsDouble(4),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6)
-                        )
-
-                        8 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7)
-                        )
-
-                        9 -> it.target?.spawnParticle(
-                            it.getRef(0) as Particle,
-                            it.getAsDouble(1),
-                            it.getAsDouble(2),
-                            it.getAsDouble(3),
-                            it.getInt(4).toInt(),
-                            it.getAsDouble(5),
-                            it.getAsDouble(6),
-                            it.getAsDouble(7),
-                            it.getAsDouble(8)
-                        )
-                        else -> error("World#spawnParticle 函数参数数量错误: ${"args"}")
-                    })
+                .function("spawnParticle", returnsVoid().params(Type.OBJECT, Type.D, Type.D, Type.D, Type.I, Type.D, Type.D, Type.D, Type.D)) {
+                    it.target?.spawnParticle(
+                        it.getRef(0) as Particle,
+                        it.getDouble(1),
+                        it.getDouble(2),
+                        it.getDouble(3),
+                        it.getInt(4).toInt(),
+                        it.getDouble(5),
+                        it.getDouble(6),
+                        it.getDouble(7),
+                        it.getDouble(8)
+                    )
                 }
                 .function("locateNearestStructure", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef(when (val var2 = it.getRef(1)) {
@@ -2064,35 +780,19 @@ object FnWorld {
                         else -> throw IllegalArgumentException("第二个参数必须是 StructureType 或 Structure 类型")
                     })
                 }
-                .function("locateNearestBiome", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.locateNearestBiome(
-                            it.getRef(0) as Location,
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.locateNearestBiome(
-                            it.getRef(0) as Location,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    })
+                .function("locateNearestBiome", returnsObject().params(Type.OBJECT, Type.I)) {
+                    it.setReturnRef(it.target?.locateNearestBiome(
+                        it.getRef(0) as Location,
+                        it.getInt(1).toInt()
+                    ))
                 }
-                .function("locateNearestBiome", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.locateNearestBiome(
-                            it.getRef(0) as Location,
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.locateNearestBiome(
-                            it.getRef(0) as Location,
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt()
-                        )
-                    })
+                .function("locateNearestBiome", returnsObject().params(Type.OBJECT, Type.I, Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.locateNearestBiome(
+                        it.getRef(0) as Location,
+                        it.getInt(1).toInt(),
+                        it.getInt(2).toInt(),
+                        it.getInt(3).toInt()
+                    ))
                 }
                 .function("locateNearestRaid", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
                     it.setReturnRef(it.target?.locateNearestRaid(
@@ -2103,36 +803,21 @@ object FnWorld {
                 .function("raids", returnsObject().noParams()) { it.setReturnRef(it.target?.raids) }
                 .function("enderDragonBattle", returnsObject().noParams()) { it.setReturnRef(it.target?.enderDragonBattle) }
                 .function("featureFlags", returnsObject().noParams()) { it.setReturnRef(it.target?.featureFlags) }
-                .function("getStructures", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getStructures(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getStructures(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getRef(2) as Structure
-                        )
-                    })
+                .function("getStructures", returnsObject().params(Type.I, Type.I)) {
+                    it.setReturnRef(it.target?.getStructures(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt()
+                    ))
                 }
-                .function("getStructures", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 2) {
-                        it.target?.getStructures(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt()
-                        )
-                    } else {
-                        it.target?.getStructures(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getRef(2) as Structure
-                        )
-                    })
+                .function("getStructures", returnsObject().params(Type.I, Type.I, Type.OBJECT)) {
+                    it.setReturnRef(it.target?.getStructures(
+                        it.getInt(0).toInt(),
+                        it.getInt(1).toInt(),
+                        it.getRef(2) as Structure
+                    ))
                 }
-                .function("isDay", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isDay) }
-                .function("isNight", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isNight) }
+                .function("isDay", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDay ?: false) }
+                .function("isNight", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isNight ?: false) }
         }
     }
 
@@ -2158,6 +843,8 @@ object FnWorld {
 @Requires(classes = ["org.bukkit.World.Environment"])
 @PlatformSide(Platform.BUKKIT)
 object FnWorldEnvironment {
+
+    val TYPE = Type.fromClass(World.Environment::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {

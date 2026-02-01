@@ -18,34 +18,24 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnCriteria {
 
+    val TYPE = Type.fromClass(Criteria::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Criteria::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("isReadOnly", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isReadOnly) }
+                .function("isReadOnly", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isReadOnly ?: false) }
                 .function("defaultRenderType", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultRenderType) }
                 // static
                 .function("statistic", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        Criteria.statistic(it.getRef(0) as Statistic)
-                    } else {
-                        when (val var2 = it.getRef(1)) {
-                            is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                            is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                            else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
-                        }
-                    })
+                    it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic))
                 }
                 .function("statistic", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(if (it.argumentCount == 1) {
-                        Criteria.statistic(it.getRef(0) as Statistic)
-                    } else {
-                        when (val var2 = it.getRef(1)) {
-                            is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                            is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                            else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
-                        }
+                    it.setReturnRef(when (val var2 = it.getRef(1)) {
+                        is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
+                        is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
+                        else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
                     })
                 }
                 // static

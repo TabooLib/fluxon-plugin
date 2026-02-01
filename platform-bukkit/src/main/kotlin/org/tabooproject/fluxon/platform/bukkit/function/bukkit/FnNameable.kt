@@ -8,18 +8,21 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Nameable"])
 @PlatformSide(Platform.BUKKIT)
 object FnNameable {
 
+    val TYPE = Type.fromClass(Nameable::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Nameable::class.java)
                 .function("customName", returnsObject().noParams()) { it.setReturnRef(it.target?.customName) }
-                .function("setCustomName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setCustomName(it.getString(0))) }
+                .function("setCustomName", returnsVoid().params(Type.STRING)) { it.target?.setCustomName(it.getString(0)) }
         }
     }
 }

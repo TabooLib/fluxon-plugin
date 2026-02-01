@@ -15,14 +15,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnArmorTrim {
 
+    val TYPE = Type.fromClass(ArmorTrim::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorTrim::class.java)
                 .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
                 .function("pattern", returnsObject().noParams()) { it.setReturnRef(it.target?.pattern) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
         }
     }
 }

@@ -10,16 +10,19 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.entity.AbstractSkeleton"])
 @PlatformSide(Platform.BUKKIT)
 object FnAbstractSkeleton {
 
+    val TYPE = Type.fromClass(AbstractSkeleton::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractSkeleton::class.java)
-                .function("setSkeletonType", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType)) }
+                .function("setSkeletonType", returnsVoid().params(Type.OBJECT)) { it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType) }
         }
     }
 }

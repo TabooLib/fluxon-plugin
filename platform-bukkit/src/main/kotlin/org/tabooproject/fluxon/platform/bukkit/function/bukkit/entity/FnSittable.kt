@@ -7,20 +7,23 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.Sittable"])
 @PlatformSide(Platform.BUKKIT)
 object FnSittable {
 
+    val TYPE = Type.fromClass(Sittable::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sittable::class.java)
-                .function("isSitting", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isSitting) }
-                .function("setSitting", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSitting(it.getBool(0))) }
+                .function("isSitting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSitting ?: false) }
+                .function("setSitting", returnsVoid().params(Type.Z)) { it.target?.setSitting(it.getBool(0)) }
         }
     }
 }

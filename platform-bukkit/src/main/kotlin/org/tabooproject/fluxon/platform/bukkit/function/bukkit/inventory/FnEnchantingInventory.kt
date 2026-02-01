@@ -9,19 +9,22 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.EnchantingInventory"])
 @PlatformSide(Platform.BUKKIT)
 object FnEnchantingInventory {
 
+    val TYPE = Type.fromClass(EnchantingInventory::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantingInventory::class.java)
-                .function("setItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setItem(it.getRef(0) as ItemStack)) }
+                .function("setItem", returnsVoid().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
                 .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("setSecondary", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setSecondary(it.getRef(0) as ItemStack)) }
+                .function("setSecondary", returnsVoid().params(Type.OBJECT)) { it.target?.setSecondary(it.getRef(0) as ItemStack) }
                 .function("secondary", returnsObject().noParams()) { it.setReturnRef(it.target?.secondary) }
         }
     }

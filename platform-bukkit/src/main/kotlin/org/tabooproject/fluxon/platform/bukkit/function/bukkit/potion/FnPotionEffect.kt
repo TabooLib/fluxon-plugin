@@ -16,22 +16,30 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 @PlatformSide(Platform.BUKKIT)
 object FnPotionEffect {
 
+    val TYPE = Type.fromClass(PotionEffect::class.java)
+
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffect::class.java)
-                .syncFunction("apply", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.apply(it.getRef(0) as LivingEntity)) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.equals(it.getRef(0))) }
-                .function("amplifier", returnsObject().noParams()) { it.setReturnRef(it.target?.amplifier) }
-                .function("duration", returnsObject().noParams()) { it.setReturnRef(it.target?.duration) }
-                .function("isInfinite", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isInfinite) }
-                .function("isShorterThan", returns(Type.Z).params(Type.OBJECT)) { it.setReturnRef(it.target?.isShorterThan(it.getRef(0) as PotionEffect)) }
+                .syncFunction("apply", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.apply(it.getRef(0) as LivingEntity) ?: false)
+                }
+                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
+                }
+                .function("amplifier", returns(Type.I).noParams()) { it.setReturnInt(it.target?.amplifier ?: 0) }
+                .function("duration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.duration ?: 0) }
+                .function("isInfinite", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInfinite ?: false) }
+                .function("isShorterThan", returns(Type.Z).params(Type.OBJECT)) {
+                    it.setReturnBool(it.target?.isShorterThan(it.getRef(0) as PotionEffect) ?: false)
+                }
                 .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("isAmbient", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.isAmbient) }
-                .function("hasParticles", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasParticles()) }
+                .function("isAmbient", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAmbient ?: false) }
+                .function("hasParticles", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasParticles() ?: false) }
                 .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("hasIcon", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hasIcon()) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnRef(it.target?.hashCode()) }
+                .function("hasIcon", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasIcon() ?: false) }
+                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

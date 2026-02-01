@@ -13,10 +13,13 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 
 @Requires(classes = ["org.bukkit.BanList"])
 @PlatformSide(Platform.BUKKIT)
 object FnBanList {
+
+    val TYPE = Type.fromClass(BanList::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -28,7 +31,7 @@ object FnBanList {
                         else -> (it.target as? BanList<Any>)?.getBanEntry(var1!!)
                     })
                 }
-                .function("addBan", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("addBan", returnsObject().params(Type.OBJECT, Type.STRING, Type.OBJECT, Type.STRING)) {
                     it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.addBan(
                             var1,
@@ -66,16 +69,16 @@ object FnBanList {
                 .function("banEntries", returnsObject().noParams()) { it.setReturnRef(it.target?.banEntries) }
                 .function("entries", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntries()) }
                 .function("isBanned", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                    it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isBanned(var1)
                         else -> (it.target as? BanList<Any>)?.isBanned(var1!!)
-                    })
+                    } ?: false)
                 }
-                .function("pardon", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
+                .function("pardon", returnsVoid().params(Type.OBJECT)) {
+                    when (val var1 = it.getRef(0)) {
                         is String -> it.target?.pardon(var1)
                         else -> (it.target as? BanList<Any>)?.pardon(var1!!)
-                    })
+                    }
                 }
         }
     }
