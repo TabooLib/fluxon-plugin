@@ -7,7 +7,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -22,8 +21,8 @@ object FnSignSide {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
-                .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("lines", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.lines?.toList()) }
+                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
                 .function("setLine", returnsVoid().params(Type.I, Type.STRING)) {
                     it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!)
                 }

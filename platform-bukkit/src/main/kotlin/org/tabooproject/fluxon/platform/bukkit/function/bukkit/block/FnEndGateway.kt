@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.Location
 import org.bukkit.block.EndGateway
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -23,8 +24,8 @@ object FnEndGateway {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EndGateway::class.java)
-                .function("exitLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.exitLocation) }
-                .function("setExitLocation", returnsVoid().params(Type.OBJECT)) { it.target?.setExitLocation(it.getRef(0) as Location) }
+                .function("exitLocation", returns(FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.exitLocation) }
+                .function("setExitLocation", returnsVoid().params(FnLocation.TYPE)) { it.target?.setExitLocation(it.getRef(0) as Location) }
                 .function("isExactTeleport", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExactTeleport ?: false) }
                 .function("setExactTeleport", returnsVoid().params(Type.Z)) { it.target?.setExactTeleport(it.getBool(0)) }
                 .function("age", returns(Type.J).noParams()) { it.setReturnLong(it.target?.age ?: 0L) }

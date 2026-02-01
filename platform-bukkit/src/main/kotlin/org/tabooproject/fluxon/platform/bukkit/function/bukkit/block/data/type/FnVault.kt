@@ -1,13 +1,13 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.type
 
 import org.bukkit.block.data.type.Vault
+import org.tabooproject.fluxon.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -22,10 +22,23 @@ object FnVault {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vault::class.java)
-                .function("trialSpawnerState", returnsObject().noParams()) { it.setReturnRef(it.target?.trialSpawnerState) }
-                .function("setTrialSpawnerState", returnsVoid().params(Type.OBJECT)) { it.target?.setTrialSpawnerState(it.getRef(0) as Vault.State) }
+                .function("trialSpawnerState", returns(FnVaultState.TYPE).noParams()) { it.setReturnRef(it.target?.trialSpawnerState) }
+                .function("setTrialSpawnerState", returnsVoid().params(FnVaultState.TYPE)) { it.target?.setTrialSpawnerState(it.getRef(0) as Vault.State) }
+                .function("setTrialSpawnerState", returnsVoid().params(Type.STRING)) {
+                    FnVaultState.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.setTrialSpawnerState(
+                            p0)
+                    }
+                }
                 .function("isOminous", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOminous ?: false) }
                 .function("setOminous", returnsVoid().params(Type.Z)) { it.target?.setOminous(it.getBool(0)) }
         }
     }
+}
+
+@Requires(classes = ["org.bukkit.block.data.type.Vault.State"])
+@PlatformSide(Platform.BUKKIT)
+object FnVaultState : FnEnumGetter<Vault.State>() {
+
+    override val enumClass: Class<Vault.State> = Vault.State::class.java
 }

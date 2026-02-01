@@ -24,7 +24,7 @@ object FnComparator {
             registerExtension(Comparator::class.java)
                 .function("mode", returns(FnComparatorMode.TYPE).noParams()) { it.setReturnRef(it.target?.mode) }
                 .function("setMode", returnsVoid().params(FnComparatorMode.TYPE)) { it.target?.setMode(it.getRef(0) as Comparator.Mode) }
-                .function("setMode", returnsVoid().params(FnComparatorMode.TYPE)) { FnComparatorMode.enumValue(it.getString(0))?.let { p0 -> it.target?.setMode(p0) } }
+                .function("setMode", returnsVoid().params(Type.STRING)) { FnComparatorMode.enumValue(it.getString(0))?.let { p0 -> it.target?.setMode(p0) } }
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.block.BlockFace
+import org.tabooproject.fluxon.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -14,18 +15,14 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.BlockFace"])
 @PlatformSide(Platform.BUKKIT)
-object FnBlockFace {
+object FnBlockFace : FnEnumGetter<BlockFace>() {
 
-    val TYPE = Type.fromClass(BlockFace::class.java)
+    override val enumClass: Class<BlockFace> = BlockFace::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockFace::class.java)
-                // 橙汁喵: 枚举类语法
-                .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                // 橙汁喵: 枚举类语法
-                .function("ordinal", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ordinal ?: 0) }
                 .function("modX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modX ?: 0) }
                 .function("modY", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modY ?: 0) }
                 .function("modZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modZ ?: 0) }

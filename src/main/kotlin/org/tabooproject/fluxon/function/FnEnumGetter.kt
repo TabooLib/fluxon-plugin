@@ -28,7 +28,7 @@ abstract class FnEnumGetter<E : Enum<E>> {
         }
     }
 
-    fun enumValue(value: String): E? {
+    open fun enumValue(value: String): E? {
         return try {
             java.lang.Enum.valueOf(enumClass, value)
         } catch (_: IllegalArgumentException) {

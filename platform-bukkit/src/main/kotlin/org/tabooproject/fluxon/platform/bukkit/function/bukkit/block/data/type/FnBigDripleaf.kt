@@ -24,7 +24,7 @@ object FnBigDripleaf {
             registerExtension(BigDripleaf::class.java)
                 .function("tilt", returns(FnBigDripleafTilt.TYPE).noParams()) { it.setReturnRef(it.target?.tilt) }
                 .function("setTilt", returnsVoid().params(FnBigDripleafTilt.TYPE)) { it.target?.setTilt(it.getRef(0) as BigDripleaf.Tilt) }
-                .function("setTilt", returnsVoid().params(FnBigDripleafTilt.TYPE)) {
+                .function("setTilt", returnsVoid().params(Type.STRING)) {
                     FnBigDripleafTilt.enumValue(it.getString(0))?.let { p0 ->
                         it.target?.setTilt(
                             p0)

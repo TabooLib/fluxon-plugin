@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.block.BrewingStand
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnBrewerInventory
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -8,7 +9,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -26,8 +26,8 @@ object FnBrewingStand {
                 .function("setBrewingTime", returnsVoid().params(Type.I)) { it.target?.setBrewingTime(it.getInt(0).toInt()) }
                 .function("fuelLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuelLevel ?: 0) }
                 .function("setFuelLevel", returnsVoid().params(Type.I)) { it.target?.setFuelLevel(it.getInt(0).toInt()) }
-                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
-                .function("snapshotInventory", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
+                .function("inventory", returns(FnBrewerInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("snapshotInventory", returns(FnBrewerInventory.TYPE).noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }
     }
 }

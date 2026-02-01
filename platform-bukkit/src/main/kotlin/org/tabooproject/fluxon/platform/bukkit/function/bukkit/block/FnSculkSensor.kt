@@ -8,7 +8,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -25,7 +24,7 @@ object FnSculkSensor {
                 .function("lastVibrationFrequency", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lastVibrationFrequency ?: 0) }
                 .function("setLastVibrationFrequency", returnsVoid().params(Type.I)) {
                     it.target?.setLastVibrationFrequency(
-                        it.getInt(0).toInt()
+                        it.getInt(0)
                     )
                 }
         }

@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity
 
 import org.bukkit.World
 import org.bukkit.entity.EntityType
+import org.tabooproject.fluxon.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -11,13 +12,15 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import taboolib.library.xseries.XEntityType
+import kotlin.jvm.optionals.getOrNull
 
 
 @Requires(classes = ["org.bukkit.entity.EntityType"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityType {
+object FnEntityType : FnEnumGetter<EntityType>() {
 
-    val TYPE = Type.fromClass(EntityType::class.java)
+    override val enumClass: Class<EntityType> = EntityType::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -37,5 +40,9 @@ object FnEntityType {
                 .function("translationKey", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.translationKey) }
                 .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as World) ?: false) }
         }
+    }
+
+    override fun enumValue(value: String): EntityType? {
+        return XEntityType.of(value).getOrNull()?.get()
     }
 }

@@ -4,6 +4,8 @@ import org.bukkit.block.spawner.SpawnRule
 import org.bukkit.block.spawner.SpawnerEntry
 import org.bukkit.entity.EntitySnapshot
 import org.bukkit.loot.LootTable
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntitySnapshot
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.loot.FnLootTable
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -11,7 +13,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -25,14 +26,14 @@ object FnSpawnerEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry::class.java)
-                .function("snapshot", returnsObject().noParams()) { it.setReturnRef(it.target?.snapshot) }
-                .function("setSnapshot", returnsVoid().params(Type.OBJECT)) { it.target?.setSnapshot(it.getRef(0) as EntitySnapshot) }
+                .function("snapshot", returns(FnEntitySnapshot.TYPE).noParams()) { it.setReturnRef(it.target?.snapshot) }
+                .function("setSnapshot", returnsVoid().params(FnEntitySnapshot.TYPE)) { it.target?.setSnapshot(it.getRef(0) as EntitySnapshot) }
                 .function("spawnWeight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnWeight ?: 0) }
                 .function("setSpawnWeight", returnsVoid().params(Type.I)) { it.target?.setSpawnWeight(it.getInt(0).toInt()) }
-                .function("spawnRule", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnRule) }
-                .function("setSpawnRule", returnsVoid().params(Type.OBJECT)) { it.target?.setSpawnRule(it.getRef(0) as SpawnRule) }
-                .function("equipment", returnsObject().noParams()) { it.setReturnRef(it.target?.equipment) }
-                .function("setEquipment", returnsVoid().params(Type.OBJECT)) { it.target?.setEquipment(it.getRef(0) as SpawnerEntry.Equipment) }
+                .function("spawnRule", returns(FnSpawnRule.TYPE).noParams()) { it.setReturnRef(it.target?.spawnRule) }
+                .function("setSpawnRule", returnsVoid().params(FnSpawnRule.TYPE)) { it.target?.setSpawnRule(it.getRef(0) as SpawnRule) }
+                .function("equipment", returns(FnSpawnerEntryEquipment.TYPE).noParams()) { it.setReturnRef(it.target?.equipment) }
+                .function("setEquipment", returnsVoid().params(FnSpawnerEntryEquipment.TYPE)) { it.target?.setEquipment(it.getRef(0) as SpawnerEntry.Equipment) }
         }
     }
 }
@@ -47,8 +48,8 @@ object FnSpawnerEntryEquipment {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnerEntry.Equipment::class.java)
-                .function("equipmentLootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.equipmentLootTable) }
-                .function("setEquipmentLootTable", returnsVoid().params(Type.OBJECT)) { it.target?.setEquipmentLootTable(it.getRef(0) as LootTable) }
+                .function("equipmentLootTable", returns(FnLootTable.TYPE).noParams()) { it.setReturnRef(it.target?.equipmentLootTable) }
+                .function("setEquipmentLootTable", returnsVoid().params(FnLootTable.TYPE)) { it.target?.setEquipmentLootTable(it.getRef(0) as LootTable) }
         }
     }
 }

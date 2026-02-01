@@ -2,6 +2,10 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.World
 import org.bukkit.block.BlockType
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemType
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -22,11 +26,11 @@ object FnBlockType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockType::class.java)
-                .function("typed", returnsObject().noParams()) { it.setReturnRef(it.target?.typed()) }
+                .function("typed", returns(FnBlockTypeTyped.TYPE).noParams()) { it.setReturnRef(it.target?.typed()) }
                 .function("hasItemType", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasItemType() ?: false) }
-                .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
-                .function("createBlockData", returnsObject().noParams()) { it.setReturnRef(it.target?.createBlockData()) }
-                .function("createBlockData", returnsObject().params(Type.STRING)) {
+                .function("itemType", returns(FnItemType.TYPE).noParams()) { it.setReturnRef(it.target?.itemType) }
+                .function("createBlockData", returns(FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.createBlockData()) }
+                .function("createBlockData", returns(FnBlockData.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.createBlockData(it.getString(0)))
                 }
                 .function("isSolid", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSolid ?: false) }
@@ -39,11 +43,11 @@ object FnBlockType {
                 .function("blastResistance", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.blastResistance ?: 0.0f) }
                 .function("slipperiness", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.slipperiness ?: 0.0f) }
                 .function("isAir", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAir ?: false) }
-                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) {
+                .function("isEnabledByFeature", returns(Type.Z).params(FnWorld.TYPE)) {
                     it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as World) ?: false)
                 }
-                .function("asMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.asMaterial()) }
-                .function("blockDataClass", returnsObject().noParams()) { it.setReturnRef(it.target?.blockDataClass) }
+                .function("asMaterial", returns(FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.asMaterial()) }
+                .function("blockDataClass", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.blockDataClass) }
         }
     }
 }
@@ -58,9 +62,9 @@ object FnBlockTypeTyped {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockType.Typed::class.java)
-                .function("blockDataClass", returnsObject().noParams()) { it.setReturnRef(it.target?.blockDataClass) }
-                .function("createBlockData", returnsObject().noParams()) { it.setReturnRef(it.target?.createBlockData()) }
-                .function("createBlockData", returnsObject().params(Type.STRING)) {
+                .function("blockDataClass", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.blockDataClass) }
+                .function("createBlockData", returns(FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.createBlockData()) }
+                .function("createBlockData", returns(FnBlockData.TYPE).params(Type.STRING)) {
                     it.setReturnRef((it.target as? BlockType.Typed<*>)?.createBlockData(it.getString(0)))
                 }
         }

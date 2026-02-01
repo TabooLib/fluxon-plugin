@@ -7,7 +7,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -38,12 +37,14 @@ object FnSpawnRule {
                 .function("setMaxSkyLight", returnsVoid().params(Type.I)) {
                     it.target?.setMaxSkyLight(it.getInt(0).toInt())
                 }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
+                // 不能删除
+                .function("equals", returns(Type.Z).params(TYPE)) {
                     it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
                 }
                 .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
-                .function("deserialize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(SpawnRule.deserialize(it.getRef(0) as Map<String, Any>)) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("deserialize", returns(TYPE).params(Type.MAP)) { it.setReturnRef(SpawnRule.deserialize(it.getRef(0) as Map<String, Any>)) }
+                .function("serialize", returns(Type.MAP).params(TYPE)) { it.setReturnRef((it.getRef(0) as SpawnRule).serialize()) }
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.block.PistonMoveReaction
+import org.tabooproject.fluxon.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -12,17 +13,15 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.PistonMoveReaction"])
 @PlatformSide(Platform.BUKKIT)
-object FnPistonMoveReaction {
+object FnPistonMoveReaction : FnEnumGetter<PistonMoveReaction>() {
 
-    val TYPE = Type.fromClass(PistonMoveReaction::class.java)
+    override val enumClass: Class<PistonMoveReaction> = PistonMoveReaction::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PistonMoveReaction::class.java)
                 .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
-                // static
-                .function("getById", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PistonMoveReaction.getById(it.getInt(0).toInt())) }
         }
     }
 }

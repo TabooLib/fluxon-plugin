@@ -24,7 +24,7 @@ object FnBell {
             registerExtension(Bell::class.java)
                 .function("attachment", returns(FnBellAttachment.TYPE).noParams()) { it.setReturnRef(it.target?.attachment) }
                 .function("setAttachment", returnsVoid().params(FnBellAttachment.TYPE)) { it.target?.setAttachment(it.getRef(0) as Bell.Attachment) }
-                .function("setAttachment", returnsVoid().params(FnBellAttachment.TYPE)) {
+                .function("setAttachment", returnsVoid().params(Type.STRING)) {
                     FnBellAttachment.enumValue(it.getString(0))?.let { p0 ->
                         it.target?.setAttachment(
                             p0)

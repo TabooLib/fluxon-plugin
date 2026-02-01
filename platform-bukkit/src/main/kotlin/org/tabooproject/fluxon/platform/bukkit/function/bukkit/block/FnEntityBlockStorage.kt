@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.block.EntityBlockStorage
 import org.bukkit.entity.Entity
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -27,7 +28,7 @@ object FnEntityBlockStorage {
                 .function("maxEntities", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxEntities ?: 0) }
                 .function("setMaxEntities", returnsVoid().params(Type.I)) { it.target?.setMaxEntities(it.getInt(0).toInt()) }
                 .function("releaseEntities", returnsVoid().noParams()) { it.target?.releaseEntities() }
-                .function("addEntity", returnsVoid().params(Type.OBJECT)) {
+                .function("addEntity", returnsVoid().params(FnEntity.TYPE)) {
                     (it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getRef(0) as Entity)
                 }
         }

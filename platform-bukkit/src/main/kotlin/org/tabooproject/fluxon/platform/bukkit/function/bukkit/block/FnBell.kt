@@ -3,13 +3,13 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 import org.bukkit.block.Bell
 import org.bukkit.block.BlockFace
 import org.bukkit.entity.Entity
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -24,17 +24,25 @@ object FnBell {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bell::class.java)
                 .function("ring", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.ring() ?: false) }
-                .function("ring", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(when (val var1 = it.getRef(0)) {
-                        is Entity -> it.target?.ring(var1)
-                        is BlockFace -> it.target?.ring(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Entity 或 BlockFace 类型")
-                    } ?: false)
+                .function("ring", returns(Type.Z).params(FnEntity.TYPE)) {
+                    it.setReturnBool(it.target?.ring(it.getRef(0) as Entity) ?: false)
                 }
-                .function("ring", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
+                .function("ring", returns(Type.Z).params(FnBlockFace.TYPE)) {
+                    it.setReturnBool(it.target?.ring(it.getRef(0) as BlockFace) ?: false)
+                }
+                .function("ring", returns(Type.Z).params(Type.STRING)) {
+                    it.setReturnBool(it.target?.ring(FnBlockFace.enumValue(it.getString(0))) ?: false)
+                }
+                .function("ring", returns(Type.Z).params(FnEntity.TYPE, FnBlockFace.TYPE)) {
                     it.setReturnBool(it.target?.ring(
                         it.getRef(0) as Entity,
                         it.getRef(1) as BlockFace
+                    ) ?: false)
+                }
+                .function("ring", returns(Type.Z).params(FnEntity.TYPE, Type.STRING)) {
+                    it.setReturnBool(it.target?.ring(
+                        it.getRef(0) as Entity,
+                        FnBlockFace.enumValue(it.getString(1))
                     ) ?: false)
                 }
                 .function("isShaking", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShaking ?: false) }
