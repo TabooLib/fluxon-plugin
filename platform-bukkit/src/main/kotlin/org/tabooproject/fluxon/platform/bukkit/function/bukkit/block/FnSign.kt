@@ -9,14 +9,15 @@ import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.sign.FnSide
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.sign.FnSignSide
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.util.StandardTypes
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.Sign"])
 @PlatformSide(Platform.BUKKIT)
@@ -28,7 +29,7 @@ object FnSign {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sign::class.java)
-                .function("lines", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.lines?.toList()) }
+                .function("lines", returns(StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.lines) }
                 .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
                 .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!) }
                 .function("isEditable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEditable ?: false) }

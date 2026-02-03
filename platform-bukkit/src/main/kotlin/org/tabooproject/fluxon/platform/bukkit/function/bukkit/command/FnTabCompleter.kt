@@ -4,12 +4,12 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.command.TabCompleter"])
@@ -22,12 +22,12 @@ object FnTabCompleter {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TabCompleter::class.java)
-                .function("onTabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("onTabComplete", returns(Type.LIST).params(FnCommandSender.TYPE, FnCommand.TYPE, Type.STRING, Type.LIST)) {
                     it.setReturnRef(it.target?.onTabComplete(
                         it.getRef(0) as CommandSender,
                         it.getRef(1) as Command,
                         it.getString(2)!!,
-                        it.getRef(3) as Array<String>
+                        (it.getRef(3) as List<String>).toTypedArray()
                     ))
                 }
         }

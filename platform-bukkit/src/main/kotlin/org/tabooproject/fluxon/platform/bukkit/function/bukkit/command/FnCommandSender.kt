@@ -1,18 +1,18 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.command
 
 import org.bukkit.command.CommandSender
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnServer
 import org.tabooproject.fluxon.runtime.FluxonRuntime
-import taboolib.common.LifeCycle
-import taboolib.common.platform.Awake
-import taboolib.common.platform.function.adaptCommandSender
-import java.util.*
-import taboolib.common.platform.Platform
-import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import taboolib.common.LifeCycle
+import taboolib.common.Requires
+import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
+import taboolib.common.platform.function.adaptCommandSender
+import java.util.*
 
 @Requires(classes = ["org.bukkit.command.CommandSender"])
 @PlatformSide(Platform.BUKKIT)
@@ -34,7 +34,7 @@ object FnCommandSender {
                         it.getString(1)
                     )
                 }
-                .function("server", returnsObject().noParams()) { it.setReturnRef(it.target?.server) }
+                .function("server", returns(FnServer.TYPE).noParams()) { it.setReturnRef(it.target?.server) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
         }
     }

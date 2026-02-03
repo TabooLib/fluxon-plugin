@@ -1,14 +1,15 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.hanging
 
 import org.bukkit.event.hanging.HangingEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.hanging.HangingEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnHangingEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HangingEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("entity", returns(FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
         }
     }
 }

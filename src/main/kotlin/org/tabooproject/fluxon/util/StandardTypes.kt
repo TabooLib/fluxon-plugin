@@ -1,7 +1,7 @@
 package org.tabooproject.fluxon.util
 
 import org.tabooproject.fluxon.runtime.Type
-import java.util.Date
+import java.util.*
 
 /**
  * FluxonPlugin
@@ -16,4 +16,7 @@ object StandardTypes {
     val DATE = Type.fromClass(Date::class.java)
     val UUID = Type.fromClass(java.util.UUID::class.java)
     val SET = Type.fromClass(Set::class.java)
+
+    val STRING_ARRAY = Type(String::class.java, 1)
+    val I_ARRAY = Type(Integer.TYPE, 1)
 }

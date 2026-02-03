@@ -1,14 +1,16 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.inventory
 
 import org.bukkit.event.inventory.FurnaceExtractEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.FurnaceExtractEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,9 +22,9 @@ object FnFurnaceExtractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceExtractEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
-                .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
-                .function("itemAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.itemAmount) }
+                .function("player", returns(FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
+                .function("itemType", returns(FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.itemType) }
+                .function("itemAmount", returns(Type.I).noParams()) { it.setReturnRef(it.target?.itemAmount) }
         }
     }
 }

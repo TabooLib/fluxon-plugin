@@ -1,16 +1,19 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.hanging
 
 import org.bukkit.event.hanging.HangingPlaceEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.hanging.HangingPlaceEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,16 +25,11 @@ object FnHangingPlaceEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HangingPlaceEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
-                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
-                .function("blockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.blockFace) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(HangingPlaceEvent.getHandlerList()) }
+                .function("player", returns(FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
+                .function("block", returns(FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.block) }
+                .function("blockFace", returns(FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.blockFace) }
+                .function("hand", returns(FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("itemStack", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemStack) }
         }
     }
 }

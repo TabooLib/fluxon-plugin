@@ -1,14 +1,16 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.inventory
 
 import org.bukkit.event.inventory.CraftItemEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnCraftingInventory
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipe
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.inventory.CraftItemEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,8 +22,8 @@ object FnCraftItemEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CraftItemEvent::class.java)
-                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
-                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("recipe", returns(FnRecipe.TYPE).noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("inventory", returns(FnCraftingInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

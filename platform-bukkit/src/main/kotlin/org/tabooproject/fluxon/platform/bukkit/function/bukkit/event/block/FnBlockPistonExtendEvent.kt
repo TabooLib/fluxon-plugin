@@ -2,14 +2,13 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.BlockPistonExtendEvent
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockPistonExtendEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,10 +21,7 @@ object FnBlockPistonExtendEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPistonExtendEvent::class.java)
                 .function("length", returns(Type.I).noParams()) { it.setReturnInt(it.target?.length ?: 0) }
-                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockPistonExtendEvent.getHandlerList()) }
+                .function("blocks", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.blocks) }
         }
     }
 }

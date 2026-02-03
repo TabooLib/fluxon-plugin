@@ -2,16 +2,16 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.BlockCookEvent
 import org.bukkit.inventory.ItemStack
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.BlockCookEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -23,14 +23,9 @@ object FnBlockCookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockCookEvent::class.java)
-                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockCookEvent.getHandlerList()) }
+                .function("source", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.source) }
+                .function("result", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setResult", returnsVoid().params(FnItemStack.TYPE)) { it.target?.setResult(it.getRef(0) as ItemStack) }
         }
     }
 }

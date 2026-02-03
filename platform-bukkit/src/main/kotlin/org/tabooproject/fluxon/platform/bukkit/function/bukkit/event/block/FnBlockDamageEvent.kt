@@ -1,16 +1,16 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.BlockDamageEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockDamageEvent"])
@@ -23,15 +23,10 @@ object FnBlockDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDamageEvent::class.java)
-                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
-                .function("instaBreak", returnsObject().noParams()) { it.setReturnRef(it.target?.instaBreak) }
+                .function("player", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
+                .function("instaBreak", returns(Type.Z).noParams()) { it.setReturnRef(it.target?.instaBreak) }
                 .function("setInstaBreak", returnsVoid().params(Type.Z)) { it.target?.setInstaBreak(it.getBool(0)) }
-                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockDamageEvent.getHandlerList()) }
+                .function("itemInHand", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInHand) }
         }
     }
 }

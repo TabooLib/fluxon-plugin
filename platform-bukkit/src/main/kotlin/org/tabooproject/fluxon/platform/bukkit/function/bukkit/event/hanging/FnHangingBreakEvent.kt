@@ -1,16 +1,15 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.hanging
 
 import org.bukkit.event.hanging.HangingBreakEvent
+import org.tabooproject.fluxon.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.hanging.HangingBreakEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,12 +21,14 @@ object FnHangingBreakEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HangingBreakEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(HangingBreakEvent.getHandlerList()) }
+                .function("cause", returns(FnHangingBreakEventRemoveCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
         }
     }
+}
+
+@Requires(classes = ["org.bukkit.event.hanging.HangingBreakEvent.RemoveCause"])
+@PlatformSide(Platform.BUKKIT)
+object FnHangingBreakEventRemoveCause : FnEnumGetter<HangingBreakEvent.RemoveCause>() {
+
+    override val enumClass: Class<HangingBreakEvent.RemoveCause> = HangingBreakEvent.RemoveCause::class.java
 }

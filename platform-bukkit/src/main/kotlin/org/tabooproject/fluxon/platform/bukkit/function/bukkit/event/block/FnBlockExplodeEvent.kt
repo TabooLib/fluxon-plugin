@@ -1,16 +1,16 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.BlockExplodeEvent
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState
 import org.tabooproject.fluxon.runtime.FluxonRuntime
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
-import org.tabooproject.fluxon.runtime.Type
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 
 @Requires(classes = ["org.bukkit.event.block.BlockExplodeEvent"])
@@ -23,15 +23,10 @@ object FnBlockExplodeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExplodeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("explodedBlockState", returnsObject().noParams()) { it.setReturnRef(it.target?.explodedBlockState) }
-                .function("blockList", returnsObject().noParams()) { it.setReturnRef(it.target?.blockList()) }
-                .function("yield", returnsObject().noParams()) { it.setReturnRef(it.target?.yield) }
+                .function("explodedBlockState", returns(FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.explodedBlockState) }
+                .function("blockList", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.blockList()) }
+                .function("yield", returns(Type.F).noParams()) { it.setReturnRef(it.target?.yield) }
                 .function("setYield", returnsVoid().params(Type.F)) { it.target?.setYield(it.getFloat(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
-                // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(BlockExplodeEvent.getHandlerList()) }
         }
     }
 }
