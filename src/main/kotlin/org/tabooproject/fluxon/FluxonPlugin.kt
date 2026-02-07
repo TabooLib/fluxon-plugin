@@ -16,6 +16,13 @@ import taboolib.common.util.runSync
 )
 object FluxonPlugin {
 
+    /**
+     * 全局特性：是否允许在非脚本环境使用调度器
+     * 当启用时，允许在非脚本环境使用调度器，例如 submit、runAsync 等
+     * 默认值：false（禁用），避免内存泄漏风险
+     */
+    var DEFAULT_ALLOW_EXECUTE_TASK_ON_NON_SCRIPT_ENV = false
+
     @Awake(LifeCycle.INIT)
     fun init() {
         // 启用特性

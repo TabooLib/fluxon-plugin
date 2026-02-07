@@ -1,5 +1,6 @@
 package org.tabooproject.fluxon.function.platform
 
+import org.tabooproject.fluxon.FluxonPlugin
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
@@ -71,8 +72,10 @@ object FunctionExecutor {
     ): PlatformExecutor.PlatformTask? {
         val script = env.getFluxonScript()
         if (script == null) {
-            warning("无法注册调度器：没有找到脚本环境。")
-            return null
+            if (!FluxonPlugin.DEFAULT_ALLOW_EXECUTE_TASK_ON_NON_SCRIPT_ENV) {
+                warning("无法注册调度器：没有找到脚本环境。")
+                return null
+            }
         }
         val task = submit(async = async, delay = delay, period = period) {
             lambda.invokeInline(env, 1, this, null, null, null, this)
@@ -80,7 +83,7 @@ object FunctionExecutor {
         // 如果是周期性任务，注册为可释放资源
         if (period > 0) {
             val resourceId = "task_${UUID.randomUUID()}"
-            script.resources[resourceId] = AutoCloseable {
+            script?.resources[resourceId] = AutoCloseable {
                 task.cancel()
             }
         }
