@@ -81,10 +81,12 @@ object FunctionExecutor {
             lambda.invokeInline(env, 1, this, null, null, null, this)
         }
         // 如果是周期性任务，注册为可释放资源
-        if (period > 0) {
-            val resourceId = "task_${UUID.randomUUID()}"
-            script?.resources[resourceId] = AutoCloseable {
-                task.cancel()
+        if (script != null) {
+            if (period > 0) {
+                val resourceId = "task_${UUID.randomUUID()}"
+                script.resources[resourceId] = AutoCloseable {
+                    task.cancel()
+                }
             }
         }
         return task

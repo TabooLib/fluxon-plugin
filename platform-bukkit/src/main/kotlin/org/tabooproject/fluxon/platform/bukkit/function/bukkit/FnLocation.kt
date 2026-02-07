@@ -155,6 +155,13 @@ object FnLocation {
                     }
                 }
 
+                .function("distance", 1) {
+                    it.target?.distance(it.getArgument(0) as Location)
+                }
+                .function("distanceSquared", 1) {
+                    it.target?.distanceSquared(it.getArgument(0) as Location)
+                }
+
         }
     }
 }
