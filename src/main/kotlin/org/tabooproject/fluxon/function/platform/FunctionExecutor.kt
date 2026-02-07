@@ -97,9 +97,9 @@ object FunctionExecutor {
      */
     class TaskBuilder(val env: Environment) {
 
-        private var async = false
-        private var delay = 0L
-        private var period = 0L
+        var async = false
+        var delay = 0L
+        var period = 0L
 
         @Export
         fun async(): TaskBuilder {

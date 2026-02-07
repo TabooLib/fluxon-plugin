@@ -129,6 +129,7 @@ object FnLocation {
                 .function("add", 1) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.add(arg.toVector())
+                        is Vector -> it.target?.add(arg)
                         is Number -> it.target?.add(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
@@ -136,6 +137,7 @@ object FnLocation {
                 .function("subtract", 1) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.subtract(arg.toVector())
+                        is Vector -> it.target?.subtract(arg)
                         is Number -> it.target?.subtract(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
@@ -143,6 +145,7 @@ object FnLocation {
                 .function("multiply", 1) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.multiply(arg)
+                        is Vector -> it.target?.subtract(arg)
                         is Number -> it.target?.multiply(Location(null, arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
@@ -150,6 +153,7 @@ object FnLocation {
                 .function("divide", 1) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.divide(arg)
+                        is Vector -> it.target?.subtract(arg)
                         is Number -> it.target?.divide(Location(null, arg.toDouble(), arg.toDouble(), arg.toDouble()))
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
