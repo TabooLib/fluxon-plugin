@@ -1,7 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.TNTPrimeEvent
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type

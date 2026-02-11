@@ -1,7 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory
 
 import org.bukkit.event.inventory.InventoryAction
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import taboolib.common.Requires
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide

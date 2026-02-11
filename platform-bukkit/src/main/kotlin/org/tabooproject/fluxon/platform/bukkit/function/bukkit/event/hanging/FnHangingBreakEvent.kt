@@ -1,7 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.hanging
 
 import org.bukkit.event.hanging.HangingBreakEvent
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type

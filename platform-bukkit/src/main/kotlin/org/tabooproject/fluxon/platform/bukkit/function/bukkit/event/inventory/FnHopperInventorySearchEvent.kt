@@ -2,7 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.inventory
 
 import org.bukkit.event.inventory.HopperInventorySearchEvent
 import org.bukkit.inventory.Inventory
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory
 import org.tabooproject.fluxon.runtime.FluxonRuntime

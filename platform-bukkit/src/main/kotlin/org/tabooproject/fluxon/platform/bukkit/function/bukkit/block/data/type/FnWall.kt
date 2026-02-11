@@ -2,7 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.type
 
 import org.bukkit.block.BlockFace
 import org.bukkit.block.data.type.Wall
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle

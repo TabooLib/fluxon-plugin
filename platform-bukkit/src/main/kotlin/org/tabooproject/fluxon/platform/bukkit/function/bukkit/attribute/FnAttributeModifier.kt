@@ -2,7 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.attribute
 
 import com.google.common.base.Enums
 import org.bukkit.attribute.AttributeModifier
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlotGroup
 import org.tabooproject.fluxon.runtime.FluxonRuntime

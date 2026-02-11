@@ -1,7 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block
 
 import org.bukkit.event.block.CauldronLevelChangeEvent
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity
 import org.tabooproject.fluxon.runtime.FluxonRuntime

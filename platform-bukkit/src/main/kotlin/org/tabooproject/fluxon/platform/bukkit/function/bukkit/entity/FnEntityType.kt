@@ -2,7 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity
 
 import org.bukkit.World
 import org.bukkit.entity.EntityType
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake

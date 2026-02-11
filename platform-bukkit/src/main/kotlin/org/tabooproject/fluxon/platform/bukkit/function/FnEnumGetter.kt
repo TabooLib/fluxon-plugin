@@ -1,7 +1,7 @@
-package org.tabooproject.fluxon.function
+package org.tabooproject.fluxon.platform.bukkit.function
 
 import org.tabooproject.fluxon.runtime.FluxonRuntime
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature
 import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.function.registerLifeCycleTask
@@ -16,13 +16,14 @@ import taboolib.common.platform.function.registerLifeCycleTask
 abstract class FnEnumGetter<E : Enum<E>> {
 
     abstract val enumClass: Class<E>
-    val TYPE: Type = Type.fromClass(enumClass)
+
+    val TYPE = Type.fromClass(enumClass)!!
 
     init {
         registerLifeCycleTask(LifeCycle.INIT) {
             val className = javaClass.simpleName.removePrefix("Fn")
             val name = className[0] + className.substring(1)
-            FluxonRuntime.getInstance().registerFunction(name, returns(TYPE).params(Type.STRING)) {
+            FluxonRuntime.getInstance().registerFunction(name, FunctionSignature.returns(TYPE).params(Type.STRING)) {
                 it.setReturnRef(enumValue(it.getString(0)))
             }
         }

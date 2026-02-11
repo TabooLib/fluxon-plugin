@@ -2,7 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.block
 
 import org.bukkit.Material
 import org.bukkit.block.DecoratedPot
-import org.tabooproject.fluxon.function.FnEnumGetter
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial
 import org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnDecoratedPotInventory
 import org.tabooproject.fluxon.runtime.FluxonRuntime

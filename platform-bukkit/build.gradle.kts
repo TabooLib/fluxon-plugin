@@ -17,7 +17,7 @@ taboolib {
 
 
 dependencies {
-    compileOnly(rootProject)
+    compileOnly(project(":common"))
     compileOnly("ink.ptms.core:v12006:12006:mapped")
     compileOnly("ink.ptms.core:v11605:11605")
     compileOnly("public:PlaceholderAPI:2.10.9")
