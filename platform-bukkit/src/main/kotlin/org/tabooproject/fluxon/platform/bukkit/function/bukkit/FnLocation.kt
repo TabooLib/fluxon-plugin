@@ -126,19 +126,29 @@ object FnLocation {
                 }
 
                 // 基本运算
-                .function("add", 1) {
+                .function("add", listOf(1, 3)) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.add(arg.toVector())
                         is Vector -> it.target?.add(arg)
-                        is Number -> it.target?.add(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
+                        is Number -> {
+                            val x = it.getNumber(0)
+                            val y = it.getNumber(1)
+                            val z = it.getNumber(2)
+                            it.target?.add(Vector(x.toDouble(), y.toDouble(), z.toDouble()))
+                        }
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
                 }
-                .function("subtract", 1) {
+                .function("subtract", listOf(1, 3)) {
                     when (val arg = it.getArgument(0)!!) {
                         is Location -> it.target?.subtract(arg.toVector())
                         is Vector -> it.target?.subtract(arg)
-                        is Number -> it.target?.subtract(Vector(arg.toDouble(), arg.toDouble(), arg.toDouble()))
+                        is Number -> {
+                            val x = it.getNumber(0)
+                            val y = it.getNumber(1)
+                            val z = it.getNumber(2)
+                            it.target?.subtract(Vector(x.toDouble(), y.toDouble(), z.toDouble()))
+                        }
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     }
                 }

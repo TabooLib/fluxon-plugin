@@ -8,6 +8,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import taboolib.library.xseries.XPotion
 
 @Requires(classes = ["org.bukkit.potion.PotionEffectType"])
 @PlatformSide(Platform.BUKKIT)
@@ -16,6 +17,9 @@ object FnPotionEffectType {
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
+            registerFunction("potion", 1) {
+                XPotion.of(it.getString(0)!!).get().get()!!
+            }
             registerExtension(PotionEffectType::class.java)
                 .function("createEffect", 2) {
                     it.target?.createEffect(

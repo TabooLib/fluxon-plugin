@@ -17,6 +17,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
+import taboolib.platform.util.sendActionBar
 
 
 @Requires(classes = ["org.bukkit.entity.HumanEntity"])
@@ -128,6 +129,7 @@ object FnHumanEntity {
                 .function("lastDeathLocation", 0) { it.target?.lastDeathLocation }
                 .function("setLastDeathLocation", 1) { it.target?.setLastDeathLocation(it.getArgument(0) as Location) }
                 .function("fireworkBoost", 1) { it.target?.fireworkBoost(it.getArgument(0) as ItemStack) }
+                .function("sendActionBar", 1) { it.getString(0)?.let { message -> it.target?.sendActionBar(message) } }
         }
     }
 }
