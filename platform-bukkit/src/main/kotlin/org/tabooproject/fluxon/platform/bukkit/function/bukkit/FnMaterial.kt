@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
 import org.bukkit.Material
 import org.bukkit.World
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
@@ -16,9 +17,13 @@ import taboolib.common.Requires
 
 @Requires(classes = ["org.bukkit.Material"])
 @PlatformSide(Platform.BUKKIT)
-object FnMaterial {
+object FnMaterial : FnEnumGetter<Material>() {
 
-    val TYPE = Type.fromClass(Material::class.java)
+    override val enumClass: Class<Material> = Material::class.java
+
+    override fun enumValue(value: String): Material? {
+        return XMaterial.matchXMaterial(value).getOrNull()?.get()
+    }
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -67,12 +72,6 @@ object FnMaterial {
                 }
                 .function("isCompostable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCompostable ?: false) }
                 .function("compostChance", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.compostChance ?: 0.0f) }
-            registerFunction("material", returnsObject().params(Type.STRING)) {
-                val name = it.getRef(0).toString()
-                it.setReturnRef(XMaterial.matchXMaterial(name).getOrNull()?.get() ?: error("Material 不存在: $name"))}
-            registerFunction("materialOrNull", returnsObject().params(Type.STRING)) {
-                val name = it.getRef(0).toString()
-                it.setReturnRef(XMaterial.matchXMaterial(name).getOrNull()?.get())}
         }
     }
 }

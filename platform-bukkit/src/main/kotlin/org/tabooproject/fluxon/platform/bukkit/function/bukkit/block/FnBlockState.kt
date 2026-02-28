@@ -48,7 +48,7 @@ object FnBlockState {
                 .function("setData", returnsVoid().params(FnMaterialData.TYPE)) { it.target?.setData(it.getRef(0) as MaterialData) }
                 .function("setBlockData", returnsVoid().params(FnBlockData.TYPE)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
                 .function("setType", returnsVoid().params(FnMaterial.TYPE)) { it.target?.setType(it.getRef(0) as Material) }
-                .function("setType", returnsVoid().params(Type.STRING)) { XMaterial.matchXMaterial(it.getString(0)).getOrNull()?.get()?.let { p0 -> it.target?.setType(p0) } }
+                .function("setType", returnsVoid().params(Type.STRING)) { FnMaterial.enumValue(it.getString(0))?.let { p0 -> it.target?.setType(p0) } }
                 .function("update", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.update() ?: false) }
                 .function("update", returns(Type.Z).params(Type.Z)) {
                     it.setReturnBool(it.target?.update(it.getBool(0)) ?: false)

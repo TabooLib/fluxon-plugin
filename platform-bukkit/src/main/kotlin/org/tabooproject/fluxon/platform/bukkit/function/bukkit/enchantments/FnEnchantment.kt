@@ -12,6 +12,8 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import taboolib.library.xseries.XEnchantment
+import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.enchantments.Enchantment"])
 @PlatformSide(Platform.BUKKIT)
@@ -38,5 +40,9 @@ object FnEnchantment {
                 // static
                 .function("values", returnsObject().noParams()) { it.setReturnRef(Enchantment.values()) }
         }
+    }
+
+    fun enumValue(value: String): Enchantment? {
+        return XEnchantment.of(value).getOrNull()?.get()
     }
 }

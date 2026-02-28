@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit.attribute
 
 import org.bukkit.attribute.Attribute
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import taboolib.common.LifeCycle
@@ -14,16 +15,11 @@ import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.attribute.Attribute"])
 @PlatformSide(Platform.BUKKIT)
-object FnAttribute {
+object FnAttribute : FnEnumGetter<Attribute>() {
 
-    val TYPE = Type.fromClass(Attribute::class.java)
+    override val enumClass: Class<Attribute> = Attribute::class.java
 
-    @Awake(LifeCycle.INIT)
-    private fun init() {
-        with(FluxonRuntime.getInstance()) {
-            registerFunction("attribute", returns(FnAttributable.TYPE).params(Type.STRING)) {
-                it.setReturnRef(XAttribute.of(it.getString(0)).getOrNull()?.get())
-            }
-        }
+    override fun enumValue(value: String): Attribute? {
+        return XAttribute.of(value).getOrNull()?.get()
     }
 }

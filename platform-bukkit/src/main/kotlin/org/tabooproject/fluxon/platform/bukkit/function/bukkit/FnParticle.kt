@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
 import org.bukkit.Particle
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -10,12 +11,14 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import taboolib.library.xseries.particles.XParticle
+import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.Particle"])
 @PlatformSide(Platform.BUKKIT)
-object FnParticle {
+object FnParticle : FnEnumGetter<Particle>() {
 
-    val TYPE = Type.fromClass(Particle::class.java)
+    override val enumClass: Class<Particle> = Particle::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,6 +26,10 @@ object FnParticle {
             registerExtension(Particle::class.java)
                 .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
+    }
+
+    override fun enumValue(value: String): Particle? {
+        return XParticle.of(value).getOrNull()?.get()
     }
 }
 

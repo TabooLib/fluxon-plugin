@@ -36,7 +36,7 @@ object FnDecoratedPot {
                 .function("setSherd", returnsVoid().params(FnDecoratedPotSide.TYPE, Type.STRING)) {
                     it.target?.setSherd(
                         it.getRef(0) as DecoratedPot.Side,
-                        XMaterial.matchXMaterial(it.getString(1)).getOrNull()?.get()
+                        FnMaterial.enumValue(it.getString(1))
                     )
                 }
                 .function("setSherd", returnsVoid().params(Type.STRING, FnMaterial.TYPE)) {
@@ -49,7 +49,7 @@ object FnDecoratedPot {
                 }
                 .function("setSherd", returnsVoid().params(Type.STRING, Type.STRING)) {
                     val side = FnDecoratedPotSide.enumValue(it.getString(0)) ?: return@function
-                    val mat = XMaterial.matchXMaterial(it.getString(1)).getOrNull()?.get() ?: return@function
+                    val mat = FnMaterial.enumValue(it.getString(1)) ?: return@function
                     it.target?.setSherd(side, mat)
                 }
                 .function("getSherd", returns(FnMaterial.TYPE).params(FnDecoratedPotSide.TYPE)) { it.setReturnRef(it.target?.getSherd(it.getRef(0) as DecoratedPot.Side)) }

@@ -21,6 +21,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import taboolib.platform.util.sendActionBar
 
 
 @Requires(classes = ["org.bukkit.entity.HumanEntity"])
@@ -132,6 +133,7 @@ object FnHumanEntity {
                 .function("lastDeathLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.lastDeathLocation) }
                 .function("setLastDeathLocation", returnsVoid().params(Type.OBJECT)) { it.target?.setLastDeathLocation(it.getRef(0) as Location) }
                 .function("fireworkBoost", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.fireworkBoost(it.getRef(0) as ItemStack)) }
+                .function("sendActionBar", returnsVoid().params(Type.STRING)) { it.getString(0)?.let { message -> it.target?.sendActionBar(message) } }
         }
     }
 }

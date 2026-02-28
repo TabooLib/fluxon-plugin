@@ -98,13 +98,13 @@ object FnBlock {
                     it.target?.setType(it.getRef(0) as Material)
                 }
                 .function("setType", returnsVoid().params(Type.STRING)) {
-                    XMaterial.matchXMaterial(it.getString(0)).getOrNull()?.get()?.let { p0 -> it.target?.setType(p0) }
+                    FnMaterial.enumValue(it.getString(0))?.let { p0 -> it.target?.setType(p0) }
                 }
                 .function("setType", returnsVoid().params(FnMaterial.TYPE, Type.Z)) {
                     it.target?.setType(it.getRef(0) as Material, it.getBool(1))
                 }
                 .function("setType", returnsVoid().params(Type.STRING, Type.Z)) {
-                    XMaterial.matchXMaterial(it.getString(0)).getOrNull()?.get()?.let { p0 -> it.target?.setType(p0, it.getBool(1)) }
+                    FnMaterial.enumValue(it.getString(0))?.let { p0 -> it.target?.setType(p0, it.getBool(1)) }
                 }
                 .function("getFace", returns(FnBlockFace.TYPE).params(FnBlock.TYPE)) { it.setReturnRef(it.target?.getFace(it.getRef(0) as Block)) }
                 .function("state", returns(FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }

@@ -11,6 +11,8 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import taboolib.library.xseries.XPotion
+import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.potion.PotionEffectType"])
 @PlatformSide(Platform.BUKKIT)
@@ -34,14 +36,10 @@ object FnPotionEffectType {
                 .function("durationModifier", returnsObject().noParams()) { it.setReturnRef(it.target?.durationModifier) }
                 .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                // static
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionEffectType.getByKey(it.getRef(0) as NamespacedKey)) }
-                // static
-                .function("getById", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionEffectType.getById(it.getInt(0).toInt())) }
-                // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionEffectType.getByName(it.getString(0)!!)) }
-                // static
-                .function("values", returnsObject().noParams()) { it.setReturnRef(PotionEffectType.values()) }
         }
+    }
+
+    fun enumValue(value: String): PotionEffectType? {
+        return XPotion.of(value).getOrNull()?.get()
     }
 }

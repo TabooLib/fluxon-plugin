@@ -1,6 +1,7 @@
 package org.tabooproject.fluxon.platform.bukkit.function.bukkit
 
 import org.bukkit.Sound
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
@@ -14,9 +15,9 @@ import taboolib.common.Requires
 
 @Requires(classes = ["org.bukkit.Sound"])
 @PlatformSide(Platform.BUKKIT)
-object FnSound {
+object FnSound : FnEnumGetter<Sound>() {
 
-    val TYPE = Type.fromClass(Sound::class.java)
+    override val enumClass: Class<Sound> = Sound::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -30,5 +31,9 @@ object FnSound {
                 val name = it.getRef(0).toString()
                 it.setReturnRef(XSound.of(name).getOrNull()?.get())}
         }
+    }
+
+    override fun enumValue(value: String): Sound? {
+        return XSound.of(value).getOrNull()?.get()
     }
 }

@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion
 
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.potion.PotionType
+import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -14,9 +15,9 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPotionType {
+object FnPotionType : FnEnumGetter<PotionType>() {
 
-    val TYPE = Type.fromClass(PotionType::class.java)
+    override val enumClass: Class<PotionType> = PotionType::class.java
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -28,9 +29,6 @@ object FnPotionType {
                 .function("isUpgradeable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUpgradeable ?: false) }
                 .function("isExtendable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExtendable ?: false) }
                 .function("maxLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLevel ?: 0) }
-                // statics
-                .function("getByEffect", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PotionType.getByEffect(it.getRef(0) as PotionEffectType)) }
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

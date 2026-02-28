@@ -30,7 +30,7 @@ object FnJukebox {
             registerExtension(Jukebox::class.java)
                 .function("playing", returns(FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.playing) }
                 .function("setPlaying", returnsVoid().params(FnMaterial.TYPE)) { it.target?.setPlaying(it.getRef(0) as Material) }
-                .function("setPlaying", returnsVoid().params(Type.STRING)) { it.target?.setPlaying(XMaterial.matchXMaterial(it.getString(0)).getOrNull()?.get()) }
+                .function("setPlaying", returnsVoid().params(Type.STRING)) { it.target?.setPlaying(FnMaterial.enumValue(it.getString(0))) }
 
                 .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRecord() ?: false) }
                 .function("record", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.record) }

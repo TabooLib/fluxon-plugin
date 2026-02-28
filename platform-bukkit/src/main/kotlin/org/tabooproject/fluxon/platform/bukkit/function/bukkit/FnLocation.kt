@@ -147,6 +147,13 @@ object FnLocation {
                     it.target?.divide(Location(null, arg, arg, arg))
                 }
 
+                .function("distance", returns(Type.D).params(TYPE)) {
+                    it.setReturnDouble(it.target?.distance(it.getRef(0) as Location)!!)
+                }
+                .function("distanceSquared", returns(Type.D).params(TYPE)) {
+                    it.setReturnDouble(it.target?.distanceSquared(it.getRef(0) as Location)!!)
+                }
+
         }
     }
 }
