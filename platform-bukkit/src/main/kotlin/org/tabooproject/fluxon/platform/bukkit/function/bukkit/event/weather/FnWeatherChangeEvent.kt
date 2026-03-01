@@ -22,12 +22,10 @@ object FnWeatherChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WeatherChangeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("toWeatherState", returnsObject().noParams()) { it.setReturnRef(it.target?.toWeatherState()) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("toWeatherState",returns(Type.Z).noParams()) { it.setReturnRef(it.target?.toWeatherState()) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(WeatherChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(WeatherChangeEvent.getHandlerList()) }
         }
     }
 }

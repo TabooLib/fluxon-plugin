@@ -23,10 +23,10 @@ object FnFireworkEffectMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffectMeta::class.java)
-                .function("setEffect", returnsVoid().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as FireworkEffect) }
+                .function("setEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffect.TYPE)) { it.target?.setEffect(it.getRef(0) as FireworkEffect) }
                 .function("hasEffect", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEffect() ?: false) }
-                .function("effect", returnsObject().noParams()) { it.setReturnRef(it.target?.effect) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("effect", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffect.TYPE).noParams()) { it.setReturnRef(it.target?.effect) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnFireworkEffectMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

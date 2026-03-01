@@ -2,6 +2,7 @@ package org.tabooproject.fluxon.platform.bukkit.function;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer;
 import org.tabooproject.fluxon.runtime.Environment;
 import org.tabooproject.fluxon.runtime.FluxonRuntime;
 import org.tabooproject.fluxon.runtime.NativeFunction;
@@ -43,8 +44,8 @@ public class FunctionPlaceholder {
             context.setReturnRef(PlaceholderAPI.setPlaceholders(player, content));
         };
         runtime.registerFunction("papi", returns(Type.STRING).params(Type.STRING), function);
-        runtime.registerFunction("papi", returns(Type.STRING).params(Type.STRING, Type.OBJECT), function);
+        runtime.registerFunction("papi", returns(Type.STRING).params(Type.STRING, FnPlayer.INSTANCE.getTYPE()), function);
         runtime.registerFunction("placeholder", returns(Type.STRING).params(Type.STRING), function);
-        runtime.registerFunction("placeholder", returns(Type.STRING).params(Type.STRING, Type.OBJECT), function);
+        runtime.registerFunction("placeholder", returns(Type.STRING).params(Type.STRING, FnPlayer.INSTANCE.getTYPE()), function);
     }
 }

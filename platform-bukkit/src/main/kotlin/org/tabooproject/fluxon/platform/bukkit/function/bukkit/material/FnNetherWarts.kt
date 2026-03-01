@@ -23,10 +23,11 @@ object FnNetherWarts {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NetherWarts::class.java)
-                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
-                .function("setState", returnsVoid().params(Type.OBJECT)) { it.target?.setState(it.getRef(0) as NetherWartsState) }
+                .function("state", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNetherWartsState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
+                .function("setState", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNetherWartsState.TYPE)) { it.target?.setState(it.getRef(0) as NetherWartsState)  }
+                .function("setState", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNetherWartsState.enumValue(it.getString(0))?.let { p0 -> it.target?.setState(p0)  } }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPoseChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,10 +21,10 @@ object FnEntityPoseChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPoseChangeEvent::class.java)
-                .function("pose", returnsObject().noParams()) { it.setReturnRef(it.target?.pose) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("pose", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPose.TYPE).noParams()) { it.setReturnRef(it.target?.pose) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPoseChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityPoseChangeEvent.getHandlerList()) }
         }
     }
 }

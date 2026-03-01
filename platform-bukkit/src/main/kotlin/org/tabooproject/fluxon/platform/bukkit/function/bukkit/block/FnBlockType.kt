@@ -52,7 +52,7 @@ object FnBlockType {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.BlockType.Typed"])
+@Requires(classes = ["org.bukkit.block.BlockType\$Typed"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockTypeTyped {
 

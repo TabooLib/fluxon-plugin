@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.SizedFireball"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,8 +23,8 @@ object FnSizedFireball {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SizedFireball::class.java)
-                .function("displayItem", returnsObject().noParams()) { it.setReturnRef(it.target?.displayItem) }
-                .function("setDisplayItem", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayItem(it.getRef(0) as ItemStack) }
+                .function("displayItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.displayItem) }
+                .function("setDisplayItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setDisplayItem(it.getRef(0) as ItemStack) }
         }
     }
 }

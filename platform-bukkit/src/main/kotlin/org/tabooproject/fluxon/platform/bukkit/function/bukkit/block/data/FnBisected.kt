@@ -29,7 +29,7 @@ object FnBisected {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.Bisected"])
+@Requires(classes = ["org.bukkit.block.data.Bisected\$Half"])
 @PlatformSide(Platform.BUKKIT)
 object FnBisectedHalf : FnEnumGetter<Bisected.Half>() {
 

@@ -10,6 +10,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerQuitEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,11 +22,11 @@ object FnPlayerQuitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerQuitEvent::class.java)
-                .function("quitMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.quitMessage) }
+                .function("quitMessage",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.quitMessage) }
                 .function("setQuitMessage", returnsVoid().params(Type.STRING)) { it.target?.setQuitMessage(it.getString(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerQuitEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerQuitEvent.getHandlerList()) }
         }
     }
 }

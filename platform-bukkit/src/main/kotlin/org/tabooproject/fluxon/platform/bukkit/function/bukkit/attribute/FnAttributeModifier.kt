@@ -36,7 +36,7 @@ object FnAttributeModifier {
     }
 }
 
-@Requires(classes = ["org.bukkit.attribute.AttributeModifier.Operation"])
+@Requires(classes = ["org.bukkit.attribute.AttributeModifier\$Operation"])
 @PlatformSide(Platform.BUKKIT)
 object FnAttributeModifierOperation : FnEnumGetter<AttributeModifier.Operation>() {
 

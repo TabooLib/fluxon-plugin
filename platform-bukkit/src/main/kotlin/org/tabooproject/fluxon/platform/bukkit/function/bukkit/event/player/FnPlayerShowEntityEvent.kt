@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerShowEntityEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,10 +21,10 @@ object FnPlayerShowEntityEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerShowEntityEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("entity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerShowEntityEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerShowEntityEvent.getHandlerList()) }
         }
     }
 }

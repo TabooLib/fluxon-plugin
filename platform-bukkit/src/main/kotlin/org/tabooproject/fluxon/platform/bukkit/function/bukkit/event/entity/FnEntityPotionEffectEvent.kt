@@ -22,18 +22,16 @@ object FnEntityPotionEffectEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPotionEffectEvent::class.java)
-                .function("oldEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.oldEffect) }
-                .function("newEffect", returnsObject().noParams()) { it.setReturnRef(it.target?.newEffect) }
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
-                .function("action", returnsObject().noParams()) { it.setReturnRef(it.target?.action) }
-                .function("modifiedType", returnsObject().noParams()) { it.setReturnRef(it.target?.modifiedType) }
+                .function("oldEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).noParams()) { it.setReturnRef(it.target?.oldEffect) }
+                .function("newEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).noParams()) { it.setReturnRef(it.target?.newEffect) }
+                .function("cause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityPotionEffectEventCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("action", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityPotionEffectEventAction.TYPE).noParams()) { it.setReturnRef(it.target?.action) }
+                .function("modifiedType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE).noParams()) { it.setReturnRef(it.target?.modifiedType) }
                 .function("isOverride", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOverride ?: false) }
                 .function("setOverride", returnsVoid().params(Type.Z)) { it.target?.setOverride(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPotionEffectEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityPotionEffectEvent.getHandlerList()) }
         }
     }
 }

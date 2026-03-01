@@ -29,7 +29,7 @@ object FnOctaveGenerator {
                 .function("setYScale", returnsVoid().params(Type.D)) { it.target?.setYScale(it.getDouble(0)) }
                 .function("zScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.getZScale() ?: 0.0) }
                 .function("setZScale", returnsVoid().params(Type.D)) { it.target?.setZScale(it.getDouble(0)) }
-                .function("octaves", returnsObject().noParams()) { it.setReturnRef(it.target?.getOctaves()) }
+                .function("octaves", returns(Type.fromClass(Array<org.bukkit.util.noise.NoiseGenerator>::class.java)).noParams()) { it.setReturnRef(it.target?.getOctaves()) }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(it.target?.noise(
                         it.getDouble(0),

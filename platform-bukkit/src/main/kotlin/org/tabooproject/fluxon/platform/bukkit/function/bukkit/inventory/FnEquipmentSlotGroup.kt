@@ -22,7 +22,7 @@ object FnEquipmentSlotGroup {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EquipmentSlotGroup::class.java)
-                .function("test", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.test(it.getRef(0) as EquipmentSlot)) }
+                .function("test",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE)) { it.setReturnRef(it.target?.test(it.getRef(0) as EquipmentSlot)) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

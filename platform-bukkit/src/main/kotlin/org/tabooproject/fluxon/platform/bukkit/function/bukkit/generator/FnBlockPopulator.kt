@@ -12,7 +12,6 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -21,19 +20,20 @@ import org.tabooproject.fluxon.runtime.Type
 object FnBlockPopulator {
 
     val TYPE = Type.fromClass(BlockPopulator::class.java)
+    private val RANDOM = Type.fromClass(Random::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockPopulator::class.java)
-                .function("populate", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("populate", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE, RANDOM, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChunk.TYPE)) {
                     it.target?.populate(
                         it.getRef(0) as World,
                         it.getRef(1) as Random,
                         it.getRef(2) as Chunk
                     )
                 }
-                .function("populate", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("populate", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, RANDOM, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnLimitedRegion.TYPE)) {
                     it.target?.populate(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,

@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.scheduler.BukkitWorker"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,9 +21,9 @@ object FnBukkitWorker {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitWorker::class.java)
-                .function("taskId", returnsObject().noParams()) { it.setReturnRef(it.target?.taskId) }
-                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
-                .function("thread", returnsObject().noParams()) { it.setReturnRef(it.target?.thread) }
+                .function("taskId",returns(Type.I).noParams()) { it.setReturnRef(it.target?.taskId) }
+                .function("owner",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE).noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("thread", returns(Type.fromClass(Thread::class.java)).noParams()) { it.setReturnRef(it.target?.thread) }
         }
     }
 }

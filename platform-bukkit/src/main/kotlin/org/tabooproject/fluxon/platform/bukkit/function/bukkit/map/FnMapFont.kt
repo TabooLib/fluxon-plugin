@@ -22,13 +22,13 @@ object FnMapFont {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont::class.java)
-                .function("setChar", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                .function("setChar",returnsVoid().params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapFontCharacterSprite.TYPE)) {
                     it.target?.setChar(
                         it.getString(0)?.firstOrNull()!!,
                         it.getRef(1) as MapFont.CharacterSprite
                     )
                 }
-                .function("getChar", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getChar(it.getString(0)?.firstOrNull()!!)) }
+                .function("getChar", returns(FnMapFontCharacterSprite.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getChar(it.getString(0)?.firstOrNull()!!)) }
                 .function("getWidth", returns(Type.I).params(Type.STRING)) { it.setReturnInt(it.target?.getWidth(it.getString(0)!!) ?: 0) }
                 .function("height", returns(Type.I).noParams()) { it.setReturnInt(it.target?.height ?: 0) }
                 .function("isValid", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isValid(it.getString(0)!!) ?: false) }
@@ -36,7 +36,7 @@ object FnMapFont {
     }
 }
 
-@Requires(classes = ["org.bukkit.map.MapFont.CharacterSprite"])
+@Requires(classes = ["org.bukkit.map.MapFont\$CharacterSprite"])
 @PlatformSide(Platform.BUKKIT)
 object FnMapFontCharacterSprite {
 

@@ -22,11 +22,11 @@ object FnPainting {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Painting::class.java)
-                .function("art", returnsObject().noParams()) { it.setReturnRef(it.target?.art) }
-                .function("setArt", returns(Type.Z).params(Type.OBJECT)) {
+                .function("art",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnArt.TYPE).noParams()) { it.setReturnRef(it.target?.art) }
+                .function("setArt",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnArt.TYPE)) {
                     it.setReturnBool(it.target?.setArt(it.getRef(0) as Art) ?: false)
                 }
-                .function("setArt", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                .function("setArt",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnArt.TYPE, Type.Z)) {
                     it.setReturnBool(it.target?.setArt(it.getRef(0) as Art, it.getBool(1)) ?: false)
                 }
         }

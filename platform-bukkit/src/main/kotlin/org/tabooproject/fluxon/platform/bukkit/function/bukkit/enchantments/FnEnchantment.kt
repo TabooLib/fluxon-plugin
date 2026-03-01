@@ -28,17 +28,17 @@ object FnEnchantment {
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 .function("maxLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLevel ?: 0) }
                 .function("startLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.startLevel ?: 0) }
-                .function("itemTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.itemTarget) }
+                .function("itemTarget", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantmentTarget.TYPE).noParams()) { it.setReturnRef(it.target?.itemTarget) }
                 .function("isTreasure", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTreasure ?: false) }
                 .function("isCursed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCursed ?: false) }
-                .function("conflictsWith", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.conflictsWith(it.getRef(0) as Enchantment) ?: false) }
-                .function("canEnchantItem", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.canEnchantItem(it.getRef(0) as ItemStack) ?: false) }
+                .function("conflictsWith",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnBool(it.target?.conflictsWith(it.getRef(0) as Enchantment) ?: false) }
+                .function("canEnchantItem",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnBool(it.target?.canEnchantItem(it.getRef(0) as ItemStack) ?: false) }
                 // static
-                .function("getByKey", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Enchantment.getByKey(it.getRef(0) as NamespacedKey)) }
+                .function("getByKey", returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(Enchantment.getByKey(it.getRef(0) as NamespacedKey)) }
                 // static
-                .function("getByName", returnsObject().params(Type.STRING)) { it.setReturnRef(Enchantment.getByName(it.getString(0))) }
+                .function("getByName", returns(TYPE).params(Type.STRING)) { it.setReturnRef(Enchantment.getByName(it.getString(0))) }
                 // static
-                .function("values", returnsObject().noParams()) { it.setReturnRef(Enchantment.values()) }
+                .function("values", returns(Type.fromClass(Array<Enchantment>::class.java)).noParams()) { it.setReturnRef(Enchantment.values()) }
         }
     }
 

@@ -23,11 +23,11 @@ object FnVine {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vine::class.java)
-                .function("isOnFace", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.isOnFace(it.getRef(0) as BlockFace) ?: false) }
-                .function("putOnFace", returnsVoid().params(Type.OBJECT)) { it.target?.putOnFace(it.getRef(0) as BlockFace) }
-                .function("removeFromFace", returnsVoid().params(Type.OBJECT)) { it.target?.removeFromFace(it.getRef(0) as BlockFace) }
+                .function("isOnFace",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.setReturnBool(it.target?.isOnFace(it.getRef(0) as BlockFace) ?: false) }
+                .function("putOnFace",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.putOnFace(it.getRef(0) as BlockFace) }
+                .function("removeFromFace",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.removeFromFace(it.getRef(0) as BlockFace) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

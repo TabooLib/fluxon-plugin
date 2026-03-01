@@ -10,6 +10,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.VoxelShape"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,8 +22,8 @@ object FnVoxelShape {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VoxelShape::class.java)
-                .function("boundingBoxes", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBoxes) }
-                .function("overlaps", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.overlaps(it.getRef(0) as BoundingBox)) }
+                .function("boundingBoxes",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.boundingBoxes) }
+                .function("overlaps",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE)) { it.setReturnRef(it.target?.overlaps(it.getRef(0) as BoundingBox)) }
         }
     }
 }

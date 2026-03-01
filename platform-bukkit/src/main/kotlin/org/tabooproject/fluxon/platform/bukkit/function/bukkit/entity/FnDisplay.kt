@@ -9,7 +9,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -24,8 +23,8 @@ object FnDisplay {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Display::class.java)
-                .function("transformation", returnsObject().noParams()) { it.setReturnRef(it.target?.transformation) }
-                .function("setTransformation", returnsVoid().params(Type.OBJECT)) {
+                .function("transformation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnTransformation.TYPE).noParams()) { it.setReturnRef(it.target?.transformation) }
+                .function("setTransformation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnTransformation.TYPE)) {
                     it.target?.setTransformation(it.getRef(0) as Transformation)
                 }
                 .function("interpolationDuration", returns(Type.I).noParams()) {
@@ -52,23 +51,22 @@ object FnDisplay {
                 .function("setInterpolationDelay", returnsVoid().params(Type.I)) {
                     it.target?.setInterpolationDelay(it.getInt(0).toInt())
                 }
-                .function("billboard", returnsObject().noParams()) { it.setReturnRef(it.target?.billboard) }
-                .function("setBillboard", returnsVoid().params(Type.OBJECT)) {
-                    it.target?.setBillboard(it.getRef(0) as Display.Billboard)
-                }
-                .function("glowColorOverride", returnsObject().noParams()) { it.setReturnRef(it.target?.glowColorOverride) }
-                .function("setGlowColorOverride", returnsVoid().params(Type.OBJECT)) {
+                .function("billboard", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBillboard.TYPE).noParams()) { it.setReturnRef(it.target?.billboard) }
+                .function("setBillboard", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBillboard.TYPE)) { it.target?.setBillboard(it.getRef(0) as Display.Billboard) }
+                .function("setBillboard", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBillboard.enumValue(it.getString(0))?.let { p0 -> it.target?.setBillboard(p0) } }
+                .function("glowColorOverride",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).noParams()) { it.setReturnRef(it.target?.glowColorOverride) }
+                .function("setGlowColorOverride",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) {
                     it.target?.setGlowColorOverride(it.getRef(0) as Color)
                 }
-                .function("brightness", returnsObject().noParams()) { it.setReturnRef(it.target?.brightness) }
-                .function("setBrightness", returnsVoid().params(Type.OBJECT)) {
+                .function("brightness",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBrightness.TYPE).noParams()) { it.setReturnRef(it.target?.brightness) }
+                .function("setBrightness",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBrightness.TYPE)) {
                     it.target?.setBrightness(it.getRef(0) as Display.Brightness)
                 }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.entity.Display.Brightness"])
+@Requires(classes = ["org.bukkit.entity.Display\$Brightness"])
 @PlatformSide(Platform.BUKKIT)
 object FnDisplayBrightness {
 
@@ -80,10 +78,6 @@ object FnDisplayBrightness {
             registerExtension(Display.Brightness::class.java)
                 .function("blockLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.blockLight ?: 0) }
                 .function("skyLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.skyLight ?: 0) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

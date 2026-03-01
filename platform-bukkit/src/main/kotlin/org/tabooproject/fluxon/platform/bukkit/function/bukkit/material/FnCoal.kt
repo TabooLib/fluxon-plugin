@@ -23,10 +23,10 @@ object FnCoal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Coal::class.java)
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("setType", returnsVoid().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as CoalType) }
+                .function("type",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnCoalType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
+                .function("setType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnCoalType.TYPE)) { it.target?.setType(it.getRef(0) as CoalType) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

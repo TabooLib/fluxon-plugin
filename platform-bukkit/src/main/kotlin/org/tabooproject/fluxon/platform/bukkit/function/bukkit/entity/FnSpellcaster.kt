@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -21,8 +22,9 @@ object FnSpellcaster {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Spellcaster::class.java)
-                .function("spell", returnsObject().noParams()) { it.setReturnRef(it.target?.spell) }
-                .function("setSpell", returnsVoid().params(Type.OBJECT)) { it.target?.setSpell(it.getRef(0) as Spellcaster.Spell) }
+                .function("spell", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSpellcasterSpell.TYPE).noParams()) { it.setReturnRef(it.target?.spell) }
+                .function("setSpell", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSpellcasterSpell.TYPE)) { it.target?.setSpell(it.getRef(0) as Spellcaster.Spell)  }
+                .function("setSpell", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSpellcasterSpell.enumValue(it.getString(0))?.let { p0 -> it.target?.setSpell(p0)  } }
         }
     }
 }

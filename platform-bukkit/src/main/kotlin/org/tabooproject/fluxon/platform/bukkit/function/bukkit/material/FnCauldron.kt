@@ -24,7 +24,7 @@ object FnCauldron {
                 .function("isFull", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFull ?: false) }
                 .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

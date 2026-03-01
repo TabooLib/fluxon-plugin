@@ -23,8 +23,8 @@ object FnFireworkMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkMeta::class.java)
-                .function("addEffect", returnsVoid().params(Type.OBJECT)) { it.target?.addEffect(it.getRef(0) as FireworkEffect) }
-                .function("addEffects", returnsVoid().params(Type.OBJECT)) {
+                .function("addEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffect.TYPE)) { it.target?.addEffect(it.getRef(0) as FireworkEffect) }
+                .function("addEffects",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffect.TYPE)) {
                     val effects = it.getRef(0)
                     if (effects is Iterable<*>) {
                         it.target?.addEffects(effects as Iterable<FireworkEffect>)
@@ -32,14 +32,14 @@ object FnFireworkMeta {
                         it.target?.addEffects(*(effects as Array<FireworkEffect>))
                     }
                 }
-                .function("effects", returnsObject().noParams()) { it.setReturnRef(it.target?.effects) }
+                .function("effects", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.effects) }
                 .function("effectsSize", returns(Type.I).noParams()) { it.setReturnInt(it.target?.effectsSize ?: 0) }
                 .function("removeEffect", returnsVoid().params(Type.I)) { it.target?.removeEffect(it.getInt(0).toInt()) }
                 .function("clearEffects", returnsVoid().noParams()) { it.target?.clearEffects() }
                 .function("hasEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEffects() ?: false) }
                 .function("power", returns(Type.I).noParams()) { it.setReturnInt(it.target?.power ?: 0) }
                 .function("setPower", returnsVoid().params(Type.I)) { it.target?.setPower(it.getInt(0).toInt()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnFireworkMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

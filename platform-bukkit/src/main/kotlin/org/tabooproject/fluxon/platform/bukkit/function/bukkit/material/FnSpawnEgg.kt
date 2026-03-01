@@ -23,10 +23,10 @@ object FnSpawnEgg {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnEgg::class.java)
-                .function("spawnedType", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedType) }
-                .function("setSpawnedType", returnsVoid().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
+                .function("spawnedType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.spawnedType) }
+                .function("setSpawnedType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

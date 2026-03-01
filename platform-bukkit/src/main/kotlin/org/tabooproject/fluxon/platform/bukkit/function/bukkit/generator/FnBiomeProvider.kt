@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.generator.BiomeProvider"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,7 +23,7 @@ object FnBiomeProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BiomeProvider::class.java)
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.I, Type.I, Type.I)) {
+                .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getRef(0) as WorldInfo,
                         it.getInt(1).toInt(),
@@ -30,7 +31,7 @@ object FnBiomeProvider {
                         it.getInt(3).toInt()
                     ))
                 }
-                .function("getBiome", returnsObject().params(Type.OBJECT, Type.I, Type.I, Type.I, Type.OBJECT)) {
+                .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnBiomeParameterPoint.TYPE)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getRef(0) as WorldInfo,
                         it.getInt(1).toInt(),
@@ -39,7 +40,7 @@ object FnBiomeProvider {
                         it.getRef(4) as BiomeParameterPoint
                     ))
                 }
-                .function("getBiomes", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBiomes(it.getRef(0) as WorldInfo)) }
+                .function("getBiomes",returns(Type.LIST).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE)) { it.setReturnRef(it.target?.getBiomes(it.getRef(0) as WorldInfo)) }
         }
     }
 }

@@ -13,17 +13,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.permissions.PermissionDefault"])
 @PlatformSide(Platform.BUKKIT)
-object FnPermissionDefault {
+object FnPermissionDefault : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.permissions.PermissionDefault>() {
 
-    val TYPE = Type.fromClass(PermissionDefault::class.java)
+    override val enumClass: Class<org.bukkit.permissions.PermissionDefault> = org.bukkit.permissions.PermissionDefault::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PermissionDefault::class.java)
-                .function("getValue", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getValue(it.getBool(0))) }
+                .function("getValue", returns(Type.Z).params(Type.Z)) { it.setReturnBool(it.target?.getValue(it.getBool(0)) ?: false) }
                 // static
-                .function("getByName", returnsObject().params(Type.OBJECT)) { it.setReturnRef(PermissionDefault.getByName(it.getString(0)!!)) }
+                .function("getByName", returns(TYPE).params(Type.STRING)) { it.setReturnRef(PermissionDefault.getByName(it.getString(0)!!)) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

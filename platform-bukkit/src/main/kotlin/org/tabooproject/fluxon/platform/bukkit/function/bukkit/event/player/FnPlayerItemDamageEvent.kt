@@ -23,14 +23,12 @@ object FnPlayerItemDamageEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemDamageEvent::class.java)
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("damage", returnsObject().noParams()) { it.setReturnRef(it.target?.damage) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("damage",returns(Type.I).noParams()) { it.setReturnRef(it.target?.damage) }
                 .function("setDamage", returnsVoid().params(Type.I)) { it.target?.setDamage(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemDamageEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerItemDamageEvent.getHandlerList()) }
         }
     }
 }

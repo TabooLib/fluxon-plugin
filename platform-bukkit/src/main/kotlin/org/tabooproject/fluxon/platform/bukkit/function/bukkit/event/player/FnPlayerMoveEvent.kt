@@ -23,15 +23,13 @@ object FnPlayerMoveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerMoveEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("from", returnsObject().noParams()) { it.setReturnRef(it.target?.from) }
-                .function("setFrom", returnsVoid().params(Type.OBJECT)) { it.target?.setFrom(it.getRef(0) as Location) }
-                .function("to", returnsObject().noParams()) { it.setReturnRef(it.target?.to) }
-                .function("setTo", returnsVoid().params(Type.OBJECT)) { it.target?.setTo(it.getRef(0) as Location) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("from",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.from) }
+                .function("setFrom",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setFrom(it.getRef(0) as Location) }
+                .function("to",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.to) }
+                .function("setTo",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setTo(it.getRef(0) as Location) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerMoveEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerMoveEvent.getHandlerList()) }
         }
     }
 }

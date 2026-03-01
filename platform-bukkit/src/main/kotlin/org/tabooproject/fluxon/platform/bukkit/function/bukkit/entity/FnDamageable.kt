@@ -25,7 +25,7 @@ object FnDamageable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
                 .function("damage", returnsVoid().params(Type.D)) { it.target?.damage(it.getDouble(0)) }
-                .function("damage", returnsVoid().params(Type.D, Type.OBJECT)) {
+                .function("damage",returnsVoid().params(Type.D, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
                     it.target?.damage(it.getDouble(0), it.getRef(1) as Entity)
                 }
                 .function("health", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.health ?: 0.0) }

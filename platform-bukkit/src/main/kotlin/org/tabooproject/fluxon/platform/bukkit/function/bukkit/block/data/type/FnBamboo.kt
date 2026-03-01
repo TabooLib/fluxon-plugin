@@ -29,7 +29,7 @@ object FnBamboo {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Bamboo.Leaves"])
+@Requires(classes = ["org.bukkit.block.data.type.Bamboo\$Leaves"])
 @PlatformSide(Platform.BUKKIT)
 object FnBambooLeaves : FnEnumGetter<Bamboo.Leaves>() {
 

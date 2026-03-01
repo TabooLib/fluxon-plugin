@@ -30,7 +30,7 @@ object FnBed {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Bed.Part"])
+@Requires(classes = ["org.bukkit.block.data.type.Bed\$Part"])
 @PlatformSide(Platform.BUKKIT)
 object FnBedPart : FnEnumGetter<Bed.Part>() {
 

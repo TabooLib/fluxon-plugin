@@ -22,13 +22,13 @@ object FnItemType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemType::class.java)
-                .function("typed", returnsObject().noParams()) { it.setReturnRef(it.target?.typed()) }
-                .function("createItemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.createItemStack()) }
-                .function("createItemStack", returnsObject().params(Type.I)) {
+                .function("typed", returns(FnItemTypeTyped.TYPE).noParams()) { it.setReturnRef(it.target?.typed()) }
+                .function("createItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.createItemStack()) }
+                .function("createItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(Type.I)) {
                     it.setReturnRef(it.target?.createItemStack(it.getInt(0).toInt()))
                 }
                 .function("hasBlockType", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBlockType() ?: false) }
-                .function("blockType", returnsObject().noParams()) { it.setReturnRef(it.target?.blockType) }
+                .function("blockType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockType.TYPE).noParams()) { it.setReturnRef(it.target?.blockType) }
                 .function("maxStackSize", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxStackSize ?: 0) }
                 .function("maxDurability", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxDurability?.toInt() ?: 0) }
                 .function("isEdible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEdible ?: false) }
@@ -36,11 +36,11 @@ object FnItemType {
                 .function("isFuel", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFuel ?: false) }
                 .function("isCompostable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCompostable ?: false) }
                 .function("compostChance", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.compostChance ?: 0f) }
-                .function("craftingRemainingItem", returnsObject().noParams()) { it.setReturnRef(it.target?.craftingRemainingItem) }
-                .function("creativeCategory", returnsObject().noParams()) { it.setReturnRef(it.target?.creativeCategory) }
-                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as World) ?: false) }
-                .function("asMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.asMaterial()) }
-                .function("itemMetaClass", returnsObject().noParams()) { it.setReturnRef(it.target?.itemMetaClass) }
+                .function("craftingRemainingItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemType.TYPE).noParams()) { it.setReturnRef(it.target?.craftingRemainingItem) }
+                .function("creativeCategory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnCreativeCategory.TYPE).noParams()) { it.setReturnRef(it.target?.creativeCategory) }
+                .function("isEnabledByFeature",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as World) ?: false) }
+                .function("asMaterial",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.asMaterial()) }
+                .function("itemMetaClass",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.itemMetaClass) }
         }
     }
 }

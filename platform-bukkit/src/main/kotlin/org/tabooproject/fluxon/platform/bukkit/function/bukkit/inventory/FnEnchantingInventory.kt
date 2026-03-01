@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.EnchantingInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,10 +23,10 @@ object FnEnchantingInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantingInventory::class.java)
-                .function("setItem", returnsVoid().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("setSecondary", returnsVoid().params(Type.OBJECT)) { it.target?.setSecondary(it.getRef(0) as ItemStack) }
-                .function("secondary", returnsObject().noParams()) { it.setReturnRef(it.target?.secondary) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setSecondary",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setSecondary(it.getRef(0) as ItemStack) }
+                .function("secondary",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.secondary) }
         }
     }
 }

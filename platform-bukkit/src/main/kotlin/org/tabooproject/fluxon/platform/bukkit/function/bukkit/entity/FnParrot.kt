@@ -22,8 +22,9 @@ object FnParrot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Parrot::class.java)
-                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
-                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Parrot.Variant) }
+                .function("variant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnParrotVariant.TYPE).noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnParrotVariant.TYPE)) { it.target?.setVariant(it.getRef(0) as Parrot.Variant)  }
+                .function("setVariant", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnParrotVariant.enumValue(it.getString(0))?.let { p0 -> it.target?.setVariant(p0)  } }
                 .function("isDancing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDancing ?: false) }
         }
     }

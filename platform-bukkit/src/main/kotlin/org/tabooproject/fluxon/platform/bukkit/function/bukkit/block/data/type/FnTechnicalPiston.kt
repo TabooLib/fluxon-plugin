@@ -29,7 +29,7 @@ object FnTechnicalPiston {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.TechnicalPiston.Type"])
+@Requires(classes = ["org.bukkit.block.data.type.TechnicalPiston\$Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnTechnicalPistonType : FnEnumGetter<TechnicalPiston.Type>() {
 

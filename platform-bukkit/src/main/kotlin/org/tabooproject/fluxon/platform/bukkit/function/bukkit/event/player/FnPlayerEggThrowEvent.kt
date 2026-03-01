@@ -23,16 +23,16 @@ object FnPlayerEggThrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEggThrowEvent::class.java)
-                .function("egg", returnsObject().noParams()) { it.setReturnRef(it.target?.egg) }
+                .function("egg", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEgg.TYPE).noParams()) { it.setReturnRef(it.target?.egg) }
                 .function("isHatching", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isHatching ?: false) }
                 .function("setHatching", returnsVoid().params(Type.Z)) { it.target?.setHatching(it.getBool(0)) }
-                .function("hatchingType", returnsObject().noParams()) { it.setReturnRef(it.target?.hatchingType) }
-                .function("setHatchingType", returnsVoid().params(Type.OBJECT)) { it.target?.setHatchingType(it.getRef(0) as EntityType) }
-                .function("numHatches", returnsObject().noParams()) { it.setReturnRef(it.target?.numHatches) }
+                .function("hatchingType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.hatchingType) }
+                .function("setHatchingType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.setHatchingType(it.getRef(0) as EntityType) }
+                .function("numHatches",returns(Type.I).noParams()) { it.setReturnRef(it.target?.numHatches) }
                 .function("setNumHatches", returnsVoid().params(Type.I)) { it.target?.setNumHatches(it.getInt(0).toByte()) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerEggThrowEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerEggThrowEvent.getHandlerList()) }
         }
     }
 }

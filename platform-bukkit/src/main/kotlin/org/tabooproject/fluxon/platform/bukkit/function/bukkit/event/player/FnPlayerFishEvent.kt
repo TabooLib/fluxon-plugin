@@ -23,17 +23,15 @@ object FnPlayerFishEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerFishEvent::class.java)
-                .function("caught", returnsObject().noParams()) { it.setReturnRef(it.target?.caught) }
-                .function("hook", returnsObject().noParams()) { it.setReturnRef(it.target?.hook) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("caught",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.caught) }
+                .function("hook",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFishHook.TYPE).noParams()) { it.setReturnRef(it.target?.hook) }
                 .function("expToDrop", returns(Type.I).noParams()) { it.setReturnInt(it.target?.expToDrop ?: 0) }
                 .function("setExpToDrop", returnsVoid().params(Type.I)) { it.target?.setExpToDrop(it.getInt(0)) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("state", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerFishEventState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerFishEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerFishEvent.getHandlerList()) }
 
                 .function("isFishing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.let { e -> e.state == PlayerFishEvent.State.FISHING } ?: false) }
                 .function("isCaughtFish", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.let { e -> e.state == PlayerFishEvent.State.CAUGHT_FISH } ?: false) }

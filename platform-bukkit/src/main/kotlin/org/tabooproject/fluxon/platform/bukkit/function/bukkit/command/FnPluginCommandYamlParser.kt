@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.command.PluginCommandYamlParser"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,7 +23,7 @@ object FnPluginCommandYamlParser {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginCommandYamlParser::class.java)
-                .function("parse", returnsObject().params(FnPlugin.TYPE)) { it.setReturnRef(PluginCommandYamlParser.parse(it.getRef(0) as Plugin)) }
+                .function("parse",returns(Type.LIST).params(FnPlugin.TYPE)) { it.setReturnRef(PluginCommandYamlParser.parse(it.getRef(0) as Plugin)) }
         }
     }
 }

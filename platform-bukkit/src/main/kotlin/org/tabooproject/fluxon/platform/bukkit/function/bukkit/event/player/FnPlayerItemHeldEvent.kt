@@ -23,13 +23,11 @@ object FnPlayerItemHeldEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemHeldEvent::class.java)
-                .function("previousSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.previousSlot) }
-                .function("newSlot", returnsObject().noParams()) { it.setReturnRef(it.target?.newSlot) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("previousSlot",returns(Type.I).noParams()) { it.setReturnRef(it.target?.previousSlot) }
+                .function("newSlot",returns(Type.I).noParams()) { it.setReturnRef(it.target?.newSlot) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemHeldEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerItemHeldEvent.getHandlerList()) }
         }
     }
 }

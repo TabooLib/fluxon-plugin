@@ -9,7 +9,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -24,21 +23,16 @@ object FnPermission {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Permission::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("default", returnsObject().noParams()) { it.setReturnRef(it.target?.default) }
-                .function("setDefault", returnsVoid().params(Type.OBJECT)) { it.target?.setDefault(it.getRef(0) as PermissionDefault) }
+                .function("default",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionDefault.TYPE).noParams()) { it.setReturnRef(it.target?.default) }
+                .function("setDefault",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionDefault.TYPE)) { it.target?.setDefault(it.getRef(0) as PermissionDefault) }
                 .function("description", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.description) }
                 .function("setDescription", returnsVoid().params(Type.STRING)) { it.target?.setDescription(it.getString(0)) }
-                .function("permissibles", returnsObject().noParams()) { it.setReturnRef(it.target?.permissibles) }
+                .function("permissibles",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.permissibles) }
                 .function("recalculatePermissibles", returnsVoid().noParams()) { it.target?.recalculatePermissibles() }
-                .function("addParent", returnsVoid().params(Type.OBJECT, Type.Z)) {
-                    when (val var1 = it.getRef(0)) {
-                        is String -> it.target?.addParent(var1, it.getBool(1))
-                        is Permission -> it.target?.addParent(var1, it.getBool(1))
-                        else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
-                    }
-                }
+                .function("addParent", returnsVoid().params(Type.STRING, Type.Z)) { it.target?.addParent(it.getString(0)!!, it.getBool(1)) }
+                .function("addParent", returnsVoid().params(TYPE, Type.Z)) { it.target?.addParent(it.getRef(0) as Permission, it.getBool(1)) }
                 // static
-                .function("loadPermissions", returnsObject().params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("loadPermissions",returns(Type.LIST).params(Type.MAP, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionDefault.TYPE)) {
                     it.setReturnRef(Permission.loadPermissions(
                         it.getRef(0) as Map<*, *>,
                         it.getString(1)!!,
@@ -46,7 +40,7 @@ object FnPermission {
                     ))
                 }
                 // static
-                .function("loadPermission", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("loadPermission",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE).params(Type.STRING, Type.MAP)) {
                     it.setReturnRef(
                         Permission.loadPermission(
                             it.getString(0)!!,
@@ -54,7 +48,7 @@ object FnPermission {
                         )
                     )
                 }
-                .function("loadPermission", returnsObject().params(Type.STRING, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("loadPermission",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE).params(Type.STRING, Type.MAP, org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionDefault.TYPE, Type.LIST)) {
                     it.setReturnRef(
                         Permission.loadPermission(
                             it.getString(0)!!,

@@ -22,10 +22,8 @@ object FnStructureType {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureType::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("key",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

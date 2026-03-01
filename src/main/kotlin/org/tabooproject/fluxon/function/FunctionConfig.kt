@@ -8,6 +8,7 @@ import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.index.IndexAccessor
 import org.tabooproject.fluxon.runtime.index.IndexAccessorRegistry
 import org.tabooproject.fluxon.runtime.java.Export
+import org.tabooproject.fluxon.util.StandardTypes
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.library.configuration.ConfigurationSection
@@ -21,7 +22,7 @@ object FunctionConfig {
         IndexAccessorRegistry.getInstance().registerAccessor(ConfigIndexAccessor)
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(YamlApi::class.java)
-            registerFunction("yaml", returnsObject().noParams()) { it.setReturnRef(YamlApi) }
+            registerFunction("yaml", returns(YamlApi.TYPE).noParams()) { it.setReturnRef(YamlApi) }
             registerExtension(Configuration::class.java)
                 .function("file", returns(Type.FILE).noParams()) { it.setReturnRef(it.target?.file) }
                 .function("save", returnsVoid().noParams()) {
@@ -31,8 +32,8 @@ object FunctionConfig {
                     it.target?.saveToFile(it.getRef(0) as File)
                 }
             registerExtension(ConfigurationSection::class.java)
-                .function("primitiveConfig", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveConfig) }
-                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
+                .function("primitiveConfig", returns(StandardTypes.CONFIGURATION_SECTION).noParams()) { it.setReturnRef(it.target?.primitiveConfig) }
+                .function("parent", returns(StandardTypes.CONFIGURATION_SECTION).noParams()) { it.setReturnRef(it.target?.parent) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 .function("type", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.type?.name) }
                 .function("keys", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.getKeys(false)) }
@@ -53,6 +54,8 @@ object FunctionConfig {
     }
 
     object YamlApi {
+
+        val TYPE = Type.fromClass(YamlApi::class.java)!!
 
         @Export
         fun load(file: File): Configuration {

@@ -13,9 +13,10 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.TreeSpecies"])
 @PlatformSide(Platform.BUKKIT)
-object FnTreeSpecies {
+object FnTreeSpecies : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.TreeSpecies>() {
 
-    val TYPE = Type.fromClass(TreeSpecies::class.java)
+    override val enumClass: Class<org.bukkit.TreeSpecies> = org.bukkit.TreeSpecies::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,7 +24,7 @@ object FnTreeSpecies {
             registerExtension(TreeSpecies::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returnsObject().params(Type.I)) { it.setReturnRef(TreeSpecies.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(TreeSpecies.getByData(it.getInt(0).toByte())) }
         }
     }
 }

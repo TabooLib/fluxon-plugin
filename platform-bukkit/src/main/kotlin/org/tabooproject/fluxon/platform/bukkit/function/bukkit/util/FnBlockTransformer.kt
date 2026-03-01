@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.BlockTransformer"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,7 +23,7 @@ object FnBlockTransformer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer::class.java)
-                .function("transform", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("transform",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnLimitedRegion.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockTransformerTransformationState.TYPE)) {
                     it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
                         it.getInt(1).toInt(),
@@ -36,7 +37,7 @@ object FnBlockTransformer {
     }
 }
 
-@Requires(classes = ["org.bukkit.util.BlockTransformer.TransformationState"])
+@Requires(classes = ["org.bukkit.util.BlockTransformer\$TransformationState"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockTransformerTransformationState {
 
@@ -46,8 +47,8 @@ object FnBlockTransformerTransformationState {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockTransformer.TransformationState::class.java)
-                .function("original", returnsObject().noParams()) { it.setReturnRef(it.target?.original) }
-                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
+                .function("original", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.original) }
+                .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
         }
     }
 }

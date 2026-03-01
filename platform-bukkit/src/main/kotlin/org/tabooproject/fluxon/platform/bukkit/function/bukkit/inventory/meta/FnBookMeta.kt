@@ -8,7 +8,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -29,31 +28,19 @@ object FnBookMeta {
                 .function("author", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.author) }
                 .function("setAuthor", returnsVoid().params(Type.STRING)) { it.target?.setAuthor(it.getString(0)) }
                 .function("hasGeneration", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasGeneration() ?: false) }
-                .function("generation", returnsObject().noParams()) { it.setReturnRef(it.target?.generation) }
-                .function("setGeneration", returnsVoid().params(Type.OBJECT)) { it.target?.setGeneration(it.getRef(0) as BookMeta.Generation) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("generation", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMetaGeneration.TYPE).noParams()) { it.setReturnRef(it.target?.generation) }
+                .function("setGeneration", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMetaGeneration.TYPE)) { it.target?.setGeneration(it.getRef(0) as BookMeta.Generation)  }
+                .function("setGeneration", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMetaGeneration.enumValue(it.getString(0))?.let { p0 -> it.target?.setGeneration(p0)  } }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
                 .function("getPage", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getPage(it.getInt(0).toInt())) }
                 .function("setPage", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setPage(it.getInt(0).toInt(), it.getString(1)!!) }
-                .function("pages", returnsObject().noParams()) { it.setReturnRef(it.target?.pages) }
+                .function("pages", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.pages) }
                 .function("setPages", returnsVoid().params(Type.LIST)) {
                     it.target?.setPages(it.getRef(0) as List<String>)
                 }
-                .function("setPages", returnsVoid().params(Type.OBJECT)) {
-                    val pages = it.getRef(0)
-                    if (pages is List<*>) {
-                        it.target?.setPages(pages as List<String>)
-                    } else {
-                        it.target?.setPages(*(pages as Array<String>))
-                    }
-                }
-                .function("addPage", returnsVoid().params(Type.OBJECT)) {
-                    val pages = it.getRef(0)
-                    if (pages is List<*>) {
-                        it.target?.addPage(*(pages as List<String>).toTypedArray())
-                    } else {
-                        it.target?.addPage(*(pages as Array<String>))
-                    }
-                }
+                .function("setPages", returnsVoid().params(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY)) { it.target?.setPages(*(it.getRef(0) as Array<String>)) }
+                .function("addPage", returnsVoid().params(Type.LIST)) { it.target?.addPage(*(it.getRef(0) as List<String>).toTypedArray()) }
+                .function("addPage", returnsVoid().params(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY)) { it.target?.addPage(*(it.getRef(0) as Array<String>)) }
         }
     }
 }

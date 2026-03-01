@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Vehicle"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,8 +23,8 @@ object FnVehicle {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vehicle::class.java)
-                .function("velocity", returnsObject().noParams()) { it.setReturnRef(it.target?.velocity) }
-                .function("setVelocity", returnsVoid().params(Type.OBJECT)) { it.target?.setVelocity(it.getRef(0) as Vector) }
+                .function("velocity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.velocity) }
+                .function("setVelocity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setVelocity(it.getRef(0) as Vector) }
         }
     }
 }

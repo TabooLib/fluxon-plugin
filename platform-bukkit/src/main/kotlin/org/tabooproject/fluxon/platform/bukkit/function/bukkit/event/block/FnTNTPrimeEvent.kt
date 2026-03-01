@@ -10,6 +10,7 @@ import taboolib.common.Requires
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.block.TNTPrimeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,14 +22,14 @@ object FnTNTPrimeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TNTPrimeEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
-                .function("primingEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.primingEntity) }
-                .function("primingBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.primingBlock) }
+                .function("cause",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block.FnTNTPrimeEventPrimeCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("primingEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.primingEntity) }
+                .function("primingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.primingBlock) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.event.block.TNTPrimeEvent.PrimeCause"])
+@Requires(classes = ["org.bukkit.event.block.TNTPrimeEvent\$PrimeCause"])
 @PlatformSide(Platform.BUKKIT)
 object FnTNTPrimeEventPrimeCause : FnEnumGetter<TNTPrimeEvent.PrimeCause>() {
 

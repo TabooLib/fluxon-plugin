@@ -22,14 +22,12 @@ object FnPlayerHarvestBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerHarvestBlockEvent::class.java)
-                .function("harvestedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.harvestedBlock) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("itemsHarvested", returnsObject().noParams()) { it.setReturnRef(it.target?.itemsHarvested) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("harvestedBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.harvestedBlock) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("itemsHarvested",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.itemsHarvested) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerHarvestBlockEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerHarvestBlockEvent.getHandlerList()) }
         }
     }
 }

@@ -23,16 +23,14 @@ object FnPlayerItemMendEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerItemMendEvent::class.java)
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
-                .function("experienceOrb", returnsObject().noParams()) { it.setReturnRef(it.target?.experienceOrb) }
-                .function("repairAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.repairAmount) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("slot",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("experienceOrb",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnExperienceOrb.TYPE).noParams()) { it.setReturnRef(it.target?.experienceOrb) }
+                .function("repairAmount",returns(Type.I).noParams()) { it.setReturnRef(it.target?.repairAmount) }
                 .function("setRepairAmount", returnsVoid().params(Type.I)) { it.target?.setRepairAmount(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerItemMendEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerItemMendEvent.getHandlerList()) }
         }
     }
 }

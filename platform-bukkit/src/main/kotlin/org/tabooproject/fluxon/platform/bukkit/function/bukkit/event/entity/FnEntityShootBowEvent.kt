@@ -24,20 +24,18 @@ object FnEntityShootBowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityShootBowEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("bow", returnsObject().noParams()) { it.setReturnRef(it.target?.bow) }
-                .function("consumable", returnsObject().noParams()) { it.setReturnRef(it.target?.consumable) }
-                .function("projectile", returnsObject().noParams()) { it.setReturnRef(it.target?.projectile) }
-                .function("setProjectile", returnsVoid().params(Type.OBJECT)) { it.target?.setProjectile(it.getRef(0) as Entity) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("bow",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.bow) }
+                .function("consumable",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.consumable) }
+                .function("projectile",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.projectile) }
+                .function("setProjectile",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setProjectile(it.getRef(0) as Entity) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
                 .function("force", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.force ?: 0f) }
                 .function("setConsumeItem", returnsVoid().params(Type.Z)) { it.target?.setConsumeItem(it.getBool(0)) }
                 .function("shouldConsumeItem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.shouldConsumeItem() ?: false) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityShootBowEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityShootBowEvent.getHandlerList()) }
         }
     }
 }

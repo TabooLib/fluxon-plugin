@@ -69,7 +69,7 @@ object FnLocation {
             registerExtension(Location::class.java)
                 // 基本属性（只读）
                 .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
-//                .function("taboo", returnsObject().noParams()) { it.setReturnRef(it.target?.toProxyLocation()) }
+//                .function("taboo", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.toProxyLocation()) }
                 .function("block", returns(FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.block) }
                 .function("blockX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.blockX ?: 0) }
                 .function("blockY", returns(Type.I).noParams()) { it.setReturnInt(it.target?.blockY ?: 0) }
@@ -133,13 +133,13 @@ object FnLocation {
                 .function("subtract", returns(TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.subtract(it.getDouble(0), it.getDouble(1), it.getDouble(2)))
                 }
-                .function("multiply", returns(TYPE).params(Type.OBJECT)) {
+                .function("multiply",returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(it.target?.multiply(it.getRef(0) as Location))
                 }
                 .function("multiply", returns(TYPE).params(Type.D)) {
                     it.setReturnRef(it.target?.multiply(it.getDouble(0)))
                 }
-                .function("divide", returns(TYPE).params(Type.OBJECT)) {
+                .function("divide",returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(it.target?.divide(it.getRef(0) as Location))
                 }
                 .function("divide", returns(TYPE).params(Type.D)) {

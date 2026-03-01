@@ -29,7 +29,7 @@ object FnStairs {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Stairs.Shape"])
+@Requires(classes = ["org.bukkit.block.data.type.Stairs\$Shape"])
 @PlatformSide(Platform.BUKKIT)
 object FnStairsShape : FnEnumGetter<Stairs.Shape>() {
 

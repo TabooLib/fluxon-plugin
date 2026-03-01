@@ -23,17 +23,15 @@ object FnPlayerEditBookEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerEditBookEvent::class.java)
-                .function("previousBookMeta", returnsObject().noParams()) { it.setReturnRef(it.target?.previousBookMeta) }
-                .function("newBookMeta", returnsObject().noParams()) { it.setReturnRef(it.target?.newBookMeta) }
-                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
-                .function("setNewBookMeta", returnsVoid().params(Type.OBJECT)) { it.target?.setNewBookMeta(it.getRef(0) as BookMeta) }
+                .function("previousBookMeta",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMeta.TYPE).noParams()) { it.setReturnRef(it.target?.previousBookMeta) }
+                .function("newBookMeta",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMeta.TYPE).noParams()) { it.setReturnRef(it.target?.newBookMeta) }
+                .function("slot",returns(Type.I).noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("setNewBookMeta",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMeta.TYPE)) { it.target?.setNewBookMeta(it.getRef(0) as BookMeta) }
                 .function("isSigning", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSigning ?: false) }
                 .function("setSigning", returnsVoid().params(Type.Z)) { it.target?.setSigning(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerEditBookEvent.getHandlerList()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerEditBookEvent.getHandlerList()) }
         }
     }
 }

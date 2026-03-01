@@ -23,17 +23,15 @@ object FnEntityKnockbackEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityKnockbackEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
-                .function("force", returnsObject().noParams()) { it.setReturnRef(it.target?.force) }
-                .function("knockback", returnsObject().noParams()) { it.setReturnRef(it.target?.knockback) }
-                .function("finalKnockback", returnsObject().noParams()) { it.setReturnRef(it.target?.finalKnockback) }
-                .function("setFinalKnockback", returnsVoid().params(Type.OBJECT)) { it.target?.setFinalKnockback(it.getRef(0) as Vector) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("cause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityKnockbackEventKnockbackCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("force",returns(Type.D).noParams()) { it.setReturnRef(it.target?.force) }
+                .function("knockback",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.knockback) }
+                .function("finalKnockback",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.finalKnockback) }
+                .function("setFinalKnockback",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setFinalKnockback(it.getRef(0) as Vector) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityKnockbackEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityKnockbackEvent.getHandlerList()) }
         }
     }
 }

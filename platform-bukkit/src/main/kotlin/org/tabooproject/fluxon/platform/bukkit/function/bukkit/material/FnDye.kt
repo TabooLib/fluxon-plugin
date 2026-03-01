@@ -23,10 +23,10 @@ object FnDye {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Dye::class.java)
-                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as DyeColor) }
+                .function("color",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setColor(it.getRef(0) as DyeColor) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

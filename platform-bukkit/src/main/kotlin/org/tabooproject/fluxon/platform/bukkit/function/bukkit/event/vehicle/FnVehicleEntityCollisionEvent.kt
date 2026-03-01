@@ -22,16 +22,14 @@ object FnVehicleEntityCollisionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleEntityCollisionEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("entity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
                 .function("isPickupCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPickupCancelled ?: false) }
                 .function("setPickupCancelled", returnsVoid().params(Type.Z)) { it.target?.setPickupCancelled(it.getBool(0)) }
                 .function("isCollisionCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCollisionCancelled ?: false) }
                 .function("setCollisionCancelled", returnsVoid().params(Type.Z)) { it.target?.setCollisionCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleEntityCollisionEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(VehicleEntityCollisionEvent.getHandlerList()) }
         }
     }
 }

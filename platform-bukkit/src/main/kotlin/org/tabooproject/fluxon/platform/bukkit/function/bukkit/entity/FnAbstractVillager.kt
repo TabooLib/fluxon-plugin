@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.AbstractVillager"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnAbstractVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractVillager::class.java)
-                .function("inventory", returnsObject().noParams()) { it.setReturnRef(it.target?.inventory) }
+                .function("inventory",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }
 }

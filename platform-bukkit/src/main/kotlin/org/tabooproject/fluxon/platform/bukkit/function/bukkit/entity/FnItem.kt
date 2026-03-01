@@ -25,16 +25,16 @@ object FnItem {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Item::class.java)
-                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
-                .function("setItemStack", returnsVoid().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
+                .function("itemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("setItemStack",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
                 .function("pickupDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.pickupDelay ?: 0) }
                 .function("setPickupDelay", returnsVoid().params(Type.I)) { it.target?.setPickupDelay(it.getInt(0).toInt()) }
                 .function("setUnlimitedLifetime", returnsVoid().params(Type.Z)) { it.target?.setUnlimitedLifetime(it.getBool(0)) }
                 .function("isUnlimitedLifetime", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUnlimitedLifetime ?: false) }
                 .function("setOwner", returnsVoid().params(Type.STRING)) { it.target?.setOwner(UUID.fromString(it.getString(0))) }
-                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("owner",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.owner) }
                 .function("setThrower", returnsVoid().params(Type.STRING)) { it.target?.setThrower(UUID.fromString(it.getString(0))) }
-                .function("thrower", returnsObject().noParams()) { it.setReturnRef(it.target?.thrower) }
+                .function("thrower",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.thrower) }
         }
     }
 }

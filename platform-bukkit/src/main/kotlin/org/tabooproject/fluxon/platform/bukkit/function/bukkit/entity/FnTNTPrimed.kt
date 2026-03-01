@@ -25,8 +25,8 @@ object FnTNTPrimed {
             registerExtension(TNTPrimed::class.java)
                 .function("setFuseTicks", returnsVoid().params(Type.I)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
                 .function("fuseTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuseTicks ?: 0) }
-                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
-                .function("setSource", returnsVoid().params(Type.OBJECT)) { it.target?.setSource(it.getRef(0) as Entity) }
+                .function("source",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.source) }
+                .function("setSource",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setSource(it.getRef(0) as Entity) }
         }
     }
 }

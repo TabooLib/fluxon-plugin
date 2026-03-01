@@ -22,12 +22,10 @@ object FnPlayerAnimationEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerAnimationEvent::class.java)
-                .function("animationType", returnsObject().noParams()) { it.setReturnRef(it.target?.animationType) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("animationType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerAnimationType.TYPE).noParams()) { it.setReturnRef(it.target?.animationType) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerAnimationEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerAnimationEvent.getHandlerList()) }
         }
     }
 }

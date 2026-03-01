@@ -29,7 +29,7 @@ object FnComparator {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Comparator.Mode"])
+@Requires(classes = ["org.bukkit.block.data.type.Comparator\$Mode"])
 @PlatformSide(Platform.BUKKIT)
 object FnComparatorMode : FnEnumGetter<Comparator.Mode>() {
 

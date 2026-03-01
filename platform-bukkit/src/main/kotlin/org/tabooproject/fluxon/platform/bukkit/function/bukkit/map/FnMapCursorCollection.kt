@@ -8,7 +8,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -24,19 +23,19 @@ object FnMapCursorCollection {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapCursorCollection::class.java)
                 .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size() ?: 0) }
-                .function("getCursor", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getCursor(it.getInt(0).toInt())) }
-                .function("removeCursor", returnsVoid().params(Type.OBJECT)) { it.target?.removeCursor(it.getRef(0) as MapCursor) }
-                .function("addCursor", returnsObject().params(Type.OBJECT)) {
+                .function("getCursor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getCursor(it.getInt(0).toInt())) }
+                .function("removeCursor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE)) { it.target?.removeCursor(it.getRef(0) as MapCursor) }
+                .function("addCursor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE)) {
                     it.setReturnRef(it.target?.addCursor(it.getRef(0) as MapCursor))
                 }
-                .function("addCursor", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("addCursor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.addCursor(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toByte()
                     ))
                 }
-                .function("addCursor", returnsObject().params(Type.I, Type.I, Type.I, Type.I)) {
+                .function("addCursor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(Type.I, Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.addCursor(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -44,7 +43,7 @@ object FnMapCursorCollection {
                         it.getInt(3).toByte()
                     ))
                 }
-                .function("addCursor", returnsObject().params(Type.I, Type.I, Type.I, Type.I, Type.Z)) {
+                .function("addCursor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(Type.I, Type.I, Type.I, Type.I, Type.Z)) {
                     it.setReturnRef(it.target?.addCursor(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -53,7 +52,7 @@ object FnMapCursorCollection {
                         it.getBool(4)
                     ))
                 }
-                .function("addCursor", returnsObject().params(Type.I, Type.I, Type.I, Type.I, Type.Z, Type.STRING)) {
+                .function("addCursor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursor.TYPE).params(Type.I, Type.I, Type.I, Type.I, Type.Z, Type.STRING)) {
                     it.setReturnRef(it.target?.addCursor(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),

@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.ComplexLivingEntity"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnComplexLivingEntity {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ComplexLivingEntity::class.java)
-                .function("parts", returnsObject().noParams()) { it.setReturnRef(it.target?.parts) }
+                .function("parts",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.parts) }
         }
     }
 }

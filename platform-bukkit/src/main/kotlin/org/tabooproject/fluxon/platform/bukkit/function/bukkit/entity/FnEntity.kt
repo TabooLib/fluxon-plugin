@@ -29,45 +29,45 @@ object FnEntity {
                 .function("isMoving", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.velocity?.let { v -> !v.isZero } ?: false)
                 }
-                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
-                .function("getLocation", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getLocation(it.getRef(0) as Location)) }
-                .function("setVelocity", returnsVoid().params(Type.OBJECT)) { it.target?.setVelocity(it.getRef(0) as Vector) }
-                .function("velocity", returnsObject().noParams()) { it.setReturnRef(it.target?.velocity) }
+                .function("location", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
+                .function("getLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.getLocation(it.getRef(0) as Location)) }
+                .function("setVelocity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setVelocity(it.getRef(0) as Vector) }
+                .function("velocity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.velocity) }
                 .function("height", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.height ?: 0.0) }
                 .function("width", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.width ?: 0.0) }
-                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
+                .function("boundingBox", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).noParams()) { it.setReturnRef(it.target?.boundingBox) }
                 .function("isOnGround", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOnGround ?: false) }
                 .function("isInWater", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInWater ?: false) }
-                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
+                .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
                 .function("setRotation", returnsVoid().params(Type.F, Type.F)) {
                     it.target?.setRotation(
                         it.getFloat(0),
                         it.getFloat(1)
                     )
                 }
-                .syncFunction("teleport", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(when (val var1 = it.getRef(0)) {
-                        is Location -> it.target?.teleport(var1)
-                        is Entity -> it.target?.teleport(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
-                    } ?: false)
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
+                    it.setReturnBool(it.target?.teleport(it.getRef(0) as Location) ?: false)
                 }
-                .syncFunction("teleport", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnBool(when (val var1 = it.getRef(0)) {
-                        is Location -> it.target?.teleport(
-                            var1,
-                            it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
-                        )
-
-                        is Entity -> it.target?.teleport(
-                            var1,
-                            it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause
-                        )
-
-                        else -> throw IllegalArgumentException("参数必须是 Location 或 Entity 类型")
-                    } ?: false)
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
+                    it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity) ?: false)
                 }
-                .function("getNearbyEntities", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
+                    it.setReturnBool(it.target?.teleport(it.getRef(0) as Location, it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause) ?: false)
+                }
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.enumValue(it.getString(1))?.let { p1 ->
+                        it.setReturnBool(it.target?.teleport(it.getRef(0) as Location, p1) ?: false)
+                    }
+                }
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
+                    it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity, it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause) ?: false)
+                }
+                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.enumValue(it.getString(1))?.let { p1 ->
+                        it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity, p1) ?: false)
+                    }
+                }
+                .function("getNearbyEntities",returns(Type.LIST).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.getNearbyEntities(
                         it.getDouble(0),
                         it.getDouble(1),
@@ -87,39 +87,39 @@ object FnEntity {
                 .function("remove", returnsVoid().noParams()) { it.target?.remove() }
                 .function("isDead", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDead ?: false) }
                 .function("isValid", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isValid ?: false) }
-                .function("server", returnsObject().noParams()) { it.setReturnRef(it.target?.server) }
+                .function("server", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnServer.TYPE).noParams()) { it.setReturnRef(it.target?.server) }
                 .function("isPersistent", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPersistent ?: false) }
                 .function("setPersistent", returnsVoid().params(Type.Z)) { it.target?.setPersistent(it.getBool(0)) }
-                .function("passenger", returnsObject().noParams()) { it.setReturnRef(it.target?.passenger) }
-                .function("setPassenger", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.setPassenger(it.getRef(0) as Entity) ?: false) }
-                .function("passengers", returnsObject().noParams()) { it.setReturnRef(it.target?.passengers) }
-                .function("addPassenger", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.addPassenger(it.getRef(0) as Entity) ?: false) }
-                .function("removePassenger", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.removePassenger(it.getRef(0) as Entity) ?: false) }
+                .function("passenger", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.passenger) }
+                .function("setPassenger",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.setReturnBool(it.target?.setPassenger(it.getRef(0) as Entity) ?: false) }
+                .function("passengers", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.passengers) }
+                .function("addPassenger",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.setReturnBool(it.target?.addPassenger(it.getRef(0) as Entity) ?: false) }
+                .function("removePassenger",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.setReturnBool(it.target?.removePassenger(it.getRef(0) as Entity) ?: false) }
                 .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
                 .function("eject", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.eject() ?: false) }
                 .function("fallDistance", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.fallDistance ?: 0f) }
                 .function("setFallDistance", returnsVoid().params(Type.F)) { it.target?.setFallDistance(it.getFloat(0)) }
-                .function("setLastDamageCause", returnsVoid().params(Type.OBJECT)) {
+                .function("setLastDamageCause",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEvent.TYPE)) {
                     @Suppress("removal")
                     it.target?.setLastDamageCause(it.getRef(0) as EntityDamageEvent)
                 }
-                .function("lastDamageCause", returnsObject().noParams()) { it.setReturnRef(it.target?.lastDamageCause) }
-                .function("uniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.uniqueId) }
+                .function("lastDamageCause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEvent.TYPE).noParams()) { it.setReturnRef(it.target?.lastDamageCause) }
+                .function("uniqueId", returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.uniqueId) }
                 .function("ticksLived", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ticksLived ?: 0) }
                 .function("setTicksLived", returnsVoid().params(Type.I)) { it.target?.setTicksLived(it.getInt(0)) }
-                .function("playEffect", returnsVoid().params(Type.OBJECT)) { it.target?.playEffect(it.getRef(0) as EntityEffect) }
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("swimSound", returnsObject().noParams()) { it.setReturnRef(it.target?.swimSound) }
-                .function("swimSplashSound", returnsObject().noParams()) { it.setReturnRef(it.target?.swimSplashSound) }
-                .function("swimHighSpeedSplashSound", returnsObject().noParams()) { it.setReturnRef(it.target?.swimHighSpeedSplashSound) }
+                .function("playEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnEntityEffect.TYPE)) { it.target?.playEffect(it.getRef(0) as EntityEffect) }
+                .function("type", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
+                .function("swimSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.swimSound) }
+                .function("swimSplashSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.swimSplashSound) }
+                .function("swimHighSpeedSplashSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.swimHighSpeedSplashSound) }
                 .function("isInsideVehicle", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInsideVehicle ?: false) }
                 .function("leaveVehicle", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.leaveVehicle() ?: false) }
-                .function("vehicle", returnsObject().noParams()) { it.setReturnRef(it.target?.vehicle) }
+                .function("vehicle", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.vehicle) }
                 .function("setCustomNameVisible", returnsVoid().params(Type.Z)) { it.target?.setCustomNameVisible(it.getBool(0)) }
                 .function("isCustomNameVisible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCustomNameVisible ?: false) }
                 .function("setVisibleByDefault", returnsVoid().params(Type.Z)) { it.target?.setVisibleByDefault(it.getBool(0)) }
                 .function("isVisibleByDefault", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVisibleByDefault ?: false) }
-                .function("trackedBy", returnsObject().noParams()) { it.setReturnRef(it.target?.trackedBy) }
+                .function("trackedBy", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.trackedBy) }
                 .function("setGlowing", returnsVoid().params(Type.Z)) { it.target?.setGlowing(it.getBool(0)) }
                 .function("isGlowing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isGlowing ?: false) }
                 .function("setInvulnerable", returnsVoid().params(Type.Z)) { it.target?.setInvulnerable(it.getBool(0)) }
@@ -130,13 +130,13 @@ object FnEntity {
                 .function("setGravity", returnsVoid().params(Type.Z)) { it.target?.setGravity(it.getBool(0)) }
                 .function("portalCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.portalCooldown ?: 0) }
                 .function("setPortalCooldown", returnsVoid().params(Type.I)) { it.target?.setPortalCooldown(it.getInt(0)) }
-                .function("scoreboardTags", returnsObject().noParams()) { it.setReturnRef(it.target?.scoreboardTags) }
+                .function("scoreboardTags", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.scoreboardTags) }
                 .function("addScoreboardTag", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.addScoreboardTag(it.getString(0)!!) ?: false) }
                 .function("removeScoreboardTag", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.removeScoreboardTag(it.getString(0)!!) ?: false) }
-                .function("pistonMoveReaction", returnsObject().noParams()) { it.setReturnRef(it.target?.pistonMoveReaction) }
-                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
-                .function("pose", returnsObject().noParams()) { it.setReturnRef(it.target?.pose) }
-                .function("spawnCategory", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnCategory) }
+                .function("pistonMoveReaction", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnPistonMoveReaction.TYPE).noParams()) { it.setReturnRef(it.target?.pistonMoveReaction) }
+                .function("facing", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("pose", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPose.TYPE).noParams()) { it.setReturnRef(it.target?.pose) }
+                .function("spawnCategory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSpawnCategory.TYPE).noParams()) { it.setReturnRef(it.target?.spawnCategory) }
                 .function("isInWorld", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInWorld ?: false) }
         }
     }

@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.EventException"])
@@ -20,7 +21,7 @@ object FnEventException {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventException::class.java)
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("cause", returns(Type.fromClass(Throwable::class.java)).noParams()) { it.setReturnRef(it.target?.cause) }
         }
     }
 }

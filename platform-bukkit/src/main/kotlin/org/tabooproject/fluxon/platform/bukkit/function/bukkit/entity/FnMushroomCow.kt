@@ -25,22 +25,23 @@ object FnMushroomCow {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MushroomCow::class.java)
                 .function("hasEffectsForNextStew", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEffectsForNextStew() ?: false) }
-                .function("effectsForNextStew", returnsObject().noParams()) { it.setReturnRef(it.target?.effectsForNextStew) }
-                .function("addEffectToNextStew", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                .function("effectsForNextStew", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.effectsForNextStew) }
+                .function("addEffectToNextStew",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE, Type.Z)) {
                     it.setReturnBool(it.target?.addEffectToNextStew(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
                     ) ?: false)
                 }
-                .function("removeEffectFromNextStew", returns(Type.Z).params(Type.OBJECT)) {
+                .function("removeEffectFromNextStew",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) {
                     it.setReturnBool(it.target?.removeEffectFromNextStew(it.getRef(0) as PotionEffectType) ?: false)
                 }
-                .function("hasEffectForNextStew", returns(Type.Z).params(Type.OBJECT)) {
+                .function("hasEffectForNextStew",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) {
                     it.setReturnBool(it.target?.hasEffectForNextStew(it.getRef(0) as PotionEffectType) ?: false)
                 }
                 .function("clearEffectsForNextStew", returnsVoid().noParams()) { it.target?.clearEffectsForNextStew() }
-                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
-                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as MushroomCow.Variant) }
+                .function("variant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnMushroomCowVariant.TYPE).noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnMushroomCowVariant.TYPE)) { it.target?.setVariant(it.getRef(0) as MushroomCow.Variant)  }
+                .function("setVariant", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnMushroomCowVariant.enumValue(it.getString(0))?.let { p0 -> it.target?.setVariant(p0)  } }
         }
     }
 }

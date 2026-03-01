@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.enchantments.EnchantmentWrapper"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnEnchantmentWrapper {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentWrapper::class.java)
-                .function("enchantment", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantment) }
+                .function("enchantment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE).noParams()) { it.setReturnRef(it.target?.enchantment) }
         }
     }
 }

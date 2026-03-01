@@ -38,10 +38,6 @@ object FnSpawnRule {
                     it.target?.setMaxSkyLight(it.getInt(0).toInt())
                 }
                 // 不能删除
-                .function("equals", returns(Type.Z).params(TYPE)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
                 .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
                 .function("deserialize", returns(TYPE).params(Type.MAP)) { it.setReturnRef(SpawnRule.deserialize(it.getRef(0) as Map<String, Any>)) }
                 .function("serialize", returns(Type.MAP).params(TYPE)) { it.setReturnRef((it.getRef(0) as SpawnRule).serialize()) }

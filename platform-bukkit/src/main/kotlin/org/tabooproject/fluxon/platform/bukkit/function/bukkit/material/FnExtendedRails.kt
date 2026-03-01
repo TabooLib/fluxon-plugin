@@ -24,13 +24,13 @@ object FnExtendedRails {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExtendedRails::class.java)
                 .function("isCurve", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCurve ?: false) }
-                .function("setDirection", returnsVoid().params(Type.OBJECT, Type.Z)) {
+                .function("setDirection",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.Z)) {
                     it.target?.setDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
                     )
                 }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

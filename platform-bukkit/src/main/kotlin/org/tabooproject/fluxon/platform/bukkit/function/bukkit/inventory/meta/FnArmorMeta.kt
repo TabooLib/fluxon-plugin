@@ -24,9 +24,9 @@ object FnArmorMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorMeta::class.java)
                 .function("hasTrim", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasTrim() ?: false) }
-                .function("setTrim", returnsVoid().params(Type.OBJECT)) { it.target?.setTrim(it.getRef(0) as ArmorTrim) }
-                .function("trim", returnsObject().noParams()) { it.setReturnRef(it.target?.trim) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("setTrim",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.trim.FnArmorTrim.TYPE)) { it.target?.setTrim(it.getRef(0) as ArmorTrim) }
+                .function("trim", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.trim.FnArmorTrim.TYPE).noParams()) { it.setReturnRef(it.target?.trim) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnArmorMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

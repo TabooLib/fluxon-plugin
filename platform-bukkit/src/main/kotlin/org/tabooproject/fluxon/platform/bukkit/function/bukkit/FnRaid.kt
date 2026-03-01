@@ -26,14 +26,14 @@ object FnRaid {
                 .function("activeTicks", returns(Type.J).noParams()) { it.setReturnLong(it.target?.activeTicks ?: 0) }
                 .function("badOmenLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.badOmenLevel ?: 0) }
                 .function("setBadOmenLevel", returnsVoid().params(Type.I)) { it.target?.setBadOmenLevel(it.getInt(0).toInt()) }
-                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
-                .function("status", returnsObject().noParams()) { it.setReturnRef(it.target?.status) }
+                .function("location",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
+                .function("status", returns(FnRaidRaidStatus.TYPE).noParams()) { it.setReturnRef(it.target?.status) }
                 .function("spawnedGroups", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnedGroups ?: 0) }
                 .function("totalGroups", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalGroups ?: 0) }
                 .function("totalWaves", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalWaves ?: 0) }
                 .function("totalHealth", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.totalHealth ?: 0.0f) }
-                .function("heroes", returnsObject().noParams()) { it.setReturnRef(it.target?.heroes) }
-                .function("raiders", returnsObject().noParams()) { it.setReturnRef(it.target?.raiders) }
+                .function("heroes",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.heroes) }
+                .function("raiders",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.raiders) }
         }
     }
 }

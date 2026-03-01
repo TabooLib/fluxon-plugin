@@ -21,10 +21,6 @@ object FnPluginBase {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginBase::class.java)
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
         }
     }

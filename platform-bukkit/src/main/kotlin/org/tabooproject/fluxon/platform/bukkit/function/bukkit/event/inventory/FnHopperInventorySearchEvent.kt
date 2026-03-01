@@ -33,7 +33,7 @@ object FnHopperInventorySearchEvent {
     }
 }
 
-@Requires(classes = ["org.bukkit.event.inventory.HopperInventorySearchEvent.ContainerType"])
+@Requires(classes = ["org.bukkit.event.inventory.HopperInventorySearchEvent\$ContainerType"])
 @PlatformSide(Platform.BUKKIT)
 object FnHopperInventorySearchEventContainerType : FnEnumGetter<HopperInventorySearchEvent.ContainerType>() {
 

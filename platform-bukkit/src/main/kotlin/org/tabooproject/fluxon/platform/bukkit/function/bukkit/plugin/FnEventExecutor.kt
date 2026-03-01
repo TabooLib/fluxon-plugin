@@ -9,7 +9,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.EventExecutor"])
@@ -22,11 +22,11 @@ object FnEventExecutor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EventExecutor::class.java)
-                .function("execute", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.execute(
+                .function("execute", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnListener.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnEvent.TYPE)) {
+                    it.target?.execute(
                         it.getRef(0) as Listener,
                         it.getRef(1) as Event
-                    ))
+                    )
                 }
         }
     }

@@ -22,15 +22,13 @@ object FnEntityEnterLoveModeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityEnterLoveModeEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("humanEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.humanEntity) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("humanEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnHumanEntity.TYPE).noParams()) { it.setReturnRef(it.target?.humanEntity) }
                 .function("ticksInLove", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ticksInLove ?: 0) }
                 .function("setTicksInLove", returnsVoid().params(Type.I)) { it.target?.setTicksInLove(it.getInt(0).toInt()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityEnterLoveModeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityEnterLoveModeEvent.getHandlerList()) }
         }
     }
 }

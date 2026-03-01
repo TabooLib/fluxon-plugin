@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Fluid"])
@@ -20,7 +21,7 @@ object FnFluid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Fluid::class.java)
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("key", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

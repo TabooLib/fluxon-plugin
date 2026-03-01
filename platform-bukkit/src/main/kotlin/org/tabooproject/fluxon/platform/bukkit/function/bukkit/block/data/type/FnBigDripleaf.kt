@@ -34,7 +34,7 @@ object FnBigDripleaf {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.BigDripleaf.Tilt"])
+@Requires(classes = ["org.bukkit.block.data.type.BigDripleaf\$Tilt"])
 @PlatformSide(Platform.BUKKIT)
 object FnBigDripleafTilt : FnEnumGetter<BigDripleaf.Tilt>() {
 

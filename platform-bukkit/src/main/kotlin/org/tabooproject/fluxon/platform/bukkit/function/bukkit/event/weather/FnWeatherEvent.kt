@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.weather.WeatherEvent"])
@@ -20,7 +21,7 @@ object FnWeatherEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WeatherEvent::class.java)
-                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.getWorld()) }
+                .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.getWorld()) }
         }
     }
 }

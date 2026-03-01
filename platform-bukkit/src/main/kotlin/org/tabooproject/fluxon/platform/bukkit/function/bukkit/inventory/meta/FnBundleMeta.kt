@@ -24,9 +24,9 @@ object FnBundleMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BundleMeta::class.java)
                 .function("hasItems", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasItems() ?: false) }
-                .function("items", returnsObject().noParams()) { it.setReturnRef(it.target?.items) }
-                .function("setItems", returnsVoid().params(Type.OBJECT)) { it.target?.setItems(it.getRef(0) as List<ItemStack>) }
-                .function("addItem", returnsVoid().params(Type.OBJECT)) { it.target?.addItem(it.getRef(0) as ItemStack) }
+                .function("items", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.items) }
+                .function("setItems",returnsVoid().params(Type.LIST)) { it.target?.setItems(it.getRef(0) as List<ItemStack>) }
+                .function("addItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.addItem(it.getRef(0) as ItemStack) }
         }
     }
 }

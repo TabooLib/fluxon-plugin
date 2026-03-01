@@ -9,6 +9,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -22,9 +23,9 @@ object FnCustomItemTagContainer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CustomItemTagContainer::class.java)
-                .function("removeCustomTag", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.removeCustomTag(it.getRef(0) as NamespacedKey)) }
+                .function("removeCustomTag", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.target?.removeCustomTag(it.getRef(0) as NamespacedKey) }
                 .function("isEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEmpty ?: false) }
-                .function("adapterContext", returnsObject().noParams()) { it.setReturnRef(it.target?.adapterContext) }
+                .function("adapterContext",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.tags.FnItemTagAdapterContext.TYPE).noParams()) { it.setReturnRef(it.target?.adapterContext) }
         }
     }
 }

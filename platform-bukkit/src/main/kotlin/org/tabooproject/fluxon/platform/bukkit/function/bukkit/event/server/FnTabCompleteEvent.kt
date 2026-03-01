@@ -22,15 +22,13 @@ object FnTabCompleteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TabCompleteEvent::class.java)
-                .function("sender", returnsObject().noParams()) { it.setReturnRef(it.target?.sender) }
-                .function("buffer", returnsObject().noParams()) { it.setReturnRef(it.target?.buffer) }
-                .function("completions", returnsObject().noParams()) { it.setReturnRef(it.target?.completions) }
-                .function("setCompletions", returnsVoid().params(Type.OBJECT)) { it.target?.setCompletions(it.getRef(0) as List<String>) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("sender",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE).noParams()) { it.setReturnRef(it.target?.sender) }
+                .function("buffer",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.buffer) }
+                .function("completions",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.completions) }
+                .function("setCompletions",returnsVoid().params(Type.LIST)) { it.target?.setCompletions(it.getRef(0) as List<String>) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(TabCompleteEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(TabCompleteEvent.getHandlerList()) }
         }
     }
 }

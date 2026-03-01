@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerResourcePackStatusEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,11 +21,11 @@ object FnPlayerResourcePackStatusEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerResourcePackStatusEvent::class.java)
-                .function("iD", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
-                .function("status", returnsObject().noParams()) { it.setReturnRef(it.target?.status) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("iD",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.id) }
+                .function("status", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerResourcePackStatusEventStatus.TYPE).noParams()) { it.setReturnRef(it.target?.status) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerResourcePackStatusEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerResourcePackStatusEvent.getHandlerList()) }
         }
     }
 }

@@ -23,7 +23,7 @@ object FnBukkitTask {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BukkitTask::class.java)
                 .function("taskId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.taskId ?: 0) }
-                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("owner",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE).noParams()) { it.setReturnRef(it.target?.owner) }
                 .function("isSync", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSync ?: false) }
                 .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
                 .function("cancel", returnsVoid().noParams()) { it.target?.cancel() }

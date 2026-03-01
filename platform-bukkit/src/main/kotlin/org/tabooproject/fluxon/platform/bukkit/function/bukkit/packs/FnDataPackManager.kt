@@ -11,7 +11,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -25,16 +24,18 @@ object FnDataPackManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DataPackManager::class.java)
-                .function("dataPacks", returnsObject().noParams()) { it.setReturnRef(it.target?.dataPacks) }
-                .function("getDataPack", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDataPack(it.getRef(0) as NamespacedKey)) }
-                .function("getEnabledDataPacks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getEnabledDataPacks(it.getRef(0) as World)) }
-                .function("getDisabledDataPacks", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDisabledDataPacks(it.getRef(0) as World)) }
-                .function("isEnabledByFeature", returns(Type.Z).params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Material -> it.target?.isEnabledByFeature(var1, it.getRef(1) as World)
-                        is EntityType -> it.target?.isEnabledByFeature(var1, it.getRef(1) as World)
-                        else -> throw IllegalArgumentException("参数必须是 Material 或 EntityType 类型")
-                    })
+                .function("dataPacks", returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.dataPacks) }
+                .function("getDataPack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.packs.FnDataPack.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(it.target?.getDataPack(it.getRef(0) as NamespacedKey)) }
+                .function("getEnabledDataPacks",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnRef(it.target?.getEnabledDataPacks(it.getRef(0) as World)) }
+                .function("getDisabledDataPacks",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnRef(it.target?.getDisabledDataPacks(it.getRef(0) as World)) }
+                .function("isEnabledByFeature", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as Material, it.getRef(1) as World) ?: false) }
+                .function("isEnabledByFeature", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnBool(it.target?.isEnabledByFeature(it.getRef(0) as EntityType, it.getRef(1) as World) ?: false) }
+                .function("isEnabledByFeature", returns(Type.Z).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.enumValue(it.getString(0))?.let { p0 ->
+                        it.setReturnBool(it.target?.isEnabledByFeature(p0, it.getRef(1) as World) ?: false)
+                    } ?: org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.enumValue(it.getString(0))?.let { p0 ->
+                        it.setReturnBool(it.target?.isEnabledByFeature(p0, it.getRef(1) as World) ?: false)
+                    }
                 }
         }
     }

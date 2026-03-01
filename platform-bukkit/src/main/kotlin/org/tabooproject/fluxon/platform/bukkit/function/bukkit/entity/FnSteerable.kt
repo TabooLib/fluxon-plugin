@@ -28,7 +28,7 @@ object FnSteerable {
                 .function("setBoostTicks", returnsVoid().params(Type.I)) { it.target?.setBoostTicks(it.getInt(0).toInt()) }
                 .function("currentBoostTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.currentBoostTicks ?: 0) }
                 .function("setCurrentBoostTicks", returnsVoid().params(Type.I)) { it.target?.setCurrentBoostTicks(it.getInt(0).toInt()) }
-                .function("steerMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.steerMaterial) }
+                .function("steerMaterial",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.steerMaterial) }
         }
     }
 }

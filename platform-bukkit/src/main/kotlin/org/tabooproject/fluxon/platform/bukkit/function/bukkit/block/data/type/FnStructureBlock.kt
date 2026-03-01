@@ -29,7 +29,7 @@ object FnStructureBlock {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.StructureBlock.Mode"])
+@Requires(classes = ["org.bukkit.block.data.type.StructureBlock\$Mode"])
 @PlatformSide(Platform.BUKKIT)
 object FnStructureBlockMode : FnEnumGetter<StructureBlock.Mode>()  {
 

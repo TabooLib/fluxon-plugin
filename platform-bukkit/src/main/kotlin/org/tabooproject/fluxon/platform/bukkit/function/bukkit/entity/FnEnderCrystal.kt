@@ -25,8 +25,8 @@ object FnEnderCrystal {
             registerExtension(EnderCrystal::class.java)
                 .function("isShowingBottom", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShowingBottom ?: false) }
                 .function("setShowingBottom", returnsVoid().params(Type.Z)) { it.target?.setShowingBottom(it.getBool(0)) }
-                .function("beamTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.beamTarget) }
-                .function("setBeamTarget", returnsVoid().params(Type.OBJECT)) { it.target?.setBeamTarget(it.getRef(0) as Location) }
+                .function("beamTarget",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.beamTarget) }
+                .function("setBeamTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setBeamTarget(it.getRef(0) as Location) }
         }
     }
 }

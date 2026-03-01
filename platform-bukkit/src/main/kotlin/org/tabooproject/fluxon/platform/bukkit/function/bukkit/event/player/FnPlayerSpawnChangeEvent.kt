@@ -23,16 +23,14 @@ object FnPlayerSpawnChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSpawnChangeEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("cause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerSpawnChangeEventCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
                 .function("isForced", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isForced ?: false) }
                 .function("setForced", returnsVoid().params(Type.Z)) { it.target?.setForced(it.getBool(0)) }
-                .function("newSpawn", returnsObject().noParams()) { it.setReturnRef(it.target?.newSpawn) }
-                .function("setNewSpawn", returnsVoid().params(Type.OBJECT)) { it.target?.setNewSpawn(it.getRef(0) as Location) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("newSpawn",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.newSpawn) }
+                .function("setNewSpawn",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setNewSpawn(it.getRef(0) as Location) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerSpawnChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerSpawnChangeEvent.getHandlerList()) }
         }
     }
 }

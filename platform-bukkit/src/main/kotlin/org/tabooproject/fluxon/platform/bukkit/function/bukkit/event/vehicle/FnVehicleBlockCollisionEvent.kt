@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.vehicle.VehicleBlockCollisionEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,10 +21,10 @@ object FnVehicleBlockCollisionEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleBlockCollisionEvent::class.java)
-                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("block",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.block) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleBlockCollisionEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(VehicleBlockCollisionEvent.getHandlerList()) }
         }
     }
 }

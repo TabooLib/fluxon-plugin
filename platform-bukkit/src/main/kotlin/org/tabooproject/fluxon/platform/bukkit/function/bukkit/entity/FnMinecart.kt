@@ -31,14 +31,14 @@ object FnMinecart {
                 .function("setMaxSpeed", returnsVoid().params(Type.D)) { it.target?.setMaxSpeed(it.getDouble(0)) }
                 .function("isSlowWhenEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSlowWhenEmpty ?: false) }
                 .function("setSlowWhenEmpty", returnsVoid().params(Type.Z)) { it.target?.setSlowWhenEmpty(it.getBool(0)) }
-                .function("flyingVelocityMod", returnsObject().noParams()) { it.setReturnRef(it.target?.flyingVelocityMod) }
-                .function("setFlyingVelocityMod", returnsVoid().params(Type.OBJECT)) { it.target?.setFlyingVelocityMod(it.getRef(0) as Vector) }
-                .function("derailedVelocityMod", returnsObject().noParams()) { it.setReturnRef(it.target?.derailedVelocityMod) }
-                .function("setDerailedVelocityMod", returnsVoid().params(Type.OBJECT)) { it.target?.setDerailedVelocityMod(it.getRef(0) as Vector) }
-                .function("setDisplayBlock", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayBlock(it.getRef(0) as MaterialData) }
-                .function("displayBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.displayBlock) }
-                .function("setDisplayBlockData", returnsVoid().params(Type.OBJECT)) { it.target?.setDisplayBlockData(it.getRef(0) as BlockData) }
-                .function("displayBlockData", returnsObject().noParams()) { it.setReturnRef(it.target?.displayBlockData) }
+                .function("flyingVelocityMod",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.flyingVelocityMod) }
+                .function("setFlyingVelocityMod",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setFlyingVelocityMod(it.getRef(0) as Vector) }
+                .function("derailedVelocityMod",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.derailedVelocityMod) }
+                .function("setDerailedVelocityMod",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setDerailedVelocityMod(it.getRef(0) as Vector) }
+                .function("setDisplayBlock",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setDisplayBlock(it.getRef(0) as MaterialData) }
+                .function("displayBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.displayBlock) }
+                .function("setDisplayBlockData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setDisplayBlockData(it.getRef(0) as BlockData) }
+                .function("displayBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.displayBlockData) }
                 .function("setDisplayBlockOffset", returnsVoid().params(Type.I)) { it.target?.setDisplayBlockOffset(it.getInt(0).toInt()) }
                 .function("displayBlockOffset", returns(Type.I).noParams()) { it.setReturnInt(it.target?.displayBlockOffset ?: 0) }
         }

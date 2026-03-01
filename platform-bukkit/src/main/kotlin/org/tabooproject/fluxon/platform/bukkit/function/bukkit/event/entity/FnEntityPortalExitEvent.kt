@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityPortalExitEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,12 +23,12 @@ object FnEntityPortalExitEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalExitEvent::class.java)
-                .function("before", returnsObject().noParams()) { it.setReturnRef(it.target?.before) }
-                .function("after", returnsObject().noParams()) { it.setReturnRef(it.target?.after) }
-                .function("setAfter", returnsVoid().params(Type.OBJECT)) { it.target?.setAfter(it.getRef(0) as Vector) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("before",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.before) }
+                .function("after",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.after) }
+                .function("setAfter",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.target?.setAfter(it.getRef(0) as Vector) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPortalExitEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityPortalExitEvent.getHandlerList()) }
         }
     }
 }

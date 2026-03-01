@@ -9,7 +9,6 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -23,16 +22,22 @@ object FnWither {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Wither::class.java)
-                .function("setTarget", returnsVoid().params(Type.OBJECT)) {
+                .function("setTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) {
                     it.target?.setTarget(it.getRef(0) as LivingEntity)
                 }
-                .function("setTarget", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                .function("setTarget", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnWitherHead.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) {
                     it.target?.setTarget(
                         it.getRef(0) as Wither.Head,
                         it.getRef(1) as LivingEntity
                     )
                 }
-                .function("getTarget", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getTarget(it.getRef(0) as Wither.Head)) }
+                .function("setTarget", returnsVoid().params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnWitherHead.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.setTarget(p0, it.getRef(1) as LivingEntity)
+                    }
+                }
+                .function("getTarget", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnWitherHead.TYPE)) { it.setReturnRef(it.target?.getTarget(it.getRef(0) as Wither.Head))  }
+                .function("getTarget", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnWitherHead.enumValue(it.getString(0))?.let { p0 -> it.setReturnRef(it.target?.getTarget(p0))  } }
                 .function("invulnerabilityTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.invulnerabilityTicks ?: 0) }
                 .function("setInvulnerabilityTicks", returnsVoid().params(Type.I)) { it.target?.setInvulnerabilityTicks(it.getInt(0).toInt()) }
         }

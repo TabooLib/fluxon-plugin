@@ -24,11 +24,11 @@ object FnCompassMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CompassMeta::class.java)
                 .function("hasLodestone", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasLodestone() ?: false) }
-                .function("lodestone", returnsObject().noParams()) { it.setReturnRef(it.target?.lodestone) }
-                .function("setLodestone", returnsVoid().params(Type.OBJECT)) { it.target?.setLodestone(it.getRef(0) as Location) }
+                .function("lodestone", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.lodestone) }
+                .function("setLodestone",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setLodestone(it.getRef(0) as Location) }
                 .function("isLodestoneTracked", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLodestoneTracked ?: false) }
                 .function("setLodestoneTracked", returnsVoid().params(Type.Z)) { it.target?.setLodestoneTracked(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnCompassMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

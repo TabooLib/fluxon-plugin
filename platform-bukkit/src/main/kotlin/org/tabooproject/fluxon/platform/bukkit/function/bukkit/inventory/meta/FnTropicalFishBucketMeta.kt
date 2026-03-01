@@ -24,13 +24,14 @@ object FnTropicalFishBucketMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFishBucketMeta::class.java)
-                .function("patternColor", returnsObject().noParams()) { it.setReturnRef(it.target?.patternColor) }
-                .function("setPatternColor", returnsVoid().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
-                .function("bodyColor", returnsObject().noParams()) { it.setReturnRef(it.target?.bodyColor) }
-                .function("setBodyColor", returnsVoid().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
-                .function("setPattern", returnsVoid().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
+                .function("patternColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.patternColor) }
+                .function("setPatternColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
+                .function("bodyColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.bodyColor) }
+                .function("setBodyColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
+                .function("setPattern", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnTropicalFishPattern.TYPE)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern)  }
+                .function("setPattern", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnTropicalFishPattern.enumValue(it.getString(0))?.let { p0 -> it.target?.setPattern(p0)  } }
                 .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasVariant() ?: false) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnTropicalFishBucketMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

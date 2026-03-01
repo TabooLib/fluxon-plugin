@@ -25,12 +25,12 @@ object FnEnderman {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Enderman::class.java)
-                .function("carriedMaterial", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedMaterial) }
-                .function("setCarriedMaterial", returnsVoid().params(Type.OBJECT)) { it.target?.setCarriedMaterial(it.getRef(0) as MaterialData) }
-                .function("carriedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.carriedBlock) }
-                .function("setCarriedBlock", returnsVoid().params(Type.OBJECT)) { it.target?.setCarriedBlock(it.getRef(0) as BlockData) }
+                .function("carriedMaterial",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.carriedMaterial) }
+                .function("setCarriedMaterial",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setCarriedMaterial(it.getRef(0) as MaterialData) }
+                .function("carriedBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.carriedBlock) }
+                .function("setCarriedBlock",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setCarriedBlock(it.getRef(0) as BlockData) }
                 .function("teleport", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.teleport() == true) }
-                .function("teleportTowards", returns(Type.Z).params(Type.OBJECT)) {
+                .function("teleportTowards",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
                     it.setReturnBool(it.target?.teleportTowards(it.getRef(0) as Entity) == true)
                 }
         }

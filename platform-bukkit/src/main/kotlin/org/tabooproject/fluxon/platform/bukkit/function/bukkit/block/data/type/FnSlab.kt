@@ -29,7 +29,7 @@ object FnSlab {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Slab.Type"])
+@Requires(classes = ["org.bukkit.block.data.type.Slab\$Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnSlabType: FnEnumGetter<Slab.Type>() {
 

@@ -23,22 +23,20 @@ object FnFireworkEffect {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffect::class.java)
                 // static
-                .function("builder", returnsObject().noParams()) { it.setReturnRef(FireworkEffect.builder()) }
+                .function("builder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).noParams()) { it.setReturnRef(FireworkEffect.builder()) }
                 .function("hasFlicker", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasFlicker() ?: false) }
                 .function("hasTrail", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasTrail() ?: false) }
-                .function("colors", returnsObject().noParams()) { it.setReturnRef(it.target?.colors) }
-                .function("fadeColors", returnsObject().noParams()) { it.setReturnRef(it.target?.fadeColors) }
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("colors",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.colors) }
+                .function("fadeColors",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.fadeColors) }
+                .function("type", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
                 // static
-                .function("deserialize", returnsObject().params(Type.MAP)) { it.setReturnRef(FireworkEffect.deserialize(it.getRef(0) as Map<String, Any>)) }
+                .function("deserialize", returns(Type.fromClass(org.bukkit.configuration.serialization.ConfigurationSerializable::class.java)).params(Type.MAP)) { it.setReturnRef(FireworkEffect.deserialize(it.getRef(0) as Map<String, Any>)) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.FireworkEffect.Builder"])
+@Requires(classes = ["org.bukkit.FireworkEffect\$Builder"])
 @PlatformSide(Platform.BUKKIT)
 object FnFireworkEffectBuilder {
 
@@ -48,14 +46,15 @@ object FnFireworkEffectBuilder {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FireworkEffect.Builder::class.java)
-                .function("with", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.with(it.getRef(0) as FireworkEffect.Type)) }
-                .function("withFlicker", returnsObject().noParams()) { it.setReturnRef(it.target?.withFlicker()) }
-                .function("flicker", returnsObject().params(Type.Z)) { it.setReturnRef(it.target?.flicker(it.getBool(0))) }
-                .function("withTrail", returnsObject().noParams()) { it.setReturnRef(it.target?.withTrail()) }
-                .function("trail", returnsObject().params(Type.Z)) { it.setReturnRef(it.target?.trail(it.getBool(0))) }
-                .function("withColor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.withColor(it.getRef(0) as Color)) }
-                .function("withFade", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.withFade(it.getRef(0) as Color)) }
-                .function("build", returnsObject().noParams()) { it.setReturnRef(it.target?.build()) }
+                .function("with", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectType.TYPE)) { it.setReturnRef(it.target?.with(it.getRef(0) as FireworkEffect.Type))  }
+                .function("with", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectType.enumValue(it.getString(0))?.let { p0 -> it.setReturnRef(it.target?.with(p0))  } }
+                .function("withFlicker", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).noParams()) { it.setReturnRef(it.target?.withFlicker()) }
+                .function("flicker", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(Type.Z)) { it.setReturnRef(it.target?.flicker(it.getBool(0))) }
+                .function("withTrail", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).noParams()) { it.setReturnRef(it.target?.withTrail()) }
+                .function("trail", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(Type.Z)) { it.setReturnRef(it.target?.trail(it.getBool(0))) }
+                .function("withColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) { it.setReturnRef(it.target?.withColor(it.getRef(0) as Color)) }
+                .function("withFade",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffectBuilder.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) { it.setReturnRef(it.target?.withFade(it.getRef(0) as Color)) }
+                .function("build", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFireworkEffect.TYPE).noParams()) { it.setReturnRef(it.target?.build()) }
         }
     }
 }

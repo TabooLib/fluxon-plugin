@@ -22,7 +22,7 @@ object FnHanging {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hanging::class.java)
-                .function("setFacingDirection", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                .function("setFacingDirection",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.Z)) {
                     it.setReturnBool(it.target?.setFacingDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)

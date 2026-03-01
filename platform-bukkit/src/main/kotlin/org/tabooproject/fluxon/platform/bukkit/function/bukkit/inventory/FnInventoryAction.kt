@@ -6,7 +6,7 @@ import taboolib.common.Requires
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 
-@Requires(classes = ["org.bukkit.inventory.InventoryAction"])
+@Requires(classes = ["org.bukkit.event.inventory.InventoryAction"])
 @PlatformSide(Platform.BUKKIT)
 object FnInventoryAction : FnEnumGetter<InventoryAction>() {
 

@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
@@ -19,12 +18,13 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 object FnWorldBorder {
 
     val TYPE = Type.fromClass(WorldBorder::class.java)
+    private val TIME_UNIT = Type.fromClass(TimeUnit::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldBorder::class.java)
-                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
+                .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
                 .function("reset", returnsVoid().noParams()) { it.target?.reset() }
                 .function("size", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.size ?: 0.0) }
                 .function("setSize", returnsVoid().params(Type.D)) {
@@ -33,15 +33,15 @@ object FnWorldBorder {
                 .function("setSize", returnsVoid().params(Type.D, Type.J)) {
                     it.target?.setSize(it.getDouble(0), it.getLong(1))
                 }
-                .function("setSize", returnsVoid().params(Type.D, Type.OBJECT, Type.J)) {
+                .function("setSize", returnsVoid().params(Type.D, TIME_UNIT, Type.J)) {
                     it.target?.setSize(
                         it.getDouble(0),
                         it.getRef(1) as TimeUnit,
                         it.getLong(2)
                     )
                 }
-                .function("center", returnsObject().noParams()) { it.setReturnRef(it.target?.center) }
-                .function("setCenter", returnsVoid().params(Type.OBJECT)) {
+                .function("center",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.center) }
+                .function("setCenter",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.target?.setCenter(it.getRef(0) as Location)
                 }
                 .function("setCenter", returnsVoid().params(Type.D, Type.D)) {
@@ -58,7 +58,7 @@ object FnWorldBorder {
                 .function("setWarningTime", returnsVoid().params(Type.I)) { it.target?.setWarningTime(it.getInt(0).toInt()) }
                 .function("warningDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.warningDistance ?: 0) }
                 .function("setWarningDistance", returnsVoid().params(Type.I)) { it.target?.setWarningDistance(it.getInt(0).toInt()) }
-                .function("isInside", returns(Type.Z).params(Type.OBJECT)) {
+                .function("isInside",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnBool(it.target?.isInside(it.getRef(0) as Location) ?: false)
                 }
                 .function("maxSize", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.maxSize ?: 0.0) }

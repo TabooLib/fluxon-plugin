@@ -26,7 +26,7 @@ object FnHangingBreakEvent {
     }
 }
 
-@Requires(classes = ["org.bukkit.event.hanging.HangingBreakEvent.RemoveCause"])
+@Requires(classes = ["org.bukkit.event.hanging.HangingBreakEvent\$RemoveCause"])
 @PlatformSide(Platform.BUKKIT)
 object FnHangingBreakEventRemoveCause : FnEnumGetter<HangingBreakEvent.RemoveCause>() {
 

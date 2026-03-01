@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.server.ServerLoadEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,10 +21,10 @@ object FnServerLoadEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ServerLoadEvent::class.java)
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("type", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.server.FnServerLoadEventLoadType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ServerLoadEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(ServerLoadEvent.getHandlerList()) }
         }
     }
 }

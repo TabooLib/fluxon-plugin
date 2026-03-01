@@ -21,12 +21,8 @@ object FnArmorTrim {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ArmorTrim::class.java)
-                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
-                .function("pattern", returnsObject().noParams()) { it.setReturnRef(it.target?.pattern) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
+                .function("material", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.trim.FnTrimMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.material) }
+                .function("pattern", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.trim.FnTrimPattern.TYPE).noParams()) { it.setReturnRef(it.target?.pattern) }
         }
     }
 }

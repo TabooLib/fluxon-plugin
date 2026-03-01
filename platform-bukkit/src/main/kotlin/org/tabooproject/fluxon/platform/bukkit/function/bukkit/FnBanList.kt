@@ -25,13 +25,13 @@ object FnBanList {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanList::class.java)
-                .function("getBanEntry", returnsObject().params(Type.OBJECT)) {
+                .function("getBanEntry",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBanEntry.TYPE).params(Type.STRING)) {
                     it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.getBanEntry(var1)
                         else -> (it.target as? BanList<Any>)?.getBanEntry(var1!!)
                     })
                 }
-                .function("addBan", returnsObject().params(Type.OBJECT, Type.STRING, Type.OBJECT, Type.STRING)) {
+                .function("addBan",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBanEntry.TYPE).params(Type.STRING, Type.STRING, org.tabooproject.fluxon.util.StandardTypes.DATE, Type.STRING)) {
                     it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.addBan(
                             var1,
@@ -66,15 +66,15 @@ object FnBanList {
                         }
                     })
                 }
-                .function("banEntries", returnsObject().noParams()) { it.setReturnRef(it.target?.banEntries) }
-                .function("entries", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntries()) }
-                .function("isBanned", returns(Type.Z).params(Type.OBJECT)) {
+                .function("banEntries",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.banEntries) }
+                .function("entries",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.getEntries()) }
+                .function("isBanned",returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is String -> it.target?.isBanned(var1)
                         else -> (it.target as? BanList<Any>)?.isBanned(var1!!)
                     } ?: false)
                 }
-                .function("pardon", returnsVoid().params(Type.OBJECT)) {
+                .function("pardon",returnsVoid().params(Type.STRING)) {
                     when (val var1 = it.getRef(0)) {
                         is String -> it.target?.pardon(var1)
                         else -> (it.target as? BanList<Any>)?.pardon(var1!!)

@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityCombustByBlockEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnEntityCombustByBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityCombustByBlockEvent::class.java)
-                .function("combuster", returnsObject().noParams()) { it.setReturnRef(it.target?.combuster) }
+                .function("combuster",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.combuster) }
         }
     }
 }

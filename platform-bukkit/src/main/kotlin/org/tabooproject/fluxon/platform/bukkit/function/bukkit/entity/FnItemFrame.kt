@@ -24,15 +24,15 @@ object FnItemFrame {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemFrame::class.java)
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("setItem", returnsVoid().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("setItem", returnsVoid().params(Type.OBJECT, Type.Z)) {
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE, Type.Z)) {
                     it.target?.setItem(it.getRef(0) as ItemStack, it.getBool(1))
                 }
                 .function("itemDropChance", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.itemDropChance ?: 0f) }
                 .function("setItemDropChance", returnsVoid().params(Type.F)) { it.target?.setItemDropChance(it.getFloat(0)) }
-                .function("rotation", returnsObject().noParams()) { it.setReturnRef(it.target?.rotation) }
-                .function("setRotation", returnsVoid().params(Type.OBJECT)) { it.target?.setRotation(it.getRef(0) as Rotation) }
+                .function("rotation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnRotation.TYPE).noParams()) { it.setReturnRef(it.target?.rotation) }
+                .function("setRotation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnRotation.TYPE)) { it.target?.setRotation(it.getRef(0) as Rotation) }
                 .function("isVisible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVisible ?: false) }
                 .function("setVisible", returnsVoid().params(Type.Z)) { it.target?.setVisible(it.getBool(0)) }
                 .function("isFixed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFixed ?: false) }

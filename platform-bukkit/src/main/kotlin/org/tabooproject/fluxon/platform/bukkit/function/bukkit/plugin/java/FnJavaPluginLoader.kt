@@ -10,7 +10,9 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.plugin.java.JavaPluginLoader"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,11 +24,11 @@ object FnJavaPluginLoader {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JavaPluginLoader::class.java)
-                .function("loadPlugin", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.loadPlugin(it.getRef(0) as File)) }
-                .function("getPluginDescription", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getPluginDescription(it.getRef(0) as File)) }
-                .function("pluginFileFilters", returnsObject().noParams()) { it.setReturnRef(it.target?.pluginFileFilters) }
-                .function("enablePlugin", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.enablePlugin(it.getRef(0) as Plugin)) }
-                .function("disablePlugin", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.disablePlugin(it.getRef(0) as Plugin)) }
+                .function("loadPlugin",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE).params(Type.FILE)) { it.setReturnRef(it.target?.loadPlugin(it.getRef(0) as File)) }
+                .function("getPluginDescription",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPluginDescriptionFile.TYPE).params(Type.FILE)) { it.setReturnRef(it.target?.getPluginDescription(it.getRef(0) as File)) }
+                .function("pluginFileFilters", returns(Type.fromClass(Array<java.util.regex.Pattern>::class.java)).noParams()) { it.setReturnRef(it.target?.pluginFileFilters) }
+                .function("enablePlugin", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) { it.target?.enablePlugin(it.getRef(0) as Plugin) }
+                .function("disablePlugin", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) { it.target?.disablePlugin(it.getRef(0) as Plugin) }
         }
     }
 }

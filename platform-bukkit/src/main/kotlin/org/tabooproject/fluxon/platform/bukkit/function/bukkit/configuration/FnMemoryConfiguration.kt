@@ -8,9 +8,9 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.configuration.MemoryConfiguration"])
 @PlatformSide(Platform.BUKKIT)
@@ -23,16 +23,11 @@ object FnMemoryConfiguration {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemoryConfiguration::class.java)
                 .function("addDefault", returnsVoid().params(Type.STRING, Type.OBJECT)) { it.target?.addDefault(it.getString(0)!!, it.getRef(1)) }
-                .function("addDefaults", returnsVoid().params(Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
-                        is Map<*, *> -> it.target?.addDefaults(var1 as Map<String, Any>)
-                        is Configuration -> it.target?.addDefaults(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Map<String, Object> 或 Configuration 类型")
-                    }
-                }
-                .function("setDefaults", returnsVoid().params(Type.OBJECT)) { it.target?.setDefaults(it.getRef(0) as Configuration) }
-                .function("defaults", returnsObject().noParams()) { it.setReturnRef(it.target?.getDefaults()) }
-                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
+                .function("addDefaults", returnsVoid().params(Type.MAP)) { it.target?.addDefaults(it.getRef(0) as Map<String, Any>) }
+                .function("addDefaults", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfiguration.TYPE)) { it.target?.addDefaults(it.getRef(0) as Configuration) }
+                .function("setDefaults",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfiguration.TYPE)) { it.target?.setDefaults(it.getRef(0) as Configuration) }
+                .function("defaults",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfiguration.TYPE).noParams()) { it.setReturnRef(it.target?.getDefaults()) }
+                .function("parent",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).noParams()) { it.setReturnRef(it.target?.parent) }
         }
     }
 }

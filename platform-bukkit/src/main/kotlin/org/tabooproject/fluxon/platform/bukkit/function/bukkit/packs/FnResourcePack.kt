@@ -21,10 +21,10 @@ object FnResourcePack {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ResourcePack::class.java)
-                .function("id", returnsObject().noParams()) { it.setReturnRef(it.target?.id) }
-                .function("url", returnsObject().noParams()) { it.setReturnRef(it.target?.url) }
-                .function("hash", returnsObject().noParams()) { it.setReturnRef(it.target?.hash) }
-                .function("prompt", returnsObject().noParams()) { it.setReturnRef(it.target?.prompt) }
+                .function("id",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.id) }
+                .function("url",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.url) }
+                .function("hash",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.hash) }
+                .function("prompt",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.prompt) }
                 .function("isRequired", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRequired ?: false) }
         }
     }

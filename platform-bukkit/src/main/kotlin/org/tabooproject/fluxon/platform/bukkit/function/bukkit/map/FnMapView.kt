@@ -26,17 +26,17 @@ object FnMapView {
             registerExtension(MapView::class.java)
                 .function("id", returns(Type.I).noParams()) { it.setReturnInt(it.target?.id ?: 0) }
                 .function("isVirtual", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVirtual ?: false) }
-                .function("scale", returnsObject().noParams()) { it.setReturnRef(it.target?.scale) }
-                .function("setScale", returnsVoid().params(Type.OBJECT)) { it.target?.setScale(it.getRef(0) as MapView.Scale) }
+                .function("scale",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapViewScale.TYPE).noParams()) { it.setReturnRef(it.target?.scale) }
+                .function("setScale",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapViewScale.TYPE)) { it.target?.setScale(it.getRef(0) as MapView.Scale) }
                 .function("centerX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.centerX ?: 0) }
                 .function("centerZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.centerZ ?: 0) }
                 .function("setCenterX", returnsVoid().params(Type.I)) { it.target?.setCenterX(it.getInt(0).toInt()) }
                 .function("setCenterZ", returnsVoid().params(Type.I)) { it.target?.setCenterZ(it.getInt(0).toInt()) }
-                .function("world", returnsObject().noParams()) { it.setReturnRef(it.target?.world) }
-                .function("setWorld", returnsVoid().params(Type.OBJECT)) { it.target?.setWorld(it.getRef(0) as World) }
-                .function("renderers", returnsObject().noParams()) { it.setReturnRef(it.target?.renderers) }
-                .function("addRenderer", returnsVoid().params(Type.OBJECT)) { it.target?.addRenderer(it.getRef(0) as MapRenderer) }
-                .function("removeRenderer", returnsVoid().params(Type.OBJECT)) { it.target?.removeRenderer(it.getRef(0) as MapRenderer) }
+                .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
+                .function("setWorld",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.target?.setWorld(it.getRef(0) as World) }
+                .function("renderers",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.renderers) }
+                .function("addRenderer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapRenderer.TYPE)) { it.target?.addRenderer(it.getRef(0) as MapRenderer) }
+                .function("removeRenderer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapRenderer.TYPE)) { it.target?.removeRenderer(it.getRef(0) as MapRenderer) }
                 .function("isTrackingPosition", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTrackingPosition ?: false) }
                 .function("setTrackingPosition", returnsVoid().params(Type.Z)) { it.target?.setTrackingPosition(it.getBool(0)) }
                 .function("isUnlimitedTracking", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUnlimitedTracking ?: false) }
@@ -47,18 +47,19 @@ object FnMapView {
     }
 }
 
-@Requires(classes = ["org.bukkit.map.MapView.Scale"])
+@Requires(classes = ["org.bukkit.map.MapView\$Scale"])
 @PlatformSide(Platform.BUKKIT)
-object FnMapViewScale {
+object FnMapViewScale : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.map.MapView.Scale>() {
 
-    val TYPE = Type.fromClass(MapView.Scale::class.java)
+    override val enumClass: Class<org.bukkit.map.MapView.Scale> = org.bukkit.map.MapView.Scale::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapView.Scale::class.java)
                 // static
-                .function("valueOf", returnsObject().params(Type.I)) { it.setReturnRef(MapView.Scale.valueOf(it.getInt(0).toByte())) }
+                .function("valueOf", returns(TYPE).params(Type.I)) { it.setReturnRef(MapView.Scale.valueOf(it.getInt(0).toByte())) }
                 .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value?.toInt() ?: 0) }
         }
     }

@@ -24,21 +24,21 @@ object FnSuspiciousStewMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SuspiciousStewMeta::class.java)
                 .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCustomEffects() ?: false) }
-                .function("customEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.customEffects) }
-                .function("addCustomEffect", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                .function("customEffects", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.customEffects) }
+                .function("addCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE, Type.Z)) {
                     it.setReturnBool(it.target?.addCustomEffect(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
                     ) ?: false)
                 }
-                .function("removeCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                .function("removeCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) {
                     it.setReturnBool(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
                 }
-                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) {
+                .function("hasCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) {
                     it.setReturnBool(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) ?: false)
                 }
                 .function("clearCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.clearCustomEffects() ?: false) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnSuspiciousStewMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

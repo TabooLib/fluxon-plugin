@@ -23,12 +23,13 @@ object FnCraftingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CraftingRecipe::class.java)
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
+                .function("key",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
+                .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
                 .function("group", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.group) }
                 .function("setGroup", returnsVoid().params(Type.STRING)) { it.target?.setGroup(it.getString(0)!!) }
-                .function("category", returnsObject().noParams()) { it.setReturnRef(it.target?.category) }
-                .function("setCategory", returnsVoid().params(Type.OBJECT)) { it.target?.setCategory(it.getRef(0) as CraftingBookCategory) }
+                .function("category", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.recipe.FnCraftingBookCategory.TYPE).noParams()) { it.setReturnRef(it.target?.category) }
+                .function("setCategory", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.recipe.FnCraftingBookCategory.TYPE)) { it.target?.setCategory(it.getRef(0) as CraftingBookCategory)  }
+                .function("setCategory", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.recipe.FnCraftingBookCategory.enumValue(it.getString(0))?.let { p0 -> it.target?.setCategory(p0)  } }
         }
     }
 }

@@ -24,9 +24,9 @@ object FnCrossbowMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CrossbowMeta::class.java)
                 .function("hasChargedProjectiles", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasChargedProjectiles() ?: false) }
-                .function("chargedProjectiles", returnsObject().noParams()) { it.setReturnRef(it.target?.chargedProjectiles) }
-                .function("setChargedProjectiles", returnsVoid().params(Type.OBJECT)) { it.target?.setChargedProjectiles(it.getRef(0) as List<ItemStack>) }
-                .function("addChargedProjectile", returnsVoid().params(Type.OBJECT)) { it.target?.addChargedProjectile(it.getRef(0) as ItemStack) }
+                .function("chargedProjectiles", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.chargedProjectiles) }
+                .function("setChargedProjectiles",returnsVoid().params(Type.LIST)) { it.target?.setChargedProjectiles(it.getRef(0) as List<ItemStack>) }
+                .function("addChargedProjectile",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.addChargedProjectile(it.getRef(0) as ItemStack) }
         }
     }
 }

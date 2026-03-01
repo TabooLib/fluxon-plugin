@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerChatTabCompleteEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,12 +21,12 @@ object FnPlayerChatTabCompleteEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerChatTabCompleteEvent::class.java)
-                .function("chatMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.chatMessage) }
-                .function("lastToken", returnsObject().noParams()) { it.setReturnRef(it.target?.lastToken) }
-                .function("tabCompletions", returnsObject().noParams()) { it.setReturnRef(it.target?.tabCompletions) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("chatMessage",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.chatMessage) }
+                .function("lastToken",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.lastToken) }
+                .function("tabCompletions",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.tabCompletions) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerChatTabCompleteEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerChatTabCompleteEvent.getHandlerList()) }
         }
     }
 }

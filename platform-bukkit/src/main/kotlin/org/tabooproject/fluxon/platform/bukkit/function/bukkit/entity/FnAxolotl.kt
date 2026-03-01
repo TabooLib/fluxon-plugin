@@ -24,8 +24,9 @@ object FnAxolotl {
             registerExtension(Axolotl::class.java)
                 .function("isPlayingDead", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlayingDead ?: false) }
                 .function("setPlayingDead", returnsVoid().params(Type.Z)) { it.target?.setPlayingDead(it.getBool(0)) }
-                .function("variant", returnsObject().noParams()) { it.setReturnRef(it.target?.variant) }
-                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
+                .function("variant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAxolotlVariant.TYPE).noParams()) { it.setReturnRef(it.target?.variant) }
+                .function("setVariant", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAxolotlVariant.TYPE)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant)  }
+                .function("setVariant", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAxolotlVariant.enumValue(it.getString(0))?.let { p0 -> it.target?.setVariant(p0)  } }
         }
     }
 }

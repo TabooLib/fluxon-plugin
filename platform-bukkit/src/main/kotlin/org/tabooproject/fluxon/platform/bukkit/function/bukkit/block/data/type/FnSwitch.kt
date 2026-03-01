@@ -29,7 +29,7 @@ object FnSwitch {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Switch.Face"])
+@Requires(classes = ["org.bukkit.block.data.type.Switch\$Face"])
 @PlatformSide(Platform.BUKKIT)
 object FnSwitchFace : FnEnumGetter<Switch.Face>() {
 

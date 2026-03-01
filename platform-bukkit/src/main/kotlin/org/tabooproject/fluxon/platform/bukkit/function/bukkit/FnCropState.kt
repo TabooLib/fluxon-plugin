@@ -13,9 +13,10 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.CropState"])
 @PlatformSide(Platform.BUKKIT)
-object FnCropState {
+object FnCropState : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.CropState>() {
 
-    val TYPE = Type.fromClass(CropState::class.java)
+    override val enumClass: Class<org.bukkit.CropState> = org.bukkit.CropState::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,7 +24,7 @@ object FnCropState {
             registerExtension(CropState::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returnsObject().params(Type.I)) { it.setReturnRef(CropState.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(CropState.getByData(it.getInt(0).toByte())) }
         }
     }
 }

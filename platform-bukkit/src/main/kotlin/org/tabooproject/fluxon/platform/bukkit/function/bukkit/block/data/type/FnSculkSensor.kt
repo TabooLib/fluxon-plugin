@@ -30,7 +30,7 @@ object FnSculkSensor {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.SculkSensor.Phase"])
+@Requires(classes = ["org.bukkit.block.data.type.SculkSensor\$Phase"])
 @PlatformSide(Platform.BUKKIT)
 object FnSculkSensorPhase : FnEnumGetter<SculkSensor.Phase>() {
 

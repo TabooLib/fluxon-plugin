@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.material.MonsterEggs"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,8 +21,8 @@ object FnMonsterEggs {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MonsterEggs::class.java)
-                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("textures",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

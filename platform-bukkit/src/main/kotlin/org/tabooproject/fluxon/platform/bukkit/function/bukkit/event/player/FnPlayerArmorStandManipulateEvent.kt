@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerArmorStandManipulateEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,14 +21,14 @@ object FnPlayerArmorStandManipulateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerArmorStandManipulateEvent::class.java)
-                .function("playerItem", returnsObject().noParams()) { it.setReturnRef(it.target?.playerItem) }
-                .function("armorStandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.armorStandItem) }
-                .function("slot", returnsObject().noParams()) { it.setReturnRef(it.target?.slot) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("rightClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.rightClicked) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("playerItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.playerItem) }
+                .function("armorStandItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.armorStandItem) }
+                .function("slot",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.slot) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("rightClicked", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnArmorStand.TYPE).noParams()) { it.setReturnRef(it.target?.rightClicked) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerArmorStandManipulateEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerArmorStandManipulateEvent.getHandlerList()) }
         }
     }
 }

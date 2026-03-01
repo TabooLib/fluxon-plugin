@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.ShulkerBullet"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,8 +23,8 @@ object FnShulkerBullet {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShulkerBullet::class.java)
-                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
-                .function("setTarget", returnsVoid().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as Entity) }
+                .function("target",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.target) }
+                .function("setTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setTarget(it.getRef(0) as Entity) }
         }
     }
 }

@@ -10,6 +10,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerJoinEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,11 +22,11 @@ object FnPlayerJoinEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerJoinEvent::class.java)
-                .function("joinMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.joinMessage) }
+                .function("joinMessage",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.joinMessage) }
                 .function("setJoinMessage", returnsVoid().params(Type.STRING)) { it.target?.setJoinMessage(it.getString(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerJoinEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerJoinEvent.getHandlerList()) }
         }
     }
 }

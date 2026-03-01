@@ -26,14 +26,14 @@ object FnTeam {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Team::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("displayName", returnsObject().noParams()) { it.setReturnRef(it.target?.displayName) }
+                .function("displayName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.displayName) }
                 .function("setDisplayName", returnsVoid().params(Type.STRING)) { it.target?.setDisplayName(it.getString(0)!!) }
-                .function("prefix", returnsObject().noParams()) { it.setReturnRef(it.target?.prefix) }
+                .function("prefix", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.prefix) }
                 .function("setPrefix", returnsVoid().params(Type.STRING)) { it.target?.setPrefix(it.getString(0)!!) }
-                .function("suffix", returnsObject().noParams()) { it.setReturnRef(it.target?.suffix) }
+                .function("suffix", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.suffix) }
                 .function("setSuffix", returnsVoid().params(Type.STRING)) { it.target?.setSuffix(it.getString(0)!!) }
-                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as ChatColor) }
+                .function("color", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChatColor.TYPE).noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChatColor.TYPE)) { it.target?.setColor(it.getRef(0) as ChatColor) }
                 .function("allowFriendlyFire", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.allowFriendlyFire() ?: false) }
                 .function("setAllowFriendlyFire", returnsVoid().params(Type.Z)) { it.target?.setAllowFriendlyFire(it.getBool(0)) }
                 .function("canSeeFriendlyInvisibles", returns(Type.Z).noParams()) {
@@ -42,39 +42,71 @@ object FnTeam {
                 .function("setCanSeeFriendlyInvisibles", returnsVoid().params(Type.Z)) {
                     it.target?.setCanSeeFriendlyInvisibles(it.getBool(0))
                 }
-                .function("nameTagVisibility", returnsObject().noParams()) { it.setReturnRef(it.target?.nameTagVisibility) }
-                .function("setNameTagVisibility", returnsVoid().params(Type.OBJECT)) {
+                .function("nameTagVisibility", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnNameTagVisibility.TYPE).noParams()) { it.setReturnRef(it.target?.nameTagVisibility) }
+                .function("setNameTagVisibility", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnNameTagVisibility.TYPE)) {
                     it.target?.setNameTagVisibility(it.getRef(0) as NameTagVisibility)
                 }
-                .function("players", returnsObject().noParams()) { it.setReturnRef(it.target?.players) }
-                .function("entries", returnsObject().noParams()) { it.setReturnRef(it.target?.entries) }
+                .function("setNameTagVisibility", returnsVoid().params(Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnNameTagVisibility.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.setNameTagVisibility(p0)
+                    }
+                }
+                .function("players", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.players) }
+                .function("entries", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.entries) }
                 .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size ?: 0) }
-                .function("scoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.scoreboard) }
-                .function("addPlayer", returnsVoid().params(Type.OBJECT)) {
+                .function("scoreboard", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.scoreboard) }
+                .function("addPlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.target?.addPlayer(it.getRef(0) as OfflinePlayer)
                 }
                 .function("addEntry", returnsVoid().params(Type.STRING)) {
                     it.target?.addEntry(it.getString(0)!!)
                 }
-                .function("removePlayer", returns(Type.Z).params(Type.OBJECT)) {
+                .function("removePlayer",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.setReturnBool(it.target?.removePlayer(it.getRef(0) as OfflinePlayer) ?: false)
                 }
                 .function("removeEntry", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.removeEntry(it.getString(0)!!) ?: false)
                 }
                 .function("unregister", returnsVoid().noParams()) { it.target?.unregister() }
-                .function("hasPlayer", returns(Type.Z).params(Type.OBJECT)) {
+                .function("hasPlayer",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.setReturnBool(it.target?.hasPlayer(it.getRef(0) as OfflinePlayer) ?: false)
                 }
                 .function("hasEntry", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.hasEntry(it.getString(0)!!) ?: false)
                 }
-                .function("getOption", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getOption(it.getRef(0) as Team.Option)) }
-                .function("setOption", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                .function("getOption", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.TYPE)) { it.setReturnRef(it.target?.getOption(it.getRef(0) as Team.Option))  }
+                .function("getOption", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.TYPE).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.enumValue(it.getString(0))?.let { p0 -> it.setReturnRef(it.target?.getOption(p0))  } }
+                .function("setOption", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.TYPE)) {
                     it.target?.setOption(
                         it.getRef(0) as Team.Option,
                         it.getRef(1) as Team.OptionStatus
                     )
+                }
+                .function("setOption", returnsVoid().params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.TYPE)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.setOption(
+                            p0,
+                            it.getRef(1) as Team.OptionStatus
+                        )
+                    }
+                }
+                .function("setOption", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.TYPE, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.enumValue(it.getString(1))?.let { p1 ->
+                        it.target?.setOption(
+                            it.getRef(0) as Team.Option,
+                            p1
+                        )
+                    }
+                }
+                .function("setOption", returnsVoid().params(Type.STRING, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOption.enumValue(it.getString(0))?.let { p0 ->
+                        org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnTeamOptionStatus.enumValue(it.getString(1))?.let { p1 ->
+                            it.target?.setOption(
+                                p0,
+                                p1
+                            )
+                        }
+                    }
                 }
         }
     }

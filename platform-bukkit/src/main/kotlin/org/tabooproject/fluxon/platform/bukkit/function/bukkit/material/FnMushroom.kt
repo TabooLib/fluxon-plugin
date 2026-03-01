@@ -26,20 +26,20 @@ object FnMushroom {
             registerExtension(Mushroom::class.java)
                 .function("isStem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isStem ?: false) }
                 .function("setStem", returnsVoid().noParams()) { it.target?.setStem() }
-                .function("blockTexture", returnsObject().noParams()) { it.setReturnRef(it.target?.blockTexture) }
-                .function("setBlockTexture", returnsVoid().params(Type.OBJECT)) { it.target?.setBlockTexture(it.getRef(0) as MushroomBlockTexture) }
-                .function("isFacePainted", returns(Type.Z).params(Type.OBJECT)) {
+                .function("blockTexture",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.types.FnMushroomBlockTexture.TYPE).noParams()) { it.setReturnRef(it.target?.blockTexture) }
+                .function("setBlockTexture",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.types.FnMushroomBlockTexture.TYPE)) { it.target?.setBlockTexture(it.getRef(0) as MushroomBlockTexture) }
+                .function("isFacePainted",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) {
                     it.setReturnBool(it.target?.isFacePainted(it.getRef(0) as BlockFace) ?: false)
                 }
-                .function("setFacePainted", returnsVoid().params(Type.OBJECT, Type.Z)) {
+                .function("setFacePainted",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.Z)) {
                     it.target?.setFacePainted(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
                     )
                 }
-                .function("paintedFaces", returnsObject().noParams()) { it.setReturnRef(it.target?.paintedFaces) }
+                .function("paintedFaces",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.paintedFaces) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

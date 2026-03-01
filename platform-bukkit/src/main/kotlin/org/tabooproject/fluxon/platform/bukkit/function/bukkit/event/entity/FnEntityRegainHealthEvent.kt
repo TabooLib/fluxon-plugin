@@ -25,12 +25,10 @@ object FnEntityRegainHealthEvent {
             registerExtension(EntityRegainHealthEvent::class.java)
                 .function("amount", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.amount ?: 0.0) }
                 .function("setAmount", returnsVoid().params(Type.D)) { it.target?.setAmount(it.getDouble(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("regainReason", returnsObject().noParams()) { it.setReturnRef(it.target?.regainReason) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("regainReason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityRegainHealthEventRegainReason.TYPE).noParams()) { it.setReturnRef(it.target?.regainReason) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityRegainHealthEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityRegainHealthEvent.getHandlerList()) }
         }
     }
 }

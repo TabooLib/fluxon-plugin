@@ -13,7 +13,6 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -23,17 +22,18 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 object FnStructure {
 
     val TYPE = Type.fromClass(Structure::class.java)
+    private val RANDOM = Type.fromClass(Random::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Structure::class.java)
-                .function("size", returnsObject().noParams()) { it.setReturnRef(it.target?.size) }
-                .function("palettes", returnsObject().noParams()) { it.setReturnRef(it.target?.palettes) }
+                .function("size",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockVector.TYPE).noParams()) { it.setReturnRef(it.target?.size) }
+                .function("palettes",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.palettes) }
                 .function("paletteCount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.paletteCount ?: 0) }
-                .function("entities", returnsObject().noParams()) { it.setReturnRef(it.target?.entities) }
+                .function("entities",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.entities) }
                 .function("entityCount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.entityCount ?: 0) }
-                .function("place", returnsVoid().params(Type.OBJECT, Type.Z, Type.OBJECT, Type.OBJECT, Type.I, Type.F, Type.OBJECT)) {
+                .function("place",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.structure.FnStructureRotation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.structure.FnMirror.TYPE, Type.I, Type.F, RANDOM)) {
                     it.target?.place(
                         it.getRef(0) as Location,
                         it.getBool(1),
@@ -44,7 +44,7 @@ object FnStructure {
                         it.getRef(6) as Random
                     )
                 }
-                .function("place", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.Z, Type.OBJECT, Type.OBJECT, Type.I, Type.F, Type.OBJECT)) {
+                .function("place",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnRegionAccessor.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockVector.TYPE, Type.Z, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.structure.FnStructureRotation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.structure.FnMirror.TYPE, Type.I, Type.F, RANDOM)) {
                     it.target?.place(
                         it.getRef(0) as RegionAccessor,
                         it.getRef(1) as BlockVector,
@@ -56,13 +56,8 @@ object FnStructure {
                         it.getRef(7) as Random
                     )
                 }
-                .function("fill", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.Z)) {
-                    when (val var2 = it.getRef(1)) {
-                        is Location -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
-                        is BlockVector -> it.target?.fill(it.getRef(0) as Location, var2, it.getBool(2))
-                        else -> throw IllegalArgumentException("第二个参数必须是 Location 或 BlockVector 类型")
-                    }
-                }
+                .function("fill", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) { it.target?.fill(it.getRef(0) as Location, it.getRef(1) as Location, it.getBool(2)) }
+                .function("fill", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockVector.TYPE, Type.Z)) { it.target?.fill(it.getRef(0) as Location, it.getRef(1) as BlockVector, it.getBool(2)) }
         }
     }
 }

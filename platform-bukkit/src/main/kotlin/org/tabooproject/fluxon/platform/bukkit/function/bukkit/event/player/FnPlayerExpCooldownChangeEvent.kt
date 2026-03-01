@@ -22,12 +22,12 @@ object FnPlayerExpCooldownChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerExpCooldownChangeEvent::class.java)
-                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("reason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerExpCooldownChangeEventChangeReason.TYPE).noParams()) { it.setReturnRef(it.target?.reason) }
                 .function("newCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.newCooldown ?: 0) }
                 .function("setNewCooldown", returnsVoid().params(Type.I)) { it.target?.setNewCooldown(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerExpCooldownChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerExpCooldownChangeEvent.getHandlerList()) }
         }
     }
 }

@@ -10,6 +10,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.help.HelpTopicComparator"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,20 +23,20 @@ object FnHelpTopicComparator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicComparator::class.java)
                 // static
-                .function("topicNameComparatorInstance", returnsObject().noParams()) { it.setReturnRef(HelpTopicComparator.topicNameComparatorInstance()) }
+                .function("topicNameComparatorInstance",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.help.FnHelpTopicComparatorTopicNameComparator.TYPE).noParams()) { it.setReturnRef(HelpTopicComparator.topicNameComparatorInstance()) }
                 // static
-                .function("helpTopicComparatorInstance", returnsObject().noParams()) { it.setReturnRef(HelpTopicComparator.helpTopicComparatorInstance()) }
-                .function("compare", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.compare(
+                .function("helpTopicComparatorInstance",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.help.FnHelpTopicComparator.TYPE).noParams()) { it.setReturnRef(HelpTopicComparator.helpTopicComparatorInstance()) }
+                .function("compare",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.help.FnHelpTopic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.help.FnHelpTopic.TYPE)) {
+                    it.setReturnInt(it.target?.compare(
                         it.getRef(0) as HelpTopic,
                         it.getRef(1) as HelpTopic
-                    ))
+                    ) ?: 0)
                 }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.help.HelpTopicComparator.TopicNameComparator"])
+@Requires(classes = ["org.bukkit.help.HelpTopicComparator\$TopicNameComparator"])
 @PlatformSide(Platform.BUKKIT)
 object FnHelpTopicComparatorTopicNameComparator {
 
@@ -45,7 +46,7 @@ object FnHelpTopicComparatorTopicNameComparator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(HelpTopicComparator.TopicNameComparator::class.java)
-                .function("compare", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(it.target?.compare(it.getString(0)!!, it.getRef(1) as String)) }
+                .function("compare", returns(Type.I).params(Type.STRING, Type.STRING)) { it.setReturnInt(it.target?.compare(it.getString(0)!!, it.getRef(1) as String) ?: 0) }
         }
     }
 }

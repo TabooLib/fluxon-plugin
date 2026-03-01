@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.EntityTransformer"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,7 +23,7 @@ object FnEntityTransformer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityTransformer::class.java)
-                .function("transform", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("transform",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnLimitedRegion.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.Z)) {
                     it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
                         it.getInt(1).toInt(),

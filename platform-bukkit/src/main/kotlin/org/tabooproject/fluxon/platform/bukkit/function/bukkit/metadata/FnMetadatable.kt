@@ -13,7 +13,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -35,20 +34,20 @@ object FnMetadatable {
                 .function("hasMeta", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.hasMeta(it.getString(0)!!) ?: false)
                 }
-                .function("getMeta", returnsObject().params(Type.STRING)) {
+                .function("getMeta", returns(Type.OBJECT).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getMetaFirstOrNull(it.getString(0)!!)?.value())
                 }
-                .function("setMetadata", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                .function("setMetadata",returnsVoid().params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.metadata.FnMetadataValue.TYPE)) {
                     it.target?.setMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as MetadataValue
                     )
                 }
-                .function("getMetadata", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getMetadata(it.getString(0)!!)) }
+                .function("getMetadata",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getMetadata(it.getString(0)!!)) }
                 .function("hasMetadata", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.hasMetadata(it.getString(0)!!) ?: false)
                 }
-                .function("removeMetadata", returnsVoid().params(Type.STRING, Type.OBJECT)) {
+                .function("removeMetadata",returnsVoid().params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
                     it.target?.removeMetadata(
                         it.getString(0)!!,
                         it.getRef(1) as Plugin

@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.EnderDragonPart"])
@@ -20,7 +21,7 @@ object FnEnderDragonPart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderDragonPart::class.java)
-                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
+                .function("parent", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEnderDragon.TYPE).noParams()) { it.setReturnRef(it.target?.parent) }
         }
     }
 }

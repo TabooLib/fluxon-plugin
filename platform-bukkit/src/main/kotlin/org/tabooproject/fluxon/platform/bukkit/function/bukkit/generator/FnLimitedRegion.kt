@@ -22,8 +22,8 @@ object FnLimitedRegion {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LimitedRegion::class.java)
-                .function("buffer", returnsObject().noParams()) { it.setReturnRef(it.target?.buffer) }
-                .function("isInRegion", returns(Type.Z).params(Type.OBJECT)) {
+                .function("buffer",returns(Type.I).noParams()) { it.setReturnRef(it.target?.buffer) }
+                .function("isInRegion",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnBool(it.target?.isInRegion(it.getRef(0) as Location) ?: false)
                 }
                 .function("isInRegion", returns(Type.Z).params(Type.I, Type.I, Type.I)) {
@@ -33,7 +33,7 @@ object FnLimitedRegion {
                         it.getInt(2).toInt()
                     ) ?: false)
                 }
-                .function("tileEntities", returnsObject().noParams()) { it.setReturnRef(it.target?.tileEntities) }
+                .function("tileEntities",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.tileEntities) }
         }
     }
 }

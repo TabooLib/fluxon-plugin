@@ -35,7 +35,7 @@ object FnTrialSpawner {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.TrialSpawner.State"])
+@Requires(classes = ["org.bukkit.block.data.type.TrialSpawner\$State"])
 @PlatformSide(Platform.BUKKIT)
 object FnTrialSpawnerState : FnEnumGetter<TrialSpawner.State>() {
 

@@ -26,8 +26,8 @@ object FnMapRenderer {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapRenderer::class.java)
                 .function("isContextual", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isContextual ?: false) }
-                .function("initialize", returnsVoid().params(Type.OBJECT)) { it.target?.initialize(it.getRef(0) as MapView) }
-                .function("render", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("initialize",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE)) { it.target?.initialize(it.getRef(0) as MapView) }
+                .function("render",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCanvas.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) {
                     it.target?.render(
                         it.getRef(0) as MapView,
                         it.getRef(1) as MapCanvas,

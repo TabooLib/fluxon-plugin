@@ -23,9 +23,9 @@ object FnIndexHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(IndexHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
+                .function("canSee",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
                 .function("amendCanSee", returnsVoid().params(Type.STRING)) { it.target?.amendCanSee(it.getString(0)) }
-                .function("getFullText", returns(Type.STRING).params(Type.OBJECT)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
+                .function("getFullText",returns(Type.STRING).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE)) { it.setReturnRef(it.target?.getFullText(it.getRef(0) as CommandSender)) }
         }
     }
 }

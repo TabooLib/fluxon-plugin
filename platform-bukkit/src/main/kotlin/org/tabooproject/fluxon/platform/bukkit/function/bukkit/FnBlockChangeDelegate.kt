@@ -22,7 +22,7 @@ object FnBlockChangeDelegate {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockChangeDelegate::class.java)
-                .function("setBlockData", returns(Type.Z).params(Type.I, Type.I, Type.I, Type.OBJECT)) {
+                .function("setBlockData",returns(Type.Z).params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) {
                     it.setReturnBool(it.target?.setBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -30,7 +30,7 @@ object FnBlockChangeDelegate {
                         it.getRef(3) as BlockData
                     ) ?: false)
                 }
-                .function("getBlockData", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),

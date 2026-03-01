@@ -34,7 +34,7 @@ object FnJigsaw {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Jigsaw.Orientation"])
+@Requires(classes = ["org.bukkit.block.data.type.Jigsaw\$Orientation"])
 @PlatformSide(Platform.BUKKIT)
 object FnJigsawOrientation : FnEnumGetter<Jigsaw.Orientation>() {
 

@@ -13,9 +13,10 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.GrassSpecies"])
 @PlatformSide(Platform.BUKKIT)
-object FnGrassSpecies {
+object FnGrassSpecies : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.GrassSpecies>() {
 
-    val TYPE = Type.fromClass(GrassSpecies::class.java)
+    override val enumClass: Class<org.bukkit.GrassSpecies> = org.bukkit.GrassSpecies::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,7 +24,7 @@ object FnGrassSpecies {
             registerExtension(GrassSpecies::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returnsObject().params(Type.I)) { it.setReturnRef(GrassSpecies.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(GrassSpecies.getByData(it.getInt(0).toByte())) }
         }
     }
 }

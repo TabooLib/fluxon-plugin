@@ -23,7 +23,7 @@ object FnTimedRegisteredListener {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimedRegisteredListener::class.java)
-                .function("callEvent", returnsVoid().params(Type.OBJECT)) { it.target?.callEvent(it.getRef(0) as Event) }
+                .function("callEvent",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnEvent.TYPE)) { it.target?.callEvent(it.getRef(0) as Event) }
                 .function("reset", returnsVoid().noParams()) { it.target?.reset() }
                 .function("count", returns(Type.I).noParams()) { it.setReturnInt(it.target?.count ?: 0) }
                 .function("totalTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.totalTime ?: 0L) }

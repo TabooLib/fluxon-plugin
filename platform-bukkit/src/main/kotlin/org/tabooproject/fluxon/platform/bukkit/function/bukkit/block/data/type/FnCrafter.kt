@@ -38,7 +38,7 @@ object FnCrafter {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Crafter.Orientation"])
+@Requires(classes = ["org.bukkit.block.data.type.Crafter\$Orientation"])
 @PlatformSide(Platform.BUKKIT)
 object FnCrafterOrientation : FnEnumGetter<Crafter.Orientation>() {
 

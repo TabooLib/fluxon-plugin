@@ -22,15 +22,13 @@ object FnExplosionPrimeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExplosionPrimeEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("radius", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.radius ?: 0f) }
                 .function("setRadius", returnsVoid().params(Type.F)) { it.target?.setRadius(it.getFloat(0)) }
                 .function("fire", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.fire ?: false) }
                 .function("setFire", returnsVoid().params(Type.Z)) { it.target?.setFire(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ExplosionPrimeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(ExplosionPrimeEvent.getHandlerList()) }
         }
     }
 }

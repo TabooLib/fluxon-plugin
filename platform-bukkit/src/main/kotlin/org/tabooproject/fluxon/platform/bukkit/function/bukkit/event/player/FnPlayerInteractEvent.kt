@@ -25,7 +25,7 @@ object FnPlayerInteractEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInteractEvent::class.java)
-                .function("action", returnsObject().noParams()) { it.setReturnRef(it.target?.action) }
+                .function("action", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.block.FnAction.TYPE).noParams()) { it.setReturnRef(it.target?.action) }
 
                 .function("isLeftClick", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.let { e -> e.action == Action.LEFT_CLICK_AIR || e.action == Action.LEFT_CLICK_BLOCK } ?: false)
@@ -44,22 +44,20 @@ object FnPlayerInteractEvent {
                     it.setReturnBool(it.target?.action == Action.RIGHT_CLICK_BLOCK)
                 }
 
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.getItem()) }
-                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.getItem()) }
+                .function("material",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.material) }
                 .function("hasBlock", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBlock() ?: false) }
                 .function("hasItem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasItem() ?: false) }
                 .function("isBlockInHand", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBlockInHand ?: false) }
-                .function("clickedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.clickedBlock) }
-                .function("blockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.getBlockFace()) }
-                .function("setUseInteractedBlock", returnsVoid().params(Type.OBJECT)) { it.target?.setUseInteractedBlock(it.getRef(0) as Event.Result) }
-                .function("setUseItemInHand", returnsVoid().params(Type.OBJECT)) { it.target?.setUseItemInHand(it.getRef(0) as Event.Result) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("clickedPosition", returnsObject().noParams()) { it.setReturnRef(it.target?.clickedPosition) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("clickedBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.clickedBlock) }
+                .function("blockFace",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.getBlockFace()) }
+                .function("setUseInteractedBlock",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnEventResult.TYPE)) { it.target?.setUseInteractedBlock(it.getRef(0) as Event.Result) }
+                .function("setUseItemInHand",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnEventResult.TYPE)) { it.target?.setUseItemInHand(it.getRef(0) as Event.Result) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
+                .function("clickedPosition",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.clickedPosition) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerInteractEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerInteractEvent.getHandlerList()) }
         }
     }
 }

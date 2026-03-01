@@ -12,6 +12,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.SpawnEggMeta"])
 @PlatformSide(Platform.BUKKIT)
@@ -23,11 +24,11 @@ object FnSpawnEggMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpawnEggMeta::class.java)
-                .function("spawnedType", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedType) }
-                .function("setSpawnedType", returnsVoid().params(Type.OBJECT)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
-                .function("spawnedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnedEntity) }
-                .function("setSpawnedEntity", returnsVoid().params(Type.OBJECT)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("spawnedType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.spawnedType) }
+                .function("setSpawnedType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.setSpawnedType(it.getRef(0) as EntityType) }
+                .function("spawnedEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntitySnapshot.TYPE).noParams()) { it.setReturnRef(it.target?.spawnedEntity) }
+                .function("setSpawnedEntity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntitySnapshot.TYPE)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnSpawnEggMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -23,13 +23,13 @@ object FnMerchantRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MerchantRecipe::class.java)
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("addIngredient", returnsVoid().params(Type.OBJECT)) { it.target?.addIngredient(it.getRef(0) as ItemStack) }
+                .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("addIngredient",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.addIngredient(it.getRef(0) as ItemStack) }
                 .function("removeIngredient", returnsVoid().params(Type.I)) { it.target?.removeIngredient(it.getInt(0)) }
-                .function("setIngredients", returnsVoid().params(Type.OBJECT)) { it.target?.setIngredients(it.getRef(0) as List<ItemStack>) }
-                .function("ingredients", returnsObject().noParams()) { it.setReturnRef(it.target?.ingredients) }
-                .function("adjustedIngredient1", returnsObject().noParams()) { it.setReturnRef(it.target?.adjustedIngredient1) }
-                .function("adjust", returnsVoid().params(Type.OBJECT)) { it.target?.adjust(it.getRef(0) as ItemStack) }
+                .function("setIngredients",returnsVoid().params(Type.LIST)) { it.target?.setIngredients(it.getRef(0) as List<ItemStack>) }
+                .function("ingredients",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.ingredients) }
+                .function("adjustedIngredient1",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.adjustedIngredient1) }
+                .function("adjust",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.adjust(it.getRef(0) as ItemStack) }
                 .function("demand", returns(Type.I).noParams()) { it.setReturnInt(it.target?.demand ?: 0) }
                 .function("setDemand", returnsVoid().params(Type.I)) { it.target?.setDemand(it.getInt(0)) }
                 .function("specialPrice", returns(Type.I).noParams()) { it.setReturnInt(it.target?.specialPrice ?: 0) }

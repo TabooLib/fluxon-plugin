@@ -22,16 +22,14 @@ object FnStructureGrowEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructureGrowEvent::class.java)
-                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
-                .function("species", returnsObject().noParams()) { it.setReturnRef(it.target?.species) }
+                .function("location",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
+                .function("species", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE).noParams()) { it.setReturnRef(it.target?.species) }
                 .function("isFromBonemeal", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFromBonemeal ?: false) }
-                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
-                .function("blocks", returnsObject().noParams()) { it.setReturnRef(it.target?.blocks) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("player",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
+                .function("blocks",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.blocks) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(StructureGrowEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(StructureGrowEvent.getHandlerList()) }
         }
     }
 }

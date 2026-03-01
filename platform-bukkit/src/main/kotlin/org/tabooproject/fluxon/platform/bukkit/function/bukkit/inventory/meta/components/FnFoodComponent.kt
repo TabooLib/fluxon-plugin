@@ -31,9 +31,9 @@ object FnFoodComponent {
                 .function("setCanAlwaysEat", returnsVoid().params(Type.Z)) { it.target?.setCanAlwaysEat(it.getBool(0)) }
                 .function("eatSeconds", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.eatSeconds ?: 0f) }
                 .function("setEatSeconds", returnsVoid().params(Type.F)) { it.target?.setEatSeconds(it.getFloat(0)) }
-                .function("effects", returnsObject().noParams()) { it.setReturnRef(it.target?.effects) }
-                .function("setEffects", returnsVoid().params(Type.OBJECT)) { it.target?.setEffects(it.getRef(0) as List<FoodComponent.FoodEffect>) }
-                .function("addEffect", returnsVoid().params(Type.OBJECT, Type.F)) {
+                .function("effects", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.effects) }
+                .function("setEffects",returnsVoid().params(Type.LIST)) { it.target?.setEffects(it.getRef(0) as List<FoodComponent.FoodEffect>) }
+                .function("addEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE, Type.F)) {
                     it.target?.addEffect(
                         it.getRef(0) as PotionEffect,
                         it.getFloat(1)
@@ -43,7 +43,7 @@ object FnFoodComponent {
     }
 }
 
-@Requires(classes = ["org.bukkit.inventory.meta.components.FoodComponent.FoodEffect"])
+@Requires(classes = ["org.bukkit.inventory.meta.components.FoodComponent\$FoodEffect"])
 @PlatformSide(Platform.BUKKIT)
 object FnFoodComponentFoodEffect {
 
@@ -53,8 +53,8 @@ object FnFoodComponentFoodEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FoodComponent.FoodEffect::class.java)
-                .function("effect", returnsObject().noParams()) { it.setReturnRef(it.target?.effect) }
-                .function("setEffect", returnsVoid().params(Type.OBJECT)) { it.target?.setEffect(it.getRef(0) as PotionEffect) }
+                .function("effect", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).noParams()) { it.setReturnRef(it.target?.effect) }
+                .function("setEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE)) { it.target?.setEffect(it.getRef(0) as PotionEffect) }
                 .function("probability", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.probability ?: 0f) }
                 .function("setProbability", returnsVoid().params(Type.F)) { it.target?.setProbability(it.getFloat(0)) }
         }

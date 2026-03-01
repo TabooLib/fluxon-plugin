@@ -32,7 +32,7 @@ object FnBlockIgniteEvent {
     }
 }
 
-@Requires(classes = ["org.bukkit.event.block.BlockIgniteEvent"])
+@Requires(classes = ["org.bukkit.event.block.BlockIgniteEvent\$IgniteCause"])
 @PlatformSide(Platform.BUKKIT)
 object FnBlockIgniteEventIgniteCause : FnEnumGetter<BlockIgniteEvent.IgniteCause>() {
 

@@ -24,15 +24,15 @@ object FnZombieVillager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ZombieVillager::class.java)
-                .function("setVillagerProfession", returnsVoid().params(Type.OBJECT)) {
+                .function("setVillagerProfession",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerProfession.TYPE)) {
                     it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession)
                 }
-                .function("setVillagerType", returnsVoid().params(Type.OBJECT)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
+                .function("setVillagerType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerType.TYPE)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
                 .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
-                .function("conversionPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.conversionPlayer) }
-                .function("setConversionPlayer", returnsVoid().params(Type.OBJECT)) {
+                .function("conversionPlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE).noParams()) { it.setReturnRef(it.target?.conversionPlayer) }
+                .function("setConversionPlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.target?.setConversionPlayer(it.getRef(0) as OfflinePlayer)
                 }
         }

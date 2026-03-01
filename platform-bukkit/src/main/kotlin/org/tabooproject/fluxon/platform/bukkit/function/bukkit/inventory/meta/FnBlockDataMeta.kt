@@ -25,8 +25,8 @@ object FnBlockDataMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockDataMeta::class.java)
                 .function("hasBlockData", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBlockData() ?: false) }
-                .function("getBlockData", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBlockData(it.getRef(0) as Material)) }
-                .function("setBlockData", returnsVoid().params(Type.OBJECT)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
+                .function("getBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnRef(it.target?.getBlockData(it.getRef(0) as Material)) }
+                .function("setBlockData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setBlockData(it.getRef(0) as BlockData) }
         }
     }
 }

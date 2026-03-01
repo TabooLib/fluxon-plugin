@@ -22,14 +22,12 @@ object FnTimeSkipEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TimeSkipEvent::class.java)
-                .function("skipReason", returnsObject().noParams()) { it.setReturnRef(it.target?.skipReason) }
-                .function("skipAmount", returnsObject().noParams()) { it.setReturnRef(it.target?.skipAmount) }
+                .function("skipReason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.world.FnTimeSkipEventSkipReason.TYPE).noParams()) { it.setReturnRef(it.target?.skipReason) }
+                .function("skipAmount",returns(Type.J).noParams()) { it.setReturnRef(it.target?.skipAmount) }
                 .function("setSkipAmount", returnsVoid().params(Type.J)) { it.target?.setSkipAmount(it.getLong(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(TimeSkipEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(TimeSkipEvent.getHandlerList()) }
         }
     }
 }

@@ -38,7 +38,7 @@ object FnSpawnerEntry {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.spawner.SpawnerEntry.Equipment"])
+@Requires(classes = ["org.bukkit.block.spawner.SpawnerEntry\$Equipment"])
 @PlatformSide(Platform.BUKKIT)
 object FnSpawnerEntryEquipment {
 

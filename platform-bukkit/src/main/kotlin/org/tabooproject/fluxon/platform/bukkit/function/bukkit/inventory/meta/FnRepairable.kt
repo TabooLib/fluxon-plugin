@@ -25,7 +25,7 @@ object FnRepairable {
                 .function("hasRepairCost", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRepairCost() ?: false) }
                 .function("repairCost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.repairCost ?: 0) }
                 .function("setRepairCost", returnsVoid().params(Type.I)) { it.target?.setRepairCost(it.getInt(0)) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnRepairable.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

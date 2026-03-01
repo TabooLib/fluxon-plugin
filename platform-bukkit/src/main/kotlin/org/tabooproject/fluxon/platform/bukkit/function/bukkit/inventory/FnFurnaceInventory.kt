@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.FurnaceInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,13 +23,13 @@ object FnFurnaceInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FurnaceInventory::class.java)
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
-                .function("smelting", returnsObject().noParams()) { it.setReturnRef(it.target?.smelting) }
-                .function("setFuel", returnsVoid().params(Type.OBJECT)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
-                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("setSmelting", returnsVoid().params(Type.OBJECT)) { it.target?.setSmelting(it.getRef(0) as ItemStack) }
-                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
+                .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("fuel",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("smelting",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.smelting) }
+                .function("setFuel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
+                .function("setResult",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("setSmelting",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setSmelting(it.getRef(0) as ItemStack) }
+                .function("holder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnFurnace.TYPE).noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

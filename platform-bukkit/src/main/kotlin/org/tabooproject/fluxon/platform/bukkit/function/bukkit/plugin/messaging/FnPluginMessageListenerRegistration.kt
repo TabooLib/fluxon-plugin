@@ -21,14 +21,10 @@ object FnPluginMessageListenerRegistration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageListenerRegistration::class.java)
-                .function("channel", returnsObject().noParams()) { it.setReturnRef(it.target?.channel) }
-                .function("listener", returnsObject().noParams()) { it.setReturnRef(it.target?.listener) }
-                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("channel",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.channel) }
+                .function("listener",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.messaging.FnPluginMessageListener.TYPE).noParams()) { it.setReturnRef(it.target?.listener) }
+                .function("plugin",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE).noParams()) { it.setReturnRef(it.target?.plugin) }
                 .function("isValid", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isValid ?: false) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
         }
     }
 }

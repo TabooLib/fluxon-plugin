@@ -22,16 +22,14 @@ object FnGenericGameEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericGameEvent::class.java)
-                .function("event", returnsObject().noParams()) { it.setReturnRef(it.target?.event) }
-                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
-                .function("radius", returnsObject().noParams()) { it.setReturnRef(it.target?.radius) }
+                .function("event",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnGameEvent.TYPE).noParams()) { it.setReturnRef(it.target?.event) }
+                .function("location",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
+                .function("entity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("radius",returns(Type.I).noParams()) { it.setReturnRef(it.target?.radius) }
                 .function("setRadius", returnsVoid().params(Type.I)) { it.target?.setRadius(it.getInt(0).toInt()) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(GenericGameEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(GenericGameEvent.getHandlerList()) }
         }
     }
 }

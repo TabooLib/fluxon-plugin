@@ -23,18 +23,18 @@ object FnEnchantmentStorageMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentStorageMeta::class.java)
                 .function("hasStoredEnchants", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasStoredEnchants() ?: false) }
-                .function("hasStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
-                .function("getStoredEnchantLevel", returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment) ?: 0) }
-                .function("addStoredEnchant", returns(Type.Z).params(Type.OBJECT, Type.I, Type.Z)) {
+                .function("hasStoredEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnBool(it.target?.hasStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
+                .function("getStoredEnchantLevel",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnInt(it.target?.getStoredEnchantLevel(it.getRef(0) as Enchantment) ?: 0) }
+                .function("addStoredEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE, Type.I, Type.Z)) {
                     it.setReturnBool(it.target?.addStoredEnchant(
                         it.getRef(0) as Enchantment,
                         it.getInt(1),
                         it.getBool(2)
                     ) ?: false)
                 }
-                .function("removeStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.removeStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
-                .function("hasConflictingStoredEnchant", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("removeStoredEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnBool(it.target?.removeStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
+                .function("hasConflictingStoredEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnBool(it.target?.hasConflictingStoredEnchant(it.getRef(0) as Enchantment) ?: false) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnEnchantmentStorageMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

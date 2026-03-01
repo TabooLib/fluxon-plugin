@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.AsyncPlayerChatPreviewEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,9 +21,9 @@ object FnAsyncPlayerChatPreviewEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncPlayerChatPreviewEvent::class.java)
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncPlayerChatPreviewEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(AsyncPlayerChatPreviewEvent.getHandlerList()) }
         }
     }
 }

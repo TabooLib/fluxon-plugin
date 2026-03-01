@@ -26,7 +26,7 @@ object FnRaidStopEvent {
     }
 }
 
-@Requires(classes = ["org.bukkit.event.raid.RaidStopEvent.Reason"])
+@Requires(classes = ["org.bukkit.event.raid.RaidStopEvent\$Reason"])
 @PlatformSide(Platform.BUKKIT)
 object FnRaidStopEventReason : FnEnumGetter<RaidStopEvent.Reason>() {
 

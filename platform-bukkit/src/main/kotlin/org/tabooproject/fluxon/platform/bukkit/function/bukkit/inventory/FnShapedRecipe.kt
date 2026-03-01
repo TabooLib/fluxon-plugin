@@ -10,7 +10,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.ShapedRecipe"])
@@ -23,16 +23,11 @@ object FnShapedRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ShapedRecipe::class.java)
-                .function("shape", returnsObject().noParams()) { it.setReturnRef(it.target?.shape) }
-                .function("setIngredient", returnsObject().params(Type.STRING, Type.OBJECT)) {
-                    it.setReturnRef(when (val var2 = it.getRef(1)) {
-                        is MaterialData -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        is Material -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        is RecipeChoice -> it.target?.setIngredient(it.getString(0)!!.first(), var2)
-                        else -> throw IllegalArgumentException("参数 2 必须是 MaterialData, Material, 或 RecipeChoice 类型")
-                    })
-                }
-                .function("setIngredient", returnsObject().params(Type.STRING, Type.OBJECT, Type.I)) {
+                .function("shape", returns(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.shape) }
+                .function("setIngredient", returns(TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.setReturnRef(it.target?.setIngredient(it.getString(0)!!.first(), it.getRef(1) as MaterialData)) }
+                .function("setIngredient", returns(TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnRef(it.target?.setIngredient(it.getString(0)!!.first(), it.getRef(1) as Material)) }
+                .function("setIngredient", returns(TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE)) { it.setReturnRef(it.target?.setIngredient(it.getString(0)!!.first(), it.getRef(1) as RecipeChoice)) }
+                .function("setIngredient", returns(TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.setIngredient(
                         it.getString(0)?.firstOrNull()!!,
                         it.getRef(1) as Material,

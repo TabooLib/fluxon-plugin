@@ -21,13 +21,9 @@ object FnBlockVector {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockVector::class.java)
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
                 // static
-                .function("deserialize", returnsObject().params(Type.OBJECT)) { it.setReturnRef(BlockVector.deserialize(it.getRef(0) as Map<String, Any>)) }
+                .function("deserialize", returns(TYPE).params(Type.MAP)) { it.setReturnRef(BlockVector.deserialize(it.getRef(0) as Map<String, Any>)) }
         }
     }
 }

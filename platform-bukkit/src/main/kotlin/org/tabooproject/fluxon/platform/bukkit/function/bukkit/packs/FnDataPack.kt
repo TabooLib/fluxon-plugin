@@ -21,16 +21,16 @@ object FnDataPack {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DataPack::class.java)
-                .function("title", returnsObject().noParams()) { it.setReturnRef(it.target?.title) }
-                .function("description", returnsObject().noParams()) { it.setReturnRef(it.target?.description) }
+                .function("title", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.title) }
+                .function("description", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.description) }
                 .function("packFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.packFormat ?: 0) }
                 .function("minSupportedPackFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minSupportedPackFormat ?: 0) }
                 .function("maxSupportedPackFormat", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxSupportedPackFormat ?: 0) }
                 .function("isEnabled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEnabled ?: false) }
                 .function("isRequired", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRequired ?: false) }
-                .function("compatibility", returnsObject().noParams()) { it.setReturnRef(it.target?.compatibility) }
-                .function("requestedFeatures", returnsObject().noParams()) { it.setReturnRef(it.target?.requestedFeatures) }
-                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("compatibility", returns(FnDataPackCompatibility.TYPE).noParams()) { it.setReturnRef(it.target?.compatibility) }
+                .function("requestedFeatures", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.requestedFeatures) }
+                .function("source", returns(FnDataPackSource.TYPE).noParams()) { it.setReturnRef(it.target?.source) }
         }
     }
 }

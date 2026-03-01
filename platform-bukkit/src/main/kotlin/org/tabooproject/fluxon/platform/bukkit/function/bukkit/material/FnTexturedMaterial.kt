@@ -23,11 +23,11 @@ object FnTexturedMaterial {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TexturedMaterial::class.java)
-                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
-                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
-                .function("setMaterial", returnsVoid().params(Type.OBJECT)) { it.target?.setMaterial(it.getRef(0) as Material) }
+                .function("textures",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("material",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.material) }
+                .function("setMaterial",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.setMaterial(it.getRef(0) as Material) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

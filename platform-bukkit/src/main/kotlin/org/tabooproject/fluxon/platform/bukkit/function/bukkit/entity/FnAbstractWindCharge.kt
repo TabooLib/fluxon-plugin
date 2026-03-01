@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.entity.AbstractWindCharge"])
@@ -20,7 +21,7 @@ object FnAbstractWindCharge {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractWindCharge::class.java)
-                .function("explode", returnsObject().noParams()) { it.setReturnRef(it.target?.explode()) }
+                .function("explode", returnsVoid().noParams()) { it.target?.explode() }
         }
     }
 }

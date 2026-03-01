@@ -8,7 +8,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -18,31 +17,36 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 object FnAsyncPlayerPreLoginEvent {
 
     val TYPE = Type.fromClass(AsyncPlayerPreLoginEvent::class.java)
+    private val INET_ADDRESS = Type.fromClass(java.net.InetAddress::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncPlayerPreLoginEvent::class.java)
-                .function("loginResult", returnsObject().noParams()) { it.setReturnRef(it.target?.loginResult) }
-                .function("setLoginResult", returnsVoid().params(Type.OBJECT)) { it.target?.setLoginResult(it.getRef(0) as AsyncPlayerPreLoginEvent.Result) }
-                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as PlayerPreLoginEvent.Result) }
-                .function("kickMessage", returnsObject().noParams()) { it.setReturnRef(it.target?.kickMessage) }
+                .function("loginResult", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnAsyncPlayerPreLoginEventResult.TYPE).noParams()) { it.setReturnRef(it.target?.loginResult) }
+                .function("setLoginResult", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnAsyncPlayerPreLoginEventResult.TYPE)) { it.target?.setLoginResult(it.getRef(0) as AsyncPlayerPreLoginEvent.Result)  }
+                .function("setLoginResult", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnAsyncPlayerPreLoginEventResult.enumValue(it.getString(0))?.let { p0 -> it.target?.setLoginResult(p0)  } }
+                .function("setResult", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerPreLoginEventResult.TYPE)) { it.target?.setResult(it.getRef(0) as PlayerPreLoginEvent.Result)  }
+                .function("setResult", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerPreLoginEventResult.enumValue(it.getString(0))?.let { p0 -> it.target?.setResult(p0)  } }
+                .function("kickMessage",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.kickMessage) }
                 .function("setKickMessage", returnsVoid().params(Type.STRING)) { it.target?.setKickMessage(it.getString(0)!!) }
                 .function("allow", returnsVoid().noParams()) { it.target?.allow() }
-                .function("disallow", returnsVoid().params(Type.OBJECT, Type.STRING)) {
-                    when (val var1 = it.getRef(0)) {
-                        is AsyncPlayerPreLoginEvent.Result -> it.target?.disallow(var1, it.getString(1)!!)
-                        is PlayerPreLoginEvent.Result -> it.target?.disallow(var1, it.getString(1)!!)
-                        else -> throw IllegalArgumentException("参数必须是 AsyncPlayerPreLoginEvent.Result 或 PlayerPreLoginEvent.Result 类型")
+                .function("disallow", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnAsyncPlayerPreLoginEventResult.TYPE, Type.STRING)) { it.target?.disallow(it.getRef(0) as AsyncPlayerPreLoginEvent.Result, it.getString(1)!!) }
+                .function("disallow", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerPreLoginEventResult.TYPE, Type.STRING)) { it.target?.disallow(it.getRef(0) as PlayerPreLoginEvent.Result, it.getString(1)!!) }
+                .function("disallow", returnsVoid().params(Type.STRING, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnAsyncPlayerPreLoginEventResult.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.disallow(p0, it.getString(1)!!)
+                    } ?: org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerPreLoginEventResult.enumValue(it.getString(0))?.let { p0 ->
+                        it.target?.disallow(p0, it.getString(1)!!)
                     }
                 }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("address", returnsObject().noParams()) { it.setReturnRef(it.target?.address) }
-                .function("uniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.uniqueId) }
+                .function("address", returns(INET_ADDRESS).noParams()) { it.setReturnRef(it.target?.address) }
+                .function("uniqueId",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.uniqueId) }
                 .function("isTransferred", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTransferred ?: false) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncPlayerPreLoginEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(AsyncPlayerPreLoginEvent.getHandlerList()) }
         }
     }
 }

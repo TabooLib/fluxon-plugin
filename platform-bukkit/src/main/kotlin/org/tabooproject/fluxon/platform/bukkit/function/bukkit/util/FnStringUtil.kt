@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.StringUtil"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,7 +22,7 @@ object FnStringUtil {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StringUtil::class.java)
                 // static
-                .function("startsWithIgnoreCase", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("startsWithIgnoreCase",returns(Type.Z).params(Type.STRING, Type.STRING)) {
                     it.setReturnRef(StringUtil.startsWithIgnoreCase(
                         it.getString(0)!!,
                         it.getString(1)!!

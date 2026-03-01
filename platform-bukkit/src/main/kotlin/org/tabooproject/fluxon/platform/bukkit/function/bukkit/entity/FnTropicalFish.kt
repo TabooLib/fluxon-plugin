@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.TropicalFish"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,12 +23,13 @@ object FnTropicalFish {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TropicalFish::class.java)
-                .function("patternColor", returnsObject().noParams()) { it.setReturnRef(it.target?.patternColor) }
-                .function("setPatternColor", returnsVoid().params(Type.OBJECT)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
-                .function("bodyColor", returnsObject().noParams()) { it.setReturnRef(it.target?.bodyColor) }
-                .function("setBodyColor", returnsVoid().params(Type.OBJECT)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
-                .function("pattern", returnsObject().noParams()) { it.setReturnRef(it.target?.pattern) }
-                .function("setPattern", returnsVoid().params(Type.OBJECT)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern) }
+                .function("patternColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.patternColor) }
+                .function("setPatternColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setPatternColor(it.getRef(0) as DyeColor) }
+                .function("bodyColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.bodyColor) }
+                .function("setBodyColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setBodyColor(it.getRef(0) as DyeColor) }
+                .function("pattern", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnTropicalFishPattern.TYPE).noParams()) { it.setReturnRef(it.target?.pattern) }
+                .function("setPattern", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnTropicalFishPattern.TYPE)) { it.target?.setPattern(it.getRef(0) as TropicalFish.Pattern)  }
+                .function("setPattern", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnTropicalFishPattern.enumValue(it.getString(0))?.let { p0 -> it.target?.setPattern(p0)  } }
         }
     }
 }

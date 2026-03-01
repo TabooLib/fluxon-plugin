@@ -23,25 +23,25 @@ object FnPluginDescriptionFile {
             registerExtension(PluginDescriptionFile::class.java)
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("provides", returnsObject().noParams()) { it.setReturnRef(it.target?.provides) }
-                .function("version", returnsObject().noParams()) { it.setReturnRef(it.target?.version) }
-                .function("main", returnsObject().noParams()) { it.setReturnRef(it.target?.main) }
-                .function("description", returnsObject().noParams()) { it.setReturnRef(it.target?.description) }
-                .function("load", returnsObject().noParams()) { it.setReturnRef(it.target?.load) }
-                .function("authors", returnsObject().noParams()) { it.setReturnRef(it.target?.authors) }
-                .function("contributors", returnsObject().noParams()) { it.setReturnRef(it.target?.contributors) }
-                .function("website", returnsObject().noParams()) { it.setReturnRef(it.target?.website) }
-                .function("depend", returnsObject().noParams()) { it.setReturnRef(it.target?.depend) }
-                .function("softDepend", returnsObject().noParams()) { it.setReturnRef(it.target?.softDepend) }
-                .function("loadBefore", returnsObject().noParams()) { it.setReturnRef(it.target?.loadBefore) }
-                .function("prefix", returnsObject().noParams()) { it.setReturnRef(it.target?.prefix) }
-                .function("permissions", returnsObject().noParams()) { it.setReturnRef(it.target?.permissions) }
-                .function("permissionDefault", returnsObject().noParams()) { it.setReturnRef(it.target?.permissionDefault) }
-                .function("awareness", returnsObject().noParams()) { it.setReturnRef(it.target?.awareness) }
-                .function("fullName", returnsObject().noParams()) { it.setReturnRef(it.target?.fullName) }
-                .function("aPIVersion", returnsObject().noParams()) { it.setReturnRef(it.target?.apiVersion) }
-                .function("libraries", returnsObject().noParams()) { it.setReturnRef(it.target?.libraries) }
-                .function("classLoaderOf", returnsObject().noParams()) { it.setReturnRef(it.target?.classLoaderOf) }
+                .function("provides",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.provides) }
+                .function("version",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.version) }
+                .function("main",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.main) }
+                .function("description",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.description) }
+                .function("load", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPluginLoadOrder.TYPE).noParams()) { it.setReturnRef(it.target?.load) }
+                .function("authors",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.authors) }
+                .function("contributors",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.contributors) }
+                .function("website",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.website) }
+                .function("depend",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.depend) }
+                .function("softDepend",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.softDepend) }
+                .function("loadBefore",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.loadBefore) }
+                .function("prefix",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.prefix) }
+                .function("permissions",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.permissions) }
+                .function("permissionDefault",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionDefault.TYPE).noParams()) { it.setReturnRef(it.target?.permissionDefault) }
+                .function("awareness",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.awareness) }
+                .function("fullName",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.fullName) }
+                .function("aPIVersion",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.apiVersion) }
+                .function("libraries",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.libraries) }
+                .function("classLoaderOf",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.classLoaderOf) }
         }
     }
 }

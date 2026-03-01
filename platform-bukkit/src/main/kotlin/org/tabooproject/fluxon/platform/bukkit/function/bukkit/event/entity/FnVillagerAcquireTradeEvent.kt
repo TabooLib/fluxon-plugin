@@ -23,14 +23,12 @@ object FnVillagerAcquireTradeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VillagerAcquireTradeEvent::class.java)
-                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
-                .function("setRecipe", returnsVoid().params(Type.OBJECT)) { it.target?.setRecipe(it.getRef(0) as MerchantRecipe) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("recipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE).noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("setRecipe",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE)) { it.target?.setRecipe(it.getRef(0) as MerchantRecipe) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VillagerAcquireTradeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(VillagerAcquireTradeEvent.getHandlerList()) }
         }
     }
 }

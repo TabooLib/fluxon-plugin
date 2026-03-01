@@ -22,8 +22,8 @@ object FnFallingBlock {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FallingBlock::class.java)
-                .function("material", returnsObject().noParams()) { it.setReturnRef(it.target?.material) }
-                .function("blockData", returnsObject().noParams()) { it.setReturnRef(it.target?.blockData) }
+                .function("material",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.material) }
+                .function("blockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.blockData) }
                 .function("dropItem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.dropItem ?: false) }
                 .function("setDropItem", returnsVoid().params(Type.Z)) { it.target?.setDropItem(it.getBool(0)) }
                 .function("cancelDrop", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.cancelDrop ?: false) }

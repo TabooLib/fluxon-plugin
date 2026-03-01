@@ -28,15 +28,15 @@ object FnSkullMeta {
                 .function("owner", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.owner) }
                 .function("hasOwner", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasOwner() ?: false) }
                 .function("setOwner", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.setOwner(it.getString(0)) == true) }
-                .function("owningPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.owningPlayer) }
-                .function("setOwningPlayer", returns(Type.Z).params(Type.OBJECT)) {
+                .function("owningPlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE).noParams()) { it.setReturnRef(it.target?.owningPlayer) }
+                .function("setOwningPlayer",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.setReturnBool(it.target?.setOwningPlayer(it.getRef(0) as OfflinePlayer) == true)
                 }
-                .function("ownerProfile", returnsObject().noParams()) { it.setReturnRef(it.target?.ownerProfile) }
-                .function("setOwnerProfile", returnsVoid().params(Type.OBJECT)) { it.target?.setOwnerProfile(it.getRef(0) as PlayerProfile) }
-                .function("setNoteBlockSound", returnsVoid().params(Type.OBJECT)) { it.target?.setNoteBlockSound(it.getRef(0) as NamespacedKey) }
-                .function("noteBlockSound", returnsObject().noParams()) { it.setReturnRef(it.target?.noteBlockSound) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("ownerProfile",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.profile.FnPlayerProfile.TYPE).noParams()) { it.setReturnRef(it.target?.ownerProfile) }
+                .function("setOwnerProfile",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.profile.FnPlayerProfile.TYPE)) { it.target?.setOwnerProfile(it.getRef(0) as PlayerProfile) }
+                .function("setNoteBlockSound",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.target?.setNoteBlockSound(it.getRef(0) as NamespacedKey) }
+                .function("noteBlockSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.noteBlockSound) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnSkullMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

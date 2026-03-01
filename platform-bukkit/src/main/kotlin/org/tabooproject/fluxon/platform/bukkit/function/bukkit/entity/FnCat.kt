@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.Cat"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,15 +23,15 @@ object FnCat {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cat::class.java)
-                .function("catType", returnsObject().noParams()) { it.setReturnRef(it.target?.catType) }
-                .function("setCatType", returnsVoid().params(Type.OBJECT)) { it.target?.setCatType(it.getRef(0) as Cat.Type) }
-                .function("collarColor", returnsObject().noParams()) { it.setReturnRef(it.target?.collarColor) }
-                .function("setCollarColor", returnsVoid().params(Type.OBJECT)) { it.target?.setCollarColor(it.getRef(0) as DyeColor) }
+                .function("catType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnCatType.TYPE).noParams()) { it.setReturnRef(it.target?.catType) }
+                .function("setCatType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnCatType.TYPE)) { it.target?.setCatType(it.getRef(0) as Cat.Type) }
+                .function("collarColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE).noParams()) { it.setReturnRef(it.target?.collarColor) }
+                .function("setCollarColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnDyeColor.TYPE)) { it.target?.setCollarColor(it.getRef(0) as DyeColor) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.entity.Cat.Type"])
+@Requires(classes = ["org.bukkit.entity.Cat\$Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnCatType {
 
@@ -40,7 +41,7 @@ object FnCatType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cat.Type::class.java)
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("key", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
         }
     }
 }

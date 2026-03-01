@@ -23,14 +23,14 @@ object FnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Event::class.java)
-                .function("eventName", returnsObject().noParams()) { it.setReturnRef(it.target?.eventName) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("eventName",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.eventName) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 .function("isAsynchronous", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAsynchronous ?: false) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.event.Event.Result"])
+@Requires(classes = ["org.bukkit.event.Event\$Result"])
 @PlatformSide(Platform.BUKKIT)
 object FnEventResult : FnEnumGetter<Event.Result>() {
 

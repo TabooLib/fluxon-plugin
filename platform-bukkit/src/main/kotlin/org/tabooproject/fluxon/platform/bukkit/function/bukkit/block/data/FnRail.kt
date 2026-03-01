@@ -31,7 +31,7 @@ object FnRail {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.Rail.Shape"])
+@Requires(classes = ["org.bukkit.block.data.Rail\$Shape"])
 @PlatformSide(Platform.BUKKIT)
 object FnRailShape : FnEnumGetter<Rail.Shape>() {
 

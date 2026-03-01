@@ -21,14 +21,14 @@ object FnVibration {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration::class.java)
-                .function("origin", returnsObject().noParams()) { it.setReturnRef(it.target?.origin) }
-                .function("destination", returnsObject().noParams()) { it.setReturnRef(it.target?.destination) }
+                .function("origin",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.origin) }
+                .function("destination", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnVibrationDestination.TYPE).noParams()) { it.setReturnRef(it.target?.destination) }
                 .function("arrivalTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.arrivalTime ?: 0) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.Vibration.Destination.EntityDestination"])
+@Requires(classes = ["org.bukkit.Vibration\$Destination\$EntityDestination"])
 @PlatformSide(Platform.BUKKIT)
 object FnVibrationDestinationEntityDestination {
 
@@ -38,12 +38,12 @@ object FnVibrationDestinationEntityDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.EntityDestination::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.Vibration.Destination.BlockDestination"])
+@Requires(classes = ["org.bukkit.Vibration\$Destination\$BlockDestination"])
 @PlatformSide(Platform.BUKKIT)
 object FnVibrationDestinationBlockDestination {
 
@@ -53,8 +53,8 @@ object FnVibrationDestinationBlockDestination {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Vibration.Destination.BlockDestination::class.java)
-                .function("location", returnsObject().noParams()) { it.setReturnRef(it.target?.location) }
-                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
+                .function("location", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
+                .function("block", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.block) }
         }
     }
 }

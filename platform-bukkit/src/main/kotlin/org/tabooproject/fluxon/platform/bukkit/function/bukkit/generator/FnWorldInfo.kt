@@ -22,11 +22,11 @@ object FnWorldInfo {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WorldInfo::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("uID", returnsObject().noParams()) { it.setReturnRef(it.target?.uid) }
-                .function("seed", returnsObject().noParams()) { it.setReturnRef(it.target?.seed) }
-                .function("minHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.minHeight) }
-                .function("maxHeight", returnsObject().noParams()) { it.setReturnRef(it.target?.maxHeight) }
-                .function("environment", returnsObject().noParams()) { it.setReturnRef(it.target?.environment) }
+                .function("uID",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.uid) }
+                .function("seed",returns(Type.J).noParams()) { it.setReturnRef(it.target?.seed) }
+                .function("minHeight",returns(Type.I).noParams()) { it.setReturnRef(it.target?.minHeight) }
+                .function("maxHeight",returns(Type.I).noParams()) { it.setReturnRef(it.target?.maxHeight) }
+                .function("environment", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldEnvironment.TYPE).noParams()) { it.setReturnRef(it.target?.environment) }
         }
     }
 }

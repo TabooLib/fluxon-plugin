@@ -21,14 +21,10 @@ object FnRayTraceResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RayTraceResult::class.java)
-                .function("hitPosition", returnsObject().noParams()) { it.setReturnRef(it.target?.hitPosition) }
-                .function("hitBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlock) }
-                .function("hitBlockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.hitBlockFace) }
-                .function("hitEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.hitEntity) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
+                .function("hitPosition",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.hitPosition) }
+                .function("hitBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.hitBlock) }
+                .function("hitBlockFace",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.hitBlockFace) }
+                .function("hitEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.hitEntity) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

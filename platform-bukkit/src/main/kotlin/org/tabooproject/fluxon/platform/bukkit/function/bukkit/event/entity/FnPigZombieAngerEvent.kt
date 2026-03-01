@@ -22,15 +22,13 @@ object FnPigZombieAngerEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PigZombieAngerEvent::class.java)
-                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
+                .function("target",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.target) }
                 .function("newAnger", returns(Type.I).noParams()) { it.setReturnInt(it.target?.newAnger ?: 0) }
                 .function("setNewAnger", returnsVoid().params(Type.I)) { it.target?.setNewAnger(it.getInt(0).toInt()) }
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PigZombieAngerEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PigZombieAngerEvent.getHandlerList()) }
         }
     }
 }

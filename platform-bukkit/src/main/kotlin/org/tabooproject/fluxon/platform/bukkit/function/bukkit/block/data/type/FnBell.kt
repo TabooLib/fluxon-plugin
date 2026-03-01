@@ -34,7 +34,7 @@ object FnBell {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Bell.Attachment"])
+@Requires(classes = ["org.bukkit.block.data.type.Bell\$Attachment"])
 @PlatformSide(Platform.BUKKIT)
 object FnBellAttachment : FnEnumGetter<Bell.Attachment>() {
 

@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.scoreboard.ScoreboardManager"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,8 +21,8 @@ object FnScoreboardManager {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ScoreboardManager::class.java)
-                .function("mainScoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.mainScoreboard) }
-                .syncFunction("newScoreboard", returnsObject().noParams()) { it.setReturnRef(it.target?.newScoreboard) }
+                .function("mainScoreboard",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.mainScoreboard) }
+                .syncFunction("newScoreboard",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.newScoreboard) }
         }
     }
 }

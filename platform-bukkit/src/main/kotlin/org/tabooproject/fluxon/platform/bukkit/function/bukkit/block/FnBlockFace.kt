@@ -26,9 +26,9 @@ object FnBlockFace : FnEnumGetter<BlockFace>() {
                 .function("modX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modX ?: 0) }
                 .function("modY", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modY ?: 0) }
                 .function("modZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.modZ ?: 0) }
-                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("direction", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.direction) }
                 .function("isCartesian", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCartesian ?: false) }
-                .function("oppositeFace", returnsObject().noParams()) { it.setReturnRef(it.target?.oppositeFace) }
+                .function("oppositeFace", returns(Type.fromClass(BlockFace::class.java)).noParams()) { it.setReturnRef(it.target?.oppositeFace) }
         }
     }
 }

@@ -30,7 +30,7 @@ object FnChunkGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator::class.java)
-                .function("generateNoise", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("generateNoise",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorChunkData.TYPE)) {
                     it.target?.generateNoise(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -39,7 +39,7 @@ object FnChunkGenerator {
                         it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateSurface", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("generateSurface",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorChunkData.TYPE)) {
                     it.target?.generateSurface(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -48,7 +48,7 @@ object FnChunkGenerator {
                         it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateBedrock", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("generateBedrock",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorChunkData.TYPE)) {
                     it.target?.generateBedrock(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -57,7 +57,7 @@ object FnChunkGenerator {
                         it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("generateCaves", returnsVoid().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("generateCaves",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorChunkData.TYPE)) {
                     it.target?.generateCaves(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -66,8 +66,8 @@ object FnChunkGenerator {
                         it.getRef(4) as ChunkGenerator.ChunkData
                     )
                 }
-                .function("getDefaultBiomeProvider", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDefaultBiomeProvider(it.getRef(0) as WorldInfo)) }
-                .function("getBaseHeight", returns(Type.I).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("getDefaultBiomeProvider",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnBiomeProvider.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE)) { it.setReturnRef(it.target?.getDefaultBiomeProvider(it.getRef(0) as WorldInfo)) }
+                .function("getBaseHeight",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnHeightMap.TYPE)) {
                     it.setReturnInt(it.target?.getBaseHeight(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -76,7 +76,7 @@ object FnChunkGenerator {
                         it.getRef(4) as HeightMap
                     ) ?: 0)
                 }
-                .function("generateChunkData", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.I, Type.I, Type.OBJECT)) {
+                .function("generateChunkData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorChunkData.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGeneratorBiomeGrid.TYPE)) {
                     it.setReturnRef(it.target?.generateChunkData(
                         it.getRef(0) as World,
                         it.getRef(1) as Random,
@@ -85,15 +85,15 @@ object FnChunkGenerator {
                         it.getRef(4) as ChunkGenerator.BiomeGrid
                     ))
                 }
-                .function("canSpawn", returns(Type.Z).params(Type.OBJECT, Type.I, Type.I)) {
+                .function("canSpawn",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE, Type.I, Type.I)) {
                     it.setReturnBool(it.target?.canSpawn(
                         it.getRef(0) as World,
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ) ?: false)
                 }
-                .function("getDefaultPopulators", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getDefaultPopulators(it.getRef(0) as World)) }
-                .function("getFixedSpawnLocation", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("getDefaultPopulators",returns(Type.LIST).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnRef(it.target?.getDefaultPopulators(it.getRef(0) as World)) }
+                .function("getFixedSpawnLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE, Type.fromClass(Random::class.java))) {
                     it.setReturnRef(it.target?.getFixedSpawnLocation(
                         it.getRef(0) as World,
                         it.getRef(1) as Random
@@ -103,7 +103,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateNoise", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateNoise() ?: false)
                 }
-                .function("shouldGenerateNoise", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateNoise",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateNoise(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -114,7 +114,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateSurface", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateSurface() ?: false)
                 }
-                .function("shouldGenerateSurface", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateSurface",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateSurface(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -126,7 +126,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateCaves", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateCaves() ?: false)
                 }
-                .function("shouldGenerateCaves", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateCaves",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateCaves(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -137,7 +137,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateDecorations", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateDecorations() ?: false)
                 }
-                .function("shouldGenerateDecorations", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateDecorations",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateDecorations(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -148,7 +148,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateMobs", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateMobs() ?: false)
                 }
-                .function("shouldGenerateMobs", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateMobs",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateMobs(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -159,7 +159,7 @@ object FnChunkGenerator {
                 .function("shouldGenerateStructures", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldGenerateStructures() ?: false)
                 }
-                .function("shouldGenerateStructures", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.I, Type.I)) {
+                .function("shouldGenerateStructures",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.fromClass(Random::class.java), Type.I, Type.I)) {
                     it.setReturnBool(it.target?.shouldGenerateStructures(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
@@ -171,7 +171,7 @@ object FnChunkGenerator {
     }
 }
 
-@Requires(classes = ["org.bukkit.generator.ChunkGenerator.ChunkData"])
+@Requires(classes = ["org.bukkit.generator.ChunkGenerator\$ChunkData"])
 @PlatformSide(Platform.BUKKIT)
 object FnChunkGeneratorChunkData {
 
@@ -183,101 +183,46 @@ object FnChunkGeneratorChunkData {
             registerExtension(ChunkGenerator.ChunkData::class.java)
                 .function("minHeight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minHeight ?: 0) }
                 .function("maxHeight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxHeight ?: 0) }
-                .function("getBiome", returnsObject().params(Type.I, Type.I, Type.I)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt())) }
-                .function("setBlock", returnsVoid().params(Type.I, Type.I, Type.I, Type.OBJECT)) {
-                    when (val var4 = it.getRef(3)) {
-                        is Material -> it.target?.setBlock(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            var4
-                        )
-
-                        is MaterialData -> it.target?.setBlock(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            var4
-                        )
-
-                        is BlockData -> it.target?.setBlock(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            var4
-                        )
-
-                        else -> throw IllegalArgumentException("参数 4 必须是 Material, MaterialData, 或 BlockData 类型")
-                    }
-                }
-                .function("setRegion", returnsVoid().params(Type.I, Type.I, Type.I, Type.I, Type.I, Type.I, Type.OBJECT)) {
-                    when (val var7 = it.getRef(6)) {
-                        is Material -> it.target?.setRegion(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt(),
-                            it.getInt(4).toInt(),
-                            it.getInt(5).toInt(),
-                            var7
-                        )
-
-                        is MaterialData -> it.target?.setRegion(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt(),
-                            it.getInt(4).toInt(),
-                            it.getInt(5).toInt(),
-                            var7
-                        )
-
-                        is BlockData -> it.target?.setRegion(
-                            it.getInt(0).toInt(),
-                            it.getInt(1).toInt(),
-                            it.getInt(2).toInt(),
-                            it.getInt(3).toInt(),
-                            it.getInt(4).toInt(),
-                            it.getInt(5).toInt(),
-                            var7
-                        )
-
-                        else -> throw IllegalArgumentException("参数 7 必须是 Material, MaterialData, 或 BlockData 类型")
-                    }
-                }
-                .function("getType", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBiome", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I, Type.I)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt())) }
+                .function("setBlock", returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.setBlock(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getRef(3) as Material) }
+                .function("setBlock", returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setBlock(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getRef(3) as MaterialData) }
+                .function("setBlock", returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setBlock(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getRef(3) as BlockData) }
+                .function("setRegion", returnsVoid().params(Type.I, Type.I, Type.I, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.setRegion(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getInt(3).toInt(), it.getInt(4).toInt(), it.getInt(5).toInt(), it.getRef(6) as Material) }
+                .function("setRegion", returnsVoid().params(Type.I, Type.I, Type.I, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setRegion(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getInt(3).toInt(), it.getInt(4).toInt(), it.getInt(5).toInt(), it.getRef(6) as MaterialData) }
+                .function("setRegion", returnsVoid().params(Type.I, Type.I, Type.I, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setRegion(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt(), it.getInt(3).toInt(), it.getInt(4).toInt(), it.getInt(5).toInt(), it.getRef(6) as BlockData) }
+                .function("getType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getType(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getTypeAndData", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getTypeAndData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getTypeAndData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getBlockData", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBlockData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getData", returnsObject().params(Type.I, Type.I, Type.I)) {
-                    it.setReturnRef(it.target?.getData(
+                .function("getData", returns(Type.I).params(Type.I, Type.I, Type.I)) {
+                    it.setReturnInt(it.target?.getData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
-                    ))
+                    )?.toInt() ?: 0)
                 }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.generator.ChunkGenerator.BiomeGrid"])
+@Requires(classes = ["org.bukkit.generator.ChunkGenerator\$BiomeGrid"])
 @PlatformSide(Platform.BUKKIT)
 object FnChunkGeneratorBiomeGrid {
 
@@ -287,15 +232,15 @@ object FnChunkGeneratorBiomeGrid {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkGenerator.BiomeGrid::class.java)
-                .function("getBiome", returnsObject().params(Type.I, Type.I)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())) }
-                .function("setBiome", returnsVoid().params(Type.I, Type.I, Type.OBJECT)) {
+                .function("getBiome", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt())) }
+                .function("setBiome",returnsVoid().params(Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE)) {
                     it.target?.setBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getRef(2) as Biome
                     )
                 }
-                .function("setBiome", returnsVoid().params(Type.I, Type.I, Type.I, Type.OBJECT)) {
+                .function("setBiome",returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE)) {
                     it.target?.setBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -303,6 +248,7 @@ object FnChunkGeneratorBiomeGrid {
                         it.getRef(3) as Biome
                     )
                 }
+                .function("getBiome", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I, Type.I)) { it.setReturnRef(it.target?.getBiome(it.getInt(0).toInt(), it.getInt(1).toInt(), it.getInt(2).toInt())) }
         }
     }
 }

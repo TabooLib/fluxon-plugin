@@ -24,12 +24,12 @@ object FnStonecuttingRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StonecuttingRecipe::class.java)
-                .function("setInput", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInput(it.getRef(0) as Material)) }
-                .function("input", returnsObject().noParams()) { it.setReturnRef(it.target?.input) }
-                .function("setInputChoice", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
-                .function("inputChoice", returnsObject().noParams()) { it.setReturnRef(it.target?.inputChoice) }
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
+                .function("setInput",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnStonecuttingRecipe.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnRef(it.target?.setInput(it.getRef(0) as Material)) }
+                .function("input",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.input) }
+                .function("setInputChoice",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnStonecuttingRecipe.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE)) { it.setReturnRef(it.target?.setInputChoice(it.getRef(0) as RecipeChoice)) }
+                .function("inputChoice",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE).noParams()) { it.setReturnRef(it.target?.inputChoice) }
+                .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("key",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
                 .function("group", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.group) }
                 .function("setGroup", returnsVoid().params(Type.STRING)) { it.target?.setGroup(it.getString(0)!!) }
         }

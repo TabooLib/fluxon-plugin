@@ -23,10 +23,10 @@ object FnBee {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Bee::class.java)
-                .function("hive", returnsObject().noParams()) { it.setReturnRef(it.target?.hive) }
-                .function("setHive", returnsVoid().params(Type.OBJECT)) { it.target?.setHive(it.getRef(0) as Location) }
-                .function("flower", returnsObject().noParams()) { it.setReturnRef(it.target?.flower) }
-                .function("setFlower", returnsVoid().params(Type.OBJECT)) { it.target?.setFlower(it.getRef(0) as Location) }
+                .function("hive",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.hive) }
+                .function("setHive",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setHive(it.getRef(0) as Location) }
+                .function("flower",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.flower) }
+                .function("setFlower",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setFlower(it.getRef(0) as Location) }
                 .function("hasNectar", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasNectar() ?: false) }
                 .function("setHasNectar", returnsVoid().params(Type.Z)) { it.target?.setHasNectar(it.getBool(0)) }
                 .function("hasStung", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasStung() ?: false) }

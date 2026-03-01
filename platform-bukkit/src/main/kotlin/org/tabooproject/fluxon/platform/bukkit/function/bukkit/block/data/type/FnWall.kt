@@ -64,7 +64,7 @@ object FnWall {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Wall.Height"])
+@Requires(classes = ["org.bukkit.block.data.type.Wall\$Height"])
 @PlatformSide(Platform.BUKKIT)
 object FnWallHeight : FnEnumGetter<Wall.Height>() {
 

@@ -30,10 +30,10 @@ object FnAllay {
                 .function("resetDuplicationCooldown", returnsVoid().noParams()) { it.target?.resetDuplicationCooldown() }
                 .function("isDancing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDancing ?: false) }
                 .function("startDancing", returnsVoid().noParams()) { it.target?.startDancing() }
-                .function("startDancing", returnsVoid().params(Type.OBJECT)) { it.target?.startDancing(it.getRef(0) as Location) }
+                .function("startDancing",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.startDancing(it.getRef(0) as Location) }
                 .function("stopDancing", returnsVoid().noParams()) { it.target?.stopDancing() }
-                .function("duplicateAllay", returnsObject().noParams()) { it.setReturnRef(it.target?.duplicateAllay()) }
-                .function("jukebox", returnsObject().noParams()) { it.setReturnRef(it.target?.jukebox) }
+                .function("duplicateAllay",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAllay.TYPE).noParams()) { it.setReturnRef(it.target?.duplicateAllay()) }
+                .function("jukebox",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.jukebox) }
         }
     }
 }

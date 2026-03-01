@@ -26,7 +26,7 @@ object FnTripwire {
                 .function("setActivated", returnsVoid().params(Type.Z)) { it.target?.setActivated(it.getBool(0)) }
                 .function("isObjectTriggering", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isObjectTriggering ?: false) }
                 .function("setObjectTriggering", returnsVoid().params(Type.Z)) { it.target?.setObjectTriggering(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
         }
     }

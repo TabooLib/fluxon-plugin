@@ -23,10 +23,10 @@ object FnCrops {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crops::class.java)
-                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
-                .function("setState", returnsVoid().params(Type.OBJECT)) { it.target?.setState(it.getRef(0) as CropState) }
+                .function("state",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnCropState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
+                .function("setState",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnCropState.TYPE)) { it.target?.setState(it.getRef(0) as CropState) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

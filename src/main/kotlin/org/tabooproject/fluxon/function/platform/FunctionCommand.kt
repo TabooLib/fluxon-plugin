@@ -3,6 +3,7 @@ package org.tabooproject.fluxon.function.platform
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
@@ -26,12 +27,17 @@ object FunctionCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             exportRegistry.registerClass(CommandBuilder::class.java)
-            registerFunction("command", returnsObject().params(Type.STRING)) { it.setReturnRef(CommandBuilder(it.getString(0)!!, it.environment)) }
+            registerFunction("command", returns(CommandBuilder.TYPE).params(Type.STRING)) { it.setReturnRef(CommandBuilder(it.getString(0)!!, it.environment)) }
             registerFunction("unregisterCommand", returnsVoid().params(Type.STRING)) { unregisterCommand(it.getString(0)!!) }
         }
     }
 
     class CommandBuilder(val name: String, val env: Environment) {
+
+        companion object {
+
+            val TYPE = Type.fromClass(CommandBuilder::class.java)!!
+        }
 
         var aliases = emptyList<String>()
         var description = ""

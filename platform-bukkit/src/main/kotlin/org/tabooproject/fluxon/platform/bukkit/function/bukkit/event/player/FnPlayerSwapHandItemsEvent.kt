@@ -23,15 +23,13 @@ object FnPlayerSwapHandItemsEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerSwapHandItemsEvent::class.java)
-                .function("mainHandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.mainHandItem) }
-                .function("setMainHandItem", returnsVoid().params(Type.OBJECT)) { it.target?.setMainHandItem(it.getRef(0) as ItemStack) }
-                .function("offHandItem", returnsObject().noParams()) { it.setReturnRef(it.target?.offHandItem) }
-                .function("setOffHandItem", returnsVoid().params(Type.OBJECT)) { it.target?.setOffHandItem(it.getRef(0) as ItemStack) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("mainHandItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.mainHandItem) }
+                .function("setMainHandItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setMainHandItem(it.getRef(0) as ItemStack) }
+                .function("offHandItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.offHandItem) }
+                .function("setOffHandItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setOffHandItem(it.getRef(0) as ItemStack) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerSwapHandItemsEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerSwapHandItemsEvent.getHandlerList()) }
         }
     }
 }

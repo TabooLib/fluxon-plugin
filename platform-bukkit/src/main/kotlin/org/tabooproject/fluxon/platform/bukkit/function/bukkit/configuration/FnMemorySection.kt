@@ -13,7 +13,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -28,7 +27,7 @@ object FnMemorySection {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MemorySection::class.java)
-                .function("getKeys", returnsObject().params(Type.Z)) { it.setReturnRef(it.target?.getKeys(it.getBool(0))) }
+                .function("getKeys",returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(Type.Z)) { it.setReturnRef(it.target?.getKeys(it.getBool(0))) }
                 .function("contains", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.contains(it.getString(0)!!) ?: false)
                 }
@@ -36,23 +35,23 @@ object FnMemorySection {
                     it.setReturnBool(it.target?.contains(it.getString(0)!!, it.getBool(1)) ?: false)
                 }
                 .function("isSet", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isSet(it.getString(0)!!) ?: false) }
-                .function("currentPath", returnsObject().noParams()) { it.setReturnRef(it.target?.currentPath) }
+                .function("currentPath",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.currentPath) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("root", returnsObject().noParams()) { it.setReturnRef(it.target?.root) }
-                .function("parent", returnsObject().noParams()) { it.setReturnRef(it.target?.parent) }
+                .function("root",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfiguration.TYPE).noParams()) { it.setReturnRef(it.target?.root) }
+                .function("parent",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).noParams()) { it.setReturnRef(it.target?.parent) }
                 .function("addDefault", returnsVoid().params(Type.STRING, Type.OBJECT)) { it.target?.addDefault(it.getString(0)!!, it.getRef(1)) }
-                .function("defaultSection", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultSection) }
+                .function("defaultSection",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).noParams()) { it.setReturnRef(it.target?.defaultSection) }
                 .function("set", returnsVoid().params(Type.STRING, Type.OBJECT)) { it.target?.set(it.getString(0)!!, it.getRef(1)) }
-                .function("get", returnsObject().params(Type.STRING)) {
+                .function("get", returns(Type.OBJECT).params(Type.STRING)) {
                     it.setReturnRef(it.target?.get(it.getString(0)!!))
                 }
-                .function("get", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("get", returns(Type.OBJECT).params(Type.STRING, Type.OBJECT)) {
                     it.setReturnRef(it.target?.get(it.getString(0)!!, it.getRef(1)))
                 }
-                .function("createSection", returnsObject().params(Type.STRING)) {
+                .function("createSection",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.createSection(it.getString(0)!!))
                 }
-                .function("createSection", returnsObject().params(Type.STRING, Type.MAP)) {
+                .function("createSection",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).params(Type.STRING, Type.MAP)) {
                     it.setReturnRef(it.target?.createSection(it.getString(0)!!, it.getRef(1) as Map<*, *>))
                 }
                 .function("getString", returns(Type.STRING).params(Type.STRING)) {
@@ -91,68 +90,68 @@ object FnMemorySection {
                 }
                 .function("isLong", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isLong(it.getString(0)!!) ?: false) }
                 .function("isList", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isList(it.getString(0)!!) ?: false) }
-                .function("getStringList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getStringList(it.getString(0)!!)) }
-                .function("getIntegerList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getIntegerList(it.getString(0)!!)) }
-                .function("getBooleanList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getBooleanList(it.getString(0)!!)) }
-                .function("getDoubleList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getDoubleList(it.getString(0)!!)) }
-                .function("getFloatList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getFloatList(it.getString(0)!!)) }
-                .function("getLongList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getLongList(it.getString(0)!!)) }
-                .function("getByteList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getByteList(it.getString(0)!!)) }
-                .function("getCharacterList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getCharacterList(it.getString(0)!!)) }
-                .function("getShortList", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getShortList(it.getString(0)!!)) }
-                .function("getVector", returnsObject().params(Type.STRING)) {
+                .function("getStringList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getStringList(it.getString(0)!!)) }
+                .function("getIntegerList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getIntegerList(it.getString(0)!!)) }
+                .function("getBooleanList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getBooleanList(it.getString(0)!!)) }
+                .function("getDoubleList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getDoubleList(it.getString(0)!!)) }
+                .function("getFloatList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getFloatList(it.getString(0)!!)) }
+                .function("getLongList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getLongList(it.getString(0)!!)) }
+                .function("getByteList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getByteList(it.getString(0)!!)) }
+                .function("getCharacterList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getCharacterList(it.getString(0)!!)) }
+                .function("getShortList",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getShortList(it.getString(0)!!)) }
+                .function("getVector",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getVector(it.getString(0)!!))
                 }
-                .function("getVector", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("getVector",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) {
                     it.setReturnRef(it.target?.getVector(it.getString(0)!!, it.getRef(1) as Vector))
                 }
                 .function("isVector", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isVector(it.getString(0)!!) ?: false) }
-                .function("getOfflinePlayer", returnsObject().params(Type.STRING)) {
+                .function("getOfflinePlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getOfflinePlayer(it.getString(0)!!))
                 }
-                .function("getOfflinePlayer", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("getOfflinePlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnOfflinePlayer.TYPE)) {
                     it.setReturnRef(it.target?.getOfflinePlayer(it.getString(0)!!, it.getRef(1) as OfflinePlayer))
                 }
                 .function("isOfflinePlayer", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isOfflinePlayer(it.getString(0)!!) ?: false) }
-                .function("getItemStack", returnsObject().params(Type.STRING)) {
+                .function("getItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getItemStack(it.getString(0)!!))
                 }
-                .function("getItemStack", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("getItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) {
                     it.setReturnRef(it.target?.getItemStack(it.getString(0)!!, it.getRef(1) as ItemStack))
                 }
                 .function("isItemStack", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isItemStack(it.getString(0)!!) ?: false) }
-                .function("getColor", returnsObject().params(Type.STRING)) {
+                .function("getColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getColor(it.getString(0)!!))
                 }
-                .function("getColor", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("getColor",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) {
                     it.setReturnRef(it.target?.getColor(it.getString(0)!!, it.getRef(1) as Color))
                 }
                 .function("isColor", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isColor(it.getString(0)!!) ?: false) }
-                .function("getLocation", returnsObject().params(Type.STRING)) {
+                .function("getLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).params(Type.STRING)) {
                     it.setReturnRef(it.target?.getLocation(it.getString(0)!!))
                 }
-                .function("getLocation", returnsObject().params(Type.STRING, Type.OBJECT)) {
+                .function("getLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(it.target?.getLocation(it.getString(0)!!, it.getRef(1) as Location))
                 }
                 .function("isLocation", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isLocation(it.getString(0)!!) ?: false) }
-                .function("getConfigurationSection", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getConfigurationSection(it.getString(0)!!)) }
+                .function("getConfigurationSection",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getConfigurationSection(it.getString(0)!!)) }
                 .function("isConfigurationSection", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isConfigurationSection(it.getString(0)!!) ?: false) }
                 // static
-                .function("createPath", returns(Type.STRING).params(Type.OBJECT, Type.STRING)) {
+                .function("createPath",returns(Type.STRING).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE, Type.STRING)) {
                     it.setReturnRef(MemorySection.createPath(
                         it.getRef(0) as ConfigurationSection,
                         it.getString(1)
                     ))
                 }
-                .function("createPath", returns(Type.STRING).params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("createPath",returns(Type.STRING).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnConfigurationSection.TYPE)) {
                     it.setReturnRef(MemorySection.createPath(
                         it.getRef(0) as ConfigurationSection,
                         it.getString(1),
                         it.getRef(2) as ConfigurationSection
                     ))
                 }
-                .function("getComments", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getComments(it.getString(0)!!)) }
-                .function("getInlineComments", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getInlineComments(it.getString(0)!!)) }
+                .function("getComments",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getComments(it.getString(0)!!)) }
+                .function("getInlineComments",returns(Type.LIST).params(Type.STRING)) { it.setReturnRef(it.target?.getInlineComments(it.getString(0)!!)) }
                 .function("setComments", returnsVoid().params(Type.STRING, Type.LIST)) {
                     it.target?.setComments(
                         it.getString(0)!!,

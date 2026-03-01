@@ -23,17 +23,17 @@ object FnEntityDeathEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDeathEvent::class.java)
-//                .function("reviveHealth", returnsObject().noParams()) { it.setReturnRef(it.target?.reviveHealth) }
-//                .function("setReviveHealth", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?reviveHealth = it.getDouble(0)) }
-                .function("killer", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("damageSource", returnsObject().noParams()) { it.setReturnRef(it.target?.damageSource) }
+//                .function("reviveHealth",returns(Type.D).noParams()) { it.setReturnRef(it.target?.reviveHealth) }
+//                .function("setReviveHealth",returns(Type.OBJECT).params(Type.D)) { it.setReturnRef(it.target?reviveHealth = it.getDouble(0)) }
+                .function("killer", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.entity?.killer) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("damageSource",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.damage.FnDamageSource.TYPE).noParams()) { it.setReturnRef(it.target?.damageSource) }
                 .function("droppedExp", returns(Type.I).noParams()) { it.setReturnInt(it.target?.droppedExp ?: 0) }
                 .function("setDroppedExp", returnsVoid().params(Type.I)) { it.target?.setDroppedExp(it.getInt(0).toInt()) }
-                .function("drops", returnsObject().noParams()) { it.setReturnRef(it.target?.drops) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("drops",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.drops) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityDeathEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityDeathEvent.getHandlerList()) }
         }
     }
 }

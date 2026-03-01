@@ -21,12 +21,12 @@ object FnPlayerRecipeBookSettingsChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRecipeBookSettingsChangeEvent::class.java)
-                .function("recipeBookType", returnsObject().noParams()) { it.setReturnRef(it.target?.recipeBookType) }
+                .function("recipeBookType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerRecipeBookSettingsChangeEventRecipeBookType.TYPE).noParams()) { it.setReturnRef(it.target?.recipeBookType) }
                 .function("isOpen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOpen ?: false) }
                 .function("isFiltering", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFiltering ?: false) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRecipeBookSettingsChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerRecipeBookSettingsChangeEvent.getHandlerList()) }
         }
     }
 }

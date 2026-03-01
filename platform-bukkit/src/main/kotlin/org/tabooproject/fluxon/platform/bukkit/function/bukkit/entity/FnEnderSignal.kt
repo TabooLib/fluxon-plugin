@@ -24,12 +24,12 @@ object FnEnderSignal {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderSignal::class.java)
-                .function("targetLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.targetLocation) }
-                .function("setTargetLocation", returnsVoid().params(Type.OBJECT)) { it.target?.setTargetLocation(it.getRef(0) as Location) }
+                .function("targetLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.targetLocation) }
+                .function("setTargetLocation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setTargetLocation(it.getRef(0) as Location) }
                 .function("dropItem", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.dropItem ?: false) }
                 .function("setDropItem", returnsVoid().params(Type.Z)) { it.target?.setDropItem(it.getBool(0)) }
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("setItem", returnsVoid().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
                 .function("despawnTimer", returns(Type.I).noParams()) { it.setReturnInt(it.target?.despawnTimer ?: 0) }
                 .function("setDespawnTimer", returnsVoid().params(Type.I)) { it.target?.setDespawnTimer(it.getInt(0).toInt()) }
         }

@@ -7,7 +7,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -22,41 +22,31 @@ object FnNumberConversions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NumberConversions::class.java)
                 // static
-                .function("floor", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.floor(it.getDouble(0))) }
+                .function("floor",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.floor(it.getDouble(0))) }
                 // static
-                .function("ceil", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.ceil(it.getDouble(0))) }
+                .function("ceil",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.ceil(it.getDouble(0))) }
                 // static
-                .function("round", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.round(it.getDouble(0))) }
+                .function("round",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.round(it.getDouble(0))) }
                 // static
-                .function("square", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.square(it.getDouble(0))) }
+                .function("square",returns(Type.D).params(Type.D)) { it.setReturnDouble(NumberConversions.square(it.getDouble(0))) }
                 // static
-                .function("toInt", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toInt(it.getRef(0))) }
+                .function("toInt",returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(NumberConversions.toInt(it.getRef(0))) }
                 // static
-                .function("toFloat", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toFloat(it.getRef(0))) }
+                .function("toFloat",returns(Type.F).params(Type.OBJECT)) { it.setReturnFloat(NumberConversions.toFloat(it.getRef(0))) }
                 // static
-                .function("toDouble", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toDouble(it.getRef(0))) }
+                .function("toDouble",returns(Type.D).params(Type.OBJECT)) { it.setReturnDouble(NumberConversions.toDouble(it.getRef(0))) }
                 // static
-                .function("toLong", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toLong(it.getRef(0))) }
+                .function("toLong",returns(Type.J).params(Type.OBJECT)) { it.setReturnLong(NumberConversions.toLong(it.getRef(0))) }
                 // static
-                .function("toShort", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toShort(it.getRef(0))) }
+                .function("toShort",returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(NumberConversions.toShort(it.getRef(0)).toInt()) }
                 // static
-                .function("toByte", returnsObject().params(Type.OBJECT)) { it.setReturnRef(NumberConversions.toByte(it.getRef(0))) }
+                .function("toByte",returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(NumberConversions.toByte(it.getRef(0)).toInt()) }
                 // static
-                .function("isFinite", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Double -> NumberConversions.isFinite(var1)
-                        is Float -> NumberConversions.isFinite(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Double 或 Float 类型")
-                    })
-                }
+                .function("isFinite", returns(Type.Z).params(Type.D)) { it.setReturnBool(NumberConversions.isFinite(it.getDouble(0))) }
+                .function("isFinite", returns(Type.Z).params(Type.F)) { it.setReturnBool(NumberConversions.isFinite(it.getFloat(0))) }
                 // static
-                .function("checkFinite", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Double -> NumberConversions.checkFinite(var1, it.getString(1)!!)
-                        is Float -> NumberConversions.checkFinite(var1, it.getString(1)!!)
-                        else -> throw IllegalArgumentException("第一个参数必须是 Double 或 Float 类型")
-                    })
-                }
+                .function("checkFinite",returnsVoid().params(Type.D, Type.STRING)) { NumberConversions.checkFinite(it.getDouble(0), it.getString(1)!!) }
+                .function("checkFinite",returnsVoid().params(Type.F, Type.STRING)) { NumberConversions.checkFinite(it.getFloat(0), it.getString(1)!!) }
         }
     }
 }

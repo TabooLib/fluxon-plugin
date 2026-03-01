@@ -24,11 +24,11 @@ object FnTameable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tameable::class.java)
-//                .function("ownerUniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.ownerUniqueId?.toString()) }
+//                .function("ownerUniqueId", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.ownerUniqueId?.toString()) }
                 .function("isTamed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTamed ?: false) }
                 .function("setTamed", returnsVoid().params(Type.Z)) { it.target?.setTamed(it.getBool(0)) }
-                .function("owner", returnsObject().noParams()) { it.setReturnRef(it.target?.owner) }
-                .function("setOwner", returnsVoid().params(Type.OBJECT)) { it.target?.setOwner(it.getRef(0) as AnimalTamer) }
+                .function("owner",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAnimalTamer.TYPE).noParams()) { it.setReturnRef(it.target?.owner) }
+                .function("setOwner",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAnimalTamer.TYPE)) { it.target?.setOwner(it.getRef(0) as AnimalTamer) }
         }
     }
 }

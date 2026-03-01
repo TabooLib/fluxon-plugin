@@ -23,10 +23,10 @@ object FnTree {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tree::class.java)
-                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
-                .function("setDirection", returnsVoid().params(Type.OBJECT)) { it.target?.setDirection(it.getRef(0) as BlockFace) }
+                .function("direction",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("setDirection",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.setDirection(it.getRef(0) as BlockFace) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

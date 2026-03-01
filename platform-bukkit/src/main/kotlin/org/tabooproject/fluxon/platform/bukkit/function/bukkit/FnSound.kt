@@ -4,6 +4,7 @@ import org.bukkit.Sound
 import org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -23,11 +24,11 @@ object FnSound : FnEnumGetter<Sound>() {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sound::class.java)
-                .function("key", returnsObject().noParams()) { it.setReturnRef(it.target?.key) }
-            registerFunction("sound", returnsObject().params(Type.STRING)) {
+                .function("key", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
+            registerFunction("sound", returns(Type.fromClass(Sound::class.java)).params(Type.STRING)) {
                 val name = it.getRef(0).toString()
                 it.setReturnRef(XSound.of(name).getOrNull()?.get() ?: error("音效不存在: $name"))}
-            registerFunction("soundOrNull", returnsObject().params(Type.STRING)) {
+            registerFunction("soundOrNull", returns(Type.fromClass(Sound::class.java)).params(Type.STRING)) {
                 val name = it.getRef(0).toString()
                 it.setReturnRef(XSound.of(name).getOrNull()?.get())}
         }

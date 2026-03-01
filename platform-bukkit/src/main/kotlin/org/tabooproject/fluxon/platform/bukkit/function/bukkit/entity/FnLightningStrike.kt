@@ -28,8 +28,8 @@ object FnLightningStrike {
                 .function("setFlashes", returnsVoid().params(Type.I)) { it.target?.setFlashes(it.getInt(0).toInt()) }
                 .function("lifeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lifeTicks ?: 0) }
                 .function("setLifeTicks", returnsVoid().params(Type.I)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
-                .function("causingPlayer", returnsObject().noParams()) { it.setReturnRef(it.target?.causingPlayer) }
-                .function("setCausingPlayer", returnsVoid().params(Type.OBJECT)) { it.target?.setCausingPlayer(it.getRef(0) as Player) }
+                .function("causingPlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.causingPlayer) }
+                .function("setCausingPlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.target?.setCausingPlayer(it.getRef(0) as Player) }
                 .function("isSilent", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSilent ?: false) }
         }
     }

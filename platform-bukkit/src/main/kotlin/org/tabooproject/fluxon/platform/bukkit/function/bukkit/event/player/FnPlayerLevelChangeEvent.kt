@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.player.PlayerLevelChangeEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,11 +21,11 @@ object FnPlayerLevelChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerLevelChangeEvent::class.java)
-                .function("oldLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.oldLevel) }
-                .function("newLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.newLevel) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("oldLevel",returns(Type.I).noParams()) { it.setReturnRef(it.target?.oldLevel) }
+                .function("newLevel",returns(Type.I).noParams()) { it.setReturnRef(it.target?.newLevel) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerLevelChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerLevelChangeEvent.getHandlerList()) }
         }
     }
 }

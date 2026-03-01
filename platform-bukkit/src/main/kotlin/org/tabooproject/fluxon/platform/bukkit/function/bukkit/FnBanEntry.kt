@@ -8,9 +8,9 @@ import java.util.*
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.BanEntry"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,15 +22,15 @@ object FnBanEntry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BanEntry::class.java)
-                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
-                .function("banTarget", returnsObject().noParams()) { it.setReturnRef(it.target?.getBanTarget()) }
-                .function("created", returnsObject().noParams()) { it.setReturnRef(it.target?.created) }
+                .function("target",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.target) }
+                .function("banTarget", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.getBanTarget()) }
+                .function("created",returns(org.tabooproject.fluxon.util.StandardTypes.DATE).noParams()) { it.setReturnRef(it.target?.created) }
                 .function("setCreated", returnsVoid().params(Type.J)) { it.target?.setCreated(Date(it.getLong(0))) }
-                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
+                .function("source",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.source) }
                 .function("setSource", returnsVoid().params(Type.STRING)) { it.target?.setSource(it.getString(0)!!) }
-                .function("expiration", returnsObject().noParams()) { it.setReturnRef(it.target?.expiration) }
+                .function("expiration",returns(org.tabooproject.fluxon.util.StandardTypes.DATE).noParams()) { it.setReturnRef(it.target?.expiration) }
                 .function("setExpiration", returnsVoid().params(Type.J)) { it.target?.setExpiration(Date(it.getLong(0))) }
-                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("reason",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.reason) }
                 .function("setReason", returnsVoid().params(Type.STRING)) { it.target?.setReason(it.getString(0)) }
                 .function("save", returnsVoid().noParams()) { it.target?.save() }
                 .function("remove", returnsVoid().noParams()) { it.target?.remove() }

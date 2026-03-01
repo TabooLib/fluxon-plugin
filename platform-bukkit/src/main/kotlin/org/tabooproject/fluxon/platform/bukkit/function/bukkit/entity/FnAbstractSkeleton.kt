@@ -22,7 +22,8 @@ object FnAbstractSkeleton {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractSkeleton::class.java)
-                .function("setSkeletonType", returnsVoid().params(Type.OBJECT)) { it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType) }
+                .function("setSkeletonType", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSkeletonSkeletonType.TYPE)) { it.target?.setSkeletonType(it.getRef(0) as Skeleton.SkeletonType)  }
+                .function("setSkeletonType", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnSkeletonSkeletonType.enumValue(it.getString(0))?.let { p0 -> it.target?.setSkeletonType(p0)  } }
         }
     }
 }

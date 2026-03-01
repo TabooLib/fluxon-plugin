@@ -4,6 +4,7 @@ import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.util.StandardTypes
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common5.util.parseMillis
@@ -19,7 +20,7 @@ object ExtensionString {
         with(FluxonRuntime.getInstance()) {
             registerExtension(String::class.java)
                 .function("parseMillis", returns(Type.J).noParams()) { it.setReturnLong(it.target!!.parseMillis()) }
-                .function("parseUUID", returnsObject().noParams()) { it.setReturnRef(it.target!!.parseUUID()) }
+                .function("parseUUID", returns(StandardTypes.UUID).noParams()) { it.setReturnRef(it.target!!.parseUUID()) }
                 .function("colored", returns(Type.STRING).noParams()) { it.setReturnRef(it.target!!.colored()) }
                 .function("uncolored", returns(Type.STRING).noParams()) { it.setReturnRef(it.target!!.uncolored()) }
                 .function("parseToHexColor", returns(Type.STRING).noParams()) { it.setReturnRef(it.target!!.parseToHexColor()) }

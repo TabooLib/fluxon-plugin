@@ -23,14 +23,14 @@ object FnPlayerRespawnEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerRespawnEvent::class.java)
-                .function("respawnLocation", returnsObject().noParams()) { it.setReturnRef(it.target?.respawnLocation) }
-                .function("setRespawnLocation", returnsVoid().params(Type.OBJECT)) { it.target?.setRespawnLocation(it.getRef(0) as Location) }
+                .function("respawnLocation", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.respawnLocation) }
+                .function("setRespawnLocation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setRespawnLocation(it.getRef(0) as Location) }
                 .function("isBedSpawn", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBedSpawn ?: false) }
                 .function("isAnchorSpawn", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAnchorSpawn ?: false) }
-                .function("respawnReason", returnsObject().noParams()) { it.setReturnRef(it.target?.respawnReason) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("respawnReason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerRespawnEventRespawnReason.TYPE).noParams()) { it.setReturnRef(it.target?.respawnReason) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(PlayerRespawnEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerRespawnEvent.getHandlerList()) }
         }
     }
 }

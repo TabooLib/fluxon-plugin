@@ -8,8 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,15 +21,15 @@ object FnItemTagType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType::class.java)
-                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
-                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
-                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("primitiveType",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.primitiveType) }
+                .function("complexType",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.complexType) }
+                .function("toPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.tags.FnItemTagAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
                     ))
                 }
-                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("fromPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.tags.FnItemTagAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
@@ -39,7 +39,7 @@ object FnItemTagType {
     }
 }
 
-@Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType.PrimitiveTagType"])
+@Requires(classes = ["org.bukkit.inventory.meta.tags.ItemTagType\$PrimitiveTagType"])
 @PlatformSide(Platform.BUKKIT)
 object FnItemTagTypePrimitiveTagType {
 
@@ -49,15 +49,15 @@ object FnItemTagTypePrimitiveTagType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemTagType.PrimitiveTagType::class.java)
-                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
-                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
-                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("primitiveType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.primitiveType) }
+                .function("complexType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.complexType) }
+                .function("toPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.tags.FnItemTagAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext
                     ))
                 }
-                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("fromPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.tags.FnItemTagAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? ItemTagType.PrimitiveTagType<Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as ItemTagAdapterContext

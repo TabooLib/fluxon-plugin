@@ -24,9 +24,9 @@ object FnEntityPortalEvent {
             registerExtension(EntityPortalEvent::class.java)
                 .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
                 .function("searchRadius", returns(Type.I).noParams()) { it.setReturnInt(it.target?.searchRadius ?: 0) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityPortalEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityPortalEvent.getHandlerList()) }
         }
     }
 }

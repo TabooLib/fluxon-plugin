@@ -32,10 +32,10 @@ object FnSimpleCommandMap {
                         it.getRef(1) as List<Command>
                     )
                 }
-                .function("register", returns(Type.Z).params(Type.STRING, Type.OBJECT)) {
+                .function("register",returns(Type.Z).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnCommand.TYPE)) {
                     it.setReturnBool(it.target?.register(it.getString(0)!!, it.getRef(1) as Command) == true)
                 }
-                .function("register", returns(Type.Z).params(Type.STRING, Type.STRING, Type.OBJECT)) {
+                .function("register",returns(Type.Z).params(Type.STRING, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnCommand.TYPE)) {
                     it.setReturnBool(
                         it.target?.register(
                             it.getString(0)!!,
@@ -44,11 +44,11 @@ object FnSimpleCommandMap {
                         ) == true
                     )
                 }
-                .function("dispatch", returns(Type.Z).params(Type.OBJECT, Type.STRING)) {
+                .function("dispatch",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, Type.STRING)) {
                     it.setReturnBool(it.target?.dispatch(it.getRef(0) as CommandSender, it.getString(1)!!) == true)
                 }
-                .function("getCommand", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getCommand(it.getString(0)!!)) }
-                .function("tabComplete", returnsObject().params(Type.OBJECT, Type.STRING)) {
+                .function("getCommand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommand.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getCommand(it.getString(0)!!)) }
+                .function("tabComplete",returns(Type.LIST).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, Type.STRING)) {
                     it.setReturnRef(
                         it.target?.tabComplete(
                             it.getRef(0) as CommandSender,
@@ -56,7 +56,7 @@ object FnSimpleCommandMap {
                         )
                     )
                 }
-                .function("tabComplete", returnsObject().params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("tabComplete",returns(Type.LIST).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(
                         it.target?.tabComplete(
                             it.getRef(0) as CommandSender,
@@ -65,7 +65,7 @@ object FnSimpleCommandMap {
                         )
                     )
                 }
-                .function("commands", returnsObject().noParams()) { it.setReturnRef(it.target?.commands) }
+                .function("commands",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.commands) }
                 .function("registerServerAliases", returnsVoid().noParams()) { it.target?.registerServerAliases() }
         }
     }

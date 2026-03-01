@@ -22,10 +22,10 @@ object FnPanda {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Panda::class.java)
-                .function("mainGene", returnsObject().noParams()) { it.setReturnRef(it.target?.mainGene) }
-                .function("setMainGene", returnsVoid().params(Type.OBJECT)) { it.target?.setMainGene(it.getRef(0) as Panda.Gene) }
-                .function("hiddenGene", returnsObject().noParams()) { it.setReturnRef(it.target?.hiddenGene) }
-                .function("setHiddenGene", returnsVoid().params(Type.OBJECT)) { it.target?.setHiddenGene(it.getRef(0) as Panda.Gene) }
+                .function("mainGene",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPandaGene.TYPE).noParams()) { it.setReturnRef(it.target?.mainGene) }
+                .function("setMainGene",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPandaGene.TYPE)) { it.target?.setMainGene(it.getRef(0) as Panda.Gene) }
+                .function("hiddenGene",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPandaGene.TYPE).noParams()) { it.setReturnRef(it.target?.hiddenGene) }
+                .function("setHiddenGene",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPandaGene.TYPE)) { it.target?.setHiddenGene(it.getRef(0) as Panda.Gene) }
                 .function("isRolling", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRolling ?: false) }
                 .function("setRolling", returnsVoid().params(Type.Z)) { it.target?.setRolling(it.getBool(0)) }
                 .function("isSneezing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSneezing ?: false) }
@@ -40,11 +40,12 @@ object FnPanda {
     }
 }
 
-@Requires(classes = ["org.bukkit.entity.Panda.Gene"])
+@Requires(classes = ["org.bukkit.entity.Panda\$Gene"])
 @PlatformSide(Platform.BUKKIT)
-object FnPandaGene {
+object FnPandaGene : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.entity.Panda.Gene>() {
 
-    val TYPE = Type.fromClass(Panda.Gene::class.java)
+    override val enumClass: Class<org.bukkit.entity.Panda.Gene> = org.bukkit.entity.Panda.Gene::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {

@@ -26,14 +26,14 @@ object FnChunkSnapshot {
                 .function("x", returns(Type.I).noParams()) { it.setReturnInt(it.target?.x ?: 0) }
                 .function("z", returns(Type.I).noParams()) { it.setReturnInt(it.target?.z ?: 0) }
                 .function("worldName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.worldName) }
-                .function("getBlockType", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBlockType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockType(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getBlockData", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -67,13 +67,13 @@ object FnChunkSnapshot {
                         it.getInt(1).toInt()
                     ) ?: 0)
                 }
-                .function("getBiome", returnsObject().params(Type.I, Type.I)) {
+                .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt()
                     ))
                 }
-                .function("getBiome", returnsObject().params(Type.I, Type.I, Type.I)) {
+                .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getInt(0).toInt(),
                         it.getInt(1).toInt(),
@@ -97,7 +97,7 @@ object FnChunkSnapshot {
                 .function("isSectionEmpty", returns(Type.Z).params(Type.I)) {
                     it.setReturnBool(it.target?.isSectionEmpty(it.getInt(0).toInt()) ?: false)
                 }
-                .function("contains", returns(Type.Z).params(Type.OBJECT)) {
+                .function("contains",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) {
                     it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is BlockData -> it.target?.contains(var1)
                         is Biome -> it.target?.contains(var1)

@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.SmithingInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,9 +23,9 @@ object FnSmithingInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingInventory::class.java)
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("setResult", returnsVoid().params(Type.OBJECT)) { it.target?.setResult(it.getRef(0) as ItemStack) }
-                .function("recipe", returnsObject().noParams()) { it.setReturnRef(it.target?.recipe) }
+                .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("setResult",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setResult(it.getRef(0) as ItemStack) }
+                .function("recipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipe.TYPE).noParams()) { it.setReturnRef(it.target?.recipe) }
         }
     }
 }

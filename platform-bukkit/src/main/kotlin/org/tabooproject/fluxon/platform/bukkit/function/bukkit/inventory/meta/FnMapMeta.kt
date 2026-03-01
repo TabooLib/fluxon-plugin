@@ -28,17 +28,17 @@ object FnMapMeta {
                 .function("mapId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.mapId ?: 0) }
                 .function("setMapId", returnsVoid().params(Type.I)) { it.target?.setMapId(it.getInt(0).toInt()) }
                 .function("hasMapView", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMapView() ?: false) }
-                .function("mapView", returnsObject().noParams()) { it.setReturnRef(it.target?.mapView) }
-                .function("setMapView", returnsVoid().params(Type.OBJECT)) { it.target?.setMapView(it.getRef(0) as MapView) }
+                .function("mapView", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE).noParams()) { it.setReturnRef(it.target?.mapView) }
+                .function("setMapView",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE)) { it.target?.setMapView(it.getRef(0) as MapView) }
                 .function("isScaling", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isScaling ?: false) }
                 .function("setScaling", returnsVoid().params(Type.Z)) { it.target?.setScaling(it.getBool(0)) }
                 .function("hasLocationName", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasLocationName() ?: false) }
                 .function("locationName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.locationName) }
                 .function("setLocationName", returnsVoid().params(Type.STRING)) { it.target?.setLocationName(it.getString(0)) }
                 .function("hasColor", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasColor() ?: false) }
-                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("color", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) { it.target?.setColor(it.getRef(0) as Color) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnMapMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

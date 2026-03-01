@@ -21,13 +21,9 @@ object FnPotionData {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionData::class.java)
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("type",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
                 .function("isUpgraded", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUpgraded ?: false) }
                 .function("isExtended", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExtended ?: false) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
         }
     }
 }

@@ -25,8 +25,8 @@ object FnShulker {
             registerExtension(Shulker::class.java)
                 .function("peek", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.peek ?: 0f) }
                 .function("setPeek", returnsVoid().params(Type.F)) { it.target?.setPeek(it.getFloat(0)) }
-                .function("attachedFace", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedFace) }
-                .function("setAttachedFace", returnsVoid().params(Type.OBJECT)) { it.target?.setAttachedFace(it.getRef(0) as BlockFace) }
+                .function("attachedFace",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.attachedFace) }
+                .function("setAttachedFace",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.setAttachedFace(it.getRef(0) as BlockFace) }
         }
     }
 }

@@ -10,6 +10,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.util.permissions.CommandPermissions"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,7 +23,7 @@ object FnCommandPermissions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandPermissions::class.java)
                 // static
-                .function("registerPermissions", returnsObject().params(Type.OBJECT)) { it.setReturnRef(CommandPermissions.registerPermissions(it.getRef(0) as Permission)) }
+                .function("registerPermissions",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE)) { it.setReturnRef(CommandPermissions.registerPermissions(it.getRef(0) as Permission)) }
         }
     }
 }

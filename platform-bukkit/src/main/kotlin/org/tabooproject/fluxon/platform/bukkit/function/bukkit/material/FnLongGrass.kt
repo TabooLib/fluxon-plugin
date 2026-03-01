@@ -23,10 +23,10 @@ object FnLongGrass {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LongGrass::class.java)
-                .function("species", returnsObject().noParams()) { it.setReturnRef(it.target?.species) }
-                .function("setSpecies", returnsVoid().params(Type.OBJECT)) { it.target?.setSpecies(it.getRef(0) as GrassSpecies) }
+                .function("species",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnGrassSpecies.TYPE).noParams()) { it.setReturnRef(it.target?.species) }
+                .function("setSpecies",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnGrassSpecies.TYPE)) { it.target?.setSpecies(it.getRef(0) as GrassSpecies) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

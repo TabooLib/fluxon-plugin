@@ -23,14 +23,12 @@ object FnVillagerCareerChangeEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VillagerCareerChangeEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
-                .function("setProfession", returnsVoid().params(Type.OBJECT)) { it.target?.setProfession(it.getRef(0) as Villager.Profession) }
-                .function("reason", returnsObject().noParams()) { it.setReturnRef(it.target?.reason) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("setProfession",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerProfession.TYPE)) { it.target?.setProfession(it.getRef(0) as Villager.Profession) }
+                .function("reason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnVillagerCareerChangeEventChangeReason.TYPE).noParams()) { it.setReturnRef(it.target?.reason) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VillagerCareerChangeEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(VillagerCareerChangeEvent.getHandlerList()) }
         }
     }
 }

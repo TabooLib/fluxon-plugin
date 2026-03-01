@@ -23,18 +23,18 @@ object FnMob {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Mob::class.java)
-                .function("setTarget", returnsVoid().params(Type.OBJECT)) { it.target?.setTarget(it.getRef(0) as LivingEntity) }
-                .function("target", returnsObject().noParams()) { it.setReturnRef(it.target?.target) }
+                .function("setTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) { it.target?.setTarget(it.getRef(0) as LivingEntity) }
+                .function("target",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.target) }
                 .function("setAware", returnsVoid().params(Type.Z)) { it.target?.setAware(it.getBool(0)) }
                 .function("isAware", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAware ?: false) }
-                .function("ambientSound", returnsObject().noParams()) { it.setReturnRef(it.target?.ambientSound) }
-//                .function("possibleExperienceReward", returnsObject().noParams()) { it.setReturnRef(it.target?.possibleExperienceReward) }
-//                .function("headRotationSpeed", returnsObject().noParams()) { it.setReturnRef(it.target?.headRotationSpeed) }
-//                .function("maxHeadPitch", returnsObject().noParams()) { it.setReturnRef(it.target?.maxHeadPitch) }
+                .function("ambientSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.ambientSound) }
+//                .function("possibleExperienceReward",returns(Type.I).noParams()) { it.setReturnRef(it.target?.possibleExperienceReward) }
+//                .function("headRotationSpeed",returns(Type.I).noParams()) { it.setReturnRef(it.target?.headRotationSpeed) }
+//                .function("maxHeadPitch",returns(Type.I).noParams()) { it.setReturnRef(it.target?.maxHeadPitch) }
 //                .function("isAggressive", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAggressive ?: false) }
-//                .function("setAggressive", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.isAggressive = it.getBool(0)) }
+//                .function("setAggressive",returns(Type.OBJECT).params(Type.Z)) { it.setReturnRef(it.target?.isAggressive = it.getBool(0)) }
 //                .function("isLeftHanded", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLeftHanded ?: false) }
-//                .function("setLeftHanded", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.isLeftHanded = it.getBool(0)) }
+//                .function("setLeftHanded",returns(Type.OBJECT).params(Type.Z)) { it.setReturnRef(it.target?.isLeftHanded = it.getBool(0)) }
         }
     }
 }

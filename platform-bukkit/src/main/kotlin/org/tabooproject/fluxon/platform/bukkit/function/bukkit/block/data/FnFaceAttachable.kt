@@ -34,7 +34,7 @@ object FnFaceAttachable {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.FaceAttachable.AttachedFace"])
+@Requires(classes = ["org.bukkit.block.data.FaceAttachable\$AttachedFace"])
 @PlatformSide(Platform.BUKKIT)
 object FnAttachedFace : FnEnumGetter<FaceAttachable.AttachedFace>() {
 

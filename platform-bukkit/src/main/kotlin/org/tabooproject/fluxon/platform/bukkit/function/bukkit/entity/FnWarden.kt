@@ -25,20 +25,20 @@ object FnWarden {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Warden::class.java)
                 .function("anger", returns(Type.I).noParams()) { it.setReturnInt(it.target?.anger ?: 0) }
-                .function("getAnger", returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(it.target?.getAnger(it.getRef(0) as Entity) ?: 0) }
-                .function("increaseAnger", returnsVoid().params(Type.OBJECT, Type.I)) {
+                .function("getAnger",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.setReturnInt(it.target?.getAnger(it.getRef(0) as Entity) ?: 0) }
+                .function("increaseAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.I)) {
                     it.target?.increaseAnger(
                         it.getRef(0) as Entity,
                         it.getInt(1).toInt()
                     )
                 }
-                .function("setAnger", returnsVoid().params(Type.OBJECT, Type.I)) {
+                .function("setAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.I)) {
                     it.target?.setAnger(it.getRef(0) as Entity, it.getInt(1).toInt())
                 }
-                .function("clearAnger", returnsVoid().params(Type.OBJECT)) { it.target?.clearAnger(it.getRef(0) as Entity) }
-                .function("entityAngryAt", returnsObject().noParams()) { it.setReturnRef(it.target?.entityAngryAt) }
-                .function("setDisturbanceLocation", returnsVoid().params(Type.OBJECT)) { it.target?.setDisturbanceLocation(it.getRef(0) as Location) }
-                .function("angerLevel", returnsObject().noParams()) { it.setReturnRef(it.target?.angerLevel) }
+                .function("clearAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.clearAnger(it.getRef(0) as Entity) }
+                .function("entityAngryAt",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entityAngryAt) }
+                .function("setDisturbanceLocation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setDisturbanceLocation(it.getRef(0) as Location) }
+                .function("angerLevel", returns(Type.fromClass(Warden.AngerLevel::class.java)).noParams()) { it.setReturnRef(it.target?.angerLevel) }
         }
     }
 }

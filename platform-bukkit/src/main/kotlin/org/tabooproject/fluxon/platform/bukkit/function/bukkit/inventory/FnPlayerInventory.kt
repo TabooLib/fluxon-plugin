@@ -24,35 +24,30 @@ object FnPlayerInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerInventory::class.java)
-                .function("armorContents", returnsObject().noParams()) { it.setReturnRef(it.target?.armorContents) }
-                .function("extraContents", returnsObject().noParams()) { it.setReturnRef(it.target?.extraContents) }
-                .function("helmet", returnsObject().noParams()) { it.setReturnRef(it.target?.helmet) }
-                .function("chestplate", returnsObject().noParams()) { it.setReturnRef(it.target?.chestplate) }
-                .function("leggings", returnsObject().noParams()) { it.setReturnRef(it.target?.leggings) }
-                .function("boots", returnsObject().noParams()) { it.setReturnRef(it.target?.boots) }
-                .function("setItem", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
-                    when (val var1 = it.getRef(0)) {
-                        is Int -> it.target?.setItem(var1, it.getRef(1) as ItemStack)
-                        is EquipmentSlot -> it.target?.setItem(var1, it.getRef(1) as ItemStack)
-                        else -> throw IllegalArgumentException("参数 1 必须是 Int 或 EquipmentSlot 类型")
-                    }
-                }
-                .function("getItem", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getItem(it.getRef(0) as EquipmentSlot)) }
-                .function("setArmorContents", returnsVoid().params(Type.OBJECT)) { it.target?.setArmorContents(it.getRef(0) as Array<ItemStack>) }
-                .function("setExtraContents", returnsVoid().params(Type.OBJECT)) { it.target?.setExtraContents(it.getRef(0) as Array<ItemStack>) }
-                .function("setHelmet", returnsVoid().params(Type.OBJECT)) { it.target?.setHelmet(it.getRef(0) as ItemStack) }
-                .function("setChestplate", returnsVoid().params(Type.OBJECT)) { it.target?.setChestplate(it.getRef(0) as ItemStack) }
-                .function("setLeggings", returnsVoid().params(Type.OBJECT)) { it.target?.setLeggings(it.getRef(0) as ItemStack) }
-                .function("setBoots", returnsVoid().params(Type.OBJECT)) { it.target?.setBoots(it.getRef(0) as ItemStack) }
-                .function("itemInMainHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInMainHand) }
-                .function("setItemInMainHand", returnsVoid().params(Type.OBJECT)) { it.target?.setItemInMainHand(it.getRef(0) as ItemStack) }
-                .function("itemInOffHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInOffHand) }
-                .function("setItemInOffHand", returnsVoid().params(Type.OBJECT)) { it.target?.setItemInOffHand(it.getRef(0) as ItemStack) }
-                .function("itemInHand", returnsObject().noParams()) { it.setReturnRef(it.target?.itemInHand) }
-                .function("setItemInHand", returnsVoid().params(Type.OBJECT)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }
+                .function("armorContents", returns(Type.fromClass(Array<ItemStack>::class.java)).noParams()) { it.setReturnRef(it.target?.armorContents) }
+                .function("extraContents", returns(Type.fromClass(Array<ItemStack>::class.java)).noParams()) { it.setReturnRef(it.target?.extraContents) }
+                .function("helmet", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.helmet) }
+                .function("chestplate", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.chestplate) }
+                .function("leggings", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.leggings) }
+                .function("boots", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.boots) }
+                .function("setItem",returnsVoid().params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getInt(0), it.getRef(1) as ItemStack) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as EquipmentSlot, it.getRef(1) as ItemStack) }
+                .function("getItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE)) { it.setReturnRef(it.target?.getItem(it.getRef(0) as EquipmentSlot)) }
+                .function("setArmorContents", returnsVoid().params(Type.fromClass(Array<ItemStack>::class.java))) { it.target?.setArmorContents(it.getRef(0) as Array<ItemStack>) }
+                .function("setExtraContents", returnsVoid().params(Type.fromClass(Array<ItemStack>::class.java))) { it.target?.setExtraContents(it.getRef(0) as Array<ItemStack>) }
+                .function("setHelmet",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setHelmet(it.getRef(0) as ItemStack) }
+                .function("setChestplate",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setChestplate(it.getRef(0) as ItemStack) }
+                .function("setLeggings",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setLeggings(it.getRef(0) as ItemStack) }
+                .function("setBoots",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setBoots(it.getRef(0) as ItemStack) }
+                .function("itemInMainHand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInMainHand) }
+                .function("setItemInMainHand",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemInMainHand(it.getRef(0) as ItemStack) }
+                .function("itemInOffHand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInOffHand) }
+                .function("setItemInOffHand",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemInOffHand(it.getRef(0) as ItemStack) }
+                .function("itemInHand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInHand) }
+                .function("setItemInHand",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }
                 .function("heldItemSlot", returns(Type.I).noParams()) { it.setReturnInt(it.target?.heldItemSlot ?: 0) }
                 .function("setHeldItemSlot", returnsVoid().params(Type.I)) { it.target?.setHeldItemSlot(it.getInt(0).toInt()) }
-                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
+                .function("holder", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnHumanEntity.TYPE).noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

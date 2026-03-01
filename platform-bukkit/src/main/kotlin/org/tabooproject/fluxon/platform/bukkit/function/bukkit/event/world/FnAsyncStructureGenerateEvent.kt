@@ -25,32 +25,32 @@ object FnAsyncStructureGenerateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AsyncStructureGenerateEvent::class.java)
-                .function("cause", returnsObject().noParams()) { it.setReturnRef(it.target?.cause) }
-                .function("getBlockTransformer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getBlockTransformer(it.getRef(0) as NamespacedKey)) }
-                .function("setBlockTransformer", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                .function("cause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.world.FnAsyncStructureGenerateEventCause.TYPE).noParams()) { it.setReturnRef(it.target?.cause) }
+                .function("getBlockTransformer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockTransformer.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(it.target?.getBlockTransformer(it.getRef(0) as NamespacedKey)) }
+                .function("setBlockTransformer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockTransformer.TYPE)) {
                     it.target?.setBlockTransformer(
                         it.getRef(0) as NamespacedKey,
                         it.getRef(1) as BlockTransformer
                     )
                 }
-                .function("removeBlockTransformer", returnsVoid().params(Type.OBJECT)) { it.target?.removeBlockTransformer(it.getRef(0) as NamespacedKey) }
+                .function("removeBlockTransformer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.target?.removeBlockTransformer(it.getRef(0) as NamespacedKey) }
                 .function("clearBlockTransformers", returnsVoid().noParams()) { it.target?.clearBlockTransformers() }
-                .function("getEntityTransformer", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getEntityTransformer(it.getRef(0) as NamespacedKey)) }
-                .function("setEntityTransformer", returnsVoid().params(Type.OBJECT, Type.OBJECT)) {
+                .function("getEntityTransformer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEntityTransformer.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(it.target?.getEntityTransformer(it.getRef(0) as NamespacedKey)) }
+                .function("setEntityTransformer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEntityTransformer.TYPE)) {
                     it.target?.setEntityTransformer(
                         it.getRef(0) as NamespacedKey,
                         it.getRef(1) as EntityTransformer
                     )
                 }
-                .function("removeEntityTransformer", returnsVoid().params(Type.OBJECT)) { it.target?.removeEntityTransformer(it.getRef(0) as NamespacedKey) }
+                .function("removeEntityTransformer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.target?.removeEntityTransformer(it.getRef(0) as NamespacedKey) }
                 .function("clearEntityTransformers", returnsVoid().noParams()) { it.target?.clearEntityTransformers() }
-                .function("structure", returnsObject().noParams()) { it.setReturnRef(it.target?.structure) }
-                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
+                .function("structure",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.structure.FnStructure.TYPE).noParams()) { it.setReturnRef(it.target?.structure) }
+                .function("boundingBox",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).noParams()) { it.setReturnRef(it.target?.boundingBox) }
                 .function("chunkX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.chunkX ?: 0) }
                 .function("chunkZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.chunkZ ?: 0) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(AsyncStructureGenerateEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(AsyncStructureGenerateEvent.getHandlerList()) }
         }
     }
 }

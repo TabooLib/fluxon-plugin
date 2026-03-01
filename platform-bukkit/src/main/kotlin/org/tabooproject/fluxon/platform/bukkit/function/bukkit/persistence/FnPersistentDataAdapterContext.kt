@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.persistence.PersistentDataAdapterContext"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnPersistentDataAdapterContext {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataAdapterContext::class.java)
-                .function("newPersistentDataContainer", returnsObject().noParams()) { it.setReturnRef(it.target?.newPersistentDataContainer()) }
+                .function("newPersistentDataContainer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataContainer.TYPE).noParams()) { it.setReturnRef(it.target?.newPersistentDataContainer()) }
         }
     }
 }

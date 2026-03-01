@@ -22,13 +22,11 @@ object FnEntityCombustEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityCombustEvent::class.java)
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
                 .function("duration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.duration ?: 0) }
                 .function("setDuration", returnsVoid().params(Type.I)) { it.target?.setDuration(it.getInt(0).toInt()) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(EntityCombustEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityCombustEvent.getHandlerList()) }
         }
     }
 }

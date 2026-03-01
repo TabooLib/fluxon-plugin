@@ -25,15 +25,15 @@ object FnRails {
             registerExtension(Rails::class.java)
                 .function("isOnSlope", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOnSlope ?: false) }
                 .function("isCurve", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCurve ?: false) }
-                .function("direction", returnsObject().noParams()) { it.setReturnRef(it.target?.direction) }
+                .function("direction",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.direction) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("setDirection", returnsVoid().params(Type.OBJECT, Type.Z)) {
+                .function("setDirection",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.Z)) {
                     it.target?.setDirection(
                         it.getRef(0) as BlockFace,
                         it.getBool(1)
                     )
                 }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

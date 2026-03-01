@@ -27,7 +27,7 @@ object FnZombie {
                 .function("setBaby", returnsVoid().params(Type.Z)) { it.target?.setBaby(it.getBool(0)) }
                 .function("isVillager", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVillager ?: false) }
                 .function("setVillager", returnsVoid().params(Type.Z)) { it.target?.setVillager(it.getBool(0)) }
-                .function("setVillagerProfession", returnsVoid().params(Type.OBJECT)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
+                .function("setVillagerProfession",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerProfession.TYPE)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
                 .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }

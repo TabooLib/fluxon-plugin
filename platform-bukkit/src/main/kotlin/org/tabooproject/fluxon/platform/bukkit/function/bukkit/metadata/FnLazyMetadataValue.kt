@@ -7,8 +7,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.metadata.LazyMetadataValue"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +20,7 @@ object FnLazyMetadataValue {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LazyMetadataValue::class.java)
-                .function("value", returnsObject().noParams()) { it.setReturnRef(it.target?.value()) }
+                .function("value", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.value()) }
         }
     }
 }

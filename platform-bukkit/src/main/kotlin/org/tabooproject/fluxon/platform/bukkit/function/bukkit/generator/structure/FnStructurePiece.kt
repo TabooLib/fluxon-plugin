@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.generator.structure.StructurePiece"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,7 +21,7 @@ object FnStructurePiece {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(StructurePiece::class.java)
-                .function("boundingBox", returnsObject().noParams()) { it.setReturnRef(it.target?.boundingBox) }
+                .function("boundingBox",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).noParams()) { it.setReturnRef(it.target?.boundingBox) }
         }
     }
 }

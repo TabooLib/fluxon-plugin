@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.AbstractHorseInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,8 +23,8 @@ object FnAbstractHorseInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractHorseInventory::class.java)
-                .function("saddle", returnsObject().noParams()) { it.setReturnRef(it.target?.saddle) }
-                .function("setSaddle", returnsVoid().params(Type.OBJECT)) { it.target?.setSaddle(it.getRef(0) as ItemStack) }
+                .function("saddle",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.saddle) }
+                .function("setSaddle",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setSaddle(it.getRef(0) as ItemStack) }
         }
     }
 }

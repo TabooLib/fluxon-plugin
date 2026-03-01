@@ -11,7 +11,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -21,6 +20,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 object FnMessenger {
 
     val TYPE = Type.fromClass(Messenger::class.java)
+    private val BYTE_ARRAY = Type.fromClass(ByteArray::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -29,63 +29,66 @@ object FnMessenger {
                 .function("isReservedChannel", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.isReservedChannel(it.getString(0)!!) ?: false)
                 }
-                .function("registerOutgoingPluginChannel", returnsVoid().params(Type.OBJECT, Type.STRING)) {
+                .function("registerOutgoingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.target?.registerOutgoingPluginChannel(
                         it.getRef(
                             0
                         ) as Plugin, it.getString(1)!!
                     )
                 }
-                .function("unregisterOutgoingPluginChannel", returnsVoid().params(Type.OBJECT)) {
+                .function("unregisterOutgoingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
                     it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin)
                 }
-                .function("unregisterOutgoingPluginChannel", returnsVoid().params(Type.OBJECT, Type.STRING)) {
+                .function("unregisterOutgoingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.target?.unregisterOutgoingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
                 }
-                .function("registerIncomingPluginChannel", returnsVoid().params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("registerIncomingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.messaging.FnPluginMessageListener.TYPE)) {
                     it.target?.registerIncomingPluginChannel(
                         it.getRef(
                             0
                         ) as Plugin, it.getString(1)!!, it.getRef(2) as PluginMessageListener
                     )
                 }
-                .function("unregisterIncomingPluginChannel", returnsVoid().params(Type.OBJECT)) {
+                .function("unregisterIncomingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
                     it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin)
                 }
-                .function("unregisterIncomingPluginChannel", returnsVoid().params(Type.OBJECT, Type.STRING)) {
+                .function("unregisterIncomingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.target?.unregisterIncomingPluginChannel(it.getRef(0) as Plugin, it.getString(1)!!)
                 }
-                .function("unregisterIncomingPluginChannel", returnsVoid().params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("unregisterIncomingPluginChannel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.messaging.FnPluginMessageListener.TYPE)) {
                     it.target?.unregisterIncomingPluginChannel(
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
                         it.getRef(2) as PluginMessageListener
                     )
                 }
-                .function("outgoingChannels", returnsObject().noParams()) { it.setReturnRef(it.target?.outgoingChannels) }
-                .function("getOutgoingChannels", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getOutgoingChannels(it.getRef(0) as Plugin)) }
-                .function("incomingChannels", returnsObject().noParams()) { it.setReturnRef(it.target?.incomingChannels) }
-                .function("getIncomingChannels", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getIncomingChannels(it.getRef(0) as Plugin)) }
-                .function("getIncomingChannelRegistrations", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Plugin -> it.target?.getIncomingChannelRegistrations(var1)
-                        is String -> it.target?.getIncomingChannelRegistrations(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Plugin 或 String 类型")
-                    })
+                .function("outgoingChannels", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.outgoingChannels) }
+                .function("getOutgoingChannels", returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
+                    it.setReturnRef(it.target?.getOutgoingChannels(it.getRef(0) as Plugin))
                 }
-                .function("getIncomingChannelRegistrations", returnsObject().params(Type.OBJECT, Type.STRING)) {
+                .function("incomingChannels", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.incomingChannels) }
+                .function("getIncomingChannels", returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
+                    it.setReturnRef(it.target?.getIncomingChannels(it.getRef(0) as Plugin))
+                }
+                .function("getIncomingChannelRegistrations", returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
+                    it.setReturnRef(it.target?.getIncomingChannelRegistrations(it.getRef(0) as Plugin))
+                }
+                .function("getIncomingChannelRegistrations", returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(Type.STRING)) {
+                    it.setReturnRef(it.target?.getIncomingChannelRegistrations(it.getString(0)!!))
+                }
+                .function("getIncomingChannelRegistrations", returns(org.tabooproject.fluxon.util.StandardTypes.SET).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.setReturnRef(it.target?.getIncomingChannelRegistrations(it.getRef(0) as Plugin, it.getString(1)!!))
                 }
-                .function("isRegistrationValid", returns(Type.Z).params(Type.OBJECT)) {
+                .function("isRegistrationValid",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.messaging.FnPluginMessageListenerRegistration.TYPE)) {
                     it.setReturnBool(it.target?.isRegistrationValid(it.getRef(0) as PluginMessageListenerRegistration) ?: false)
                 }
-                .function("isIncomingChannelRegistered", returns(Type.Z).params(Type.OBJECT, Type.STRING)) {
+                .function("isIncomingChannelRegistered",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.setReturnBool(it.target?.isIncomingChannelRegistered(it.getRef(0) as Plugin, it.getString(1)!!) ?: false)
                 }
-                .function("isOutgoingChannelRegistered", returns(Type.Z).params(Type.OBJECT, Type.STRING)) {
+                .function("isOutgoingChannelRegistered",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING)) {
                     it.setReturnBool(it.target?.isOutgoingChannelRegistered(it.getRef(0) as Plugin, it.getString(1)!!) ?: false)
                 }
-                .function("dispatchIncomingMessage", returnsVoid().params(Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("dispatchIncomingMessage", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE, Type.STRING, BYTE_ARRAY)) {
                     it.target?.dispatchIncomingMessage(
                         it.getRef(0) as Player,
                         it.getString(1)!!,

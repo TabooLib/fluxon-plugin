@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.SmithingTrimRecipe"])
@@ -20,7 +21,7 @@ object FnSmithingTrimRecipe {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SmithingTrimRecipe::class.java)
-                .function("template", returnsObject().noParams()) { it.setReturnRef(it.target?.template) }
+                .function("template", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE).noParams()) { it.setReturnRef(it.target?.template) }
         }
     }
 }

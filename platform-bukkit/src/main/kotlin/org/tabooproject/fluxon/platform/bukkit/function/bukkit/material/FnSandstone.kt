@@ -23,10 +23,10 @@ object FnSandstone {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sandstone::class.java)
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
-                .function("setType", returnsVoid().params(Type.OBJECT)) { it.target?.setType(it.getRef(0) as SandstoneType) }
+                .function("type",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSandstoneType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
+                .function("setType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSandstoneType.TYPE)) { it.target?.setType(it.getRef(0) as SandstoneType) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

@@ -23,10 +23,10 @@ object FnMerchant {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Merchant::class.java)
-                .function("recipes", returnsObject().noParams()) { it.setReturnRef(it.target?.recipes) }
-                .function("setRecipes", returnsVoid().params(Type.OBJECT)) { it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>) }
-                .function("getRecipe", returnsObject().params(Type.I)) { it.setReturnRef(it.target?.getRecipe(it.getInt(0).toInt())) }
-                .function("setRecipe", returnsVoid().params(Type.I, Type.OBJECT)) {
+                .function("recipes",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.recipes) }
+                .function("setRecipes",returnsVoid().params(Type.LIST)) { it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>) }
+                .function("getRecipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getRecipe(it.getInt(0).toInt())) }
+                .function("setRecipe",returnsVoid().params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE)) {
                     it.target?.setRecipe(
                         it.getInt(0).toInt(),
                         it.getRef(1) as MerchantRecipe
@@ -34,7 +34,7 @@ object FnMerchant {
                 }
                 .function("recipeCount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.recipeCount ?: 0) }
                 .function("isTrading", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTrading ?: false) }
-                .function("trader", returnsObject().noParams()) { it.setReturnRef(it.target?.trader) }
+                .function("trader",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnHumanEntity.TYPE).noParams()) { it.setReturnRef(it.target?.trader) }
         }
     }
 }

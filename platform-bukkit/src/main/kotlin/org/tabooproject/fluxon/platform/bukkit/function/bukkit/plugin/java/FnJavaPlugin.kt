@@ -24,18 +24,18 @@ object FnJavaPlugin {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(JavaPlugin::class.java)
-                .function("dataFolder", returnsObject().noParams()) { it.setReturnRef(it.target?.dataFolder) }
-                .function("pluginLoader", returnsObject().noParams()) { it.setReturnRef(it.target?.pluginLoader) }
-                .function("server", returnsObject().noParams()) { it.setReturnRef(it.target?.server) }
+                .function("dataFolder", returns(Type.FILE).noParams()) { it.setReturnRef(it.target?.dataFolder) }
+                .function("pluginLoader", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPluginLoader.TYPE).noParams()) { it.setReturnRef(it.target?.pluginLoader) }
+                .function("server", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnServer.TYPE).noParams()) { it.setReturnRef(it.target?.server) }
                 .function("isEnabled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEnabled ?: false) }
-                .function("description", returnsObject().noParams()) { it.setReturnRef(it.target?.description) }
-                .function("config", returnsObject().noParams()) { it.setReturnRef(it.target?.config) }
+                .function("description", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPluginDescriptionFile.TYPE).noParams()) { it.setReturnRef(it.target?.description) }
+                .function("config", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfiguration.TYPE).noParams()) { it.setReturnRef(it.target?.config) }
                 .function("reloadConfig", returnsVoid().noParams()) { it.target?.reloadConfig() }
                 .function("saveConfig", returnsVoid().noParams()) { it.target?.saveConfig() }
                 .function("saveDefaultConfig", returnsVoid().noParams()) { it.target?.saveDefaultConfig() }
                 .function("saveResource", returnsVoid().params(Type.STRING, Type.Z)) { it.target?.saveResource(it.getString(0)!!, it.getBool(1)) }
-                .function("getResource", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getResource(it.getString(0)!!)) }
-                .function("onCommand", returns(Type.Z).params(Type.OBJECT, Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("getResource", returns(Type.fromClass(java.io.InputStream::class.java)).params(Type.STRING)) { it.setReturnRef(it.target?.getResource(it.getString(0)!!)) }
+                .function("onCommand",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommand.TYPE, Type.STRING, org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY)) {
                     it.setReturnBool(it.target?.onCommand(
                         it.getRef(0) as CommandSender,
                         it.getRef(1) as Command,
@@ -43,7 +43,7 @@ object FnJavaPlugin {
                         it.getRef(3) as Array<String>
                     ) ?: false)
                 }
-                .function("onTabComplete", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.STRING, Type.OBJECT)) {
+                .function("onTabComplete",returns(Type.LIST).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommand.TYPE, Type.STRING, org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY)) {
                     it.setReturnRef(it.target?.onTabComplete(
                         it.getRef(0) as CommandSender,
                         it.getRef(1) as Command,
@@ -51,17 +51,17 @@ object FnJavaPlugin {
                         it.getRef(3) as Array<String>
                     ))
                 }
-                .function("getCommand", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.getCommand(it.getString(0)!!)) }
+                .function("getCommand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnPluginCommand.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getCommand(it.getString(0)!!)) }
                 .function("onLoad", returnsVoid().noParams()) { it.target?.onLoad() }
                 .function("onDisable", returnsVoid().noParams()) { it.target?.onDisable() }
                 .function("onEnable", returnsVoid().noParams()) { it.target?.onEnable() }
-                .function("getDefaultWorldGenerator", returnsObject().params(Type.STRING, Type.STRING)) {
+                .function("getDefaultWorldGenerator", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnChunkGenerator.TYPE).params(Type.STRING, Type.STRING)) {
                     it.setReturnRef(it.target?.getDefaultWorldGenerator(
                         it.getString(0)!!,
                         it.getString(1)
                     ))
                 }
-                .function("getDefaultBiomeProvider", returnsObject().params(Type.STRING, Type.STRING)) {
+                .function("getDefaultBiomeProvider", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnBiomeProvider.TYPE).params(Type.STRING, Type.STRING)) {
                     it.setReturnRef(it.target?.getDefaultBiomeProvider(
                         it.getString(0)!!,
                         it.getString(1)
@@ -69,10 +69,10 @@ object FnJavaPlugin {
                 }
                 .function("isNaggable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isNaggable ?: false) }
                 .function("setNaggable", returnsVoid().params(Type.Z)) { it.target?.setNaggable(it.getBool(0)) }
-                .function("logger", returnsObject().noParams()) { it.setReturnRef(it.target?.logger) }
+                .function("logger", returns(Type.fromClass(java.util.logging.Logger::class.java)).noParams()) { it.setReturnRef(it.target?.logger) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 // static
-                .function("getProvidingPlugin", returnsObject().params(Type.OBJECT)) { it.setReturnRef(JavaPlugin.getProvidingPlugin(it.getRef(0) as Class<*>)) }
+                .function("getProvidingPlugin",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.java.FnJavaPlugin.TYPE).params(Type.CLASS)) { it.setReturnRef(JavaPlugin.getProvidingPlugin(it.getRef(0) as Class<*>)) }
         }
     }
 }

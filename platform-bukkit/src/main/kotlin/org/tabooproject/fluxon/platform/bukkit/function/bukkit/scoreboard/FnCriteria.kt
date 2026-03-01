@@ -10,7 +10,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -26,20 +25,22 @@ object FnCriteria {
             registerExtension(Criteria::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
                 .function("isReadOnly", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isReadOnly ?: false) }
-                .function("defaultRenderType", returnsObject().noParams()) { it.setReturnRef(it.target?.defaultRenderType) }
+                .function("defaultRenderType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.TYPE).noParams()) { it.setReturnRef(it.target?.defaultRenderType) }
                 // static
-                .function("statistic", returnsObject().params(Type.OBJECT)) {
+                .function("statistic",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE)) {
                     it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic))
                 }
-                .function("statistic", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(when (val var2 = it.getRef(1)) {
-                        is Material -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                        is EntityType -> Criteria.statistic(it.getRef(0) as Statistic, var2)
-                        else -> throw IllegalArgumentException("第二个参数必须是 Material 或 EntityType 类型")
-                    })
+                .function("statistic", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic, it.getRef(1) as Material)) }
+                .function("statistic", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType)) }
+                .function("statistic", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, Type.STRING)) {
+                    org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.enumValue(it.getString(1))?.let { p1 ->
+                        it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic, p1))
+                    } ?: org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.enumValue(it.getString(1))?.let { p1 ->
+                        it.setReturnRef(Criteria.statistic(it.getRef(0) as Statistic, p1))
+                    }
                 }
                 // static
-                .function("create", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Criteria.create(it.getString(0)!!)) }
+                .function("create",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE).params(Type.STRING)) { it.setReturnRef(Criteria.create(it.getString(0)!!)) }
         }
     }
 }

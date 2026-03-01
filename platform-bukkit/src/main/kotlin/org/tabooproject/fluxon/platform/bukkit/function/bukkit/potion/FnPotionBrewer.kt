@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionBrewer"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,15 +23,15 @@ object FnPotionBrewer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionBrewer::class.java)
-                .function("createEffect", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("createEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.createEffect(
                         it.getRef(0) as PotionEffectType,
                         it.getInt(1).toInt(),
                         it.getInt(2).toInt()
                     ))
                 }
-                .function("getEffectsFromDamage", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.getEffectsFromDamage(it.getInt(0).toInt())) }
-                .function("getEffects", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+                .function("getEffectsFromDamage",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(Type.I)) { it.setReturnRef(it.target?.getEffectsFromDamage(it.getInt(0).toInt())) }
+                .function("getEffects",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionType.TYPE, Type.Z, Type.Z)) {
                     it.setReturnRef(it.target?.getEffects(
                         it.getRef(0) as PotionType,
                         it.getBool(1),

@@ -50,6 +50,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly(project(":common"))
     taboo("org.tabooproject.fluxon:core:1.6.10") { isTransitive = false }
     taboo("org.tabooproject.fluxon:inst-core:1.6.10") { isTransitive = false }
     compileOnly(kotlin("stdlib"))

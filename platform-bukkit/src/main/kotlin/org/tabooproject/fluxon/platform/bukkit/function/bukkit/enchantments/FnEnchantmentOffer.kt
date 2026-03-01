@@ -23,8 +23,8 @@ object FnEnchantmentOffer {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentOffer::class.java)
-                .function("enchantment", returnsObject().noParams()) { it.setReturnRef(it.target?.enchantment) }
-                .function("setEnchantment", returnsVoid().params(Type.OBJECT)) { it.target?.setEnchantment(it.getRef(0) as Enchantment) }
+                .function("enchantment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE).noParams()) { it.setReturnRef(it.target?.enchantment) }
+                .function("setEnchantment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.target?.setEnchantment(it.getRef(0) as Enchantment) }
                 .function("enchantmentLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.enchantmentLevel ?: 0) }
                 .function("setEnchantmentLevel", returnsVoid().params(Type.I)) { it.target?.setEnchantmentLevel(it.getInt(0).toInt()) }
                 .function("cost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cost ?: 0) }

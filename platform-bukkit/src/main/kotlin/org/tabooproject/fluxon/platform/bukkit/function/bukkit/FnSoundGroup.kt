@@ -23,11 +23,11 @@ object FnSoundGroup {
             registerExtension(SoundGroup::class.java)
                 .function("volume", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.volume ?: 0.0f) }
                 .function("pitch", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.pitch ?: 0.0f) }
-                .function("breakSound", returnsObject().noParams()) { it.setReturnRef(it.target?.breakSound) }
-                .function("stepSound", returnsObject().noParams()) { it.setReturnRef(it.target?.stepSound) }
-                .function("placeSound", returnsObject().noParams()) { it.setReturnRef(it.target?.placeSound) }
-                .function("hitSound", returnsObject().noParams()) { it.setReturnRef(it.target?.hitSound) }
-                .function("fallSound", returnsObject().noParams()) { it.setReturnRef(it.target?.fallSound) }
+                .function("breakSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.breakSound) }
+                .function("stepSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.stepSound) }
+                .function("placeSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.placeSound) }
+                .function("hitSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.hitSound) }
+                .function("fallSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.fallSound) }
         }
     }
 }

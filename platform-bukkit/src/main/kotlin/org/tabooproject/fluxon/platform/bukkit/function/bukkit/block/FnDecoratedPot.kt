@@ -60,7 +60,7 @@ object FnDecoratedPot {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.DecoratedPot.Side"])
+@Requires(classes = ["org.bukkit.block.DecoratedPot\$Side"])
 @PlatformSide(Platform.BUKKIT)
 object FnDecoratedPotSide : FnEnumGetter<DecoratedPot.Side>() {
 

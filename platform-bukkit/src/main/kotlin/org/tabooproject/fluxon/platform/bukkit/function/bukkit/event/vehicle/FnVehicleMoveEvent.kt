@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.vehicle.VehicleMoveEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,11 +21,11 @@ object FnVehicleMoveEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(VehicleMoveEvent::class.java)
-                .function("from", returnsObject().noParams()) { it.setReturnRef(it.target?.from) }
-                .function("to", returnsObject().noParams()) { it.setReturnRef(it.target?.to) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("from",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.from) }
+                .function("to",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.to) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(VehicleMoveEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(VehicleMoveEvent.getHandlerList()) }
         }
     }
 }

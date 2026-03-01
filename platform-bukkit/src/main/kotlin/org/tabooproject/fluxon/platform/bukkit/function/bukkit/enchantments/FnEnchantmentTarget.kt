@@ -9,26 +9,23 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.enchantments.EnchantmentTarget"])
 @PlatformSide(Platform.BUKKIT)
-object FnEnchantmentTarget {
+object FnEnchantmentTarget : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.enchantments.EnchantmentTarget>() {
 
-    val TYPE = Type.fromClass(EnchantmentTarget::class.java)
+    override val enumClass: Class<org.bukkit.enchantments.EnchantmentTarget> = org.bukkit.enchantments.EnchantmentTarget::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnchantmentTarget::class.java)
-                .function("includes", returnsObject().params(Type.OBJECT)) {
-                    it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Material -> it.target?.includes(var1)
-                        is ItemStack -> it.target?.includes(var1)
-                        else -> throw IllegalArgumentException("参数必须是 Material 或 ItemStack 类型")
-                    })
-                }
+                .function("includes", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnBool(it.target?.includes(it.getRef(0) as Material) ?: false) }
+                .function("includes", returns(Type.Z).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.enumValue(it.getString(0))?.let { p0 -> it.setReturnBool(it.target?.includes(p0) ?: false) } }
+                .function("includes", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnBool(it.target?.includes(it.getRef(0) as ItemStack) ?: false) }
         }
     }
 }

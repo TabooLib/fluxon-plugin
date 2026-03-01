@@ -7,7 +7,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
@@ -21,11 +20,11 @@ object FnRegisteredServiceProvider {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RegisteredServiceProvider::class.java)
-                .function("service", returnsObject().noParams()) { it.setReturnRef(it.target?.getService()) }
-                .function("plugin", returnsObject().noParams()) { it.setReturnRef(it.target?.plugin) }
-                .function("provider", returnsObject().noParams()) { it.setReturnRef(it.target?.getProvider()) }
-                .function("priority", returnsObject().noParams()) { it.setReturnRef(it.target?.priority) }
-                .function("compareTo", returns(Type.I).params(Type.OBJECT)) {
+                .function("service",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.getService()) }
+                .function("plugin",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE).noParams()) { it.setReturnRef(it.target?.plugin) }
+                .function("provider", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.getProvider()) }
+                .function("priority", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnServicePriority.TYPE).noParams()) { it.setReturnRef(it.target?.priority) }
+                .function("compareTo",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnRegisteredServiceProvider.TYPE)) {
                     it.setReturnInt(it.target?.compareTo(it.getRef(0) as RegisteredServiceProvider<*>) ?: 0)
                 }
         }

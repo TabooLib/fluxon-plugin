@@ -10,7 +10,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.FunctionSignature.returns
@@ -27,37 +26,27 @@ object FnPermissibleBase {
             registerExtension(PermissibleBase::class.java)
                 .function("isOp", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOp ?: false) }
                 .function("setOp", returnsVoid().params(Type.Z)) { it.target?.setOp(it.getBool(0)) }
-                .function("isPermissionSet", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(when (val var1 = it.getRef(0)) {
-                        is String -> it.target?.isPermissionSet(var1)
-                        is Permission -> it.target?.isPermissionSet(var1)
-                        else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
-                    } ?: false)
-                }
-                .function("hasPermission", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(when (val var1 = it.getRef(0)) {
-                        is String -> it.target?.hasPermission(var1)
-                        is Permission -> it.target?.hasPermission(var1)
-                        else -> throw IllegalArgumentException("参数必须是 String 或 Permission 类型")
-                    } ?: false)
-                }
-                .function("addAttachment", returnsObject().params(Type.OBJECT)) {
+                .function("isPermissionSet", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isPermissionSet(it.getString(0)!!) ?: false) }
+                .function("isPermissionSet", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE)) { it.setReturnBool(it.target?.isPermissionSet(it.getRef(0) as Permission) ?: false) }
+                .function("hasPermission", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.hasPermission(it.getString(0)!!) ?: false) }
+                .function("hasPermission", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermission.TYPE)) { it.setReturnBool(it.target?.hasPermission(it.getRef(0) as Permission) ?: false) }
+                .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE)) {
                     it.setReturnRef(it.target?.addAttachment(it.getRef(0) as Plugin))
                 }
-                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.I)) {
+                .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.addAttachment(
                         it.getRef(0) as Plugin,
                         it.getInt(1).toInt()
                     ))
                 }
-                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.STRING, Type.Z)) {
+                .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, Type.Z)) {
                     it.setReturnRef(it.target?.addAttachment(
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
                         it.getBool(2)
                     ))
                 }
-                .function("addAttachment", returnsObject().params(Type.OBJECT, Type.STRING, Type.Z, Type.I)) {
+                .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, Type.Z, Type.I)) {
                     it.setReturnRef(it.target?.addAttachment(
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
@@ -65,14 +54,14 @@ object FnPermissibleBase {
                         it.getInt(3).toInt()
                     ))
                 }
-                .function("removeAttachment", returnsVoid().params(Type.OBJECT)) {
+                .function("removeAttachment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE)) {
                     it.target?.removeAttachment(it.getRef(0) as PermissionAttachment)
                 }
                 .function("recalculatePermissions", returnsVoid().noParams()) { it.target?.recalculatePermissions() }
-                .function("effectivePermissions", returnsObject().noParams()) { it.setReturnRef(it.target?.effectivePermissions) }
+                .function("effectivePermissions",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.effectivePermissions) }
 
 //            registerExtension(PermissibleBase.RemoveAttachmentRunnable::class.java)
-//                .function("run", returnsObject().noParams()) { it.setReturnRef(it.target?.run()) }
+//                .function("run", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.run()) }
         }
     }
 }

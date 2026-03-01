@@ -11,6 +11,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.entity.EntitySnapshot"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,14 +23,14 @@ object FnEntitySnapshot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntitySnapshot::class.java)
-                .function("createEntity", returnsObject().params(Type.OBJECT)) {
+                .function("createEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(when (val var1 = it.getRef(0)) {
                         is World -> it.target?.createEntity(var1)
                         is Location -> it.target?.createEntity(var1)
                         else -> throw IllegalArgumentException("参数必须是 World 或 Location 类型")
                     })
                 }
-                .function("entityType", returnsObject().noParams()) { it.setReturnRef(it.target?.entityType) }
+                .function("entityType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.entityType) }
         }
     }
 }

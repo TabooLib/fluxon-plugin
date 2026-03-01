@@ -60,16 +60,16 @@ object FnFishHook {
                 .function("biteChance", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.biteChance ?: 0.0) }
                 .function("setBiteChance", returnsVoid().params(Type.D)) { it.target?.setBiteChance(it.getDouble(0)) }
                 .function("isInOpenWater", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInOpenWater ?: false) }
-                .function("hookedEntity", returnsObject().noParams()) { it.setReturnRef(it.target?.hookedEntity) }
-                .function("setHookedEntity", returnsVoid().params(Type.OBJECT)) { it.target?.setHookedEntity(it.getRef(0) as Entity) }
+                .function("hookedEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.hookedEntity) }
+                .function("setHookedEntity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setHookedEntity(it.getRef(0) as Entity) }
                 .function("pullHookedEntity", returnsVoid().noParams()) { it.target?.pullHookedEntity() }
                 .function("isSkyInfluenced", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSkyInfluenced ?: false) }
                 .function("setSkyInfluenced", returnsVoid().params(Type.Z)) { it.target?.setSkyInfluenced(it.getBool(0)) }
                 .function("isRainInfluenced", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isRainInfluenced ?: false) }
                 .function("setRainInfluenced", returnsVoid().params(Type.Z)) { it.target?.setRainInfluenced(it.getBool(0)) }
-                .function("state", returnsObject().noParams()) { it.setReturnRef(it.target?.state) }
-//                .function("waitTime", returnsObject().noParams()) { it.setReturnRef(it.target?.waitTime) }
-//                .function("setWaitTime", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.apply { waitTime = it.getInt(0).toInt() }) }
+                .function("state", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFishHookHookState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
+//                .function("waitTime",returns(Type.I).noParams()) { it.setReturnRef(it.target?.waitTime) }
+//                .function("setWaitTime",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { waitTime = it.getInt(0).toInt() }) }
         }
     }
 }

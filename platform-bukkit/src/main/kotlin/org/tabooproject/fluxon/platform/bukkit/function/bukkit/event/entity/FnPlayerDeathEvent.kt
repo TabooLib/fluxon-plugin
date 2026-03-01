@@ -22,7 +22,7 @@ object FnPlayerDeathEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerDeathEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.getEntity()) }
+                .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("setDeathMessage", returnsVoid().params(Type.STRING)) { it.target?.setDeathMessage(it.getString(0)) }
                 .function("deathMessage", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.deathMessage) }
                 .function("newExp", returns(Type.I).noParams()) { it.setReturnInt(it.target?.newExp ?: 0) }

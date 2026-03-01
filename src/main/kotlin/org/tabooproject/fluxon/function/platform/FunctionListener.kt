@@ -7,6 +7,7 @@ import org.tabooproject.fluxon.runtime.FunctionContext
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.util.StandardTypes
 import org.tabooproject.fluxon.util.getFluxonScript
 import org.tabooproject.fluxon.util.invokeInline
 import taboolib.common.LifeCycle
@@ -25,7 +26,7 @@ object FunctionListener {
             // 注册扩展函数
             registerExtensionFunction(ProxyListener::class.java, null, "cancel", returnsVoid().noParams(), { unregisterListener(it.target!!) }, false, false)
             // listenBukkit - 2 参数
-            registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+            registerFunction("listenBukkit", returnsVoid().params(Type.CLASS, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -42,7 +43,8 @@ object FunctionListener {
                 })
             }
             // listenBukkit - 3 参数 (class, priority/ignoreCancelled, fn)
-            registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+            // FIXME Type.OBJECT
+            registerFunction("listenBukkit", returnsVoid().params(Type.CLASS, Type.OBJECT, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -61,7 +63,8 @@ object FunctionListener {
                 })
             }
             // listenBukkit - 4 参数 (class, priority, ignoreCancelled, fn)
-            registerFunction("listenBukkit", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.Z, Type.OBJECT)) {
+            // FIXME Type.OBJECT
+            registerFunction("listenBukkit", returnsVoid().params(Type.CLASS, Type.OBJECT, Type.Z, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -80,7 +83,7 @@ object FunctionListener {
                 })
             }
             // listenBungee - 2 参数
-            registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+            registerFunction("listenBungee", returnsVoid().params(Type.CLASS, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -97,7 +100,7 @@ object FunctionListener {
                 })
             }
             // listenBungee - 3 参数
-            registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+            registerFunction("listenBungee", returnsVoid().params(Type.CLASS, Type.OBJECT, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -117,7 +120,7 @@ object FunctionListener {
                 })
             }
             // listenBungee - 4 参数
-            registerFunction("listenBungee", returnsObject().params(Type.OBJECT, Type.I, Type.Z, Type.OBJECT)) {
+            registerFunction("listenBungee", returnsVoid().params(Type.CLASS, Type.I, Type.Z, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -136,7 +139,7 @@ object FunctionListener {
                 })
             }
             // listenVelocity - 2 参数
-            registerFunction("listenVelocity", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+            registerFunction("listenVelocity", returnsVoid().params(Type.CLASS, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {
@@ -153,7 +156,7 @@ object FunctionListener {
                 })
             }
             // listenVelocity - 3 参数
-            registerFunction("listenVelocity", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
+            registerFunction("listenVelocity", returnsVoid().params(Type.CLASS, Type.OBJECT, StandardTypes.FLUXON_FUNCTION)) {
                 val env = it.environment
                 val script = env.getFluxonScript()
                 it.setReturnRef(if (script == null) {

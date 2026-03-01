@@ -7,7 +7,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.util.ChatPaginator"])
@@ -21,10 +21,10 @@ object FnChatPaginator {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator::class.java)
                 // static
-                .function("paginate", returnsObject().params(Type.STRING, Type.I)) {
+                .function("paginate", returns(FnChatPaginatorChatPage.TYPE).params(Type.STRING, Type.I)) {
                     it.setReturnRef(ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt()))
                 }
-                .function("paginate", returnsObject().params(Type.STRING, Type.I, Type.I, Type.I)) {
+                .function("paginate", returns(FnChatPaginatorChatPage.TYPE).params(Type.STRING, Type.I, Type.I, Type.I)) {
                     it.setReturnRef(ChatPaginator.paginate(
                         it.getString(0),
                         it.getInt(1).toInt(),
@@ -33,12 +33,14 @@ object FnChatPaginator {
                     ))
                 }
                 // static
-                .function("wordWrap", returnsObject().params(Type.OBJECT, Type.OBJECT)) { it.setReturnRef(ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt())) }
+                .function("wordWrap", returns(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY).params(Type.STRING, Type.I)) {
+                    it.setReturnRef(ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt()))
+                }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.util.ChatPaginator.ChatPage"])
+@Requires(classes = ["org.bukkit.util.ChatPaginator\$ChatPage"])
 @PlatformSide(Platform.BUKKIT)
 object FnChatPaginatorChatPage {
 
@@ -48,9 +50,9 @@ object FnChatPaginatorChatPage {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChatPaginator.ChatPage::class.java)
-                .function("pageNumber", returnsObject().noParams()) { it.setReturnRef(it.target?.pageNumber) }
-                .function("totalPages", returnsObject().noParams()) { it.setReturnRef(it.target?.totalPages) }
-                .function("lines", returnsObject().noParams()) { it.setReturnRef(it.target?.lines) }
+                .function("pageNumber", returns(Type.I).noParams()) { it.setReturnInt(it.target?.pageNumber ?: 0) }
+                .function("totalPages", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalPages ?: 0) }
+                .function("lines", returns(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.lines) }
         }
     }
 }

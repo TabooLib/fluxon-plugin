@@ -22,10 +22,10 @@ object FnTag {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tag::class.java)
-                .function("isTagged", returns(Type.Z).params(Type.OBJECT)) {
+                .function("isTagged",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnKeyed.TYPE)) {
                     it.setReturnBool((it.target as? Tag<Keyed>)?.isTagged(it.getRef(0) as Keyed) ?: false)
                 }
-                .function("values", returnsObject().noParams()) { it.setReturnRef(it.target?.getValues()) }
+                .function("values",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.getValues()) }
         }
     }
 }

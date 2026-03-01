@@ -25,18 +25,18 @@ object FnDoor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Door::class.java)
                 // static
-                .function("getWoodDoorOfSpecies", returnsObject().params(Type.OBJECT)) { it.setReturnRef(Door.getWoodDoorOfSpecies(it.getRef(0) as TreeSpecies)) }
+                .function("getWoodDoorOfSpecies",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeSpecies.TYPE)) { it.setReturnRef(Door.getWoodDoorOfSpecies(it.getRef(0) as TreeSpecies)) }
                 .function("isOpen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOpen ?: false) }
                 .function("setOpen", returnsVoid().params(Type.Z)) { it.target?.setOpen(it.getBool(0)) }
                 .function("isTopHalf", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTopHalf ?: false) }
                 .function("setTopHalf", returnsVoid().params(Type.Z)) { it.target?.setTopHalf(it.getBool(0)) }
-                .function("hingeCorner", returnsObject().noParams()) { it.setReturnRef(it.target?.hingeCorner) }
+                .function("hingeCorner",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.hingeCorner) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("setFacingDirection", returnsVoid().params(Type.OBJECT)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
-                .function("facing", returnsObject().noParams()) { it.setReturnRef(it.target?.facing) }
-                .function("hinge", returnsObject().noParams()) { it.setReturnRef(it.target?.hinge) }
+                .function("setFacingDirection",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.setFacingDirection(it.getRef(0) as BlockFace) }
+                .function("facing",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.facing) }
+                .function("hinge",returns(Type.Z).noParams()) { it.setReturnRef(it.target?.hinge) }
                 .function("setHinge", returnsVoid().params(Type.Z)) { it.target?.setHinge(it.getBool(0)) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

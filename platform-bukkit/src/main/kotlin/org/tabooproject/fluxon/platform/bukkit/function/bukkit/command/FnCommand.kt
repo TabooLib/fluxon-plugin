@@ -25,8 +25,8 @@ object FnCommand {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Command::class.java)
-//                .function("timings", returnsObject().noParams()) { it.setReturnRef(it.target?.timings) }
-//                .function("setTimings", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.timings = it.getRef(0) as CustomTimingsHandler) }
+//                .function("timings", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.timings) }
+//                .function("setTimings", returns(Type.OBJECT).params(Type.OBJECT)) { it.setReturnRef(it.target?.timings = it.getRef(0) as CustomTimingsHandler) }
                 .function("execute", returns(Type.Z).params(FnCommandSender.TYPE, Type.STRING, Type.LIST)) {
                     it.setReturnBool(it.target?.execute(
                         it.getRef(0) as CommandSender,
@@ -62,7 +62,7 @@ object FnCommand {
                 }
                 .function("label", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.label) }
                 .function("setLabel", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.setLabel(it.getString(0)!!) ?: false) }
-                .function("register", returns(Type.Z).params(Type.OBJECT)) {
+                .function("register",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandMap.TYPE)) {
                     it.setReturnBool(it.target?.register(it.getRef(0) as CommandMap) ?: false)
                 }
                 .function("unregister", returns(Type.Z).params(FnCommandMap.TYPE)) {

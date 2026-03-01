@@ -64,7 +64,7 @@ object FnRedstoneWire {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.RedstoneWire.Connection"])
+@Requires(classes = ["org.bukkit.block.data.type.RedstoneWire\$Connection"])
 @PlatformSide(Platform.BUKKIT)
 object FnRedstoneWireConnection : FnEnumGetter<RedstoneWire.Connection>() {
 

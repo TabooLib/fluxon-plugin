@@ -23,10 +23,10 @@ object FnFlowerPot {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FlowerPot::class.java)
-                .function("contents", returnsObject().noParams()) { it.setReturnRef(it.target?.contents) }
-                .function("setContents", returnsVoid().params(Type.OBJECT)) { it.target?.setContents(it.getRef(0) as MaterialData) }
+                .function("contents",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.contents) }
+                .function("setContents",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setContents(it.getRef(0) as MaterialData) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

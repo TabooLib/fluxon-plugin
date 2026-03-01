@@ -8,7 +8,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Registry"])
@@ -21,15 +21,15 @@ object FnRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry::class.java)
-                .function("get", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
-                .function("stream", returnsObject().noParams()) { it.setReturnRef(it.target?.stream()) }
-                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
-                .function("match", returnsObject().params(Type.STRING)) { it.setReturnRef(it.target?.match(it.getString(0)!!)) }
+                .function("get",returns(Type.OBJECT).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
+                .function("stream", returns(Type.fromClass(java.util.stream.Stream::class.java)).noParams()) { it.setReturnRef(it.target?.stream()) }
+                .function("iterator", returns(Type.fromClass(java.util.Iterator::class.java)).noParams()) { it.setReturnRef(it.target?.iterator()) }
+                .function("match", returns(Type.OBJECT).params(Type.STRING)) { it.setReturnRef(it.target?.match(it.getString(0)!!)) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.Registry.SimpleRegistry"])
+@Requires(classes = ["org.bukkit.Registry\$SimpleRegistry"])
 @PlatformSide(Platform.BUKKIT)
 object FnRegistrySimpleRegistry {
 
@@ -39,10 +39,10 @@ object FnRegistrySimpleRegistry {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Registry.SimpleRegistry::class.java)
-                .function("get", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
-                .function("stream", returnsObject().noParams()) { it.setReturnRef(it.target?.stream()) }
-                .function("iterator", returnsObject().noParams()) { it.setReturnRef(it.target?.iterator()) }
-                .function("type", returnsObject().noParams()) { it.setReturnRef(it.target?.type) }
+                .function("get",returns(Type.OBJECT).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE)) { it.setReturnRef(it.target?.get(it.getRef(0) as NamespacedKey)) }
+                .function("stream", returns(Type.fromClass(java.util.stream.Stream::class.java)).noParams()) { it.setReturnRef(it.target?.stream()) }
+                .function("iterator", returns(Type.fromClass(java.util.Iterator::class.java)).noParams()) { it.setReturnRef(it.target?.iterator()) }
+                .function("type", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.type) }
         }
     }
 }

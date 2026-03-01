@@ -13,9 +13,10 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.WorldType"])
 @PlatformSide(Platform.BUKKIT)
-object FnWorldType {
+object FnWorldType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.WorldType>() {
 
-    val TYPE = Type.fromClass(WorldType::class.java)
+    override val enumClass: Class<org.bukkit.WorldType> = org.bukkit.WorldType::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -23,7 +24,7 @@ object FnWorldType {
             registerExtension(WorldType::class.java)
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.getName()) }
                 // static
-                .function("getByName", returnsObject().params(Type.STRING)) { it.setReturnRef(WorldType.getByName(it.getString(0)!!)) }
+                .function("getByName", returns(TYPE).params(Type.STRING)) { it.setReturnRef(WorldType.getByName(it.getString(0)!!)) }
         }
     }
 }

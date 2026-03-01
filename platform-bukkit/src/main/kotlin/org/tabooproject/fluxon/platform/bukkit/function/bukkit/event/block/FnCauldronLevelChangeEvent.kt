@@ -34,7 +34,7 @@ object FnCauldronLevelChangeEvent {
     }
 }
 
-@Requires(classes = ["org.bukkit.event.block.CauldronLevelChangeEvent.ChangeReason"])
+@Requires(classes = ["org.bukkit.event.block.CauldronLevelChangeEvent\$ChangeReason"])
 @PlatformSide(Platform.BUKKIT)
 object FnCauldronLevelChangeEventChangeReason : FnEnumGetter<CauldronLevelChangeEvent.ChangeReason>() {
 

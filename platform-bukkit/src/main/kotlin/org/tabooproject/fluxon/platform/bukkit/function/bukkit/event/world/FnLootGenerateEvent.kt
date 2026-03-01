@@ -23,18 +23,16 @@ object FnLootGenerateEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(LootGenerateEvent::class.java)
-                .function("entity", returnsObject().noParams()) { it.setReturnRef(it.target?.entity) }
-                .function("inventoryHolder", returnsObject().noParams()) { it.setReturnRef(it.target?.inventoryHolder) }
-                .function("lootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.lootTable) }
-                .function("lootContext", returnsObject().noParams()) { it.setReturnRef(it.target?.lootContext) }
-                .function("setLoot", returnsVoid().params(Type.OBJECT)) { it.target?.setLoot(it.getRef(0) as Collection<ItemStack>) }
-                .function("loot", returnsObject().noParams()) { it.setReturnRef(it.target?.loot) }
+                .function("entity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
+                .function("inventoryHolder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryHolder.TYPE).noParams()) { it.setReturnRef(it.target?.inventoryHolder) }
+                .function("lootTable",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.loot.FnLootTable.TYPE).noParams()) { it.setReturnRef(it.target?.lootTable) }
+                .function("lootContext",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.loot.FnLootContext.TYPE).noParams()) { it.setReturnRef(it.target?.lootContext) }
+                .function("setLoot",returnsVoid().params(org.tabooproject.fluxon.util.StandardTypes.COLLECTION)) { it.target?.setLoot(it.getRef(0) as Collection<ItemStack>) }
+                .function("loot",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.loot) }
                 .function("isPlugin", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlugin ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(LootGenerateEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(LootGenerateEvent.getHandlerList()) }
         }
     }
 }

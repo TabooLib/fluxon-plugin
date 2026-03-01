@@ -23,15 +23,15 @@ object FnPlayerProfile {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerProfile::class.java)
-                .function("uniqueId", returnsObject().noParams()) { it.setReturnRef(it.target?.uniqueId) }
+                .function("uniqueId",returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.uniqueId) }
                 .function("name", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.name) }
-                .function("textures", returnsObject().noParams()) { it.setReturnRef(it.target?.textures) }
-                .function("setTextures", returnsVoid().params(Type.OBJECT)) {
+                .function("textures",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.profile.FnPlayerTextures.TYPE).noParams()) { it.setReturnRef(it.target?.textures) }
+                .function("setTextures",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.profile.FnPlayerTextures.TYPE)) {
                     it.target?.setTextures(it.getRef(0) as PlayerTextures)
                 }
                 .function("isComplete", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isComplete ?: false) }
-                .function("update", returnsObject().noParams()) { it.setReturnRef(it.target?.update()) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("update", returns(Type.fromClass(java.util.concurrent.CompletableFuture::class.java)).noParams()) { it.setReturnRef(it.target?.update()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.profile.FnPlayerProfile.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

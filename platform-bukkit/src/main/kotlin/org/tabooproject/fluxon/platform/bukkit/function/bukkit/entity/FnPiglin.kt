@@ -25,20 +25,20 @@ object FnPiglin {
             registerExtension(Piglin::class.java)
                 .function("isAbleToHunt", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAbleToHunt ?: false) }
                 .function("setIsAbleToHunt", returnsVoid().params(Type.Z)) { it.target?.setIsAbleToHunt(it.getBool(0)) }
-                .function("addBarterMaterial", returns(Type.Z).params(Type.OBJECT)) {
+                .function("addBarterMaterial",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) {
                     it.setReturnBool(it.target?.addBarterMaterial(it.getRef(0) as Material) == true)
                 }
-                .function("removeBarterMaterial", returns(Type.Z).params(Type.OBJECT)) {
+                .function("removeBarterMaterial",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) {
                     it.setReturnBool(it.target?.removeBarterMaterial(it.getRef(0) as Material) == true)
                 }
-                .function("addMaterialOfInterest", returns(Type.Z).params(Type.OBJECT)) {
+                .function("addMaterialOfInterest",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) {
                     it.setReturnBool(it.target?.addMaterialOfInterest(it.getRef(0) as Material) == true)
                 }
-                .function("removeMaterialOfInterest", returns(Type.Z).params(Type.OBJECT)) {
+                .function("removeMaterialOfInterest",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) {
                     it.setReturnBool(it.target?.removeMaterialOfInterest(it.getRef(0) as Material) == true)
                 }
-                .function("interestList", returnsObject().noParams()) { it.setReturnRef(it.target?.interestList) }
-                .function("barterList", returnsObject().noParams()) { it.setReturnRef(it.target?.barterList) }
+                .function("interestList",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.interestList) }
+                .function("barterList",returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.barterList) }
         }
     }
 }

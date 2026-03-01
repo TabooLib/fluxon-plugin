@@ -8,8 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.persistence.PersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
@@ -21,15 +21,15 @@ object FnPersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType::class.java)
-                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
-                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
-                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("primitiveType",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.primitiveType) }
+                .function("complexType",returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.complexType) }
+                .function("toPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? PersistentDataType<Any, Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as PersistentDataAdapterContext
                     ))
                 }
-                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("fromPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? PersistentDataType<Any, Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as PersistentDataAdapterContext
@@ -39,7 +39,7 @@ object FnPersistentDataType {
     }
 }
 
-@Requires(classes = ["org.bukkit.persistence.PersistentDataType.PrimitivePersistentDataType"])
+@Requires(classes = ["org.bukkit.persistence.PersistentDataType\$PrimitivePersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataTypePrimitivePersistentDataType {
 
@@ -49,15 +49,15 @@ object FnPersistentDataTypePrimitivePersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.PrimitivePersistentDataType::class.java)
-                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
-                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
-                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("primitiveType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.primitiveType) }
+                .function("complexType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.complexType) }
+                .function("toPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? PersistentDataType<Any, Any>)?.toPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as PersistentDataAdapterContext
                     ))
                 }
-                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
+                .function("fromPrimitive",returns(Type.OBJECT).params(Type.OBJECT, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
                     it.setReturnRef((it.target as? PersistentDataType<Any, Any>)?.fromPrimitive(
                         it.getRef(0)!!,
                         it.getRef(1) as PersistentDataAdapterContext
@@ -67,7 +67,7 @@ object FnPersistentDataTypePrimitivePersistentDataType {
     }
 }
 
-@Requires(classes = ["org.bukkit.persistence.PersistentDataType.BooleanPersistentDataType"])
+@Requires(classes = ["org.bukkit.persistence.PersistentDataType\$BooleanPersistentDataType"])
 @PlatformSide(Platform.BUKKIT)
 object FnPersistentDataTypeBooleanPersistentDataType {
 
@@ -77,19 +77,19 @@ object FnPersistentDataTypeBooleanPersistentDataType {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PersistentDataType.BooleanPersistentDataType::class.java)
-                .function("primitiveType", returnsObject().noParams()) { it.setReturnRef(it.target?.primitiveType) }
-                .function("complexType", returnsObject().noParams()) { it.setReturnRef(it.target?.complexType) }
-                .function("toPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef((it.target as? PersistentDataType<Byte, Boolean>)?.toPrimitive(
+                .function("primitiveType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.primitiveType) }
+                .function("complexType", returns(Type.CLASS).noParams()) { it.setReturnRef(it.target?.complexType) }
+                .function("toPrimitive", returns(Type.I).params(Type.Z, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
+                    it.setReturnInt(((it.target as? PersistentDataType<Byte, Boolean>)?.toPrimitive(
                         it.getBool(0),
                         it.getRef(1) as PersistentDataAdapterContext
-                    ))
+                    ) ?: 0).toInt())
                 }
-                .function("fromPrimitive", returnsObject().params(Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef((it.target as? PersistentDataType<Byte, Boolean>)?.fromPrimitive(
-                        it.getRef(0) as Byte,
+                .function("fromPrimitive", returns(Type.Z).params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
+                    it.setReturnBool((it.target as? PersistentDataType<Byte, Boolean>)?.fromPrimitive(
+                        it.getInt(0).toByte(),
                         it.getRef(1) as PersistentDataAdapterContext
-                    ))
+                    ) ?: false)
                 }
         }
     }

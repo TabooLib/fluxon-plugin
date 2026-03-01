@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.DecoratedPotInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,9 +23,9 @@ object FnDecoratedPotInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(DecoratedPotInventory::class.java)
-                .function("setItem", returnsVoid().params(Type.OBJECT)) { it.target?.setItem(it.getRef(0) as ItemStack) }
-                .function("item", returnsObject().noParams()) { it.setReturnRef(it.target?.item) }
-                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
+                .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
+                .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
+                .function("holder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnDecoratedPot.TYPE).noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

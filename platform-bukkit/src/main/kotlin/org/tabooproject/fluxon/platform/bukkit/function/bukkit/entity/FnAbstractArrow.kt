@@ -22,7 +22,7 @@ object FnAbstractArrow {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AbstractArrow::class.java)
-                .function("attachedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.let { arrow -> if (arrow.isInBlock) arrow.attachedBlock else null }) }
+                .function("attachedBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.let { arrow -> if (arrow.isInBlock) arrow.attachedBlock else null }) }
                 .function("isCanPickup", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.pickupStatus == AbstractArrow.PickupStatus.ALLOWED) }
                 .function("isCannotPickup", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.pickupStatus == AbstractArrow.PickupStatus.DISALLOWED) }
                 .function("isCreativeOnlyPickup", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.pickupStatus == AbstractArrow.PickupStatus.CREATIVE_ONLY) }
@@ -35,9 +35,10 @@ object FnAbstractArrow {
                 .function("isCritical", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCritical ?: false) }
                 .function("setCritical", returnsVoid().params(Type.Z)) { it.target?.setCritical(it.getBool(0)) }
                 .function("isInBlock", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInBlock ?: false) }
-                .function("attachedBlock", returnsObject().noParams()) { it.setReturnRef(it.target?.attachedBlock) }
-                .function("pickupStatus", returnsObject().noParams()) { it.setReturnRef(it.target?.pickupStatus) }
-                .function("setPickupStatus", returnsVoid().params(Type.OBJECT)) { it.target?.setPickupStatus(it.getRef(0) as AbstractArrow.PickupStatus) }
+                .function("attachedBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.attachedBlock) }
+                .function("pickupStatus", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAbstractArrowPickupStatus.TYPE).noParams()) { it.setReturnRef(it.target?.pickupStatus) }
+                .function("setPickupStatus", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAbstractArrowPickupStatus.TYPE)) { it.target?.setPickupStatus(it.getRef(0) as AbstractArrow.PickupStatus)  }
+                .function("setPickupStatus", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAbstractArrowPickupStatus.enumValue(it.getString(0))?.let { p0 -> it.target?.setPickupStatus(p0)  } }
                 .function("isShotFromCrossbow", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShotFromCrossbow ?: false) }
                 .function("setShotFromCrossbow", returnsVoid().params(Type.Z)) { it.target?.setShotFromCrossbow(it.getBool(0)) }
         }

@@ -36,7 +36,7 @@ object FnVault {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.Vault.State"])
+@Requires(classes = ["org.bukkit.block.data.type.Vault\$State"])
 @PlatformSide(Platform.BUKKIT)
 object FnVaultState : FnEnumGetter<Vault.State>() {
 

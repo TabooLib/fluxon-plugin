@@ -23,9 +23,10 @@ object FnAxolotlBucketMeta {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AxolotlBucketMeta::class.java)
-                .function("setVariant", returnsVoid().params(Type.OBJECT)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant) }
+                .function("setVariant", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAxolotlVariant.TYPE)) { it.target?.setVariant(it.getRef(0) as Axolotl.Variant)  }
+                .function("setVariant", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnAxolotlVariant.enumValue(it.getString(0))?.let { p0 -> it.target?.setVariant(p0)  } }
                 .function("hasVariant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasVariant() ?: false) }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnAxolotlBucketMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

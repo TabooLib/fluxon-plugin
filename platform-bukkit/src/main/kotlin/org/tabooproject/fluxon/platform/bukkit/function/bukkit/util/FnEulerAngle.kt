@@ -24,27 +24,23 @@ object FnEulerAngle {
                 .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.x ?: 0.0) }
                 .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.y ?: 0.0) }
                 .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.z ?: 0.0) }
-                .function("setX", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setX(it.getDouble(0))) }
-                .function("setY", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setY(it.getDouble(0))) }
-                .function("setZ", returnsObject().params(Type.D)) { it.setReturnRef(it.target?.setZ(it.getDouble(0))) }
-                .function("add", returnsObject().params(Type.D, Type.D, Type.D)) {
+                .function("setX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setX(it.getDouble(0))) }
+                .function("setY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setY(it.getDouble(0))) }
+                .function("setZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setZ(it.getDouble(0))) }
+                .function("add",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.add(
                         it.getDouble(0),
                         it.getDouble(1),
                         it.getDouble(2)
                     ))
                 }
-                .function("subtract", returnsObject().params(Type.D, Type.D, Type.D)) {
+                .function("subtract",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.subtract(
                         it.getDouble(0),
                         it.getDouble(1),
                         it.getDouble(2)
                     ))
                 }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
         }
     }
 }

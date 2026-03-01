@@ -27,7 +27,7 @@ object FnPointedDripstone {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PointedDripstone::class.java)
                 .function("verticalDirection", returns(FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.verticalDirection) }
-                .function("setVerticalDirection", returnsVoid().params(Type.OBJECT)) { it.target?.setVerticalDirection(it.getRef(0) as BlockFace) }
+                .function("setVerticalDirection",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE)) { it.target?.setVerticalDirection(it.getRef(0) as BlockFace) }
                 .function("verticalDirections", returns(StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.verticalDirections) }
                 .function("thickness", returns(FnPointedDripstoneThickness.TYPE).noParams()) { it.setReturnRef(it.target?.thickness) }
                 .function("setThickness", returnsVoid().params(FnPointedDripstoneThickness.TYPE)) { it.target?.setThickness(it.getRef(0) as PointedDripstone.Thickness) }
@@ -41,7 +41,7 @@ object FnPointedDripstone {
     }
 }
 
-@Requires(classes = ["org.bukkit.block.data.type.PointedDripstone.Thickness"])
+@Requires(classes = ["org.bukkit.block.data.type.PointedDripstone\$Thickness"])
 @PlatformSide(Platform.BUKKIT)
 object FnPointedDripstoneThickness : FnEnumGetter<PointedDripstone.Thickness>() {
 

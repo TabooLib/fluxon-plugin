@@ -22,9 +22,10 @@ object FnEnderDragon {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EnderDragon::class.java)
-                .function("phase", returnsObject().noParams()) { it.setReturnRef(it.target?.phase) }
-                .function("setPhase", returnsVoid().params(Type.OBJECT)) { it.target?.setPhase(it.getRef(0) as EnderDragon.Phase) }
-                .function("dragonBattle", returnsObject().noParams()) { it.setReturnRef(it.target?.dragonBattle) }
+                .function("phase", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEnderDragonPhase.TYPE).noParams()) { it.setReturnRef(it.target?.phase) }
+                .function("setPhase", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEnderDragonPhase.TYPE)) { it.target?.setPhase(it.getRef(0) as EnderDragon.Phase)  }
+                .function("setPhase", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEnderDragonPhase.enumValue(it.getString(0))?.let { p0 -> it.target?.setPhase(p0)  } }
+                .function("dragonBattle",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnDragonBattle.TYPE).noParams()) { it.setReturnRef(it.target?.dragonBattle) }
                 .function("deathAnimationTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.deathAnimationTicks ?: 0) }
         }
     }

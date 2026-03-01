@@ -27,7 +27,7 @@ object FnServerTickManager {
                 .function("isStepping", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isStepping ?: false) }
                 .function("isSprinting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSprinting ?: false) }
                 .function("isFrozen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFrozen ?: false) }
-                .function("isFrozen", returns(Type.Z).params(Type.OBJECT)) {
+                .function("isFrozen",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
                     it.setReturnBool(it.target?.isFrozen(it.getRef(0) as Entity) ?: false)
                 }
                 .function("tickRate", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.tickRate ?: 0.0f) }

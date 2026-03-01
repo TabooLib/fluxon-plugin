@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.inventory.ItemCraftResult"])
@@ -20,9 +21,9 @@ object FnItemCraftResult {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ItemCraftResult::class.java)
-                .function("result", returnsObject().noParams()) { it.setReturnRef(it.target?.result) }
-                .function("resultingMatrix", returnsObject().noParams()) { it.setReturnRef(it.target?.resultingMatrix) }
-                .function("overflowItems", returnsObject().noParams()) { it.setReturnRef(it.target?.overflowItems) }
+                .function("result", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
+                .function("resultingMatrix", returns(Type.fromClass(Array<org.bukkit.inventory.ItemStack>::class.java)).noParams()) { it.setReturnRef(it.target?.resultingMatrix) }
+                .function("overflowItems", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.overflowItems) }
         }
     }
 }

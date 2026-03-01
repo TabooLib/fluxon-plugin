@@ -66,7 +66,7 @@ object FnPerlinNoiseGenerator {
                     ))
                 }
                 // static
-                .function("instance", returnsObject().noParams()) {
+                .function("instance",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.noise.FnPerlinNoiseGenerator.TYPE).noParams()) {
                     it.setReturnRef(PerlinNoiseGenerator.getInstance())
                 }
         }

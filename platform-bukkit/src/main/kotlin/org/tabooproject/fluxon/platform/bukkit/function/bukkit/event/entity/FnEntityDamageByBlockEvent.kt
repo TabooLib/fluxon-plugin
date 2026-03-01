@@ -9,6 +9,7 @@ import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.event.entity.EntityDamageByBlockEvent"])
 @PlatformSide(Platform.BUKKIT)
@@ -20,8 +21,8 @@ object FnEntityDamageByBlockEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityDamageByBlockEvent::class.java)
-                .function("damager", returnsObject().noParams()) { it.setReturnRef(it.target?.damager) }
-                .function("damagerBlockState", returnsObject().noParams()) { it.setReturnRef(it.target?.damagerBlockState) }
+                .function("damager",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.damager) }
+                .function("damagerBlockState",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.damagerBlockState) }
         }
     }
 }

@@ -22,7 +22,7 @@ object FnGenericCommandHelpTopic {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GenericCommandHelpTopic::class.java)
-                .function("canSee", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
+                .function("canSee",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE)) { it.setReturnBool(it.target?.canSee(it.getRef(0) as CommandSender) ?: false) }
         }
     }
 }

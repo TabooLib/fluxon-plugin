@@ -34,7 +34,7 @@ object FnJukebox {
 
                 .function("hasRecord", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRecord() ?: false) }
                 .function("record", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.record) }
-                .function("setRecord", returnsVoid().params(Type.OBJECT)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
+                .function("setRecord",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setRecord(it.getRef(0) as ItemStack) }
 
                 .function("isPlaying", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlaying ?: false) }
                 .function("startPlaying", returnsVoid().noParams()) { it.target?.startPlaying() }

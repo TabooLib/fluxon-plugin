@@ -24,17 +24,13 @@ object FnMaterialData {
             registerExtension(MaterialData::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 .function("setData", returnsVoid().params(Type.I)) { it.target?.setData(it.getInt(0).toByte()) }
-                .function("itemType", returnsObject().noParams()) { it.setReturnRef(it.target?.itemType) }
-                .function("toItemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.toItemStack()) }
-                .function("toItemStack", returnsObject().params(Type.I)) {
+                .function("itemType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.itemType) }
+                .function("toItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.toItemStack()) }
+                .function("toItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(Type.I)) {
                     it.setReturnRef(it.target?.toItemStack(it.getInt(0).toInt()))
                 }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
-                .function("hashCode", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hashCode() ?: 0) }
-                .function("equals", returns(Type.Z).params(Type.OBJECT)) {
-                    it.setReturnBool(it.target?.equals(it.getRef(0)) ?: false)
-                }
-                .function("clone", returnsObject().noParams()) { it.setReturnRef(it.target?.clone()) }
+                .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }
 }

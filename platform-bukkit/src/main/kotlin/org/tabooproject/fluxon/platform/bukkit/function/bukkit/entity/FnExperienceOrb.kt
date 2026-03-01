@@ -24,11 +24,11 @@ object FnExperienceOrb {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExperienceOrb::class.java)
 //                .function("isFromBottle", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFromBottle ?: false) }
-//                .function("triggerEntityId", returnsObject().noParams()) { it.setReturnRef(it.target?.triggerEntityId?.toString()) }
-//                .function("sourceEntityId", returnsObject().noParams()) { it.setReturnRef(it.target?.sourceEntityId?.toString()) }
-//                .function("spawnReason", returnsObject().noParams()) { it.setReturnRef(it.target?.spawnReason?.name) }
+//                .function("triggerEntityId", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.triggerEntityId?.toString()) }
+//                .function("sourceEntityId", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.sourceEntityId?.toString()) }
+//                .function("spawnReason", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.spawnReason?.name) }
 //                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
-//                .function("setCount", returnsObject().params(Type.OBJECT)) { it.setReturnRef(it.target?.apply { count = it.getInt(0).toInt() }) }
+//                .function("setCount",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { count = it.getInt(0).toInt() }) }
                 .function("experience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.experience ?: 0) }
                 .function("setExperience", returnsVoid().params(Type.I)) { it.target?.setExperience(it.getInt(0).toInt()) }
         }

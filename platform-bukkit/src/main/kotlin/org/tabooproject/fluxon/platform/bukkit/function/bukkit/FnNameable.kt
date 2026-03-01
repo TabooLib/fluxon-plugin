@@ -8,6 +8,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
@@ -21,7 +22,7 @@ object FnNameable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Nameable::class.java)
-                .function("customName", returnsObject().noParams()) { it.setReturnRef(it.target?.customName) }
+                .function("customName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.customName) }
                 .function("setCustomName", returnsVoid().params(Type.STRING)) { it.target?.setCustomName(it.getString(0)) }
         }
     }

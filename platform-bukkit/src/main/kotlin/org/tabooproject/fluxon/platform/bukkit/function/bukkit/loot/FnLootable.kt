@@ -23,8 +23,8 @@ object FnLootable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lootable::class.java)
-                .function("setLootTable", returnsVoid().params(Type.OBJECT)) { it.target?.setLootTable(it.getRef(0) as LootTable) }
-                .function("lootTable", returnsObject().noParams()) { it.setReturnRef(it.target?.lootTable) }
+                .function("setLootTable",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.loot.FnLootTable.TYPE)) { it.target?.setLootTable(it.getRef(0) as LootTable) }
+                .function("lootTable", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.loot.FnLootTable.TYPE).noParams()) { it.setReturnRef(it.target?.lootTable) }
                 .function("setSeed", returnsVoid().params(Type.J)) { it.target?.setSeed(it.getLong(0)) }
                 .function("seed", returns(Type.J).noParams()) { it.setReturnLong(it.target?.seed ?: 0L) }
         }

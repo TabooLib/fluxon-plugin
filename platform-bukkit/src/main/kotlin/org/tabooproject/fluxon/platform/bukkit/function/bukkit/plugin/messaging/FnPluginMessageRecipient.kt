@@ -8,7 +8,8 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.Requires
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
+import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.plugin.messaging.PluginMessageRecipient"])
@@ -16,19 +17,20 @@ import org.tabooproject.fluxon.runtime.Type
 object FnPluginMessageRecipient {
 
     val TYPE = Type.fromClass(PluginMessageRecipient::class.java)
+    private val BYTE_ARRAY = Type.fromClass(ByteArray::class.java)
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PluginMessageRecipient::class.java)
-                .function("sendPluginMessage", returnsObject().params(Type.OBJECT, Type.OBJECT, Type.OBJECT)) {
-                    it.setReturnRef(it.target?.sendPluginMessage(
+                .function("sendPluginMessage", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, BYTE_ARRAY)) {
+                    it.target?.sendPluginMessage(
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
                         it.getRef(2) as ByteArray
-                    ))
+                    )
                 }
-                .function("listeningPluginChannels", returnsObject().noParams()) { it.setReturnRef(it.target?.listeningPluginChannels) }
+                .function("listeningPluginChannels", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.listeningPluginChannels) }
         }
     }
 }

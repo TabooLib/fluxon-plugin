@@ -23,15 +23,13 @@ object FnPlayerBucketEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerBucketEvent::class.java)
-                .function("bucket", returnsObject().noParams()) { it.setReturnRef(it.target?.bucket) }
-                .function("itemStack", returnsObject().noParams()) { it.setReturnRef(it.target?.itemStack) }
-                .function("setItemStack", returnsVoid().params(Type.OBJECT)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
-                .function("block", returnsObject().noParams()) { it.setReturnRef(it.target?.block) }
-                .function("blockClicked", returnsObject().noParams()) { it.setReturnRef(it.target?.blockClicked) }
-                .function("blockFace", returnsObject().noParams()) { it.setReturnRef(it.target?.blockFace) }
-                .function("hand", returnsObject().noParams()) { it.setReturnRef(it.target?.hand) }
-                .function("isCancelled", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCancelled ?: false) }
-                .function("setCancelled", returnsVoid().params(Type.Z)) { it.target?.setCancelled(it.getBool(0)) }
+                .function("bucket",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.bucket) }
+                .function("itemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemStack) }
+                .function("setItemStack",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
+                .function("block",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.block) }
+                .function("blockClicked",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.blockClicked) }
+                .function("blockFace",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE).noParams()) { it.setReturnRef(it.target?.blockFace) }
+                .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
         }
     }
 }

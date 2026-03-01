@@ -11,6 +11,7 @@ import taboolib.common.Requires
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
+import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.inventory.BrewerInventory"])
 @PlatformSide(Platform.BUKKIT)
@@ -22,11 +23,11 @@ object FnBrewerInventory {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewerInventory::class.java)
-                .function("ingredient", returnsObject().noParams()) { it.setReturnRef(it.target?.ingredient) }
-                .function("setIngredient", returnsVoid().params(Type.OBJECT)) { it.target?.setIngredient(it.getRef(0) as ItemStack) }
-                .function("fuel", returnsObject().noParams()) { it.setReturnRef(it.target?.fuel) }
-                .function("setFuel", returnsVoid().params(Type.OBJECT)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
-                .function("holder", returnsObject().noParams()) { it.setReturnRef(it.target?.holder) }
+                .function("ingredient",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.ingredient) }
+                .function("setIngredient",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setIngredient(it.getRef(0) as ItemStack) }
+                .function("fuel",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.fuel) }
+                .function("setFuel",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setFuel(it.getRef(0) as ItemStack) }
+                .function("holder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBrewingStand.TYPE).noParams()) { it.setReturnRef(it.target?.holder) }
         }
     }
 }

@@ -24,8 +24,8 @@ object FnBlockStateMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockStateMeta::class.java)
                 .function("hasBlockState", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBlockState() ?: false) }
-                .function("blockState", returnsObject().noParams()) { it.setReturnRef(it.target?.blockState) }
-                .function("setBlockState", returnsVoid().params(Type.OBJECT)) { it.target?.setBlockState(it.getRef(0) as BlockState) }
+                .function("blockState", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.blockState) }
+                .function("setBlockState",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE)) { it.target?.setBlockState(it.getRef(0) as BlockState) }
         }
     }
 }

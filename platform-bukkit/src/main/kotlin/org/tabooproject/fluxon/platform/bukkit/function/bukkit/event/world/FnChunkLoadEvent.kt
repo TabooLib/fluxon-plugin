@@ -22,9 +22,9 @@ object FnChunkLoadEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChunkLoadEvent::class.java)
                 .function("isNewChunk", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isNewChunk ?: false) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkLoadEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(ChunkLoadEvent.getHandlerList()) }
         }
     }
 }

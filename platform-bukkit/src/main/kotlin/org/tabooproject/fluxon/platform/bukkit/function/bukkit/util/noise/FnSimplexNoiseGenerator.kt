@@ -47,7 +47,7 @@ object FnSimplexNoiseGenerator {
                     ))
                 }
                 // static
-                .function("instance", returnsObject().noParams()) {
+                .function("instance", returns(TYPE).noParams()) {
                     it.setReturnRef(SimplexNoiseGenerator.getInstance())
                 }
         }

@@ -24,9 +24,9 @@ object FnChunkUnloadEvent {
             registerExtension(ChunkUnloadEvent::class.java)
                 .function("isSaveChunk", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSaveChunk ?: false) }
                 .function("setSaveChunk", returnsVoid().params(Type.Z)) { it.target?.setSaveChunk(it.getBool(0)) }
-                .function("handlers", returnsObject().noParams()) { it.setReturnRef(it.target?.handlers) }
+                .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
-                .function("handlerList", returnsObject().noParams()) { it.setReturnRef(ChunkUnloadEvent.getHandlerList()) }
+                .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(ChunkUnloadEvent.getHandlerList()) }
         }
     }
 }

@@ -8,6 +8,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.potion.PotionType
 import org.bukkit.projectiles.ProjectileSource
+import org.tabooproject.fluxon.platform.bukkit.function.bukkit.projectiles.FnProjectileSource
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -43,27 +44,27 @@ object FnAreaEffectCloud {
                 .function("setRadiusOnUse", returnsVoid().params(Type.F)) { it.target?.setRadiusOnUse(it.getFloat(0)) }
                 .function("radiusPerTick", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.radiusPerTick ?: 0f) }
                 .function("setRadiusPerTick", returnsVoid().params(Type.F)) { it.target?.setRadiusPerTick(it.getFloat(0)) }
-                .function("particle", returnsObject().noParams()) { it.setReturnRef(it.target?.particle) }
-                .function("setParticle", returnsVoid().params(Type.OBJECT)) { it.target?.setParticle(it.getRef(0) as Particle) }
-                .function("setBasePotionData", returnsVoid().params(Type.OBJECT)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
-                .function("basePotionData", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionData) }
-                .function("setBasePotionType", returnsVoid().params(Type.OBJECT)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
-                .function("basePotionType", returnsObject().noParams()) { it.setReturnRef(it.target?.basePotionType) }
+                .function("particle",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE).noParams()) { it.setReturnRef(it.target?.particle) }
+                .function("setParticle",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE)) { it.target?.setParticle(it.getRef(0) as Particle) }
+                .function("setBasePotionData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionData.TYPE)) { it.target?.setBasePotionData(it.getRef(0) as PotionData) }
+                .function("basePotionData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionData.TYPE).noParams()) { it.setReturnRef(it.target?.basePotionData) }
+                .function("setBasePotionType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionType.TYPE)) { it.target?.setBasePotionType(it.getRef(0) as PotionType) }
+                .function("basePotionType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionType.TYPE).noParams()) { it.setReturnRef(it.target?.basePotionType) }
                 .function("hasCustomEffects", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCustomEffects() ?: false) }
-                .function("customEffects", returnsObject().noParams()) { it.setReturnRef(it.target?.customEffects) }
-                .function("addCustomEffect", returns(Type.Z).params(Type.OBJECT, Type.Z)) {
+                .function("customEffects", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.customEffects) }
+                .function("addCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE, Type.Z)) {
                     it.setReturnBool(it.target?.addCustomEffect(
                         it.getRef(0) as PotionEffect,
                         it.getBool(1)
                     ) ?: false)
                 }
-                .function("removeCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) ?: false) }
-                .function("hasCustomEffect", returns(Type.Z).params(Type.OBJECT)) { it.setReturnBool(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) ?: false) }
+                .function("removeCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) { it.setReturnBool(it.target?.removeCustomEffect(it.getRef(0) as PotionEffectType) ?: false) }
+                .function("hasCustomEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE)) { it.setReturnBool(it.target?.hasCustomEffect(it.getRef(0) as PotionEffectType) ?: false) }
                 .function("clearCustomEffects", returnsVoid().noParams()) { it.target?.clearCustomEffects() }
-                .function("color", returnsObject().noParams()) { it.setReturnRef(it.target?.color) }
-                .function("setColor", returnsVoid().params(Type.OBJECT)) { it.target?.setColor(it.getRef(0) as Color) }
-                .function("source", returnsObject().noParams()) { it.setReturnRef(it.target?.source) }
-                .function("setSource", returnsVoid().params(Type.OBJECT)) { it.target?.setSource(it.getRef(0) as ProjectileSource) }
+                .function("color",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).noParams()) { it.setReturnRef(it.target?.color) }
+                .function("setColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) { it.target?.setColor(it.getRef(0) as Color) }
+                .function("source", returns(FnProjectileSource.TYPE).noParams()) { it.setReturnRef(it.target?.source) }
+                .function("setSource", returnsVoid().params(FnProjectileSource.TYPE)) { it.target?.setSource(it.getRef(0) as ProjectileSource) }
         }
     }
 }

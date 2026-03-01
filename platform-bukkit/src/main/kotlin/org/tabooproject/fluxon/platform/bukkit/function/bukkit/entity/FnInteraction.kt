@@ -28,13 +28,13 @@ object FnInteraction {
                 .function("setInteractionHeight", returnsVoid().params(Type.F)) { it.target?.setInteractionHeight(it.getFloat(0)) }
                 .function("isResponsive", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isResponsive ?: false) }
                 .function("setResponsive", returnsVoid().params(Type.Z)) { it.target?.setResponsive(it.getBool(0)) }
-                .function("lastAttack", returnsObject().noParams()) { it.setReturnRef(it.target?.lastAttack) }
-                .function("lastInteraction", returnsObject().noParams()) { it.setReturnRef(it.target?.lastInteraction) }
+                .function("lastAttack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnInteractionPreviousInteraction.TYPE).noParams()) { it.setReturnRef(it.target?.lastAttack) }
+                .function("lastInteraction",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnInteractionPreviousInteraction.TYPE).noParams()) { it.setReturnRef(it.target?.lastInteraction) }
         }
     }
 }
 
-@Requires(classes = ["org.bukkit.entity.Interaction.PreviousInteraction"])
+@Requires(classes = ["org.bukkit.entity.Interaction\$PreviousInteraction"])
 @PlatformSide(Platform.BUKKIT)
 object FnInteractionPreviousInteraction {
 
@@ -44,7 +44,7 @@ object FnInteractionPreviousInteraction {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Interaction.PreviousInteraction::class.java)
-                .function("player", returnsObject().noParams()) { it.setReturnRef(it.target?.player) }
+                .function("player", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
                 .function("timestamp", returns(Type.J).noParams()) { it.setReturnLong(it.target?.timestamp ?: 0L) }
         }
     }

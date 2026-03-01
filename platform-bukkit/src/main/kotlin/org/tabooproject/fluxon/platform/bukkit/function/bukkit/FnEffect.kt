@@ -13,9 +13,10 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Effect"])
 @PlatformSide(Platform.BUKKIT)
-object FnEffect {
+object FnEffect : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Effect>() {
 
-    val TYPE = Type.fromClass(Effect::class.java)
+    override val enumClass: Class<org.bukkit.Effect> = org.bukkit.Effect::class.java
+
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -28,7 +29,7 @@ object FnEffect {
     }
 }
 
-@Requires(classes = ["org.bukkit.Effect.Type"])
+@Requires(classes = ["org.bukkit.Effect\$Type"])
 @PlatformSide(Platform.BUKKIT)
 object FnEffectType : FnEnumGetter<Effect.Type>() {
 
