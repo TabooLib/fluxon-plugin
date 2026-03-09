@@ -4,9 +4,7 @@ import org.tabooproject.fluxon.FluxonPlugin
 import org.tabooproject.fluxon.runtime.Environment
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
-import org.tabooproject.fluxon.runtime.FunctionSignature.returns
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
+import org.tabooproject.fluxon.runtime.FunctionSignature
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.runtime.java.Export
 import org.tabooproject.fluxon.util.StandardTypes
@@ -17,7 +15,7 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.function.warning
 import taboolib.common.platform.service.PlatformExecutor
-import java.util.*
+import java.util.UUID
 
 object FunctionExecutor {
 
@@ -25,33 +23,40 @@ object FunctionExecutor {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             // 注册扩展函数
-            registerExtensionFunction(PlatformExecutor.PlatformTask::class.java, null, "cancel", returnsVoid().noParams(), { it.target!!.cancel() }, false, false)
+            registerExtensionFunction(PlatformExecutor.PlatformTask::class.java, null, "cancel", FunctionSignature.returnsVoid()
+                .noParams(), { it.target!!.cancel() }, false, false)
             // Builder 模式
             exportRegistry.registerClass(TaskBuilder::class.java)
-            registerFunction("submit", returns(TaskBuilder.TYPE).noParams()) { it.setReturnRef(TaskBuilder(it.environment)) }
+            registerFunction("submit", FunctionSignature.returns(TaskBuilder.TYPE).noParams()) { it.setReturnRef(TaskBuilder(it.environment)) }
             // 快捷函数：立即执行
-            registerFunction("run", returns(StandardTypes.PLATFORM_TASK).params(StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("run", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(StandardTypes.FLUXON_FUNCTION)) { context ->
                 val lambda = context.getRef(0) as Function
                 context.setReturnRef(executeTask(lambda, context.environment, async = false, delay = 0, period = 0))}
-            registerFunction("runAsync", returns(StandardTypes.PLATFORM_TASK).params(StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("runAsync", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(StandardTypes.FLUXON_FUNCTION)) { context ->
                 val lambda = context.getRef(0) as Function
                 context.setReturnRef(executeTask(lambda, context.environment, async = true, delay = 0, period = 0))}
             // 快捷函数：延迟执行
-            registerFunction("runLater", returns(StandardTypes.PLATFORM_TASK).params(Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("runLater", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
                 val delay = context.getLong(0)
                 val lambda = context.getRef(1) as Function
                 context.setReturnRef(executeTask(lambda, context.environment, async = false, delay = delay, period = 0))}
-            registerFunction("runAsyncLater", returns(StandardTypes.PLATFORM_TASK).params(Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("runAsyncLater", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
                 val delay = context.getLong(0)
                 val lambda = context.getRef(1) as Function
                 context.setReturnRef(executeTask(lambda, context.environment, async = true, delay = delay, period = 0))}
             // 快捷函数：定时执行
-            registerFunction("runTimer", returns(StandardTypes.PLATFORM_TASK).params(Type.J, Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("runTimer", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(Type.J, Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
                 val delay = context.getLong(0)
                 val period = context.getLong(1)
                 val lambda = context.getRef(2) as Function
                 context.setReturnRef(executeTask(lambda, context.environment, async = false, delay = delay, period = period))}
-            registerFunction("runAsyncTimer", returns(StandardTypes.PLATFORM_TASK).params(Type.J, Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
+            registerFunction("runAsyncTimer", FunctionSignature.returns(StandardTypes.PLATFORM_TASK)
+                .params(Type.J, Type.J, StandardTypes.FLUXON_FUNCTION)) { context ->
                 val delay = context.getLong(0)
                 val period = context.getLong(1)
                 val lambda = context.getRef(2) as Function
@@ -95,9 +100,9 @@ object FunctionExecutor {
      * 任务构建器
      */
     class TaskBuilder(val env: Environment) {
-        
+
         companion object {
-            
+
             val TYPE = Type.fromClass(TaskBuilder::class.java)!!
         }
 

@@ -83,6 +83,7 @@ configure(subprojects) {
     taboolib {
         env {
             install(Basic)
+            install(Bukkit)
             install(MinecraftChat)
         }
         version { taboolib = "6.2.4-62eb811" }
@@ -95,6 +96,7 @@ configure(subprojects) {
     
     dependencies {
         taboo("org.tabooproject.fluxon:core:1.6.14") { isTransitive = false }
+        taboo("org.tabooproject.fluxon:inst-core:1.6.14") { isTransitive = false }
         compileOnly(kotlin("stdlib"))
         compileOnly(rootProject.fileTree("libs"))
     }

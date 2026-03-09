@@ -4,7 +4,6 @@ import org.tabooproject.fluxon.FluxonScript
 import org.tabooproject.fluxon.runtime.FluxonRuntime
 import org.tabooproject.fluxon.runtime.Function
 import org.tabooproject.fluxon.runtime.FunctionContext
-import org.tabooproject.fluxon.runtime.FunctionSignature.returnsObject
 import org.tabooproject.fluxon.runtime.FunctionSignature.returnsVoid
 import org.tabooproject.fluxon.runtime.Type
 import org.tabooproject.fluxon.util.StandardTypes

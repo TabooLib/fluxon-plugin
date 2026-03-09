@@ -51,9 +51,17 @@ object FnServer {
                 .function("isLoggingIPs", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLoggingIPs ?: false) }
                 .function("initialEnabledPacks", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.initialEnabledPacks) }
                 .function("initialDisabledPacks", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.initialDisabledPacks) }
-                .function("dataPackManager", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.packs.FnDataPackManager.TYPE).noParams()) { it.setReturnRef(it.target?.dataPackManager) }
                 .function("serverTickManager", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnServerTickManager.TYPE).noParams()) { it.setReturnRef(it.target?.serverTickManager) }
-                .function("serverResourcePack", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.packs.FnResourcePack.TYPE).noParams()) { it.setReturnRef(it.target?.serverResourcePack) }
+                .apply {
+                    try {
+                        function("dataPackManager", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.packs.FnDataPackManager.TYPE).noParams()) { it.setReturnRef(it.target?.dataPackManager) }
+                    } catch (_: Throwable) {
+                    }
+                    try {
+                        function("serverResourcePack", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.packs.FnResourcePack.TYPE).noParams()) { it.setReturnRef(it.target?.serverResourcePack) }
+                    } catch (_: Throwable) {
+                    }
+                }
                 .function("resourcePack", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.resourcePack) }
                 .function("resourcePackHash", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.resourcePackHash) }
                 .function("resourcePackPrompt", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.resourcePackPrompt) }

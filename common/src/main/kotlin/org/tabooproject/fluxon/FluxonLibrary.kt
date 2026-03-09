@@ -9,6 +9,7 @@ import org.tabooproject.fluxon.runtime.library.LibraryLoader
 import org.tabooproject.fluxon.util.toScriptId
 import org.tabooproject.fluxon.util.with
 import taboolib.common.LifeCycle
+import taboolib.common.Requires
 import taboolib.common.io.deepDelete
 import taboolib.common.io.newFile
 import taboolib.common.platform.function.getDataFolder
@@ -20,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
+@Requires(classes = ["!org.tabooproject.fluxon.ParseScript"])
 object FluxonLibrary {
 
     /**
