@@ -27,7 +27,7 @@ object FnRaider {
                 .function("setRaid",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnRaid.TYPE)) { it.target?.setRaid(it.getRef(0) as Raid) }
                 .function("raid",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnRaid.TYPE).noParams()) { it.setReturnRef(it.target?.raid) }
                 .function("wave", returns(Type.I).noParams()) { it.setReturnInt(it.target?.wave ?: 0) }
-                .function("setWave", returnsVoid().params(Type.I)) { it.target?.setWave(it.getInt(0).toInt()) }
+                .function("setWave", returnsVoid().params(Type.I)) { it.target?.setWave(it.getAsInt(0).toInt()) }
                 .function("patrolTarget",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.patrolTarget) }
                 .function("setPatrolTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE)) { it.target?.setPatrolTarget(it.getRef(0) as Block) }
                 .function("isPatrolLeader", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPatrolLeader ?: false) }
@@ -35,7 +35,7 @@ object FnRaider {
                 .function("isCanJoinRaid", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCanJoinRaid ?: false) }
                 .function("setCanJoinRaid", returnsVoid().params(Type.Z)) { it.target?.setCanJoinRaid(it.getBool(0)) }
                 .function("ticksOutsideRaid", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ticksOutsideRaid ?: 0) }
-                .function("setTicksOutsideRaid", returnsVoid().params(Type.I)) { it.target?.setTicksOutsideRaid(it.getInt(0).toInt()) }
+                .function("setTicksOutsideRaid", returnsVoid().params(Type.I)) { it.target?.setTicksOutsideRaid(it.getAsInt(0).toInt()) }
                 .function("isCelebrating", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCelebrating ?: false) }
                 .function("setCelebrating", returnsVoid().params(Type.Z)) { it.target?.setCelebrating(it.getBool(0)) }
                 .function("celebrationSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.celebrationSound) }

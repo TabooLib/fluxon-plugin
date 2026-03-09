@@ -38,25 +38,25 @@ object FnCreatureSpawner {
                 .function("creatureTypeName", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.creatureTypeName) }
 
                 .function("delay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.delay ?: 0) }
-                .function("setDelay", returnsVoid().params(Type.I)) { it.target?.setDelay(it.getInt(0)) }
+                .function("setDelay", returnsVoid().params(Type.I)) { it.target?.setDelay(it.getAsInt(0)) }
 
                 .function("minSpawnDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minSpawnDelay ?: 0) }
-                .function("setMinSpawnDelay", returnsVoid().params(Type.I)) { it.target?.setMinSpawnDelay(it.getInt(0)) }
+                .function("setMinSpawnDelay", returnsVoid().params(Type.I)) { it.target?.setMinSpawnDelay(it.getAsInt(0)) }
 
                 .function("maxSpawnDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxSpawnDelay ?: 0) }
-                .function("setMaxSpawnDelay", returnsVoid().params(Type.I)) { it.target?.setMaxSpawnDelay(it.getInt(0)) }
+                .function("setMaxSpawnDelay", returnsVoid().params(Type.I)) { it.target?.setMaxSpawnDelay(it.getAsInt(0)) }
 
                 .function("spawnCount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnCount ?: 0) }
-                .function("setSpawnCount", returnsVoid().params(Type.I)) { it.target?.setSpawnCount(it.getInt(0)) }
+                .function("setSpawnCount", returnsVoid().params(Type.I)) { it.target?.setSpawnCount(it.getAsInt(0)) }
 
                 .function("maxNearbyEntities", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxNearbyEntities ?: 0) }
-                .function("setMaxNearbyEntities", returnsVoid().params(Type.I)) { it.target?.setMaxNearbyEntities(it.getInt(0)) }
+                .function("setMaxNearbyEntities", returnsVoid().params(Type.I)) { it.target?.setMaxNearbyEntities(it.getAsInt(0)) }
 
                 .function("requiredPlayerRange", returns(Type.I).noParams()) { it.setReturnInt(it.target?.requiredPlayerRange ?: 0) }
-                .function("setRequiredPlayerRange", returnsVoid().params(Type.I)) { it.target?.setRequiredPlayerRange(it.getInt(0)) }
+                .function("setRequiredPlayerRange", returnsVoid().params(Type.I)) { it.target?.setRequiredPlayerRange(it.getAsInt(0)) }
 
                 .function("spawnRange", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnRange ?: 0) }
-                .function("setSpawnRange", returnsVoid().params(Type.I)) { it.target?.setSpawnRange(it.getInt(0)) }
+                .function("setSpawnRange", returnsVoid().params(Type.I)) { it.target?.setSpawnRange(it.getAsInt(0)) }
 
                 .function("spawnedEntity", returns(FnEntitySnapshot.TYPE).noParams()) { it.setReturnRef(it.target?.spawnedEntity) }
                 .function("setSpawnedEntity", returnsVoid().params(FnEntitySnapshot.TYPE)) { it.target?.setSpawnedEntity(it.getRef(0) as EntitySnapshot) }
@@ -67,7 +67,7 @@ object FnCreatureSpawner {
                 .function("addPotentialSpawn", returnsVoid().params(FnSpawnerEntry.TYPE, Type.I, FnSpawnRule.TYPE)) {
                     it.target?.addPotentialSpawn(
                         it.getRef(0) as EntitySnapshot,
-                        it.getInt(1),
+                        it.getAsInt(1),
                         it.getRef(2) as SpawnRule
                     )
                 }

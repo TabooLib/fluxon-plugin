@@ -23,7 +23,7 @@ object FnCake {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Cake::class.java)
                 .function("bites", returns(Type.I).noParams()) { it.setReturnInt(it.target?.bites ?: 0) }
-                .function("setBites", returnsVoid().params(Type.I)) { it.target?.setBites(it.getInt(0).toInt()) }
+                .function("setBites", returnsVoid().params(Type.I)) { it.target?.setBites(it.getAsInt(0).toInt()) }
                 .function("maximumBites", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumBites ?: 0) }
         }
     }

@@ -26,17 +26,17 @@ object FnBiomeProvider {
                 .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getRef(0) as WorldInfo,
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt()
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt()
                     ))
                 }
                 .function("getBiome",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnWorldInfo.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnBiomeParameterPoint.TYPE)) {
                     it.setReturnRef(it.target?.getBiome(
                         it.getRef(0) as WorldInfo,
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt(),
                         it.getRef(4) as BiomeParameterPoint
                     ))
                 }

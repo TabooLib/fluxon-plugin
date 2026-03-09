@@ -33,7 +33,7 @@ object FnServerListPingEvent {
                 .function("shouldSendChatPreviews", returns(Type.Z).noParams()) {
                     it.setReturnBool(it.target?.shouldSendChatPreviews() ?: false)
                 }
-                .function("setMaxPlayers", returnsVoid().params(Type.I)) { it.target?.setMaxPlayers(it.getInt(0).toInt()) }
+                .function("setMaxPlayers", returnsVoid().params(Type.I)) { it.target?.setMaxPlayers(it.getAsInt(0).toInt()) }
                 .function("setServerIcon", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnCachedServerIcon.TYPE)) {
                     it.target?.setServerIcon(it.getRef(0) as CachedServerIcon)
                 }

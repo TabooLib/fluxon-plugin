@@ -25,7 +25,7 @@ object FnChiseledBookshelf {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
                 .function("lastInteractedSlot", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lastInteractedSlot ?: 0) }
-                .function("setLastInteractedSlot", returnsVoid().params(Type.I)) { it.target?.setLastInteractedSlot(it.getInt(0)) }
+                .function("setLastInteractedSlot", returnsVoid().params(Type.I)) { it.target?.setLastInteractedSlot(it.getAsInt(0)) }
                 .function("inventory", returns(FnChiseledBookshelfInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
                 .function("snapshotInventory", returns(FnChiseledBookshelfInventory.TYPE).noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
                 .function("getSlot", returns(Type.I).params(FnVector.TYPE)) { it.setReturnInt(it.target?.getSlot(it.getRef(0) as Vector) ?: 0) }

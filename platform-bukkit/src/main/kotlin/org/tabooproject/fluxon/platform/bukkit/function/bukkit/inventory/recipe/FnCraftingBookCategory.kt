@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.inventory.recipe.CraftingBookCategory"])
 @PlatformSide(Platform.BUKKIT)
-object FnCraftingBookCategory : FnEnumGetter<org.bukkit.inventory.recipe.CraftingBookCategory>() {
+object FnCraftingBookCategory : FnEnumGetter<org.bukkit.inventory.recipe.CraftingBookCategory>(org.bukkit.inventory.recipe.CraftingBookCategory::class.java) {
 
-    override val enumClass: Class<org.bukkit.inventory.recipe.CraftingBookCategory> = org.bukkit.inventory.recipe.CraftingBookCategory::class.java
 }

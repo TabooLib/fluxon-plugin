@@ -17,9 +17,7 @@ import taboolib.common.Requires
 
 @Requires(classes = ["org.bukkit.Material"])
 @PlatformSide(Platform.BUKKIT)
-object FnMaterial : FnEnumGetter<Material>() {
-
-    override val enumClass: Class<Material> = Material::class.java
+object FnMaterial : FnEnumGetter<Material>(Material::class.java) {
 
     override fun enumValue(value: String): Material? {
         return XMaterial.matchXMaterial(value).getOrNull()?.get()
@@ -38,7 +36,7 @@ object FnMaterial : FnEnumGetter<Material>() {
                 .function("maxDurability", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxDurability?.toInt() ?: 0) }
                 .function("createBlockData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.createBlockData()) }
                 .function("createBlockData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.createBlockData(it.getString(0))) }
-                .function("getNewData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getNewData(it.getInt(0).toByte())) }
+                .function("getNewData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getNewData(it.getAsInt(0).toByte())) }
                 .function("isBlock", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBlock ?: false) }
                 .function("isEdible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEdible ?: false) }
                 // static

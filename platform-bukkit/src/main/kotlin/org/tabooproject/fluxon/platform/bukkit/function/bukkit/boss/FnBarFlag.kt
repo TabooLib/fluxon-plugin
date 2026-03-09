@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.boss.BarFlag"])
 @PlatformSide(Platform.BUKKIT)
-object FnBarFlag : FnEnumGetter<org.bukkit.boss.BarFlag>() {
+object FnBarFlag : FnEnumGetter<org.bukkit.boss.BarFlag>(org.bukkit.boss.BarFlag::class.java) {
 
-    override val enumClass: Class<org.bukkit.boss.BarFlag> = org.bukkit.boss.BarFlag::class.java
 }

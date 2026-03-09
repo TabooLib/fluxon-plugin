@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.SandstoneType"])
 @PlatformSide(Platform.BUKKIT)
-object FnSandstoneType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.SandstoneType>() {
-
-    override val enumClass: Class<org.bukkit.SandstoneType> = org.bukkit.SandstoneType::class.java
-
+object FnSandstoneType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.SandstoneType>(org.bukkit.SandstoneType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,7 +21,7 @@ object FnSandstoneType : org.tabooproject.fluxon.platform.bukkit.function.FnEnum
             registerExtension(SandstoneType::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(SandstoneType.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(SandstoneType.getByData(it.getAsInt(0).toByte())) }
         }
     }
 }

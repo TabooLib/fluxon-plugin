@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Display\$Billboard"])
 @PlatformSide(Platform.BUKKIT)
-object FnDisplayBillboard : FnEnumGetter<org.bukkit.entity.Display.Billboard>() {
+object FnDisplayBillboard : FnEnumGetter<org.bukkit.entity.Display.Billboard>(org.bukkit.entity.Display.Billboard::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Display.Billboard> = org.bukkit.entity.Display.Billboard::class.java
 }

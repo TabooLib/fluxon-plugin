@@ -100,7 +100,7 @@ object FnPlayer {
                 .function("setRespawnLocation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) {
                     it.target?.setRespawnLocation(it.getRef(0) as Location, it.getBool(1))
                 }
-                .function("playNote",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.I, Type.I)) { it.target?.playNote(it.getRef(0) as Location, it.getInt(1).toByte(), it.getInt(2).toByte()) }
+                .function("playNote",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.I, Type.I)) { it.target?.playNote(it.getRef(0) as Location, it.getAsInt(1).toByte(), it.getAsInt(2).toByte()) }
                 .function("playNote",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnInstrument.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNote.TYPE)) { it.target?.playNote(it.getRef(0) as Location, it.getRef(1) as Instrument, it.getRef(2) as Note) }
                 .function("playNote",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNote.TYPE)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnInstrument.enumValue(it.getString(1))?.let { p1 ->
@@ -115,10 +115,10 @@ object FnPlayer {
                 .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F)) { it.target?.playSound(it.getRef(0) as Location, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4)) }
                 .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F)) { it.target?.playSound(it.getRef(0) as Entity, it.getRef(1) as Sound, it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4)) }
                 .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F)) { it.target?.playSound(it.getRef(0) as Entity, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4)) }
-                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Location, it.getRef(1) as Sound, it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getLong(5)) }
-                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Location, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getLong(5)) }
-                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Entity, it.getRef(1) as Sound, it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getLong(5)) }
-                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Entity, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getLong(5)) }
+                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Location, it.getRef(1) as Sound, it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getAsLong(5)) }
+                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Location, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getAsLong(5)) }
+                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Entity, it.getRef(1) as Sound, it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getAsLong(5)) }
+                .function("playSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE, Type.F, Type.F, Type.J)) { it.target?.playSound(it.getRef(0) as Entity, it.getString(1), it.getRef(2) as SoundCategory, it.getFloat(3), it.getFloat(4), it.getAsLong(5)) }
                 .function("stopSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE)) { it.target?.stopSound(it.getRef(0) as Sound) }
                 .function("stopSound", returnsVoid().params(Type.STRING)) { it.target?.stopSound(it.getString(0)) }
                 .function("stopSound", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSoundCategory.TYPE)) { it.target?.stopSound(it.getRef(0) as SoundCategory) }
@@ -145,7 +145,7 @@ object FnPlayer {
                     it.target?.playEffect(
                         it.getRef(0) as Location,
                         it.getRef(1) as Effect,
-                        it.getInt(2)
+                        it.getAsInt(2)
                     )
                 }
                 .function("breakBlock",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE)) {
@@ -161,7 +161,7 @@ object FnPlayer {
                     it.target?.sendBlockChange(
                         it.getRef(0) as Location,
                         it.getRef(1) as Material,
-                        it.getInt(2).toByte()
+                        it.getAsInt(2).toByte()
                     )
                 }
                 .function("sendBlockChanges",returnsVoid().params(org.tabooproject.fluxon.util.StandardTypes.COLLECTION)) {
@@ -177,7 +177,7 @@ object FnPlayer {
                     )
                 }
                 .function("sendBlockDamage",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.sendBlockDamage(it.getRef(0) as Location, it.getFloat(1), it.getRef(2) as Entity) }
-                .function("sendBlockDamage",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F, Type.I)) { it.target?.sendBlockDamage(it.getRef(0) as Location, it.getFloat(1), it.getInt(2)) }
+                .function("sendBlockDamage",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F, Type.I)) { it.target?.sendBlockDamage(it.getRef(0) as Location, it.getFloat(1), it.getAsInt(2)) }
                 .function("sendEquipmentChange",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE, Type.MAP)) {
                     it.target?.sendEquipmentChange(
                         it.getRef(0) as LivingEntity,
@@ -241,10 +241,10 @@ object FnPlayer {
                 .function("setCustomChatCompletions",returnsVoid().params(org.tabooproject.fluxon.util.StandardTypes.COLLECTION)) { it.target?.setCustomChatCompletions(it.getRef(0) as Collection<String>) }
                 .function("previousGameMode", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnGameMode.TYPE).noParams()) { it.setReturnRef(it.target?.previousGameMode) }
                 .function("setPlayerTime", returnsVoid().params(Type.J)) {
-                    it.target?.setPlayerTime(it.getLong(0), false)
+                    it.target?.setPlayerTime(it.getAsLong(0), false)
                 }
                 .function("setPlayerTime", returnsVoid().params(Type.J, Type.Z)) {
-                    it.target?.setPlayerTime(it.getLong(0), it.getBool(1))
+                    it.target?.setPlayerTime(it.getAsLong(0), it.getBool(1))
                 }
                 .function("playerTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.playerTime ?: 0) }
                 .function("playerTimeOffset", returns(Type.J).noParams()) { it.setReturnLong(it.target?.playerTimeOffset ?: 0) }
@@ -257,20 +257,20 @@ object FnPlayer {
                 .function("playerWeather", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWeatherType.TYPE).noParams()) { it.setReturnRef(it.target?.playerWeather) }
                 .function("resetPlayerWeather", returnsVoid().noParams()) { it.target?.resetPlayerWeather() }
                 .function("expCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.expCooldown ?: 0) }
-                .function("setExpCooldown", returnsVoid().params(Type.I)) { it.target?.setExpCooldown(it.getInt(0)) }
-                .function("giveExp", returnsVoid().params(Type.I)) { it.target?.giveExp(it.getInt(0)) }
-                .function("giveExpLevels", returnsVoid().params(Type.I)) { it.target?.giveExpLevels(it.getInt(0)) }
+                .function("setExpCooldown", returnsVoid().params(Type.I)) { it.target?.setExpCooldown(it.getAsInt(0)) }
+                .function("giveExp", returnsVoid().params(Type.I)) { it.target?.giveExp(it.getAsInt(0)) }
+                .function("giveExpLevels", returnsVoid().params(Type.I)) { it.target?.giveExpLevels(it.getAsInt(0)) }
                 .function("exp", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.exp ?: 0f) }
                 .function("setExp", returnsVoid().params(Type.F)) { it.target?.setExp(it.getFloat(0)) }
                 .function("level", returns(Type.I).noParams()) { it.setReturnInt(it.target?.level ?: 0) }
-                .function("setLevel", returnsVoid().params(Type.I)) { it.target?.setLevel(it.getInt(0)) }
+                .function("setLevel", returnsVoid().params(Type.I)) { it.target?.setLevel(it.getAsInt(0)) }
                 .function("totalExperience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.totalExperience ?: 0) }
-                .function("setTotalExperience", returnsVoid().params(Type.I)) { it.target?.setTotalExperience(it.getInt(0)) }
+                .function("setTotalExperience", returnsVoid().params(Type.I)) { it.target?.setTotalExperience(it.getAsInt(0)) }
                 .function("sendExperienceChange", returnsVoid().params(Type.F)) {
                     it.target?.sendExperienceChange(it.getFloat(0))
                 }
                 .function("sendExperienceChange", returnsVoid().params(Type.F, Type.I)) {
-                    it.target?.sendExperienceChange(it.getFloat(0), it.getInt(1))
+                    it.target?.sendExperienceChange(it.getFloat(0), it.getAsInt(1))
                 }
                 .function("allowFlight", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.allowFlight ?: false) }
                 .function("setAllowFlight", returnsVoid().params(Type.Z)) { it.target?.setAllowFlight(it.getBool(0)) }
@@ -364,13 +364,13 @@ object FnPlayer {
                 }
                 .function("sendHealthUpdate", returnsVoid().params(Type.D, Type.I, Type.F)) {
                     it.target?.sendHealthUpdate(
-                        it.getDouble(0),
-                        it.getInt(1),
+                        it.getAsDouble(0),
+                        it.getAsInt(1),
                         it.getFloat(2)
                     )
                 }
                 .function("setHealthScaled", returnsVoid().params(Type.Z)) { it.target?.setHealthScaled(it.getBool(0)) }
-                .function("setHealthScale", returnsVoid().params(Type.D)) { it.target?.setHealthScale(it.getDouble(0)) }
+                .function("setHealthScale", returnsVoid().params(Type.D)) { it.target?.setHealthScale(it.getAsDouble(0)) }
                 .function("healthScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.healthScale ?: 0.0) }
                 .function("spectatorTarget", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.spectatorTarget) }
                 .function("setSpectatorTarget",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setSpectatorTarget(it.getRef(0) as Entity) }
@@ -381,9 +381,9 @@ object FnPlayer {
                     it.target?.sendTitle(
                         it.getString(0),
                         it.getString(1),
-                        it.getInt(2),
-                        it.getInt(3),
-                        it.getInt(4)
+                        it.getAsInt(2),
+                        it.getAsInt(3),
+                        it.getAsInt(4)
                     )
                 }
                 .function("resetTitle", returnsVoid().noParams()) { it.target?.resetTitle() }
@@ -391,62 +391,62 @@ object FnPlayer {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
                         it.getRef(1) as Location,
-                        it.getInt(2).toInt()
+                        it.getAsInt(2).toInt()
                     )
                 }
                 .function("spawnParticle", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE, Type.D, Type.D, Type.D, Type.I)) {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getInt(4).toInt()
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsInt(4).toInt()
                     )
                 }
                 .function("spawnParticle",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.I, Type.D, Type.D, Type.D)) {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
                         it.getRef(1) as Location,
-                        it.getInt(2).toInt(),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5)
+                        it.getAsInt(2).toInt(),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5)
                     )
                 }
                 .function("spawnParticle",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.I, Type.D, Type.D, Type.D, Type.D)) {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
                         it.getRef(1) as Location,
-                        it.getInt(2).toInt(),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5),
-                        it.getDouble(6)
+                        it.getAsInt(2).toInt(),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5),
+                        it.getAsDouble(6)
                     )
                 }
                 .function("spawnParticle", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE, Type.D, Type.D, Type.D, Type.I, Type.D, Type.D, Type.D)) {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getInt(4).toInt(),
-                        it.getDouble(5),
-                        it.getDouble(6),
-                        it.getDouble(7)
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsInt(4).toInt(),
+                        it.getAsDouble(5),
+                        it.getAsDouble(6),
+                        it.getAsDouble(7)
                     )
                 }
                 .function("spawnParticle", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnParticle.TYPE, Type.D, Type.D, Type.D, Type.I, Type.D, Type.D, Type.D, Type.D)) {
                     it.target?.spawnParticle(
                         it.getRef(0) as Particle,
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getInt(4).toInt(),
-                        it.getDouble(5),
-                        it.getDouble(6),
-                        it.getDouble(7),
-                        it.getDouble(8)
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsInt(4).toInt(),
+                        it.getAsDouble(5),
+                        it.getAsDouble(6),
+                        it.getAsDouble(7),
+                        it.getAsDouble(8)
                     )
                 }
                 .function("getAdvancementProgress",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.advancement.FnAdvancementProgress.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.advancement.FnAdvancement.TYPE)) { it.setReturnRef(it.target?.getAdvancementProgress(it.getRef(0) as Advancement)) }

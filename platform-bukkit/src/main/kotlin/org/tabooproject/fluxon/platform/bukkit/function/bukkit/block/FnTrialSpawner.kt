@@ -21,13 +21,13 @@ object FnTrialSpawner {
         with(FluxonRuntime.getInstance()) {
             registerExtension(org.bukkit.block.TrialSpawner::class.java)
                 // .function("getCooldownEnd", returns(Type.J).noParams()) { it.setReturnLong(it.target?.getCooldownEnd() ?: 0L) }
-                // .function("setCooldownEnd", returnsVoid().params(Type.J)) { it.target?.setCooldownEnd(it.getLong(0).toLong()) }
+                // .function("setCooldownEnd", returnsVoid().params(Type.J)) { it.target?.setCooldownEnd(it.getAsLong(0).toLong()) }
                 // .function("getNextSpawnAttempt", returns(Type.J).noParams()) { it.setReturnLong(it.target?.getNextSpawnAttempt() ?: 0L) }
-                // .function("setNextSpawnAttempt", returnsVoid().params(Type.J)) { it.target?.setNextSpawnAttempt(it.getLong(0).toLong()) }
+                // .function("setNextSpawnAttempt", returnsVoid().params(Type.J)) { it.target?.setNextSpawnAttempt(it.getAsLong(0).toLong()) }
                 // .function("getCooldownLength", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getCooldownLength() ?: 0) }
-                // .function("setCooldownLength", returnsVoid().params(Type.I)) { it.target?.setCooldownLength(it.getInt(0).toInt()) }
+                // .function("setCooldownLength", returnsVoid().params(Type.I)) { it.target?.setCooldownLength(it.getAsInt(0).toInt()) }
                 // .function("getRequiredPlayerRange", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getRequiredPlayerRange() ?: 0) }
-                // .function("setRequiredPlayerRange", returnsVoid().params(Type.I)) { it.target?.setRequiredPlayerRange(it.getInt(0).toInt()) }
+                // .function("setRequiredPlayerRange", returnsVoid().params(Type.I)) { it.target?.setRequiredPlayerRange(it.getAsInt(0).toInt()) }
                 // .function("getTrackedPlayers", returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.getTrackedPlayers()) }
                 // .function("isTrackingPlayer", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.setReturnBool(it.target?.isTrackingPlayer(it.getRef(0) as org.bukkit.entity.Player) ?: false) }
                 // .function("startTrackingPlayer", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.target?.startTrackingPlayer(it.getRef(0) as org.bukkit.entity.Player) }

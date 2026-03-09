@@ -43,7 +43,7 @@ object FnItemMeta {
                 .function("setLore",returnsVoid().params(Type.LIST)) { it.target?.setLore(it.getRef(0) as List<String>) }
                 .function("hasCustomModelData", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasCustomModelData() ?: false) }
                 .function("customModelData", returns(Type.I).noParams()) { it.setReturnInt(it.target?.customModelData ?: 0) }
-                .function("setCustomModelData", returnsVoid().params(Type.I)) { it.target?.setCustomModelData(it.getInt(0)) }
+                .function("setCustomModelData", returnsVoid().params(Type.I)) { it.target?.setCustomModelData(it.getAsInt(0)) }
                 .function("enchants", returns(Type.MAP).noParams()) { it.setReturnRef(it.target?.enchants) }
                 .function("hasEnchants", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasEnchants() ?: false) }
                 .function("hasEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.setReturnBool(it.target?.hasEnchant(it.getRef(0) as Enchantment) ?: false) }
@@ -53,7 +53,7 @@ object FnItemMeta {
                 .function("addEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE, Type.I, Type.Z)) {
                     it.setReturnBool(it.target?.addEnchant(
                         it.getRef(0) as Enchantment,
-                        it.getInt(1),
+                        it.getAsInt(1),
                         it.getBool(2)
                     ) ?: false)
                 }
@@ -81,7 +81,7 @@ object FnItemMeta {
                 .function("setFireResistant", returnsVoid().params(Type.Z)) { it.target?.setFireResistant(it.getBool(0)) }
                 .function("hasMaxStackSize", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMaxStackSize() ?: false) }
                 .function("maxStackSize", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxStackSize ?: 0) }
-                .function("setMaxStackSize", returnsVoid().params(Type.I)) { it.target?.setMaxStackSize(it.getInt(0)) }
+                .function("setMaxStackSize", returnsVoid().params(Type.I)) { it.target?.setMaxStackSize(it.getAsInt(0)) }
                 .function("hasRarity", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasRarity() ?: false) }
                 .function("rarity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemRarity.TYPE).noParams()) { it.setReturnRef(it.target?.rarity) }
                 .function("setRarity", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemRarity.TYPE)) { it.target?.setRarity(it.getRef(0) as ItemRarity)  }

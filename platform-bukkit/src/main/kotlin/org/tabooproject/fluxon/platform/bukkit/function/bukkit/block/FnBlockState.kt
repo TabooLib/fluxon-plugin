@@ -57,7 +57,7 @@ object FnBlockState {
                     it.setReturnBool(it.target?.update(it.getBool(0), it.getBool(1)) ?: false)
                 }
                 .function("rawData", returns(Type.I).noParams()) { it.setReturnInt(it.target?.rawData?.toInt() ?: 0) }
-                .function("setRawData", returnsVoid().params(Type.I)) { it.target?.setRawData(it.getInt(0).toByte()) }
+                .function("setRawData", returnsVoid().params(Type.I)) { it.target?.setRawData(it.getAsInt(0).toByte()) }
                 .function("isPlaced", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPlaced ?: false) }
         }
     }

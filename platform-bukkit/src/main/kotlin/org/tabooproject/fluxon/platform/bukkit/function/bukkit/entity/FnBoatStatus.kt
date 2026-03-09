@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Boat\$Status"])
 @PlatformSide(Platform.BUKKIT)
-object FnBoatStatus : FnEnumGetter<org.bukkit.entity.Boat.Status>() {
+object FnBoatStatus : FnEnumGetter<org.bukkit.entity.Boat.Status>(org.bukkit.entity.Boat.Status::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Boat.Status> = org.bukkit.entity.Boat.Status::class.java
 }

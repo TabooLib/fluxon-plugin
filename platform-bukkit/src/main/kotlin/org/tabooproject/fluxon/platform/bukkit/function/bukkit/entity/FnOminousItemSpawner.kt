@@ -26,7 +26,7 @@ object FnOminousItemSpawner {
                 .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
                 .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
                 .function("spawnItemAfterTicks", returns(Type.J).noParams()) { it.setReturnLong(it.target?.spawnItemAfterTicks ?: 0L) }
-                .function("setSpawnItemAfterTicks", returnsVoid().params(Type.J)) { it.target?.setSpawnItemAfterTicks(it.getLong(0)) }
+                .function("setSpawnItemAfterTicks", returnsVoid().params(Type.J)) { it.target?.setSpawnItemAfterTicks(it.getAsLong(0)) }
         }
     }
 }

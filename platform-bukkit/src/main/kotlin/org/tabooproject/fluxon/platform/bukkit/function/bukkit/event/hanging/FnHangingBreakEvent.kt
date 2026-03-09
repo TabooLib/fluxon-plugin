@@ -28,7 +28,6 @@ object FnHangingBreakEvent {
 
 @Requires(classes = ["org.bukkit.event.hanging.HangingBreakEvent\$RemoveCause"])
 @PlatformSide(Platform.BUKKIT)
-object FnHangingBreakEventRemoveCause : FnEnumGetter<HangingBreakEvent.RemoveCause>() {
+object FnHangingBreakEventRemoveCause : FnEnumGetter<HangingBreakEvent.RemoveCause>(HangingBreakEvent.RemoveCause::class.java) {
 
-    override val enumClass: Class<HangingBreakEvent.RemoveCause> = HangingBreakEvent.RemoveCause::class.java
 }

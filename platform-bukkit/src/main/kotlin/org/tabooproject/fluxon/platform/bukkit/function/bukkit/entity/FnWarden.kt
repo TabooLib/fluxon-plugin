@@ -29,11 +29,11 @@ object FnWarden {
                 .function("increaseAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.I)) {
                     it.target?.increaseAnger(
                         it.getRef(0) as Entity,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     )
                 }
                 .function("setAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.I)) {
-                    it.target?.setAnger(it.getRef(0) as Entity, it.getInt(1).toInt())
+                    it.target?.setAnger(it.getRef(0) as Entity, it.getAsInt(1).toInt())
                 }
                 .function("clearAnger",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.clearAnger(it.getRef(0) as Entity) }
                 .function("entityAngryAt",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entityAngryAt) }

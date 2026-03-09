@@ -66,7 +66,6 @@ object FnRedstoneWire {
 
 @Requires(classes = ["org.bukkit.block.data.type.RedstoneWire\$Connection"])
 @PlatformSide(Platform.BUKKIT)
-object FnRedstoneWireConnection : FnEnumGetter<RedstoneWire.Connection>() {
+object FnRedstoneWireConnection : FnEnumGetter<RedstoneWire.Connection>(RedstoneWire.Connection::class.java) {
 
-    override val enumClass: Class<RedstoneWire.Connection> = RedstoneWire.Connection::class.java
 }

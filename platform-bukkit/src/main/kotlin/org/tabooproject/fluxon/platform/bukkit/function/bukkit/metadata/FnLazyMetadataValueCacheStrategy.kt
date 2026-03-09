@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.metadata.LazyMetadataValue\$CacheStrategy"])
 @PlatformSide(Platform.BUKKIT)
-object FnLazyMetadataValueCacheStrategy : FnEnumGetter<org.bukkit.metadata.LazyMetadataValue.CacheStrategy>() {
+object FnLazyMetadataValueCacheStrategy : FnEnumGetter<org.bukkit.metadata.LazyMetadataValue.CacheStrategy>(org.bukkit.metadata.LazyMetadataValue.CacheStrategy::class.java) {
 
-    override val enumClass: Class<org.bukkit.metadata.LazyMetadataValue.CacheStrategy> = org.bukkit.metadata.LazyMetadataValue.CacheStrategy::class.java
 }

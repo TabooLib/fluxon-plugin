@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Chunk\$LoadLevel"])
 @PlatformSide(Platform.BUKKIT)
-object FnChunkLoadLevel : FnEnumGetter<Chunk.LoadLevel>() {
+object FnChunkLoadLevel : FnEnumGetter<Chunk.LoadLevel>(Chunk.LoadLevel::class.java) {
 
-    override val enumClass: Class<Chunk.LoadLevel> = Chunk.LoadLevel::class.java
 }

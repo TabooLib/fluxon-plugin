@@ -31,7 +31,7 @@ object FnEnderSignal {
                 .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
                 .function("setItem",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItem(it.getRef(0) as ItemStack) }
                 .function("despawnTimer", returns(Type.I).noParams()) { it.setReturnInt(it.target?.despawnTimer ?: 0) }
-                .function("setDespawnTimer", returnsVoid().params(Type.I)) { it.target?.setDespawnTimer(it.getInt(0).toInt()) }
+                .function("setDespawnTimer", returnsVoid().params(Type.I)) { it.target?.setDespawnTimer(it.getAsInt(0).toInt()) }
         }
     }
 }

@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.sign.Side"])
 @PlatformSide(Platform.BUKKIT)
-object FnSide : FnEnumGetter<Side>() {
+object FnSide : FnEnumGetter<Side>(Side::class.java) {
 
-    override val enumClass: Class<Side> = Side::class.java
 }

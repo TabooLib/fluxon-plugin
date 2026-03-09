@@ -22,12 +22,12 @@ object FnExplosiveMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ExplosiveMinecart::class.java)
-                .function("setFuseTicks", returnsVoid().params(Type.I)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
+                .function("setFuseTicks", returnsVoid().params(Type.I)) { it.target?.setFuseTicks(it.getAsInt(0).toInt()) }
                 .function("fuseTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuseTicks ?: 0) }
                 .function("ignite", returnsVoid().noParams()) { it.target?.ignite() }
                 .function("isIgnited", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isIgnited ?: false) }
                 .function("explode", returnsVoid().noParams()) { it.target?.explode() }
-                .function("explode", returnsVoid().params(Type.D)) { it.target?.explode(it.getDouble(0)) }
+                .function("explode", returnsVoid().params(Type.D)) { it.target?.explode(it.getAsDouble(0)) }
         }
     }
 }

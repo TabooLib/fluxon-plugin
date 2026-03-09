@@ -26,7 +26,7 @@ object FnEntityBlockStorage {
                 .function("isFull", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFull ?: false) }
                 .function("entityCount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.entityCount ?: 0) }
                 .function("maxEntities", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxEntities ?: 0) }
-                .function("setMaxEntities", returnsVoid().params(Type.I)) { it.target?.setMaxEntities(it.getInt(0).toInt()) }
+                .function("setMaxEntities", returnsVoid().params(Type.I)) { it.target?.setMaxEntities(it.getAsInt(0).toInt()) }
                 .function("releaseEntities", returnsVoid().noParams()) { it.target?.releaseEntities() }
                 .function("addEntity", returnsVoid().params(FnEntity.TYPE)) {
                     (it.target as? EntityBlockStorage<Entity>)?.addEntity(it.getRef(0) as Entity)

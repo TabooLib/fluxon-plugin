@@ -23,9 +23,9 @@ object FnSignSide {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SignSide::class.java)
                 .function("lines", returns(StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
+                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getAsInt(0).toInt())) }
                 .function("setLine", returnsVoid().params(Type.I, Type.STRING)) {
-                    it.target?.setLine(it.getInt(0), it.getString(1)!!)
+                    it.target?.setLine(it.getAsInt(0), it.getString(1)!!)
                 }
                 .function("isGlowingText", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isGlowingText ?: false) }
                 .function("setGlowingText", returnsVoid().params(Type.Z)) { it.target?.setGlowingText(it.getBool(0)) }

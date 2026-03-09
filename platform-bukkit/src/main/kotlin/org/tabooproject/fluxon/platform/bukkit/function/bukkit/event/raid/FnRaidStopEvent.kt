@@ -28,7 +28,6 @@ object FnRaidStopEvent {
 
 @Requires(classes = ["org.bukkit.event.raid.RaidStopEvent\$Reason"])
 @PlatformSide(Platform.BUKKIT)
-object FnRaidStopEventReason : FnEnumGetter<RaidStopEvent.Reason>() {
+object FnRaidStopEventReason : FnEnumGetter<RaidStopEvent.Reason>(RaidStopEvent.Reason::class.java) {
 
-    override val enumClass: Class<RaidStopEvent.Reason> = RaidStopEvent.Reason::class.java
 }

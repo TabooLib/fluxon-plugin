@@ -27,11 +27,11 @@ object FnAbstractArrow {
                 .function("isCannotPickup", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.pickupStatus == AbstractArrow.PickupStatus.DISALLOWED) }
                 .function("isCreativeOnlyPickup", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.pickupStatus == AbstractArrow.PickupStatus.CREATIVE_ONLY) }
                 .function("knockbackStrength", returns(Type.I).noParams()) { it.setReturnInt(it.target?.knockbackStrength ?: 0) }
-                .function("setKnockbackStrength", returnsVoid().params(Type.I)) { it.target?.setKnockbackStrength(it.getInt(0)) }
+                .function("setKnockbackStrength", returnsVoid().params(Type.I)) { it.target?.setKnockbackStrength(it.getAsInt(0)) }
                 .function("damage", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damage ?: 0.0) }
-                .function("setDamage", returnsVoid().params(Type.D)) { it.target?.setDamage(it.getDouble(0)) }
+                .function("setDamage", returnsVoid().params(Type.D)) { it.target?.setDamage(it.getAsDouble(0)) }
                 .function("pierceLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.pierceLevel ?: 0) }
-                .function("setPierceLevel", returnsVoid().params(Type.I)) { it.target?.setPierceLevel(it.getInt(0)) }
+                .function("setPierceLevel", returnsVoid().params(Type.I)) { it.target?.setPierceLevel(it.getAsInt(0)) }
                 .function("isCritical", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isCritical ?: false) }
                 .function("setCritical", returnsVoid().params(Type.Z)) { it.target?.setCritical(it.getBool(0)) }
                 .function("isInBlock", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInBlock ?: false) }

@@ -40,7 +40,7 @@ object FnBossBar {
                 .function("addFlag", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBarFlag.enumValue(it.getString(0))?.let { p0 -> it.target?.addFlag(p0)  } }
                 .function("hasFlag", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBarFlag.TYPE)) { it.setReturnBool(it.target?.hasFlag(it.getRef(0) as BarFlag) ?: false)  }
                 .function("hasFlag", returns(Type.Z).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBarFlag.enumValue(it.getString(0))?.let { p0 -> it.setReturnBool(it.target?.hasFlag(p0) ?: false)  } }
-                .function("setProgress", returnsVoid().params(Type.D)) { it.target?.setProgress(it.getDouble(0)) }
+                .function("setProgress", returnsVoid().params(Type.D)) { it.target?.setProgress(it.getAsDouble(0)) }
                 .function("progress", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.progress ?: 0.0) }
                 .function("addPlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.target?.addPlayer(it.getRef(0) as Player) }
                 .function("removePlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.target?.removePlayer(it.getRef(0) as Player) }

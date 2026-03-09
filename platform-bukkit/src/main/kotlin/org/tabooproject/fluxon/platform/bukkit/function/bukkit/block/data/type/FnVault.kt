@@ -38,7 +38,6 @@ object FnVault {
 
 @Requires(classes = ["org.bukkit.block.data.type.Vault\$State"])
 @PlatformSide(Platform.BUKKIT)
-object FnVaultState : FnEnumGetter<Vault.State>() {
+object FnVaultState : FnEnumGetter<Vault.State>(Vault.State::class.java) {
 
-    override val enumClass: Class<Vault.State> = Vault.State::class.java
 }

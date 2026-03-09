@@ -23,7 +23,7 @@ object FnTadpole {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Tadpole::class.java)
                 .function("age", returns(Type.I).noParams()) { it.setReturnInt(it.target?.age ?: 0) }
-                .function("setAge", returnsVoid().params(Type.I)) { it.target?.setAge(it.getInt(0).toInt()) }
+                .function("setAge", returnsVoid().params(Type.I)) { it.target?.setAge(it.getAsInt(0).toInt()) }
         }
     }
 }

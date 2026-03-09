@@ -33,7 +33,7 @@ object FnFallingBlock {
                 .function("damagePerBlock", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.damagePerBlock ?: 0f) }
                 .function("setDamagePerBlock", returnsVoid().params(Type.F)) { it.target?.setDamagePerBlock(it.getFloat(0)) }
                 .function("maxDamage", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxDamage ?: 0) }
-                .function("setMaxDamage", returnsVoid().params(Type.I)) { it.target?.setMaxDamage(it.getInt(0).toInt()) }
+                .function("setMaxDamage", returnsVoid().params(Type.I)) { it.target?.setMaxDamage(it.getAsInt(0).toInt()) }
         }
     }
 }

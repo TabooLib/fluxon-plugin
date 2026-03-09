@@ -25,7 +25,7 @@ object FnAttributeInstance {
             registerExtension(AttributeInstance::class.java)
                 .function("attribute", returns(FnAttribute.TYPE).noParams()) { it.setReturnRef(it.target?.attribute) }
                 .function("baseValue", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.baseValue ?: 0.0) }
-                .function("setBaseValue", returnsVoid().params(Type.D)) { it.target?.setBaseValue(it.getDouble(0)) }
+                .function("setBaseValue", returnsVoid().params(Type.D)) { it.target?.setBaseValue(it.getAsDouble(0)) }
                 .function("modifiers", returns(StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.modifiers) }
                 .function("addModifier", returnsVoid().params(FnAttributeModifier.TYPE)) { it.target?.addModifier(it.getRef(0) as AttributeModifier) }
                 .function("removeModifier", returnsVoid().params(FnAttributeModifier.TYPE)) { it.target?.removeModifier(it.getRef(0) as AttributeModifier) }

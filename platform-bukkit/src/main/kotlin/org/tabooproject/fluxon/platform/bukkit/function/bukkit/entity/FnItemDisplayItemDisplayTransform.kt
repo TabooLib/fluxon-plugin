@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.ItemDisplay\$ItemDisplayTransform"])
 @PlatformSide(Platform.BUKKIT)
-object FnItemDisplayItemDisplayTransform : FnEnumGetter<org.bukkit.entity.ItemDisplay.ItemDisplayTransform>() {
+object FnItemDisplayItemDisplayTransform : FnEnumGetter<org.bukkit.entity.ItemDisplay.ItemDisplayTransform>(org.bukkit.entity.ItemDisplay.ItemDisplayTransform::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.ItemDisplay.ItemDisplayTransform> = org.bukkit.entity.ItemDisplay.ItemDisplayTransform::class.java
 }

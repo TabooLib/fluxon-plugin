@@ -24,7 +24,7 @@ object FnBrewingStandFuelEvent {
             registerExtension(BrewingStandFuelEvent::class.java)
                 .function("fuel", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.fuel) }
                 .function("fuelPower", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuelPower ?: 0) }
-                .function("setFuelPower", returnsVoid().params(Type.I)) { it.target?.setFuelPower(it.getInt(0).toInt()) }
+                .function("setFuelPower", returnsVoid().params(Type.I)) { it.target?.setFuelPower(it.getAsInt(0).toInt()) }
                 .function("isConsuming", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConsuming ?: false) }
                 .function("setConsuming", returnsVoid().params(Type.Z)) { it.target?.setConsuming(it.getBool(0)) }
         }

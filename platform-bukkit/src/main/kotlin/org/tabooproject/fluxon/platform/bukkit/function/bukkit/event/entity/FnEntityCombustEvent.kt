@@ -23,7 +23,7 @@ object FnEntityCombustEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityCombustEvent::class.java)
                 .function("duration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.duration ?: 0) }
-                .function("setDuration", returnsVoid().params(Type.I)) { it.target?.setDuration(it.getInt(0).toInt()) }
+                .function("setDuration", returnsVoid().params(Type.I)) { it.target?.setDuration(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityCombustEvent.getHandlerList()) }

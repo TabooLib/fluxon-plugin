@@ -66,7 +66,6 @@ object FnWall {
 
 @Requires(classes = ["org.bukkit.block.data.type.Wall\$Height"])
 @PlatformSide(Platform.BUKKIT)
-object FnWallHeight : FnEnumGetter<Wall.Height>() {
+object FnWallHeight : FnEnumGetter<Wall.Height>(Wall.Height::class.java) {
 
-    override val enumClass: Class<Wall.Height> = Wall.Height::class.java
 }

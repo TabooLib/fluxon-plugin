@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Raid\$RaidStatus"])
 @PlatformSide(Platform.BUKKIT)
-object FnRaidRaidStatus : FnEnumGetter<Raid.RaidStatus>() {
+object FnRaidRaidStatus : FnEnumGetter<Raid.RaidStatus>(Raid.RaidStatus::class.java) {
 
-    override val enumClass: Class<Raid.RaidStatus> = Raid.RaidStatus::class.java
 }

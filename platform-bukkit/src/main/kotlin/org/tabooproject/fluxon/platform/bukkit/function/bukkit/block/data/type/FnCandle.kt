@@ -22,7 +22,7 @@ object FnCandle {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Candle::class.java)
                 .function("candles", returns(Type.I).noParams()) { it.setReturnInt(it.target?.candles ?: 0) }
-                .function("setCandles", returnsVoid().params(Type.I)) { it.target?.setCandles(it.getInt(0)) }
+                .function("setCandles", returnsVoid().params(Type.I)) { it.target?.setCandles(it.getAsInt(0)) }
                 .function("maximumCandles", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumCandles ?: 0) }
         }
     }

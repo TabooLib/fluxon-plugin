@@ -31,7 +31,6 @@ object FnSlab {
 
 @Requires(classes = ["org.bukkit.block.data.type.Slab\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnSlabType: FnEnumGetter<Slab.Type>() {
+object FnSlabType: FnEnumGetter<Slab.Type>(Slab.Type::class.java) {
 
-    override val enumClass: Class<Slab.Type> = Slab.Type::class.java
 }

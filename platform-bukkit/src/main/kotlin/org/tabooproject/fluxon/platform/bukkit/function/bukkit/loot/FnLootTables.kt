@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.loot.LootTables"])
 @PlatformSide(Platform.BUKKIT)
-object FnLootTables : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.loot.LootTables>() {
-
-    override val enumClass: Class<org.bukkit.loot.LootTables> = org.bukkit.loot.LootTables::class.java
-
+object FnLootTables : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.loot.LootTables>(org.bukkit.loot.LootTables::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

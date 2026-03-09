@@ -48,30 +48,30 @@ object FnOfflinePlayer {
                     it.target?.incrementStatistic(it.getRef(0) as Statistic)
                 }
                 .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, Type.I)) {
-                    it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getInt(1).toInt())
+                    it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getAsInt(1).toInt())
                 }
                 .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material) }
                 .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType) }
-                .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getInt(2).toInt()) }
-                .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getInt(2).toInt()) }
+                .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getAsInt(2).toInt()) }
+                .function("incrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.incrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getAsInt(2).toInt()) }
                 .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE)) {
                     it.target?.decrementStatistic(it.getRef(0) as Statistic)
                 }
                 .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, Type.I)) {
-                    it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getInt(1).toInt())
+                    it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getAsInt(1).toInt())
                 }
                 .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material) }
                 .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType) }
-                .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getInt(2).toInt()) }
-                .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getInt(2).toInt()) }
+                .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getAsInt(2).toInt()) }
+                .function("decrementStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.decrementStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getAsInt(2).toInt()) }
                 .function("setStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, Type.I)) {
                     it.target?.setStatistic(
                         it.getRef(0) as Statistic,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     )
                 }
-                .function("setStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.setStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getInt(2).toInt()) }
-                .function("setStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.setStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getInt(2).toInt()) }
+                .function("setStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.target?.setStatistic(it.getRef(0) as Statistic, it.getRef(1) as Material, it.getAsInt(2).toInt()) }
+                .function("setStatistic",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.I)) { it.target?.setStatistic(it.getRef(0) as Statistic, it.getRef(1) as EntityType, it.getAsInt(2).toInt()) }
                 .function("getStatistic",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnStatistic.TYPE)) {
                     it.setReturnInt(it.target?.getStatistic(it.getRef(0) as Statistic) ?: 0)
                 }

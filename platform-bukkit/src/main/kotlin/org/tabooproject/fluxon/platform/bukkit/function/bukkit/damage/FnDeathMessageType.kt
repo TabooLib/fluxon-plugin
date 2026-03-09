@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.damage.DeathMessageType"])
 @PlatformSide(Platform.BUKKIT)
-object FnDeathMessageType : FnEnumGetter<org.bukkit.damage.DeathMessageType>() {
+object FnDeathMessageType : FnEnumGetter<org.bukkit.damage.DeathMessageType>(org.bukkit.damage.DeathMessageType::class.java) {
 
-    override val enumClass: Class<org.bukkit.damage.DeathMessageType> = org.bukkit.damage.DeathMessageType::class.java
 }

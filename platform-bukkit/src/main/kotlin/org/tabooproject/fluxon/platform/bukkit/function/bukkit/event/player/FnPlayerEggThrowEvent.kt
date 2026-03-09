@@ -29,7 +29,7 @@ object FnPlayerEggThrowEvent {
                 .function("hatchingType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.hatchingType) }
                 .function("setHatchingType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) { it.target?.setHatchingType(it.getRef(0) as EntityType) }
                 .function("numHatches",returns(Type.I).noParams()) { it.setReturnRef(it.target?.numHatches) }
-                .function("setNumHatches", returnsVoid().params(Type.I)) { it.target?.setNumHatches(it.getInt(0).toByte()) }
+                .function("setNumHatches", returnsVoid().params(Type.I)) { it.target?.setNumHatches(it.getAsInt(0).toByte()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerEggThrowEvent.getHandlerList()) }

@@ -24,7 +24,7 @@ object FnSlimeSplitEvent {
             registerExtension(SlimeSplitEvent::class.java)
                 .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("count", returns(Type.I).noParams()) { it.setReturnInt(it.target?.count ?: 0) }
-                .function("setCount", returnsVoid().params(Type.I)) { it.target?.setCount(it.getInt(0).toInt()) }
+                .function("setCount", returnsVoid().params(Type.I)) { it.target?.setCount(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(SlimeSplitEvent.getHandlerList()) }

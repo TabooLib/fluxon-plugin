@@ -15,9 +15,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.attribute.Attribute"])
 @PlatformSide(Platform.BUKKIT)
-object FnAttribute : FnEnumGetter<Attribute>() {
-
-    override val enumClass: Class<Attribute> = Attribute::class.java
+object FnAttribute : FnEnumGetter<Attribute>(Attribute::class.java) {
 
     override fun enumValue(value: String): Attribute? {
         return XAttribute.of(value).getOrNull()?.get()

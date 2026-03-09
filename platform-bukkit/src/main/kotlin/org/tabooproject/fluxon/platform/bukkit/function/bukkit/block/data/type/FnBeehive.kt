@@ -22,7 +22,7 @@ object FnBeehive {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Beehive::class.java)
                 .function("honeyLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.honeyLevel ?: 0) }
-                .function("setHoneyLevel", returnsVoid().params(Type.I)) { it.target?.setHoneyLevel(it.getInt(0).toInt()) }
+                .function("setHoneyLevel", returnsVoid().params(Type.I)) { it.target?.setHoneyLevel(it.getAsInt(0).toInt()) }
                 .function("maximumHoneyLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumHoneyLevel ?: 0) }
         }
     }

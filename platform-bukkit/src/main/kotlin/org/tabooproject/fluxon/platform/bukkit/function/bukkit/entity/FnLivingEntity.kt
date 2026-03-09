@@ -36,53 +36,53 @@ object FnLivingEntity {
                 .function("getLineOfSight",returns(Type.LIST).params(org.tabooproject.fluxon.util.StandardTypes.SET, Type.I)) {
                     it.setReturnRef(it.target?.getLineOfSight(
                         it.getRef(0) as Set<Material>,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     ))
                 }
                 .function("getTargetBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).params(org.tabooproject.fluxon.util.StandardTypes.SET, Type.I)) {
                     it.setReturnRef(it.target?.getTargetBlock(
                         it.getRef(0) as Set<Material>,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     ))
                 }
-                .function("getLastTwoTargetBlocks",returns(Type.LIST).params(org.tabooproject.fluxon.util.StandardTypes.SET, Type.I)) { it.setReturnRef(it.target?.getLastTwoTargetBlocks(it.getRef(0) as Set<Material>, it.getInt(1).toInt())) }
+                .function("getLastTwoTargetBlocks",returns(Type.LIST).params(org.tabooproject.fluxon.util.StandardTypes.SET, Type.I)) { it.setReturnRef(it.target?.getLastTwoTargetBlocks(it.getRef(0) as Set<Material>, it.getAsInt(1).toInt())) }
                 .function("getTargetBlockExact", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).params(Type.I)) {
-                    it.setReturnRef(it.target?.getTargetBlockExact(it.getInt(0).toInt()))
+                    it.setReturnRef(it.target?.getTargetBlockExact(it.getAsInt(0).toInt()))
                 }
                 .function("getTargetBlockExact",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFluidCollisionMode.TYPE)) {
                     it.setReturnRef(it.target?.getTargetBlockExact(
-                        it.getInt(0).toInt(),
+                        it.getAsInt(0).toInt(),
                         it.getRef(1) as FluidCollisionMode
                     ))
                 }
                 .function("rayTraceBlocks", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnRayTraceResult.TYPE).params(Type.D)) {
-                    it.setReturnRef(it.target?.rayTraceBlocks(it.getDouble(0)))
+                    it.setReturnRef(it.target?.rayTraceBlocks(it.getAsDouble(0)))
                 }
                 .function("rayTraceBlocks",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnRayTraceResult.TYPE).params(Type.D, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnFluidCollisionMode.TYPE)) {
                     it.setReturnRef(it.target?.rayTraceBlocks(
-                        it.getDouble(0),
+                        it.getAsDouble(0),
                         it.getRef(1) as FluidCollisionMode
                     ))
                 }
                 .function("remainingAir", returns(Type.I).noParams()) { it.setReturnInt(it.target?.remainingAir ?: 0) }
-                .function("setRemainingAir", returnsVoid().params(Type.I)) { it.target?.setRemainingAir(it.getInt(0)) }
+                .function("setRemainingAir", returnsVoid().params(Type.I)) { it.target?.setRemainingAir(it.getAsInt(0)) }
                 .function("maximumAir", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumAir ?: 0) }
-                .function("setMaximumAir", returnsVoid().params(Type.I)) { it.target?.setMaximumAir(it.getInt(0)) }
+                .function("setMaximumAir", returnsVoid().params(Type.I)) { it.target?.setMaximumAir(it.getAsInt(0)) }
                 .function("itemInUse", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInUse) }
                 .function("itemInUseTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.itemInUseTicks ?: 0) }
-                .function("setItemInUseTicks", returnsVoid().params(Type.I)) { it.target?.setItemInUseTicks(it.getInt(0)) }
+                .function("setItemInUseTicks", returnsVoid().params(Type.I)) { it.target?.setItemInUseTicks(it.getAsInt(0)) }
                 .function("arrowCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.arrowCooldown ?: 0) }
-                .function("setArrowCooldown", returnsVoid().params(Type.I)) { it.target?.setArrowCooldown(it.getInt(0)) }
+                .function("setArrowCooldown", returnsVoid().params(Type.I)) { it.target?.setArrowCooldown(it.getAsInt(0)) }
                 .function("arrowsInBody", returns(Type.I).noParams()) { it.setReturnInt(it.target?.arrowsInBody ?: 0) }
-                .function("setArrowsInBody", returnsVoid().params(Type.I)) { it.target?.setArrowsInBody(it.getInt(0)) }
+                .function("setArrowsInBody", returnsVoid().params(Type.I)) { it.target?.setArrowsInBody(it.getAsInt(0)) }
                 .function("maximumNoDamageTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumNoDamageTicks ?: 0) }
-                .function("setMaximumNoDamageTicks", returnsVoid().params(Type.I)) { it.target?.setMaximumNoDamageTicks(it.getInt(0)) }
+                .function("setMaximumNoDamageTicks", returnsVoid().params(Type.I)) { it.target?.setMaximumNoDamageTicks(it.getAsInt(0)) }
                 .function("lastDamage", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.lastDamage ?: 0.0) }
-                .function("setLastDamage", returnsVoid().params(Type.D)) { it.target?.setLastDamage(it.getDouble(0)) }
+                .function("setLastDamage", returnsVoid().params(Type.D)) { it.target?.setLastDamage(it.getAsDouble(0)) }
                 .function("noDamageTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.noDamageTicks ?: 0) }
-                .function("setNoDamageTicks", returnsVoid().params(Type.I)) { it.target?.setNoDamageTicks(it.getInt(0)) }
+                .function("setNoDamageTicks", returnsVoid().params(Type.I)) { it.target?.setNoDamageTicks(it.getAsInt(0)) }
                 .function("noActionTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.noActionTicks ?: 0) }
-                .function("setNoActionTicks", returnsVoid().params(Type.I)) { it.target?.setNoActionTicks(it.getInt(0)) }
+                .function("setNoActionTicks", returnsVoid().params(Type.I)) { it.target?.setNoActionTicks(it.getAsInt(0)) }
                 .function("killer", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.killer) }
                 .syncFunction("addPotionEffect",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE)) {
                     it.setReturnBool(it.target?.addPotionEffect(it.getRef(0) as PotionEffect) ?: false)
@@ -125,7 +125,7 @@ object FnLivingEntity {
                 .function("collidableExemptions", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.collidableExemptions) }
                 .function("hurtSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.hurtSound) }
                 .function("deathSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.deathSound) }
-                .function("getFallDamageSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getFallDamageSound(it.getInt(0).toInt())) }
+                .function("getFallDamageSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getFallDamageSound(it.getAsInt(0).toInt())) }
                 .function("fallDamageSoundSmall", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.fallDamageSoundSmall) }
                 .function("fallDamageSoundBig", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.fallDamageSoundBig) }
                 .function("getDrinkingSound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.getDrinkingSound(it.getRef(0) as ItemStack)) }

@@ -31,7 +31,6 @@ object FnBisected {
 
 @Requires(classes = ["org.bukkit.block.data.Bisected\$Half"])
 @PlatformSide(Platform.BUKKIT)
-object FnBisectedHalf : FnEnumGetter<Bisected.Half>() {
+object FnBisectedHalf : FnEnumGetter<Bisected.Half>(Bisected.Half::class.java) {
 
-    override val enumClass: Class<Bisected.Half> = Bisected.Half::class.java
 }

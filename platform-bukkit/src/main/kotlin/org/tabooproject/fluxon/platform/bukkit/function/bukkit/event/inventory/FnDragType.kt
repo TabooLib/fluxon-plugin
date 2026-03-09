@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.inventory.DragType"])
 @PlatformSide(Platform.BUKKIT)
-object FnDragType : FnEnumGetter<DragType>() {
+object FnDragType : FnEnumGetter<DragType>(DragType::class.java) {
 
-    override val enumClass: Class<DragType> = DragType::class.java
 }

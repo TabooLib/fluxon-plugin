@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.TextDisplay\$TextAlignment"])
 @PlatformSide(Platform.BUKKIT)
-object FnTextDisplayTextAlignment : FnEnumGetter<org.bukkit.entity.TextDisplay.TextAlignment>() {
+object FnTextDisplayTextAlignment : FnEnumGetter<org.bukkit.entity.TextDisplay.TextAlignment>(org.bukkit.entity.TextDisplay.TextAlignment::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.TextDisplay.TextAlignment> = org.bukkit.entity.TextDisplay.TextAlignment::class.java
 }

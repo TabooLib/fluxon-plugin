@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.AsyncPlayerPreLoginEvent\$Result"])
 @PlatformSide(Platform.BUKKIT)
-object FnAsyncPlayerPreLoginEventResult : FnEnumGetter<org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result>() {
+object FnAsyncPlayerPreLoginEventResult : FnEnumGetter<org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result>(org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result> = org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result::class.java
 }

@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.world.TimeSkipEvent\$SkipReason"])
 @PlatformSide(Platform.BUKKIT)
-object FnTimeSkipEventSkipReason : FnEnumGetter<org.bukkit.event.world.TimeSkipEvent.SkipReason>() {
+object FnTimeSkipEventSkipReason : FnEnumGetter<org.bukkit.event.world.TimeSkipEvent.SkipReason>(org.bukkit.event.world.TimeSkipEvent.SkipReason::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.world.TimeSkipEvent.SkipReason> = org.bukkit.event.world.TimeSkipEvent.SkipReason::class.java
 }

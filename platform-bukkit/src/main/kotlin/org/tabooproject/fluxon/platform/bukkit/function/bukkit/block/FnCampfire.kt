@@ -24,23 +24,23 @@ object FnCampfire {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Campfire::class.java)
                 .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size ?: 0) }
-                .function("getItem", returns(FnItemStack.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getItem(it.getInt(0).toInt())) }
+                .function("getItem", returns(FnItemStack.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getItem(it.getAsInt(0).toInt())) }
                 .function("setItem", returnsVoid().params(Type.I, FnItemStack.TYPE)) {
-                    it.target?.setItem(it.getInt(0), it.getRef(1) as ItemStack)
+                    it.target?.setItem(it.getAsInt(0), it.getRef(1) as ItemStack)
                 }
                 .function("getCookTime", returns(Type.I).params(Type.I)) {
-                    it.setReturnInt(it.target?.getCookTime(it.getInt(0)) ?: 0)
+                    it.setReturnInt(it.target?.getCookTime(it.getAsInt(0)) ?: 0)
                 }
                 .function("setCookTime", returnsVoid().params(Type.I, Type.I)) {
-                    it.target?.setCookTime(it.getInt(0), it.getInt(1))
+                    it.target?.setCookTime(it.getAsInt(0), it.getAsInt(1))
                 }
                 .function("getCookTimeTotal", returns(Type.I).params(Type.I)) {
-                    it.setReturnInt(it.target?.getCookTimeTotal(it.getInt(0)) ?: 0)
+                    it.setReturnInt(it.target?.getCookTimeTotal(it.getAsInt(0)) ?: 0)
                 }
                 .function("setCookTimeTotal", returnsVoid().params(Type.I, Type.I)) {
                     it.target?.setCookTimeTotal(
-                        it.getInt(0),
-                        it.getInt(1)
+                        it.getAsInt(0),
+                        it.getAsInt(1)
                     )
                 }
         }

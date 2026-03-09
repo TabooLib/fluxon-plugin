@@ -34,7 +34,7 @@ object FnPermissible {
                 .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.addAttachment(
                         it.getRef(0) as Plugin,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     ))
                 }
                 .function("addAttachment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.plugin.FnPlugin.TYPE, Type.STRING, Type.Z)) {
@@ -49,7 +49,7 @@ object FnPermissible {
                         it.getRef(0) as Plugin,
                         it.getString(1)!!,
                         it.getBool(2),
-                        it.getInt(3).toInt()
+                        it.getAsInt(3).toInt()
                     ))
                 }
                 .function("removeAttachment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.permissions.FnPermissionAttachment.TYPE)) {

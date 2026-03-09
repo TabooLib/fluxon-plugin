@@ -23,11 +23,11 @@ object FnFurnace {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Furnace::class.java)
                 .function("burnTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.burnTime?.toInt() ?: 0) }
-                .function("setBurnTime", returnsVoid().params(Type.I)) { it.target?.setBurnTime(it.getInt(0).toShort()) }
+                .function("setBurnTime", returnsVoid().params(Type.I)) { it.target?.setBurnTime(it.getAsInt(0).toShort()) }
                 .function("cookTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cookTime?.toInt() ?: 0) }
-                .function("setCookTime", returnsVoid().params(Type.I)) { it.target?.setCookTime(it.getInt(0).toShort()) }
+                .function("setCookTime", returnsVoid().params(Type.I)) { it.target?.setCookTime(it.getAsInt(0).toShort()) }
                 .function("cookTimeTotal", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cookTimeTotal ?: 0) }
-                .function("setCookTimeTotal", returnsVoid().params(Type.I)) { it.target?.setCookTimeTotal(it.getInt(0)) }
+                .function("setCookTimeTotal", returnsVoid().params(Type.I)) { it.target?.setCookTimeTotal(it.getAsInt(0)) }
                 .function("inventory", returns(FnFurnaceInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
                 .function("snapshotInventory", returns(FnFurnaceInventory.TYPE).noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }

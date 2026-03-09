@@ -26,11 +26,11 @@ object FnBannerMeta {
                 .function("patterns",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.patterns) }
                 .function("setPatterns",returnsVoid().params(Type.LIST)) { it.target?.setPatterns(it.getRef(0) as List<Pattern>) }
                 .function("addPattern",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE)) { it.target?.addPattern(it.getRef(0) as Pattern) }
-                .function("getPattern",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getPattern(it.getInt(0).toInt())) }
-                .function("removePattern",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE).params(Type.I)) { it.setReturnRef(it.target?.removePattern(it.getInt(0).toInt())) }
+                .function("getPattern",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getPattern(it.getAsInt(0).toInt())) }
+                .function("removePattern",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE).params(Type.I)) { it.setReturnRef(it.target?.removePattern(it.getAsInt(0).toInt())) }
                 .function("setPattern",returnsVoid().params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.banner.FnPattern.TYPE)) {
                     it.target?.setPattern(
-                        it.getInt(0).toInt(),
+                        it.getAsInt(0).toInt(),
                         it.getRef(1) as Pattern
                     )
                 }

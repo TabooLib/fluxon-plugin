@@ -26,11 +26,11 @@ object FnTextDisplay {
                 .function("text", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.text) }
                 .function("setText", returnsVoid().params(Type.STRING)) { it.target?.setText(it.getString(0)) }
                 .function("lineWidth", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lineWidth ?: 0) }
-                .function("setLineWidth", returnsVoid().params(Type.I)) { it.target?.setLineWidth(it.getInt(0).toInt()) }
+                .function("setLineWidth", returnsVoid().params(Type.I)) { it.target?.setLineWidth(it.getAsInt(0).toInt()) }
                 .function("backgroundColor", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE).noParams()) { it.setReturnRef(it.target?.backgroundColor) }
                 .function("setBackgroundColor",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) { it.target?.setBackgroundColor(it.getRef(0) as Color) }
                 .function("textOpacity", returns(Type.I).noParams()) { it.setReturnInt(it.target?.textOpacity?.toInt() ?: 0) }
-                .function("setTextOpacity", returnsVoid().params(Type.I)) { it.target?.setTextOpacity(it.getInt(0).toByte()) }
+                .function("setTextOpacity", returnsVoid().params(Type.I)) { it.target?.setTextOpacity(it.getAsInt(0).toByte()) }
                 .function("isShadowed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isShadowed ?: false) }
                 .function("setShadowed", returnsVoid().params(Type.Z)) { it.target?.setShadowed(it.getBool(0)) }
                 .function("isSeeThrough", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSeeThrough ?: false) }

@@ -26,7 +26,7 @@ object FnArt {
                 .function("id", returns(Type.I).noParams()) { it.setReturnInt(it.target?.id ?: 0) }
                 .function("key", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
                 // static
-                .function("getById", returns(TYPE).params(Type.I)) { it.setReturnRef(Art.getById(it.getInt(0))) }
+                .function("getById", returns(TYPE).params(Type.I)) { it.setReturnRef(Art.getById(it.getAsInt(0))) }
                 // static
                 .function("getByName", returns(TYPE).params(Type.STRING)) { it.setReturnRef(Art.getByName(it.getString(0)!!)) }
         }

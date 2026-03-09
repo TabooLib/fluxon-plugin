@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.EntityEffect"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityEffect : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.EntityEffect>() {
-
-    override val enumClass: Class<org.bukkit.EntityEffect> = org.bukkit.EntityEffect::class.java
-
+object FnEntityEffect : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.EntityEffect>(org.bukkit.EntityEffect::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

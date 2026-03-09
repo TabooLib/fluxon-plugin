@@ -14,9 +14,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.block.PistonMoveReaction"])
 @PlatformSide(Platform.BUKKIT)
-object FnPistonMoveReaction : FnEnumGetter<PistonMoveReaction>() {
-
-    override val enumClass: Class<PistonMoveReaction> = PistonMoveReaction::class.java
+object FnPistonMoveReaction : FnEnumGetter<PistonMoveReaction>(PistonMoveReaction::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

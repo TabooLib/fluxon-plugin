@@ -24,16 +24,16 @@ object FnDamageable {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Damageable::class.java)
-                .function("damage", returnsVoid().params(Type.D)) { it.target?.damage(it.getDouble(0)) }
+                .function("damage", returnsVoid().params(Type.D)) { it.target?.damage(it.getAsDouble(0)) }
                 .function("damage",returnsVoid().params(Type.D, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
-                    it.target?.damage(it.getDouble(0), it.getRef(1) as Entity)
+                    it.target?.damage(it.getAsDouble(0), it.getRef(1) as Entity)
                 }
                 .function("health", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.health ?: 0.0) }
-                .function("setHealth", returnsVoid().params(Type.D)) { it.target?.setHealth(it.getDouble(0)) }
+                .function("setHealth", returnsVoid().params(Type.D)) { it.target?.setHealth(it.getAsDouble(0)) }
                 .function("absorptionAmount", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.absorptionAmount ?: 0.0) }
-                .function("setAbsorptionAmount", returnsVoid().params(Type.D)) { it.target?.setAbsorptionAmount(it.getDouble(0)) }
+                .function("setAbsorptionAmount", returnsVoid().params(Type.D)) { it.target?.setAbsorptionAmount(it.getAsDouble(0)) }
                 .function("maxHealth", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.maxHealth ?: 0.0) }
-                .function("setMaxHealth", returnsVoid().params(Type.D)) { it.target?.setMaxHealth(it.getDouble(0)) }
+                .function("setMaxHealth", returnsVoid().params(Type.D)) { it.target?.setMaxHealth(it.getAsDouble(0)) }
                 .function("resetMaxHealth", returnsVoid().noParams()) { it.target?.resetMaxHealth() }
         }
     }

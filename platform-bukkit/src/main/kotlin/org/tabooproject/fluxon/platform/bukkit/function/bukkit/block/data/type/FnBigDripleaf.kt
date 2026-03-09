@@ -36,7 +36,6 @@ object FnBigDripleaf {
 
 @Requires(classes = ["org.bukkit.block.data.type.BigDripleaf\$Tilt"])
 @PlatformSide(Platform.BUKKIT)
-object FnBigDripleafTilt : FnEnumGetter<BigDripleaf.Tilt>() {
+object FnBigDripleafTilt : FnEnumGetter<BigDripleaf.Tilt>(BigDripleaf.Tilt::class.java) {
 
-    override val enumClass: Class<BigDripleaf.Tilt> = BigDripleaf.Tilt::class.java
 }

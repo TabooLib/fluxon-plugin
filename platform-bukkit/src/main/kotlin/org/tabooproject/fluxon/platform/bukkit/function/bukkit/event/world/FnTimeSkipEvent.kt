@@ -24,7 +24,7 @@ object FnTimeSkipEvent {
             registerExtension(TimeSkipEvent::class.java)
                 .function("skipReason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.world.FnTimeSkipEventSkipReason.TYPE).noParams()) { it.setReturnRef(it.target?.skipReason) }
                 .function("skipAmount",returns(Type.J).noParams()) { it.setReturnRef(it.target?.skipAmount) }
-                .function("setSkipAmount", returnsVoid().params(Type.J)) { it.target?.setSkipAmount(it.getLong(0)) }
+                .function("setSkipAmount", returnsVoid().params(Type.J)) { it.target?.setSkipAmount(it.getAsLong(0)) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(TimeSkipEvent.getHandlerList()) }

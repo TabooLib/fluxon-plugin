@@ -24,21 +24,21 @@ object FnEulerAngle {
                 .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.x ?: 0.0) }
                 .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.y ?: 0.0) }
                 .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.z ?: 0.0) }
-                .function("setX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setX(it.getDouble(0))) }
-                .function("setY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setY(it.getDouble(0))) }
-                .function("setZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setZ(it.getDouble(0))) }
+                .function("setX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setX(it.getAsDouble(0))) }
+                .function("setY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setY(it.getAsDouble(0))) }
+                .function("setZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D)) { it.setReturnRef(it.target?.setZ(it.getAsDouble(0))) }
                 .function("add",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.add(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("subtract",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnEulerAngle.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.subtract(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
         }

@@ -32,7 +32,7 @@ object FnFurnaceRecipe {
                     }
                 }
                 .function("setInput",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
-                    it.target?.setInput(it.getRef(0) as Material, it.getInt(1).toInt())
+                    it.target?.setInput(it.getRef(0) as Material, it.getAsInt(1).toInt())
                 }
                 .function("setInputChoice",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE)) { it.target?.setInputChoice(it.getRef(0) as RecipeChoice) }
         }

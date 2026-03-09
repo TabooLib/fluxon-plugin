@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.entity.CreeperPowerEvent\$PowerCause"])
 @PlatformSide(Platform.BUKKIT)
-object FnCreeperPowerEventPowerCause : FnEnumGetter<org.bukkit.event.entity.CreeperPowerEvent.PowerCause>() {
+object FnCreeperPowerEventPowerCause : FnEnumGetter<org.bukkit.event.entity.CreeperPowerEvent.PowerCause>(org.bukkit.event.entity.CreeperPowerEvent.PowerCause::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.entity.CreeperPowerEvent.PowerCause> = org.bukkit.event.entity.CreeperPowerEvent.PowerCause::class.java
 }

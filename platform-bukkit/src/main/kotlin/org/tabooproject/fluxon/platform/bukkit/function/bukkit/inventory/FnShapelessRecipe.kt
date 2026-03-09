@@ -28,7 +28,7 @@ object FnShapelessRecipe {
                 .function("addIngredient", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnShapelessRecipe.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE)) { it.setReturnRef(it.target?.addIngredient(it.getRef(0) as RecipeChoice)) }
                 .function("addIngredient",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnShapelessRecipe.TYPE).params(Type.I, Type.I)) {
                     it.setReturnRef(when (val var1 = it.getRef(0)) {
-                        is Material -> it.target?.addIngredient(var1, it.getInt(1).toInt())
+                        is Material -> it.target?.addIngredient(var1, it.getAsInt(1).toInt())
                         is Int -> when (val var2 = it.getRef(1)) {
                             is MaterialData -> it.target?.addIngredient(var1, var2)
                             is Material -> it.target?.addIngredient(var1, var2)
@@ -40,9 +40,9 @@ object FnShapelessRecipe {
                 }
                 .function("addIngredient",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnShapelessRecipe.TYPE).params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.addIngredient(
-                        it.getInt(0).toInt(),
+                        it.getAsInt(0).toInt(),
                         it.getRef(1) as Material,
-                        it.getInt(2).toInt()
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("removeIngredient",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnShapelessRecipe.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnRecipeChoice.TYPE)) { it.setReturnRef(it.target?.removeIngredient(it.getRef(0) as RecipeChoice)) }
@@ -56,15 +56,15 @@ object FnShapelessRecipe {
                             else -> throw IllegalArgumentException("参数 2 必须是 Material 或 MaterialData 类型")
                         }
 
-                        is Material -> it.target?.removeIngredient(var1, it.getInt(1).toInt())
+                        is Material -> it.target?.removeIngredient(var1, it.getAsInt(1).toInt())
                         else -> throw IllegalArgumentException("参数 1 必须是 Int 或 Material 类型")
                     })
                 }
                 .function("removeIngredient",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnShapelessRecipe.TYPE).params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.removeIngredient(
-                        it.getInt(0).toInt(),
+                        it.getAsInt(0).toInt(),
                         it.getRef(1) as Material,
-                        it.getInt(2).toInt()
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("ingredientList",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.ingredientList) }

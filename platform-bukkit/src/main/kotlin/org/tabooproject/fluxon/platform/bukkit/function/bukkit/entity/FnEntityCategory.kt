@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.EntityCategory"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityCategory : FnEnumGetter<org.bukkit.entity.EntityCategory>() {
+object FnEntityCategory : FnEnumGetter<org.bukkit.entity.EntityCategory>(org.bukkit.entity.EntityCategory::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.EntityCategory> = org.bukkit.entity.EntityCategory::class.java
 }

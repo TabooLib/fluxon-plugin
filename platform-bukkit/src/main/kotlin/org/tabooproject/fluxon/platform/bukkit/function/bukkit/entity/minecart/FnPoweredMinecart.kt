@@ -23,7 +23,7 @@ object FnPoweredMinecart {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PoweredMinecart::class.java)
                 .function("fuel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuel ?: 0) }
-                .function("setFuel", returnsVoid().params(Type.I)) { it.target?.setFuel(it.getInt(0).toInt()) }
+                .function("setFuel", returnsVoid().params(Type.I)) { it.target?.setFuel(it.getAsInt(0).toInt()) }
         }
     }
 }

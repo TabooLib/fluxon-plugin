@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.scoreboard.NameTagVisibility"])
 @PlatformSide(Platform.BUKKIT)
-object FnNameTagVisibility : FnEnumGetter<org.bukkit.scoreboard.NameTagVisibility>() {
+object FnNameTagVisibility : FnEnumGetter<org.bukkit.scoreboard.NameTagVisibility>(org.bukkit.scoreboard.NameTagVisibility::class.java) {
 
-    override val enumClass: Class<org.bukkit.scoreboard.NameTagVisibility> = org.bukkit.scoreboard.NameTagVisibility::class.java
 }

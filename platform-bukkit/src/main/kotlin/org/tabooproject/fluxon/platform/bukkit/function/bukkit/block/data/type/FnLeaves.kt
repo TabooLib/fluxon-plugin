@@ -25,7 +25,7 @@ object FnLeaves {
                 .function("isPersistent", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPersistent ?: false) }
                 .function("setPersistent", returnsVoid().params(Type.Z)) { it.target?.setPersistent(it.getBool(0)) }
                 .function("distance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.distance ?: 0) }
-                .function("setDistance", returnsVoid().params(Type.I)) { it.target?.setDistance(it.getInt(0).toInt()) }
+                .function("setDistance", returnsVoid().params(Type.I)) { it.target?.setDistance(it.getAsInt(0).toInt()) }
         }
     }
 }

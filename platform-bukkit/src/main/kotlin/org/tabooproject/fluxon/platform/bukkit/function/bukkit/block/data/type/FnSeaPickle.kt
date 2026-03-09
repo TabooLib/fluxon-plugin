@@ -23,7 +23,7 @@ object FnSeaPickle {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SeaPickle::class.java)
                 .function("pickles", returns(Type.I).noParams()) { it.setReturnInt(it.target?.pickles ?: 0) }
-                .function("setPickles", returnsVoid().params(Type.I)) { it.target?.setPickles(it.getInt(0).toInt()) }
+                .function("setPickles", returnsVoid().params(Type.I)) { it.target?.setPickles(it.getAsInt(0).toInt()) }
                 .function("minimumPickles", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minimumPickles ?: 0) }
                 .function("maximumPickles", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumPickles ?: 0) }
         }

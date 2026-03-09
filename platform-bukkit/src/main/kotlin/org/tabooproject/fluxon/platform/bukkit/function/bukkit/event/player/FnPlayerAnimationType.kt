@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerAnimationType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerAnimationType : FnEnumGetter<org.bukkit.event.player.PlayerAnimationType>() {
+object FnPlayerAnimationType : FnEnumGetter<org.bukkit.event.player.PlayerAnimationType>(org.bukkit.event.player.PlayerAnimationType::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerAnimationType> = org.bukkit.event.player.PlayerAnimationType::class.java
 }

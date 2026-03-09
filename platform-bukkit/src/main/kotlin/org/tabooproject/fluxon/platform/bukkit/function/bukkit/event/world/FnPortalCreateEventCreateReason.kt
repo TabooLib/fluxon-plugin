@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.world.PortalCreateEvent\$CreateReason"])
 @PlatformSide(Platform.BUKKIT)
-object FnPortalCreateEventCreateReason : FnEnumGetter<org.bukkit.event.world.PortalCreateEvent.CreateReason>() {
+object FnPortalCreateEventCreateReason : FnEnumGetter<org.bukkit.event.world.PortalCreateEvent.CreateReason>(org.bukkit.event.world.PortalCreateEvent.CreateReason::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.world.PortalCreateEvent.CreateReason> = org.bukkit.event.world.PortalCreateEvent.CreateReason::class.java
 }

@@ -36,7 +36,6 @@ object FnJigsaw {
 
 @Requires(classes = ["org.bukkit.block.data.type.Jigsaw\$Orientation"])
 @PlatformSide(Platform.BUKKIT)
-object FnJigsawOrientation : FnEnumGetter<Jigsaw.Orientation>() {
+object FnJigsawOrientation : FnEnumGetter<Jigsaw.Orientation>(Jigsaw.Orientation::class.java) {
 
-    override val enumClass: Class<Jigsaw.Orientation> = Jigsaw.Orientation::class.java
 }

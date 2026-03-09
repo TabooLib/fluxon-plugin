@@ -40,7 +40,6 @@ object FnCrafter {
 
 @Requires(classes = ["org.bukkit.block.data.type.Crafter\$Orientation"])
 @PlatformSide(Platform.BUKKIT)
-object FnCrafterOrientation : FnEnumGetter<Crafter.Orientation>() {
+object FnCrafterOrientation : FnEnumGetter<Crafter.Orientation>(Crafter.Orientation::class.java) {
 
-    override val enumClass: Class<Crafter.Orientation> = Crafter.Orientation::class.java
 }

@@ -31,7 +31,6 @@ object FnDoor {
 
 @Requires(classes = ["org.bukkit.block.data.type.Door\$Hinge"])
 @PlatformSide(Platform.BUKKIT)
-object FnDoorHinge : FnEnumGetter<Door.Hinge>() {
+object FnDoorHinge : FnEnumGetter<Door.Hinge>(Door.Hinge::class.java) {
 
-    override val enumClass: Class<Door.Hinge> = Door.Hinge::class.java
 }

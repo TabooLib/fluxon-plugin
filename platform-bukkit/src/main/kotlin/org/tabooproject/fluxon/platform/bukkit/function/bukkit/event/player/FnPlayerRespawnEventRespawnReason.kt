@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerRespawnEvent\$RespawnReason"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerRespawnEventRespawnReason : FnEnumGetter<org.bukkit.event.player.PlayerRespawnEvent.RespawnReason>() {
+object FnPlayerRespawnEventRespawnReason : FnEnumGetter<org.bukkit.event.player.PlayerRespawnEvent.RespawnReason>(org.bukkit.event.player.PlayerRespawnEvent.RespawnReason::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerRespawnEvent.RespawnReason> = org.bukkit.event.player.PlayerRespawnEvent.RespawnReason::class.java
 }

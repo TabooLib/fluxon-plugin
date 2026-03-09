@@ -28,9 +28,9 @@ object FnFirework {
                 .function("setFireworkMeta",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnFireworkMeta.TYPE)) { it.target?.setFireworkMeta(it.getRef(0) as FireworkMeta) }
                 .function("setAttachedTo",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) { it.target?.setAttachedTo(it.getRef(0) as LivingEntity) }
                 .function("attachedTo",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.attachedTo) }
-                .function("setLife", returnsVoid().params(Type.I)) { it.target?.setLife(it.getInt(0)) }
+                .function("setLife", returnsVoid().params(Type.I)) { it.target?.setLife(it.getAsInt(0)) }
                 .function("life", returns(Type.I).noParams()) { it.setReturnInt(it.target?.life ?: 0) }
-                .function("setMaxLife", returnsVoid().params(Type.I)) { it.target?.setMaxLife(it.getInt(0)) }
+                .function("setMaxLife", returnsVoid().params(Type.I)) { it.target?.setMaxLife(it.getAsInt(0)) }
                 .function("maxLife", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLife ?: 0) }
                 .function("detonate", returnsVoid().noParams()) { it.target?.detonate() }
                 .function("isDetonated", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDetonated ?: false) }

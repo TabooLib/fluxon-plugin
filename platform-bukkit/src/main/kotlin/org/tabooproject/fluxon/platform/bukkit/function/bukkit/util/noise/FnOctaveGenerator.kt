@@ -22,62 +22,62 @@ object FnOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(OctaveGenerator::class.java)
-                .function("setScale", returnsVoid().params(Type.D)) { it.target?.setScale(it.getDouble(0)) }
+                .function("setScale", returnsVoid().params(Type.D)) { it.target?.setScale(it.getAsDouble(0)) }
                 .function("xScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.getXScale() ?: 0.0) }
-                .function("setXScale", returnsVoid().params(Type.D)) { it.target?.setXScale(it.getDouble(0)) }
+                .function("setXScale", returnsVoid().params(Type.D)) { it.target?.setXScale(it.getAsDouble(0)) }
                 .function("yScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.getYScale() ?: 0.0) }
-                .function("setYScale", returnsVoid().params(Type.D)) { it.target?.setYScale(it.getDouble(0)) }
+                .function("setYScale", returnsVoid().params(Type.D)) { it.target?.setYScale(it.getAsDouble(0)) }
                 .function("zScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.getZScale() ?: 0.0) }
-                .function("setZScale", returnsVoid().params(Type.D)) { it.target?.setZScale(it.getDouble(0)) }
+                .function("setZScale", returnsVoid().params(Type.D)) { it.target?.setZScale(it.getAsDouble(0)) }
                 .function("octaves", returns(Type.fromClass(Array<org.bukkit.util.noise.NoiseGenerator>::class.java)).noParams()) { it.setReturnRef(it.target?.getOctaves()) }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.Z)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
                         it.getBool(3)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D, Type.Z)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
                         it.getBool(4)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D, Type.D, Type.Z)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4),
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
                         it.getBool(5)
                     ) ?: 0.0)
                 }

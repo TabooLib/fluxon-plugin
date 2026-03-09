@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.boss.DragonBattle\$RespawnPhase"])
 @PlatformSide(Platform.BUKKIT)
-object FnDragonBattleRespawnPhase : FnEnumGetter<org.bukkit.boss.DragonBattle.RespawnPhase>() {
+object FnDragonBattleRespawnPhase : FnEnumGetter<org.bukkit.boss.DragonBattle.RespawnPhase>(org.bukkit.boss.DragonBattle.RespawnPhase::class.java) {
 
-    override val enumClass: Class<org.bukkit.boss.DragonBattle.RespawnPhase> = org.bukkit.boss.DragonBattle.RespawnPhase::class.java
 }

@@ -22,7 +22,7 @@ object FnEntityPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityPortalEvent::class.java)
-                .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
+                .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getAsInt(0).toInt()) }
                 .function("searchRadius", returns(Type.I).noParams()) { it.setReturnInt(it.target?.searchRadius ?: 0) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

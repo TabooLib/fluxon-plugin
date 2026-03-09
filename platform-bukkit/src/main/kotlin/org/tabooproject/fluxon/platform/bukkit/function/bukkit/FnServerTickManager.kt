@@ -33,9 +33,9 @@ object FnServerTickManager {
                 .function("tickRate", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.tickRate ?: 0.0f) }
                 .function("setTickRate", returnsVoid().params(Type.F)) { it.target?.setTickRate(it.getFloat(0)) }
                 .function("setFrozen", returnsVoid().params(Type.Z)) { it.target?.setFrozen(it.getBool(0)) }
-                .function("stepGameIfFrozen", returnsVoid().params(Type.I)) { it.target?.stepGameIfFrozen(it.getInt(0).toInt()) }
+                .function("stepGameIfFrozen", returnsVoid().params(Type.I)) { it.target?.stepGameIfFrozen(it.getAsInt(0).toInt()) }
                 .function("stopStepping", returnsVoid().noParams()) { it.target?.stopStepping() }
-                .function("requestGameToSprint", returnsVoid().params(Type.I)) { it.target?.requestGameToSprint(it.getInt(0).toInt()) }
+                .function("requestGameToSprint", returnsVoid().params(Type.I)) { it.target?.requestGameToSprint(it.getAsInt(0).toInt()) }
                 .function("stopSprinting", returnsVoid().noParams()) { it.target?.stopSprinting() }
                 .function("frozenTicksToRun", returns(Type.I).noParams()) { it.setReturnInt(it.target?.frozenTicksToRun ?: 0) }
         }

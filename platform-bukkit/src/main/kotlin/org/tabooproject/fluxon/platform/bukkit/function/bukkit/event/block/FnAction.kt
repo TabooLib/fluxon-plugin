@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.block.Action"])
 @PlatformSide(Platform.BUKKIT)
-object FnAction : FnEnumGetter<org.bukkit.event.block.Action>() {
+object FnAction : FnEnumGetter<org.bukkit.event.block.Action>(org.bukkit.event.block.Action::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.block.Action> = org.bukkit.event.block.Action::class.java
 }

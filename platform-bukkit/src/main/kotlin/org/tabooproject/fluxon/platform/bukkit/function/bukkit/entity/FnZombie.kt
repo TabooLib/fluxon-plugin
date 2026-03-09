@@ -30,7 +30,7 @@ object FnZombie {
                 .function("setVillagerProfession",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerProfession.TYPE)) { it.target?.setVillagerProfession(it.getRef(0) as Villager.Profession) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
-                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getAsInt(0).toInt()) }
                 .function("canBreakDoors", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canBreakDoors() ?: false) }
                 .function("setCanBreakDoors", returnsVoid().params(Type.Z)) { it.target?.setCanBreakDoors(it.getBool(0)) }
         }

@@ -25,7 +25,7 @@ object FnScore {
                 .function("entry", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.entry) }
                 .function("objective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).noParams()) { it.setReturnRef(it.target?.objective) }
                 .function("score", returns(Type.I).noParams()) { it.setReturnInt(it.target?.score ?: 0) }
-                .function("setScore", returnsVoid().params(Type.I)) { it.target?.setScore(it.getInt(0).toInt()) }
+                .function("setScore", returnsVoid().params(Type.I)) { it.target?.setScore(it.getAsInt(0).toInt()) }
                 .function("isScoreSet", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isScoreSet ?: false) }
                 .function("scoreboard", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.scoreboard) }
         }

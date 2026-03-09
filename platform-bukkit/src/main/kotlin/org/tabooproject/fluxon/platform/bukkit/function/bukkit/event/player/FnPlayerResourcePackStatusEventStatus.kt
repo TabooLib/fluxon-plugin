@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerResourcePackStatusEvent\$Status"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerResourcePackStatusEventStatus : FnEnumGetter<org.bukkit.event.player.PlayerResourcePackStatusEvent.Status>() {
+object FnPlayerResourcePackStatusEventStatus : FnEnumGetter<org.bukkit.event.player.PlayerResourcePackStatusEvent.Status>(org.bukkit.event.player.PlayerResourcePackStatusEvent.Status::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerResourcePackStatusEvent.Status> = org.bukkit.event.player.PlayerResourcePackStatusEvent.Status::class.java
 }

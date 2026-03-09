@@ -23,7 +23,7 @@ object FnAgeable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Ageable::class.java)
                 .function("age", returns(Type.I).noParams()) { it.setReturnInt(it.target?.age ?: 0) }
-                .function("setAge", returnsVoid().params(Type.I)) { it.target?.setAge(it.getInt(0)) }
+                .function("setAge", returnsVoid().params(Type.I)) { it.target?.setAge(it.getAsInt(0)) }
                 .function("maximumAge", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumAge ?: 0) }
         }
     }

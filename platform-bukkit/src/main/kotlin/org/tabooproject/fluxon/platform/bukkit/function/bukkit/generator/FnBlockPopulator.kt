@@ -37,8 +37,8 @@ object FnBlockPopulator {
                     it.target?.populate(
                         it.getRef(0) as WorldInfo,
                         it.getRef(1) as Random,
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt(),
                         it.getRef(4) as LimitedRegion
                     )
                 }

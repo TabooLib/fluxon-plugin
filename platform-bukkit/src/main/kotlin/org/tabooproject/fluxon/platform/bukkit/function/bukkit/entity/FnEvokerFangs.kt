@@ -27,7 +27,7 @@ object FnEvokerFangs {
                 .function("owner",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.owner) }
                 .function("setOwner",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) { it.target?.setOwner(it.getRef(0) as LivingEntity) }
                 .function("attackDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.attackDelay ?: 0) }
-                .function("setAttackDelay", returnsVoid().params(Type.I)) { it.target?.setAttackDelay(it.getInt(0).toInt()) }
+                .function("setAttackDelay", returnsVoid().params(Type.I)) { it.target?.setAttackDelay(it.getAsInt(0).toInt()) }
         }
     }
 }

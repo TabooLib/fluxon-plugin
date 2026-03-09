@@ -23,7 +23,7 @@ object FnLectern {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Lectern::class.java)
                 .function("page", returns(Type.I).noParams()) { it.setReturnInt(it.target?.page ?: 0) }
-                .function("setPage", returnsVoid().params(Type.I)) { it.target?.setPage(it.getInt(0).toInt()) }
+                .function("setPage", returnsVoid().params(Type.I)) { it.target?.setPage(it.getAsInt(0).toInt()) }
                 .function("inventory", returns(FnInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
                 .function("snapshotInventory", returns(FnInventory.TYPE).noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }

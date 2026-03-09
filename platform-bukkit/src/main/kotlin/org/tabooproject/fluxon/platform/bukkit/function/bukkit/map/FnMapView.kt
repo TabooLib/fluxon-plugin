@@ -30,8 +30,8 @@ object FnMapView {
                 .function("setScale",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapViewScale.TYPE)) { it.target?.setScale(it.getRef(0) as MapView.Scale) }
                 .function("centerX", returns(Type.I).noParams()) { it.setReturnInt(it.target?.centerX ?: 0) }
                 .function("centerZ", returns(Type.I).noParams()) { it.setReturnInt(it.target?.centerZ ?: 0) }
-                .function("setCenterX", returnsVoid().params(Type.I)) { it.target?.setCenterX(it.getInt(0).toInt()) }
-                .function("setCenterZ", returnsVoid().params(Type.I)) { it.target?.setCenterZ(it.getInt(0).toInt()) }
+                .function("setCenterX", returnsVoid().params(Type.I)) { it.target?.setCenterX(it.getAsInt(0).toInt()) }
+                .function("setCenterZ", returnsVoid().params(Type.I)) { it.target?.setCenterZ(it.getAsInt(0).toInt()) }
                 .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
                 .function("setWorld",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.target?.setWorld(it.getRef(0) as World) }
                 .function("renderers",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.renderers) }
@@ -49,17 +49,14 @@ object FnMapView {
 
 @Requires(classes = ["org.bukkit.map.MapView\$Scale"])
 @PlatformSide(Platform.BUKKIT)
-object FnMapViewScale : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.map.MapView.Scale>() {
-
-    override val enumClass: Class<org.bukkit.map.MapView.Scale> = org.bukkit.map.MapView.Scale::class.java
-
+object FnMapViewScale : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.map.MapView.Scale>(org.bukkit.map.MapView.Scale::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapView.Scale::class.java)
                 // static
-                .function("valueOf", returns(TYPE).params(Type.I)) { it.setReturnRef(MapView.Scale.valueOf(it.getInt(0).toByte())) }
+                .function("valueOf", returns(TYPE).params(Type.I)) { it.setReturnRef(MapView.Scale.valueOf(it.getAsInt(0).toByte())) }
                 .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value?.toInt() ?: 0) }
         }
     }

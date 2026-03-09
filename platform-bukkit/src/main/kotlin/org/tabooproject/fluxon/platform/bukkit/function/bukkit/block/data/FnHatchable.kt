@@ -23,7 +23,7 @@ object FnHatchable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Hatchable::class.java)
                 .function("hatch", returns(Type.I).noParams()) { it.setReturnInt(it.target?.hatch ?: 0) }
-                .function("setHatch", returnsVoid().params(Type.I)) { it.target?.setHatch(it.getInt(0).toInt()) }
+                .function("setHatch", returnsVoid().params(Type.I)) { it.target?.setHatch(it.getAsInt(0).toInt()) }
                 .function("maximumHatch", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumHatch ?: 0) }
         }
     }

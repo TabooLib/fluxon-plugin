@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerExpCooldownChangeEvent\$ChangeReason"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerExpCooldownChangeEventChangeReason : FnEnumGetter<org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason>() {
+object FnPlayerExpCooldownChangeEventChangeReason : FnEnumGetter<org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason>(org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason> = org.bukkit.event.player.PlayerExpCooldownChangeEvent.ChangeReason::class.java
 }

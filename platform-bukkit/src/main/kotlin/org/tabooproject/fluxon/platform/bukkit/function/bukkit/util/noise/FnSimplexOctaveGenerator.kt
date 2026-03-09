@@ -21,27 +21,27 @@ object FnSimplexOctaveGenerator {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SimplexOctaveGenerator::class.java)
-                .function("setScale", returnsVoid().params(Type.D)) { it.target?.setScale(it.getDouble(0)) }
+                .function("setScale", returnsVoid().params(Type.D)) { it.target?.setScale(it.getAsDouble(0)) }
                 .function("wScale", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.wScale ?: 0.0) }
-                .function("setWScale", returnsVoid().params(Type.D)) { it.target?.setWScale(it.getDouble(0)) }
+                .function("setWScale", returnsVoid().params(Type.D)) { it.target?.setWScale(it.getAsDouble(0)) }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5)
                     ) ?: 0.0)
                 }
                 .function("noise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D, Type.D, Type.D, Type.Z)) {
                     it.setReturnDouble(it.target?.noise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5),
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5),
                         it.getBool(6)
                     ) ?: 0.0)
                 }

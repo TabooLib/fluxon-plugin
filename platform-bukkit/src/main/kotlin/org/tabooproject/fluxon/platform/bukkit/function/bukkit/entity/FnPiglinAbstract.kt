@@ -25,7 +25,7 @@ object FnPiglinAbstract {
                 .function("isImmuneToZombification", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isImmuneToZombification ?: false) }
                 .function("setImmuneToZombification", returnsVoid().params(Type.Z)) { it.target?.setImmuneToZombification(it.getBool(0)) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
-                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0)) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getAsInt(0)) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
                 .function("isBaby", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBaby ?: false) }
                 .function("setBaby", returnsVoid().params(Type.Z)) { it.target?.setBaby(it.getBool(0)) }

@@ -128,7 +128,7 @@ object FunctionListener {
                     null
                 } else {
                     val bind = it.tryGetClass(0)
-                    val property = it.getInt(1)
+                    val property = it.getAsInt(1)
                     val ignoreCancelled = it.getBool(2)
                     val fn = it.getRef(3) as Function
                     registerLifeCycleTask(LifeCycle.ENABLE) {

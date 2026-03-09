@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.MinecraftExperimental\$Requires"])
 @PlatformSide(Platform.BUKKIT)
-object FnMinecraftExperimentalRequires : FnEnumGetter<org.bukkit.MinecraftExperimental.Requires>() {
+object FnMinecraftExperimentalRequires : FnEnumGetter<org.bukkit.MinecraftExperimental.Requires>(org.bukkit.MinecraftExperimental.Requires::class.java) {
 
-    override val enumClass: Class<org.bukkit.MinecraftExperimental.Requires> = org.bukkit.MinecraftExperimental.Requires::class.java
 }

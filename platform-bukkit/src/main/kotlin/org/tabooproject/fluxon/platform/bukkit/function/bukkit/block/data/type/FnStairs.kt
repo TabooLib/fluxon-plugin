@@ -31,7 +31,6 @@ object FnStairs {
 
 @Requires(classes = ["org.bukkit.block.data.type.Stairs\$Shape"])
 @PlatformSide(Platform.BUKKIT)
-object FnStairsShape : FnEnumGetter<Stairs.Shape>() {
+object FnStairsShape : FnEnumGetter<Stairs.Shape>(Stairs.Shape::class.java) {
 
-    override val enumClass: Class<Stairs.Shape> = Stairs.Shape::class.java
 }

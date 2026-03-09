@@ -22,11 +22,11 @@ object FnCrafter {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Crafter::class.java)
                 .function("craftingTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.craftingTicks ?: 0) }
-                .function("setCraftingTicks", returnsVoid().params(Type.I)) { it.target?.setCraftingTicks(it.getInt(0)) }
-                .function("isSlotDisabled", returns(Type.Z).params(Type.I)) { it.setReturnBool(it.target?.isSlotDisabled(it.getInt(0)) ?: false) }
+                .function("setCraftingTicks", returnsVoid().params(Type.I)) { it.target?.setCraftingTicks(it.getAsInt(0)) }
+                .function("isSlotDisabled", returns(Type.Z).params(Type.I)) { it.setReturnBool(it.target?.isSlotDisabled(it.getAsInt(0)) ?: false) }
                 .function("setSlotDisabled", returnsVoid().params(Type.I, Type.Z)) {
                     it.target?.setSlotDisabled(
-                        it.getInt(0),
+                        it.getAsInt(0),
                         it.getBool(1)
                     )
                 }

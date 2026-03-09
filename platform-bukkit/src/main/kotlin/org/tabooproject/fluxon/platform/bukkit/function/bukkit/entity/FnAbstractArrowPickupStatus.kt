@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.AbstractArrow\$PickupStatus"])
 @PlatformSide(Platform.BUKKIT)
-object FnAbstractArrowPickupStatus : FnEnumGetter<org.bukkit.entity.AbstractArrow.PickupStatus>() {
+object FnAbstractArrowPickupStatus : FnEnumGetter<org.bukkit.entity.AbstractArrow.PickupStatus>(org.bukkit.entity.AbstractArrow.PickupStatus::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.AbstractArrow.PickupStatus> = org.bukkit.entity.AbstractArrow.PickupStatus::class.java
 }

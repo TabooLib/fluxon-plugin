@@ -30,8 +30,8 @@ object FnSign {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sign::class.java)
                 .function("lines", returns(StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0).toInt())) }
-                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getAsInt(0).toInt())) }
+                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getAsInt(0).toInt(), it.getString(1)!!) }
                 .function("isEditable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEditable ?: false) }
                 .function("setEditable", returnsVoid().params(Type.Z)) { it.target?.setEditable(it.getBool(0)) }
                 .function("isWaxed", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isWaxed ?: false) }

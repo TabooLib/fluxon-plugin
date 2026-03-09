@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.packs.DataPack\$Compatibility"])
 @PlatformSide(Platform.BUKKIT)
-object FnDataPackCompatibility : FnEnumGetter<DataPack.Compatibility>() {
+object FnDataPackCompatibility : FnEnumGetter<DataPack.Compatibility>(DataPack.Compatibility::class.java) {
 
-    override val enumClass: Class<DataPack.Compatibility> = DataPack.Compatibility::class.java
 }

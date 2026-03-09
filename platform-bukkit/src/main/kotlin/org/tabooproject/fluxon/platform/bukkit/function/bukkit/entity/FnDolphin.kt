@@ -21,7 +21,7 @@ object FnDolphin {
         with(FluxonRuntime.getInstance()) {
             registerExtension(org.bukkit.entity.Dolphin::class.java)
                 // .function("getMoistness", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getMoistness() ?: 0) }
-                // .function("setMoistness", returnsVoid().params(Type.I)) { it.target?.setMoistness(it.getInt(0).toInt()) }
+                // .function("setMoistness", returnsVoid().params(Type.I)) { it.target?.setMoistness(it.getAsInt(0).toInt()) }
                 // .function("setHasFish", returnsVoid().params(Type.Z)) { it.target?.setHasFish(it.getBool(0)) }
                 // .function("hasFish", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasFish() ?: false) }
                 // .function("getTreasureLocation", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.getTreasureLocation()) }

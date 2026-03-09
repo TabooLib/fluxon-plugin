@@ -18,9 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.entity.EntityType"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityType : FnEnumGetter<EntityType>() {
-
-    override val enumClass: Class<EntityType> = EntityType::class.java
+object FnEntityType : FnEnumGetter<EntityType>(EntityType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -34,7 +32,7 @@ object FnEntityType : FnEnumGetter<EntityType>() {
                 // static
                 .function("fromName", returns(TYPE).params(Type.STRING)) { it.setReturnRef(EntityType.fromName(it.getString(0))) }
                 // static
-                .function("fromId", returns(TYPE).params(Type.I)) { it.setReturnRef(EntityType.fromId(it.getInt(0))) }
+                .function("fromId", returns(TYPE).params(Type.I)) { it.setReturnRef(EntityType.fromId(it.getAsInt(0))) }
                 .function("isSpawnable", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSpawnable ?: false) }
                 .function("isAlive", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAlive ?: false) }
                 .function("translationKey", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.translationKey) }

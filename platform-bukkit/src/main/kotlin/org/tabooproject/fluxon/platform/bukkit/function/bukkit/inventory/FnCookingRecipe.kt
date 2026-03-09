@@ -32,7 +32,7 @@ object FnCookingRecipe {
                 .function("result",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.result) }
                 .function("setExperience", returnsVoid().params(Type.F)) { it.target?.setExperience(it.getFloat(0)) }
                 .function("experience", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.experience ?: 0f) }
-                .function("setCookingTime", returnsVoid().params(Type.I)) { it.target?.setCookingTime(it.getInt(0)) }
+                .function("setCookingTime", returnsVoid().params(Type.I)) { it.target?.setCookingTime(it.getAsInt(0)) }
                 .function("cookingTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cookingTime ?: 0) }
                 .function("key",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnNamespacedKey.TYPE).noParams()) { it.setReturnRef(it.target?.key) }
                 .function("group", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.group) }

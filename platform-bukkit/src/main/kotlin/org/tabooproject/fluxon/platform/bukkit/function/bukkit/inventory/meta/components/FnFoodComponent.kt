@@ -24,7 +24,7 @@ object FnFoodComponent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(FoodComponent::class.java)
                 .function("nutrition", returns(Type.I).noParams()) { it.setReturnInt(it.target?.nutrition ?: 0) }
-                .function("setNutrition", returnsVoid().params(Type.I)) { it.target?.setNutrition(it.getInt(0)) }
+                .function("setNutrition", returnsVoid().params(Type.I)) { it.target?.setNutrition(it.getAsInt(0)) }
                 .function("saturation", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.saturation ?: 0f) }
                 .function("setSaturation", returnsVoid().params(Type.F)) { it.target?.setSaturation(it.getFloat(0)) }
                 .function("canAlwaysEat", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canAlwaysEat() ?: false) }

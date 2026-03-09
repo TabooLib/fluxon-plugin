@@ -28,9 +28,9 @@ object FnLimitedRegion {
                 }
                 .function("isInRegion", returns(Type.Z).params(Type.I, Type.I, Type.I)) {
                     it.setReturnBool(it.target?.isInRegion(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ) ?: false)
                 }
                 .function("tileEntities",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.tileEntities) }

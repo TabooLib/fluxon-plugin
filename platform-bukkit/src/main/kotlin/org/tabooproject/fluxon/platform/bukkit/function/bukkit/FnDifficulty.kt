@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Difficulty"])
 @PlatformSide(Platform.BUKKIT)
-object FnDifficulty : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Difficulty>() {
-
-    override val enumClass: Class<org.bukkit.Difficulty> = org.bukkit.Difficulty::class.java
-
+object FnDifficulty : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Difficulty>(org.bukkit.Difficulty::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,7 +21,7 @@ object FnDifficulty : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGet
             registerExtension(Difficulty::class.java)
                 .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value ?: 0) }
                 // static
-                .function("getByValue", returns(TYPE).params(Type.I)) { it.setReturnRef(Difficulty.getByValue(it.getInt(0).toInt())) }
+                .function("getByValue", returns(TYPE).params(Type.I)) { it.setReturnRef(Difficulty.getByValue(it.getAsInt(0).toInt())) }
         }
     }
 }

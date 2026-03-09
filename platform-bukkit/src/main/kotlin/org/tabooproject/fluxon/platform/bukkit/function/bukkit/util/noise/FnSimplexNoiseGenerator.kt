@@ -23,27 +23,27 @@ object FnSimplexNoiseGenerator {
             registerExtension(SimplexNoiseGenerator::class.java)
                 // static
                 .function("getNoise", returns(Type.D).params(Type.D)) {
-                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(it.getDouble(0)))
+                    it.setReturnDouble(SimplexNoiseGenerator.getNoise(it.getAsDouble(0)))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D)) {
                     it.setReturnDouble(SimplexNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(SimplexNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(SimplexNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3)
                     ))
                 }
                 // static

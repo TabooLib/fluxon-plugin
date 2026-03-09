@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.SkullType"])
 @PlatformSide(Platform.BUKKIT)
-object FnSkullType : FnEnumGetter<SkullType>() {
+object FnSkullType : FnEnumGetter<SkullType>(SkullType::class.java) {
 
-    override val enumClass: Class<SkullType> = SkullType::class.java
 }

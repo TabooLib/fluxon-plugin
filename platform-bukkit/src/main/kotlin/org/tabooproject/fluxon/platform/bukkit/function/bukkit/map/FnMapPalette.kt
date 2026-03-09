@@ -35,13 +35,13 @@ object FnMapPalette {
                 }
                 .function("matchColor", returns(Type.I).params(Type.I, Type.I, Type.I)) {
                     it.setReturnInt(MapPalette.matchColor(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ).toInt())
                 }
                 // static
-                .function("getColor", returns(AWT_COLOR).params(Type.I)) { it.setReturnRef(MapPalette.getColor(it.getInt(0).toByte())) }
+                .function("getColor", returns(AWT_COLOR).params(Type.I)) { it.setReturnRef(MapPalette.getColor(it.getAsInt(0).toByte())) }
                 // static
                 .function("setMapColorCache",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapPaletteMapColorCache.TYPE)) {
                     MapPalette.setMapColorCache(it.getRef(0) as MapPalette.MapColorCache)

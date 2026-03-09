@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.entity.EntityDamageEvent\$DamageCause"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityDamageEventDamageCause : FnEnumGetter<org.bukkit.event.entity.EntityDamageEvent.DamageCause>() {
+object FnEntityDamageEventDamageCause : FnEnumGetter<org.bukkit.event.entity.EntityDamageEvent.DamageCause>(org.bukkit.event.entity.EntityDamageEvent.DamageCause::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.entity.EntityDamageEvent.DamageCause> = org.bukkit.event.entity.EntityDamageEvent.DamageCause::class.java
 }

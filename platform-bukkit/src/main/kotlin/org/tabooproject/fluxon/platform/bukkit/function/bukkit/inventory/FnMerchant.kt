@@ -25,10 +25,10 @@ object FnMerchant {
             registerExtension(Merchant::class.java)
                 .function("recipes",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.recipes) }
                 .function("setRecipes",returnsVoid().params(Type.LIST)) { it.target?.setRecipes(it.getRef(0) as List<MerchantRecipe>) }
-                .function("getRecipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getRecipe(it.getInt(0).toInt())) }
+                .function("getRecipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getRecipe(it.getAsInt(0).toInt())) }
                 .function("setRecipe",returnsVoid().params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE)) {
                     it.target?.setRecipe(
-                        it.getInt(0).toInt(),
+                        it.getAsInt(0).toInt(),
                         it.getRef(1) as MerchantRecipe
                     )
                 }

@@ -23,9 +23,9 @@ object FnBrewingStand {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStand::class.java)
                 .function("brewingTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.brewingTime ?: 0) }
-                .function("setBrewingTime", returnsVoid().params(Type.I)) { it.target?.setBrewingTime(it.getInt(0).toInt()) }
+                .function("setBrewingTime", returnsVoid().params(Type.I)) { it.target?.setBrewingTime(it.getAsInt(0).toInt()) }
                 .function("fuelLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuelLevel ?: 0) }
-                .function("setFuelLevel", returnsVoid().params(Type.I)) { it.target?.setFuelLevel(it.getInt(0).toInt()) }
+                .function("setFuelLevel", returnsVoid().params(Type.I)) { it.target?.setFuelLevel(it.getAsInt(0).toInt()) }
                 .function("inventory", returns(FnBrewerInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
                 .function("snapshotInventory", returns(FnBrewerInventory.TYPE).noParams()) { it.setReturnRef(it.target?.snapshotInventory) }
         }

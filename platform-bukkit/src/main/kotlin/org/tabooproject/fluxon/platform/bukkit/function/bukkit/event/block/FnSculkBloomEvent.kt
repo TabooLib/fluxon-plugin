@@ -22,7 +22,7 @@ object FnSculkBloomEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkBloomEvent::class.java)
                 .function("charge", returns(Type.I).noParams()) { it.setReturnRef(it.target?.charge) }
-                .function("setCharge", returnsVoid().params(Type.I)) { it.target?.setCharge(it.getInt(0)) }
+                .function("setCharge", returnsVoid().params(Type.I)) { it.target?.setCharge(it.getAsInt(0)) }
         }
     }
 }

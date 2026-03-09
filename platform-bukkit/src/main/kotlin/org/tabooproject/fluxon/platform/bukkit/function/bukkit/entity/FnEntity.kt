@@ -69,20 +69,20 @@ object FnEntity {
                 }
                 .function("getNearbyEntities",returns(Type.LIST).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.getNearbyEntities(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("entityId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.entityId ?: 0) }
                 .function("fireTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fireTicks ?: 0) }
                 .function("maxFireTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxFireTicks ?: 0) }
-                .function("setFireTicks", returnsVoid().params(Type.I)) { it.target?.setFireTicks(it.getInt(0)) }
+                .function("setFireTicks", returnsVoid().params(Type.I)) { it.target?.setFireTicks(it.getAsInt(0)) }
                 .function("setVisualFire", returnsVoid().params(Type.Z)) { it.target?.setVisualFire(it.getBool(0)) }
                 .function("isVisualFire", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isVisualFire ?: false) }
                 .function("freezeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.freezeTicks ?: 0) }
                 .function("maxFreezeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxFreezeTicks ?: 0) }
-                .function("setFreezeTicks", returnsVoid().params(Type.I)) { it.target?.setFreezeTicks(it.getInt(0)) }
+                .function("setFreezeTicks", returnsVoid().params(Type.I)) { it.target?.setFreezeTicks(it.getAsInt(0)) }
                 .function("isFrozen", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFrozen ?: false) }
                 .function("remove", returnsVoid().noParams()) { it.target?.remove() }
                 .function("isDead", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDead ?: false) }
@@ -106,7 +106,7 @@ object FnEntity {
                 .function("lastDamageCause", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEvent.TYPE).noParams()) { it.setReturnRef(it.target?.lastDamageCause) }
                 .function("uniqueId", returns(org.tabooproject.fluxon.util.StandardTypes.UUID).noParams()) { it.setReturnRef(it.target?.uniqueId) }
                 .function("ticksLived", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ticksLived ?: 0) }
-                .function("setTicksLived", returnsVoid().params(Type.I)) { it.target?.setTicksLived(it.getInt(0)) }
+                .function("setTicksLived", returnsVoid().params(Type.I)) { it.target?.setTicksLived(it.getAsInt(0)) }
                 .function("playEffect",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnEntityEffect.TYPE)) { it.target?.playEffect(it.getRef(0) as EntityEffect) }
                 .function("type", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
                 .function("swimSound", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnSound.TYPE).noParams()) { it.setReturnRef(it.target?.swimSound) }
@@ -129,7 +129,7 @@ object FnEntity {
                 .function("hasGravity", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasGravity() ?: false) }
                 .function("setGravity", returnsVoid().params(Type.Z)) { it.target?.setGravity(it.getBool(0)) }
                 .function("portalCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.portalCooldown ?: 0) }
-                .function("setPortalCooldown", returnsVoid().params(Type.I)) { it.target?.setPortalCooldown(it.getInt(0)) }
+                .function("setPortalCooldown", returnsVoid().params(Type.I)) { it.target?.setPortalCooldown(it.getAsInt(0)) }
                 .function("scoreboardTags", returns(org.tabooproject.fluxon.util.StandardTypes.SET).noParams()) { it.setReturnRef(it.target?.scoreboardTags) }
                 .function("addScoreboardTag", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.addScoreboardTag(it.getString(0)!!) ?: false) }
                 .function("removeScoreboardTag", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.removeScoreboardTag(it.getString(0)!!) ?: false) }

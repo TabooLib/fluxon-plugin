@@ -49,7 +49,7 @@ object FnItemFactory {
                 .function("enchantItem", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE, Type.I, Type.Z)) {
                     it.setReturnRef(it.target?.enchantItem(
                         it.getRef(0) as ItemStack,
-                        it.getInt(1).toInt(),
+                        it.getAsInt(1).toInt(),
                         it.getBool(2)
                     ))
                 }
@@ -57,7 +57,7 @@ object FnItemFactory {
                     it.setReturnRef(it.target?.enchantItem(
                         it.getRef(0) as Entity,
                         it.getRef(1) as ItemStack,
-                        it.getInt(2).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getBool(3)
                     ))
                 }
@@ -65,7 +65,7 @@ object FnItemFactory {
                     it.setReturnRef(it.target?.enchantItem(
                         it.getRef(0) as World,
                         it.getRef(1) as ItemStack,
-                        it.getInt(2).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getBool(3)
                     ))
                 }

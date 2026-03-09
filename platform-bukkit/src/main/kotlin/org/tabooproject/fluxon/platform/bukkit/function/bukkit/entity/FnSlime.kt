@@ -23,7 +23,7 @@ object FnSlime {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Slime::class.java)
                 .function("size", returns(Type.I).noParams()) { it.setReturnInt(it.target?.size ?: 0) }
-                .function("setSize", returnsVoid().params(Type.I)) { it.target?.setSize(it.getInt(0).toInt()) }
+                .function("setSize", returnsVoid().params(Type.I)) { it.target?.setSize(it.getAsInt(0).toInt()) }
         }
     }
 }

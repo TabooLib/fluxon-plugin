@@ -24,7 +24,7 @@ object FnScaffolding {
                 .function("isBottom", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBottom ?: false) }
                 .function("setBottom", returnsVoid().params(Type.Z)) { it.target?.setBottom(it.getBool(0)) }
                 .function("distance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.distance ?: 0) }
-                .function("setDistance", returnsVoid().params(Type.I)) { it.target?.setDistance(it.getInt(0)) }
+                .function("setDistance", returnsVoid().params(Type.I)) { it.target?.setDistance(it.getAsInt(0)) }
                 .function("maximumDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumDistance ?: 0) }
         }
     }

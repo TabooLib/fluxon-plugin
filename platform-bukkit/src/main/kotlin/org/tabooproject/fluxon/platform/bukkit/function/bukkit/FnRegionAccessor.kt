@@ -33,9 +33,9 @@ object FnRegionAccessor {
                 }
                 .function("getBiome", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBiome(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .syncFunction("setBiome",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE)) {
@@ -46,9 +46,9 @@ object FnRegionAccessor {
                 }
                 .syncFunction("setBiome",returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE)) {
                     it.target?.setBiome(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getRef(3) as Biome
                     )
                 }
@@ -57,9 +57,9 @@ object FnRegionAccessor {
                 }
                 .function("getBlockState", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockState(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("getBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
@@ -67,9 +67,9 @@ object FnRegionAccessor {
                 }
                 .function("getBlockData", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("getType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
@@ -77,9 +77,9 @@ object FnRegionAccessor {
                 }
                 .function("getType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getType(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .syncFunction("setBlockData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) {
@@ -90,9 +90,9 @@ object FnRegionAccessor {
                 }
                 .syncFunction("setBlockData",returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) {
                     it.target?.setBlockData(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getRef(3) as BlockData
                     )
                 }
@@ -104,9 +104,9 @@ object FnRegionAccessor {
                 }
                 .syncFunction("setType",returnsVoid().params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) {
                     it.target?.setType(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getRef(3) as Material
                     )
                 }
@@ -143,8 +143,8 @@ object FnRegionAccessor {
                 }
                 .function("getHighestBlockYAt", returns(Type.I).params(Type.I, Type.I)) {
                     it.setReturnInt(it.target?.getHighestBlockYAt(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt()
                     ) ?: 0)
                 }
                 .function("getHighestBlockYAt",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnHeightMap.TYPE)) {
@@ -155,8 +155,8 @@ object FnRegionAccessor {
                 }
                 .function("getHighestBlockYAt", returns(Type.I).params(Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnHeightMap.TYPE)) {
                     it.setReturnInt(it.target?.getHighestBlockYAt(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
                         it.getRef(2) as HeightMap
                     ) ?: 0)
                 }

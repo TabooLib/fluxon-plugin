@@ -87,7 +87,7 @@ object FnPersistentDataTypeBooleanPersistentDataType {
                 }
                 .function("fromPrimitive", returns(Type.Z).params(Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.persistence.FnPersistentDataAdapterContext.TYPE)) {
                     it.setReturnBool((it.target as? PersistentDataType<Byte, Boolean>)?.fromPrimitive(
-                        it.getInt(0).toByte(),
+                        it.getAsInt(0).toByte(),
                         it.getRef(1) as PersistentDataAdapterContext
                     ) ?: false)
                 }

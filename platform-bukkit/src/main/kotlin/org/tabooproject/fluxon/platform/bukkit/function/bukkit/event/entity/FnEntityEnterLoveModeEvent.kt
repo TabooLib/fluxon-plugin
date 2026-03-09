@@ -25,7 +25,7 @@ object FnEntityEnterLoveModeEvent {
                 .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("humanEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnHumanEntity.TYPE).noParams()) { it.setReturnRef(it.target?.humanEntity) }
                 .function("ticksInLove", returns(Type.I).noParams()) { it.setReturnInt(it.target?.ticksInLove ?: 0) }
-                .function("setTicksInLove", returnsVoid().params(Type.I)) { it.target?.setTicksInLove(it.getInt(0).toInt()) }
+                .function("setTicksInLove", returnsVoid().params(Type.I)) { it.target?.setTicksInLove(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityEnterLoveModeEvent.getHandlerList()) }

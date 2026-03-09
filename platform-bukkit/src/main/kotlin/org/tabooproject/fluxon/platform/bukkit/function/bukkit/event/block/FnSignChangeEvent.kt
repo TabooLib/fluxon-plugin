@@ -26,8 +26,8 @@ object FnSignChangeEvent {
             registerExtension(SignChangeEvent::class.java)
                 .function("player", returns(FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.player) }
                 .function("lines", returns(StandardTypes.STRING_ARRAY).noParams()) { it.setReturnRef(it.target?.lines) }
-                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getInt(0))) }
-                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getInt(0), it.getString(1)) }
+                .function("getLine", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getLine(it.getAsInt(0))) }
+                .function("setLine", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setLine(it.getAsInt(0), it.getString(1)) }
                 .function("side", returns(FnSide.TYPE).noParams()) { it.setReturnRef(it.target?.side) }
         }
     }

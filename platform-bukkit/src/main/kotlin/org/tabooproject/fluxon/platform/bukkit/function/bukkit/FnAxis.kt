@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Axis"])
 @PlatformSide(Platform.BUKKIT)
-object FnAxis : FnEnumGetter<Axis>() {
+object FnAxis : FnEnumGetter<Axis>(Axis::class.java) {
 
-    override val enumClass: Class<Axis> = Axis::class.java
 }

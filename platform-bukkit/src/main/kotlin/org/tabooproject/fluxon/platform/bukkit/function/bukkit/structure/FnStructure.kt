@@ -39,7 +39,7 @@ object FnStructure {
                         it.getBool(1),
                         it.getRef(2) as StructureRotation,
                         it.getRef(3) as Mirror,
-                        it.getInt(4).toInt(),
+                        it.getAsInt(4).toInt(),
                         it.getFloat(5),
                         it.getRef(6) as Random
                     )
@@ -51,7 +51,7 @@ object FnStructure {
                         it.getBool(2),
                         it.getRef(3) as StructureRotation,
                         it.getRef(4) as Mirror,
-                        it.getInt(5).toInt(),
+                        it.getAsInt(5).toInt(),
                         it.getFloat(6),
                         it.getRef(7) as Random
                     )

@@ -25,7 +25,7 @@ object FnItemType {
                 .function("typed", returns(FnItemTypeTyped.TYPE).noParams()) { it.setReturnRef(it.target?.typed()) }
                 .function("createItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.createItemStack()) }
                 .function("createItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(Type.I)) {
-                    it.setReturnRef(it.target?.createItemStack(it.getInt(0).toInt()))
+                    it.setReturnRef(it.target?.createItemStack(it.getAsInt(0).toInt()))
                 }
                 .function("hasBlockType", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasBlockType() ?: false) }
                 .function("blockType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockType.TYPE).noParams()) { it.setReturnRef(it.target?.blockType) }

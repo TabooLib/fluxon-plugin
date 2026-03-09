@@ -73,7 +73,7 @@ object FnStructure {
                 .function("isBoundingBoxVisible", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBoundingBoxVisible ?: false) }
                 .function("setIntegrity", returnsVoid().params(Type.F)) { it.target?.setIntegrity(it.getFloat(0)) }
                 .function("integrity", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.integrity ?: 0.0f) }
-                .function("setSeed", returnsVoid().params(Type.J)) { it.target?.setSeed(it.getLong(0)) }
+                .function("setSeed", returnsVoid().params(Type.J)) { it.target?.setSeed(it.getAsLong(0)) }
                 .function("seed", returns(Type.J).noParams()) { it.setReturnLong(it.target?.seed ?: 0L) }
         }
     }

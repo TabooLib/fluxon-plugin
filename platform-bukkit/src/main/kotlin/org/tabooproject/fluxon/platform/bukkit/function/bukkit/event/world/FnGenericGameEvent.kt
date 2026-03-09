@@ -26,7 +26,7 @@ object FnGenericGameEvent {
                 .function("location",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
                 .function("entity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.entity) }
                 .function("radius",returns(Type.I).noParams()) { it.setReturnRef(it.target?.radius) }
-                .function("setRadius", returnsVoid().params(Type.I)) { it.target?.setRadius(it.getInt(0).toInt()) }
+                .function("setRadius", returnsVoid().params(Type.I)) { it.target?.setRadius(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(GenericGameEvent.getHandlerList()) }

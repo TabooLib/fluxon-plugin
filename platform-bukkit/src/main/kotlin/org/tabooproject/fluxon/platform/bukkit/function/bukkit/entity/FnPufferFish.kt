@@ -23,7 +23,7 @@ object FnPufferFish {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PufferFish::class.java)
                 .function("puffState", returns(Type.I).noParams()) { it.setReturnInt(it.target?.puffState ?: 0) }
-                .function("setPuffState", returnsVoid().params(Type.I)) { it.target?.setPuffState(it.getInt(0).toInt()) }
+                .function("setPuffState", returnsVoid().params(Type.I)) { it.target?.setPuffState(it.getAsInt(0).toInt()) }
         }
     }
 }

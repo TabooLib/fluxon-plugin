@@ -13,11 +13,9 @@ import taboolib.common.platform.function.registerLifeCycleTask
  * @author mical
  * @since 2026/2/1 19:55
  */
-abstract class FnEnumGetter<E : Enum<E>> {
+abstract class FnEnumGetter<E : Enum<E>>(val enumClass: Class<E>) {
 
-    abstract val enumClass: Class<E>
-
-    val TYPE = Type.fromClass(enumClass)!!
+    var TYPE = Type.fromClass(enumClass)!!
 
     init {
         registerLifeCycleTask(LifeCycle.INIT) {

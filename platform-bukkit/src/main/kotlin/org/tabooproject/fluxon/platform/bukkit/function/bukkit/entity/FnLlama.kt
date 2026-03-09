@@ -26,7 +26,7 @@ object FnLlama {
                 .function("setColor", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLlamaColor.TYPE)) { it.target?.setColor(it.getRef(0) as Llama.Color)  }
                 .function("setColor", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLlamaColor.enumValue(it.getString(0))?.let { p0 -> it.target?.setColor(p0)  } }
                 .function("strength", returns(Type.I).noParams()) { it.setReturnInt(it.target?.strength ?: 0) }
-                .function("setStrength", returnsVoid().params(Type.I)) { it.target?.setStrength(it.getInt(0).toInt()) }
+                .function("setStrength", returnsVoid().params(Type.I)) { it.target?.setStrength(it.getAsInt(0).toInt()) }
                 .function("inventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).noParams()) { it.setReturnRef(it.target?.inventory) }
         }
     }

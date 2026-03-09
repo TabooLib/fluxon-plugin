@@ -26,7 +26,7 @@ object FnVillagerReplenishTradeEvent {
                 .function("recipe",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE).noParams()) { it.setReturnRef(it.target?.recipe) }
                 .function("setRecipe",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchantRecipe.TYPE)) { it.target?.setRecipe(it.getRef(0) as MerchantRecipe) }
                 .function("bonus", returns(Type.I).noParams()) { it.setReturnInt(it.target?.bonus ?: 0) }
-                .function("setBonus", returnsVoid().params(Type.I)) { it.target?.setBonus(it.getInt(0).toInt()) }
+                .function("setBonus", returnsVoid().params(Type.I)) { it.target?.setBonus(it.getAsInt(0).toInt()) }
                 .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

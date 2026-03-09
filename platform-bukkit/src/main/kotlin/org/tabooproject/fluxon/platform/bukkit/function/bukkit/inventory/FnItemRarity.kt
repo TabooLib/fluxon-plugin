@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.inventory.ItemRarity"])
 @PlatformSide(Platform.BUKKIT)
-object FnItemRarity : FnEnumGetter<org.bukkit.inventory.ItemRarity>() {
+object FnItemRarity : FnEnumGetter<org.bukkit.inventory.ItemRarity>(org.bukkit.inventory.ItemRarity::class.java) {
 
-    override val enumClass: Class<org.bukkit.inventory.ItemRarity> = org.bukkit.inventory.ItemRarity::class.java
 }

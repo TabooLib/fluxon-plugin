@@ -23,19 +23,19 @@ object FnSpawnRule {
             registerExtension(SpawnRule::class.java)
                 .function("minBlockLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minBlockLight ?: 0) }
                 .function("setMinBlockLight", returnsVoid().params(Type.I)) {
-                    it.target?.setMinBlockLight(it.getInt(0).toInt())
+                    it.target?.setMinBlockLight(it.getAsInt(0).toInt())
                 }
                 .function("maxBlockLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxBlockLight ?: 0) }
                 .function("setMaxBlockLight", returnsVoid().params(Type.I)) {
-                    it.target?.setMaxBlockLight(it.getInt(0).toInt())
+                    it.target?.setMaxBlockLight(it.getAsInt(0).toInt())
                 }
                 .function("minSkyLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minSkyLight ?: 0) }
                 .function("setMinSkyLight", returnsVoid().params(Type.I)) {
-                    it.target?.setMinSkyLight(it.getInt(0).toInt())
+                    it.target?.setMinSkyLight(it.getAsInt(0).toInt())
                 }
                 .function("maxSkyLight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxSkyLight ?: 0) }
                 .function("setMaxSkyLight", returnsVoid().params(Type.I)) {
-                    it.target?.setMaxSkyLight(it.getInt(0).toInt())
+                    it.target?.setMaxSkyLight(it.getAsInt(0).toInt())
                 }
                 // 不能删除
                 .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }

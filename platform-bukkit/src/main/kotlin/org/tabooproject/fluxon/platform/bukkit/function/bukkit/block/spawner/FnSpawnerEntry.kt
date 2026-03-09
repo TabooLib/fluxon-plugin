@@ -29,7 +29,7 @@ object FnSpawnerEntry {
                 .function("snapshot", returns(FnEntitySnapshot.TYPE).noParams()) { it.setReturnRef(it.target?.snapshot) }
                 .function("setSnapshot", returnsVoid().params(FnEntitySnapshot.TYPE)) { it.target?.setSnapshot(it.getRef(0) as EntitySnapshot) }
                 .function("spawnWeight", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnWeight ?: 0) }
-                .function("setSpawnWeight", returnsVoid().params(Type.I)) { it.target?.setSpawnWeight(it.getInt(0).toInt()) }
+                .function("setSpawnWeight", returnsVoid().params(Type.I)) { it.target?.setSpawnWeight(it.getAsInt(0).toInt()) }
                 .function("spawnRule", returns(FnSpawnRule.TYPE).noParams()) { it.setReturnRef(it.target?.spawnRule) }
                 .function("setSpawnRule", returnsVoid().params(FnSpawnRule.TYPE)) { it.target?.setSpawnRule(it.getRef(0) as SpawnRule) }
                 .function("equipment", returns(FnSpawnerEntryEquipment.TYPE).noParams()) { it.setReturnRef(it.target?.equipment) }

@@ -22,7 +22,7 @@ object FnBrewingStartEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BrewingStartEvent::class.java)
                 .function("totalBrewTime", returns(Type.I).noParams()) { it.setReturnRef(it.target?.totalBrewTime) }
-                .function("setTotalBrewTime", returnsVoid().params(Type.I)) { it.target?.setTotalBrewTime(it.getInt(0)) }
+                .function("setTotalBrewTime", returnsVoid().params(Type.I)) { it.target?.setTotalBrewTime(it.getAsInt(0)) }
         }
     }
 }

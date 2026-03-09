@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.data.type.Chest\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnChestType : FnEnumGetter<org.bukkit.block.data.type.Chest.Type>() {
+object FnChestType : FnEnumGetter<org.bukkit.block.data.type.Chest.Type>(org.bukkit.block.data.type.Chest.Type::class.java) {
 
-    override val enumClass: Class<org.bukkit.block.data.type.Chest.Type> = org.bukkit.block.data.type.Chest.Type::class.java
 }

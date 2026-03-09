@@ -59,22 +59,22 @@ object FnBlock {
                 .function("getRelative", returns(TYPE).params(FnBlockFace.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.getRelative(
                         it.getRef(0) as BlockFace,
-                        it.getInt(1)
+                        it.getAsInt(1)
                     ))
                 }
                 .function("getRelative", returns(TYPE).params(Type.STRING, Type.I)) {
                     FnBlockFace.enumValue(it.getString(0))?.let { p0 ->
                         it.setReturnRef(it.target?.getRelative(
                             p0,
-                            it.getInt(1)
+                            it.getAsInt(1)
                         ))
                     }
                 }
                 .function("getRelative", returns(TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getRelative(
-                        it.getInt(0),
-                        it.getInt(1),
-                        it.getInt(2)
+                        it.getAsInt(0),
+                        it.getAsInt(1),
+                        it.getAsInt(2)
                     ))
                 }
                 .function("type", returns(FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
@@ -175,7 +175,7 @@ object FnBlock {
                     it.setReturnRef(it.target?.rayTrace(
                         it.getRef(0) as Location,
                         it.getRef(1) as Vector,
-                        it.getDouble(2),
+                        it.getAsDouble(2),
                         it.getRef(3) as FluidCollisionMode
                     ))
                 }
@@ -185,7 +185,7 @@ object FnBlock {
                         it.setReturnRef(it.target?.rayTrace(
                             it.getRef(0) as Location,
                             it.getRef(1) as Vector,
-                            it.getDouble(2),
+                            it.getAsDouble(2),
                             p3
                         ))
                     }

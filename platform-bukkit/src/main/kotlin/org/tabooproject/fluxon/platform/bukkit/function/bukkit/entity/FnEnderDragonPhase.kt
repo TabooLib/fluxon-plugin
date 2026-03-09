@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.EnderDragon\$Phase"])
 @PlatformSide(Platform.BUKKIT)
-object FnEnderDragonPhase : FnEnumGetter<org.bukkit.entity.EnderDragon.Phase>() {
+object FnEnderDragonPhase : FnEnumGetter<org.bukkit.entity.EnderDragon.Phase>(org.bukkit.entity.EnderDragon.Phase::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.EnderDragon.Phase> = org.bukkit.entity.EnderDragon.Phase::class.java
 }

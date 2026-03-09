@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.Rotation"])
 @PlatformSide(Platform.BUKKIT)
-object FnRotation : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Rotation>() {
-
-    override val enumClass: Class<org.bukkit.Rotation> = org.bukkit.Rotation::class.java
-
+object FnRotation : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Rotation>(org.bukkit.Rotation::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

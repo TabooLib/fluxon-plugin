@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.FluidCollisionMode"])
 @PlatformSide(Platform.BUKKIT)
-object FnFluidCollisionMode : FnEnumGetter<FluidCollisionMode>() {
+object FnFluidCollisionMode : FnEnumGetter<FluidCollisionMode>(FluidCollisionMode::class.java) {
 
-    override val enumClass: Class<FluidCollisionMode> = FluidCollisionMode::class.java
 }

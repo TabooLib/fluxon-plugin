@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.plugin.ServicePriority"])
 @PlatformSide(Platform.BUKKIT)
-object FnServicePriority : FnEnumGetter<org.bukkit.plugin.ServicePriority>() {
+object FnServicePriority : FnEnumGetter<org.bukkit.plugin.ServicePriority>(org.bukkit.plugin.ServicePriority::class.java) {
 
-    override val enumClass: Class<org.bukkit.plugin.ServicePriority> = org.bukkit.plugin.ServicePriority::class.java
 }

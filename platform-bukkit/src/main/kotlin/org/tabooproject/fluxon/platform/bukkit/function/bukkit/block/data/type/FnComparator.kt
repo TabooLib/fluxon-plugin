@@ -31,7 +31,6 @@ object FnComparator {
 
 @Requires(classes = ["org.bukkit.block.data.type.Comparator\$Mode"])
 @PlatformSide(Platform.BUKKIT)
-object FnComparatorMode : FnEnumGetter<Comparator.Mode>() {
+object FnComparatorMode : FnEnumGetter<Comparator.Mode>(Comparator.Mode::class.java) {
 
-    override val enumClass: Class<Comparator.Mode> = Comparator.Mode::class.java
 }

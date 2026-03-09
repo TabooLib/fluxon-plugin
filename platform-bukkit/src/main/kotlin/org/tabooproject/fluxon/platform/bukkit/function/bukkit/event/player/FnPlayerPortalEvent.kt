@@ -22,11 +22,11 @@ object FnPlayerPortalEvent {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PlayerPortalEvent::class.java)
-                .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getInt(0).toInt()) }
+                .function("setSearchRadius", returnsVoid().params(Type.I)) { it.target?.setSearchRadius(it.getAsInt(0).toInt()) }
                 .function("searchRadius",returns(Type.I).noParams()) { it.setReturnRef(it.target?.searchRadius) }
                 .function("canCreatePortal", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canCreatePortal ?: false) }
                 .function("setCanCreatePortal", returnsVoid().params(Type.Z)) { it.target?.setCanCreatePortal(it.getBool(0)) }
-                .function("setCreationRadius", returnsVoid().params(Type.I)) { it.target?.setCreationRadius(it.getInt(0).toInt()) }
+                .function("setCreationRadius", returnsVoid().params(Type.I)) { it.target?.setCreationRadius(it.getAsInt(0).toInt()) }
                 .function("creationRadius",returns(Type.I).noParams()) { it.setReturnRef(it.target?.creationRadius) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

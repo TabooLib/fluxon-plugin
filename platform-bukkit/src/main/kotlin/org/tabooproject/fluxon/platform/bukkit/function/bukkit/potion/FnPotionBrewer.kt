@@ -26,11 +26,11 @@ object FnPotionBrewer {
                 .function("createEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffectType.TYPE, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.createEffect(
                         it.getRef(0) as PotionEffectType,
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
-                .function("getEffectsFromDamage",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(Type.I)) { it.setReturnRef(it.target?.getEffectsFromDamage(it.getInt(0).toInt())) }
+                .function("getEffectsFromDamage",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(Type.I)) { it.setReturnRef(it.target?.getEffectsFromDamage(it.getAsInt(0).toInt())) }
                 .function("getEffects",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionType.TYPE, Type.Z, Type.Z)) {
                     it.setReturnRef(it.target?.getEffects(
                         it.getRef(0) as PotionType,

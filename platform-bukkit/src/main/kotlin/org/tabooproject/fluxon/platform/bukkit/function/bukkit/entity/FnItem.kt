@@ -28,7 +28,7 @@ object FnItem {
                 .function("itemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemStack) }
                 .function("setItemStack",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemStack(it.getRef(0) as ItemStack) }
                 .function("pickupDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.pickupDelay ?: 0) }
-                .function("setPickupDelay", returnsVoid().params(Type.I)) { it.target?.setPickupDelay(it.getInt(0).toInt()) }
+                .function("setPickupDelay", returnsVoid().params(Type.I)) { it.target?.setPickupDelay(it.getAsInt(0).toInt()) }
                 .function("setUnlimitedLifetime", returnsVoid().params(Type.Z)) { it.target?.setUnlimitedLifetime(it.getBool(0)) }
                 .function("isUnlimitedLifetime", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isUnlimitedLifetime ?: false) }
                 .function("setOwner", returnsVoid().params(Type.STRING)) { it.target?.setOwner(UUID.fromString(it.getString(0))) }

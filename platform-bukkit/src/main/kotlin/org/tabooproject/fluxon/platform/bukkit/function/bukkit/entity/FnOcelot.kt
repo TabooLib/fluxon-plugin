@@ -32,10 +32,7 @@ object FnOcelot {
 
 @Requires(classes = ["org.bukkit.entity.Ocelot\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnOcelotType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.entity.Ocelot.Type>() {
-
-    override val enumClass: Class<org.bukkit.entity.Ocelot.Type> = org.bukkit.entity.Ocelot.Type::class.java
-
+object FnOcelotType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.entity.Ocelot.Type>(org.bukkit.entity.Ocelot.Type::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -43,7 +40,7 @@ object FnOcelotType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGet
             registerExtension(Ocelot.Type::class.java)
                 .function("id", returns(Type.I).noParams()) { it.setReturnInt(it.target?.id ?: 0) }
                 // static
-                .function("getType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnOcelotType.TYPE).params(Type.I)) { it.setReturnRef(Ocelot.Type.getType(it.getInt(0).toInt())) }
+                .function("getType", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnOcelotType.TYPE).params(Type.I)) { it.setReturnRef(Ocelot.Type.getType(it.getAsInt(0).toInt())) }
         }
     }
 }

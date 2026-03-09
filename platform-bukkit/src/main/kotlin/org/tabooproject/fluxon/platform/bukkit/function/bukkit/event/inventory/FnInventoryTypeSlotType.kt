@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryType\$SlotType"])
 @PlatformSide(Platform.BUKKIT)
-object FnInventoryTypeSlotType : FnEnumGetter<InventoryType.SlotType>() {
+object FnInventoryTypeSlotType : FnEnumGetter<InventoryType.SlotType>(InventoryType.SlotType::class.java) {
 
-    override val enumClass: Class<InventoryType.SlotType> = InventoryType.SlotType::class.java
 }

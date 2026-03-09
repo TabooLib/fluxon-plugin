@@ -28,16 +28,16 @@ object FnWorldBorder {
                 .function("reset", returnsVoid().noParams()) { it.target?.reset() }
                 .function("size", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.size ?: 0.0) }
                 .function("setSize", returnsVoid().params(Type.D)) {
-                    it.target?.setSize(it.getDouble(0))
+                    it.target?.setSize(it.getAsDouble(0))
                 }
                 .function("setSize", returnsVoid().params(Type.D, Type.J)) {
-                    it.target?.setSize(it.getDouble(0), it.getLong(1))
+                    it.target?.setSize(it.getAsDouble(0), it.getAsLong(1))
                 }
                 .function("setSize", returnsVoid().params(Type.D, TIME_UNIT, Type.J)) {
                     it.target?.setSize(
-                        it.getDouble(0),
+                        it.getAsDouble(0),
                         it.getRef(1) as TimeUnit,
-                        it.getLong(2)
+                        it.getAsLong(2)
                     )
                 }
                 .function("center",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.center) }
@@ -46,18 +46,18 @@ object FnWorldBorder {
                 }
                 .function("setCenter", returnsVoid().params(Type.D, Type.D)) {
                     it.target?.setCenter(
-                        it.getDouble(0),
-                        it.getDouble(1)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1)
                     )
                 }
                 .function("damageBuffer", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damageBuffer ?: 0.0) }
-                .function("setDamageBuffer", returnsVoid().params(Type.D)) { it.target?.setDamageBuffer(it.getDouble(0)) }
+                .function("setDamageBuffer", returnsVoid().params(Type.D)) { it.target?.setDamageBuffer(it.getAsDouble(0)) }
                 .function("damageAmount", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damageAmount ?: 0.0) }
-                .function("setDamageAmount", returnsVoid().params(Type.D)) { it.target?.setDamageAmount(it.getDouble(0)) }
+                .function("setDamageAmount", returnsVoid().params(Type.D)) { it.target?.setDamageAmount(it.getAsDouble(0)) }
                 .function("warningTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.warningTime ?: 0) }
-                .function("setWarningTime", returnsVoid().params(Type.I)) { it.target?.setWarningTime(it.getInt(0).toInt()) }
+                .function("setWarningTime", returnsVoid().params(Type.I)) { it.target?.setWarningTime(it.getAsInt(0).toInt()) }
                 .function("warningDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.warningDistance ?: 0) }
-                .function("setWarningDistance", returnsVoid().params(Type.I)) { it.target?.setWarningDistance(it.getInt(0).toInt()) }
+                .function("setWarningDistance", returnsVoid().params(Type.I)) { it.target?.setWarningDistance(it.getAsInt(0).toInt()) }
                 .function("isInside",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnBool(it.target?.isInside(it.getRef(0) as Location) ?: false)
                 }

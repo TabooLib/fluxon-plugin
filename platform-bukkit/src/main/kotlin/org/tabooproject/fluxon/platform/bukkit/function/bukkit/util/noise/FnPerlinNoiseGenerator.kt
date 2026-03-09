@@ -23,46 +23,46 @@ object FnPerlinNoiseGenerator {
             registerExtension(PerlinNoiseGenerator::class.java)
                 // static
                 .function("getNoise", returns(Type.D).params(Type.D)) {
-                    it.setReturnDouble(PerlinNoiseGenerator.getNoise(it.getDouble(0)))
+                    it.setReturnDouble(PerlinNoiseGenerator.getNoise(it.getAsDouble(0)))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D)) {
                     it.setReturnDouble(PerlinNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D)) {
                     it.setReturnDouble(PerlinNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.I, Type.D, Type.D)) {
                     it.setReturnDouble(PerlinNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getInt(1),
-                        it.getDouble(2),
-                        it.getDouble(3)
+                        it.getAsDouble(0),
+                        it.getAsInt(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.I, Type.D, Type.D)) {
                     it.setReturnDouble(PerlinNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getInt(2),
-                        it.getDouble(3),
-                        it.getDouble(4)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsInt(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4)
                     ))
                 }
                 .function("getNoise", returns(Type.D).params(Type.D, Type.D, Type.D, Type.I, Type.D, Type.D)) {
                     it.setReturnDouble(PerlinNoiseGenerator.getNoise(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getInt(3),
-                        it.getDouble(4),
-                        it.getDouble(5)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsInt(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5)
                     ))
                 }
                 // static

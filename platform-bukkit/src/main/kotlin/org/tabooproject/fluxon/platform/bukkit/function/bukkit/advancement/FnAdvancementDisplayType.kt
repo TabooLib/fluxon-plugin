@@ -14,10 +14,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.advancement.AdvancementDisplayType"])
 @PlatformSide(Platform.BUKKIT)
-object FnAdvancementDisplayType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.advancement.AdvancementDisplayType>() {
-
-    override val enumClass: Class<org.bukkit.advancement.AdvancementDisplayType> = org.bukkit.advancement.AdvancementDisplayType::class.java
-
+object FnAdvancementDisplayType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.advancement.AdvancementDisplayType>(org.bukkit.advancement.AdvancementDisplayType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

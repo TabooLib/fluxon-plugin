@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Evoker\$Spell"])
 @PlatformSide(Platform.BUKKIT)
-object FnEvokerSpell : FnEnumGetter<org.bukkit.entity.Evoker.Spell>() {
+object FnEvokerSpell : FnEnumGetter<org.bukkit.entity.Evoker.Spell>(org.bukkit.entity.Evoker.Spell::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Evoker.Spell> = org.bukkit.entity.Evoker.Spell::class.java
 }

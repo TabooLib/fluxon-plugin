@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.damage.DamageScaling"])
 @PlatformSide(Platform.BUKKIT)
-object FnDamageScaling : FnEnumGetter<org.bukkit.damage.DamageScaling>() {
+object FnDamageScaling : FnEnumGetter<org.bukkit.damage.DamageScaling>(org.bukkit.damage.DamageScaling::class.java) {
 
-    override val enumClass: Class<org.bukkit.damage.DamageScaling> = org.bukkit.damage.DamageScaling::class.java
 }

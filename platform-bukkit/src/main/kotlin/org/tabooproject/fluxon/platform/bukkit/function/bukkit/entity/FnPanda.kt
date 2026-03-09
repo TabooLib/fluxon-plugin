@@ -42,10 +42,7 @@ object FnPanda {
 
 @Requires(classes = ["org.bukkit.entity.Panda\$Gene"])
 @PlatformSide(Platform.BUKKIT)
-object FnPandaGene : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.entity.Panda.Gene>() {
-
-    override val enumClass: Class<org.bukkit.entity.Panda.Gene> = org.bukkit.entity.Panda.Gene::class.java
-
+object FnPandaGene : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.entity.Panda.Gene>(org.bukkit.entity.Panda.Gene::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

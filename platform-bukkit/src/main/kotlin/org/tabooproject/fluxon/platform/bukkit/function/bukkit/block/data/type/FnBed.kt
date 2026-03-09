@@ -32,7 +32,6 @@ object FnBed {
 
 @Requires(classes = ["org.bukkit.block.data.type.Bed\$Part"])
 @PlatformSide(Platform.BUKKIT)
-object FnBedPart : FnEnumGetter<Bed.Part>() {
+object FnBedPart : FnEnumGetter<Bed.Part>(Bed.Part::class.java) {
 
-    override val enumClass: Class<Bed.Part> = Bed.Part::class.java
 }

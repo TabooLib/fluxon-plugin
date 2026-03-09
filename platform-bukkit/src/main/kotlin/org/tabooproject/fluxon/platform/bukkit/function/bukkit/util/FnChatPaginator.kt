@@ -22,19 +22,19 @@ object FnChatPaginator {
             registerExtension(ChatPaginator::class.java)
                 // static
                 .function("paginate", returns(FnChatPaginatorChatPage.TYPE).params(Type.STRING, Type.I)) {
-                    it.setReturnRef(ChatPaginator.paginate(it.getString(0), it.getInt(1).toInt()))
+                    it.setReturnRef(ChatPaginator.paginate(it.getString(0), it.getAsInt(1).toInt()))
                 }
                 .function("paginate", returns(FnChatPaginatorChatPage.TYPE).params(Type.STRING, Type.I, Type.I, Type.I)) {
                     it.setReturnRef(ChatPaginator.paginate(
                         it.getString(0),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt()
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt()
                     ))
                 }
                 // static
                 .function("wordWrap", returns(org.tabooproject.fluxon.util.StandardTypes.STRING_ARRAY).params(Type.STRING, Type.I)) {
-                    it.setReturnRef(ChatPaginator.wordWrap(it.getString(0), it.getInt(1).toInt()))
+                    it.setReturnRef(ChatPaginator.wordWrap(it.getString(0), it.getAsInt(1).toInt()))
                 }
         }
     }

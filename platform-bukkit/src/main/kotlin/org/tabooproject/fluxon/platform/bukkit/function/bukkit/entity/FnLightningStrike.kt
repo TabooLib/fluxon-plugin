@@ -25,9 +25,9 @@ object FnLightningStrike {
             registerExtension(LightningStrike::class.java)
                 .function("isEffect", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEffect ?: false) }
                 .function("flashes", returns(Type.I).noParams()) { it.setReturnInt(it.target?.flashes ?: 0) }
-                .function("setFlashes", returnsVoid().params(Type.I)) { it.target?.setFlashes(it.getInt(0).toInt()) }
+                .function("setFlashes", returnsVoid().params(Type.I)) { it.target?.setFlashes(it.getAsInt(0).toInt()) }
                 .function("lifeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lifeTicks ?: 0) }
-                .function("setLifeTicks", returnsVoid().params(Type.I)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
+                .function("setLifeTicks", returnsVoid().params(Type.I)) { it.target?.setLifeTicks(it.getAsInt(0).toInt()) }
                 .function("causingPlayer",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE).noParams()) { it.setReturnRef(it.target?.causingPlayer) }
                 .function("setCausingPlayer",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnPlayer.TYPE)) { it.target?.setCausingPlayer(it.getRef(0) as Player) }
                 .function("isSilent", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSilent ?: false) }

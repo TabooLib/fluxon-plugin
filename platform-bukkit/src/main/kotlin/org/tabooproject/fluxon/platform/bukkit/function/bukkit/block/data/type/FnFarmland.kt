@@ -22,7 +22,7 @@ object FnFarmland {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Farmland::class.java)
                 .function("moisture", returns(Type.I).noParams()) { it.setReturnInt(it.target?.moisture ?: 0) }
-                .function("setMoisture", returnsVoid().params(Type.I)) { it.target?.setMoisture(it.getInt(0)) }
+                .function("setMoisture", returnsVoid().params(Type.I)) { it.target?.setMoisture(it.getAsInt(0)) }
                 .function("maximumMoisture", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumMoisture ?: 0) }
         }
     }

@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.CoalType"])
 @PlatformSide(Platform.BUKKIT)
-object FnCoalType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.CoalType>() {
-
-    override val enumClass: Class<org.bukkit.CoalType> = org.bukkit.CoalType::class.java
-
+object FnCoalType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.CoalType>(org.bukkit.CoalType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,7 +21,7 @@ object FnCoalType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGette
             registerExtension(CoalType::class.java)
                 .function("data", returns(Type.I).noParams()) { it.setReturnInt(it.target?.data?.toInt() ?: 0) }
                 // static
-                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(CoalType.getByData(it.getInt(0).toByte())) }
+                .function("getByData", returns(TYPE).params(Type.I)) { it.setReturnRef(CoalType.getByData(it.getAsInt(0).toByte())) }
         }
     }
 }

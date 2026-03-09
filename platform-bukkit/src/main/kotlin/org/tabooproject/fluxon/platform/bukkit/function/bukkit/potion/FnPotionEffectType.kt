@@ -26,8 +26,8 @@ object FnPotionEffectType {
             registerExtension(PotionEffectType::class.java)
                 .function("createEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.potion.FnPotionEffect.TYPE).params(Type.I, Type.I)) {
                     it.setReturnRef(it.target?.createEffect(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt()
                     ))
                 }
                 .function("isInstant", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInstant ?: false) }

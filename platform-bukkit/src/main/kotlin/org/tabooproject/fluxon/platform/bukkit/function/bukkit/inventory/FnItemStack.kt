@@ -31,10 +31,10 @@ object FnItemStack {
                 .function("type", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.type) }
                 .function("setType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.target?.setType(it.getRef(0) as Material) }
                 .function("amount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.amount ?: 0) }
-                .function("setAmount", returnsVoid().params(Type.I)) { it.target?.setAmount(it.getInt(0).toInt()) }
+                .function("setAmount", returnsVoid().params(Type.I)) { it.target?.setAmount(it.getAsInt(0).toInt()) }
                 .function("data", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.data) }
                 .function("setData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.target?.setData(it.getRef(0) as MaterialData) }
-                .function("setDurability", returnsVoid().params(Type.I)) { it.target?.setDurability(it.getInt(0).toShort()) }
+                .function("setDurability", returnsVoid().params(Type.I)) { it.target?.setDurability(it.getAsInt(0).toShort()) }
                 .function("durability", returns(Type.I).noParams()) { it.setReturnInt(it.target?.durability?.toInt() ?: 0) }
                 .function("maxStackSize", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxStackSize ?: 0) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
@@ -55,7 +55,7 @@ object FnItemStack {
                 .function("addEnchantment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE, Type.I)) {
                     it.target?.addEnchantment(
                         it.getRef(0) as Enchantment,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     )
                 }
                 .function("addUnsafeEnchantments",returnsVoid().params(Type.MAP)) {
@@ -64,7 +64,7 @@ object FnItemStack {
                 .function("addUnsafeEnchantment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE, Type.I)) {
                     it.target?.addUnsafeEnchantment(
                         it.getRef(0) as Enchantment,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     )
                 }
                 .function("removeEnchantment",returns(Type.I).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) {

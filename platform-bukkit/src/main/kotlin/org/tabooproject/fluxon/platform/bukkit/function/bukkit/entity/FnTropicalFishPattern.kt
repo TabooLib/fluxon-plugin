@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.TropicalFish\$Pattern"])
 @PlatformSide(Platform.BUKKIT)
-object FnTropicalFishPattern : FnEnumGetter<org.bukkit.entity.TropicalFish.Pattern>() {
+object FnTropicalFishPattern : FnEnumGetter<org.bukkit.entity.TropicalFish.Pattern>(org.bukkit.entity.TropicalFish.Pattern::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.TropicalFish.Pattern> = org.bukkit.entity.TropicalFish.Pattern::class.java
 }

@@ -28,7 +28,7 @@ object FnVex {
                 .function("bound",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.bound) }
                 .function("setBound",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setBound(it.getRef(0) as Location) }
                 .function("lifeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lifeTicks ?: 0) }
-                .function("setLifeTicks", returnsVoid().params(Type.I)) { it.target?.setLifeTicks(it.getInt(0).toInt()) }
+                .function("setLifeTicks", returnsVoid().params(Type.I)) { it.target?.setLifeTicks(it.getAsInt(0).toInt()) }
                 .function("hasLimitedLife", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasLimitedLife() ?: false) }
         }
     }

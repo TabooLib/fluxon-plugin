@@ -38,7 +38,6 @@ object FnAttributeModifier {
 
 @Requires(classes = ["org.bukkit.attribute.AttributeModifier\$Operation"])
 @PlatformSide(Platform.BUKKIT)
-object FnAttributeModifierOperation : FnEnumGetter<AttributeModifier.Operation>() {
+object FnAttributeModifierOperation : FnEnumGetter<AttributeModifier.Operation>(AttributeModifier.Operation::class.java) {
 
-    override val enumClass: Class<AttributeModifier.Operation> = AttributeModifier.Operation::class.java
 }

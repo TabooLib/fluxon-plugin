@@ -26,9 +26,9 @@ object FnEntityTransformer {
                 .function("transform",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnLimitedRegion.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.Z)) {
                     it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt(),
                         it.getRef(4) as Entity,
                         it.getBool(5)
                     ))

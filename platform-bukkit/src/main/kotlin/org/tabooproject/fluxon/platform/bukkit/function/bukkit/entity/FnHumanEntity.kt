@@ -38,10 +38,10 @@ object FnHumanEntity {
                 .function("enderChest",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).noParams()) { it.setReturnRef(it.target?.enderChest) }
                 .function("mainHand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMainHand.TYPE).noParams()) { it.setReturnRef(it.target?.mainHand) }
                 .function("setWindowProperty",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryViewProperty.TYPE, Type.I)) {
-                    it.setReturnBool(it.target?.setWindowProperty(it.getRef(0) as InventoryView.Property, it.getInt(1).toInt()) == true)
+                    it.setReturnBool(it.target?.setWindowProperty(it.getRef(0) as InventoryView.Property, it.getAsInt(1).toInt()) == true)
                 }
                 .function("enchantmentSeed", returns(Type.I).noParams()) { it.setReturnInt(it.target?.enchantmentSeed ?: 0) }
-                .function("setEnchantmentSeed", returnsVoid().params(Type.I)) { it.target?.setEnchantmentSeed(it.getInt(0).toInt()) }
+                .function("setEnchantmentSeed", returnsVoid().params(Type.I)) { it.target?.setEnchantmentSeed(it.getAsInt(0).toInt()) }
                 .syncFunction("openInventory",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).noParams()) {
                     it.setReturnRef(it.target?.openInventory)
                 }
@@ -73,7 +73,7 @@ object FnHumanEntity {
                 .function("setCooldown",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE, Type.I)) {
                     it.target?.setCooldown(
                         it.getRef(0) as Material,
-                        it.getInt(1).toInt()
+                        it.getAsInt(1).toInt()
                     )
                 }
                 .function("sleepTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.sleepTicks ?: 0) }
@@ -112,13 +112,13 @@ object FnHumanEntity {
                 .function("saturation", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.saturation ?: 0f) }
                 .function("setSaturation", returnsVoid().params(Type.F)) { it.target?.setSaturation(it.getFloat(0)) }
                 .function("foodLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.foodLevel ?: 0) }
-                .function("setFoodLevel", returnsVoid().params(Type.I)) { it.target?.setFoodLevel(it.getInt(0).toInt()) }
+                .function("setFoodLevel", returnsVoid().params(Type.I)) { it.target?.setFoodLevel(it.getAsInt(0).toInt()) }
                 .function("saturatedRegenRate", returns(Type.I).noParams()) { it.setReturnInt(it.target?.saturatedRegenRate ?: 0) }
-                .function("setSaturatedRegenRate", returnsVoid().params(Type.I)) { it.target?.setSaturatedRegenRate(it.getInt(0).toInt()) }
+                .function("setSaturatedRegenRate", returnsVoid().params(Type.I)) { it.target?.setSaturatedRegenRate(it.getAsInt(0).toInt()) }
                 .function("unsaturatedRegenRate", returns(Type.I).noParams()) { it.setReturnInt(it.target?.unsaturatedRegenRate ?: 0) }
-                .function("setUnsaturatedRegenRate", returnsVoid().params(Type.I)) { it.target?.setUnsaturatedRegenRate(it.getInt(0).toInt()) }
+                .function("setUnsaturatedRegenRate", returnsVoid().params(Type.I)) { it.target?.setUnsaturatedRegenRate(it.getAsInt(0).toInt()) }
                 .function("starvationRate", returns(Type.I).noParams()) { it.setReturnInt(it.target?.starvationRate ?: 0) }
-                .function("setStarvationRate", returnsVoid().params(Type.I)) { it.target?.setStarvationRate(it.getInt(0).toInt()) }
+                .function("setStarvationRate", returnsVoid().params(Type.I)) { it.target?.setStarvationRate(it.getAsInt(0).toInt()) }
                 .function("lastDeathLocation",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.lastDeathLocation) }
                 .function("setLastDeathLocation",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.target?.setLastDeathLocation(it.getRef(0) as Location) }
                 .function("fireworkBoost",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFirework.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.fireworkBoost(it.getRef(0) as ItemStack)) }

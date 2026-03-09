@@ -31,7 +31,7 @@ object FnShapedRecipe {
                     it.setReturnRef(it.target?.setIngredient(
                         it.getString(0)?.firstOrNull()!!,
                         it.getRef(1) as Material,
-                        it.getInt(2).toInt()
+                        it.getAsInt(2).toInt()
                     ))
                 }
         }

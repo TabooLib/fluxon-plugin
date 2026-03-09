@@ -31,7 +31,7 @@ object FnWorldCreator {
                 // static
                 .function("name",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldCreator.TYPE).params(Type.STRING)) { it.setReturnRef(WorldCreator.name(it.getString(0)!!)) }
                 .function("seed", returns(Type.J).noParams()) { it.setReturnLong(it.target?.seed() ?: 0L) }
-                .function("seed",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldCreator.TYPE).params(Type.J)) { it.setReturnRef(it.target?.seed(it.getLong(0))) }
+                .function("seed",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldCreator.TYPE).params(Type.J)) { it.setReturnRef(it.target?.seed(it.getAsLong(0))) }
                 .function("environment", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldEnvironment.TYPE).noParams()) { it.setReturnRef(it.target?.environment()) }
                 .function("environment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldCreator.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldEnvironment.TYPE)) {
                     it.setReturnRef(it.target?.environment(it.getRef(0) as World.Environment))

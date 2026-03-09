@@ -31,7 +31,6 @@ object FnTNTPrimeEvent {
 
 @Requires(classes = ["org.bukkit.event.block.TNTPrimeEvent\$PrimeCause"])
 @PlatformSide(Platform.BUKKIT)
-object FnTNTPrimeEventPrimeCause : FnEnumGetter<TNTPrimeEvent.PrimeCause>() {
+object FnTNTPrimeEventPrimeCause : FnEnumGetter<TNTPrimeEvent.PrimeCause>(TNTPrimeEvent.PrimeCause::class.java) {
 
-    override val enumClass: Class<TNTPrimeEvent.PrimeCause> = TNTPrimeEvent.PrimeCause::class.java
 }

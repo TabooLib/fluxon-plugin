@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerSignOpenEvent\$Cause"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerSignOpenEventCause : FnEnumGetter<org.bukkit.event.player.PlayerSignOpenEvent.Cause>() {
+object FnPlayerSignOpenEventCause : FnEnumGetter<org.bukkit.event.player.PlayerSignOpenEvent.Cause>(org.bukkit.event.player.PlayerSignOpenEvent.Cause::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerSignOpenEvent.Cause> = org.bukkit.event.player.PlayerSignOpenEvent.Cause::class.java
 }

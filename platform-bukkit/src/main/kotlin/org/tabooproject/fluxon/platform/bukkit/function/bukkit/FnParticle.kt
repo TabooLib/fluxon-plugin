@@ -30,9 +30,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.Particle"])
 @PlatformSide(Platform.BUKKIT)
-object FnParticle : FnEnumGetter<Particle>() {
-
-    override val enumClass: Class<Particle> = Particle::class.java
+object FnParticle : FnEnumGetter<Particle>(Particle::class.java) {
 
     override fun enumValue(value: String): Particle? {
         return XParticle.of(value).getOrNull()?.get()

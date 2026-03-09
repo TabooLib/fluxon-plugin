@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.WorldType"])
 @PlatformSide(Platform.BUKKIT)
-object FnWorldType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.WorldType>() {
-
-    override val enumClass: Class<org.bukkit.WorldType> = org.bukkit.WorldType::class.java
-
+object FnWorldType : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.WorldType>(org.bukkit.WorldType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

@@ -8,8 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.inventory.EquipmentSlot"])
 @PlatformSide(Platform.BUKKIT)
-object FnEquipmentSlot : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.inventory.EquipmentSlot>() {
-
-    override val enumClass: Class<org.bukkit.inventory.EquipmentSlot> = org.bukkit.inventory.EquipmentSlot::class.java
+object FnEquipmentSlot : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.inventory.EquipmentSlot>(org.bukkit.inventory.EquipmentSlot::class.java) {
 
 }

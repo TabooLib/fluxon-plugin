@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.scoreboard.DisplaySlot"])
 @PlatformSide(Platform.BUKKIT)
-object FnDisplaySlot : FnEnumGetter<org.bukkit.scoreboard.DisplaySlot>() {
+object FnDisplaySlot : FnEnumGetter<org.bukkit.scoreboard.DisplaySlot>(org.bukkit.scoreboard.DisplaySlot::class.java) {
 
-    override val enumClass: Class<org.bukkit.scoreboard.DisplaySlot> = org.bukkit.scoreboard.DisplaySlot::class.java
 }

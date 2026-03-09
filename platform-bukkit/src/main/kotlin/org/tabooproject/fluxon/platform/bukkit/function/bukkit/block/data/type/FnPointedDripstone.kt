@@ -43,7 +43,6 @@ object FnPointedDripstone {
 
 @Requires(classes = ["org.bukkit.block.data.type.PointedDripstone\$Thickness"])
 @PlatformSide(Platform.BUKKIT)
-object FnPointedDripstoneThickness : FnEnumGetter<PointedDripstone.Thickness>() {
+object FnPointedDripstoneThickness : FnEnumGetter<PointedDripstone.Thickness>(PointedDripstone.Thickness::class.java) {
 
-    override val enumClass: Class<PointedDripstone.Thickness> = PointedDripstone.Thickness::class.java
 }

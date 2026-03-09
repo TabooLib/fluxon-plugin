@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.structure.StructureRotation"])
 @PlatformSide(Platform.BUKKIT)
-object FnStructureRotation : FnEnumGetter<StructureRotation>() {
+object FnStructureRotation : FnEnumGetter<StructureRotation>(StructureRotation::class.java) {
 
-    override val enumClass: Class<StructureRotation> = StructureRotation::class.java
 }

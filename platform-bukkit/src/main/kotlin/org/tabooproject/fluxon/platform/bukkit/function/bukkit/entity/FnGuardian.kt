@@ -25,7 +25,7 @@ object FnGuardian {
                 .function("setLaser", returns(Type.Z).params(Type.Z)) { it.setReturnBool(it.target?.setLaser(it.getBool(0)) == true) }
                 .function("hasLaser", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasLaser() ?: false) }
                 .function("laserDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.laserDuration ?: 0) }
-                .function("setLaserTicks", returnsVoid().params(Type.I)) { it.target?.setLaserTicks(it.getInt(0).toInt()) }
+                .function("setLaserTicks", returnsVoid().params(Type.I)) { it.target?.setLaserTicks(it.getAsInt(0).toInt()) }
                 .function("laserTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.laserTicks ?: 0) }
                 .function("isElder", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isElder ?: false) }
                 .function("setElder", returnsVoid().params(Type.Z)) { it.target?.setElder(it.getBool(0)) }

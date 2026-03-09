@@ -14,10 +14,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.enchantments.EnchantmentTarget"])
 @PlatformSide(Platform.BUKKIT)
-object FnEnchantmentTarget : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.enchantments.EnchantmentTarget>() {
-
-    override val enumClass: Class<org.bukkit.enchantments.EnchantmentTarget> = org.bukkit.enchantments.EnchantmentTarget::class.java
-
+object FnEnchantmentTarget : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.enchantments.EnchantmentTarget>(org.bukkit.enchantments.EnchantmentTarget::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

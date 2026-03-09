@@ -27,7 +27,7 @@ object FnHoglin {
                 .function("isAbleToBeHunted", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAbleToBeHunted ?: false) }
                 .function("setIsAbleToBeHunted", returnsVoid().params(Type.Z)) { it.target?.setIsAbleToBeHunted(it.getBool(0)) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
-                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0).toInt()) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getAsInt(0).toInt()) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
         }
     }

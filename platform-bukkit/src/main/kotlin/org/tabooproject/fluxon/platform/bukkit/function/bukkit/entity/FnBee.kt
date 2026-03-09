@@ -32,9 +32,9 @@ object FnBee {
                 .function("hasStung", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasStung() ?: false) }
                 .function("setHasStung", returnsVoid().params(Type.Z)) { it.target?.setHasStung(it.getBool(0)) }
                 .function("anger", returns(Type.I).noParams()) { it.setReturnInt(it.target?.anger ?: 0) }
-                .function("setAnger", returnsVoid().params(Type.I)) { it.target?.setAnger(it.getInt(0).toInt()) }
+                .function("setAnger", returnsVoid().params(Type.I)) { it.target?.setAnger(it.getAsInt(0).toInt()) }
                 .function("cannotEnterHiveTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cannotEnterHiveTicks ?: 0) }
-                .function("setCannotEnterHiveTicks", returnsVoid().params(Type.I)) { it.target?.setCannotEnterHiveTicks(it.getInt(0).toInt()) }
+                .function("setCannotEnterHiveTicks", returnsVoid().params(Type.I)) { it.target?.setCannotEnterHiveTicks(it.getAsInt(0).toInt()) }
         }
     }
 }

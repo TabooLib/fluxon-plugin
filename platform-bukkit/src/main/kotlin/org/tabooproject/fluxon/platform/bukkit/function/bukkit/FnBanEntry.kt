@@ -25,11 +25,11 @@ object FnBanEntry {
                 .function("target",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.target) }
                 .function("banTarget", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.getBanTarget()) }
                 .function("created",returns(org.tabooproject.fluxon.util.StandardTypes.DATE).noParams()) { it.setReturnRef(it.target?.created) }
-                .function("setCreated", returnsVoid().params(Type.J)) { it.target?.setCreated(Date(it.getLong(0))) }
+                .function("setCreated", returnsVoid().params(Type.J)) { it.target?.setCreated(Date(it.getAsLong(0))) }
                 .function("source",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.source) }
                 .function("setSource", returnsVoid().params(Type.STRING)) { it.target?.setSource(it.getString(0)!!) }
                 .function("expiration",returns(org.tabooproject.fluxon.util.StandardTypes.DATE).noParams()) { it.setReturnRef(it.target?.expiration) }
-                .function("setExpiration", returnsVoid().params(Type.J)) { it.target?.setExpiration(Date(it.getLong(0))) }
+                .function("setExpiration", returnsVoid().params(Type.J)) { it.target?.setExpiration(Date(it.getAsLong(0))) }
                 .function("reason",returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.reason) }
                 .function("setReason", returnsVoid().params(Type.STRING)) { it.target?.setReason(it.getString(0)) }
                 .function("save", returnsVoid().noParams()) { it.target?.save() }

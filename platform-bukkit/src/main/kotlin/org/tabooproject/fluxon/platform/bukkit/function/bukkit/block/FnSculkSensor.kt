@@ -24,7 +24,7 @@ object FnSculkSensor {
                 .function("lastVibrationFrequency", returns(Type.I).noParams()) { it.setReturnInt(it.target?.lastVibrationFrequency ?: 0) }
                 .function("setLastVibrationFrequency", returnsVoid().params(Type.I)) {
                     it.target?.setLastVibrationFrequency(
-                        it.getInt(0)
+                        it.getAsInt(0)
                     )
                 }
         }

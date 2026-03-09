@@ -24,8 +24,8 @@ object FnCake {
             registerExtension(Cake::class.java)
                 .function("slicesEaten", returns(Type.I).noParams()) { it.setReturnInt(it.target?.slicesEaten ?: 0) }
                 .function("slicesRemaining", returns(Type.I).noParams()) { it.setReturnInt(it.target?.slicesRemaining ?: 0) }
-                .function("setSlicesEaten", returnsVoid().params(Type.I)) { it.target?.setSlicesEaten(it.getInt(0).toInt()) }
-                .function("setSlicesRemaining", returnsVoid().params(Type.I)) { it.target?.setSlicesRemaining(it.getInt(0).toInt()) }
+                .function("setSlicesEaten", returnsVoid().params(Type.I)) { it.target?.setSlicesEaten(it.getAsInt(0).toInt()) }
+                .function("setSlicesRemaining", returnsVoid().params(Type.I)) { it.target?.setSlicesRemaining(it.getAsInt(0).toInt()) }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }
                 .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }

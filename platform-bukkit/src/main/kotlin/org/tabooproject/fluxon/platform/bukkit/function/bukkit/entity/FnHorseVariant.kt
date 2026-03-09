@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Horse\$Variant"])
 @PlatformSide(Platform.BUKKIT)
-object FnHorseVariant : FnEnumGetter<org.bukkit.entity.Horse.Variant>() {
+object FnHorseVariant : FnEnumGetter<org.bukkit.entity.Horse.Variant>(org.bukkit.entity.Horse.Variant::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Horse.Variant> = org.bukkit.entity.Horse.Variant::class.java
 }

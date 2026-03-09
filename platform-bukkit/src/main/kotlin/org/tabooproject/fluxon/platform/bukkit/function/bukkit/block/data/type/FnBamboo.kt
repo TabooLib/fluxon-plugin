@@ -31,7 +31,6 @@ object FnBamboo {
 
 @Requires(classes = ["org.bukkit.block.data.type.Bamboo\$Leaves"])
 @PlatformSide(Platform.BUKKIT)
-object FnBambooLeaves : FnEnumGetter<Bamboo.Leaves>() {
+object FnBambooLeaves : FnEnumGetter<Bamboo.Leaves>(Bamboo.Leaves::class.java) {
 
-    override val enumClass: Class<Bamboo.Leaves> = Bamboo.Leaves::class.java
 }

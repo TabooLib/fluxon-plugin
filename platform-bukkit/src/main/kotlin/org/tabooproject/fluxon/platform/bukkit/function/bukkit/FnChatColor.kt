@@ -12,10 +12,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.ChatColor"])
 @PlatformSide(Platform.BUKKIT)
-object FnChatColor : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.ChatColor>() {
-
-    override val enumClass: Class<org.bukkit.ChatColor> = org.bukkit.ChatColor::class.java
-
+object FnChatColor : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.ChatColor>(org.bukkit.ChatColor::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

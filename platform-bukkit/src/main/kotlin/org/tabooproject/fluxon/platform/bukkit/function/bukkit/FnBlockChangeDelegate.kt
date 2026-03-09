@@ -24,25 +24,25 @@ object FnBlockChangeDelegate {
             registerExtension(BlockChangeDelegate::class.java)
                 .function("setBlockData",returns(Type.Z).params(Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) {
                     it.setReturnBool(it.target?.setBlockData(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
                         it.getRef(3) as BlockData
                     ) ?: false)
                 }
                 .function("getBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlockData(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("height", returns(Type.I).noParams()) { it.setReturnInt(it.target?.height ?: 0) }
                 .function("isEmpty", returns(Type.Z).params(Type.I, Type.I, Type.I)) {
                     it.setReturnBool(it.target?.isEmpty(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ) ?: false)
                 }
         }

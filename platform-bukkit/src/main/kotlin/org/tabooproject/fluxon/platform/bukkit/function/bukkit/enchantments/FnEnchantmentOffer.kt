@@ -26,9 +26,9 @@ object FnEnchantmentOffer {
                 .function("enchantment",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE).noParams()) { it.setReturnRef(it.target?.enchantment) }
                 .function("setEnchantment",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE)) { it.target?.setEnchantment(it.getRef(0) as Enchantment) }
                 .function("enchantmentLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.enchantmentLevel ?: 0) }
-                .function("setEnchantmentLevel", returnsVoid().params(Type.I)) { it.target?.setEnchantmentLevel(it.getInt(0).toInt()) }
+                .function("setEnchantmentLevel", returnsVoid().params(Type.I)) { it.target?.setEnchantmentLevel(it.getAsInt(0).toInt()) }
                 .function("cost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.cost ?: 0) }
-                .function("setCost", returnsVoid().params(Type.I)) { it.target?.setCost(it.getInt(0).toInt()) }
+                .function("setCost", returnsVoid().params(Type.I)) { it.target?.setCost(it.getAsInt(0).toInt()) }
         }
     }
 }

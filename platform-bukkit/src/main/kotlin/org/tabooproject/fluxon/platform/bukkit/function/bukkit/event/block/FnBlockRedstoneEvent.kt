@@ -23,7 +23,7 @@ object FnBlockRedstoneEvent {
             registerExtension(BlockRedstoneEvent::class.java)
                 .function("oldCurrent", returns(Type.I).noParams()) { it.setReturnRef(it.target?.oldCurrent) }
                 .function("newCurrent", returns(Type.I).noParams()) { it.setReturnRef(it.target?.newCurrent) }
-                .function("setNewCurrent", returnsVoid().params(Type.I)) { it.target?.setNewCurrent(it.getInt(0)) }
+                .function("setNewCurrent", returnsVoid().params(Type.I)) { it.target?.setNewCurrent(it.getAsInt(0)) }
         }
     }
 }

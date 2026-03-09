@@ -25,17 +25,17 @@ object FnEntityDamageEvent {
                 .function("getOriginalDamage", returns(Type.D).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEventDamageModifier.TYPE)) { it.setReturnDouble(it.target?.getOriginalDamage(it.getRef(0) as EntityDamageEvent.DamageModifier) ?: 0.0) }
                 .function("getOriginalDamage", returns(Type.D).params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEventDamageModifier.enumValue(it.getString(0))?.let { p0 -> it.setReturnDouble(it.target?.getOriginalDamage(p0) ?: 0.0) } }
                 .function("setDamage", returnsVoid().params(Type.D)) {
-                    it.target?.setDamage(it.getDouble(0))
+                    it.target?.setDamage(it.getAsDouble(0))
                 }
                 .function("setDamage", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEventDamageModifier.TYPE, Type.D)) {
                     it.target?.setDamage(
                         it.getRef(0) as EntityDamageEvent.DamageModifier,
-                        it.getDouble(1)
+                        it.getAsDouble(1)
                     )
                 }
                 .function("setDamage", returnsVoid().params(Type.STRING, Type.D)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityDamageEventDamageModifier.enumValue(it.getString(0))?.let { p0 ->
-                        it.target?.setDamage(p0, it.getDouble(1))
+                        it.target?.setDamage(p0, it.getAsDouble(1))
                     }
                 }
                 .function("damage", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damage ?: 0.0) }

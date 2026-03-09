@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.structure.UsageMode"])
 @PlatformSide(Platform.BUKKIT)
-object FnUsageMode : FnEnumGetter<UsageMode>() {
+object FnUsageMode : FnEnumGetter<UsageMode>(UsageMode::class.java) {
 
-    override val enumClass: Class<UsageMode> = UsageMode::class.java
 }

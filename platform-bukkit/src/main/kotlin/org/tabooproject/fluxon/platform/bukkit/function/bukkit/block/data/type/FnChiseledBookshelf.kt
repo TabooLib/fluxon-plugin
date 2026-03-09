@@ -22,10 +22,10 @@ object FnChiseledBookshelf {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ChiseledBookshelf::class.java)
-                .function("isSlotOccupied", returns(Type.Z).params(Type.I)) { it.setReturnBool(it.target?.isSlotOccupied(it.getInt(0)) ?: false) }
+                .function("isSlotOccupied", returns(Type.Z).params(Type.I)) { it.setReturnBool(it.target?.isSlotOccupied(it.getAsInt(0)) ?: false) }
                 .function("setSlotOccupied", returnsVoid().params(Type.I, Type.Z)) {
                     it.target?.setSlotOccupied(
-                        it.getInt(0),
+                        it.getAsInt(0),
                         it.getBool(1)
                     )
                 }

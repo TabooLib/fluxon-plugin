@@ -32,7 +32,6 @@ object FnEvent {
 
 @Requires(classes = ["org.bukkit.event.Event\$Result"])
 @PlatformSide(Platform.BUKKIT)
-object FnEventResult : FnEnumGetter<Event.Result>() {
+object FnEventResult : FnEnumGetter<Event.Result>(Event.Result::class.java) {
 
-    override val enumClass: Class<Event.Result> = Event.Result::class.java
 }

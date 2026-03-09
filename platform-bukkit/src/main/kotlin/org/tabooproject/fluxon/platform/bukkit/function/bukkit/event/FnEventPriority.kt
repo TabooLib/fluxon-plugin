@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.event.EventPriority"])
 @PlatformSide(Platform.BUKKIT)
-object FnEventPriority : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.event.EventPriority>() {
-
-    override val enumClass: Class<org.bukkit.event.EventPriority> = org.bukkit.event.EventPriority::class.java
-
+object FnEventPriority : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.event.EventPriority>(org.bukkit.event.EventPriority::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

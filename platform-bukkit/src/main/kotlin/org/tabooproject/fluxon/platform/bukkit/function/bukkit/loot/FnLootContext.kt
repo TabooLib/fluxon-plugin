@@ -43,7 +43,7 @@ object FnLootContextBuilder {
             registerExtension(LootContext.Builder::class.java)
                 .function("luck", returns(TYPE).params(Type.F)) { it.setReturnRef(it.target?.luck(it.getFloat(0))) }
                 .function("lootingModifier", returns(TYPE).params(Type.I)) {
-                    it.setReturnRef(it.target?.lootingModifier(it.getInt(0).toInt()))
+                    it.setReturnRef(it.target?.lootingModifier(it.getAsInt(0).toInt()))
                 }
                 .function("lootedEntity", returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.setReturnRef(it.target?.lootedEntity(it.getRef(0) as Entity)) }
                 .function("killer", returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnHumanEntity.TYPE)) { it.setReturnRef(it.target?.killer(it.getRef(0) as HumanEntity)) }

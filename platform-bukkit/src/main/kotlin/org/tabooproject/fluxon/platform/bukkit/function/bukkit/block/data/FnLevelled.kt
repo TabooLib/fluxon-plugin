@@ -23,7 +23,7 @@ object FnLevelled {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Levelled::class.java)
                 .function("level", returns(Type.I).noParams()) { it.setReturnInt(it.target?.level ?: 0) }
-                .function("setLevel", returnsVoid().params(Type.I)) { it.target?.setLevel(it.getInt(0).toInt()) }
+                .function("setLevel", returnsVoid().params(Type.I)) { it.target?.setLevel(it.getAsInt(0).toInt()) }
                 .function("maximumLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumLevel ?: 0) }
         }
     }

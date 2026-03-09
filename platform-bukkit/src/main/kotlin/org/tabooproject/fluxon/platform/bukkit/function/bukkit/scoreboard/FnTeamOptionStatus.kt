@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.scoreboard.Team\$OptionStatus"])
 @PlatformSide(Platform.BUKKIT)
-object FnTeamOptionStatus : FnEnumGetter<Team.OptionStatus>() {
+object FnTeamOptionStatus : FnEnumGetter<Team.OptionStatus>(Team.OptionStatus::class.java) {
 
-    override val enumClass: Class<Team.OptionStatus> = Team.OptionStatus::class.java
 }

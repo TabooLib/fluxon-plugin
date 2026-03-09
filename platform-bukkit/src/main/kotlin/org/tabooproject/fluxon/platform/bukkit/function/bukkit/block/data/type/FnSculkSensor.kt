@@ -32,7 +32,6 @@ object FnSculkSensor {
 
 @Requires(classes = ["org.bukkit.block.data.type.SculkSensor\$Phase"])
 @PlatformSide(Platform.BUKKIT)
-object FnSculkSensorPhase : FnEnumGetter<SculkSensor.Phase>() {
+object FnSculkSensorPhase : FnEnumGetter<SculkSensor.Phase>(SculkSensor.Phase::class.java) {
 
-    override val enumClass: Class<SculkSensor.Phase> = SculkSensor.Phase::class.java
 }

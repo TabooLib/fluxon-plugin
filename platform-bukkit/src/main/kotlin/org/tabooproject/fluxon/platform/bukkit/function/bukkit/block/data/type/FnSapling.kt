@@ -22,7 +22,7 @@ object FnSapling {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Sapling::class.java)
                 .function("stage", returns(Type.I).noParams()) { it.setReturnInt(it.target?.stage ?: 0) }
-                .function("setStage", returnsVoid().params(Type.I)) { it.target?.setStage(it.getInt(0)) }
+                .function("setStage", returnsVoid().params(Type.I)) { it.target?.setStage(it.getAsInt(0)) }
                 .function("maximumStage", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumStage ?: 0) }
         }
     }

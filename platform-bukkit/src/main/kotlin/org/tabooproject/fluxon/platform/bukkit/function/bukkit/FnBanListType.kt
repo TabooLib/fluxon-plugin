@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.BanList\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnBanListType : FnEnumGetter<org.bukkit.BanList.Type>() {
+object FnBanListType : FnEnumGetter<org.bukkit.BanList.Type>(org.bukkit.BanList.Type::class.java) {
 
-    override val enumClass: Class<org.bukkit.BanList.Type> = org.bukkit.BanList.Type::class.java
 }

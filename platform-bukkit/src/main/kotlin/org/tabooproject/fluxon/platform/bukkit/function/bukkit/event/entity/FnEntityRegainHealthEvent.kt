@@ -24,7 +24,7 @@ object FnEntityRegainHealthEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(EntityRegainHealthEvent::class.java)
                 .function("amount", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.amount ?: 0.0) }
-                .function("setAmount", returnsVoid().params(Type.D)) { it.target?.setAmount(it.getDouble(0)) }
+                .function("setAmount", returnsVoid().params(Type.D)) { it.target?.setAmount(it.getAsDouble(0)) }
                 .function("regainReason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.entity.FnEntityRegainHealthEventRegainReason.TYPE).noParams()) { it.setReturnRef(it.target?.regainReason) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

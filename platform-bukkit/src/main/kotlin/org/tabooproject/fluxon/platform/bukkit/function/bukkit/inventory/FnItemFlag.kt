@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.inventory.ItemFlag"])
 @PlatformSide(Platform.BUKKIT)
-object FnItemFlag : FnEnumGetter<org.bukkit.inventory.ItemFlag>() {
+object FnItemFlag : FnEnumGetter<org.bukkit.inventory.ItemFlag>(org.bukkit.inventory.ItemFlag::class.java) {
 
-    override val enumClass: Class<org.bukkit.inventory.ItemFlag> = org.bukkit.inventory.ItemFlag::class.java
 }

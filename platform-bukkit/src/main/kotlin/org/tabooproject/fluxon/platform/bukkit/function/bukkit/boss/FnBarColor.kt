@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.boss.BarColor"])
 @PlatformSide(Platform.BUKKIT)
-object FnBarColor : FnEnumGetter<org.bukkit.boss.BarColor>() {
+object FnBarColor : FnEnumGetter<org.bukkit.boss.BarColor>(org.bukkit.boss.BarColor::class.java) {
 
-    override val enumClass: Class<org.bukkit.boss.BarColor> = org.bukkit.boss.BarColor::class.java
 }

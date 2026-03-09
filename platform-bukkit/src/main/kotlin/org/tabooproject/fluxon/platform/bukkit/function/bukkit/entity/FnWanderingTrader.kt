@@ -23,7 +23,7 @@ object FnWanderingTrader {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WanderingTrader::class.java)
                 .function("despawnDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.despawnDelay ?: 0) }
-                .function("setDespawnDelay", returnsVoid().params(Type.I)) { it.target?.setDespawnDelay(it.getInt(0).toInt()) }
+                .function("setDespawnDelay", returnsVoid().params(Type.I)) { it.target?.setDespawnDelay(it.getAsInt(0).toInt()) }
         }
     }
 }

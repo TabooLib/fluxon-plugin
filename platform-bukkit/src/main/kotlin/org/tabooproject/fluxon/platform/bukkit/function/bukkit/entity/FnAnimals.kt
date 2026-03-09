@@ -29,7 +29,7 @@ object FnAnimals {
                 .function("setBreedCause", returnsVoid().params(Type.STRING)) { it.target?.setBreedCause(UUID.fromString(it.getString(0))) }
                 .function("isLoveMode", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLoveMode ?: false) }
                 .function("loveModeTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.loveModeTicks ?: 0) }
-                .function("setLoveModeTicks", returnsVoid().params(Type.I)) { it.target?.setLoveModeTicks(it.getInt(0).toInt()) }
+                .function("setLoveModeTicks", returnsVoid().params(Type.I)) { it.target?.setLoveModeTicks(it.getAsInt(0).toInt()) }
                 .function("isBreedItem",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) {
                     it.setReturnBool(when (val var1 = it.getRef(0)) {
                         is ItemStack -> it.target?.isBreedItem(var1)

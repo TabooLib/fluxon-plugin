@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.conversations.Conversation\$ConversationState"])
 @PlatformSide(Platform.BUKKIT)
-object FnConversationConversationState : FnEnumGetter<org.bukkit.conversations.Conversation.ConversationState>() {
+object FnConversationConversationState : FnEnumGetter<org.bukkit.conversations.Conversation.ConversationState>(org.bukkit.conversations.Conversation.ConversationState::class.java) {
 
-    override val enumClass: Class<org.bukkit.conversations.Conversation.ConversationState> = org.bukkit.conversations.Conversation.ConversationState::class.java
 }

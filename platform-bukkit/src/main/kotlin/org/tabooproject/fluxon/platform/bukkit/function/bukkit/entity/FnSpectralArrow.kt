@@ -23,7 +23,7 @@ object FnSpectralArrow {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SpectralArrow::class.java)
                 .function("glowingTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.glowingTicks ?: 0) }
-                .function("setGlowingTicks", returnsVoid().params(Type.I)) { it.target?.setGlowingTicks(it.getInt(0).toInt()) }
+                .function("setGlowingTicks", returnsVoid().params(Type.I)) { it.target?.setGlowingTicks(it.getAsInt(0).toInt()) }
         }
     }
 }

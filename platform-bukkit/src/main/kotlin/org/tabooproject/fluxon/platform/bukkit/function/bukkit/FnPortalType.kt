@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.PortalType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPortalType : FnEnumGetter<org.bukkit.PortalType>() {
+object FnPortalType : FnEnumGetter<org.bukkit.PortalType>(org.bukkit.PortalType::class.java) {
 
-    override val enumClass: Class<org.bukkit.PortalType> = org.bukkit.PortalType::class.java
 }

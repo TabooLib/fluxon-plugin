@@ -28,9 +28,9 @@ object FnExperienceOrb {
 //                .function("sourceEntityId", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.sourceEntityId?.toString()) }
 //                .function("spawnReason", returns(Type.OBJECT).noParams()) { it.setReturnRef(it.target?.spawnReason?.name) }
 //                .function("count", returns(Type.I).noParams()) { it.setReturnRef(it.target?.count) }
-//                .function("setCount",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { count = it.getInt(0).toInt() }) }
+//                .function("setCount",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { count = it.getAsInt(0).toInt() }) }
                 .function("experience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.experience ?: 0) }
-                .function("setExperience", returnsVoid().params(Type.I)) { it.target?.setExperience(it.getInt(0).toInt()) }
+                .function("setExperience", returnsVoid().params(Type.I)) { it.target?.setExperience(it.getAsInt(0).toInt()) }
         }
     }
 }

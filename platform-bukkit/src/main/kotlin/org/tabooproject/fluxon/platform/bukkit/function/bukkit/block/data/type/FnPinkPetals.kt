@@ -23,7 +23,7 @@ object FnPinkPetals {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PinkPetals::class.java)
                 .function("flowerAmount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.flowerAmount ?: 0) }
-                .function("setFlowerAmount", returnsVoid().params(Type.I)) { it.target?.setFlowerAmount(it.getInt(0).toInt()) }
+                .function("setFlowerAmount", returnsVoid().params(Type.I)) { it.target?.setFlowerAmount(it.getAsInt(0).toInt()) }
                 .function("maximumFlowerAmount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumFlowerAmount ?: 0) }
         }
     }

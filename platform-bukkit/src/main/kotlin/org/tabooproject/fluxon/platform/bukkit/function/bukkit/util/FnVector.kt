@@ -30,9 +30,9 @@ object FnVector {
         with(FluxonRuntime.getInstance()) {
             // 构建向量
             registerFunction("vector", returns(TYPE).params(Type.D, Type.D, Type.D)) {
-                val x = it.getDouble(0)
-                val y = it.getDouble(1)
-                val z = it.getDouble(2)
+                val x = it.getAsDouble(0)
+                val y = it.getAsDouble(1)
+                val z = it.getAsDouble(2)
                 it.setReturnRef(Vector(x, y, z))
             }
 
@@ -51,11 +51,11 @@ object FnVector {
 
                 // 可读写属性
                 .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.x ?: 0.0) }
-                .function("setX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { x = it.getDouble(0) }) }
+                .function("setX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { x = it.getAsDouble(0) }) }
                 .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.y ?: 0.0) }
-                .function("setY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { y = it.getDouble(0) }) }
+                .function("setY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { y = it.getAsDouble(0) }) }
                 .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.z ?: 0.0) }
-                .function("setZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { z = it.getDouble(0) }) }
+                .function("setZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { z = it.getAsDouble(0) }) }
 
                 // 基本运算
                 .function("add",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) {
@@ -69,11 +69,11 @@ object FnVector {
                     it.setReturnRef(it.target?.subtract(it.getRef(0) as Vector))
                 }
                 .function("subtract",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) {
-                    val arg = it.getDouble(0)
+                    val arg = it.getAsDouble(0)
                     it.setReturnRef(it.target?.subtract(Vector(arg, arg, arg)))
                 }
                 .function("multiply", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.setReturnRef(it.target?.multiply(it.getRef(0) as Vector)) }
-                .function("multiply", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.multiply(it.getDouble(0))) }
+                .function("multiply", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.multiply(it.getAsDouble(0))) }
                 .function("divide",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) {
                     it.setReturnRef(when (val arg = it.getRef(0)!!) {
                         is Vector -> it.target?.divide(arg)
@@ -97,13 +97,13 @@ object FnVector {
                 .function("cross",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.setReturnRef(it.target?.crossProduct(it.getRef(0) as Vector)) }
 
                 // 向量旋转
-                .function("rotateAroundX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundX(it.getDouble(0))) }
-                .function("rotateAroundY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundY(it.getDouble(0))) }
-                .function("rotateAroundZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundZ(it.getDouble(0))) }
+                .function("rotateAroundX",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundX(it.getAsDouble(0))) }
+                .function("rotateAroundY",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundY(it.getAsDouble(0))) }
+                .function("rotateAroundZ",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(Type.D)) { it.setReturnRef(it.target?.rotateAroundZ(it.getAsDouble(0))) }
                 .function("rotateAroundAxis",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D)) {
                     it.setReturnRef(it.target?.rotateAroundAxis(
                         it.getRef(0) as Vector,
-                        it.getDouble(1)
+                        it.getAsDouble(1)
                     ))
                 }
 

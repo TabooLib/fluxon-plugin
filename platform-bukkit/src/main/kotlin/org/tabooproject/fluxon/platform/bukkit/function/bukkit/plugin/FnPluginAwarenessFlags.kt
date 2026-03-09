@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.plugin.PluginAwareness\$Flags"])
 @PlatformSide(Platform.BUKKIT)
-object FnPluginAwarenessFlags : FnEnumGetter<org.bukkit.plugin.PluginAwareness.Flags>() {
+object FnPluginAwarenessFlags : FnEnumGetter<org.bukkit.plugin.PluginAwareness.Flags>(org.bukkit.plugin.PluginAwareness.Flags::class.java) {
 
-    override val enumClass: Class<org.bukkit.plugin.PluginAwareness.Flags> = org.bukkit.plugin.PluginAwareness.Flags::class.java
 }

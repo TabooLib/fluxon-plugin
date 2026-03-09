@@ -32,8 +32,8 @@ object FnBookMeta {
                 .function("setGeneration", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMetaGeneration.TYPE)) { it.target?.setGeneration(it.getRef(0) as BookMeta.Generation)  }
                 .function("setGeneration", returnsVoid().params(Type.STRING)) { org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnBookMetaGeneration.enumValue(it.getString(0))?.let { p0 -> it.target?.setGeneration(p0)  } }
                 .function("clone", returns(TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
-                .function("getPage", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getPage(it.getInt(0).toInt())) }
-                .function("setPage", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setPage(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("getPage", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getPage(it.getAsInt(0).toInt())) }
+                .function("setPage", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setPage(it.getAsInt(0).toInt(), it.getString(1)!!) }
                 .function("pages", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.pages) }
                 .function("setPages", returnsVoid().params(Type.LIST)) {
                     it.target?.setPages(it.getRef(0) as List<String>)

@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Statistic\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnStatisticType : FnEnumGetter<Statistic.Type>() {
+object FnStatisticType : FnEnumGetter<Statistic.Type>(Statistic.Type::class.java) {
 
-    override val enumClass: Class<Statistic.Type> = Statistic.Type::class.java
 }

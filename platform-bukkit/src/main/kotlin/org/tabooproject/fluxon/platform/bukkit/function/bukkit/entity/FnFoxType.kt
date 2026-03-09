@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Fox\$Type"])
 @PlatformSide(Platform.BUKKIT)
-object FnFoxType : FnEnumGetter<org.bukkit.entity.Fox.Type>() {
+object FnFoxType : FnEnumGetter<org.bukkit.entity.Fox.Type>(org.bukkit.entity.Fox.Type::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Fox.Type> = org.bukkit.entity.Fox.Type::class.java
 }

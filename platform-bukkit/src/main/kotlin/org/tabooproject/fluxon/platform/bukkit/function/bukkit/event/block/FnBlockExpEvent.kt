@@ -23,7 +23,7 @@ object FnBlockExpEvent {
         with(FluxonRuntime.getInstance()) {
             registerExtension(BlockExpEvent::class.java)
                 .function("expToDrop", returns(Type.I).noParams()) { it.setReturnRef(it.target?.expToDrop) }
-                .function("setExpToDrop", returnsVoid().params(Type.I)) { it.target?.setExpToDrop(it.getInt(0)) }
+                .function("setExpToDrop", returnsVoid().params(Type.I)) { it.target?.setExpToDrop(it.getAsInt(0)) }
         }
     }
 }

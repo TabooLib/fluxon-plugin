@@ -31,13 +31,13 @@ object FnAreaEffectCloud {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AreaEffectCloud::class.java)
                 .function("duration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.duration ?: 0) }
-                .function("setDuration", returnsVoid().params(Type.I)) { it.target?.setDuration(it.getInt(0)) }
+                .function("setDuration", returnsVoid().params(Type.I)) { it.target?.setDuration(it.getAsInt(0)) }
                 .function("waitTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.waitTime ?: 0) }
-                .function("setWaitTime", returnsVoid().params(Type.I)) { it.target?.setWaitTime(it.getInt(0)) }
+                .function("setWaitTime", returnsVoid().params(Type.I)) { it.target?.setWaitTime(it.getAsInt(0)) }
                 .function("reapplicationDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.reapplicationDelay ?: 0) }
-                .function("setReapplicationDelay", returnsVoid().params(Type.I)) { it.target?.setReapplicationDelay(it.getInt(0)) }
+                .function("setReapplicationDelay", returnsVoid().params(Type.I)) { it.target?.setReapplicationDelay(it.getAsInt(0)) }
                 .function("durationOnUse", returns(Type.I).noParams()) { it.setReturnInt(it.target?.durationOnUse ?: 0) }
-                .function("setDurationOnUse", returnsVoid().params(Type.I)) { it.target?.setDurationOnUse(it.getInt(0)) }
+                .function("setDurationOnUse", returnsVoid().params(Type.I)) { it.target?.setDurationOnUse(it.getAsInt(0)) }
                 .function("radius", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.radius ?: 0f) }
                 .function("setRadius", returnsVoid().params(Type.F)) { it.target?.setRadius(it.getFloat(0)) }
                 .function("radiusOnUse", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.radiusOnUse ?: 0f) }

@@ -29,7 +29,7 @@ object FnEndGateway {
                 .function("isExactTeleport", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isExactTeleport ?: false) }
                 .function("setExactTeleport", returnsVoid().params(Type.Z)) { it.target?.setExactTeleport(it.getBool(0)) }
                 .function("age", returns(Type.J).noParams()) { it.setReturnLong(it.target?.age ?: 0L) }
-                .function("setAge", returnsVoid().params(Type.J)) { it.target?.setAge(it.getLong(0)) }
+                .function("setAge", returnsVoid().params(Type.J)) { it.target?.setAge(it.getAsLong(0)) }
         }
     }
 }

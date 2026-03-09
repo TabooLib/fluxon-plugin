@@ -13,9 +13,7 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Instrument"])
 @PlatformSide(Platform.BUKKIT)
-object FnInstrument : FnEnumGetter<Instrument>() {
-
-    override val enumClass: Class<Instrument> = Instrument::class.java
+object FnInstrument : FnEnumGetter<Instrument>(Instrument::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

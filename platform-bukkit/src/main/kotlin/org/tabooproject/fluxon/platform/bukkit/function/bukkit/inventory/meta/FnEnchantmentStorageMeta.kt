@@ -28,7 +28,7 @@ object FnEnchantmentStorageMeta {
                 .function("addStoredEnchant",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.enchantments.FnEnchantment.TYPE, Type.I, Type.Z)) {
                     it.setReturnBool(it.target?.addStoredEnchant(
                         it.getRef(0) as Enchantment,
-                        it.getInt(1),
+                        it.getAsInt(1),
                         it.getBool(2)
                     ) ?: false)
                 }

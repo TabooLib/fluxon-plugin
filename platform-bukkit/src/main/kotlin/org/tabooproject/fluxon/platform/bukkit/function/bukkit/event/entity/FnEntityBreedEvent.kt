@@ -28,7 +28,7 @@ object FnEntityBreedEvent {
                 .function("breeder",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE).noParams()) { it.setReturnRef(it.target?.breeder) }
                 .function("bredWith",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.bredWith) }
                 .function("experience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.experience ?: 0) }
-                .function("setExperience", returnsVoid().params(Type.I)) { it.target?.setExperience(it.getInt(0).toInt()) }
+                .function("setExperience", returnsVoid().params(Type.I)) { it.target?.setExperience(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(EntityBreedEvent.getHandlerList()) }

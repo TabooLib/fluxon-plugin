@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.SoundCategory"])
 @PlatformSide(Platform.BUKKIT)
-object FnSoundCategory : FnEnumGetter<SoundCategory>() {
+object FnSoundCategory : FnEnumGetter<SoundCategory>(SoundCategory::class.java) {
 
-    override val enumClass: Class<SoundCategory> = SoundCategory::class.java
 }

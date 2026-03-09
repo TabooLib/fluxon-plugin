@@ -36,7 +36,6 @@ object FnBell {
 
 @Requires(classes = ["org.bukkit.block.data.type.Bell\$Attachment"])
 @PlatformSide(Platform.BUKKIT)
-object FnBellAttachment : FnEnumGetter<Bell.Attachment>() {
+object FnBellAttachment : FnEnumGetter<Bell.Attachment>(Bell.Attachment::class.java) {
 
-    override val enumClass: Class<Bell.Attachment> = Bell.Attachment::class.java
 }

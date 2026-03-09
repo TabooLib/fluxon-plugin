@@ -22,8 +22,8 @@ object FnWritableBookMeta {
         with(FluxonRuntime.getInstance()) {
             registerExtension(WritableBookMeta::class.java)
                 .function("hasPages", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasPages() ?: false) }
-                .function("getPage", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getPage(it.getInt(0).toInt())) }
-                .function("setPage", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setPage(it.getInt(0).toInt(), it.getString(1)!!) }
+                .function("getPage", returns(Type.STRING).params(Type.I)) { it.setReturnRef(it.target?.getPage(it.getAsInt(0).toInt())) }
+                .function("setPage", returnsVoid().params(Type.I, Type.STRING)) { it.target?.setPage(it.getAsInt(0).toInt(), it.getString(1)!!) }
                 .function("pages", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.pages) }
                 .function("setPages", returnsVoid().params(Type.LIST)) {
                     it.target?.setPages(it.getRef(0) as List<String>)

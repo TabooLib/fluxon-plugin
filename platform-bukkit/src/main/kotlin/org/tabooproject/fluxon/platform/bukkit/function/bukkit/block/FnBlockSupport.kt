@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.BlockSupport"])
 @PlatformSide(Platform.BUKKIT)
-object FnBlockSupport : FnEnumGetter<BlockSupport>() {
+object FnBlockSupport : FnEnumGetter<BlockSupport>(BlockSupport::class.java) {
 
-    override val enumClass: Class<BlockSupport> = BlockSupport::class.java
 }

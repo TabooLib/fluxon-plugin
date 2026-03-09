@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.world.AsyncStructureGenerateEvent\$Cause"])
 @PlatformSide(Platform.BUKKIT)
-object FnAsyncStructureGenerateEventCause : FnEnumGetter<org.bukkit.event.world.AsyncStructureGenerateEvent.Cause>() {
+object FnAsyncStructureGenerateEventCause : FnEnumGetter<org.bukkit.event.world.AsyncStructureGenerateEvent.Cause>(org.bukkit.event.world.AsyncStructureGenerateEvent.Cause::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.world.AsyncStructureGenerateEvent.Cause> = org.bukkit.event.world.AsyncStructureGenerateEvent.Cause::class.java
 }

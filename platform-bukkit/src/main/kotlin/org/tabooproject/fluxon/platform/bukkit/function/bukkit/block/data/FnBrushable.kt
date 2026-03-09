@@ -22,7 +22,7 @@ object FnBrushable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Brushable::class.java)
                 .function("dusted", returns(Type.I).noParams()) { it.setReturnInt(it.target?.dusted ?: 0) }
-                .function("setDusted", returnsVoid().params(Type.I)) { it.target?.setDusted(it.getInt(0)) }
+                .function("setDusted", returnsVoid().params(Type.I)) { it.target?.setDusted(it.getAsInt(0)) }
                 .function("maximumDusted", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumDusted ?: 0) }
         }
     }

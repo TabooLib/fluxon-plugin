@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.HeightMap"])
 @PlatformSide(Platform.BUKKIT)
-object FnHeightMap : FnEnumGetter<org.bukkit.HeightMap>() {
+object FnHeightMap : FnEnumGetter<org.bukkit.HeightMap>(org.bukkit.HeightMap::class.java) {
 
-    override val enumClass: Class<org.bukkit.HeightMap> = org.bukkit.HeightMap::class.java
 }

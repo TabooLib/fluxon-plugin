@@ -32,47 +32,47 @@ object FnMapCanvas {
                 .function("setCursors",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapCursorCollection.TYPE)) { it.target?.setCursors(it.getRef(0) as MapCursorCollection) }
                 .function("setPixelColor",returnsVoid().params(Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnColor.TYPE)) {
                     it.target?.setPixelColor(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
                         (it.getRef(2) as Color).let { color -> java.awt.Color(color.red, color.green, color.blue) }
                     )
                 }
                 .function("getPixelColor", returns(AWT_COLOR).params(Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getPixelColor(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt()
                     ))
                 }
                 .function("getBasePixelColor", returns(AWT_COLOR).params(Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBasePixelColor(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt()
                     ))
                 }
                 .function("setPixel", returnsVoid().params(Type.I, Type.I, Type.I)) {
                     it.target?.setPixel(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toByte()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toByte()
                     )
                 }
                 .function("getPixel", returns(Type.I).params(Type.I, Type.I)) {
-                    it.setReturnInt(it.target?.getPixel(it.getInt(0).toInt(), it.getInt(1).toInt())?.toInt() ?: 0)
+                    it.setReturnInt(it.target?.getPixel(it.getAsInt(0).toInt(), it.getAsInt(1).toInt())?.toInt() ?: 0)
                 }
                 .function("getBasePixel", returns(Type.I).params(Type.I, Type.I)) {
-                    it.setReturnInt(it.target?.getBasePixel(it.getInt(0).toInt(), it.getInt(1).toInt())?.toInt() ?: 0)
+                    it.setReturnInt(it.target?.getBasePixel(it.getAsInt(0).toInt(), it.getAsInt(1).toInt())?.toInt() ?: 0)
                 }
                 .function("drawImage", returnsVoid().params(Type.I, Type.I, IMAGE)) {
                     it.target?.drawImage(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
                         it.getRef(2) as Image
                     )
                 }
                 .function("drawText",returnsVoid().params(Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapFont.TYPE, Type.STRING)) {
                     it.target?.drawText(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
                         it.getRef(2) as MapFont,
                         it.getString(3)!!
                     )

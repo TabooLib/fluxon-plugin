@@ -28,11 +28,11 @@ object FnFishHook {
                 .function("isHookedEntity", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.state == FishHook.HookState.HOOKED_ENTITY) }
                 .function("isBobbing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.state == FishHook.HookState.BOBBING) }
                 .function("setLureTime", returnsVoid().params(Type.I)) {
-                    val time = it.getInt(0).toInt()
+                    val time = it.getAsInt(0).toInt()
                     it.target?.setLureTime(time, time)
                 }
                 .function("setLureTime", returnsVoid().params(Type.I, Type.I)) {
-                    it.target?.setLureTime(it.getInt(0).toInt(), it.getInt(1).toInt())
+                    it.target?.setLureTime(it.getAsInt(0).toInt(), it.getAsInt(1).toInt())
                 }
                 .function("setLureAngle", returnsVoid().params(Type.F)) {
                     val angle = it.getFloat(0)
@@ -43,14 +43,14 @@ object FnFishHook {
                 }
 
                 .function("minWaitTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minWaitTime ?: 0) }
-                .function("setMinWaitTime", returnsVoid().params(Type.I)) { it.target?.setMinWaitTime(it.getInt(0)) }
+                .function("setMinWaitTime", returnsVoid().params(Type.I)) { it.target?.setMinWaitTime(it.getAsInt(0)) }
                 .function("maxWaitTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxWaitTime ?: 0) }
-                .function("setMaxWaitTime", returnsVoid().params(Type.I)) { it.target?.setMaxWaitTime(it.getInt(0)) }
-                .function("setWaitTime", returnsVoid().params(Type.I, Type.I)) { it.target?.setWaitTime(it.getInt(0), it.getInt(1)) }
+                .function("setMaxWaitTime", returnsVoid().params(Type.I)) { it.target?.setMaxWaitTime(it.getAsInt(0)) }
+                .function("setWaitTime", returnsVoid().params(Type.I, Type.I)) { it.target?.setWaitTime(it.getAsInt(0), it.getAsInt(1)) }
                 .function("minLureTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minLureTime ?: 0) }
-                .function("setMinLureTime", returnsVoid().params(Type.I)) { it.target?.setMinLureTime(it.getInt(0)) }
+                .function("setMinLureTime", returnsVoid().params(Type.I)) { it.target?.setMinLureTime(it.getAsInt(0)) }
                 .function("maxLureTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxLureTime ?: 0) }
-                .function("setMaxLureTime", returnsVoid().params(Type.I)) { it.target?.setMaxLureTime(it.getInt(0)) }
+                .function("setMaxLureTime", returnsVoid().params(Type.I)) { it.target?.setMaxLureTime(it.getAsInt(0)) }
                 .function("minLureAngle", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.minLureAngle ?: 0f) }
                 .function("setMinLureAngle", returnsVoid().params(Type.F)) { it.target?.setMinLureAngle(it.getFloat(0)) }
                 .function("maxLureAngle", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.maxLureAngle ?: 0f) }
@@ -58,7 +58,7 @@ object FnFishHook {
                 .function("applyLure", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.applyLure ?: false) }
                 .function("setApplyLure", returnsVoid().params(Type.Z)) { it.target?.setApplyLure(it.getBool(0)) }
                 .function("biteChance", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.biteChance ?: 0.0) }
-                .function("setBiteChance", returnsVoid().params(Type.D)) { it.target?.setBiteChance(it.getDouble(0)) }
+                .function("setBiteChance", returnsVoid().params(Type.D)) { it.target?.setBiteChance(it.getAsDouble(0)) }
                 .function("isInOpenWater", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isInOpenWater ?: false) }
                 .function("hookedEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.hookedEntity) }
                 .function("setHookedEntity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) { it.target?.setHookedEntity(it.getRef(0) as Entity) }
@@ -69,7 +69,7 @@ object FnFishHook {
                 .function("setRainInfluenced", returnsVoid().params(Type.Z)) { it.target?.setRainInfluenced(it.getBool(0)) }
                 .function("state", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFishHookHookState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
 //                .function("waitTime",returns(Type.I).noParams()) { it.setReturnRef(it.target?.waitTime) }
-//                .function("setWaitTime",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { waitTime = it.getInt(0).toInt() }) }
+//                .function("setWaitTime",returns(Type.OBJECT).params(Type.I)) { it.setReturnRef(it.target?.apply { waitTime = it.getAsInt(0).toInt() }) }
         }
     }
 }

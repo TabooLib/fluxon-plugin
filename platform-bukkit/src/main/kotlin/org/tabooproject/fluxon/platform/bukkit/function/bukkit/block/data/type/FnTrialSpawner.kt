@@ -37,7 +37,6 @@ object FnTrialSpawner {
 
 @Requires(classes = ["org.bukkit.block.data.type.TrialSpawner\$State"])
 @PlatformSide(Platform.BUKKIT)
-object FnTrialSpawnerState : FnEnumGetter<TrialSpawner.State>() {
+object FnTrialSpawnerState : FnEnumGetter<TrialSpawner.State>(TrialSpawner.State::class.java) {
 
-    override val enumClass: Class<TrialSpawner.State> = TrialSpawner.State::class.java
 }

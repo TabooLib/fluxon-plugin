@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.Statistic"])
 @PlatformSide(Platform.BUKKIT)
-object FnStatistic : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Statistic>() {
-
-    override val enumClass: Class<org.bukkit.Statistic> = org.bukkit.Statistic::class.java
-
+object FnStatistic : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.Statistic>(org.bukkit.Statistic::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

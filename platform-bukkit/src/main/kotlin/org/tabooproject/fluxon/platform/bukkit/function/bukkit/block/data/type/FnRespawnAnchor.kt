@@ -22,7 +22,7 @@ object FnRespawnAnchor {
         with(FluxonRuntime.getInstance()) {
             registerExtension(RespawnAnchor::class.java)
                 .function("charges", returns(Type.I).noParams()) { it.setReturnInt(it.target?.charges ?: 0) }
-                .function("setCharges", returnsVoid().params(Type.I)) { it.target?.setCharges(it.getInt(0)) }
+                .function("setCharges", returnsVoid().params(Type.I)) { it.target?.setCharges(it.getAsInt(0)) }
                 .function("maximumCharges", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumCharges ?: 0) }
         }
     }

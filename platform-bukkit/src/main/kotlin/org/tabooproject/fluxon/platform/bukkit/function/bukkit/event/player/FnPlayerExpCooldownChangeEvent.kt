@@ -24,7 +24,7 @@ object FnPlayerExpCooldownChangeEvent {
             registerExtension(PlayerExpCooldownChangeEvent::class.java)
                 .function("reason", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerExpCooldownChangeEventChangeReason.TYPE).noParams()) { it.setReturnRef(it.target?.reason) }
                 .function("newCooldown", returns(Type.I).noParams()) { it.setReturnInt(it.target?.newCooldown ?: 0) }
-                .function("setNewCooldown", returnsVoid().params(Type.I)) { it.target?.setNewCooldown(it.getInt(0).toInt()) }
+                .function("setNewCooldown", returnsVoid().params(Type.I)) { it.target?.setNewCooldown(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerExpCooldownChangeEvent.getHandlerList()) }

@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Skeleton\$SkeletonType"])
 @PlatformSide(Platform.BUKKIT)
-object FnSkeletonSkeletonType : FnEnumGetter<org.bukkit.entity.Skeleton.SkeletonType>() {
+object FnSkeletonSkeletonType : FnEnumGetter<org.bukkit.entity.Skeleton.SkeletonType>(org.bukkit.entity.Skeleton.SkeletonType::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Skeleton.SkeletonType> = org.bukkit.entity.Skeleton.SkeletonType::class.java
 }

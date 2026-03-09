@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Llama\$Color"])
 @PlatformSide(Platform.BUKKIT)
-object FnLlamaColor : FnEnumGetter<org.bukkit.entity.Llama.Color>() {
+object FnLlamaColor : FnEnumGetter<org.bukkit.entity.Llama.Color>(org.bukkit.entity.Llama.Color::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Llama.Color> = org.bukkit.entity.Llama.Color::class.java
 }

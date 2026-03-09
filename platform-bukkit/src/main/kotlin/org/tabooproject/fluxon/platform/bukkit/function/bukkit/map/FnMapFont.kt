@@ -47,7 +47,7 @@ object FnMapFontCharacterSprite {
         with(FluxonRuntime.getInstance()) {
             registerExtension(MapFont.CharacterSprite::class.java)
                 .function("get", returns(Type.Z).params(Type.I, Type.I)) {
-                    it.setReturnBool(it.target?.get(it.getInt(0).toInt(), it.getInt(1).toInt()) ?: false)
+                    it.setReturnBool(it.target?.get(it.getAsInt(0).toInt(), it.getAsInt(1).toInt()) ?: false)
                 }
                 .function("width", returns(Type.I).noParams()) { it.setReturnInt(it.target?.width ?: 0) }
         }

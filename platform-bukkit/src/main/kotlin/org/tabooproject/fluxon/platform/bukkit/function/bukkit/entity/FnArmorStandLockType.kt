@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.ArmorStand\$LockType"])
 @PlatformSide(Platform.BUKKIT)
-object FnArmorStandLockType : FnEnumGetter<ArmorStand.LockType>() {
+object FnArmorStandLockType : FnEnumGetter<ArmorStand.LockType>(ArmorStand.LockType::class.java) {
 
-    override val enumClass: Class<ArmorStand.LockType> = ArmorStand.LockType::class.java
 }

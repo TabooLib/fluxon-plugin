@@ -26,7 +26,7 @@ object FnPlayerFishEvent {
                 .function("caught",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.caught) }
                 .function("hook",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFishHook.TYPE).noParams()) { it.setReturnRef(it.target?.hook) }
                 .function("expToDrop", returns(Type.I).noParams()) { it.setReturnInt(it.target?.expToDrop ?: 0) }
-                .function("setExpToDrop", returnsVoid().params(Type.I)) { it.target?.setExpToDrop(it.getInt(0)) }
+                .function("setExpToDrop", returnsVoid().params(Type.I)) { it.target?.setExpToDrop(it.getAsInt(0)) }
                 .function("hand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.hand) }
                 .function("state", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerFishEventState.TYPE).noParams()) { it.setReturnRef(it.target?.state) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }

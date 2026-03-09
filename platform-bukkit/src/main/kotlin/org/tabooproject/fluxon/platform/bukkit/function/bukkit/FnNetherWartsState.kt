@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.NetherWartsState"])
 @PlatformSide(Platform.BUKKIT)
-object FnNetherWartsState : FnEnumGetter<org.bukkit.NetherWartsState>() {
+object FnNetherWartsState : FnEnumGetter<org.bukkit.NetherWartsState>(org.bukkit.NetherWartsState::class.java) {
 
-    override val enumClass: Class<org.bukkit.NetherWartsState> = org.bukkit.NetherWartsState::class.java
 }

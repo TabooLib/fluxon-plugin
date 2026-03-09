@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.Warning\$WarningState"])
 @PlatformSide(Platform.BUKKIT)
-object FnWarningWarningState : FnEnumGetter<org.bukkit.Warning.WarningState>() {
+object FnWarningWarningState : FnEnumGetter<org.bukkit.Warning.WarningState>(org.bukkit.Warning.WarningState::class.java) {
 
-    override val enumClass: Class<org.bukkit.Warning.WarningState> = org.bukkit.Warning.WarningState::class.java
 }

@@ -13,9 +13,7 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.inventory.InventoryType"])
 @PlatformSide(Platform.BUKKIT)
-object FnInventoryType : FnEnumGetter<InventoryType>() {
-
-    override val enumClass: Class<InventoryType> = InventoryType::class.java
+object FnInventoryType : FnEnumGetter<InventoryType>(InventoryType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

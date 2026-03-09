@@ -29,14 +29,13 @@ object FnCauldronLevelChangeEvent {
                 .function("newState", returns(FnBlockState.TYPE).noParams()) { it.setReturnRef(it.target?.newState) }
                 .function("oldLevel", returns(Type.I).noParams()) { it.setReturnRef(it.target?.oldLevel) }
                 .function("newLevel", returns(Type.I).noParams()) { it.setReturnRef(it.target?.newLevel) }
-                .function("setNewLevel", returnsVoid().params(Type.I)) { it.target?.setNewLevel(it.getInt(0)) }
+                .function("setNewLevel", returnsVoid().params(Type.I)) { it.target?.setNewLevel(it.getAsInt(0)) }
         }
     }
 }
 
 @Requires(classes = ["org.bukkit.event.block.CauldronLevelChangeEvent\$ChangeReason"])
 @PlatformSide(Platform.BUKKIT)
-object FnCauldronLevelChangeEventChangeReason : FnEnumGetter<CauldronLevelChangeEvent.ChangeReason>() {
+object FnCauldronLevelChangeEventChangeReason : FnEnumGetter<CauldronLevelChangeEvent.ChangeReason>(CauldronLevelChangeEvent.ChangeReason::class.java) {
 
-    override val enumClass: Class<CauldronLevelChangeEvent.ChangeReason> = CauldronLevelChangeEvent.ChangeReason::class.java
 }

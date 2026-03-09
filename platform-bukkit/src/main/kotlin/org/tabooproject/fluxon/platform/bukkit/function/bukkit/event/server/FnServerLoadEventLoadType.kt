@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.server.ServerLoadEvent\$LoadType"])
 @PlatformSide(Platform.BUKKIT)
-object FnServerLoadEventLoadType : FnEnumGetter<org.bukkit.event.server.ServerLoadEvent.LoadType>() {
+object FnServerLoadEventLoadType : FnEnumGetter<org.bukkit.event.server.ServerLoadEvent.LoadType>(org.bukkit.event.server.ServerLoadEvent.LoadType::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.server.ServerLoadEvent.LoadType> = org.bukkit.event.server.ServerLoadEvent.LoadType::class.java
 }

@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent\$RecipeBookType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerRecipeBookSettingsChangeEventRecipeBookType : FnEnumGetter<org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent.RecipeBookType>() {
+object FnPlayerRecipeBookSettingsChangeEventRecipeBookType : FnEnumGetter<org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent.RecipeBookType>(org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent.RecipeBookType::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent.RecipeBookType> = org.bukkit.event.player.PlayerRecipeBookSettingsChangeEvent.RecipeBookType::class.java
 }

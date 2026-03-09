@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.material.CocoaPlant\$CocoaPlantSize"])
 @PlatformSide(Platform.BUKKIT)
-object FnCocoaPlantCocoaPlantSize : FnEnumGetter<org.bukkit.material.CocoaPlant.CocoaPlantSize>() {
+object FnCocoaPlantCocoaPlantSize : FnEnumGetter<org.bukkit.material.CocoaPlant.CocoaPlantSize>(org.bukkit.material.CocoaPlant.CocoaPlantSize::class.java) {
 
-    override val enumClass: Class<org.bukkit.material.CocoaPlant.CocoaPlantSize> = org.bukkit.material.CocoaPlant.CocoaPlantSize::class.java
 }

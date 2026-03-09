@@ -33,9 +33,9 @@ object FnUnsafeValues {
                 .function("fromLegacy", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE)) { it.setReturnRef(it.target?.fromLegacy(it.getRef(0) as Material)) }
                 .function("fromLegacy", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.setReturnRef(it.target?.fromLegacy(it.getRef(0) as MaterialData)) }
                 .function("fromLegacy", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE, Type.Z)) { it.setReturnRef(it.target?.fromLegacy(it.getRef(0) as MaterialData, it.getBool(1))) }
-                .function("fromLegacy", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.setReturnRef(it.target?.fromLegacy(it.getRef(0) as Material, it.getInt(1).toByte())) }
+                .function("fromLegacy", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) { it.setReturnRef(it.target?.fromLegacy(it.getRef(0) as Material, it.getAsInt(1).toByte())) }
                 .function("getMaterial", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).params(Type.STRING, Type.I)) {
-                    it.setReturnRef(it.target?.getMaterial(it.getString(0), it.getInt(1).toInt()))
+                    it.setReturnRef(it.target?.getMaterial(it.getString(0), it.getAsInt(1).toInt()))
                 }
                 .function("dataVersion", returns(Type.I).noParams()) { it.setReturnInt(it.target?.dataVersion ?: 0) }
                 .function("modifyItemStack",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE, Type.STRING)) {

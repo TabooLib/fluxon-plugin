@@ -33,7 +33,6 @@ object FnRail {
 
 @Requires(classes = ["org.bukkit.block.data.Rail\$Shape"])
 @PlatformSide(Platform.BUKKIT)
-object FnRailShape : FnEnumGetter<Rail.Shape>() {
+object FnRailShape : FnEnumGetter<Rail.Shape>(Rail.Shape::class.java) {
 
-    override val enumClass: Class<Rail.Shape> = Rail.Shape::class.java
 }

@@ -30,7 +30,7 @@ object FnPotionSplashEvent {
                 .function("setIntensity",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE, Type.D)) {
                     it.target?.setIntensity(
                         it.getRef(0) as LivingEntity,
-                        it.getDouble(1)
+                        it.getAsDouble(1)
                     )
                 }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }

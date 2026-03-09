@@ -34,7 +34,6 @@ object FnBlockIgniteEvent {
 
 @Requires(classes = ["org.bukkit.event.block.BlockIgniteEvent\$IgniteCause"])
 @PlatformSide(Platform.BUKKIT)
-object FnBlockIgniteEventIgniteCause : FnEnumGetter<BlockIgniteEvent.IgniteCause>() {
+object FnBlockIgniteEventIgniteCause : FnEnumGetter<BlockIgniteEvent.IgniteCause>(BlockIgniteEvent.IgniteCause::class.java) {
 
-    override val enumClass: Class<BlockIgniteEvent.IgniteCause> = BlockIgniteEvent.IgniteCause::class.java
 }

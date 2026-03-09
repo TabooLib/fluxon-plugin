@@ -31,16 +31,16 @@ object FnBoundingBox {
                 .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Vector, it.getRef(1) as Vector)) }
                 .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Location, it.getRef(1) as Location)) }
                 .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Block, it.getRef(1) as Block)) }
-                .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D, Type.D, Type.D)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Vector, it.getDouble(1), it.getDouble(2), it.getDouble(3))) }
-                .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.D, Type.D, Type.D)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Location, it.getDouble(1), it.getDouble(2), it.getDouble(3))) }
+                .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D, Type.D, Type.D)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Vector, it.getAsDouble(1), it.getAsDouble(2), it.getAsDouble(3))) }
+                .function("of", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.D, Type.D, Type.D)) { it.setReturnRef(BoundingBox.of(it.getRef(0) as Location, it.getAsDouble(1), it.getAsDouble(2), it.getAsDouble(3))) }
                 .function("resize",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.resize(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5)
                     ))
                 }
                 .function("minX", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.minX ?: 0.0) }
@@ -61,32 +61,32 @@ object FnBoundingBox {
                 .function("center",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.center) }
                 .function("copy",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE)) { it.setReturnRef(it.target?.copy(it.getRef(0) as BoundingBox)) }
                 .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.setReturnRef(it.target?.expand(it.getRef(0) as Vector)) }
-                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D)) { it.setReturnRef(it.target?.expand(it.getDouble(0))) }
-                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D)) { it.setReturnRef(it.target?.expand(it.getRef(0) as Vector, it.getDouble(1))) }
-                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.D)) { it.setReturnRef(it.target?.expand(it.getRef(0) as BlockFace, it.getDouble(1))) }
+                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D)) { it.setReturnRef(it.target?.expand(it.getAsDouble(0))) }
+                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D)) { it.setReturnRef(it.target?.expand(it.getRef(0) as Vector, it.getAsDouble(1))) }
+                .function("expand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockFace.TYPE, Type.D)) { it.setReturnRef(it.target?.expand(it.getRef(0) as BlockFace, it.getAsDouble(1))) }
                 .function("expand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.expand(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("expand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.expand(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3)
                     ))
                 }
                 .function("expand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D, Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.expand(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2),
-                        it.getDouble(3),
-                        it.getDouble(4),
-                        it.getDouble(5)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2),
+                        it.getAsDouble(3),
+                        it.getAsDouble(4),
+                        it.getAsDouble(5)
                     ))
                 }
                 .function("expandDirectional",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) {
@@ -94,9 +94,9 @@ object FnBoundingBox {
                 }
                 .function("expandDirectional",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.expandDirectional(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("union", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE)) { it.setReturnRef(it.target?.union(it.getRef(0) as Vector)) }
@@ -104,9 +104,9 @@ object FnBoundingBox {
                 .function("union", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(TYPE)) { it.setReturnRef(it.target?.union(it.getRef(0) as BoundingBox)) }
                 .function("union",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.union(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("intersection",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE)) {
@@ -116,9 +116,9 @@ object FnBoundingBox {
                 .function("shift", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.shift(it.getRef(0) as Location)) }
                 .function("shift",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE).params(Type.D, Type.D, Type.D)) {
                     it.setReturnRef(it.target?.shift(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("overlaps",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE)) {
@@ -140,16 +140,16 @@ object FnBoundingBox {
                 }
                 .function("contains", returns(Type.Z).params(Type.D, Type.D, Type.D)) {
                     it.setReturnBool(it.target?.contains(
-                        it.getDouble(0),
-                        it.getDouble(1),
-                        it.getDouble(2)
+                        it.getAsDouble(0),
+                        it.getAsDouble(1),
+                        it.getAsDouble(2)
                     ) ?: false)
                 }
                 .function("rayTrace",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnRayTraceResult.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.D)) {
                     it.setReturnRef(it.target?.rayTrace(
                         it.getRef(0) as Vector,
                         it.getRef(1) as Vector,
-                        it.getDouble(2)
+                        it.getAsDouble(2)
                     ))
                 }
                 .function("toString", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.toString()) }

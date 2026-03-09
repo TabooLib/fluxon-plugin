@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.inventory.MainHand"])
 @PlatformSide(Platform.BUKKIT)
-object FnMainHand : FnEnumGetter<org.bukkit.inventory.MainHand>() {
+object FnMainHand : FnEnumGetter<org.bukkit.inventory.MainHand>(org.bukkit.inventory.MainHand::class.java) {
 
-    override val enumClass: Class<org.bukkit.inventory.MainHand> = org.bukkit.inventory.MainHand::class.java
 }

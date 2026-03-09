@@ -26,7 +26,7 @@ object FnAllay {
                 .function("canDuplicate", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.canDuplicate() ?: false) }
                 .function("setCanDuplicate", returnsVoid().params(Type.Z)) { it.target?.setCanDuplicate(it.getBool(0)) }
                 .function("duplicationCooldown", returns(Type.J).noParams()) { it.setReturnLong(it.target?.duplicationCooldown ?: 0L) }
-                .function("setDuplicationCooldown", returnsVoid().params(Type.J)) { it.target?.setDuplicationCooldown(it.getLong(0)) }
+                .function("setDuplicationCooldown", returnsVoid().params(Type.J)) { it.target?.setDuplicationCooldown(it.getAsLong(0)) }
                 .function("resetDuplicationCooldown", returnsVoid().noParams()) { it.target?.resetDuplicationCooldown() }
                 .function("isDancing", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isDancing ?: false) }
                 .function("startDancing", returnsVoid().noParams()) { it.target?.startDancing() }

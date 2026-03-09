@@ -22,7 +22,7 @@ object FnMemoryConfigurationOptions {
             registerExtension(org.bukkit.configuration.MemoryConfigurationOptions::class.java)
                 .function("configuration", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnMemoryConfiguration.TYPE).noParams()) { it.setReturnRef(it.target?.configuration()) }
                 .function("copyDefaults", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnMemoryConfigurationOptions.TYPE).params(Type.Z)) { it.setReturnRef(it.target?.copyDefaults(it.getBool(0))) }
-                .function("pathSeparator", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnMemoryConfigurationOptions.TYPE).params(Type.I)) { it.setReturnRef(it.target?.pathSeparator(it.getInt(0).toInt().toChar())) }
+                .function("pathSeparator", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.FnMemoryConfigurationOptions.TYPE).params(Type.I)) { it.setReturnRef(it.target?.pathSeparator(it.getAsInt(0).toInt().toChar())) }
         }
     }
 }

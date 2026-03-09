@@ -31,7 +31,6 @@ object FnStructureBlock {
 
 @Requires(classes = ["org.bukkit.block.data.type.StructureBlock\$Mode"])
 @PlatformSide(Platform.BUKKIT)
-object FnStructureBlockMode : FnEnumGetter<StructureBlock.Mode>()  {
+object FnStructureBlockMode : FnEnumGetter<StructureBlock.Mode>(StructureBlock.Mode::class.java)  {
 
-    override val enumClass: Class<StructureBlock.Mode> = StructureBlock.Mode::class.java
 }

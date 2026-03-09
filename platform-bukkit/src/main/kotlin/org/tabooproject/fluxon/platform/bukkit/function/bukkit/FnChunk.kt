@@ -31,9 +31,9 @@ object FnChunk {
                 .function("world", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).noParams()) { it.setReturnRef(it.target?.world) }
                 .function("getBlock", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlock.TYPE).params(Type.I, Type.I, Type.I)) {
                     it.setReturnRef(it.target?.getBlock(
-                        it.getInt(0).toInt(),
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt()
+                        it.getAsInt(0).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt()
                     ))
                 }
                 .function("chunkSnapshot", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChunkSnapshot.TYPE).noParams()) { it.setReturnRef(it.target?.chunkSnapshot) }
@@ -64,7 +64,7 @@ object FnChunk {
                 }
                 .function("pluginChunkTickets", returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.pluginChunkTickets) }
                 .function("inhabitedTime", returns(Type.J).noParams()) { it.setReturnLong(it.target?.inhabitedTime ?: 0L) }
-                .function("setInhabitedTime", returnsVoid().params(Type.J)) { it.target?.setInhabitedTime(it.getLong(0)) }
+                .function("setInhabitedTime", returnsVoid().params(Type.J)) { it.target?.setInhabitedTime(it.getAsLong(0)) }
                 .function("contains", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.setReturnBool(it.target?.contains(it.getRef(0) as BlockData) ?: false) }
                 .function("contains", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBiome.TYPE)) { it.setReturnBool(it.target?.contains(it.getRef(0) as Biome) ?: false) }
                 .function("contains", returns(Type.Z).params(Type.STRING)) {

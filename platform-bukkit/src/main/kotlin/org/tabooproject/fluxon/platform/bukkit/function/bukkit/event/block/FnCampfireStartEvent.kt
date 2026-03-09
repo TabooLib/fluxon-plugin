@@ -24,7 +24,7 @@ object FnCampfireStartEvent {
             registerExtension(CampfireStartEvent::class.java)
                 .function("recipe", returns(FnCampfireRecipe.TYPE).noParams()) { it.setReturnRef(it.target?.recipe) }
                 .function("totalCookTime", returns(Type.I).noParams()) { it.setReturnRef(it.target?.totalCookTime) }
-                .function("setTotalCookTime", returnsVoid().params(Type.I)) { it.target?.setTotalCookTime(it.getInt(0)) }
+                .function("setTotalCookTime", returnsVoid().params(Type.I)) { it.target?.setTotalCookTime(it.getAsInt(0)) }
         }
     }
 }

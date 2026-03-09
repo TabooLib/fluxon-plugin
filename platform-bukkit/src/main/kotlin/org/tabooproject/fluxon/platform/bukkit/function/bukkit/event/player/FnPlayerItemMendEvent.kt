@@ -27,7 +27,7 @@ object FnPlayerItemMendEvent {
                 .function("slot",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnEquipmentSlot.TYPE).noParams()) { it.setReturnRef(it.target?.slot) }
                 .function("experienceOrb",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnExperienceOrb.TYPE).noParams()) { it.setReturnRef(it.target?.experienceOrb) }
                 .function("repairAmount",returns(Type.I).noParams()) { it.setReturnRef(it.target?.repairAmount) }
-                .function("setRepairAmount", returnsVoid().params(Type.I)) { it.target?.setRepairAmount(it.getInt(0).toInt()) }
+                .function("setRepairAmount", returnsVoid().params(Type.I)) { it.target?.setRepairAmount(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerItemMendEvent.getHandlerList()) }

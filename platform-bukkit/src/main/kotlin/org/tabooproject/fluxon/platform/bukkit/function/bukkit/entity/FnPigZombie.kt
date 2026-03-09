@@ -23,12 +23,12 @@ object FnPigZombie {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PigZombie::class.java)
                 .function("anger", returns(Type.I).noParams()) { it.setReturnInt(it.target?.anger ?: 0) }
-                .function("setAnger", returnsVoid().params(Type.I)) { it.target?.setAnger(it.getInt(0)) }
+                .function("setAnger", returnsVoid().params(Type.I)) { it.target?.setAnger(it.getAsInt(0)) }
                 .function("setAngry", returnsVoid().params(Type.Z)) { it.target?.setAngry(it.getBool(0)) }
                 .function("isAngry", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAngry ?: false) }
                 .function("isConverting", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isConverting ?: false) }
                 .function("conversionTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.conversionTime ?: 0) }
-                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getInt(0)) }
+                .function("setConversionTime", returnsVoid().params(Type.I)) { it.target?.setConversionTime(it.getAsInt(0)) }
         }
     }
 }

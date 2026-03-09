@@ -24,7 +24,7 @@ object FnFurnaceBurnEvent {
             registerExtension(FurnaceBurnEvent::class.java)
                 .function("fuel", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.fuel) }
                 .function("burnTime", returns(Type.I).noParams()) { it.setReturnRef(it.target?.burnTime) }
-                .function("setBurnTime", returnsVoid().params(Type.I)) { it.target?.setBurnTime(it.getInt(0).toInt()) }
+                .function("setBurnTime", returnsVoid().params(Type.I)) { it.target?.setBurnTime(it.getAsInt(0).toInt()) }
                 .function("isBurning", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isBurning ?: false) }
                 .function("setBurning", returnsVoid().params(Type.Z)) { it.target?.setBurning(it.getBool(0)) }
         }

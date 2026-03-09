@@ -38,7 +38,7 @@ object FnServer {
                 .function("version", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.version) }
                 .function("bukkitVersion", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.bukkitVersion) }
                 .function("maxPlayers", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxPlayers ?: 0) }
-                .function("setMaxPlayers", returnsVoid().params(Type.I)) { it.target?.setMaxPlayers(it.getInt(0).toInt()) }
+                .function("setMaxPlayers", returnsVoid().params(Type.I)) { it.target?.setMaxPlayers(it.getAsInt(0).toInt()) }
                 .function("port", returns(Type.I).noParams()) { it.setReturnInt(it.target?.port ?: 0) }
                 .function("viewDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.viewDistance ?: 0) }
                 .function("simulationDistance", returns(Type.I).noParams()) { it.setReturnInt(it.target?.simulationDistance ?: 0) }
@@ -100,7 +100,7 @@ object FnServer {
                 .function("getWorld", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getWorld(it.getString(0)!!)) }
                 .function("getWorld", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE).params(org.tabooproject.fluxon.util.StandardTypes.UUID)) { it.setReturnRef(it.target?.getWorld(it.getRef(0) as UUID)) }
                 .function("createWorldBorder", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorldBorder.TYPE).noParams()) { it.setReturnRef(it.target?.createWorldBorder()) }
-                .function("getMap", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getMap(it.getInt(0).toInt())) }
+                .function("getMap", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE).params(Type.I)) { it.setReturnRef(it.target?.getMap(it.getAsInt(0).toInt())) }
                 .function("createMap",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE)) { it.setReturnRef(it.target?.createMap(it.getRef(0) as World)) }
                 .function("createExplorerMap",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnWorld.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.structure.FnStructureType.TYPE)) {
                     it.setReturnRef(it.target?.createExplorerMap(
@@ -114,7 +114,7 @@ object FnServer {
                         it.getRef(0) as World,
                         it.getRef(1) as Location,
                         it.getRef(2) as StructureType,
-                        it.getInt(3).toInt(),
+                        it.getAsInt(3).toInt(),
                         it.getBool(4)
                     ))
                 }
@@ -173,7 +173,7 @@ object FnServer {
                     it.setReturnBool(it.target?.removeRecipe(it.getRef(0) as NamespacedKey) ?: false)
                 }
                 .function("spawnRadius", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnRadius ?: 0) }
-                .function("setSpawnRadius", returnsVoid().params(Type.I)) { it.target?.setSpawnRadius(it.getInt(0).toInt()) }
+                .function("setSpawnRadius", returnsVoid().params(Type.I)) { it.target?.setSpawnRadius(it.getAsInt(0).toInt()) }
                 .function("shouldSendChatPreviews", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.shouldSendChatPreviews() ?: false) }
                 .function("isEnforcingSecureProfiles", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isEnforcingSecureProfiles ?: false) }
                 .function("isAcceptingTransfers", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isAcceptingTransfers ?: false) }
@@ -210,13 +210,13 @@ object FnServer {
                     it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getRef(1) as InventoryType))
                 }
                 .function("createInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryHolder.TYPE, Type.I)) {
-                    it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getInt(1)))
+                    it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getAsInt(1)))
                 }
                 .function("createInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryHolder.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.inventory.FnInventoryType.TYPE, Type.STRING)) {
                     it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getRef(1) as InventoryType, it.getString(2)!!))
                 }
                 .function("createInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryHolder.TYPE, Type.I, Type.STRING)) {
-                    it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getInt(1), it.getString(2)!!))
+                    it.setReturnRef(it.target?.createInventory(it.getRef(0) as? InventoryHolder, it.getAsInt(1), it.getString(2)!!))
                 }
                 .function("createMerchant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchant.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.createMerchant(it.getString(0))) }
                 .function("maxChainedNeighborUpdates", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxChainedNeighborUpdates ?: 0) }
@@ -245,7 +245,7 @@ object FnServer {
                 .function("serverIcon", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnCachedServerIcon.TYPE).noParams()) { it.setReturnRef(it.target?.serverIcon) }
                 .function("loadServerIcon", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnCachedServerIcon.TYPE).params(Type.FILE)) { it.setReturnRef(it.target?.loadServerIcon(it.getRef(0) as File)) }
                 .function("loadServerIcon", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnCachedServerIcon.TYPE).params(Type.fromClass(BufferedImage::class.java))) { it.setReturnRef(it.target?.loadServerIcon(it.getRef(0) as BufferedImage)) }
-                .function("setIdleTimeout", returnsVoid().params(Type.I)) { it.target?.setIdleTimeout(it.getInt(0).toInt()) }
+                .function("setIdleTimeout", returnsVoid().params(Type.I)) { it.target?.setIdleTimeout(it.getAsInt(0).toInt()) }
                 .function("idleTimeout", returns(Type.I).noParams()) { it.setReturnInt(it.target?.idleTimeout ?: 0) }
                 .function("createBossBar", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBossBar.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBarColor.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.boss.FnBarStyle.TYPE)) {
                     it.setReturnRef(it.target?.createBossBar(

@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Spellcaster\$Spell"])
 @PlatformSide(Platform.BUKKIT)
-object FnSpellcasterSpell : FnEnumGetter<org.bukkit.entity.Spellcaster.Spell>() {
+object FnSpellcasterSpell : FnEnumGetter<org.bukkit.entity.Spellcaster.Spell>(org.bukkit.entity.Spellcaster.Spell::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Spellcaster.Spell> = org.bukkit.entity.Spellcaster.Spell::class.java
 }

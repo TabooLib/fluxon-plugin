@@ -15,9 +15,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.block.BlockFace"])
 @PlatformSide(Platform.BUKKIT)
-object FnBlockFace : FnEnumGetter<BlockFace>() {
-
-    override val enumClass: Class<BlockFace> = BlockFace::class.java
+object FnBlockFace : FnEnumGetter<BlockFace>(BlockFace::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

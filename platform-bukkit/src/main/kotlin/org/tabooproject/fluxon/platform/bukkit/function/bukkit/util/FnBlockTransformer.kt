@@ -26,9 +26,9 @@ object FnBlockTransformer {
                 .function("transform",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnLimitedRegion.TYPE, Type.I, Type.I, Type.I, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.FnBlockState.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBlockTransformerTransformationState.TYPE)) {
                     it.setReturnRef(it.target?.transform(
                         it.getRef(0) as LimitedRegion,
-                        it.getInt(1).toInt(),
-                        it.getInt(2).toInt(),
-                        it.getInt(3).toInt(),
+                        it.getAsInt(1).toInt(),
+                        it.getAsInt(2).toInt(),
+                        it.getAsInt(3).toInt(),
                         it.getRef(4) as BlockState,
                         it.getRef(5) as BlockTransformer.TransformationState
                     ))

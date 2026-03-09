@@ -13,9 +13,7 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.inventory.ClickType"])
 @PlatformSide(Platform.BUKKIT)
-object FnClickType : FnEnumGetter<ClickType>() {
-
-    override val enumClass: Class<ClickType> = ClickType::class.java
+object FnClickType : FnEnumGetter<ClickType>(ClickType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

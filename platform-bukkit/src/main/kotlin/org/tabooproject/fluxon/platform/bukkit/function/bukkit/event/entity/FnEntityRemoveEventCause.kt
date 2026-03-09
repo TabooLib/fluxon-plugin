@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.event.entity.EntityRemoveEvent\$Cause"])
 @PlatformSide(Platform.BUKKIT)
-object FnEntityRemoveEventCause : FnEnumGetter<org.bukkit.event.entity.EntityRemoveEvent.Cause>() {
+object FnEntityRemoveEventCause : FnEnumGetter<org.bukkit.event.entity.EntityRemoveEvent.Cause>(org.bukkit.event.entity.EntityRemoveEvent.Cause::class.java) {
 
-    override val enumClass: Class<org.bukkit.event.entity.EntityRemoveEvent.Cause> = org.bukkit.event.entity.EntityRemoveEvent.Cause::class.java
 }

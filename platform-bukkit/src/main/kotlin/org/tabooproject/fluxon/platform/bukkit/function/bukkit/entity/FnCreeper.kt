@@ -24,11 +24,11 @@ object FnCreeper {
             registerExtension(Creeper::class.java)
                 .function("isPowered", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isPowered ?: false) }
                 .function("setPowered", returnsVoid().params(Type.Z)) { it.target?.setPowered(it.getBool(0)) }
-                .function("setMaxFuseTicks", returnsVoid().params(Type.I)) { it.target?.setMaxFuseTicks(it.getInt(0).toInt()) }
+                .function("setMaxFuseTicks", returnsVoid().params(Type.I)) { it.target?.setMaxFuseTicks(it.getAsInt(0).toInt()) }
                 .function("maxFuseTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxFuseTicks ?: 0) }
-                .function("setFuseTicks", returnsVoid().params(Type.I)) { it.target?.setFuseTicks(it.getInt(0).toInt()) }
+                .function("setFuseTicks", returnsVoid().params(Type.I)) { it.target?.setFuseTicks(it.getAsInt(0).toInt()) }
                 .function("fuseTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.fuseTicks ?: 0) }
-                .function("setExplosionRadius", returnsVoid().params(Type.I)) { it.target?.setExplosionRadius(it.getInt(0).toInt()) }
+                .function("setExplosionRadius", returnsVoid().params(Type.I)) { it.target?.setExplosionRadius(it.getAsInt(0).toInt()) }
                 .function("explosionRadius", returns(Type.I).noParams()) { it.setReturnInt(it.target?.explosionRadius ?: 0) }
                 .function("explode", returnsVoid().noParams()) { it.target?.explode() }
                 .function("ignite", returnsVoid().noParams()) { it.target?.ignite() }

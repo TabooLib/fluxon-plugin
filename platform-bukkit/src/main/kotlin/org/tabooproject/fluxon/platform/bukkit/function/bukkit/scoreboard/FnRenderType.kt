@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.scoreboard.RenderType"])
 @PlatformSide(Platform.BUKKIT)
-object FnRenderType : FnEnumGetter<org.bukkit.scoreboard.RenderType>() {
+object FnRenderType : FnEnumGetter<org.bukkit.scoreboard.RenderType>(org.bukkit.scoreboard.RenderType::class.java) {
 
-    override val enumClass: Class<org.bukkit.scoreboard.RenderType> = org.bukkit.scoreboard.RenderType::class.java
 }

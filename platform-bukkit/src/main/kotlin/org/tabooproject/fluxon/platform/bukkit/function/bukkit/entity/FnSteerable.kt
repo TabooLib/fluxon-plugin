@@ -25,9 +25,9 @@ object FnSteerable {
                 .function("hasSaddle", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasSaddle() ?: false) }
                 .function("setSaddle", returnsVoid().params(Type.Z)) { it.target?.setSaddle(it.getBool(0)) }
                 .function("boostTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.boostTicks ?: 0) }
-                .function("setBoostTicks", returnsVoid().params(Type.I)) { it.target?.setBoostTicks(it.getInt(0).toInt()) }
+                .function("setBoostTicks", returnsVoid().params(Type.I)) { it.target?.setBoostTicks(it.getAsInt(0).toInt()) }
                 .function("currentBoostTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.currentBoostTicks ?: 0) }
-                .function("setCurrentBoostTicks", returnsVoid().params(Type.I)) { it.target?.setCurrentBoostTicks(it.getInt(0).toInt()) }
+                .function("setCurrentBoostTicks", returnsVoid().params(Type.I)) { it.target?.setCurrentBoostTicks(it.getAsInt(0).toInt()) }
                 .function("steerMaterial",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE).noParams()) { it.setReturnRef(it.target?.steerMaterial) }
         }
     }

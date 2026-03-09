@@ -62,7 +62,6 @@ object FnDecoratedPot {
 
 @Requires(classes = ["org.bukkit.block.DecoratedPot\$Side"])
 @PlatformSide(Platform.BUKKIT)
-object FnDecoratedPotSide : FnEnumGetter<DecoratedPot.Side>() {
+object FnDecoratedPotSide : FnEnumGetter<DecoratedPot.Side>(DecoratedPot.Side::class.java) {
 
-    override val enumClass: Class<DecoratedPot.Side> = DecoratedPot.Side::class.java
 }

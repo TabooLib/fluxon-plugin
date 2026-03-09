@@ -26,7 +26,7 @@ object FnMapMeta {
             registerExtension(MapMeta::class.java)
                 .function("hasMapId", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMapId() ?: false) }
                 .function("mapId", returns(Type.I).noParams()) { it.setReturnInt(it.target?.mapId ?: 0) }
-                .function("setMapId", returnsVoid().params(Type.I)) { it.target?.setMapId(it.getInt(0).toInt()) }
+                .function("setMapId", returnsVoid().params(Type.I)) { it.target?.setMapId(it.getAsInt(0).toInt()) }
                 .function("hasMapView", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMapView() ?: false) }
                 .function("mapView", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE).noParams()) { it.setReturnRef(it.target?.mapView) }
                 .function("setMapView",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.map.FnMapView.TYPE)) { it.target?.setMapView(it.getRef(0) as MapView) }

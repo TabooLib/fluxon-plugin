@@ -35,7 +35,6 @@ object FnHopperInventorySearchEvent {
 
 @Requires(classes = ["org.bukkit.event.inventory.HopperInventorySearchEvent\$ContainerType"])
 @PlatformSide(Platform.BUKKIT)
-object FnHopperInventorySearchEventContainerType : FnEnumGetter<HopperInventorySearchEvent.ContainerType>() {
+object FnHopperInventorySearchEventContainerType : FnEnumGetter<HopperInventorySearchEvent.ContainerType>(HopperInventorySearchEvent.ContainerType::class.java) {
 
-    override val enumClass: Class<HopperInventorySearchEvent.ContainerType> = HopperInventorySearchEvent.ContainerType::class.java
 }

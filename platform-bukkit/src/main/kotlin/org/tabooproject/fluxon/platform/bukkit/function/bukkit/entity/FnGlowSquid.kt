@@ -23,7 +23,7 @@ object FnGlowSquid {
         with(FluxonRuntime.getInstance()) {
             registerExtension(GlowSquid::class.java)
                 .function("darkTicksRemaining", returns(Type.I).noParams()) { it.setReturnInt(it.target?.darkTicksRemaining ?: 0) }
-                .function("setDarkTicksRemaining", returnsVoid().params(Type.I)) { it.target?.setDarkTicksRemaining(it.getInt(0).toInt()) }
+                .function("setDarkTicksRemaining", returnsVoid().params(Type.I)) { it.target?.setDarkTicksRemaining(it.getAsInt(0).toInt()) }
         }
     }
 }

@@ -14,9 +14,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.DyeColor"])
 @PlatformSide(Platform.BUKKIT)
-object FnDyeColor : FnEnumGetter<DyeColor>() {
-
-    override val enumClass: Class<DyeColor> = DyeColor::class.java
+object FnDyeColor : FnEnumGetter<DyeColor>(DyeColor::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

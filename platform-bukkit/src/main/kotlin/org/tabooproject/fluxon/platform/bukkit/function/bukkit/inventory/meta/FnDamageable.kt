@@ -24,10 +24,10 @@ object FnDamageable {
             registerExtension(Damageable::class.java)
                 .function("hasDamage", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasDamage() ?: false) }
                 .function("damage", returns(Type.I).noParams()) { it.setReturnInt(it.target?.damage ?: 0) }
-                .function("setDamage", returnsVoid().params(Type.I)) { it.target?.setDamage(it.getInt(0)) }
+                .function("setDamage", returnsVoid().params(Type.I)) { it.target?.setDamage(it.getAsInt(0)) }
                 .function("hasMaxDamage", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasMaxDamage() ?: false) }
                 .function("maxDamage", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maxDamage ?: 0) }
-                .function("setMaxDamage", returnsVoid().params(Type.I)) { it.target?.setMaxDamage(it.getInt(0)) }
+                .function("setMaxDamage", returnsVoid().params(Type.I)) { it.target?.setMaxDamage(it.getAsInt(0)) }
                 .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnDamageable.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

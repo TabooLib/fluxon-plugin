@@ -23,7 +23,7 @@ object FnAnaloguePowerable {
         with(FluxonRuntime.getInstance()) {
             registerExtension(AnaloguePowerable::class.java)
                 .function("power", returns(Type.I).noParams()) { it.setReturnInt(it.target?.power ?: 0) }
-                .function("setPower", returnsVoid().params(Type.I)) { it.target?.setPower(it.getInt(0).toInt()) }
+                .function("setPower", returnsVoid().params(Type.I)) { it.target?.setPower(it.getAsInt(0).toInt()) }
                 .function("maximumPower", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumPower ?: 0) }
         }
     }

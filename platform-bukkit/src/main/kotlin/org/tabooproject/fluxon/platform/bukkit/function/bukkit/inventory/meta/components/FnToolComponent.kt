@@ -26,7 +26,7 @@ object FnToolComponent {
                 .function("defaultMiningSpeed", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.defaultMiningSpeed ?: 0f) }
                 .function("setDefaultMiningSpeed", returnsVoid().params(Type.F)) { it.target?.setDefaultMiningSpeed(it.getFloat(0)) }
                 .function("damagePerBlock", returns(Type.I).noParams()) { it.setReturnInt(it.target?.damagePerBlock ?: 0) }
-                .function("setDamagePerBlock", returnsVoid().params(Type.I)) { it.target?.setDamagePerBlock(it.getInt(0)) }
+                .function("setDamagePerBlock", returnsVoid().params(Type.I)) { it.target?.setDamagePerBlock(it.getAsInt(0)) }
                 .function("rules",returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.rules) }
                 .function("setRules",returnsVoid().params(Type.LIST)) { it.target?.setRules(it.getRef(0) as List<ToolComponent.ToolRule>) }
                 .function("addRule", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.F, Type.Z)) { it.target?.addRule(it.getRef(0) as Material, it.getFloat(1), it.getBool(2)) }

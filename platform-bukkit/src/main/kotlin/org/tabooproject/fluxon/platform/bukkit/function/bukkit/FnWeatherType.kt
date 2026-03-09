@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.WeatherType"])
 @PlatformSide(Platform.BUKKIT)
-object FnWeatherType : FnEnumGetter<org.bukkit.WeatherType>() {
+object FnWeatherType : FnEnumGetter<org.bukkit.WeatherType>(org.bukkit.WeatherType::class.java) {
 
-    override val enumClass: Class<org.bukkit.WeatherType> = org.bukkit.WeatherType::class.java
 }

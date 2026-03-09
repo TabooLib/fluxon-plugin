@@ -21,11 +21,11 @@ object FnRavager {
         with(FluxonRuntime.getInstance()) {
             registerExtension(org.bukkit.entity.Ravager::class.java)
                 // .function("getAttackTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getAttackTicks() ?: 0) }
-                // .function("setAttackTicks", returnsVoid().params(Type.I)) { it.target?.setAttackTicks(it.getInt(0).toInt()) }
+                // .function("setAttackTicks", returnsVoid().params(Type.I)) { it.target?.setAttackTicks(it.getAsInt(0).toInt()) }
                 // .function("getStunnedTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getStunnedTicks() ?: 0) }
-                // .function("setStunnedTicks", returnsVoid().params(Type.I)) { it.target?.setStunnedTicks(it.getInt(0).toInt()) }
+                // .function("setStunnedTicks", returnsVoid().params(Type.I)) { it.target?.setStunnedTicks(it.getAsInt(0).toInt()) }
                 // .function("getRoarTicks", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getRoarTicks() ?: 0) }
-                // .function("setRoarTicks", returnsVoid().params(Type.I)) { it.target?.setRoarTicks(it.getInt(0).toInt()) }
+                // .function("setRoarTicks", returnsVoid().params(Type.I)) { it.target?.setRoarTicks(it.getAsInt(0).toInt()) }
         }
     }
 }

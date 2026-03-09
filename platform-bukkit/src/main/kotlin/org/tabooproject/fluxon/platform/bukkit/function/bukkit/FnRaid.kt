@@ -25,7 +25,7 @@ object FnRaid {
                 .function("isStarted", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isStarted ?: false) }
                 .function("activeTicks", returns(Type.J).noParams()) { it.setReturnLong(it.target?.activeTicks ?: 0) }
                 .function("badOmenLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.badOmenLevel ?: 0) }
-                .function("setBadOmenLevel", returnsVoid().params(Type.I)) { it.target?.setBadOmenLevel(it.getInt(0).toInt()) }
+                .function("setBadOmenLevel", returnsVoid().params(Type.I)) { it.target?.setBadOmenLevel(it.getAsInt(0).toInt()) }
                 .function("location",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE).noParams()) { it.setReturnRef(it.target?.location) }
                 .function("status", returns(FnRaidRaidStatus.TYPE).noParams()) { it.setReturnRef(it.target?.status) }
                 .function("spawnedGroups", returns(Type.I).noParams()) { it.setReturnInt(it.target?.spawnedGroups ?: 0) }

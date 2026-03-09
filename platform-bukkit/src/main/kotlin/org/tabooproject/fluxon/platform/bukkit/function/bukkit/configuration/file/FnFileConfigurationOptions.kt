@@ -22,7 +22,7 @@ object FnFileConfigurationOptions {
             registerExtension(org.bukkit.configuration.file.FileConfigurationOptions::class.java)
                 .function("configuration", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfiguration.TYPE).noParams()) { it.setReturnRef(it.target?.configuration()) }
                 .function("copyDefaults", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfigurationOptions.TYPE).params(Type.Z)) { it.setReturnRef(it.target?.copyDefaults(it.getBool(0))) }
-                .function("pathSeparator", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfigurationOptions.TYPE).params(Type.I)) { it.setReturnRef(it.target?.pathSeparator(it.getInt(0).toInt().toChar())) }
+                .function("pathSeparator", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfigurationOptions.TYPE).params(Type.I)) { it.setReturnRef(it.target?.pathSeparator(it.getAsInt(0).toInt().toChar())) }
                 .function("getHeader", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.getHeader()) }
                 .function("header", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.header()) }
                 // .function("setHeader", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.configuration.file.FnFileConfigurationOptions.TYPE).params(Type.LIST)) { it.setReturnRef(it.target?.setHeader(it.getRef(0) as java.util.List)) }

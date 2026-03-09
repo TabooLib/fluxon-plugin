@@ -16,9 +16,7 @@ import kotlin.jvm.optionals.getOrNull
 
 @Requires(classes = ["org.bukkit.block.banner.PatternType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPatternType : FnEnumGetter<PatternType>() {
-
-    override val enumClass: Class<PatternType> = PatternType::class.java
+object FnPatternType : FnEnumGetter<PatternType>(PatternType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

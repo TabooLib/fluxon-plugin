@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.Type
 
 @Requires(classes = ["org.bukkit.GameMode"])
 @PlatformSide(Platform.BUKKIT)
-object FnGameMode : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.GameMode>() {
-
-    override val enumClass: Class<org.bukkit.GameMode> = org.bukkit.GameMode::class.java
-
+object FnGameMode : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.GameMode>(org.bukkit.GameMode::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {
@@ -24,7 +21,7 @@ object FnGameMode : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGette
             registerExtension(GameMode::class.java)
                 .function("value", returns(Type.I).noParams()) { it.setReturnInt(it.target?.value ?: 0) }
                 // static
-                .function("getByValue", returns(TYPE).params(Type.I)) { it.setReturnRef(GameMode.getByValue(it.getInt(0).toInt())) }
+                .function("getByValue", returns(TYPE).params(Type.I)) { it.setReturnRef(GameMode.getByValue(it.getAsInt(0).toInt())) }
         }
     }
 }

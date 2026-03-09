@@ -23,7 +23,7 @@ object FnTurtleEgg {
         with(FluxonRuntime.getInstance()) {
             registerExtension(TurtleEgg::class.java)
                 .function("eggs", returns(Type.I).noParams()) { it.setReturnInt(it.target?.eggs ?: 0) }
-                .function("setEggs", returnsVoid().params(Type.I)) { it.target?.setEggs(it.getInt(0).toInt()) }
+                .function("setEggs", returnsVoid().params(Type.I)) { it.target?.setEggs(it.getAsInt(0).toInt()) }
                 .function("minimumEggs", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minimumEggs ?: 0) }
                 .function("maximumEggs", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumEggs ?: 0) }
         }

@@ -29,7 +29,7 @@ object FnEnchantItemEvent {
                 .function("enchantBlock", returns(FnBlock.TYPE).noParams()) { it.setReturnRef(it.target?.enchantBlock) }
                 .function("item", returns(FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
                 .function("expLevelCost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.expLevelCost ?: 0) }
-                .function("setExpLevelCost", returnsVoid().params(Type.I)) { it.target?.setExpLevelCost(it.getInt(0)) }
+                .function("setExpLevelCost", returnsVoid().params(Type.I)) { it.target?.setExpLevelCost(it.getAsInt(0)) }
                 .function("enchantmentHint", returns(FnEnchantment.TYPE).noParams()) { it.setReturnRef(it.target?.enchantmentHint) }
                 .function("levelHint", returns(Type.I).noParams()) { it.setReturnInt(it.target?.levelHint ?: 0) }
                 .function("whichButton", returns(Type.I).noParams()) { it.setReturnInt(it.target?.whichButton() ?: 0) }

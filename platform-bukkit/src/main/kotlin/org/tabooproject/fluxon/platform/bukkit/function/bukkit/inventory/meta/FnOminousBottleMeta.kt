@@ -24,7 +24,7 @@ object FnOminousBottleMeta {
             registerExtension(OminousBottleMeta::class.java)
                 .function("hasAmplifier", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.hasAmplifier() ?: false) }
                 .function("amplifier", returns(Type.I).noParams()) { it.setReturnInt(it.target?.amplifier ?: 0) }
-                .function("setAmplifier", returnsVoid().params(Type.I)) { it.target?.setAmplifier(it.getInt(0).toInt()) }
+                .function("setAmplifier", returnsVoid().params(Type.I)) { it.target?.setAmplifier(it.getAsInt(0).toInt()) }
                 .function("clone",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.meta.FnOminousBottleMeta.TYPE).noParams()) { it.setReturnRef(it.target?.clone()) }
         }
     }

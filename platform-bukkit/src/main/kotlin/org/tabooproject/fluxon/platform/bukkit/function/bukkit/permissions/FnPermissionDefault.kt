@@ -13,10 +13,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.permissions.PermissionDefault"])
 @PlatformSide(Platform.BUKKIT)
-object FnPermissionDefault : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.permissions.PermissionDefault>() {
-
-    override val enumClass: Class<org.bukkit.permissions.PermissionDefault> = org.bukkit.permissions.PermissionDefault::class.java
-
+object FnPermissionDefault : org.tabooproject.fluxon.platform.bukkit.function.FnEnumGetter<org.bukkit.permissions.PermissionDefault>(org.bukkit.permissions.PermissionDefault::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

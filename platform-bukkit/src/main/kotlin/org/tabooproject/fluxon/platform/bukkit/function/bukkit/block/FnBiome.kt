@@ -8,7 +8,6 @@ import taboolib.common.Requires
 
 @Requires(classes = ["org.bukkit.block.Biome"])
 @PlatformSide(Platform.BUKKIT)
-object FnBiome : FnEnumGetter<Biome>() {
+object FnBiome : FnEnumGetter<Biome>(Biome::class.java) {
 
-    override val enumClass: Class<Biome> = Biome::class.java
 }

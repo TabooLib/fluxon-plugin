@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.TreeType"])
 @PlatformSide(Platform.BUKKIT)
-object FnTreeType : FnEnumGetter<org.bukkit.TreeType>() {
+object FnTreeType : FnEnumGetter<org.bukkit.TreeType>(org.bukkit.TreeType::class.java) {
 
-    override val enumClass: Class<org.bukkit.TreeType> = org.bukkit.TreeType::class.java
 }

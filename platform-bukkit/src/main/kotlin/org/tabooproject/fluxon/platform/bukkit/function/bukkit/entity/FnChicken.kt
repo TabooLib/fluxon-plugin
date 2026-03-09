@@ -25,7 +25,7 @@ object FnChicken {
                 // .function("isChickenJockey", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isChickenJockey() ?: false) }
                 // .function("setIsChickenJockey", returnsVoid().params(Type.Z)) { it.target?.setIsChickenJockey(it.getBool(0)) }
                 // .function("getEggLayTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.getEggLayTime() ?: 0) }
-                // .function("setEggLayTime", returnsVoid().params(Type.I)) { it.target?.setEggLayTime(it.getInt(0).toInt()) }
+                // .function("setEggLayTime", returnsVoid().params(Type.I)) { it.target?.setEggLayTime(it.getAsInt(0).toInt()) }
         }
     }
 }

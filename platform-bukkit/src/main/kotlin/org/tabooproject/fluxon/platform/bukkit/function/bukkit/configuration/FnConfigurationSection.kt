@@ -62,7 +62,7 @@ object FnConfigurationSection {
                     it.setReturnInt(it.target?.getInt(it.getString(0)!!) ?: 0)
                 }
                 .function("getInt", returns(Type.I).params(Type.STRING, Type.I)) {
-                    it.setReturnInt(it.target?.getInt(it.getString(0)!!, it.getInt(1)) ?: 0)
+                    it.setReturnInt(it.target?.getInt(it.getString(0)!!, it.getAsInt(1)) ?: 0)
                 }
                 .function("isInt", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isInt(it.getString(0)!!) ?: false) }
                 .function("getBoolean", returns(Type.Z).params(Type.STRING)) {
@@ -76,14 +76,14 @@ object FnConfigurationSection {
                     it.setReturnDouble(it.target?.getDouble(it.getString(0)!!) ?: 0.0)
                 }
                 .function("getDouble", returns(Type.D).params(Type.STRING, Type.D)) {
-                    it.setReturnDouble(it.target?.getDouble(it.getString(0)!!, it.getDouble(1)) ?: 0.0)
+                    it.setReturnDouble(it.target?.getDouble(it.getString(0)!!, it.getAsDouble(1)) ?: 0.0)
                 }
                 .function("isDouble", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isDouble(it.getString(0)!!) ?: false) }
                 .function("getLong", returns(Type.J).params(Type.STRING)) {
                     it.setReturnLong(it.target?.getLong(it.getString(0)!!) ?: 0L)
                 }
                 .function("getLong", returns(Type.J).params(Type.STRING, Type.J)) {
-                    it.setReturnLong(it.target?.getLong(it.getString(0)!!, it.getLong(1)) ?: 0L)
+                    it.setReturnLong(it.target?.getLong(it.getString(0)!!, it.getAsLong(1)) ?: 0L)
                 }
                 .function("isLong", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isLong(it.getString(0)!!) ?: false) }
                 .function("isList", returns(Type.Z).params(Type.STRING)) { it.setReturnBool(it.target?.isList(it.getString(0)!!) ?: false) }

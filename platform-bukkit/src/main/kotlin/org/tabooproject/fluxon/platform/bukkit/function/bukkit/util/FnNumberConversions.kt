@@ -22,13 +22,13 @@ object FnNumberConversions {
         with(FluxonRuntime.getInstance()) {
             registerExtension(NumberConversions::class.java)
                 // static
-                .function("floor",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.floor(it.getDouble(0))) }
+                .function("floor",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.floor(it.getAsDouble(0))) }
                 // static
-                .function("ceil",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.ceil(it.getDouble(0))) }
+                .function("ceil",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.ceil(it.getAsDouble(0))) }
                 // static
-                .function("round",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.round(it.getDouble(0))) }
+                .function("round",returns(Type.I).params(Type.D)) { it.setReturnInt(NumberConversions.round(it.getAsDouble(0))) }
                 // static
-                .function("square",returns(Type.D).params(Type.D)) { it.setReturnDouble(NumberConversions.square(it.getDouble(0))) }
+                .function("square",returns(Type.D).params(Type.D)) { it.setReturnDouble(NumberConversions.square(it.getAsDouble(0))) }
                 // static
                 .function("toInt",returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(NumberConversions.toInt(it.getRef(0))) }
                 // static
@@ -42,10 +42,10 @@ object FnNumberConversions {
                 // static
                 .function("toByte",returns(Type.I).params(Type.OBJECT)) { it.setReturnInt(NumberConversions.toByte(it.getRef(0)).toInt()) }
                 // static
-                .function("isFinite", returns(Type.Z).params(Type.D)) { it.setReturnBool(NumberConversions.isFinite(it.getDouble(0))) }
+                .function("isFinite", returns(Type.Z).params(Type.D)) { it.setReturnBool(NumberConversions.isFinite(it.getAsDouble(0))) }
                 .function("isFinite", returns(Type.Z).params(Type.F)) { it.setReturnBool(NumberConversions.isFinite(it.getFloat(0))) }
                 // static
-                .function("checkFinite",returnsVoid().params(Type.D, Type.STRING)) { NumberConversions.checkFinite(it.getDouble(0), it.getString(1)!!) }
+                .function("checkFinite",returnsVoid().params(Type.D, Type.STRING)) { NumberConversions.checkFinite(it.getAsDouble(0), it.getString(1)!!) }
                 .function("checkFinite",returnsVoid().params(Type.F, Type.STRING)) { NumberConversions.checkFinite(it.getFloat(0), it.getString(1)!!) }
         }
     }

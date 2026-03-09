@@ -25,10 +25,10 @@ object FnMinecart {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Minecart::class.java)
-                .function("setDamage", returnsVoid().params(Type.D)) { it.target?.setDamage(it.getDouble(0)) }
+                .function("setDamage", returnsVoid().params(Type.D)) { it.target?.setDamage(it.getAsDouble(0)) }
                 .function("damage", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.damage ?: 0.0) }
                 .function("maxSpeed", returns(Type.D).noParams()) { it.setReturnDouble(it.target?.maxSpeed ?: 0.0) }
-                .function("setMaxSpeed", returnsVoid().params(Type.D)) { it.target?.setMaxSpeed(it.getDouble(0)) }
+                .function("setMaxSpeed", returnsVoid().params(Type.D)) { it.target?.setMaxSpeed(it.getAsDouble(0)) }
                 .function("isSlowWhenEmpty", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isSlowWhenEmpty ?: false) }
                 .function("setSlowWhenEmpty", returnsVoid().params(Type.Z)) { it.target?.setSlowWhenEmpty(it.getBool(0)) }
                 .function("flyingVelocityMod",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE).noParams()) { it.setReturnRef(it.target?.flyingVelocityMod) }
@@ -39,7 +39,7 @@ object FnMinecart {
                 .function("displayBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE).noParams()) { it.setReturnRef(it.target?.displayBlock) }
                 .function("setDisplayBlockData",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.target?.setDisplayBlockData(it.getRef(0) as BlockData) }
                 .function("displayBlockData",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE).noParams()) { it.setReturnRef(it.target?.displayBlockData) }
-                .function("setDisplayBlockOffset", returnsVoid().params(Type.I)) { it.target?.setDisplayBlockOffset(it.getInt(0).toInt()) }
+                .function("setDisplayBlockOffset", returnsVoid().params(Type.I)) { it.target?.setDisplayBlockOffset(it.getAsInt(0).toInt()) }
                 .function("displayBlockOffset", returns(Type.I).noParams()) { it.setReturnInt(it.target?.displayBlockOffset ?: 0) }
         }
     }

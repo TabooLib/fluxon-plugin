@@ -31,11 +31,11 @@ object FnDisplay {
                     it.setReturnInt(it.target?.interpolationDuration ?: 0)
                 }
                 .function("setInterpolationDuration", returnsVoid().params(Type.I)) {
-                    it.target?.setInterpolationDuration(it.getInt(0).toInt())
+                    it.target?.setInterpolationDuration(it.getAsInt(0).toInt())
                 }
                 .function("teleportDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.teleportDuration ?: 0) }
                 .function("setTeleportDuration", returnsVoid().params(Type.I)) {
-                    it.target?.setTeleportDuration(it.getInt(0).toInt())
+                    it.target?.setTeleportDuration(it.getAsInt(0).toInt())
                 }
                 .function("viewRange", returns(Type.F).noParams()) { it.setReturnFloat(it.target?.viewRange ?: 0.0f) }
                 .function("setViewRange", returnsVoid().params(Type.F)) { it.target?.setViewRange(it.getFloat(0)) }
@@ -49,7 +49,7 @@ object FnDisplay {
                 .function("setDisplayHeight", returnsVoid().params(Type.F)) { it.target?.setDisplayHeight(it.getFloat(0)) }
                 .function("interpolationDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.interpolationDelay ?: 0) }
                 .function("setInterpolationDelay", returnsVoid().params(Type.I)) {
-                    it.target?.setInterpolationDelay(it.getInt(0).toInt())
+                    it.target?.setInterpolationDelay(it.getAsInt(0).toInt())
                 }
                 .function("billboard", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBillboard.TYPE).noParams()) { it.setReturnRef(it.target?.billboard) }
                 .function("setBillboard", returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnDisplayBillboard.TYPE)) { it.target?.setBillboard(it.getRef(0) as Display.Billboard) }

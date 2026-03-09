@@ -24,7 +24,7 @@ object FnSculkShrieker {
         with(FluxonRuntime.getInstance()) {
             registerExtension(SculkShrieker::class.java)
                 .function("warningLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.warningLevel ?: 0) }
-                .function("setWarningLevel", returnsVoid().params(Type.I)) { it.target?.setWarningLevel(it.getInt(0)) }
+                .function("setWarningLevel", returnsVoid().params(Type.I)) { it.target?.setWarningLevel(it.getAsInt(0)) }
                 .function("tryShriek", returnsVoid().params(FnPlayer.TYPE)) { it.target?.tryShriek(it.getRef(0) as Player) }
         }
     }

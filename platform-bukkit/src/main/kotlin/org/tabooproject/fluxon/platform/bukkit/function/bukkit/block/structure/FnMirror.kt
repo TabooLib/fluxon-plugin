@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.block.structure.Mirror"])
 @PlatformSide(Platform.BUKKIT)
-object FnMirror : FnEnumGetter<Mirror>() {
+object FnMirror : FnEnumGetter<Mirror>(Mirror::class.java) {
 
-    override val enumClass: Class<Mirror> = Mirror::class.java
 }

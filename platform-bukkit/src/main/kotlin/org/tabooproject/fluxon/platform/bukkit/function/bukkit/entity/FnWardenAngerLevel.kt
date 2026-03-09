@@ -7,7 +7,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.entity.Warden\$AngerLevel"])
 @PlatformSide(Platform.BUKKIT)
-object FnWardenAngerLevel : FnEnumGetter<org.bukkit.entity.Warden.AngerLevel>() {
+object FnWardenAngerLevel : FnEnumGetter<org.bukkit.entity.Warden.AngerLevel>(org.bukkit.entity.Warden.AngerLevel::class.java) {
 
-    override val enumClass: Class<org.bukkit.entity.Warden.AngerLevel> = org.bukkit.entity.Warden.AngerLevel::class.java
 }

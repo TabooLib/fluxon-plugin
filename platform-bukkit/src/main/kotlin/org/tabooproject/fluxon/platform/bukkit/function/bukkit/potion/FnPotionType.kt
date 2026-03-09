@@ -15,9 +15,7 @@ import org.tabooproject.fluxon.runtime.FunctionSignature.returns
 
 @Requires(classes = ["org.bukkit.potion.PotionType"])
 @PlatformSide(Platform.BUKKIT)
-object FnPotionType : FnEnumGetter<PotionType>() {
-
-    override val enumClass: Class<PotionType> = PotionType::class.java
+object FnPotionType : FnEnumGetter<PotionType>(PotionType::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

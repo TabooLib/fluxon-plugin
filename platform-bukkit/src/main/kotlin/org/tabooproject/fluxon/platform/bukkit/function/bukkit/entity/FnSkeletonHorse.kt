@@ -25,7 +25,7 @@ object FnSkeletonHorse {
                 .function("isTrapped", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isTrapped ?: false) }
                 .function("setTrapped", returnsVoid().params(Type.Z)) { it.target?.setTrapped(it.getBool(0)) }
                 .function("trapTime", returns(Type.I).noParams()) { it.setReturnInt(it.target?.trapTime ?: 0) }
-                .function("setTrapTime", returnsVoid().params(Type.I)) { it.target?.setTrapTime(it.getInt(0).toInt()) }
+                .function("setTrapTime", returnsVoid().params(Type.I)) { it.target?.setTrapTime(it.getAsInt(0).toInt()) }
         }
     }
 }

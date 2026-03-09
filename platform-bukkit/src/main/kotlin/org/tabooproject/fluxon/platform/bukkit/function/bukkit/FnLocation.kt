@@ -37,31 +37,31 @@ object FnLocation {
             // 构建向量
             // x, y, z
             registerFunction("location", returns(TYPE).params(Type.D, Type.D, Type.D)) {
-                val x = it.getDouble(0)
-                val y = it.getDouble(1)
-                val z = it.getDouble(2)
+                val x = it.getAsDouble(0)
+                val y = it.getAsDouble(1)
+                val z = it.getAsDouble(2)
                 it.setReturnRef(Location(null, x, y, z))}
             // world, x, y, z
             registerFunction("location", returns(TYPE).params(FnWorld.TYPE, Type.D, Type.D, Type.D)) {
                 val world = it.getRef(0) as? World
-                val x = it.getDouble(1)
-                val y = it.getDouble(2)
-                val z = it.getDouble(3)
+                val x = it.getAsDouble(1)
+                val y = it.getAsDouble(2)
+                val z = it.getAsDouble(3)
                 it.setReturnRef(Location(world, x, y, z))}
             // x, y, z, yaw, pitch
             registerFunction("location", returns(TYPE).params(Type.D, Type.D, Type.D, Type.F, Type.F)) {
-                val x = it.getDouble(0)
-                val y = it.getDouble(1)
-                val z = it.getDouble(2)
+                val x = it.getAsDouble(0)
+                val y = it.getAsDouble(1)
+                val z = it.getAsDouble(2)
                 val yaw = it.getFloat(3)
                 val pitch = it.getFloat(4)
                 it.setReturnRef(Location(null, x, y, z, yaw, pitch))}
             // world, x, y, z, yaw, pitch
             registerFunction("location", returns(TYPE).params(FnWorld.TYPE, Type.D, Type.D, Type.D, Type.F, Type.F)) {
                 val world = it.getRef(0) as? World
-                val x = it.getDouble(1)
-                val y = it.getDouble(2)
-                val z = it.getDouble(3)
+                val x = it.getAsDouble(1)
+                val y = it.getAsDouble(2)
+                val z = it.getAsDouble(3)
                 val yaw = it.getFloat(4)
                 val pitch = it.getFloat(5)
                 it.setReturnRef(Location(world, x, y, z, yaw, pitch))}
@@ -85,11 +85,11 @@ object FnLocation {
 
                 // 可读写属性 - 坐标
                 .function("x", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.x) }
-                .function("setX", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { x = it.getDouble(0) }) }
+                .function("setX", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { x = it.getAsDouble(0) }) }
                 .function("y", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.y) }
-                .function("setY", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { y = it.getDouble(0) }) }
+                .function("setY", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { y = it.getAsDouble(0) }) }
                 .function("z", returns(Type.D).noParams()) { it.setReturnDouble(it.target!!.z) }
-                .function("setZ", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { z = it.getDouble(0) }) }
+                .function("setZ", returns(TYPE).params(Type.D)) { it.setReturnRef(it.target?.apply { z = it.getAsDouble(0) }) }
 
                 // 可读写属性 - 朝向
                 .function("yaw", returns(Type.F).noParams()) { it.setReturnFloat(it.target!!.yaw) }
@@ -122,7 +122,7 @@ object FnLocation {
                     it.setReturnRef(it.target?.add(it.getRef(0) as Vector))
                 }
                 .function("add", returns(TYPE).params(Type.D, Type.D, Type.D)) {
-                    it.setReturnRef(it.target?.add(it.getDouble(0), it.getDouble(1), it.getDouble(2)))
+                    it.setReturnRef(it.target?.add(it.getAsDouble(0), it.getAsDouble(1), it.getAsDouble(2)))
                 }
                 .function("subtract", returns(TYPE).params(TYPE)) {
                     it.setReturnRef(it.target?.subtract(it.getRef(0) as Location))
@@ -131,19 +131,19 @@ object FnLocation {
                     it.setReturnRef(it.target?.subtract(it.getRef(0) as Vector))
                 }
                 .function("subtract", returns(TYPE).params(Type.D, Type.D, Type.D)) {
-                    it.setReturnRef(it.target?.subtract(it.getDouble(0), it.getDouble(1), it.getDouble(2)))
+                    it.setReturnRef(it.target?.subtract(it.getAsDouble(0), it.getAsDouble(1), it.getAsDouble(2)))
                 }
                 .function("multiply",returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(it.target?.multiply(it.getRef(0) as Location))
                 }
                 .function("multiply", returns(TYPE).params(Type.D)) {
-                    it.setReturnRef(it.target?.multiply(it.getDouble(0)))
+                    it.setReturnRef(it.target?.multiply(it.getAsDouble(0)))
                 }
                 .function("divide",returns(TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnRef(it.target?.divide(it.getRef(0) as Location))
                 }
                 .function("divide", returns(TYPE).params(Type.D)) {
-                    val arg = it.getDouble(0)
+                    val arg = it.getAsDouble(0)
                     it.target?.divide(Location(null, arg, arg, arg))
                 }
 

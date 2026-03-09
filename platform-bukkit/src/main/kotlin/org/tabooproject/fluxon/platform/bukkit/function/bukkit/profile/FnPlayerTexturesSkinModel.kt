@@ -8,7 +8,6 @@ import taboolib.common.platform.PlatformSide
 
 @Requires(classes = ["org.bukkit.profile.PlayerTextures\$SkinModel"])
 @PlatformSide(Platform.BUKKIT)
-object FnPlayerTexturesSkinModel : FnEnumGetter<PlayerTextures.SkinModel>() {
+object FnPlayerTexturesSkinModel : FnEnumGetter<PlayerTextures.SkinModel>(PlayerTextures.SkinModel::class.java) {
 
-    override val enumClass: Class<PlayerTextures.SkinModel> = PlayerTextures.SkinModel::class.java
 }

@@ -25,7 +25,7 @@ object FnArrowBodyCountChangeEvent {
                 .function("isReset", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isReset ?: false) }
                 .function("oldAmount",returns(Type.I).noParams()) { it.setReturnRef(it.target?.oldAmount) }
                 .function("newAmount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.newAmount ?: 0) }
-                .function("setNewAmount", returnsVoid().params(Type.I)) { it.target?.setNewAmount(it.getInt(0).toInt()) }
+                .function("setNewAmount", returnsVoid().params(Type.I)) { it.target?.setNewAmount(it.getAsInt(0).toInt()) }
                 .function("entity", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).noParams()) { it.setReturnRef(it.target?.getEntity()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static

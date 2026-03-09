@@ -23,7 +23,7 @@ object FnRepeater {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Repeater::class.java)
                 .function("delay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.delay ?: 0) }
-                .function("setDelay", returnsVoid().params(Type.I)) { it.target?.setDelay(it.getInt(0).toInt()) }
+                .function("setDelay", returnsVoid().params(Type.I)) { it.target?.setDelay(it.getAsInt(0).toInt()) }
                 .function("minimumDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.minimumDelay ?: 0) }
                 .function("maximumDelay", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumDelay ?: 0) }
                 .function("isLocked", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isLocked ?: false) }

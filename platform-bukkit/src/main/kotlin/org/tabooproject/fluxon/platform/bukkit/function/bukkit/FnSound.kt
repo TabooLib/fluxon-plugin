@@ -16,9 +16,7 @@ import taboolib.common.Requires
 
 @Requires(classes = ["org.bukkit.Sound"])
 @PlatformSide(Platform.BUKKIT)
-object FnSound : FnEnumGetter<Sound>() {
-
-    override val enumClass: Class<Sound> = Sound::class.java
+object FnSound : FnEnumGetter<Sound>(Sound::class.java) {
 
     @Awake(LifeCycle.INIT)
     private fun init() {

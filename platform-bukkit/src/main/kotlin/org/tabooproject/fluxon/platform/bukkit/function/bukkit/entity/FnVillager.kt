@@ -28,9 +28,9 @@ object FnVillager {
                 .function("villagerType",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerType.TYPE).noParams()) { it.setReturnRef(it.target?.villagerType) }
                 .function("setVillagerType",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillagerType.TYPE)) { it.target?.setVillagerType(it.getRef(0) as Villager.Type) }
                 .function("villagerLevel", returns(Type.I).noParams()) { it.setReturnInt(it.target?.villagerLevel ?: 0) }
-                .function("setVillagerLevel", returnsVoid().params(Type.I)) { it.target?.setVillagerLevel(it.getInt(0).toInt()) }
+                .function("setVillagerLevel", returnsVoid().params(Type.I)) { it.target?.setVillagerLevel(it.getAsInt(0).toInt()) }
                 .function("villagerExperience", returns(Type.I).noParams()) { it.setReturnInt(it.target?.villagerExperience ?: 0) }
-                .function("setVillagerExperience", returnsVoid().params(Type.I)) { it.target?.setVillagerExperience(it.getInt(0).toInt()) }
+                .function("setVillagerExperience", returnsVoid().params(Type.I)) { it.target?.setVillagerExperience(it.getAsInt(0).toInt()) }
                 .function("sleep",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnBool(it.target?.sleep(it.getRef(0) as Location) == true)
                 }

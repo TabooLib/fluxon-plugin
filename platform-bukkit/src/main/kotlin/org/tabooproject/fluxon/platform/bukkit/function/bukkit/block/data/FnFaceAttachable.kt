@@ -36,7 +36,6 @@ object FnFaceAttachable {
 
 @Requires(classes = ["org.bukkit.block.data.FaceAttachable\$AttachedFace"])
 @PlatformSide(Platform.BUKKIT)
-object FnAttachedFace : FnEnumGetter<FaceAttachable.AttachedFace>() {
+object FnAttachedFace : FnEnumGetter<FaceAttachable.AttachedFace>(FaceAttachable.AttachedFace::class.java) {
 
-    override val enumClass: Class<FaceAttachable.AttachedFace> = FaceAttachable.AttachedFace::class.java
 }

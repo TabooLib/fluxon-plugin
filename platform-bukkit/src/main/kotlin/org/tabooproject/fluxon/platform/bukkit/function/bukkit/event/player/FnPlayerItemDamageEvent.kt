@@ -25,7 +25,7 @@ object FnPlayerItemDamageEvent {
             registerExtension(PlayerItemDamageEvent::class.java)
                 .function("item",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.item) }
                 .function("damage",returns(Type.I).noParams()) { it.setReturnRef(it.target?.damage) }
-                .function("setDamage", returnsVoid().params(Type.I)) { it.target?.setDamage(it.getInt(0).toInt()) }
+                .function("setDamage", returnsVoid().params(Type.I)) { it.target?.setDamage(it.getAsInt(0).toInt()) }
                 .function("handlers",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(it.target?.handlers) }
                 // static
                 .function("handlerList",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.FnHandlerList.TYPE).noParams()) { it.setReturnRef(PlayerItemDamageEvent.getHandlerList()) }

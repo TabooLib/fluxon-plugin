@@ -24,11 +24,11 @@ object FnAnvilInventory {
             registerExtension(AnvilInventory::class.java)
                 .function("renameText", returns(Type.STRING).noParams()) { it.setReturnRef(it.target?.renameText) }
                 .function("repairCostAmount", returns(Type.I).noParams()) { it.setReturnInt(it.target?.repairCostAmount ?: 0) }
-                .function("setRepairCostAmount", returnsVoid().params(Type.I)) { it.target?.setRepairCostAmount(it.getInt(0).toInt()) }
+                .function("setRepairCostAmount", returnsVoid().params(Type.I)) { it.target?.setRepairCostAmount(it.getAsInt(0).toInt()) }
                 .function("repairCost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.repairCost ?: 0) }
-                .function("setRepairCost", returnsVoid().params(Type.I)) { it.target?.setRepairCost(it.getInt(0).toInt()) }
+                .function("setRepairCost", returnsVoid().params(Type.I)) { it.target?.setRepairCost(it.getAsInt(0).toInt()) }
                 .function("maximumRepairCost", returns(Type.I).noParams()) { it.setReturnInt(it.target?.maximumRepairCost ?: 0) }
-                .function("setMaximumRepairCost", returnsVoid().params(Type.I)) { it.target?.setMaximumRepairCost(it.getInt(0).toInt()) }
+                .function("setMaximumRepairCost", returnsVoid().params(Type.I)) { it.target?.setMaximumRepairCost(it.getAsInt(0).toInt()) }
         }
     }
 }
