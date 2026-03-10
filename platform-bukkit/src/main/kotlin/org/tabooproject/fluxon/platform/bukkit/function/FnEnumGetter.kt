@@ -20,7 +20,7 @@ abstract class FnEnumGetter<E : Enum<E>>(val enumClass: Class<E>) {
     init {
         registerLifeCycleTask(LifeCycle.INIT) {
             val className = javaClass.simpleName.removePrefix("Fn")
-            val name = className[0] + className.substring(1)
+            val name = className[0].lowercase() + className.substring(1)
             FluxonRuntime.getInstance().registerFunction(name, FunctionSignature.returns(TYPE).params(Type.STRING)) {
                 it.setReturnRef(enumValue(it.getString(0)))
             }
