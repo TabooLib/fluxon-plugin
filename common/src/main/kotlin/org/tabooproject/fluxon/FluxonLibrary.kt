@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-@Requires(classes = ["!org.tabooproject.fluxon.ParseScript"])
+@Requires(systemProperty = ["fluxon.hasFluxonPlugin=true"])
 object FluxonLibrary {
 
     /**
