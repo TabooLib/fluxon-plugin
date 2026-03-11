@@ -110,25 +110,25 @@ object FnRegionAccessor {
                         it.getRef(3) as Material
                     )
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.fromClass(java.util.Random::class.java), org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.fromClass(java.util.Random::class.java), org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE)) {
                     it.setReturnBool(it.target?.generateTree(
                         it.getRef(0) as Location,
                         it.getRef(1) as java.util.Random,
                         it.getRef(2) as org.bukkit.TreeType
                     ) ?: false)
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.fromClass(java.util.Random::class.java), Type.STRING)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.fromClass(java.util.Random::class.java), Type.STRING)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.enumValue(it.getString(2))?.let { p2 ->
                         it.setReturnBool(it.target?.generateTree(it.getRef(0) as Location, it.getRef(1) as java.util.Random, p2) ?: false)
                     }
                 }
-                .syncFunction("spawnEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) {
+                .function("spawnEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE)) {
                     it.setReturnRef(it.target?.spawnEntity(
                         it.getRef(0) as Location,
                         it.getRef(1) as EntityType
                     ))
                 }
-                .syncFunction("spawnEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.Z)) {
+                .function("spawnEntity",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntityType.TYPE, Type.Z)) {
                     it.setReturnRef(it.target?.spawnEntity(
                         it.getRef(0) as Location,
                         it.getRef(1) as EntityType,

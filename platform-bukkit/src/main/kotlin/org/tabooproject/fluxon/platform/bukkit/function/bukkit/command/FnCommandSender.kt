@@ -24,7 +24,7 @@ object FnCommandSender {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(CommandSender::class.java)
-                .syncFunction("performCommand", returns(Type.Z).params(Type.STRING)) {
+                .function("performCommand", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(adaptCommandSender(it.target!!).performCommand(it.getString(0)!!) ?: false)
                 }
                 .function("sendMessage", returnsVoid().params(Type.STRING)) { it.target?.sendMessage(it.getString(0)) }

@@ -22,7 +22,7 @@ object FnScoreboardManager {
         with(FluxonRuntime.getInstance()) {
             registerExtension(ScoreboardManager::class.java)
                 .function("mainScoreboard",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.mainScoreboard) }
-                .syncFunction("newScoreboard",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.newScoreboard) }
+                .function("newScoreboard",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnScoreboard.TYPE).noParams()) { it.setReturnRef(it.target?.newScoreboard) }
         }
     }
 }

@@ -131,7 +131,7 @@ object FnServer {
                 .function("logger", returns(Type.fromClass(java.util.logging.Logger::class.java)).noParams()) { it.setReturnRef(it.target?.logger) }
                 .function("getPluginCommand", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnPluginCommand.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getPluginCommand(it.getString(0)!!)) }
                 .function("savePlayers", returnsVoid().noParams()) { it.target?.savePlayers() }
-                .syncFunction("dispatchCommand",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, Type.STRING)) {
+                .function("dispatchCommand",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.command.FnCommandSender.TYPE, Type.STRING)) {
                     it.setReturnBool(it.target?.dispatchCommand(
                         it.getRef(0) as CommandSender,
                         it.getString(1)!!

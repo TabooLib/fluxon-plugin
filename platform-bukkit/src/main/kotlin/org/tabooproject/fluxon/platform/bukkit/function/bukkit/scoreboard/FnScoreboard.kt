@@ -25,24 +25,24 @@ object FnScoreboard {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(Scoreboard::class.java)
-                .syncFunction("registerNewObjective",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING)) {
+                .function("registerNewObjective",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING)) {
                     it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getString(1)!!))
                 }
-                .syncFunction("registerNewObjective",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING)) {
+                .function("registerNewObjective",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING)) {
                     it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getString(1)!!, it.getString(2)!!))
                 }
-                .syncFunction("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.TYPE)) {
+                .function("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.TYPE)) {
                     it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getString(1)!!, it.getString(2)!!, it.getRef(3) as RenderType))
                 }
-                .syncFunction("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING, Type.STRING)) {
+                .function("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, Type.STRING, Type.STRING, Type.STRING)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.enumValue(it.getString(3))?.let { p3 ->
                         it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getString(1)!!, it.getString(2)!!, p3))
                     }
                 }
-                .syncFunction("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE, Type.STRING)) {
+                .function("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE, Type.STRING)) {
                     it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getRef(1) as Criteria, it.getString(2)!!))
                 }
-                .syncFunction("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.TYPE)) {
+                .function("registerNewObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnCriteria.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnRenderType.TYPE)) {
                     it.setReturnRef(it.target?.registerNewObjective(it.getString(0)!!, it.getRef(1) as Criteria, it.getString(2)!!, it.getRef(3) as RenderType))
                 }
                 .function("getObjective", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.scoreboard.FnObjective.TYPE).params(Type.STRING)) { it.setReturnRef(it.target?.getObjective(it.getString(0)!!)) }

@@ -74,7 +74,7 @@ object FnPlayer {
                 .function("banIp",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBanEntry.TYPE).params(Type.STRING, Type.fromClass(Instant::class.java), Type.STRING, Type.Z)) { it.setReturnRef(it.target?.banIp(it.getString(0), it.getRef(1) as Instant, it.getString(2), it.getBool(3))) }
                 .function("banIp",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBanEntry.TYPE).params(Type.STRING, Type.fromClass(Duration::class.java), Type.STRING, Type.Z)) { it.setReturnRef(it.target?.banIp(it.getString(0), it.getRef(1) as Duration, it.getString(2), it.getBool(3))) }
                 .syncFunction("chat", returnsVoid().params(Type.STRING)) { it.target?.chat(it.getString(0)!!) }
-                .syncFunction("performCommand", returns(Type.Z).params(Type.STRING)) {
+                .function("performCommand", returns(Type.Z).params(Type.STRING)) {
                     it.setReturnBool(it.target?.performCommand(it.getString(0)!!) ?: false)
                 }
                 .function("isOnGround", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isOnGround ?: false) }

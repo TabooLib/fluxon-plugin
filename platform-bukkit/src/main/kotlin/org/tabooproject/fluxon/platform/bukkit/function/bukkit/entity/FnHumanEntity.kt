@@ -42,25 +42,25 @@ object FnHumanEntity {
                 }
                 .function("enchantmentSeed", returns(Type.I).noParams()) { it.setReturnInt(it.target?.enchantmentSeed ?: 0) }
                 .function("setEnchantmentSeed", returnsVoid().params(Type.I)) { it.target?.setEnchantmentSeed(it.getAsInt(0).toInt()) }
-                .syncFunction("openInventory",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).noParams()) {
+                .function("openInventory",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).noParams()) {
                     it.setReturnRef(it.target?.openInventory)
                 }
-                .syncFunction("openInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE)) { it.setReturnRef(it.target?.openInventory(it.getRef(0) as Inventory)) }
-                .syncFunction("openInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE)) { it.setReturnRef(it.target?.openInventory(it.getRef(0) as InventoryView)) }
-                .syncFunction("openWorkbench",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) {
+                .function("openInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventory.TYPE)) { it.setReturnRef(it.target?.openInventory(it.getRef(0) as Inventory)) }
+                .function("openInventory", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE)) { it.setReturnRef(it.target?.openInventory(it.getRef(0) as InventoryView)) }
+                .function("openWorkbench",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) {
                     it.setReturnRef(it.target?.openWorkbench(
                         it.getRef(0) as Location,
                         it.getBool(1)
                     ))
                 }
-                .syncFunction("openEnchanting",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) {
+                .function("openEnchanting",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.Z)) {
                     it.setReturnRef(it.target?.openEnchanting(
                         it.getRef(0) as Location,
                         it.getBool(1)
                     ))
                 }
-                .syncFunction("openMerchant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillager.TYPE, Type.Z)) { it.setReturnRef(it.target?.openMerchant(it.getRef(0) as Villager, it.getBool(1))) }
-                .syncFunction("openMerchant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchant.TYPE, Type.Z)) { it.setReturnRef(it.target?.openMerchant(it.getRef(0) as Merchant, it.getBool(1))) }
+                .function("openMerchant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnVillager.TYPE, Type.Z)) { it.setReturnRef(it.target?.openMerchant(it.getRef(0) as Villager, it.getBool(1))) }
+                .function("openMerchant", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnInventoryView.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnMerchant.TYPE, Type.Z)) { it.setReturnRef(it.target?.openMerchant(it.getRef(0) as Merchant, it.getBool(1))) }
                 .function("closeInventory", returnsVoid().noParams()) { it.target?.closeInventory() }
                 .function("itemInHand",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE).noParams()) { it.setReturnRef(it.target?.itemInHand) }
                 .function("setItemInHand",returnsVoid().params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.target?.setItemInHand(it.getRef(0) as ItemStack) }

@@ -22,7 +22,7 @@ object FnPotionEffect {
     private fun init() {
         with(FluxonRuntime.getInstance()) {
             registerExtension(PotionEffect::class.java)
-                .syncFunction("apply",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) {
+                .function("apply",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLivingEntity.TYPE)) {
                     it.setReturnBool(it.target?.apply(it.getRef(0) as LivingEntity) ?: false)
                 }
                 .function("amplifier", returns(Type.I).noParams()) { it.setReturnInt(it.target?.amplifier ?: 0) }

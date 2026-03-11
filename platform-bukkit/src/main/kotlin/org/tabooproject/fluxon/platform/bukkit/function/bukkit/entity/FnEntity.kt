@@ -45,24 +45,24 @@ object FnEntity {
                         it.getFloat(1)
                     )
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) {
                     it.setReturnBool(it.target?.teleport(it.getRef(0) as Location) ?: false)
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
                     it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity) ?: false)
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
                     it.setReturnBool(it.target?.teleport(it.getRef(0) as Location, it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause) ?: false)
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.enumValue(it.getString(1))?.let { p1 ->
                         it.setReturnBool(it.target?.teleport(it.getRef(0) as Location, p1) ?: false)
                     }
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.TYPE)) {
                     it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity, it.getRef(1) as org.bukkit.event.player.PlayerTeleportEvent.TeleportCause) ?: false)
                 }
-                .syncFunction("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING)) {
+                .function("teleport", returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE, Type.STRING)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.event.player.FnPlayerTeleportEventTeleportCause.enumValue(it.getString(1))?.let { p1 ->
                         it.setReturnBool(it.target?.teleport(it.getRef(0) as Entity, p1) ?: false)
                     }

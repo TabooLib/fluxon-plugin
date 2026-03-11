@@ -122,7 +122,7 @@ object FnWorld {
                         it.getAsInt(1).toInt()
                     ) ?: false
                 }
-                .syncFunction("loadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
+                .function("loadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
                     it.setReturnBool(it.target?.loadChunk(
                         it.getAsInt(0).toInt(),
                         it.getAsInt(1).toInt(),
@@ -141,23 +141,23 @@ object FnWorld {
                         it.getAsInt(1).toInt()
                     ) ?: false)
                 }
-                .syncFunction("unloadChunk",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChunk.TYPE)) {
+                .function("unloadChunk",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnChunk.TYPE)) {
                     it.setReturnBool(it.target?.unloadChunk(it.getRef(0) as Chunk) ?: false)
                 }
-                .syncFunction("unloadChunk", returns(Type.Z).params(Type.I, Type.I)) {
+                .function("unloadChunk", returns(Type.Z).params(Type.I, Type.I)) {
                     it.setReturnBool(it.target?.unloadChunk(
                         it.getAsInt(0).toInt(),
                         it.getAsInt(1).toInt()
                     ) ?: false)
                 }
-                .syncFunction("unloadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
+                .function("unloadChunk", returns(Type.Z).params(Type.I, Type.I, Type.Z)) {
                     it.setReturnBool(it.target?.unloadChunk(
                         it.getAsInt(0).toInt(),
                         it.getAsInt(1).toInt(),
                         it.getBool(2)
                     ) ?: false)
                 }
-                .syncFunction("unloadChunkRequest", returns(Type.Z).params(Type.I, Type.I)) {
+                .function("unloadChunkRequest", returns(Type.Z).params(Type.I, Type.I)) {
                     it.setReturnBool(it.target?.unloadChunkRequest(
                         it.getAsInt(0).toInt(),
                         it.getAsInt(1).toInt()
@@ -221,9 +221,9 @@ object FnWorld {
                     ))
                 }
                 .function("getIntersectingChunks",returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnBoundingBox.TYPE)) { it.setReturnRef(it.target?.getIntersectingChunks(it.getRef(0) as BoundingBox)) }
-                .syncFunction("dropItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnItem.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.dropItem(it.getRef(0) as Location, it.getRef(1) as ItemStack)) }
-                .syncFunction("dropItemNaturally",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnItem.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.dropItemNaturally(it.getRef(0) as Location, it.getRef(1) as ItemStack)) }
-                .syncFunction("spawnArrow",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnArrow.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.F, Type.F)) {
+                .function("dropItem",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnItem.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.dropItem(it.getRef(0) as Location, it.getRef(1) as ItemStack)) }
+                .function("dropItemNaturally",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnItem.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.inventory.FnItemStack.TYPE)) { it.setReturnRef(it.target?.dropItemNaturally(it.getRef(0) as Location, it.getRef(1) as ItemStack)) }
+                .function("spawnArrow",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnArrow.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.util.FnVector.TYPE, Type.F, Type.F)) {
                     it.setReturnRef(it.target?.spawnArrow(
                         it.getRef(0) as Location,
                         it.getRef(1) as Vector,
@@ -231,13 +231,13 @@ object FnWorld {
                         it.getFloat(3)
                     ))
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE)) {
                     it.setReturnBool(it.target?.generateTree(
                         it.getRef(0) as Location,
                         it.getRef(1) as TreeType
                     ) ?: false)
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.enumValue(it.getString(1))?.let { p1 ->
                         it.setReturnBool(it.target?.generateTree(
                             it.getRef(0) as Location,
@@ -245,14 +245,14 @@ object FnWorld {
                         ) ?: false)
                     }
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBlockChangeDelegate.TYPE)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBlockChangeDelegate.TYPE)) {
                     it.setReturnBool(it.target?.generateTree(
                         it.getRef(0) as Location,
                         it.getRef(1) as TreeType,
                         it.getRef(2) as BlockChangeDelegate
                     ) ?: false)
                 }
-                .syncFunction("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBlockChangeDelegate.TYPE)) {
+                .function("generateTree",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.STRING, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnBlockChangeDelegate.TYPE)) {
                     org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnTreeType.enumValue(it.getString(1))?.let { p1 ->
                         it.setReturnBool(it.target?.generateTree(
                             it.getRef(0) as Location,
@@ -261,8 +261,8 @@ object FnWorld {
                         ) ?: false)
                     }
                 }
-                .syncFunction("strikeLightning",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLightningStrike.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.strikeLightning(it.getRef(0) as Location)) }
-                .syncFunction("strikeLightningEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLightningStrike.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.strikeLightningEffect(it.getRef(0) as Location)) }
+                .function("strikeLightning",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLightningStrike.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.strikeLightning(it.getRef(0) as Location)) }
+                .function("strikeLightningEffect",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnLightningStrike.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE)) { it.setReturnRef(it.target?.strikeLightningEffect(it.getRef(0) as Location)) }
                 .function("entities", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.entities) }
                 .function("livingEntities", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.livingEntities) }
                 .function("entitiesByClasses", returns(org.tabooproject.fluxon.util.StandardTypes.COLLECTION).noParams()) { it.setReturnRef(it.target?.getEntitiesByClasses()) }
@@ -384,20 +384,20 @@ object FnWorld {
                 .function("isClearWeather", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isClearWeather ?: false) }
                 .function("setClearWeatherDuration", returnsVoid().params(Type.I)) { it.target?.setClearWeatherDuration(it.getAsInt(0).toInt()) }
                 .function("clearWeatherDuration", returns(Type.I).noParams()) { it.setReturnInt(it.target?.clearWeatherDuration ?: 0) }
-                .syncFunction("createExplosion",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F)) {
+                .function("createExplosion",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F)) {
                     it.setReturnBool(it.target?.createExplosion(
                         it.getRef(0) as Location,
                         it.getFloat(1)
                     ) ?: false)
                 }
-                .syncFunction("createExplosion",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F, Type.Z)) {
+                .function("createExplosion",returns(Type.Z).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, Type.F, Type.Z)) {
                     it.setReturnBool(it.target?.createExplosion(
                         it.getRef(0) as Location,
                         it.getFloat(1),
                         it.getBool(2)
                     ) ?: false)
                 }
-                .syncFunction("createExplosion",returns(Type.Z).params(Type.D, Type.F, Type.D, Type.F)) {
+                .function("createExplosion",returns(Type.Z).params(Type.D, Type.F, Type.D, Type.F)) {
                     it.setReturnBool(when (it.getRef(0)) {
                         is Location -> it.target?.createExplosion(
                             it.getRef(0) as Location,
@@ -416,7 +416,7 @@ object FnWorld {
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     } ?: false)
                 }
-                .syncFunction("createExplosion",returns(Type.Z).params(Type.D, Type.F, Type.D, Type.F, Type.Z)) {
+                .function("createExplosion",returns(Type.Z).params(Type.D, Type.F, Type.D, Type.F, Type.Z)) {
                     it.setReturnBool(when (it.getRef(0)) {
                         is Location -> it.target?.createExplosion(
                             it.getRef(0) as Location,
@@ -437,7 +437,7 @@ object FnWorld {
                         else -> throw IllegalArgumentException("参数必须是 Location 或 Number 类型")
                     } ?: false)
                 }
-                .syncFunction("createExplosion",returns(Type.Z).params(Type.D, Type.D, Type.D, Type.F, Type.Z, Type.Z)) {
+                .function("createExplosion",returns(Type.Z).params(Type.D, Type.D, Type.D, Type.F, Type.Z, Type.Z)) {
                     it.setReturnBool(it.target?.createExplosion(
                         it.getAsDouble(0),
                         it.getAsDouble(1),
@@ -447,7 +447,7 @@ object FnWorld {
                         it.getBool(5)
                     ) ?: false)
                 }
-                .syncFunction("createExplosion",returns(Type.Z).params(Type.D, Type.D, Type.D, Type.F, Type.Z, Type.Z, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
+                .function("createExplosion",returns(Type.Z).params(Type.D, Type.D, Type.D, Type.F, Type.Z, Type.Z, org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnEntity.TYPE)) {
                     it.setReturnBool(it.target?.createExplosion(
                         it.getAsDouble(0),
                         it.getAsDouble(1),
@@ -464,9 +464,9 @@ object FnWorld {
                 .function("biomeProvider", returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.generator.FnBiomeProvider.TYPE).noParams()) { it.setReturnRef(it.target?.biomeProvider) }
                 .syncFunction("save", returnsVoid().noParams()) { it.target?.save() }
                 .function("populators", returns(Type.LIST).noParams()) { it.setReturnRef(it.target?.populators) }
-                .syncFunction("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.setReturnRef(it.target?.spawnFallingBlock(it.getRef(0) as Location, it.getRef(1) as MaterialData)) }
-                .syncFunction("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.setReturnRef(it.target?.spawnFallingBlock(it.getRef(0) as Location, it.getRef(1) as BlockData)) }
-                .syncFunction("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
+                .function("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.material.FnMaterialData.TYPE)) { it.setReturnRef(it.target?.spawnFallingBlock(it.getRef(0) as Location, it.getRef(1) as MaterialData)) }
+                .function("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.block.data.FnBlockData.TYPE)) { it.setReturnRef(it.target?.spawnFallingBlock(it.getRef(0) as Location, it.getRef(1) as BlockData)) }
+                .function("spawnFallingBlock",returns(org.tabooproject.fluxon.platform.bukkit.function.bukkit.entity.FnFallingBlock.TYPE).params(org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnLocation.TYPE, org.tabooproject.fluxon.platform.bukkit.function.bukkit.FnMaterial.TYPE, Type.I)) {
                     it.setReturnRef(it.target?.spawnFallingBlock(
                         it.getRef(0) as Location,
                         it.getRef(1) as Material,
