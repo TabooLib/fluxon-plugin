@@ -306,6 +306,7 @@ object FnPlayer {
                         it.getRef(1) as Entity
                     )
                 }
+                .function("isFlying", returns(Type.Z).noParams()) { it.setReturnBool(it.target?.isFlying!!) }
                 .function("setFlying", returnsVoid().params(Type.Z)) { it.target?.setFlying(it.getBool(0)) }
                 .function("setFlySpeed", returnsVoid().params(Type.F)) { it.target?.setFlySpeed(it.getFloat(0)) }
                 .function("setWalkSpeed", returnsVoid().params(Type.F)) { it.target?.setWalkSpeed(it.getFloat(0)) }
