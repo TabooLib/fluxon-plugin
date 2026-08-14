@@ -16,7 +16,7 @@ import io.izzel.taboolib.gradle.MinecraftChat
 plugins {
     java
     `maven-publish`
-    id("io.izzel.taboolib") version "2.0.28"
+    id("io.izzel.taboolib") version "2.0.38"
     id("org.jetbrains.kotlin.jvm") version "1.8.22"
 }
 
@@ -41,7 +41,7 @@ taboolib {
             name("sky")
         }
     }
-    version { taboolib = "6.2.4-7c873bc" }
+    version { taboolib = "6.3.0-75b18a2" }
 }
 
 repositories {
@@ -51,8 +51,8 @@ repositories {
 
 dependencies {
     compileOnly(project(":common"))
-    taboo("org.tabooproject.fluxon:core:1.6.16") { isTransitive = false }
-    taboo("org.tabooproject.fluxon:inst-core:1.6.16") { isTransitive = false }
+    taboo("org.tabooproject.fluxon:core:1.7.2") { isTransitive = false }
+    taboo("org.tabooproject.fluxon:inst-core:1.7.2") { isTransitive = false }
     compileOnly(kotlin("stdlib"))
     compileOnly(fileTree("libs"))
 }
@@ -86,7 +86,7 @@ configure(subprojects) {
             install(Bukkit)
             install(MinecraftChat)
         }
-        version { taboolib = "6.2.4-62eb811" }
+        version { taboolib = "6.3.0-75b18a2" }
     }
     
     repositories {
@@ -95,8 +95,8 @@ configure(subprojects) {
     }
     
     dependencies {
-        taboo("org.tabooproject.fluxon:core:1.6.16") { isTransitive = false }
-        taboo("org.tabooproject.fluxon:inst-core:1.6.16") { isTransitive = false }
+        taboo("org.tabooproject.fluxon:core:1.7.2") { isTransitive = false }
+        taboo("org.tabooproject.fluxon:inst-core:1.7.2") { isTransitive = false }
         compileOnly(kotlin("stdlib"))
         compileOnly(rootProject.fileTree("libs"))
     }
